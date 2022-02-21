@@ -214,8 +214,7 @@
         const vm = this;
         if (id) {
           var url = (url)? url : vm.route_show;
-          url = (!url.includes('http://') || !url.includes('http://'))
-            ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+          url = vm.setUrl(url);
           url = url.indexOf("{id}") >= 0? url.replace("{id}", id) : url + '/' + id;
           axios.get(url).then(response => {
           vm.order_load = response.data.record;

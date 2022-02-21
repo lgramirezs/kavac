@@ -442,8 +442,7 @@
 			loadAssets(url)
 			{
 				const vm = this;
-				url = (!url.includes('http://') || !url.includes('http://'))
-					  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+				url = vm.setUrl(url);
 				url += (vm.asignationid != null)?'/asignations/' + vm.asignationid:'/asignations';
 				axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {

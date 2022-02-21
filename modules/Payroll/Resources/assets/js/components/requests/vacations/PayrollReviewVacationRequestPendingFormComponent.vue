@@ -244,8 +244,7 @@
             initRecords(url, modal_id) {
                 const vm = this;
                 vm.reset();
-                url = (!url.includes('http://') || !url.includes('http://'))
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 axios.get(url).then(response => {
                     if (typeof(response.data.record) !== "undefined") {

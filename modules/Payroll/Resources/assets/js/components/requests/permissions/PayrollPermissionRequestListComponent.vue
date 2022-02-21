@@ -68,15 +68,11 @@
 
 			},
 			deleteRecord(index, url) {
-	            var url = (url)?(
-					(!url.includes('http://') || !url.includes('http://'))
-					?`${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` 
-					: url
-				):this.route_delete;
-	            var records = this.records;
+				const vm = this;
+	            var records = vm.records;
 	            var confirmated = false;
 	            var index = index - 1;
-	            const vm = this;
+	            url = (url)?vm.setUrl(url):vm.route_delete;
 
 	            bootbox.confirm({
 	                title: "¿Eliminar registro?",

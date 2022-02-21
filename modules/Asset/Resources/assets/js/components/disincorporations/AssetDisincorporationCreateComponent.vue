@@ -405,8 +405,7 @@
 				const vm = this;
 				var inputFiles = document.querySelector('#files');
 				var formData   = new FormData();
-				url = (!url.includes('http://') || !url.includes('http://'))
-				  	  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+				url = vm.setUrl(url);
 
 				vm.errors = [];
 				if(!vm.selected.length > 0){
@@ -477,8 +476,7 @@
 			},
 			loadAssets(url) {
 				const vm = this;
-				url = (!url.includes('http://') || !url.includes('http://'))
-				  	  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+				url = vm.setUrl(url);
 				url += (vm.disincorporationid != null)?'/disincorporations/' + vm.disincorporationid:'/disincorporations';
 				axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {

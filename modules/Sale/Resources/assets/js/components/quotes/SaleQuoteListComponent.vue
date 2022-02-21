@@ -237,8 +237,7 @@
         const vm = this;
         /** @type {string} URL que atiende la petición de eliminación del registro */
         var url = (url)?url:vm.route_delete;
-        url = (!url.includes('http://') || !url.includes('http://'))
-          ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+        url = vm.setUrl(url);
         bootbox.confirm({
           title: "¿Eliminar registro?",
           message: "¿Esta seguro de eliminar este registro?",
@@ -281,8 +280,7 @@
       rejectedRequest(index, url) {
         const vm = this;
         var url = (url)? url : vm.route_delete;
-        url = (!url.includes('http://') || !url.includes('http://'))
-          ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+        url = vm.setUrl(url);
         var dialog = bootbox.confirm({
           title: 'Rechazar operación?',
           message: "<p>¿Seguro que desea rechazar esta operación?. Una vez rechazada la operación no se podrán realizar cambios en la misma.<p>",
@@ -325,8 +323,7 @@
       approvedRequest(index, url)  {
         const vm = this;
         var url = (url)? url : vm.route_delete;
-        url = (!url.includes('http://') || !url.includes('http://'))
-          ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+        url = vm.setUrl(url);
         var dialog = bootbox.confirm({
           title: 'Aprobar operación?',
           message: "<p>¿Seguro que desea aprobar esta operación?. Una vez aprobada la operación no se podrán realizar cambios en la misma.<p>",
@@ -370,8 +367,7 @@
         const vm = this;
         if (id) {
           var url = (url)? url : vm.route_show;
-          url = (!url.includes('http://') || !url.includes('http://'))
-            ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+          url = vm.setUrl(url);
           url = url.indexOf("{id}") >= 0? url.replace("{id}", id) : url + '/' + id;
           axios.get(url).then(response => {
             vm.quote_load = response.data.record;

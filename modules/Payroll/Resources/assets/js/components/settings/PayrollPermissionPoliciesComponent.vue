@@ -199,11 +199,11 @@
                 };
             },
             deleteRecord(index, url) {
+                const vm = this;
                 var url = (url)?url:this.route_delete;
-                var records = this.records;
+                var records = vm.records;
                 var confirmated = false;
                 var index = index - 1;
-                const vm = this;
 
                 bootbox.confirm({
                     title: "¿Eliminar registro?",
@@ -219,8 +219,7 @@
                     callback: function (result) {
                         if (result) {
                             confirmated = true;
-                            url = (!url.includes('http://') || !url.includes('http://'))
-                                  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                            url = vm.setUrl(url);
                             axios.delete(url + '/' + records[index].id).then(response => {
                                 if (typeof(response.data.error) !== "undefined") {
                                     /** Muestra un mensaje de error si sucede algún evento en la eliminación */

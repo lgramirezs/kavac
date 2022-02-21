@@ -107,8 +107,7 @@
                 const vm = this;
                 /** @type {string} URL que atiende la petición de eliminación del registro */
                 var url = (url)?url:vm.route_delete;
-                url = (!url.includes('http://') || !url.includes('http://'))
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 bootbox.confirm({
                     title: "¿Eliminar registro?",

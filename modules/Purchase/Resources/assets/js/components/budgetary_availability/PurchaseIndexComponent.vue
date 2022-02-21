@@ -389,8 +389,7 @@ export default{
 		 */
 		createRecord(url, list = true, reset = true) {
 			const vm = this;
-			url = (!url.includes('http://') || !url.includes('http://'))
-				  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+			url = vm.setUrl(url);
 			vm.loading = true;
 			axios.post(url, vm.record).then(response => {
 				if(response.data.error){

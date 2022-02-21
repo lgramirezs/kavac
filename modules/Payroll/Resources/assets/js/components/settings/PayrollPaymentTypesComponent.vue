@@ -436,8 +436,7 @@
             getOptions(url) {
                 const vm = this;
                 vm.associated_records = [];
-                url = (!url.includes('http://') || !url.includes('http://')) 
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
                 axios.get(url).then(response => {
                     if (response.data.length > 0) {
                         $.each(response.data, function(index, field) {

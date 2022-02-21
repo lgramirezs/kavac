@@ -129,13 +129,11 @@
             initRecords(url,modal_id){
             	this.errors = [];
 
-
 				const vm = this;
             	var fields = {};
 
             	document.getElementById("info_general").click();
-				url = (!url.includes('http://') || !url.includes('http://'))
-					  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+				url = vm.setUrl(url);
 
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {

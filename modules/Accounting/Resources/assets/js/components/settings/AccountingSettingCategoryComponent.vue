@@ -190,15 +190,14 @@ export default{
         },
 
         // /**
-        // * Guarda o Actualiza la información de la nueva categoria
+        // * Guarda o Actualiza la información de la nueva categoría
         // *
         // * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
         // */
         createRecord(url){
             const vm = this;
             this.record.acronym = this.record.acronym.toUpperCase();
-            url = (!url.includes('http://') || !url.includes('http://'))
-				  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+            url = vm.setUrl(url);
 
             if (this.state == 'store') {
                 if (!this.validInformation()) return;

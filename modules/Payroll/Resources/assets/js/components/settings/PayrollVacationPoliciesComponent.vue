@@ -768,11 +768,11 @@
              * @param     {string}    modal_id    Identificador del modal a mostrar con la información solicitada
              */
             initRecords(url, modal_id) {
-                this.errors = [];
-                this.reset();
                 const vm = this;
+                vm.errors = [];
+                vm.reset();
 
-                url = (!url.includes('http://') || !url.includes('http://')) ? `${window.app_url}/${url}` : url;
+                url = vm.setUrl(url);
 
                 axios.get(url).then(response => {
                     if (typeof(response.data.records) !== "undefined") {
@@ -832,8 +832,7 @@
             readRecords(url) {
                 const vm = this;
                 vm.loading = true;
-                url = (!url.includes('http://') || !url.includes('http://'))
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 axios.get(url).then(response => {
                     if (typeof(response.data.records) !== "undefined") {

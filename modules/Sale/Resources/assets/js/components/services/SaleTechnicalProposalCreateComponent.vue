@@ -1098,8 +1098,7 @@ export default {
             } else {
                 vm.loading = true;
                 var fields = {};
-                url = (!url.includes('http://') || !url.includes('http://'))
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 for (var index in vm.record) {
                     fields[index] = vm.record[index];

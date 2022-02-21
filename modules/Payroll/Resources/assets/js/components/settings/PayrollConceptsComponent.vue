@@ -866,8 +866,7 @@
             getOptions(url) {
                 const vm = this;
                 vm.variable_options = [];
-                url = (!url.includes('http://') || !url.includes('http://')) 
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 axios.get(url).then(response => {
                     vm.variable_options = response.data;

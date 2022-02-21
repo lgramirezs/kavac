@@ -751,8 +751,7 @@
             createRecord(url, list = true, reset = true) {
                 const vm = this;
                 var payroll_scales = [];
-                url = (!url.includes('http://') || !url.includes('http://'))
-                      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 if ((vm.record.payroll_horizontal_salary_scale_id > 0
                     && vm.payroll_salary_scale_h.payroll_scales.length > 0)
