@@ -315,8 +315,7 @@ Vue.mixin({
 			if (!url) {
 				return;
 			}
-			url = (!url.includes('http://') || !url.includes('http://'))
-				  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+			url = vm.setUrl(url);
 			vm.loading = true;
 			axios.get(url.replace('/pdf','/pdfVue')).then(response=>{
 				if (!response.data.result) {

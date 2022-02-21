@@ -158,8 +158,7 @@ export default{
 		registerImportedAccounts:function(url) {
 			const vm = this;
 			if (vm.accounts != null) {
-				url = (!url.includes('http://') || !url.includes('http://'))
-					  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+				url = vm.setUrl(url);
 				axios.post(url, { records: vm.accounts }).then(response=>{
 					vm.showMessage(
 						'custom', 'Éxito', 'success', 'screen-ok',
@@ -179,8 +178,7 @@ export default{
 		 * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
 		 */
 		registerAccount(url){
-			url = (!url.includes('http://') || !url.includes('http://'))
-				  ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+			url = vm.setUrl(url);
 			EventBus.$emit('register:account',url);
 		}
 	},
