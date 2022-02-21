@@ -196,8 +196,7 @@
 
                 auxRecord.active        = $('#active').prop('checked');
 
-                url = (!url.includes('http://') || !url.includes('http://'))
-				      ? `${window.app_url}${(url.startsWith('/'))?'':'/'}${url}` : url;
+                url = vm.setUrl(url);
 
                 vm.loading              = true;
 
