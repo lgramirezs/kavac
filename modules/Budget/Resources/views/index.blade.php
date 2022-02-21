@@ -1,2 +1,5 @@
-{{-- @extends('budget::layouts.master') --}}
+@extends('budget::layouts.master')
 
+@section('content')
+    
+@stop
