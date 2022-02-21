@@ -178,6 +178,7 @@ export default{
 		 * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
 		 */
 		registerAccount(url){
+			const vm = this;
 			url = vm.setUrl(url);
 			EventBus.$emit('register:account',url);
 		}
