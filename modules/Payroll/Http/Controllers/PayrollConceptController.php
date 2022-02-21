@@ -88,7 +88,7 @@ class PayrollConceptController extends Controller
                 'id'    => 'all',
                 'name'  => 'Todos los trabajadores',
                 'model' => 'Modules\Payroll\Models\PayrollStaff',
-                'type'  => ''
+                'type'  => 'list'
             ],
             [
                 'id'    => 'all_active_staff',
@@ -494,7 +494,7 @@ class PayrollConceptController extends Controller
         foreach ($this->assignTo as $field) {
             if ($field['type'] == 'list') {
                 if ($field['id'] == $id) {
-                    return template_choices($field['model'], ['name'], '', true);
+                    return template_choices($field['model'], ['first_name', ' ','last_name'], '', true);
                 }
             }
         }

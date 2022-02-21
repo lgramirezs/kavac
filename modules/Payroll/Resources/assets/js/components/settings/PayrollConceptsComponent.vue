@@ -741,7 +741,7 @@
                         }
                         if (typeof(vm.assign_options[field['id']] ) == 'undefined') {
                             vm.assign_options[field['id']] = [];
-                            axios.get('get-concept-assign-options/' + field['id']).then(response => {
+                            axios.get('payroll/get-concept-assign-options/' + field['id']).then(response => {
                                 vm.assign_options[field['id']] = response.data;
                             });
                         }
