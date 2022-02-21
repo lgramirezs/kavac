@@ -2,12 +2,12 @@
 
 namespace Modules\Accounting\Models;
 
+use Nwidart\Modules\Facades\Module;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 //use Venturecraft\Revisionable\RevisionableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use Module;
 
 /**
  * @class AccountingAccount

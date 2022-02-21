@@ -2,24 +2,24 @@
 
 namespace Modules\Accounting\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Nwidart\Modules\Facades\Module;
 
-use Modules\Accounting\Models\Accountable;
-use Modules\Accounting\Models\AccountingEntryCategory;
-use Modules\Accounting\Models\AccountingEntryAccount;
-use Modules\Accounting\Models\AccountingAccount;
-use Modules\Accounting\Models\AccountingEntry;
-use Modules\Accounting\Models\Currency;
-use Modules\Accounting\Models\Institution;
 use Modules\Accounting\Models\Profile;
-
+use Modules\Accounting\Models\Currency;
+use Modules\Accounting\Models\Accountable;
+use Modules\Accounting\Models\Institution;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\Accounting\Models\AccountingEntry;
+use Modules\Accounting\Models\AccountingAccount;
 use Modules\Accounting\Jobs\AccountingManageEntries;
 
-use Module;
-use Auth;
+use Modules\Accounting\Models\AccountingEntryAccount;
+
+use Modules\Accounting\Models\AccountingEntryCategory;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 /**
  * @class AccountingEntryController
@@ -405,6 +405,12 @@ class AccountingEntryController extends Controller
 		// Validar acceso para el registro
 		$user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
 
+		/**
+		 * [$entry informaciónd el asiento contable]
+		 * @var AccountingEntry
+		 */
+		$entry = AccountingEntry::find($id);
+
 		if (!auth()->user()->isAdmin()) {
 			if ($entry && $entry->queryAccess($user_profile['institution']['id'])) {
 				return response()->json(['error' => true, 'message'=>'No tiene acceso para eliminar el registro.', 403]);
@@ -414,7 +420,7 @@ class AccountingEntryController extends Controller
 		/** El registro de asiento contable a eliminar */
 		AccountingEntryAccount::where('accounting_entry_id', $id)->delete();
 
-		AccountingEntry::find($id)->delete();
+		$entry->delete();
 
 		return response()->json(['message'=>'Success', 200]);
 	}

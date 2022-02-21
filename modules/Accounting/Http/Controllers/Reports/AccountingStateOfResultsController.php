@@ -759,7 +759,7 @@ class AccountingStateOfResultsController extends Controller
     /**
      * [formatDataInArray sintetiza la información de una cuenta en un array con sus respectivas subcuentas]
      * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-     * @param  Modules\Accounting\Models\AccountingAccount $records registro de una cuenta o subcuenta patrimonial
+     * @param  Modules\Accounting\Models\AccountingAccount|array $records registro de una cuenta o subcuenta patrimonial
      * @param  int $level [contador que indica el nivel de profundidad de la recursividad
      *                       para obtener subcuentas de una cuenta]
      */

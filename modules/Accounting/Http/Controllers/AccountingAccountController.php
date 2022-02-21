@@ -98,7 +98,7 @@ class AccountingAccountController extends Controller
             ->where('specific', $request['specific'])
             ->where('subspecific', $request['subspecific'])
             ->where('institutional', $request['institutional'])->first();
-
+            
         /**
          * [$parent almacena la consulta de la cuenta de nivel superior de la cuanta actual,
          * si esta no posee retorna false]
@@ -113,6 +113,7 @@ class AccountingAccountController extends Controller
             $request['subspecific'],
             $request['institutional']
         );
+        
         AccountingAccount::updateOrCreate(
             [
                 'group'         => $request['group'],        'subgroup'    => $request['subgroup'],
@@ -130,7 +131,7 @@ class AccountingAccountController extends Controller
                 * de datos evita que se asigne en la columna parent_id a si mismo como su parent
                 */
                 'parent_id' => ($acc != null && $parent != false) ?
-                (($acc->id == $parent->id)?null:$parent->id) : (($parent == false)?null:$parent->id) ,
+                (($acc->id == $parent->id)?null:$parent->id) : (($parent == false || $parent == null)?null:$parent->id) ,
             ]
         );
 
@@ -468,7 +469,8 @@ class AccountingAccountController extends Controller
                 $account['item'],
                 $account['generic'],
                 $account['specific'],
-                $account['subspecific']
+                $account['subspecific'],
+                $request['institutional'] ?? '000'
             );
 
             AccountingAccount::updateOrCreate(

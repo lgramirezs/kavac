@@ -59,9 +59,10 @@ class AccountingSettingController extends Controller
 
         /**
          * [$codes información de los campos de códigos configurados]
-         * @var string
+         * @var array
          */
         $codes = $request->input();
+
         /**
          * [$saved Define el estatus verdadero para indicar que no se ha registrado información]
          * @var boolean
