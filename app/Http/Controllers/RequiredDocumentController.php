@@ -27,10 +27,10 @@ class RequiredDocumentController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        $this->middleware('permission:estate.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:estate.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:estate.delete', ['only' => 'destroy']);
-        $this->middleware('permission:estate.list', ['only' => 'index']);
+        $this->middleware('permission:document.required.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:document.required.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:document.required.delete', ['only' => 'destroy']);
+        $this->middleware('permission:document.required.list', ['only' => 'index']);
     }
 
     /**
