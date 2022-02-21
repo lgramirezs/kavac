@@ -18,7 +18,7 @@ use App\Models\Estate as BaseEstate;
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
-class Estate extends Model implements Auditable
+class Estate extends BaseEstate implements Auditable
 {
     /**
      * Estate has many PurchaseSuppliers.

@@ -82,7 +82,7 @@ class AppManagementController extends Controller
         } else {
             foreach ($this->getModels() as $model_name) {
                 //if (Cache::has($cacheKey)) {}
-                /** @var string Nombre del modelo del cual se va a buscar registros eliminados */
+                /** @var object|string Nombre del modelo del cual se va a buscar registros eliminados */
                 $model = app($model_name);
                 
                 try {

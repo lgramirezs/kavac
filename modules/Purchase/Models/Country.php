@@ -18,7 +18,7 @@ use App\Models\Country as BaseCountry;
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
-class Country extends Model implements Auditable
+class Country extends BaseCountry implements Auditable
 {
     /**
      * Country has many PurchaseSuppliers.

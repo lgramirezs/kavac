@@ -21,7 +21,7 @@ use App\Traits\ModelsTrait;
 class FailedLoginAttempt extends Model implements Auditable
 {
     use AuditableTrait;
-    use ModelsTrait;
+    //use ModelsTrait;
 
     protected $fillable = [
         'user_id', 'username', 'ip',

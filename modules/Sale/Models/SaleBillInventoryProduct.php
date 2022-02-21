@@ -2,15 +2,17 @@
 
 namespace Modules\Sale\Models;
 
+use App\Traits\ModelsTrait;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use App\Traits\ModelsTrait;
 
 class SaleBillInventoryProduct extends Model implements Auditable
 {
     use AuditableTrait;
     use ModelsTrait;
+    use SoftDeletes;
 
     /**
      * Lista de atributos para la gestión de fechas

@@ -3,11 +3,12 @@
 /** Modelos generales de base de datos */
 namespace App\Models;
 
+use App\Traits\ModelsTrait;
+use Nwidart\Modules\Facades\Module;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use Module;
 
 /**
  * @class Deduction
@@ -30,6 +31,7 @@ class Deduction extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
+    use ModelsTrait;
 
     /**
      * Lista de atributos para la gestión de fechas
