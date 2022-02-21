@@ -30,7 +30,7 @@
 				</div>
 				<div class="card-body">
 					<warehouse-request-list
-						route_list="warehouse/requests/vue-list}"
+						route_list="warehouse/requests/vue-list"
 						route_edit="warehouse/requests/edit/{id}"
 						route_delete="warehouse/requests/delete">
 					</warehouse-request-list>
