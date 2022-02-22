@@ -787,9 +787,11 @@ export default {
 		 * @param  {integer} id Identificador del proyecto a buscar, este parámetro es opcional
 		 */
 		getProjects(id) {
+			const vm = this;
 			var project_id = typeof id !== 'undefined' ? '/' + id : '';
-			axios.get(`${window.app_url}/budget/get-projects${project_id}`).then(response => {
-				this.projects = response.data;
+			const url = vm.setUrl(`budget/get-projects${project_id}`);
+			axios.get(url).then(response => {
+				vm.projects = response.data;
 			});
 		},
 		/**
@@ -799,10 +801,11 @@ export default {
 		 * @param  {integer} id Identificador de la acción centralizada a buscar, este parámetro es opcional
 		 */
 		getCentralizedActions(id) {
-			var centralized_action_id =
-				typeof id !== 'undefined' ? '/' + id : '';
-			axios.get(`${window.app_url}/budget/get-centralized-actions${centralized_action_id}`).then(response => {
-				this.centralized_actions = response.data;
+			const vm = this;
+			var centralized_action_id = typeof id !== 'undefined' ? '/' + id : '';
+			const url = vm.setUrl(`budget/get-centralized-actions${centralized_action_id}`);
+			axios.get(url).then(response => {
+				vm.centralized_actions = response.data;
 			});
 		},
 		/**
@@ -924,82 +927,80 @@ export default {
 		 */
 		loadFormulation(id) {
 			const vm = this;
-			this.record.id = id;
-			axios
-				.get(`${window.app_url}/budget/get-subspecific-formulation/${id}`)
-				.then(response => {
-					var pry_acc_id =
-						response.data.formulation.specific_action.specificable
-							.id;
-					var pry_acc_type =
-						response.data.formulation.specific_action.type;
-					var formulation = response.data.formulation;
+			vm.record.id = id;
+			const url = vm.setUrl(`budget/get-subspecific-formulation/${id}`);
+			axios.get(url).then(response => {
+				var pry_acc_id =
+					response.data.formulation.specific_action.specificable
+						.id;
+				var pry_acc_type =
+					response.data.formulation.specific_action.type;
+				var formulation = response.data.formulation;
 
-					vm.record.currency_id = formulation.currency_id;
-					vm.record.institution_id =
-						formulation.specific_action.specificable.department.institution_id;
-					vm.record.year = formulation.year;
-					vm.record.project_id =
-						pry_acc_type === 'Proyecto' ? pry_acc_id : '';
-					vm.record.centralized_action_id = !(
-						pry_acc_type === 'Proyecto'
-					)
-						? pry_acc_id
-						: '';
-					$('#centralized_action_id').attr(
-						'disabled',
-						pry_acc_type === 'Proyecto'
-					);
-					$('#project_id').attr(
-						'disabled',
-						!(pry_acc_type === 'Proyecto')
-					);
-					if (pry_acc_type === 'Proyecto') {
-						$('#project_id').click();
-					} else {
-						$('#centralized_action_id').click();
-					}
+				vm.record.currency_id = formulation.currency_id;
+				vm.record.institution_id =
+					formulation.specific_action.specificable.department.institution_id;
+				vm.record.year = formulation.year;
+				vm.record.project_id =
+					pry_acc_type === 'Proyecto' ? pry_acc_id : '';
+				vm.record.centralized_action_id = !(
+					pry_acc_type === 'Proyecto'
+				)
+					? pry_acc_id
+					: '';
+				$('#centralized_action_id').attr(
+					'disabled',
+					pry_acc_type === 'Proyecto'
+				);
+				$('#project_id').attr(
+					'disabled',
+					!(pry_acc_type === 'Proyecto')
+				);
+				if (pry_acc_type === 'Proyecto') {
+					$('#project_id').click();
+				} else {
+					$('#centralized_action_id').click();
+				}
 
-					vm.record.specific_action_id = formulation.budget_specific_action_id.toString();
+				vm.record.specific_action_id = formulation.budget_specific_action_id.toString();
 
-					/** Carga los datos de las partidas presupuestarias formuladas */
-					$.each(this.records, function(index, el) {
-						$.each(formulation.accountOpens, function() {
-							if (el.id === this.budget_account_id) {
-								vm.showAccountInputs(index);
-								vm.records[
-									index
-								].total_year_amount = this.total_year_amount;
-								vm.records[
-									index
-								].total_real_amount = this.total_real_amount;
-								vm.records[
-									index
-								].total_estimated_amount = this.total_estimated_amount;
-								vm.records[index].jan_amount = this.jan_amount;
-								vm.records[index].feb_amount = this.feb_amount;
-								vm.records[index].mar_amount = this.mar_amount;
-								vm.records[index].apr_amount = this.apr_amount;
-								vm.records[index].may_amount = this.may_amount;
-								vm.records[index].jun_amount = this.jun_amount;
-								vm.records[index].jul_amount = this.jul_amount;
-								vm.records[index].aug_amount = this.aug_amount;
-								vm.records[index].sep_amount = this.sep_amount;
-								vm.records[index].oct_amount = this.oct_amount;
-								vm.records[index].nov_amount = this.nov_amount;
-								vm.records[index].dec_amount = this.dec_amount;
-							}
-						});
+				/** Carga los datos de las partidas presupuestarias formuladas */
+				$.each(vm.records, function(index, el) {
+					$.each(formulation.accountOpens, function() {
+						if (el.id === this.budget_account_id) {
+							vm.showAccountInputs(index);
+							vm.records[
+								index
+							].total_year_amount = this.total_year_amount;
+							vm.records[
+								index
+							].total_real_amount = this.total_real_amount;
+							vm.records[
+								index
+							].total_estimated_amount = this.total_estimated_amount;
+							vm.records[index].jan_amount = this.jan_amount;
+							vm.records[index].feb_amount = this.feb_amount;
+							vm.records[index].mar_amount = this.mar_amount;
+							vm.records[index].apr_amount = this.apr_amount;
+							vm.records[index].may_amount = this.may_amount;
+							vm.records[index].jun_amount = this.jun_amount;
+							vm.records[index].jul_amount = this.jul_amount;
+							vm.records[index].aug_amount = this.aug_amount;
+							vm.records[index].sep_amount = this.sep_amount;
+							vm.records[index].oct_amount = this.oct_amount;
+							vm.records[index].nov_amount = this.nov_amount;
+							vm.records[index].dec_amount = this.dec_amount;
+						}
 					});
-				})
-				.catch(error => {
-					vm.logs(
-						'BudgetSubSpecificFormulationComponent.vue',
-						636,
-						error,
-						'loadFormulation'
-					);
 				});
+			}).catch(error => {
+				vm.logs(
+					'BudgetSubSpecificFormulationComponent.vue',
+					636,
+					error,
+					'loadFormulation'
+				);
+			});
 		},
 		/**
 		 * Ejecuta la acción para actualizar datos de la formulación
@@ -1143,18 +1144,21 @@ export default {
 			}
 		}
 	},
-	mounted() {
-		this.getOpenedFiscalYears();
-		this.getInstitutions();
-		this.getCurrencies();
-		this.getProjects();
-		this.getCentralizedActions();
-		this.initRecords(`${window.app_url}/budget/accounts/egress-list/true`, '');
+	async mounted() {
+		const vm = this;
+		vm.loading = true;
+		await vm.getOpenedFiscalYears();
+		await vm.getInstitutions();
+		await vm.getCurrencies();
+		await vm.getProjects();
+		await vm.getCentralizedActions();
+		await vm.initRecords(`${window.app_url}/budget/accounts/egress-list/true`, '');
 
-		if (this.formulationId) {
-			this.loadFormulation(this.formulationId);
+		if (vm.formulationId) {
+			await vm.loadFormulation(vm.formulationId);
 		}
-		//this.record.institution_id =
+		//vm.record.institution_id =
+		vm.loading = false;
 
 		/**
 		 * Evento para determinar los datos a requerir según el tipo de formulación
