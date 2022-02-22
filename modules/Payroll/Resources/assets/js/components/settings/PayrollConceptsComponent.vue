@@ -236,7 +236,7 @@
                                         v-if="field['type'] == 'list'">
                                         <label>{{ field['name'] }}</label>
                                         <v-multiselect
-                                                    :options="assign_options[field['id']]" track_by="text"
+                                                    :options="assign_options_lists" track_by="text"
                                                     :hide_selected="false" data-toggle="tooltip"
                                                     title="Indique los registros a los que se les va asignar el concepto"
                                                     v-model="record.assign_options[field['id']]">
@@ -541,6 +541,7 @@
                 variable:                  '',
                 variable_option:           '',
                 assign_options:            {},
+                assign_options_lists:      [],
                 type:                      '',
                 value:                     '',
                 operator:                  '',
@@ -618,6 +619,7 @@
                 vm.getOptions('payroll/get-associated-records');
                 vm.getPayrollConceptAssignTo();
                 vm.getPayrollSalaryTabulators();
+                vm.assign_options_lists = [];
 
                 $('.BlockDeletion').on('keydown', function (e) {
                     try {
@@ -742,7 +744,7 @@
                         if (typeof(vm.assign_options[field['id']] ) == 'undefined') {
                             vm.assign_options[field['id']] = [];
                             axios.get('payroll/get-concept-assign-options/' + field['id']).then(response => {
-                                vm.assign_options[field['id']] = response.data;
+                                vm.assign_options_lists = response.data;
                             });
                         }
                     }
