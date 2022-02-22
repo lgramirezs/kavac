@@ -891,9 +891,10 @@ Vue.mixin({
 		 */
 		getInstitutions(id) {
 			const vm = this;
+			let institution_id = (typeof(id)!=="undefined")?'/'+id:'';
+			const url = vm.setUrl(`get-institutions${institution_id}`);
 			vm.institutions = [];
-			var institution_id = (typeof(id)!=="undefined")?'/'+id:'';
-			axios.get(`/get-institutions${institution_id}`).then(response => {
+			axios.get(url).then(response => {
 				vm.institutions = response.data;
 			});
 		},
@@ -906,9 +907,10 @@ Vue.mixin({
 		 */
 		getCurrencies(id) {
 			const vm = this;
-			var currency_id = (typeof(id)!=="undefined")?'/'+id:'';
+			let currency_id = (typeof(id)!=="undefined")?'/'+id:'';
+			const url = vm.setUrl(`get-currencies${currency_id}`);
 			vm.currencies = [];
-			axios.get(`/get-currencies${currency_id}`).then(response => {
+			axios.get(url).then(response => {
 				vm.currencies = response.data;
 			});
 		},
@@ -1135,7 +1137,8 @@ Vue.mixin({
          */
         getOpenedFiscalYears() {
             const vm = this;
-            axios.get('/fiscal-years/opened/list').then(response => {
+			const url = vm.setUrl('fiscal-years/opened/list');
+            axios.get(url).then(response => {
                 vm.fiscal_years = response.data.records;
             }).catch(error => {
                 console.error(error);
