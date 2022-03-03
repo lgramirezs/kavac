@@ -59,6 +59,9 @@
                                     class="btn btn-default btn-sm btn-round btn-modal-close">
                                 Cerrar
                             </button>
+                            <button type="button" @click="reset()" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear">
+                                Cancelar
+                            </button>
                             <button type="button" @click="createRecord('required-documents/' + model + '/' + module)"
                                     class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
