@@ -47,8 +47,24 @@
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 			 */
 			reset() {
-
+				// 
 			},
+
+			/**
+			 * Redirecciona al formulario de actualización de datos
+			 *
+			 * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+			 *
+			 * @param  {integer} id Identificador del registro a actualizar
+			 */
+			editForm(id){
+				const vm = this;
+				let route = vm.route_edit.indexOf("{id}") >= 0
+							? vm.route_edit.replace("{id}", id)
+							: vm.route_edit + '/' + id;
+
+				location.href = `${window.app_url}${route}`;
+			}
 		}
 	};
 </script>
