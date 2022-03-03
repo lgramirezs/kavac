@@ -87,7 +87,7 @@
 								Cerrar
 							</button>
 							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()">
+									@click="reset()" data-dismiss="modal">
 								Cancelar
 							</button>
 							<button type="button" @click="createRecord('purchase/purchase_plans/start_diagnosis')" 
