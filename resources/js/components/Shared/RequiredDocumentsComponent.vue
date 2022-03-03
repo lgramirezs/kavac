@@ -21,9 +21,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" v-if="errors.length > 0">
-                            <ul>
-                                <li v-for="error in errors">{{ error }}</li>
-                            </ul>
+                            <div class="container">
+                                <div class="alert-icon">
+                                    <i class="now-ui-icons objects_support-17"></i>
+                                </div>
+                                <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                                <ul>
+                                    <li v-for="error in errors">{{ error }}</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
