@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<!-- <purchase-show-errors ref="PurchaseOrderFormComponent" /> -->
+		<!-- <purchase-show-errors ref="purchaseShowError" /> -->
 
 		<div class="row">
 			<div class="col-3">
@@ -382,7 +382,7 @@ export default{
 			this.sub_total = 0;
 			this.tax_value = 0;
 			this.total     = 0;
-			this.$refs.PurchaseOrderFormComponent.reset();
+			// this.$refs.purchaseShowError.reset();
 		},
 
 		uploadFile(inputID, e){

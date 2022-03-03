@@ -2,7 +2,7 @@
     <div class="form-horizontal">
         <div class="card-body">
             
-            <purchase-show-errors ref="PurchaseFormComponent" />
+            <purchase-show-errors ref="purchaseShowError" />
 
             <div class="row">
                 <div class="col-md-12">
@@ -222,7 +222,7 @@
                     description               : '',
                     products                  : [],
                 };
-                this.$refs.PurchaseFormComponent.reset();
+                this.$refs.purchaseShowError.reset();
             },
             createRecord(){
                 const vm = this;
@@ -238,7 +238,7 @@
                         }, 2000);
                     }).catch(error=>{
                         vm.loading = false;
-                        this.$refs.PurchaseFormComponent.reset();
+                        this.$refs.purchaseShowError.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -257,7 +257,7 @@
                         }, 2000);
                     }).catch(error=>{
                         vm.loading = false;
-                        this.$refs.PurchaseFormComponent.reset();
+                        this.$refs.purchaseShowError.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {

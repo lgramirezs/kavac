@@ -5,7 +5,7 @@ namespace Modules\Purchase\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Purchase\Models\PurchaseTypeHiring;
 
 /**
@@ -22,6 +22,8 @@ use Modules\Purchase\Models\PurchaseTypeHiring;
 
 class PurchaseTypeHiringController extends Controller
 {
+    use ValidatesRequests;
+    
     /**
      * Display a listing of the resource.
      * @return JsonResponse

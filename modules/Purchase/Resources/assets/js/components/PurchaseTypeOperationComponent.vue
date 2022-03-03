@@ -21,7 +21,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <purchase-show-errors ref="purchaseErrors" />
+                        <purchase-show-errors ref="purchaseShowError" />
 
                         <div class="row">
                             <div class="col-md-6">

@@ -22,7 +22,7 @@
                         </h6>
                     </div>
                     <div class="modal-body">
-                        <purchase-show-errors />
+                        <purchase-show-errors ref="purchaseShowError" />
 
                         <div class="row">
                             <div class="col-md-6">
@@ -160,31 +160,33 @@
             },
 
             createRecord(url){
-                this.record.active = $('#active').prop('checked');
+                const vm = this;
+                vm.record.active = $('#active').prop('checked');
                 vm.loading = true;
-                if (!this.edit) {
-                    axios.post(url,this.record).then(response=>{
-                        this.records = response.data.records;
-                        this.showMessage("store");
-                        this.reset();
+                if (!vm.edit) {
+                    axios.post(url,vm.record).then(response=>{
+                        vm.records = response.data.records;
+                        vm.showMessage("store");
+                        vm.reset();
                         vm.loading = false;
                     }).catch(error => {
                         vm.errors = [];
 
-                        if (typeof(error.response) !="undefined") {
+                        if (typeof(error.response) != "undefined") {
                             for (var index in error.response.data.errors) {
                                 if (error.response.data.errors[index]) {
                                     vm.errors.push(error.response.data.errors[index][0]);
                                 }
                             }
                         }
+                        this.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
-                }else if(this.edit && this.record.id){
-                    axios.put(url+'/'+this.record.id, this.record).then(response=>{
-                        this.records = response.data.records;
-                        this.showMessage("update");
-                        this.reset();
+                }else if(vm.edit && vm.record.id){
+                    axios.put(url+'/'+vm.record.id, vm.record).then(response=>{
+                        vm.records = response.data.records;
+                        vm.showMessage("update");
+                        vm.reset();
                         vm.loading = false;
                     }).catch(error => {
                         vm.errors = [];
@@ -196,6 +198,7 @@
                                 }
                             }
                         }
+                        this.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }

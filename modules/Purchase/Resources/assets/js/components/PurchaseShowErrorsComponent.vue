@@ -21,11 +21,12 @@
 		},
 		computed:{
 			existErrors:function(){
+				const vm = this;
 				// Si hay algun error en el componente padre actualiza
-				if (this.$parent.errors) {
-					this.options = this.$parent.errors;
+				if (vm.$parent.errors) {
+					vm.options = vm.$parent.errors;
 				};
-				return (this.options.length > 0);
+				return (vm.options.length > 0);
 			},
 		},
 		methods:{
@@ -36,6 +37,15 @@
 			reset(){
 				this.options = [];
 			},
+
+			/**
+			 * [reset actualiza el valor de opciones]
+			 * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+			 */
+			refresh(){
+				const vm = this;
+				vm.options = vm.$parent.errors;
+			}
 		}
 	};
 </script>

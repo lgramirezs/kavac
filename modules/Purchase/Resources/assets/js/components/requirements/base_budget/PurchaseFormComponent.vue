@@ -2,7 +2,7 @@
     <section class="PurchaseFormComponent">
         <div class="form-horizontal">
 
-            <purchase-show-errors ref="PurchaseBaseBudgetComponent" />
+            <purchase-show-errors ref="purchaseShowError" />
 
             <div class="card-body">
                 <div class="row">
