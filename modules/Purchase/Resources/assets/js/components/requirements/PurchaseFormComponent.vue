@@ -213,7 +213,8 @@
         },
         methods:{
             reset(){
-                this.record = {
+                const vm = this;
+                vm.record = {
                     institution_id            : '',
                     contracting_department_id : '',
                     user_department_id        : '',
@@ -222,7 +223,8 @@
                     description               : '',
                     products                  : [],
                 };
-                this.$refs.purchaseShowError.reset();
+                vm.errors = [];
+                vm.$refs.purchaseShowError.reset();
             },
             createRecord(){
                 const vm = this;
@@ -237,8 +239,6 @@
                             location.href = '/purchase/requirements';
                         }, 2000);
                     }).catch(error=>{
-                        vm.loading = false;
-                        this.$refs.purchaseShowError.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -247,6 +247,8 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
+                        vm.loading = false;
                     });
                 }else{
                     axios.post('/purchase/requirements',vm.record).then(response=>{
@@ -256,8 +258,6 @@
                             location.href = '/purchase/requirements';
                         }, 2000);
                     }).catch(error=>{
-                        vm.loading = false;
-                        this.$refs.purchaseShowError.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -266,6 +266,8 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
+                        vm.loading = false;
                     });
                 }
             },

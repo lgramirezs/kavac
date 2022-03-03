@@ -301,15 +301,16 @@
             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
             */
             CalculateTot(){
-                this.sub_total = 0;
-                this.tax       = 0;
-                for (var i = this.record_items.length - 1; i >= 0; i--) {
-                    var r = this.record_items[i];
+                const vm = this;
+                vm.sub_total = 0;
+                vm.tax       = 0;
+                for (var i = vm.record_items.length - 1; i >= 0; i--) {
+                    var r = vm.record_items[i];
                     r['qty_price'] = r.quantity * r.unit_price;
-                    this.sub_total += r['qty_price'];
+                    vm.sub_total += r['qty_price'];
                 }
-                this.tax = this.sub_total * (parseFloat(this.record_tax.percentage)/100);
-                this.total = this.sub_total + this.tax;
+                vm.tax = vm.sub_total * (parseFloat(vm.record_tax.percentage)/100);
+                vm.total = vm.sub_total + vm.tax;
             },
 
             /**

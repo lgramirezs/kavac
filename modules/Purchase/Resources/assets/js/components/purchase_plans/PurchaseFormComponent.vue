@@ -2,7 +2,7 @@
     <div class="form-horizontal">
         <div class="card-body">
             
-            <purchase-show-errors refs="PurchaseFormComponent" />
+            <purchase-show-errors ref="purchaseShowError" />
 
             <div class="row">
                 <div class="col-3">
@@ -92,14 +92,15 @@
         },
         methods:{
             reset(){
-                this.record = {
+                const vm = this;
+                vm.record = {
                     end_date:'',
                     init_date:'',
                     purchase_type_id:'',
                     purchase_processes_id:'',
                     user_id:'',
                 };
-                this.$refs.PurchaseFormComponent.reset();
+                vm.$refs.purchaseShowError.reset();
             },
 
             createRecord(){
@@ -115,7 +116,6 @@
                         }, 2000);
                     }).catch(error=>{
                         vm.loading = false;
-                        vm.$refs.PurchaseFormComponent.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -124,9 +124,10 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                     });
                 }else{
-                    axios.put('/purchase/purchase_plans/'+this.record_edit.id, vm.record).then(response=>{
+                    axios.put('/purchase/purchase_plans/'+vm.record_edit.id, vm.record).then(response=>{
                         vm.loading = false;
                         vm.showMessage('update');
                         setTimeout(function() {
@@ -134,7 +135,6 @@
                         }, 2000);
                     }).catch(error=>{
                         vm.loading = false;
-                        vm.$refs.PurchaseFormComponent.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -143,19 +143,21 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                     });
                 }
             },
             loadPurchaseProcess(){
-                for (var i = 0; i < this.purchase_types.length; i++) {
-                    if(this.purchase_types[i].id == this.record.purchase_type_id){
-                        if (this.record.purchase_processes_id != this.purchase_types[i].purchase_processes_id) {
-                            this.record.purchase_processes_id = this.purchase_types[i].purchase_processes_id;
+                const vm = this;
+                for (var i = 0; i < vm.purchase_types.length; i++) {
+                    if(vm.purchase_types[i].id == vm.record.purchase_type_id){
+                        if (vm.record.purchase_processes_id != vm.purchase_types[i].purchase_processes_id) {
+                            vm.record.purchase_processes_id = vm.purchase_types[i].purchase_processes_id;
 
-                            this.disabledInputProcess = true;
+                            vm.disabledInputProcess = true;
 
-                            if (!this.purchase_types[i].purchase_processes_id) {
-                                this.disabledInputProcess = false;    
+                            if (!vm.purchase_types[i].purchase_processes_id) {
+                                vm.disabledInputProcess = false;    
                             }
                             break;
                         }

@@ -21,7 +21,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Componente para mostrar errores en el formulario -->
-                        <purchase-show-errors />
+                        <purchase-show-errors ref="purchaseShowError" />
 
                         <div class="row">
                             <div class="col-md-6">
@@ -156,6 +156,7 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }else if(vm.edit && vm.record.id){
@@ -175,6 +176,7 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }

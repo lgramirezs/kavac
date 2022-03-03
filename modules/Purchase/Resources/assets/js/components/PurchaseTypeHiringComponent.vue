@@ -149,14 +149,17 @@
              * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
              */
             reset() {
-                this.edit = false;
-                this.record = {
+                const vm = this;
+                vm.edit = false;
+                vm.record = {
                     id: '',
                     date: '',
                     purchase_type_operation: '',
                     ut: '',
                     active: false,
                 };
+                vm.errors = [];
+                vm.$refs.purchaseShowError.refresh();
             },
 
             createRecord(url){
@@ -179,7 +182,7 @@
                                 }
                             }
                         }
-                        this.$refs.purchaseShowError.refresh();
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }else if(vm.edit && vm.record.id){
@@ -198,7 +201,7 @@
                                 }
                             }
                         }
-                        this.$refs.purchaseShowError.refresh();
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }
@@ -209,16 +212,17 @@
             },
         },
         created() {
-            this.table_options.headings = {
+            const vm = this;
+            vm.table_options.headings = {
                 'date': 'Fecha',
                 'purchase_type_operation.name': 'Tipo',
                 'ut': 'Unidades tributarias',
                 'active': 'Estatus',
                 'id':'Acción'
             };
-            this.table_options.sortable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
-            this.table_options.filterable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
-            this.table_options.columnsClasses = {
+            vm.table_options.sortable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
+            vm.table_options.filterable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
+            vm.table_options.columnsClasses = {
                 'date': 'col-xs-2 text-center',
                 'purchase_type_operation.name': 'col-xs-4',
                 'ut': 'col-xs-3',
@@ -227,8 +231,9 @@
             };
         },
         mounted(){
+            const vm = this;
             axios.get('/purchase/get-type-operations').then(response=>{
-                this.type_operations = response.data.records;
+                vm.type_operations = response.data.records;
             });
         },
     };
