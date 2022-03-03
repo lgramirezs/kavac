@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group is-required">
+                                <div class="form-group">
                                     <label>Descripción:</label>
                                     <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
                                               title="Indique la descripción para el documento a solicitar"
