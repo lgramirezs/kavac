@@ -109,7 +109,7 @@ class PurchasePlanController extends Controller
 	 */
 	public function show($id)
 	{
-		return response()->json(['records' => PurchasePlan::with('purchaseType', 'purchaseProcess', 'document')->find($id)], 200);
+		return response()->json(['records' => PurchasePlan::with('purchaseType', 'purchaseProcess', 'document', 'user')->find($id)], 200);
 	}
 
 	/**

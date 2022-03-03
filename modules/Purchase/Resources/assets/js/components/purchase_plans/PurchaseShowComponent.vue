@@ -24,12 +24,12 @@
 						<hr>
 						<h6>INFORMACIÓN DEL PLAN DE COMPRA</h6>
 						<br>
-						<div class="row">
+						<div class="row" v-if="records.user">
 							<div class="col-3"><strong>Fecha de inicio:</strong> {{ format_date(records.init_date) }}</div>
 							<div class="col-3"><strong>Fecha de culminación:</strong> {{ format_date(records.end_date) }}</div>
 							<div class="col-3"><strong>Tipo de compra:</strong> {{ purchase_type }}</div>
 							<div class="col-3"><strong>Proceso de compra:</strong> {{ purchase_process }}</div>
-							<div class="col-3"><strong>Responsable:</strong> Empleado de nomina </div>
+							<div class="col-3"><strong>Responsable:</strong> {{ records.user.name }} </div>
 						</div>
 						<hr>
 						<h6 class="text-center text-info">DOCUMENTO DE PLAN DE COMPRAS</h6>
