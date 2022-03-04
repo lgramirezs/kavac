@@ -170,9 +170,9 @@ class PurchaseSupplierController extends Controller
      * Show the specified resource.
      * @return Renderable
      */
-    public function show()
+    public function show($id)
     {
-        //return view('purchase::show');
+        return response()->json(['records' => PurchaseSupplier::find($id)], 200);
     }
 
     /**

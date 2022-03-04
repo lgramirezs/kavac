@@ -50,6 +50,16 @@ Vue.component('purchase-suppliers-list', () => import(
 );
 
 /**
+ * Componente para la visualizacion proveedor
+ *
+ * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+ */
+Vue.component('purchase-suppliers-show', () => import(
+    /* webpackChunkName: "purchase-plan-show" */
+    './components/PurchaseSupplierShowComponent.vue')
+);
+
+/**
  * Componente para la gestión de procesos de compras
  */
 Vue.component('purchase-processes', () => import(
