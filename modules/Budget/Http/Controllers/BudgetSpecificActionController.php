@@ -275,7 +275,7 @@ class BudgetSpecificActionController extends Controller
     {
         /** @var array Arreglo con información de las acciones específicas */
         $data = [['id' => '', 'text' => 'Seleccione...']];
-
+        
         if ($type==="Project") {
             /** @var object Objeto con las acciones específicas asociadas a un proyecto */
             $specificActions = BudgetProject::find($id)->specificActions()->get();
@@ -287,7 +287,8 @@ class BudgetSpecificActionController extends Controller
         foreach ($specificActions as $specificAction) {
             /** @var object Objeto que determina si la acción específica ya fue formulada para el último presupuesto */
             $existsFormulation = BudgetSubSpecificFormulation::where([
-                'budget_specific_action_id' => $specificAction->id
+                'budget_specific_action_id' => $specificAction->id,
+                'assigned' => true
             ])->orderBy('year', 'desc')->first();
 
             if (!$existsFormulation) {
