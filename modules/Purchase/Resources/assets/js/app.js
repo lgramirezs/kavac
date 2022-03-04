@@ -55,7 +55,7 @@ Vue.component('purchase-suppliers-list', () => import(
  * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
  */
 Vue.component('purchase-suppliers-show', () => import(
-    /* webpackChunkName: "purchase-plan-show" */
+    /* webpackChunkName: "purchase-suppliers-show" */
     './components/PurchaseSupplierShowComponent.vue')
 );
 
@@ -95,6 +95,16 @@ Vue.component('purchase-requirements-form', () => import(
 Vue.component('purchase-requirements-show', () => import(
     /* webpackChunkName: "purchase-requirements-show" */
     './components/requirements/PurchaseShowComponent.vue')
+);
+
+/**
+ * Componente para registrar productos en el modulo de almacen
+ *
+ * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+ */
+Vue.component('purchase-warehouse-products', () => import(
+    /* webpackChunkName: "purchase-warehouse-products" */
+    './components/requirements/PurchaseWarehouseProductoComponent.vue')
 );
 
 /**
