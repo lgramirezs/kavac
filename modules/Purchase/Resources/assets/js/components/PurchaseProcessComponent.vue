@@ -22,17 +22,16 @@
                     <div class="modal-body">
 
                         <!-- Componente para mostrar errores en el formulario -->
-                        <purchase-show-errors />
+                        <purchase-show-errors ref="purchaseShowError" />
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">
                                         <div class="col-12 bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   name="exists" data-toggle="tooltip" data-on-label="SI"
-                                                   data-off-label="NO" title="Indique si el proceso existe"
-                                                   value="true" data-record="exists">
+                                            <input id='exists' data-on-label='SI' data-off-label='NO' name='exists'
+                                                   type='checkbox' class='form-control bootstrap-switch'
+                                                   v-model='exists'>
                                             ¿El proceso existe?
                                         </div>
                                     </label>
@@ -43,6 +42,7 @@
                                     <select2 :options="processes" @input="getListDocuments"
                                              v-model="record.id"></select2>
                                 </div>
+                                <br>
                             </div>
                         </div>
                         <div class="row" v-if="!exists">
@@ -140,7 +140,7 @@
                                 <p v-html="props.row.description"></p>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
-                                <button @click="loadDataUpdate(props.index, $event)"
+                                <button @click="loadDataUpdate(props.row, $event)"
                                         class="btn btn-warning btn-xs btn-icon btn-action"
                                         title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
@@ -243,12 +243,12 @@
                     console.log(error);
                 })
             },
-            loadDataUpdate(index, event) {
+            loadDataUpdate(data, event) {
                 let vm = this;
-                var list_documents = (vm.records[index - 1].list_documents !== null)
-                                     ? JSON.parse(vm.records[index - 1].list_documents) : [];
+                let list_documents = (data.list_documents !== null)
+                                     ? JSON.parse(data.list_documents) : [];
                 vm.errors = [];
-                vm.record = vm.records[index - 1];
+                vm.record = data;
                 vm.record.list_documents = list_documents;
 
                 /**
@@ -291,11 +291,7 @@
             };
         },
         mounted() {
-            let vm = this;
-            vm.switchHandler('exists');
-            $('input[name=exists].bootstrap-switch').on('switchChange.bootstrapSwitch', function() {
-                vm.exists = $(this).is(':checked');
-            });
+            // 
         }
     };
 </script>

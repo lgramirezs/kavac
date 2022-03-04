@@ -2,7 +2,7 @@
     <div class="form-horizontal">
         <div class="card-body">
             
-            <purchase-show-errors ref="PurchaseFormComponent" />
+            <purchase-show-errors ref="purchaseShowError" />
 
             <div class="row">
                 <div class="col-md-12">
@@ -24,6 +24,7 @@
                     <div class="form-group is-required">
                         <label class="control-label" for="institutions">Institución</label><br>
                         <select2 :options="institutions" id="institutions" v-model="record.institution_id"
+                                v-has-tooltip
                                 @input="getDepartments()"></select2>
                     </div>
                 </div>
@@ -48,25 +49,38 @@
                 <div class="col-6">
                     <div class="form-group is-required">
                         <label for="description">Descripción</label>
-                        <input type="text" id="description" v-model="record.description" class="form-control">
+                        <input type="text" id="description" v-model="record.description" title="Descripción del requerimiento" data-toggle="tooltip" v-has-tooltip class="form-control">
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row" v-if="record.institution_id">
                 <div class="col-12">
-                    <b>Ingrese los Productos a la solicitud</b>
+                    <b>
+                        Ingrese los Productos a la solicitud
+                        <i class="fa fa-plus-circle card-title cursor-pointer" title="Agregar nuevo producto" 
+                            v-has-tooltip data-toggle="tooltip" 
+                            @click="$refs.purchaseWareHouseProduct.addRecord('add_product', 'warehouse/products', $event)">
+                        </i>
+                        <purchase-warehouse-products id="helpWarehouseProducts" ref="purchaseWareHouseProduct"></purchase-warehouse-products>
+                    </b>
                 </div>
                 <div class="col-6">
                     <div class="form-group is-required">
-                        <label>Nombre del Producto</label>
+                        <label>
+                            Producto
+                        </label>
                         <select2 :options="products" v-model="product"></select2>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group">
+                    </div>
+                </div>
             </div>
-
-            <hr>
-            <v-client-table :columns="columns" :data="record_products" :options="table_options" class="row">
+            <hr v-if="record.institution_id">
+            <v-client-table :columns="columns" :data="record_products" :options="table_options" 
+                class="row" v-if="record.institution_id">
                 <div slot="measurement_unit" slot-scope="props" class="text-center">
                     <p v-if="props.row.warehouse_product && props.row.warehouse_product.measurement_unit && props.row.warehouse_product.measurement_unit.name">
                         {{ props.row.warehouse_product.measurement_unit.name }}
@@ -96,7 +110,7 @@
                     <div class="d-inline-flex">
                         <button @click="removeProduct(props.index, $event)" 
                                 class="btn btn-danger btn-xs btn-icon btn-action" 
-                                title="Eliminar registro" data-toggle="tooltip" 
+                                title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
                                 type="button">
                             <i class="fa fa-trash-o"></i>
                         </button>
@@ -213,7 +227,8 @@
         },
         methods:{
             reset(){
-                this.record = {
+                const vm = this;
+                vm.record = {
                     institution_id            : '',
                     contracting_department_id : '',
                     user_department_id        : '',
@@ -222,7 +237,8 @@
                     description               : '',
                     products                  : [],
                 };
-                this.$refs.PurchaseFormComponent.reset();
+                vm.errors = [];
+                vm.$refs.purchaseShowError.reset();
             },
             createRecord(){
                 const vm = this;
@@ -237,8 +253,6 @@
                             location.href = '/purchase/requirements';
                         }, 2000);
                     }).catch(error=>{
-                        vm.loading = false;
-                        this.$refs.PurchaseFormComponent.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -247,6 +261,8 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
+                        vm.loading = false;
                     });
                 }else{
                     axios.post('/purchase/requirements',vm.record).then(response=>{
@@ -256,8 +272,6 @@
                             location.href = '/purchase/requirements';
                         }, 2000);
                     }).catch(error=>{
-                        vm.loading = false;
-                        this.$refs.PurchaseFormComponent.reset();
                         vm.errors = [];
                         if (typeof(error.response) != 'undefined') {
                             for (var index in error.response.data.errors) {
@@ -266,6 +280,8 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
+                        vm.loading = false;
                     });
                 }
             },

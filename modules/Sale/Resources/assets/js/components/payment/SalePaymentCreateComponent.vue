@@ -129,6 +129,12 @@
                         title ="Borrar datos del formulario">
                         <i class="fa fa-eraser"></i>
                 </button>
+                <button type="button"
+                    class="btn btn-warning btn-icon btn-round btn-modal-close"
+                    data-dismiss="modal"
+                    title="Cancelar y regresar">
+                    <i class="fa fa-ban"></i>
+                </button>
                 <button type="button"  @click="createRecord('sale/payment/store')"
                         class="btn btn-success btn-icon btn-round btn-modal-save"
                         title="Guardar registro">

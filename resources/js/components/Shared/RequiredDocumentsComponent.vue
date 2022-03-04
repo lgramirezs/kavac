@@ -21,9 +21,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" v-if="errors.length > 0">
-                            <ul>
-                                <li v-for="error in errors">{{ error }}</li>
-                            </ul>
+                            <div class="container">
+                                <div class="alert-icon">
+                                    <i class="now-ui-icons objects_support-17"></i>
+                                </div>
+                                <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                                <ul>
+                                    <li v-for="error in errors">{{ error }}</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -36,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group is-required">
+                                <div class="form-group">
                                     <label>Descripción:</label>
                                     <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
                                               title="Indique la descripción para el documento a solicitar"
@@ -53,6 +59,9 @@
                                     class="btn btn-default btn-sm btn-round btn-modal-close">
                                 Cerrar
                             </button>
+                            <button type="button" @click="reset()" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear">
+                                Cancelar
+                            </button>
                             <button type="button" @click="createRecord('required-documents/' + model + '/' + module)"
                                     class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
@@ -63,12 +72,12 @@
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
-                                        class="btn btn-warning btn-xs btn-icon btn-round"
+                                        class="btn btn-warning btn-xs btn-icon"
                                         title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, '/required-documents/' + model + '/' + module)"
-                                        class="btn btn-danger btn-xs btn-icon btn-round"
+                                        class="btn btn-danger btn-xs btn-icon"
                                         title="Eliminar registro" data-toggle="tooltip"
                                         type="button">
                                     <i class="fa fa-trash-o"></i>

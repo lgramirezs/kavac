@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<!-- <purchase-show-errors ref="PurchaseOrderFormComponent" /> -->
+		<!-- <purchase-show-errors ref="purchaseShowError" /> -->
 
 		<div class="row">
 			<div class="col-3">
@@ -372,17 +372,18 @@ export default{
 	methods:{
 
 		reset(){
-			this.record_items             = [];
-			this.base_budget_list         = [];
-			this.base_budget_list_deleted = [];
-			this.record = {
+			const vm = this;
+			vm.record_items             = [];
+			vm.base_budget_list         = [];
+			vm.base_budget_list_deleted = [];
+			vm.record = {
 				purchase_supplier_id:'',
 				currency:'',
 			};
-			this.sub_total = 0;
-			this.tax_value = 0;
-			this.total     = 0;
-			this.$refs.PurchaseOrderFormComponent.reset();
+			vm.sub_total = 0;
+			vm.tax_value = 0;
+			vm.total     = 0;
+			// this.$refs.purchaseShowError.reset();
 		},
 
 		uploadFile(inputID, e){
@@ -418,72 +419,74 @@ export default{
 		},
 
 		recordCheck(record){
-			axios.get('/purchase/get-convertion/'+this.currency_id+'/'+record.currency_id)
+			const vm = this;
+			axios.get('/purchase/get-convertion/'+vm.currency_id+'/'+record.currency_id)
 			.then(response=>{
-				if (record.currency_id != this.currency_id && !response.data.record) {
+				if (record.currency_id != vm.currency_id && !response.data.record) {
 
 					if ($('#requirement_check_'+record.id+' input:checkbox').prop('checked')) {
-						this.showMessage(
+						vm.showMessage(
 							'custom', 'Error', 'danger', 'screen-error',
-							"Imposible realizar la conversión de "+this.record.currency.name
+							"Imposible realizar la conversión de "+vm.record.currency.name
 							+" a "+record.currency.name
 							+". Revisar conversiones configuradas en el sistema."
 						);
 						$('#requirement_check_'+record.id+' input:checkbox').prop('checked',false);
 					}
 				}else{
-					this.convertion_list.push(response.data.record);
-					this.addToList(record);
+					vm.convertion_list.push(response.data.record);
+					vm.addToList(record);
 				}
 			});
 		},
 
 		addToList:function(record, prices) {
-			var pos = this.indexOf(this.base_budget_list, record.id);
-				// se agregan a la lista a guardar
+			const vm = this;
+			var pos = vm.indexOf(vm.base_budget_list, record.id);
+			// se agregan a la lista a guardar
+			if (pos == -1) {
+				for (var i = 0; i < record.relatable.length; i++) {
+					record.relatable[i].name = record.relatable[i].purchase_requirement_item.name;
+					record.relatable[i].quantity = record.relatable[i].purchase_requirement_item.quantity;
+
+					if (record.relatable[i].purchase_requirement_item.measurement_unit) {
+						record.relatable[i].measurement_unit_acronym =
+								record.relatable[i].purchase_requirement_item.measurement_unit.acronym;
+					}
+
+					record.relatable[i].requirement_code = record.relatable[i].purchase_requirement_item.purchase_requirement.code;
+					record.relatable[i].unit_price = (prices)?prices[record.relatable[i].id]:0;
+				}
+
+				// saca de la lista de registros eliminar
+				pos = vm.indexOf(vm.base_budget_list_deleted, record.id);
+				if (pos != -1) {
+					vm.base_budget_list_deleted.splice(pos,1);
+				}
+
+				vm.base_budget_list.push(record);
+				vm.record_items = vm.record_items.concat(record.relatable);
+			}else{
+				// se sacan de la lista a guardar
+				var record_copy = vm.base_budget_list.splice(pos,1)[0];
+				var pos = vm.indexOf(vm.base_budget_list_deleted, record_copy.id);
+
+				// agrega a la lista de registros a eliminar
 				if (pos == -1) {
-					for (var i = 0; i < record.relatable.length; i++) {
-						record.relatable[i].name = record.relatable[i].purchase_requirement_item.name;
-						record.relatable[i].quantity = record.relatable[i].purchase_requirement_item.quantity;
+					vm.base_budget_list_deleted.push(record_copy);
+				}
 
-						if (record.relatable[i].purchase_requirement_item.measurement_unit) {
-							record.relatable[i].measurement_unit_acronym =
-									record.relatable[i].purchase_requirement_item.measurement_unit.acronym;
-						}
-
-						record.relatable[i].requirement_code = record.relatable[i].purchase_requirement_item.purchase_requirement.code;
-						record.relatable[i].unit_price = (prices)?prices[record.relatable[i].id]:0;
-					}
-
-					// saca de la lista de registros eliminar
-					pos = this.indexOf(this.base_budget_list_deleted, record.id);
-					if (pos != -1) {
-						this.base_budget_list_deleted.splice(pos,1);
-					}
-
-					this.base_budget_list.push(record);
-					this.record_items = this.record_items.concat(record.relatable);
-				}else{
-					// se sacan de la lista a guardar
-					var record_copy = this.base_budget_list.splice(pos,1)[0];
-					var pos = this.indexOf(this.base_budget_list_deleted, record_copy.id);
-
-					// agrega a la lista de registros a eliminar
-					if (pos == -1) {
-						this.base_budget_list_deleted.push(record_copy);
-					}
-
-					for (var i = 0; i < record.relatable.length; i++) {
-						for (var x = 0; x < this.record_items.length; x++) {
-							if (this.record_items[x].id == record.relatable[i].id) {
-								delete this.record_items[x].qty_price;
-								this.record_items.splice(x,1);
-								break;
-							}
+				for (var i = 0; i < record.relatable.length; i++) {
+					for (var x = 0; x < vm.record_items.length; x++) {
+						if (vm.record_items[x].id == record.relatable[i].id) {
+							delete vm.record_items[x].qty_price;
+							vm.record_items.splice(x,1);
+							break;
 						}
 					}
 				}
-				this.CalculateTot();
+			}
+			vm.CalculateTot();
 		},
 
 	   /**
@@ -536,7 +539,7 @@ export default{
 			// }
 
 			/** Se obtiene y da formato para enviar el archivo a la ruta */
-			let vm = this;
+			const vm = this;
 			var formData = new FormData();
 			
 			if (vm.files['Acta_de_inicio']) {
@@ -563,13 +566,13 @@ export default{
 				);
 			}
 
-			formData.append("purchase_supplier_id", this.purchase_supplier_id);
-			formData.append("currency_id", this.currency_id);
-			formData.append("subtotal", this.sub_total);
-			formData.append("base_budget_list", JSON.stringify(this.base_budget_list) );
+			formData.append("purchase_supplier_id", vm.purchase_supplier_id);
+			formData.append("currency_id", vm.currency_id);
+			formData.append("subtotal", vm.sub_total);
+			formData.append("base_budget_list", JSON.stringify(vm.base_budget_list) );
 			vm.loading = true;
 
-			if (!this.record_edit) {
+			if (!vm.record_edit) {
 				axios.post('/purchase/quotation', formData, {
 					headers: {
 						'Content-Type': 'multipart/form-data'
@@ -577,7 +580,7 @@ export default{
 				}).then(response => {
 					vm.showMessage('store');
 					vm.loading = false;
-					location.href = this.route_list;
+					location.href = vm.route_list;
 				}).catch(error => {
 					if (typeof(error.response) !== "undefined") {
 						if (error.response.status == 422 || error.response.status == 500) {
@@ -591,16 +594,16 @@ export default{
 					vm.loading = false;
 				});
 			}else{
-				formData.append("list_to_delete", JSON.stringify(this.base_budget_list_deleted));
+				formData.append("list_to_delete", JSON.stringify(vm.base_budget_list_deleted));
 
-				axios.post('/purchase/quotation/'+this.record_edit.id, formData, {
+				axios.post('/purchase/quotation/'+vm.record_edit.id, formData, {
 					headers: {
 						'Content-Type': 'multipart/form-data'
 					}
 				}).then(response => {
 					vm.showMessage('update');
 					vm.loading = false;
-					location.href = this.route_list;
+					location.href = vm.route_list;
 
 				}).catch(error => {
 					if (typeof(error.response) !== "undefined") {
@@ -619,24 +622,25 @@ export default{
 	},
 	watch:{
 		currency_id:function(res, ant){
-			if (res != ant && !this.load_data_edit) {
-				this.record_items             = [];
+			const vm = this;
+			if (res != ant && !vm.load_data_edit) {
+				vm.record_items             = [];
 
-				this.base_budget_list_deleted = [];
-				if (this.base_budget_list.length > 0) {
-					this.base_budget_list_deleted = this.base_budget_list;
+				vm.base_budget_list_deleted = [];
+				if (vm.base_budget_list.length > 0) {
+					vm.base_budget_list_deleted = vm.base_budget_list;
 				}
-				this.base_budget_list         = [];
+				vm.base_budget_list         = [];
 
-				this.sub_total                = 0;
-				this.tax_value                = 0;
-				this.total                    = 0;
+				vm.sub_total                = 0;
+				vm.tax_value                = 0;
+				vm.total                    = 0;
 			}else{
-				this.load_data_edit = false;
+				vm.load_data_edit = false;
 			}
 			if (res) {
 				axios.get('/currencies/info/'+res).then(response=>{
-					this.record.currency = response.data.currency;
+					vm.record.currency = response.data.currency;
 				})
 			}
 		},

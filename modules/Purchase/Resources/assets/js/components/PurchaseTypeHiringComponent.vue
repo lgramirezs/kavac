@@ -4,7 +4,9 @@
            href="#" title="Registros de tipos de compras"
            data-toggle="tooltip"
            @click="addRecord('add_purchase_type_hiring', '/purchase/type_hiring', $event)">
-            <div class="mdi-margin"><i class="mdi mdi-handshake ico-3x mr-1"></i></div>
+            <div class="mt-n4">
+                <i class="mdi mdi-handshake ico-3x"></i>
+            </div>
             <span>Tipos de<br>contratación</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_purchase_type_hiring">
@@ -20,7 +22,7 @@
                         </h6>
                     </div>
                     <div class="modal-body">
-                        <purchase-show-errors />
+                        <purchase-show-errors ref="purchaseShowError" />
 
                         <div class="row">
                             <div class="col-md-6">
@@ -147,42 +149,47 @@
              * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
              */
             reset() {
-                this.edit = false;
-                this.record = {
+                const vm = this;
+                vm.edit = false;
+                vm.record = {
                     id: '',
                     date: '',
                     purchase_type_operation: '',
                     ut: '',
                     active: false,
                 };
+                vm.errors = [];
+                vm.$refs.purchaseShowError.refresh();
             },
 
             createRecord(url){
-                this.record.active = $('#active').prop('checked');
+                const vm = this;
+                vm.record.active = $('#active').prop('checked');
                 vm.loading = true;
-                if (!this.edit) {
-                    axios.post(url,this.record).then(response=>{
-                        this.records = response.data.records;
-                        this.showMessage("store");
-                        this.reset();
+                if (!vm.edit) {
+                    axios.post(url,vm.record).then(response=>{
+                        vm.records = response.data.records;
+                        vm.showMessage("store");
+                        vm.reset();
                         vm.loading = false;
                     }).catch(error => {
                         vm.errors = [];
 
-                        if (typeof(error.response) !="undefined") {
+                        if (typeof(error.response) != "undefined") {
                             for (var index in error.response.data.errors) {
                                 if (error.response.data.errors[index]) {
                                     vm.errors.push(error.response.data.errors[index][0]);
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
-                }else if(this.edit && this.record.id){
-                    axios.put(url+'/'+this.record.id, this.record).then(response=>{
-                        this.records = response.data.records;
-                        this.showMessage("update");
-                        this.reset();
+                }else if(vm.edit && vm.record.id){
+                    axios.put(url+'/'+vm.record.id, vm.record).then(response=>{
+                        vm.records = response.data.records;
+                        vm.showMessage("update");
+                        vm.reset();
                         vm.loading = false;
                     }).catch(error => {
                         vm.errors = [];
@@ -194,6 +201,7 @@
                                 }
                             }
                         }
+                        vm.$refs.purchaseShowError.refresh();
                         vm.loading = false;
                     });
                 }
@@ -204,16 +212,17 @@
             },
         },
         created() {
-            this.table_options.headings = {
+            const vm = this;
+            vm.table_options.headings = {
                 'date': 'Fecha',
                 'purchase_type_operation.name': 'Tipo',
                 'ut': 'Unidades tributarias',
                 'active': 'Estatus',
                 'id':'Acción'
             };
-            this.table_options.sortable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
-            this.table_options.filterable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
-            this.table_options.columnsClasses = {
+            vm.table_options.sortable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
+            vm.table_options.filterable = ['date', 'purchase_type_operation.name', 'ut', 'active'];
+            vm.table_options.columnsClasses = {
                 'date': 'col-xs-2 text-center',
                 'purchase_type_operation.name': 'col-xs-4',
                 'ut': 'col-xs-3',
@@ -222,19 +231,10 @@
             };
         },
         mounted(){
+            const vm = this;
             axios.get('/purchase/get-type-operations').then(response=>{
-                this.type_operations = response.data.records;
+                vm.type_operations = response.data.records;
             });
         },
     };
 </script>
-
-<style>
-    .mdi-margin{
-        margin-top: -1rem;
-        margin-bottom: -0.9rem;
-    }
-    .mdi-margin::before{
-        display: none;
-    }
-</style>

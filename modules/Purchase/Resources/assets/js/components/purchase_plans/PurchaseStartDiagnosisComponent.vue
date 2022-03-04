@@ -21,15 +21,14 @@
                     </div>
                     <!-- Fromulario -->
                     <div class="modal-body">
-                        <hr>
-                        <h6>INFORMACIÓN DEL PLAN DE COMPRA</h6>
-                        <br>
-                        <div class="row">
+                        <purchase-show-errors ref="purchaseShowError" />
+                        <h6 class="mt-3 mb-4">INFORMACIÓN DEL PLAN DE COMPRA</h6>
+                        <div class="row" v-if="records.user">
                             <div class="col-3"><strong>Fecha de inicio:</strong> {{ format_date(records.init_date) }}</div>
                             <div class="col-3"><strong>Fecha de culminación:</strong> {{ format_date(records.end_date) }}</div>
                             <div class="col-3"><strong>Tipo de compra:</strong> {{ purchase_type }}</div>
                             <div class="col-3"><strong>Proceso de compra:</strong> {{ purchase_process }}</div>
-                            <div class="col-3"><strong>Responsable:</strong> Empleado de nomina </div>
+                            <div class="col-3"><strong>Responsable:</strong> {{ records.user.name }} </div>
                         </div>
                         <hr>
                         <h6 class="text-center text-info">DOCUMENTO A CONSIGNAR</h6>
@@ -87,7 +86,7 @@
 								Cerrar
 							</button>
 							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()">
+									@click="reset()" data-dismiss="modal">
 								Cancelar
 							</button>
 							<button type="button" @click="createRecord('purchase/purchase_plans/start_diagnosis')" 
@@ -136,7 +135,9 @@ export default{
          * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
         reset() {
-            // 
+            const vm = this;
+            vm.errors = [];
+            vm.$refs.purchaseShowError.refresh();
         },
 
         uploadFile(e){
@@ -160,14 +161,23 @@ export default{
         },
 
         createRecord(){
-            let vm = this;
+            const vm = this;
             // if (document.querySelector(`#${input_id}`)) {
                 vm.loading = true;
                 // vm.files[input_id] = document.querySelector(`#${input_id}`).files[0];
 
                 /** Se obtiene y da formato para enviar el archivo a la ruta */
                 var formData = new FormData();
-                
+
+                /** Se verifica que el usuario alla cargado los documentos a consignar */
+                if (!vm.files) {
+                    vm.errors = [];
+                    vm.errors.push('Debe cargar los documentos a consignar.');
+                    vm.$refs.purchaseShowError.refresh();
+                    vm.loading = false;
+                    return;
+                };
+
                 formData.append('file', vm.files, vm.files.name);
                 formData.append("purchase_plan_id", vm.records.id);
 

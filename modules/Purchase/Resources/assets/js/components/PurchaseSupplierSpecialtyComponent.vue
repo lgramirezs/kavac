@@ -22,7 +22,7 @@
 					<div class="modal-body">
 
 						<!-- Componente para mostrar errores en el formulario -->
-						<purchase-show-errors />
+						<purchase-show-errors ref="purchaseShowError" />
 
 						<div class="row">
 							<div class="col-md-12">

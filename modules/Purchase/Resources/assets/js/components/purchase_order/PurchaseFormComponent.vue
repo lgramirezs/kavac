@@ -1,6 +1,6 @@
 <template>
     <section>
-        <purchase-show-errors refs="PurchaseOrderFormComponent" />
+        <purchase-show-errors ref="purchaseShowError" />
         
         <div class="row">
             <div class="col-3">
@@ -352,17 +352,19 @@ export default{
     methods:{
 
         reset(){
-            this.record_items             = [];
-            this.requirement_list         = [];
-            this.requirement_list_deleted = [];
-            this.record = {
+            const vm = this;
+            vm.record_items             = [];
+            vm.requirement_list         = [];
+            vm.requirement_list_deleted = [];
+            vm.record = {
                 purchase_supplier_id:'',
                 currency:'',
             };
-            this.sub_total = 0;
-            this.tax_value = 0;
-            this.total     = 0;
-            this.$refs.PurchaseOrderFormComponent.reset();
+            vm.sub_total = 0;
+            vm.tax_value = 0;
+            vm.total     = 0;
+            vm.errors    = [];
+            vm.$refs.purchaseShowError.reset();
         },
 
         addDecimals(value){
@@ -379,28 +381,30 @@ export default{
         },
 
         requirementCheck(record){
-            axios.get('/purchase/get-convertion/'+this.currency_id+'/'+record.purchase_base_budget.currency_id)
+            const vm = this;
+            axios.get('/purchase/get-convertion/'+vm.currency_id+'/'+record.purchase_base_budget.currency_id)
             .then(response=>{
-                if (record.purchase_base_budget.currency_id != this.currency_id && !response.data.record) {
+                if (record.purchase_base_budget.currency_id != vm.currency_id && !response.data.record) {
 
                     if ($('#requirement_check_'+record.id+' input:checkbox').prop('checked')) {
-                        this.showMessage(
+                        vm.showMessage(
                             'custom', 'Error', 'danger', 'screen-error',
-                            "Imposible realizar la conversión de "+this.record.currency.name
+                            "Imposible realizar la conversión de "+vm.record.currency.name
                             +" a "+record.purchase_base_budget.currency.name
                             +". Revisar conversiones configuradas en el sistema."
                         );
                         $('#requirement_check_'+record.id+' input:checkbox').prop('checked',false);
                     }
                 }else{
-                    this.convertion_list.push(response.data.record);
-                    this.addToList(record);
+                    vm.convertion_list.push(response.data.record);
+                    vm.addToList(record);
                 }
             });
         },
 
         addToList:function(record, prices) {
-            var pos = this.indexOf(this.requirement_list, record.id);
+            const vm = this;
+            var pos = vm.indexOf(vm.requirement_list, record.id);
                 // se agregan a la lista a guardar
                 if (pos == -1) {
                     for (var i = 0; i < record.purchase_requirement_items.length; i++) {
@@ -409,34 +413,34 @@ export default{
                     }
 
                     // saca de la lista de registros eliminar
-                    pos = this.indexOf(this.requirement_list_deleted, record.id);
+                    pos = vm.indexOf(vm.requirement_list_deleted, record.id);
                     if (pos != -1) {
-                        this.requirement_list_deleted.splice(pos,1);
+                        vm.requirement_list_deleted.splice(pos,1);
                     }
 
-                    this.requirement_list.push(record);
-                    this.record_items = this.record_items.concat(record.purchase_requirement_items);
+                    vm.requirement_list.push(record);
+                    vm.record_items = vm.record_items.concat(record.purchase_requirement_items);
                 }else{
                     // se sacan de la lista a guardar
-                    var record_copy = this.requirement_list.splice(pos,1)[0];
-                    var pos = this.indexOf(this.requirement_list_deleted, record_copy.id); 
+                    var record_copy = vm.requirement_list.splice(pos,1)[0];
+                    var pos = vm.indexOf(vm.requirement_list_deleted, record_copy.id); 
 
                     // agrega a la lista de registros a eliminar
                     if (pos == -1) {
-                        this.requirement_list_deleted.push(record_copy);
+                        vm.requirement_list_deleted.push(record_copy);
                     }
 
                     for (var i = 0; i < record.purchase_requirement_items.length; i++) {
-                        for (var x = 0; x < this.record_items.length; x++) {
-                            if (this.record_items[x].id == record.purchase_requirement_items[i].id) {
-                                delete this.record_items[x].qty_price;
-                                this.record_items.splice(x,1);
+                        for (var x = 0; x < vm.record_items.length; x++) {
+                            if (vm.record_items[x].id == record.purchase_requirement_items[i].id) {
+                                delete vm.record_items[x].qty_price;
+                                vm.record_items.splice(x,1);
                                 break;
                             }
                         }
                     }
                 }
-                this.CalculateTot();
+                vm.CalculateTot();
         },
 
        /**
@@ -471,9 +475,10 @@ export default{
         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
         */
         cualculateLimitDecimal(){
+            const vm = this;
             var res = "0.";
-            if (this.currency) {
-                for (var i = 0; i < this.currency.decimal_places-1; i++) {
+            if (vm.currency) {
+                for (var i = 0; i < vm.currency.decimal_places-1; i++) {
                     res += "0";
                 }
             }
@@ -489,17 +494,17 @@ export default{
             // }
 
             /** Se obtiene y da formato para enviar el archivo a la ruta */
-            let vm = this;
+            const vm = this;
             var formData = new FormData();
             // var inputFile = document.querySelector('#'+id);
             // formData.append("file", inputFile.files[0]);
-            formData.append("purchase_supplier_id", this.purchase_supplier_id);
-            formData.append("currency_id", this.currency_id);
-            formData.append("subtotal", this.sub_total);
-            formData.append("requirement_list", JSON.stringify(this.requirement_list) );
+            formData.append("purchase_supplier_id", vm.purchase_supplier_id);
+            formData.append("currency_id", vm.currency_id);
+            formData.append("subtotal", vm.sub_total);
+            formData.append("requirement_list", JSON.stringify(vm.requirement_list) );
             vm.loading = true;
              
-            if (!this.record_edit) {
+            if (!vm.record_edit) {
                 axios.post('/purchase/purchase_order', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -507,7 +512,7 @@ export default{
                 }).then(response => {
                     vm.showMessage('store');
                     vm.loading = false;
-                    location.href = this.route_list;
+                    location.href = vm.route_list;
                 }).catch(error => {
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 422 || error.response.status == 500) {
@@ -518,19 +523,20 @@ export default{
                             }
                         }
                     }
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                 });
             }else{
-                formData.append("list_to_delete", JSON.stringify(this.requirement_list_deleted));
+                formData.append("list_to_delete", JSON.stringify(vm.requirement_list_deleted));
 
-                axios.post('/purchase/purchase_order/'+this.record_edit.id, formData, {
+                axios.post('/purchase/purchase_order/'+vm.record_edit.id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
                     vm.showMessage('update');
                     vm.loading = false;
-                    location.href = this.route_list;
+                    location.href = vm.route_list;
 
                 }).catch(error => {
                     if (typeof(error.response) !== "undefined") {
@@ -542,6 +548,7 @@ export default{
                             }
                         }
                     }
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                 });
             }
@@ -549,32 +556,34 @@ export default{
     },
     watch:{
         currency_id:function(res, ant){
-            if (res != ant && !this.load_data_edit) {
-                this.record_items             = [];
+            const vm = this;
+            if (res != ant && !vm.load_data_edit) {
+                vm.record_items             = [];
 
-                this.requirement_list_deleted = [];
-                if (this.requirement_list.length > 0) {
-                    this.requirement_list_deleted = this.requirement_list;    
+                vm.requirement_list_deleted = [];
+                if (vm.requirement_list.length > 0) {
+                    vm.requirement_list_deleted = vm.requirement_list;    
                 }
-                this.requirement_list         = [];
+                vm.requirement_list         = [];
 
-                this.sub_total                = 0;
-                this.tax_value                = 0;
-                this.total                    = 0;
+                vm.sub_total                = 0;
+                vm.tax_value                = 0;
+                vm.total                    = 0;
             }else{
-                this.load_data_edit = false;
+                vm.load_data_edit = false;
             }
             if (res) {
                 axios.get('/currencies/info/'+res).then(response=>{
-                    this.record.currency = response.data.currency;
+                    vm.record.currency = response.data.currency;
                 })
             }
         },
         purchase_supplier_id:function(res) {
+            const vm = this;
             if (res) {
                 axios.get('/purchase/get-purchase-supplier-object/'+res).then(response=>{
-                    this.record.purchase_supplier_object = response.data;
-                    this.record.purchase_supplier_id = res;
+                    vm.record.purchase_supplier_object = response.data;
+                    vm.record.purchase_supplier_id = res;
                 })
             }
         },

@@ -25,14 +25,14 @@
                 </a>               
                 <button type="button" data-toggle="tooltip"
                         data-placement="bottom"
-                        class="btn btn-primary btn-xs btn-icon btn-action"
+                        class="btn btn-success btn-xs btn-icon btn-action"
                         title="Aprobar."
                         v-on:click="approvedPayment(props.index,'/sale/payment/approvedPayment')">
-                    <i class="icofont icofont-check-circled ico-3x"></i>
+                    <i class="fa fa-check"></i>
                 </button> 
                 <button type="button" data-toggle="tooltip"
                         data-placement="bottom"
-                        class="btn btn-primary btn-xs btn-icon btn-action"
+                        class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Rechazar."
                         v-on:click="refusePayment(props.index,'/sale/payment/refusePayment')">
                     <i class="fa fa-ban"></i>
