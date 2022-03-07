@@ -163,6 +163,9 @@
                 }).then(response => {
                     if (response.data.result && typeof(response.data.records) !== "undefined") {
                         vm.records = response.data.records;
+                        vm.records.sort(
+                            (a,b) => (a.deleted_at > b.deleted_at) ? 1 : ((b.deleted_at > a.deleted_at) ? -1 : 0)
+                        );
                     }
                 }).catch(error => {
                     console.error(error);
@@ -182,8 +185,8 @@
             vm.table_options.filterable = ['deleted_at', 'module', 'registers'];
             vm.table_options.columnsClasses = {
                 'deleted_at': 'col-md-1',
-                'module': 'col-md-4',
-                'registers': 'col-md-6',
+                'module': 'col-md-3',
+                'registers': 'col-md-7',
                 'id': 'col-md-1'
             };
         },
