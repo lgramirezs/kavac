@@ -298,7 +298,7 @@ Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en 
 
 Puedes, de igual forma asignarle una dirección IP o dominio a este comando y un puerto en donde atenderá las peticiones para lo cual se puede agregar las opciones --host y/o --port, un ejemplo de su uso sería:
 
-    $ php artisan serve --port 192.168.1.1 --port 9000
+    $ php artisan serve --host=192.168.1.1 --port 9000
 
 ## Procesamiento de colas
 
