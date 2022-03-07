@@ -42,7 +42,7 @@ class PayrollEmployment extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'active', 'start_date_apn', 'start_date', 'end_date', 'institution_email', 'function_description',
+        'active', 'years_apn', 'start_date', 'end_date', 'institution_email', 'function_description',
         'payroll_inactivity_type_id', 'payroll_position_type_id', 'payroll_position_id', 'department_id',
         'payroll_staff_type_id', 'payroll_contract_type_id', 'payroll_staff_id'
     ];
@@ -133,5 +133,16 @@ class PayrollEmployment extends Model implements Auditable
     public function payrollContractType()
     {
         return $this->belongsTo(PayrollContractType::class);
+    }
+
+    /**
+     * Método que obtiene los trabajos anteriores asociados al trabajador
+     *
+     * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function payrollPreviousJob()
+    {
+        return $this->hasMany(PayrollPreviousJob::class);
     }
 }

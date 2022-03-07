@@ -230,7 +230,7 @@
                              v-if="record.assign_to">
                              <div class="col-md-4"
                                   v-for="field in record.assign_to" :key="field['id']">
-                                <div v-if="field['type'] && assign_options[field['id']] && record.assign_options[field['id']]">
+                                <div v-if="field['type'] && record.assign_options[field['id']]">
                                     <!-- registro de opciones a asignar -->
                                     <div class="form-group is-required"
                                         v-if="field['type'] == 'list'">
@@ -742,7 +742,6 @@
                             vm.record.assign_options[field['id']] = [];
                         }
                         if (typeof(vm.assign_options[field['id']] ) == 'undefined') {
-                            vm.assign_options[field['id']] = [];
                             axios.get('payroll/get-concept-assign-options/' + field['id']).then(response => {
                                 vm.assign_options_lists = response.data;
                             });
