@@ -168,7 +168,7 @@
                                 </span>
                             </div>
                             <div slot="address" slot-scope="props">
-                                <span v-html="props.row.warehouse.address"></span>
+                                <span v-html="prepareText(props.row.warehouse.address)"></span>
                             </div>
                             <div slot="institution" slot-scope="props">
                                 <span>
@@ -288,6 +288,10 @@
                             : false;
                     }
                 });
+            },
+            prepareText(text) {
+                return text.substr(3, text.length-4); 
+
             },
             /**
              * Método que obtiene actualiza la institución que gestiona un almacén

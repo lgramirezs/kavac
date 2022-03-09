@@ -168,7 +168,7 @@
                                 </div>
                             </div>
                             <div slot="description" slot-scope="props">
-                                <span v-html="props.row.description"></span>
+                                <span v-html="prepareText(props.row.description)"></span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <div class="d-inline-flex">
@@ -254,6 +254,10 @@
                 axios.get('/warehouse/get-measurement-units').then(response => {
                     vm.measurement_units = response.data;
                 });
+            },
+            prepareText(text) {
+                return text.substr(3, text.length-4); 
+
             },
             exportData() {
                 //instrucciones para exportar registros

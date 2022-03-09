@@ -55,7 +55,7 @@
 			                    </div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group is-required">
+								<div class="form-group">
 									<label>Fin del cierre de almacén:</label>
 									<input type="date" placeholder="Fin del cierre del almacén" data-toggle="tooltip" :min="record.initial_date"
 													   title="Indique la fecha en que culmina el cierre del almacén (requerido)"

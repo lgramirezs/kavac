@@ -65,10 +65,15 @@
                 <div class="col-md-3" id="helpProductValue">
                     <div class="form-group is-required">
                         <label>Valor:</label>
-                        <input type="number" min="0" placeholder="Valor por unidad del insumo"
-                               title="Valor por unidad del insumo" data-toggle="tooltip" step=".01"
-                               class="form-control input-sm"
-                               v-model="warehouse_inventory_product.unit_value">
+                        <input  type="text" data-toggle="tooltip"
+                                title="Valor por unidad del insumo"
+                                class="form-control input-sm"
+                                v-input-mask data-inputmask="
+                                    'alias': 'numeric',
+                                    'allowMinus': 'false',
+                                    'digits': 2"
+                                v-model="warehouse_inventory_product.unit_value">
+
                     </div>
                 </div>
                 <div class="col-md-3" id="helpProductCurrency">
@@ -142,7 +147,7 @@
         <div class="card-footer text-right">
             <div class="row">
                 <div class="col-md-3 offset-md-9" id="helpParamButtons">
-                    <button type="button" @click="reset()"
+                    <button type="button" @click="reset()" data-toggle="tooltip" 
                             class="btn btn-default btn-icon btn-round"
                             title ="Borrar datos del formulario">
                             <i class="fa fa-eraser"></i>
@@ -209,6 +214,13 @@
         },
         methods: {
             reset() {
+                this.record = {
+                    id: '',
+                    institution_id: '',
+                    warehouse_id: '',
+                    warehouse_inventory_products: [],
+
+                };
                 this.warehouse_inventory_product = {
                     id: '',
                     quantity: '',

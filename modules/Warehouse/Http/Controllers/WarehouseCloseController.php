@@ -51,6 +51,7 @@ class WarehouseCloseController extends Controller
         $this->validateRules = [
             'warehouse_id' => ['required'],
             'initial_date' => ['required'],
+            'end_date'     => ['nullable', 'after_or_equal:initial_date'],
             'observations' => ['required']
         ];
 
@@ -58,6 +59,7 @@ class WarehouseCloseController extends Controller
         $this->messages = [
             'warehouse_id.required' => 'El campo nombre del almacén es obligatorio.',
             'initial_date.required' => 'El campo inicio del cierre de almacén es obligatorio.',
+            'end_date.after_or_equal' => 'Fin de cierre de almacén debe ser una fecha posterior o igual a inicio del cierre de almacén',
             'observations.required' => 'El campo observaciones del cierre de almacén es obligatorio.'
         ];
     }
