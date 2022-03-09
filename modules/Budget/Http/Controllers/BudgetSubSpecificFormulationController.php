@@ -291,7 +291,7 @@ class BudgetSubSpecificFormulationController extends Controller
     public function getFormulation($id)
     {
         $formulation = BudgetSubSpecificFormulation::where('id', $id)
-                       ->with(['currency', 'account_opens', 'specificAction' => function ($specifiAction) {
+                       ->with(['currency', 'accountOpens', 'specificAction' => function ($specifiAction) {
                            return $specifiAction->with(['specificable' => function ($specificable) {
                                return $specificable->with('department');
                            }]);

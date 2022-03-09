@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollEmployment;
+use Modules\Payroll\Models\PayrollPreviousJob;
 use Modules\Payroll\Models\PayrollStaff;
 use Modules\Payroll\Models\Profile;
 use App\Models\Phone;
@@ -43,7 +44,7 @@ class PayrollEmploymentController extends Controller
 
         /** Define las reglas de validación para el formulario */
         $this->rules = [
-            'start_date_apn' => ['required', 'date', 'before_or_equal:start_date'],
+            'years_apn' => ['required', 'max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
             'function_description' => ['nullable'],
@@ -57,7 +58,7 @@ class PayrollEmploymentController extends Controller
 
         /** Define los atributos para los campos personalizados */
         $this->attributes = [
-            'start_date_apn' => 'fecha de ingreso a la administración pública',
+            'years_apn' => 'años en otras instituciones públicas',
             'start_date' => 'fecha de ingreso a la institución',
             'end_date' => 'fecha de egreso de la institución',
             'function_description' => 'descripción de funciones',
@@ -104,6 +105,7 @@ class PayrollEmploymentController extends Controller
      * @method    store
      *
      * @author    William Páez <wpaez@cenditel.gob.ve>
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
      *
      * @param     object    Request    $request    Objeto con información de la petición
      *
@@ -114,7 +116,6 @@ class PayrollEmploymentController extends Controller
         $this->rules['payroll_staff_id'] = ['required', 'unique:payroll_employments,payroll_staff_id'];
         $this->rules['institution_email'] = ['email', 'nullable', 'unique:payroll_employments,institution_email'];
         if ($request->end_date) {
-            $this->rules['start_date_apn'] = ['before_or_equal:end_date'];
             $this->rules['start_date'] = ['before_or_equal:end_date'];
             $this->rules['end_date'] = ['after_or_equal:start_date'];
         }
@@ -133,7 +134,7 @@ class PayrollEmploymentController extends Controller
         $this->validate($request, $this->rules, [], $this->attributes);
         $payrollEmployment = PayrollEmployment::create([
             'payroll_staff_id' => $request->payroll_staff_id,
-            'start_date_apn' => $request->start_date_apn,
+            'years_apn' => $request->years_apn,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'active' => ($request->active!==null),
@@ -146,6 +147,21 @@ class PayrollEmploymentController extends Controller
             'department_id' => $request->department_id,
             'payroll_contract_type_id' => $request->payroll_contract_type_id,
         ]);
+
+        if ($request->previous_jobs && !empty($request->previous_jobs)) {
+            foreach ($request->previous_jobs as $job) {
+                $previousJob = PayrollPreviousJob::create([
+                    'organization_name'      => $job['organization_name'],
+                    'organization_phone'     => $job['organization_phone'],
+                    'payroll_sector_type_id' => $job['payroll_sector_type_id'],
+                    'payroll_position_id'    => $job['payroll_position_id'],
+                    'payroll_staff_type_id'  => $job['payroll_staff_type_id'],
+                    'start_date'             => $job['start_date'],
+                    'end_date'               => $job['end_date'],
+                    'payroll_employment_id'  => $payrollEmployment->id
+                ]);
+            }
+        }
 
         // Registrar ciertos datos del perfil
         $payrollStaff = PayrollStaff::find($request->payroll_staff_id);
@@ -172,7 +188,7 @@ class PayrollEmploymentController extends Controller
     public function show($id)
     {
         
-        $payrollEmployment = PayrollEmployment::where('id', $id)->with([
+        $payrollEmployment = PayrollEmployment::where('id', $id)->with(['payrollPreviousJob',
             'payrollStaff'=> function ($query) {
                 $query->with('payrollNationality','payrollGender','payrollLicenseDegree','payrollBloodType','payrollDisability',);
             }, 'payrollInactivityType', 'payrollPositionType',
@@ -214,7 +230,7 @@ class PayrollEmploymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $payrollEmployment = PayrollEmployment::find($id);
+        $payrollEmployment = PayrollEmployment::with('payrollPreviousJob')->find($id);
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
         ];
@@ -222,7 +238,6 @@ class PayrollEmploymentController extends Controller
             'email', 'nullable', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id
         ];
         if ($request->end_date) {
-            $this->rules['start_date_apn'] = ['before_or_equal:end_date'];
             $this->rules['start_date'] = ['before_or_equal:end_date'];
             $this->rules['end_date'] = ['after_or_equal:start_date'];
         }
@@ -240,7 +255,7 @@ class PayrollEmploymentController extends Controller
         }
         $this->validate($request, $this->rules, [], $this->attributes);
         $payrollEmployment->payroll_staff_id  = $request->payroll_staff_id;
-        $payrollEmployment->start_date_apn = $request->start_date_apn;
+        $payrollEmployment->years_apn = $request->years_apn;
         $payrollEmployment->start_date = $request->start_date;
         $payrollEmployment->end_date = $request->end_date;
         $payrollEmployment->active = ($request->active!==null);
@@ -254,6 +269,25 @@ class PayrollEmploymentController extends Controller
         $payrollEmployment->department_id = $request->department_id;
         $payrollEmployment->payroll_contract_type_id = $request->payroll_contract_type_id;
         $payrollEmployment->save();
+
+        foreach ($payrollEmployment->PayrollPreviousJob as $job) {
+            $job->delete();
+        }
+        if ($payrollEmployment->PayrollPreviousJob == true) {
+            foreach ($request->previous_jobs as $job) {
+                $previousJob = PayrollPreviousJob::create([
+                    'organization_name'      => $job['organization_name'],
+                    'organization_phone'     => $job['organization_phone'],
+                    'payroll_sector_type_id' => $job['payroll_sector_type_id'],
+                    'payroll_position_id'    => $job['payroll_position_id'],
+                    'payroll_staff_type_id'  => $job['payroll_staff_type_id'],
+                    'start_date'             => $job['start_date'],
+                    'end_date'               => $job['end_date'],
+                    'payroll_employment_id'  => $payrollEmployment->id
+                ]);
+            }
+        }
+
         $request->session()->flash('message', ['type' => 'update']);
         return response()->json(['result' => true, 'redirect' => route('payroll.employments.index')], 200);
     }
@@ -273,6 +307,13 @@ class PayrollEmploymentController extends Controller
     {
         $payrollEmployment = PayrollEmployment::find($id);
         $payrollEmployment->delete();
+
+        $payrollPreviousJob = PayrollPreviousJob::where('id', $payrollEmployment->id)->get();
+
+        foreach ($payrollPreviousJob as $job){
+            $job->delete();
+        }
+
         return response()->json(['record' => $payrollEmployment, 'message' => 'Success'], 200);
     }
 
@@ -289,7 +330,7 @@ class PayrollEmploymentController extends Controller
     {
         return response()->json(['records' => PayrollEmployment::with([
             'payrollStaff', 'payrollInactivityType', 'payrollPositionType',
-            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType'
+            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType', 'payrollPreviousJob'
         ])->get()], 200);
     }
 }

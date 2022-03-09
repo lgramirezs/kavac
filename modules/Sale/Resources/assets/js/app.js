@@ -487,6 +487,17 @@ Vue.component('approved-payments-list', () => import(
 );
 
 /**
+ * Componente para gestionar Pagos Rehcazados
+ *
+ * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
+ */
+
+Vue.component('rejected-payments-list', () => import(
+    /* webpackChunkName: "payment-registered-list" */
+    './components/payment/SaleRejectedPaymentsListComponent.vue')
+);
+
+/**
  * Componente para gestionar Pagos de anticvipos Aprobados
  *
  * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
