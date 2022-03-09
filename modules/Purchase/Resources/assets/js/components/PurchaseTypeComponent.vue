@@ -2,7 +2,7 @@
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
            href="#" title="Registros de tipos de compras"
-           data-toggle="tooltip"
+           data-toggle="tooltip" v-has-tooltip
            @click="addRecord('add_purchase_types', '/purchase/purchase_types', $event)">
             <i class="now-ui-icons shopping_tag-content ico-3x"></i>
             <span>Tipos de<br>Compras</span>
@@ -29,7 +29,7 @@
                                     <label>Nombre:</label>
                                     <input type="text"
                                            placeholder="Nombre del tipo de compra"
-                                           data-toggle="tooltip" v-model="record.name"
+                                           data-toggle="tooltip" v-has-tooltip v-model="record.name"
                                            title="Indique el nombre del tipo de compra (requerido)"
                                            class="form-control input-sm">
                                 </div>
@@ -81,13 +81,13 @@
                                     <button @click="loadData(props.row)"
                                             class="btn btn-warning btn-xs btn-icon btn-action"
                                             title="Modificar registro"
-                                            data-toggle="tooltip">
+                                            data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <button @click="deleteRecord(props.row.id,'/purchase/purchase_types')"
                                             class="btn btn-danger btn-xs btn-icon btn-action"
                                             title="Eliminar registro"
-                                            data-toggle="tooltip" >
+                                            data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </div>

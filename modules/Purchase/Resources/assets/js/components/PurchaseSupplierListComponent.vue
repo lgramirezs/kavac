@@ -10,12 +10,12 @@
 
 				<button @click="editForm(props.row.id)"
 	    				class="btn btn-warning btn-xs btn-icon btn-action" data-placement="bottom"
-	    				title="Modificar registro" data-toggle="tooltip" type="button">
+	    				title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 	    			<i class="fa fa-edit"></i>
 	    		</button>
 	    		<button @click="deleteRecord(props.row.id, '')"
 						class="btn btn-danger btn-xs btn-icon btn-action"
-						title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
+						title="Eliminar registro" data-toggle="tooltip" v-has-tooltip data-placement="bottom"
 						type="button">
 					<i class="fa fa-trash-o"></i>
 				</button>

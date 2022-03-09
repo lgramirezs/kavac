@@ -2,7 +2,7 @@
 	<div class="col-xs-2 text-center">
 		<a class="btn-simplex btn-simplex-md btn-simplex-primary"
 		   href="#" title="Registros de especialidades de proveedores"
-		   data-toggle="tooltip"
+		   data-toggle="tooltip" v-has-tooltip
 		   @click="addRecord('add_specialty', '/purchase/supplier-specialties', $event)">
 			<i class="icofont icofont-cube ico-3x"></i>
 			<span>Espec. de<br>Proveedor</span>
@@ -30,7 +30,7 @@
 									<label>Nombre:</label>
 									<input type="hidden" v-model="record.id">
 									<input type="text" placeholder="Nombre de la especialidad del proveedor"
-										   data-toggle="tooltip" v-model="record.name"
+										   data-toggle="tooltip" v-has-tooltip v-model="record.name"
 										   title="Indique el nombre de la especialidad del proveedor (requerido)"
 										   class="form-control input-sm">
 			                    </div>
@@ -71,15 +71,15 @@
 	                		<div slot="id" slot-scope="props" class="text-center">
 	                			<button @click="initUpdate(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-action"
-		                				title="Modificar registro" data-toggle="tooltip" type="button">
+		                				title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 		                			<i class="fa fa-edit"></i>
 		                		</button>
 		                		<button @click="deleteRecord(props.row.id, '/purchase/supplier-specialties')"
-										class="btn btn-danger btn-xs btn-icon btn-action"
-										title="Eliminar registro" data-toggle="tooltip"
-										type="button">
-									<i class="fa fa-trash-o"></i>
-								</button>
+														class="btn btn-danger btn-xs btn-icon btn-action"
+														title="Eliminar registro" data-toggle="tooltip" v-has-tooltip
+														type="button">
+													<i class="fa fa-trash-o"></i>
+												</button>
 	                		</div>
 	                	</v-client-table>
 	                </div>

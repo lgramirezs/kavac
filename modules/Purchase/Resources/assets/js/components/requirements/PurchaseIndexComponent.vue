@@ -29,7 +29,7 @@
                     <a class="btn btn-primary btn-xs btn-icon"
                             :href="'/purchase/requirements/pdf/'+props.row.id"
                             title="Imprimir Registro"
-                            data-toggle="tooltip"
+                            data-toggle="tooltip" v-has-tooltip
                             target="_blank">
                             <i class="fa fa-print" style="text-align: center;"></i>
                     </a>
@@ -37,14 +37,14 @@
                             @click="editForm(props.row.id)"
                             class="btn btn-warning btn-xs btn-icon btn-action"
                             title="Modificar registro"
-                            data-toggle="tooltip">
+                            data-toggle="tooltip" v-has-tooltip>
                         <i class="fa fa-edit"></i>
                     </button>
                     <button v-if="props.row.requirement_status == 'WAIT'"
                             @click="deleteRecord(props.index,'/purchase/requirements')"
                             class="btn btn-danger btn-xs btn-icon btn-action" 
                             title="Eliminar registro" 
-                            data-toggle="tooltip" >
+                            data-toggle="tooltip" v-has-tooltip>
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </div>

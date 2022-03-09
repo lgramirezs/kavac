@@ -2,7 +2,7 @@
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
            href="#" title="Registros de procesos de compras"
-           data-toggle="tooltip"
+           data-toggle="tooltip" v-has-tooltip
            @click="addRecord('add_process', '/purchase/processes', $event)">
             <i class="icofont icofont-law-document ico-3x"></i>
             <span>Procesos de Compras</span>
@@ -51,7 +51,7 @@
                                     <label>Nombre:</label>
                                     <input type="hidden" v-model="record.id">
                                     <input type="text" placeholder="Nombre del proceso"
-                                           data-toggle="tooltip" v-model="record.name"
+                                           data-toggle="tooltip" v-has-tooltip v-model="record.name"
                                            title="Indique el nombre del proceso de compra (requerido)"
                                            class="form-control input-sm">
                                 </div>
@@ -141,13 +141,13 @@
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="loadDataUpdate(props.row, $event)"
-                                        class="btn btn-warning btn-xs btn-icon btn-action"
-                                        title="Modificar registro" data-toggle="tooltip" type="button">
+                                        class="btn btn-warning btn-xs btn-icon btn-action" 
+                                        title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, '/purchase/processes')"
                                         class="btn btn-danger btn-xs btn-icon btn-action"
-                                        title="Eliminar registro" data-toggle="tooltip"
+                                        title="Eliminar registro" data-toggle="tooltip" v-has-tooltip
                                         type="button">
                                     <i class="fa fa-trash-o"></i>
                                 </button>

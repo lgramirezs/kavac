@@ -17,13 +17,13 @@
         <div slot="id" slot-scope="props" class="text-center">
             <button class="btn btn-warning btn-xs btn-icon btn-action"
                     title="Modificar registro"
-                    data-toggle="tooltip"
+                    data-toggle="tooltip" v-has-tooltip
                     v-on:click="editForm(props.row.id)">
                 <i class="fa fa-edit"></i>
             </button>
             <button class="btn btn-danger btn-xs btn-icon btn-action"
                     title="Eliminar registro de la lista de cuentas a convertir"
-                    data-toggle="tooltip"
+                    data-toggle="tooltip" v-has-tooltip
                     v-on:click="deleteRecord(props.row.id,'/accounting/converter')">
                 <i class="fa fa-trash-o"></i>
             </button>

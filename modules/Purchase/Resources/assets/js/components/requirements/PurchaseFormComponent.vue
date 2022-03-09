@@ -49,7 +49,8 @@
                 <div class="col-6">
                     <div class="form-group is-required">
                         <label for="description">Descripción</label>
-                        <input type="text" id="description" v-model="record.description" title="Descripción del requerimiento" data-toggle="tooltip" v-has-tooltip class="form-control">
+                        <input type="text" id="description" v-model="record.description" title="Descripción del requerimiento" 
+                            data-toggle="tooltip" v-has-tooltip class="form-control">
                     </div>
                 </div>
             </div>
@@ -59,7 +60,7 @@
                     <b>
                         Ingrese los Productos a la solicitud
                         <i class="fa fa-plus-circle card-title cursor-pointer" title="Agregar nuevo producto" 
-                            v-has-tooltip data-toggle="tooltip" 
+                            data-toggle="tooltip" v-has-tooltip
                             @click="$refs.purchaseWareHouseProduct.addRecord('add_product', 'warehouse/products', $event)">
                         </i>
                         <purchase-warehouse-products id="helpWarehouseProducts" ref="purchaseWareHouseProduct"></purchase-warehouse-products>
@@ -110,7 +111,8 @@
                     <div class="d-inline-flex">
                         <button @click="removeProduct(props.index, $event)" 
                                 class="btn btn-danger btn-xs btn-icon btn-action" 
-                                title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
+                                title="Eliminar registro" 
+                                data-toggle="tooltip" v-has-tooltip
                                 type="button">
                             <i class="fa fa-trash-o"></i>
                         </button>

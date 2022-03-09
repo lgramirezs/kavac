@@ -7,15 +7,17 @@
 			<div class="col-12 col-md-6 form-group" id="helpEntriesCategory">
 				<div class="form-group is-required">
 					<label class="control-label">Categoría del asiento</label>
-					<select2 :options="categories" v-model="data.category" data-toggle="tooltip"
-                             title="Categoría del asiento"></select2>
+					<select2 :options="categories" v-model="data.category" 
+						data-toggle="tooltip" v-has-tooltip
+                        title="Categoría del asiento"></select2>
 				</div>
 			</div>
 			<div class="col-12 col-md-6 form-group" id="helpEntriesDescription">
 				<div class="form-group is-required">
 					<label class="control-label">Concepto ó Descripción</label>
-					<input type="text" class="form-control input-sm" v-model="data.concept" data-toggle="tooltip"
-                             title="Concepto ó Descripción"> 
+					<input type="text" class="form-control input-sm" v-model="data.concept" 
+						data-toggle="tooltip" v-has-tooltip
+						title="Concepto ó Descripción"> 
 				</div>
 			</div>
 		</div>
@@ -38,13 +40,13 @@
 				</td>
 				<td>
 					<input :disabled="record.assets != 0" type="number"
-							data-toggle="tooltip"
+							data-toggle="tooltip" v-has-tooltip
 							class="form-control input-sm" :step="cualculateLimitDecimal()"
 							v-model="record.debit" @change="CalculateTot()">
 				</td>
 				<td>
 					<input :disabled="record.debit != 0 " type="number"
-							data-toggle="tooltip"
+							data-toggle="tooltip" v-has-tooltip
 							class="form-control input-sm" :step="cualculateLimitDecimal()"
 							v-model="record.assets" @change="CalculateTot()">
 				</td>
@@ -52,12 +54,12 @@
 					<div class="text-center">
 						<button @click="clearValues(recordsAccounting.indexOf(record))"
 							class="btn btn-default btn-xs btn-icon btn-action"
-							title="Vaciar valores" data-toggle="tooltip">
+							title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
 							<i class="fa fa-eraser"></i>
 						</button>
 						<button @click="deleteAccount(recordsAccounting.indexOf(record), record.entryAccountId)"
 							class="btn btn-danger btn-xs btn-icon btn-action"
-							title="Eliminar registro" data-toggle="tooltip">
+							title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
 							<i class="fa fa-trash-o"></i>
 						</button>
 					</div>

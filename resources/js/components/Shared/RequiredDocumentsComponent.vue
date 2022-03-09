@@ -2,7 +2,7 @@
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
            href="#" title="Registros de documentos a solicitar"
-           data-toggle="tooltip"
+           data-toggle="tooltip" v-has-tooltip
            @click="addRecord('add_required_doc', '/required-documents/' + model + '/' + module, $event)">
             <i class="icofont icofont-copy-alt ico-3x"></i>
             <span>Documentos Requeridos</span>

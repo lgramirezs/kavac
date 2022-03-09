@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <form method="post" enctype="multipart/form-data" @submit.prevent="">
                         <label>Cargar Hoja de calculo. Formatos permitidos:<strong>.xls .xlsx .csv</strong></label><br>
-                        <button type="button" data-toggle="tooltip"
+                        <button type="button" data-toggle="tooltip" v-has-tooltip
                                 class="btn btn-sm btn-info btn-import"
                                 title="Presione para importar la información. Los archivos permitidos son: .xls .xlsx .csv .odt .docx"
                                 @click="setFile('import_account')">

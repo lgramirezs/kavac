@@ -1,7 +1,8 @@
 <template>
     <div class="text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="" 
-            title="Registros de categorias de origen de asientos contables" data-toggle="tooltip" 
+            title="Registros de categorias de origen de asientos contables"
+            data-toggle="tooltip" v-has-tooltip
             @click="addRecord('crud_categories', 'accounting/settings/categories', $event)">
             <i class="fa fa-tags ico-3x"></i>
             <span>Categorias de origen</span>
@@ -29,7 +30,7 @@
                                         <div class="form-group is-required">
                                             <label class="control-label">Nombre</label>
                                             <input type="text" class="form-control input-sm" v-model="record.name"
-                                                   title="Ingrese el nombre de la categoria" data-toggle="tooltip">
+                                                   title="Ingrese el nombre de la categoria" data-toggle="tooltip" v-has-tooltip>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -37,7 +38,7 @@
                                             <label class="control-label">Acrónimo</label>
                                             <input type="text" 
                                                    class="form-control input-sm" maxlength="4"
-                                                   title="Ingrese el acrónimo" data-toggle="tooltip"
+                                                   title="Ingrese el acrónimo" data-toggle="tooltip" v-has-tooltip
                                                    v-model="acronym">
                                         </div>
                                     </div>
@@ -67,12 +68,12 @@
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="loadCategory(props.row)"
                                         class="btn btn-warning btn-xs btn-icon btn-action"
-                                        title="Modificar registro" data-toggle="tooltip">
+                                        title="Modificar registro" data-toggle="tooltip" v-has-tooltip>
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, '/accounting/settings/categories')"
                                         class="btn btn-danger btn-xs btn-icon btn-action"
-                                        title="Eliminar registro" data-toggle="tooltip" >
+                                        title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>

@@ -42,27 +42,27 @@
                 <div class="d-inline-flex">
                     <button @click="approve(props.index)"
                             class="btn btn-success btn-xs btn-icon btn-action"
-                            title="Aprobar Registro" data-toggle="tooltip"
+                            title="Aprobar Registro" data-toggle="tooltip" v-has-tooltip
                             v-if="!props.row.approved">
                         <i class="fa fa-check"></i>
                     </button>
                     <accounting-entry-show :id="props.row.id" :route_show="app_url+'accounting/entries/'+props.row.id" />
                     <button @click="editForm(props.row.id)"
                             class="btn btn-warning btn-xs btn-icon btn-action"
-                            title="Modificar registro" data-toggle="tooltip"
+                            title="Modificar registro" data-toggle="tooltip" v-has-tooltip
                             v-if="!props.row.approved">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button @click="deleteRecord(props.row.id,'/accounting/entries')"
                             class="btn btn-danger btn-xs btn-icon btn-action"
-                            title="Eliminar Registro" data-toggle="tooltip"
+                            title="Eliminar Registro" data-toggle="tooltip" v-has-tooltip
                             v-if="!props.row.approved">
                         <i class="fa fa-trash-o"></i>
                     </button>
                     <a class="btn btn-primary btn-xs btn-icon"
                             :href="urlPdf+'/pdf/'+props.row.id"
                             title="Imprimir Registro"
-                            data-toggle="tooltip"
+                            data-toggle="tooltip" v-has-tooltip
                             target="_blank"
                             v-if="props.row.approved">
                             <i class="fa fa-print" style="text-align: center;"></i>

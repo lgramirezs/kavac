@@ -22,12 +22,12 @@
 			</div>
 		</div>
 		<div class="card-footer text-right" >
-			<button class="btn btn-primary btn-sm" data-toggle="tooltip" title="Generar Reporte"
+			<button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar Reporte"
                     v-on:click="OpenPdf(getUrlReport(), '_blank')" id="helpDailyBookGenerateReport">
                 <span>Generar reporte</span>
                 <i class="fa fa-print"></i>
 			</button>
-			<button class="btn btn-primary btn-sm" data-toggle="tooltip" title="Generar y Firmar Reporte"
+			<button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar y Firmar Reporte"
                     v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpDailyBookGenerateReportSign">
                 <span>Generar y firmar reporte</span>
                 <i class="fa fa-print"></i>

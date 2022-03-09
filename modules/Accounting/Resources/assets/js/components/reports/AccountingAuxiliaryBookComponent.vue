@@ -40,7 +40,7 @@
 		</div>
 		<div class="card-footer text-right">
 			<button class="btn btn-primary btn-sm"
-					data-toggle="tooltip"
+					data-toggle="tooltip" v-has-tooltip
 					title="Generar Reporte"
 					@click="OpenPdf(getUrlReport(),'_blank')"
 					id="helpAuxiliaryBookGenerateReport">
@@ -48,7 +48,7 @@
 					<i class="fa fa-print"></i>
 			</button>
 			<button class="btn btn-primary btn-sm"
-					data-toggle="tooltip"
+					data-toggle="tooltip" v-has-tooltip
 					title="Generar Reporte"
 					@click="OpenPdf(getUrlReportSign(),'_blank')"
 					id="helpAuxiliaryBookGenerateReportSign">

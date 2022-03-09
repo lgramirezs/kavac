@@ -3,7 +3,7 @@
         <button @click="addRecord('show_purchase_start_diagnosis_'+id, route_show, $event)"
                 class="btn btn-success btn-xs btn-icon btn-action" 
                 title="Iniciar Diagnostico" 
-                data-toggle="tooltip" >
+                data-toggle="tooltip" v-has-tooltip>
             <i class="fa fa-check"></i>
         </button>
 
@@ -44,7 +44,7 @@
                                                             <div class="feature-list-content-left mr-2">
                                                                 <label class="custom-control">
 
-                                                                    <button type="button" data-toggle="tooltip"
+                                                                    <button type="button" data-toggle="tooltip" v-has-tooltip
                                                                             class="btn btn-sm btn-danger btn-import"
                                                                             title="Presione para subir el archivo."
                                                                             @click="setFile('file')">

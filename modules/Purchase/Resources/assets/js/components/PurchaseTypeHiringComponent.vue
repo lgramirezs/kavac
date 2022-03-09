@@ -2,7 +2,7 @@
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
            href="#" title="Registros de tipos de compras"
-           data-toggle="tooltip"
+           data-toggle="tooltip" v-has-tooltip
            @click="addRecord('add_purchase_type_hiring', '/purchase/type_hiring', $event)">
             <div class="mt-n4">
                 <i class="mdi mdi-handshake ico-3x"></i>
@@ -30,7 +30,7 @@
                                     <label class="control-label" for="record_date">Fecha
                                     </label>
                                     <input type="date" class="form-control" id="record_date" 
-                                            data-toggle="tooltip" title="Fecha" 
+                                            data-toggle="tooltip" v-has-tooltip title="Fecha" 
                                             v-model="record.date"
                                             tabindex="1">
                                 </div>
@@ -47,7 +47,8 @@
                             <div class="col-md-6">
                                 <div class="form-group is-required">
                                     <label for="record_ut">Unidades tributarias:</label>
-                                    <input type="number" id="record_ut" class="form-control" data-toggle="tooltip"
+                                    <input type="number" id="record_ut" class="form-control" 
+                                            data-toggle="tooltip" v-has-tooltip
                                             v-model="record.ut"
                                             title="Indique las unidades tributarias">
                                 </div>
@@ -106,13 +107,13 @@
                                     <button @click="loadData(props.row)"
                                             class="btn btn-warning btn-xs btn-icon btn-action"
                                             title="Modificar registro"
-                                            data-toggle="tooltip">
+                                            data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <button @click="deleteRecord(props.index,'/purchase/type_hiring')"
                                             class="btn btn-danger btn-xs btn-icon btn-action"
                                             title="Eliminar registro"
-                                            data-toggle="tooltip" >
+                                            data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </div>

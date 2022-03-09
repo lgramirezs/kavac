@@ -35,7 +35,7 @@
                 <div class="col-3">
                     <label for="acta_inicio">Acta de inicio (inhabilitado temporalmente)</label>
                     <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
+                        <button type="button" data-toggle="tooltip" v-has-tooltip
                                 class="btn btn-sm btn-info btn-import"
                                 title="Presione para subir el archivo del documento."
                                 @click="setFile('acta_inicio')"
@@ -54,7 +54,7 @@
                 <div class="col-3">
                     <label for="invitation_bussiness">Invitación de la empresa (inhabilitado temporalmente)</label>
                     <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
+                        <button type="button" data-toggle="tooltip" v-has-tooltip
                                 class="btn btn-sm btn-info btn-import"
                                 title="Presione para subir el archivo del documento."
                                 disabled="" 
@@ -73,7 +73,7 @@
                 <div class="col-3">
                     <label for="invitation_bussiness">Proforma / Cotización (inhabilitado temporalmente)</label>
                     <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
+                        <button type="button" data-toggle="tooltip" v-has-tooltip
                                 class="btn btn-sm btn-info btn-import"
                                 title="Presione para subir el archivo del documento."
                                 disabled="" 

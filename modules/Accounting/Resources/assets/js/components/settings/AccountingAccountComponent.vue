@@ -1,7 +1,7 @@
 <template>
 	<div class="col-xs-2 text-center">
 		<a class="btn-simplex btn-simplex-md btn-simplex-primary" href="" 
-			title="Catálogo de Cuentas patrimoniales" data-toggle="tooltip" 
+			title="Catálogo de Cuentas patrimoniales" data-toggle="tooltip" v-has-tooltip
 			@click="addRecord('crud_accounts', 'accounting/accounts', $event)">
 			<i class="fa fa-list ico-3x"></i>
 			<span>Catálogo de cuentas</span>
@@ -13,14 +13,14 @@
 					<div class="modal-header">
 						<button class="btn btn-sm btn-primary btn-custom" style="margin-right: 1.8rem; margin-top: -.1rem;"
 								title="Importar cuentas patrimoniales desde hoja de cálculo"
-								data-toggle="tooltip"
+								data-toggle="tooltip" v-has-tooltip
 								@click="OpenImportForm(true)"
 								v-show="!formImport">
 								<i class="fa fa-file-excel-o"></i>
 						</button>
 						<button class="btn btn-sm btn-primary btn-custom" style="margin-right: 1.8rem; margin-top: -.1rem;"
 								title="formulario de creación manual"
-								data-toggle="tooltip"
+								data-toggle="tooltip" v-has-tooltip
 								@click="OpenImportForm(false)"
 								v-show="formImport">
 								<i class="fa fa-reply"></i>

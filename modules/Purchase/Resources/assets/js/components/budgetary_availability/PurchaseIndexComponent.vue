@@ -82,7 +82,7 @@
 												<div class="feature-list-content-left mr-2">
 													<label class="custom-control">
 
-														<button type="button" data-toggle="tooltip"
+														<button type="button" data-toggle="tooltip" v-has-tooltip
 																class="btn btn-sm btn-danger btn-import"
 																title="Presione para subir el archivo."
 																@click="setFile(idx)">
@@ -131,14 +131,14 @@
 						<div class="card-footer text-right" v-if="has_budget">
 							<button class="btn btn-success btn-sm"
 									title="Hay disponibilidad"
-									data-toggle="tooltip"
+									data-toggle="tooltip" v-has-tooltip
 									:disabled="!budget_item_id || !(budget_available >= supplier_price_tot)" 
 									@click="createRecord('/purchase/budgetary_availability')">
 								Hay disponibilidad
 							</button>
 							<button class="btn btn-danger btn-sm"
 									title="No hay disponibilidad"
-									data-toggle="tooltip"
+									data-toggle="tooltip" v-has-tooltip
 									:disabled="!budget_item_id || !(budget_available < supplier_price_tot)" 
 									@click="createRecord('/purchase/budgetary_availability')">
 								No hay disponibilidad
@@ -147,13 +147,13 @@
 						<div class="card-footer text-right" v-if="!has_budget">
 							<button class="btn btn-success btn-sm"
 									title="Hay disponibilidad"
-									data-toggle="tooltip"
+									data-toggle="tooltip" v-has-tooltip
 									@click="createRecord('/purchase/budgetary_availability')">
 								Hay disponibilidad
 							</button>
 							<button class="btn btn-danger btn-sm"
 									title="No hay disponibilidad"
-									data-toggle="tooltip"
+									data-toggle="tooltip" v-has-tooltip
 									@click="createRecord('/purchase/budgetary_availability')">
 								No hay disponibilidad
 							</button>

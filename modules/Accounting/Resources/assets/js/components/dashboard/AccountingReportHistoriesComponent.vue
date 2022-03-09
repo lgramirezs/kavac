@@ -16,7 +16,7 @@
 
             <div slot="id" slot-scope="props" class="text-center">
                 <a class="btn btn-primary btn-xs btn-icon"
-                    data-toggle="tooltip"
+                    data-toggle="tooltip" v-has-tooltip
                     :href="getUrlReport(props.row.url,props.row.id)"
                     title="Generar Reporte" 
                     target="_blank">

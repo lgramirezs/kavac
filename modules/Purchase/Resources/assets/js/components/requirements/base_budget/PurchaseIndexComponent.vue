@@ -36,7 +36,7 @@
                 <div class="d-inline-flex">
                     <button class="btn btn-success btn-xs btn-icon btn-action"
                             title="Completar presupuesto base"
-                            data-toggle="tooltip"
+                            data-toggle="tooltip" v-has-tooltip
                             v-on:click="editForm(props.row.id)"
                             v-if="props.row.status == 'WAIT'">
                         <i class="icofont icofont-checked"></i>
@@ -44,14 +44,14 @@
                     <purchase-base-budget-show :id="props.row.id" :route_show="'/purchase/base_budget/'+props.row.id" />
                     <button class="btn btn-warning btn-xs btn-icon btn-action"
                             title="Modificar registro"
-                            data-toggle="tooltip"
+                            data-toggle="tooltip" v-has-tooltip
                             v-on:click="editForm(props.row.id)"
                             v-if="props.row.status == 'WAIT_QUOTATION'">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button @click="deleteRecord(props.index,'/purchase/base_budget')"
                             class="btn btn-danger btn-xs btn-icon btn-action" 
-                            title="Eliminar registro" data-toggle="tooltip" 
+                            title="Eliminar registro" data-toggle="tooltip" v-has-tooltip 
                             type="button">
                         <i class="fa fa-trash-o"></i>
                     </button>

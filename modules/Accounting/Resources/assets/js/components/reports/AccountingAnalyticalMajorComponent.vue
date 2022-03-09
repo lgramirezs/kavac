@@ -60,12 +60,12 @@
 			</div>
 		</div>
 		<div class="card-footer text-right">
-			<button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip"
+			<button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip" v-has-tooltip
 					v-on:click="OpenPdf(getUrlReport(), '_blank')" id="helpAnaliticalMajorGenerateReport">
 				<span>Generar reporte</span>
 				<i class="fa fa-print"></i>
 			</button>
-			<button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip"
+			<button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip" v-has-tooltip
 					v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpAnaliticalMajorGenerateReport">
 				<span>Generar y firmar reporte</span>
 				<i class="fa fa-print"></i>

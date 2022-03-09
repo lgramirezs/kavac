@@ -33,12 +33,12 @@
 					<div class="text-center">
 						<button @click="clearValues(recordsAccounting.indexOf(record))"
 							class="btn btn-default btn-xs btn-icon btn-action"
-							title="Vaciar valores" data-toggle="tooltip">
+							title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
 							<i class="fa fa-eraser"></i>
 						</button>
 						<button @click="deleteAccount(recordsAccounting.indexOf(record), record.entryAccountId)"
 							class="btn btn-danger btn-xs btn-icon btn-action"
-							title="Eliminar registro" data-toggle="tooltip">
+							title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
 							<i class="fa fa-trash-o"></i>
 						</button>
 					</div>

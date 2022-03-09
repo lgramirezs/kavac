@@ -42,7 +42,7 @@
             <br>
             <div class="card-footer text-right">
                 <button class="btn btn-info btn-sm" :disabled="!searchActive"
-                        title="Buscar conversiones de cuentas" data-toggle="tooltip" v-on:click="getRecords()">
+                        title="Buscar conversiones de cuentas" data-toggle="tooltip" v-has-tooltip v-on:click="getRecords()">
                     <i class="fa fa-search"></i>
                 </button>
             </div>

@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-3" id="helpCodeReference">
                         <label for="entries_reference" class="control-label">Código de referencia</label>
-                        <input type="text" class="form-control" data-toggle="tooltip"
+                        <input type="text" class="form-control" data-toggle="tooltip" v-has-tooltip
                                 title="Formato para el código de los reportes"
                                 name="entries_reference" 
                                 v-model="code"

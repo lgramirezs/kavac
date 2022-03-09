@@ -1,42 +1,43 @@
 <template>
-    <form class='form-horizontal'>
-        <div class='card-body'>
-            <div class='row'>
-                <div class='col-md-6'>
-                    <div class='form-group'>
-                        <label class='control-label'>Cuenta de nivel superior</label>
-                        <select2 :options='accRecords' v-model='record_select'></select2>
+    <form class="form-horizontal">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Cuenta de nivel superior</label>
+                        <select2 :options="accRecords" v-model="record_select"></select2>
                     </div>
                 </div>
-                <div class='col-md-6'>
-                    <div class='form-group'>
-                        <label class='control-label'>Código</label>
-                        <div class='row inline-inputs'>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Código</label>
+                        <div class="row inline-inputs">
                             <div class="col-6">
-                                <input id="code" type="text" class="form-control input-sm" placeholder="0.0.0.00.00.00.000" data-toggle="tooltip" title="Código de la cuenta patrimonial" v-model='record.code'>
+                                <input id="code" type="text" class="form-control input-sm" placeholder="0.0.0.00.00.00.000" 
+                                data-toggle="tooltip" v-has-tooltip title="Código de la cuenta patrimonial" v-model="record.code">
                             </div>
                         </div>
                         <!-- :onkeyup="record.code=justAllow(record.code)" -->
                     </div>
                 </div>
-                <div class='col-md-6'>
-                    <div class='form-group'>
-                        <label class='control-label'>Denominación</label>
-                        <input type='text' class='form-control input-sm' id='denomination' name='denomination'
-                               data-toggle='tooltip' placeholder='Descripción de la cuenta'
-                               title='Denominación o concepto de la cuenta' v-model='record.denomination'>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Denominación</label>
+                        <input type="text" class="form-control input-sm" id="denomination" name="denomination"
+                               data-toggle="tooltip" v-has-tooltip placeholder="Descripción de la cuenta"
+                               title="Denominación o concepto de la cuenta" v-model="record.denomination">
                     </div>
                 </div>
-                <div class='col-6'>
-                    <div class='row'>
-                        <div class='col-3'>
-                            <div class='form-group'>
-                                <label class='control-label'>Activa</label>
-                                <div class='col-12'>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Activa</label>
+                                <div class="col-12">
                                     <div class="col-12 bootstrap-switch-mini">
-                                        <input id='active' data-on-label='SI' data-off-label='NO' name='active'
-                                               type='checkbox' class='form-control bootstrap-switch'
-                                               v-model='record.active'>
+                                        <input id="active" data-on-label="SI" data-off-label="NO" name="active"
+                                               type="checkbox" class="form-control bootstrap-switch"
+                                               v-model="record.active">
                                     </div>
                                 </div>
                             </div>

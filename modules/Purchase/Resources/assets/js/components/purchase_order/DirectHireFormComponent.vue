@@ -143,7 +143,7 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip"
+                                        <button type="button" data-toggle="tooltip" v-has-tooltip
                                                 class="btn btn-sm btn-danger btn-import"
                                                 title="Presione para subir el archivo."
                                                 @click="setFile(idx)">
