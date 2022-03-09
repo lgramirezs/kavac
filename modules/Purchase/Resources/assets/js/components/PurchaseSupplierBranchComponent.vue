@@ -31,15 +31,16 @@
 									<input type="hidden" v-model="record.id">
 									<input type="text" placeholder="Nombre de la rama del proveedor"
 										   data-toggle="tooltip" v-model="record.name"
+										   v-has-tooltip
 										   title="Indique el nombre de la rama del proveedor (requerido)"
 										   class="form-control input-sm">
 			                    </div>
 							</div>
 							<div class="col-md-12">
-								<div class="form-group">
+								<div class="form-group" data-toggle="tooltip" v-has-tooltip
+                                     title="Indique la descripción para la rama del proveedor">
 									<label>Descripción:</label>
-                                    <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
-                                              title="Indique la descripción para la rama del proveedor"
+                                    <ckeditor :editor="ckeditor.editor"
                                               :config="ckeditor.editorConfig" class="form-control" tag-name="textarea"
                                               rows="3" v-model="record.description"
                                               placeholder="Descripción de la rama del proveedor"></ckeditor>

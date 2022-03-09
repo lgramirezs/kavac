@@ -43,10 +43,10 @@
 			                    </div>
 							</div>
 							<div class="col-md-12">
-								<div class="form-group">
+								<div class="form-group" data-toggle="tooltip" v-has-tooltip
+                                     title="Indique la descripción para el objeto del proveedor">
 									<label>Descripción:</label>
-                                    <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
-                                              title="Indique la descripción para el objeto del proveedor"
+                                    <ckeditor :editor="ckeditor.editor"
                                               :config="ckeditor.editorConfig" class="form-control" tag-name="textarea"
                                               rows="3" v-model="record.description"
                                               placeholder="Descripción del objeto del proveedor"></ckeditor>

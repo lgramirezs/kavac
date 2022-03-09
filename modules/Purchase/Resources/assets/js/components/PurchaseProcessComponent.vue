@@ -57,10 +57,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group is-required">
+                                <div class="form-group is-required" data-toggle="tooltip" v-has-tooltip
+                                     title="Indique la descripción para el proceso de compra (requerido)">
                                     <label>Descripción:</label>
-                                    <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
-                                              title="Indique la descripción para el proceso de compra (requerido)"
+                                    <ckeditor :editor="ckeditor.editor"
                                               :config="ckeditor.editorConfig" class="form-control" tag-name="textarea"
                                               rows="3" v-model="record.description"
                                               placeholder="Descripción del proceso de compra"></ckeditor>
