@@ -631,14 +631,30 @@
                         return false;
                     }
                 });
-                $('.btn-formula').on('click', function() {
+                $('.btn-formula').on('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
                     let keys = vm.record.formula.indexOf('}');
                     if (keys > 0) {
                         let firstFormula = vm.record.formula.substr(0, keys);
                         let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
-                        vm.record.formula = firstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                        let lastElement = vm.record.formula.substr(keys-1, 1)
+                        let symbols = ['+', '-', '*', '/', '.'];
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                            let lastFirstFormula = vm.record.formula.substr(0, keys-1)
+                            vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                        } else {
+                            vm.record.formula = firstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                        }
                     } else {
-                        vm.record.formula += $(this).data('value').toString().substr(0, 1);
+                        let lastElement = vm.record.formula.substr(vm.record.formula.length-1, 1)
+                        let symbols = ['+', '-', '*', '/', '.'];
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                            let lastFirstFormula = vm.record.formula.substr(0, vm.record.formula.length-1)
+                            vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1);
+                        } else {
+                            vm.record.formula += $(this).data('value').toString().substr(0, 1);
+                        }
                     }
                 });
             });
