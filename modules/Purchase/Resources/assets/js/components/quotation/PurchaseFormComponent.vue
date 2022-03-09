@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<!-- <purchase-show-errors ref="purchaseShowError" /> -->
+		<purchase-show-errors ref="purchaseShowError" />
 
 		<div class="row">
 			<div class="col-3">
@@ -383,7 +383,7 @@ export default{
 			vm.sub_total = 0;
 			vm.tax_value = 0;
 			vm.total     = 0;
-			// this.$refs.purchaseShowError.reset();
+			this.$refs.purchaseShowError.reset();
 		},
 
 		uploadFile(inputID, e){
@@ -582,15 +582,15 @@ export default{
 					vm.loading = false;
 					location.href = vm.route_list;
 				}).catch(error => {
-					if (typeof(error.response) !== "undefined") {
-						if (error.response.status == 422 || error.response.status == 500) {
-							for (const i in error.response.data.errors){
-								vm.showMessage(
-									'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-								);
-							}
-						}
-					}
+					vm.errors = [];
+                    if (typeof(error.response) != 'undefined') {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+					vm.$refs.purchaseShowError.refresh();
 					vm.loading = false;
 				});
 			}else{
@@ -606,15 +606,15 @@ export default{
 					location.href = vm.route_list;
 
 				}).catch(error => {
-					if (typeof(error.response) !== "undefined") {
-						if (error.response.status == 422 || error.response.status == 500) {
-							for (const i in error.response.data.errors){
-								vm.showMessage(
-									'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-								);
-							}
-						}
-					}
+					vm.errors = [];
+                    if (typeof(error.response) != 'undefined') {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+                    vm.$refs.purchaseShowError.refresh();
 					vm.loading = false;
 				});
 			}

@@ -39,7 +39,7 @@
                             data-toggle="tooltip"
                             v-on:click="editForm(props.row.id)"
                             v-if="props.row.status == 'WAIT'">
-                        <i class="fa fa-list"></i>
+                        <i class="icofont icofont-checked"></i>
                     </button>
                     <purchase-base-budget-show :id="props.row.id" :route_show="'/purchase/base_budget/'+props.row.id" />
                     <button class="btn btn-warning btn-xs btn-icon btn-action"
