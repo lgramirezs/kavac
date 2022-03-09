@@ -140,7 +140,7 @@
                                                 <input type="date" id="start_date" placeholder="Desde"
                                                        data-toggle="tooltip" title="Indique la fecha de aplicación asociada a la política vacacional"
                                                        class="form-control input-sm"
-                                                       :min="start_operations_date" :max="record.end_date"
+                                                       :min="start_operations_date" :max="(record.end_date == '') ? '' : record.end_date"
                                                        v-model="record.start_date">
                                             </div>
                                         </div>
@@ -149,6 +149,7 @@
                                                 <label>Hasta:</label>
                                                 <input type="date" id="end_date" placeholder="Hasta"
                                                        data-toggle="tooltip" title="Indique la fecha de aplicación asociada a la política vacacional" :min="record.start_date"
+                                                       :disabled="(record.start_date == '')"
                                                        class="form-control input-sm" v-model="record.end_date">
                                             </div>
                                         </div>
@@ -251,7 +252,7 @@
                                             <div class="form-group is-required">
                                                 <label>Fecha de inicio:</label>
                                                 <input type="date" id="start_date_vacation" placeholder="Fecha de inicio"
-                                                       data-toggle="tooltip" title="Indique la fecha del inicio del período vacacional"
+                                                       data-toggle="tooltip" title="Indique la fecha del inicio del período vacacional" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date"
                                                        class="form-control input-sm" v-model="vacation_period.start_date">
                                             </div>
                                         </div>
@@ -262,6 +263,8 @@
                                                 <label>Fecha de Finalización:</label>
                                                 <input type="date" id="end_date_vacation" placeholder="Fecha de Finalización"
                                                        data-toggle="tooltip" title="Indique la fecha de Finalización del período vacacional" :min="vacation_period.start_date"
+                                                       :max="record.end_date"
+                                                       :disabled="(vacation_period.start_date == '')"
                                                        class="form-control input-sm" v-model="vacation_period.end_date">
                                             </div>
                                         </div>
