@@ -22,8 +22,7 @@
                                     <i class="now-ui-icons objects_support-17"></i>
                                 </div>
                                 <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-                                        @click.prevent="errors = []">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click.prevent="errors = []">
                                     <span aria-hidden="true">
                                         <i class="now-ui-icons ui-1_simple-remove"></i>
                                     </span>
@@ -33,29 +32,21 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <b>Datos del insumo</b>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="form-group is-required">
                                     <label>Nombre del insumo:</label>
-                                    <input type="text" placeholder="Nombre del insumo" data-toggle="tooltip"
-                                           v-has-tooltip title="Indique el nombre del nuevo insumo (requerido)"
-                                           class="form-control input-sm" v-model="record.name">
+                                    <input type="text" placeholder="Nombre del insumo" data-toggle="tooltip" v-has-tooltip title="Indique el nombre del nuevo insumo (requerido)" class="form-control input-sm" v-model="record.name">
                                     <input type="hidden" v-model="record.id">
                                 </div>
                             </div>
-
                             <div class="col-md-6">
-                                <div class="form-group is-required" data-toggle="tooltip" v-has-tooltip
-                                     title="Indique una breve descripción del nuevo insumo (requerido)">
+                                <div class="form-group is-required" data-toggle="tooltip" v-has-tooltip title="Indique una breve descripción del nuevo insumo (requerido)">
                                     <label>Descripción:</label>
-                                    <ckeditor :editor="ckeditor.editor"
-                                              :config="ckeditor.editorConfig" class="form-control" tag-name="textarea"
-                                              rows="3" v-model="record.description"></ckeditor>
+                                    <ckeditor :editor="ckeditor.editor" :config="ckeditor.editorConfig" class="form-control" tag-name="textarea" rows="3" v-model="record.description"></ckeditor>
                                 </div>
                             </div>
                         </div>
@@ -71,11 +62,7 @@
                                     <label for="" class="control-label">Atributos personalizados</label>
                                     <div class="col-12">
                                         <div class="bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   name="define_attributes" data-toggle="tooltip" v-has-tooltip
-                                                   title="Establecer los atributos del insumo para gestionar las variantes"
-                                                   data-on-label="Si" data-off-label="No" value="true"
-                                                   v-model="record.define_attributes">
+                                            <input type="checkbox" class="form-control bootstrap-switch" name="define_attributes" data-toggle="tooltip" v-has-tooltip title="Establecer los atributos del insumo para gestionar las variantes" data-on-label="Si" data-off-label="No" value="true" v-model="record.define_attributes">
                                         </div>
                                     </div>
                                 </div>
@@ -83,29 +70,21 @@
                         </div>
                         <div v-show="this.record.define_attributes">
                             <div class="row" style="margin: 10px 0">
-                                <h6 class="card-title cursor-pointer" @click="addAttribute()" >
+                                <h6 class="card-title cursor-pointer" @click="addAttribute()">
                                     Gestionar nuevo atributo <i class="fa fa-plus-circle"></i>
                                 </h6>
                             </div>
                             <div class="row" style="margin: 20px 0">
-
-                                <div class="col-6" v-for="(attribute, index) in record.warehouse_product_attributes" 
-                                     :key="index">
-
+                                <div class="col-6" v-for="(attribute, index) in record.warehouse_product_attributes" :key="index">
                                     <div class="d-inline-flex">
                                         <div class="col-10">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Nombre del nuevo atributo"
-                                                       data-toggle="tooltip" v-has-tooltip
-                                                       title="Indique el nombre del atributo del insumo que desee hacer seguimiento (opcional)"
-                                                       v-model="attribute.name" class="form-control input-sm">
+                                                <input type="text" placeholder="Nombre del nuevo atributo" data-toggle="tooltip" v-has-tooltip title="Indique el nombre del atributo del insumo que desee hacer seguimiento (opcional)" v-model="attribute.name" class="form-control input-sm">
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <button class="btn btn-sm btn-danger btn-action" type="button"
-                                                        @click="removeRow(index, record.warehouse_product_attributes)"
-                                                        data-toggle="tooltip" v-has-tooltip title="Eliminar este dato">
+                                                <button class="btn btn-sm btn-danger btn-action" type="button" @click="removeRow(index, record.warehouse_product_attributes)" data-toggle="tooltip" v-has-tooltip title="Eliminar este dato">
                                                     <i class="fa fa-minus-circle"></i>
                                                 </button>
                                             </div>
@@ -117,16 +96,13 @@
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
-                                    @click="clearFilters" data-dismiss="modal">
+                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
                                 Cerrar
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-                                    @click="reset()">
+                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click="createRecord('warehouse/products')" 
-                                    class="btn btn-primary btn-sm btn-round btn-modal-save">
+                            <button type="button" @click="createRecord('warehouse/products')" class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
                         </div>
@@ -136,130 +112,127 @@
         </div>
     </section>
 </template>
-
 <script>
-    export default {
-        data() {
-            return {
-                record: {
-                    id:'',
-                    name: '',
-                    description: '',
-                    define_attributes: false,
-                    measurement_unit_id: '',
-                    warehouse_product_attributes: [],
-                },
+export default {
+    data() {
+        return {
+            record: {
+                id: '',
+                name: '',
+                description: '',
+                define_attributes: false,
+                measurement_unit_id: '',
+                warehouse_product_attributes: [],
+            },
 
-                errors: [],
-                records: [],
-                columns: ['name', 'description', 'attributes', 'id'],
-                measurement_units: [],
-                formImport: false,
+            errors: [],
+            records: [],
+            columns: ['name', 'description', 'attributes', 'id'],
+            measurement_units: [],
+            formImport: false,
 
+        }
+    },
+    methods: {
+        /**
+         * Método que borra todos los datos del formulario
+         *
+         * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        reset() {
+            const vm = this;
+            vm.record = {
+                id: '',
+                name: '',
+                description: '',
+                define_attributes: false,
+                measurement_unit_id: '',
+                warehouse_product_attributes: []
+            };
+        },
+        /**
+         * Método que agrega un nuevo campo de atributo al formulario
+         *
+         * @author Henry Paredes <hparedes@cenditel.gob.ve>
+         */
+        addAttribute() {
+            var field = { id: '', name: '', warehouse_product_id: '' };
+            this.record.warehouse_product_attributes.push(field);
+        },
+        /**
+         * Método que obtiene las unidades de medida del insumo
+         *
+         * @author Henry Paredes <hparedes@cenditel.gob.ve>
+         */
+        getMeasurementUnits() {
+            const vm = this;
+            vm.measurement_units = [];
+
+            axios.get('/warehouse/get-measurement-units').then(response => {
+                vm.measurement_units = response.data;
+            });
+        },
+        /**
+         * Reescribe elñ metodo para modificar su comportamiento por defecto
+         * Método que permite crear o actualizar un registro
+         *
+         * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param  {string} url    Ruta de la acción a ejecutar para la creación o actualización de datos
+         * @param  {string} list   Condición para establecer si se cargan datos en un listado de tabla.
+         *                         El valor por defecto es verdadero.
+         * @param  {string} reset  Condición que evalúa si se inicializan datos del formulario.
+         *                         El valor por defecto es verdadero.
+         */
+        createRecord(url, list = true, reset = true) {
+            const vm = this;
+            url = vm.setUrl(url);
+
+            vm.$parent.products.forEach(prod => {
+                if (vm.record.name.toUpperCase() == prod.text.toUpperCase()) {
+                    vm.record.id = prod.id;
+                };
+            });
+
+            if (vm.record.id) {
+                vm.updateRecord(url);
+            } else {
+                vm.loading = true;
+                var fields = {};
+                for (var index in vm.record) {
+                    fields[index] = vm.record[index];
+                }
+                axios.post(url, fields).then(response => {
+                    if (typeof(response.data.redirect) !== "undefined") {
+                        location.href = response.data.redirect;
+                    } else {
+                        vm.errors = [];
+                        if (reset) {
+                            vm.reset();
+                        }
+                        if (list) {
+                            vm.readRecords(url);
+                        }
+                        vm.loading = false;
+                        vm.showMessage('store');
+                    }
+                    vm.$parent.getWarehouseProducts();
+
+                }).catch(error => {
+                    vm.errors = [];
+
+                    if (typeof(error.response) != "undefined") {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+
+                    vm.loading = false;
+                });
             }
         },
-        methods: {
-            /**
-             * Método que borra todos los datos del formulario
-             *
-             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-             */
-            reset(){
-                const vm = this;
-                vm.record = {
-                    id:                           '',
-                    name:                         '',
-                    description:                  '',
-                    define_attributes:            false,
-                    measurement_unit_id:          '',
-                    warehouse_product_attributes: []
-                };
-            },
-            /**
-             * Método que agrega un nuevo campo de atributo al formulario
-             *
-             * @author Henry Paredes <hparedes@cenditel.gob.ve>
-             */
-            addAttribute(){
-                var field = {id: '', name: '', warehouse_product_id: ''};
-                this.record.warehouse_product_attributes.push(field);
-            },
-            /**
-             * Método que obtiene las unidades de medida del insumo
-             *
-             * @author Henry Paredes <hparedes@cenditel.gob.ve>
-             */
-            getMeasurementUnits() {
-                const vm = this;
-                vm.measurement_units = [];
-
-                axios.get('/warehouse/get-measurement-units').then(response => {
-                    vm.measurement_units = response.data;
-                });
-            },
-            /**
-             * Reescribe elñ metodo para modificar su comportamiento por defecto
-             * Método que permite crear o actualizar un registro
-             *
-             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-             *
-             * @param  {string} url    Ruta de la acción a ejecutar para la creación o actualización de datos
-             * @param  {string} list   Condición para establecer si se cargan datos en un listado de tabla.
-             *                         El valor por defecto es verdadero.
-             * @param  {string} reset  Condición que evalúa si se inicializan datos del formulario.
-             *                         El valor por defecto es verdadero.
-             */
-            createRecord(url, list = true, reset = true) {
-                const vm = this;
-                url = vm.setUrl(url);
-
-                vm.$parent.products.forEach(prod => {
-                    if (vm.record.name.toUpperCase() == prod.text.toUpperCase()) {
-                        vm.record.id = prod.id;
-                    };
-                });
-
-                if (vm.record.id) {
-                    vm.updateRecord(url);
-                }
-                else {
-                    vm.loading = true;
-                    var fields = {};
-                    for (var index in vm.record) {
-                        fields[index] = vm.record[index];
-                    }
-                    axios.post(url, fields).then(response => {
-                        if (typeof(response.data.redirect) !== "undefined") {
-                            location.href = response.data.redirect;
-                        }
-                        else {
-                            vm.errors = [];
-                            if (reset) {
-                                vm.reset();
-                            }
-                            if (list) {
-                                vm.readRecords(url);
-                            }
-                            vm.loading = false;
-                            vm.showMessage('store');
-                        }
-                        vm.$parent.getWarehouseProducts();
-
-                    }).catch(error => {
-                        vm.errors = [];
-
-                        if (typeof(error.response) !="undefined") {
-                            for (var index in error.response.data.errors) {
-                                if (error.response.data.errors[index]) {
-                                    vm.errors.push(error.response.data.errors[index][0]);
-                                }
-                            }
-                        }
-
-                        vm.loading = false;
-                    });
-                }
-            },
 
         /**
          * Reescribe elñ metodo para modificar su comportamiento por defecto
@@ -281,8 +254,7 @@
             axios.patch(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.id}`, fields).then(response => {
                 if (typeof(response.data.redirect) !== "undefined") {
                     location.href = response.data.redirect;
-                }
-                else {
+                } else {
                     vm.readRecords(url);
                     vm.reset();
                     vm.loading = false;
@@ -293,7 +265,7 @@
             }).catch(error => {
                 vm.errors = [];
 
-                if (typeof(error.response) !="undefined") {
+                if (typeof(error.response) != "undefined") {
                     for (var index in error.response.data.errors) {
                         if (error.response.data.errors[index]) {
                             vm.errors.push(error.response.data.errors[index][0]);
@@ -303,28 +275,28 @@
                 vm.loading = false;
             });
         },
-        },
-        created() {
-            const vm = this;
-            vm.table_options.headings = {
-                'name':        'insumo',
-                'description': 'Descripción',
-                'attributes':  'Atributos',
-                'id':          'Acción'
-            };
-            vm.table_options.sortable       = ['name', 'description'];
-            vm.table_options.filterable     = ['name', 'description'];
-            vm.table_options.columnsClasses = {
-                'name':        'col-xs-2',
-                'description': 'col-xs-4',
-                'attributes':  'col-xs-4',
-                'id':          'col-xs-2'
-            };
-        },
-        mounted() {
-            const vm = this;
-            vm.getMeasurementUnits();
-            vm.switchHandler('define_attributes');
-        }
-    };
+    },
+    created() {
+        const vm = this;
+        vm.table_options.headings = {
+            'name': 'insumo',
+            'description': 'Descripción',
+            'attributes': 'Atributos',
+            'id': 'Acción'
+        };
+        vm.table_options.sortable = ['name', 'description'];
+        vm.table_options.filterable = ['name', 'description'];
+        vm.table_options.columnsClasses = {
+            'name': 'col-xs-2',
+            'description': 'col-xs-4',
+            'attributes': 'col-xs-4',
+            'id': 'col-xs-2'
+        };
+    },
+    mounted() {
+        const vm = this;
+        vm.getMeasurementUnits();
+        vm.switchHandler('define_attributes');
+    }
+};
 </script>

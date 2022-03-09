@@ -1,9 +1,6 @@
 <template>
     <div class="col-xs-2 text-center">
-        <a class="btn-simplex btn-simplex-md btn-simplex-primary"
-           href="#" title="Registros de tipos de compras"
-           data-toggle="tooltip" v-has-tooltip
-           @click="addRecord('add_purchase_type_operation', '/purchase/type_operations', $event)">
+        <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de tipos de compras" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_purchase_type_operation', '/purchase/type_operations', $event)">
             <i class="fa fa-bookmark-o ico-3x"></i>
             <span>Tipos de<br>Operaciones</span>
         </a>
@@ -20,46 +17,33 @@
                         </h6>
                     </div>
                     <div class="modal-body">
-
                         <purchase-show-errors ref="purchaseShowError" />
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group is-required">
                                     <label>Nombre:</label>
-                                    <input type="text"
-                                           placeholder="Nombre del tipo de compra"
-                                           data-toggle="tooltip" v-has-tooltip v-model="record.name"
-                                           title="Indique el nombre del tipo de compra (requerido)"
-                                           class="form-control input-sm">
+                                    <input type="text" placeholder="Nombre del tipo de compra" data-toggle="tooltip" v-has-tooltip v-model="record.name" title="Indique el nombre del tipo de compra (requerido)" class="form-control input-sm">
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group" data-toggle="tooltip" v-has-tooltip
-                                     title="Indique la descripción para tipo de compra">
+                                <div class="form-group" data-toggle="tooltip" v-has-tooltip title="Indique la descripción para tipo de compra">
                                     <label>Descripción:</label>
-                                    <ckeditor :editor="ckeditor.editor"
-                                              :config="ckeditor.editorConfig" class="form-control" tag-name="textarea"
-                                              rows="3" v-model="record.description"
-                                              placeholder="Descripción del tipo de compra"></ckeditor>
+                                    <ckeditor :editor="ckeditor.editor" :config="ckeditor.editorConfig" class="form-control" tag-name="textarea" rows="3" v-model="record.description" placeholder="Descripción del tipo de compra"></ckeditor>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
-									@click="clearFilters" data-dismiss="modal">
-								Cerrar
-							</button>
-							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()">
-								Cancelar
-							</button>
-							<button type="button" @click="createRecord('purchase/type_operations')" 
-									class="btn btn-primary btn-sm btn-round btn-modal-save">
-								Guardar
-							</button>
+                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
+                                Cerrar
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" @click="reset()">
+                                Cancelar
+                            </button>
+                            <button type="button" @click="createRecord('purchase/type_operations')" class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                Guardar
+                            </button>
                         </div>
                     </div>
                     <div class="modal-body modal-table">
@@ -69,16 +53,10 @@
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <div class="d-inline-flex">
-                                    <button @click="loadData(props.row)"
-                                            class="btn btn-warning btn-xs btn-icon btn-action"
-                                            title="Modificar registro"
-                                            data-toggle="tooltip" v-has-tooltip>
+                                    <button @click="loadData(props.row)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                    <button @click="deleteRecord(props.index,'/purchase/type_operations')"
-                                            class="btn btn-danger btn-xs btn-icon btn-action"
-                                            title="Eliminar registro"
-                                            data-toggle="tooltip" v-has-tooltip>
+                                    <button @click="deleteRecord(props.index,'/purchase/type_operations')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </div>
@@ -90,53 +68,52 @@
         </div>
     </div>
 </template>
-
 <script>
-    export default {
-        data() {
-            return {
-                records:[],
-                errors:[],
-                columns: ['name', 'description', 'id'],
-                record: {
-                    name:'',
-                    description:'',
-                },
-                edit:false,
-            }
-        },
-        methods: {
-            /**
-             * Método que borra todos los datos del formulario
-             *
-             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-             */
-            reset() {
-                this.edit = false;
-                this.record = {
-                    id: '',
-                    name: '',
-                    description: '',
-                };
+export default {
+    data() {
+        return {
+            records: [],
+            errors: [],
+            columns: ['name', 'description', 'id'],
+            record: {
+                name: '',
+                description: '',
             },
-            loadData(record){
-                this.edit = true;
-                this.record = record;
-            }
-        },
-        created() {
-            this.table_options.headings = {
-                'name': 'Nombre',
-                'description': 'Descripción',
-                'id': 'Acción'
-            };
-            this.table_options.sortable = ['name', 'description'];
-            this.table_options.filterable = ['name', 'description'];
-            this.table_options.columnsClasses = {
-                'name': 'col-xs-5',
-                'description': 'col-xs-6',
-                'id': 'col-xs-1'
+            edit: false,
+        }
+    },
+    methods: {
+        /**
+         * Método que borra todos los datos del formulario
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         */
+        reset() {
+            this.edit = false;
+            this.record = {
+                id: '',
+                name: '',
+                description: '',
             };
         },
-    };
+        loadData(record) {
+            this.edit = true;
+            this.record = record;
+        }
+    },
+    created() {
+        this.table_options.headings = {
+            'name': 'Nombre',
+            'description': 'Descripción',
+            'id': 'Acción'
+        };
+        this.table_options.sortable = ['name', 'description'];
+        this.table_options.filterable = ['name', 'description'];
+        this.table_options.columnsClasses = {
+            'name': 'col-xs-5',
+            'description': 'col-xs-6',
+            'id': 'col-xs-1'
+        };
+    },
+};
 </script>

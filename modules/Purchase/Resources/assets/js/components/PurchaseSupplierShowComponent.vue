@@ -1,12 +1,8 @@
 <template>
     <section>
-        <button @click="addRecord('show_purchase_supplier_'+id, route_show, $event)"
-                class="btn btn-info btn-xs btn-icon btn-action" 
-                title="Visualizar registro" 
-                data-toggle="tooltip" v-has-tooltip>
+        <button @click="addRecord('show_purchase_supplier_'+id, route_show, $event)" class="btn btn-info btn-xs btn-icon btn-action" title="Visualizar registro" data-toggle="tooltip" v-has-tooltip>
             <i class="fa fa-eye"></i>
         </button>
-
         <div class="modal fade text-left" tabindex="-1" role="dialog" :id="'show_purchase_supplier_'+id">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
@@ -30,7 +26,7 @@
                         <hr>
                         <h6>Documentos</h6>
                         <br>
-<!--                         <div class="row" v-if="records.user">
+                        <!--                         <div class="row" v-if="records.user">
                             <div class="col-3"><strong>Fecha de inicio:</strong> {{ format_date(records.init_date) }}</div>
                             <div class="col-3"><strong>Fecha de culminación:</strong> {{ format_date(records.end_date) }}</div>
                             <div class="col-3"><strong>Tipo de compra:</strong> {{ purchase_type }}</div>
@@ -68,28 +64,26 @@
                 </div>
             </div>
         </div>
-
     </section>
 </template>
-
 <script>
-export default{
-    props:['id'],
-    data(){
-        return{
-            records:[],
-            files:{},
+export default {
+    props: ['id'],
+    data() {
+        return {
+            records: [],
+            files: {},
         }
     },
-    created(){
+    created() {
         // 
     },
-    mounted(){
+    mounted() {
         // if (this.records.purchase_process) {
         //     this.record = this.records.purchase_process;
         // }
     },
-    methods:{
+    methods: {
 
         /**
          * Método que borra todos los datos del formulario
@@ -136,7 +130,7 @@ export default{
         //     }
         // },
     },
-    computed:{
+    computed: {
         // purchase_type: function(){
         //     if (this.records.purchase_type) {
         //         return this.records.purchase_type.name;

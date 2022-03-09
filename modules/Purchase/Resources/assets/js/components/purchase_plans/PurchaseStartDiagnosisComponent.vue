@@ -1,12 +1,8 @@
 <template>
     <div>
-        <button @click="addRecord('show_purchase_start_diagnosis_'+id, route_show, $event)"
-                class="btn btn-success btn-xs btn-icon btn-action" 
-                title="Iniciar Diagnostico" 
-                data-toggle="tooltip" v-has-tooltip>
+        <button @click="addRecord('show_purchase_start_diagnosis_'+id, route_show, $event)" class="btn btn-success btn-xs btn-icon btn-action" title="Iniciar Diagnostico" data-toggle="tooltip" v-has-tooltip>
             <i class="fa fa-check"></i>
         </button>
-
         <div class="modal fade text-left" tabindex="-1" role="dialog" :id="'show_purchase_start_diagnosis_'+id">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
@@ -35,79 +31,64 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-body">
-                                            <ul class="feature-list list-group list-group-flush">
-                                                <li class="list-group-item"
-                                                    >
-                                                    <div class="feature-list-indicator bg-info"></div>
-                                                    <div class="feature-list-content p-0">
-                                                        <div class="feature-list-content-wrapper">
-                                                            <div class="feature-list-content-left mr-2">
-                                                                <label class="custom-control">
-
-                                                                    <button type="button" data-toggle="tooltip" v-has-tooltip
-                                                                            class="btn btn-sm btn-danger btn-import"
-                                                                            title="Presione para subir el archivo."
-                                                                            @click="setFile('file')">
-                                                                        <i class="fa fa-upload"></i>
-                                                                    </button>
-                                                                    <input type="file" 
-                                                                            id="file" 
-                                                                            @change="uploadFile($event)"
-                                                                            style="display:none;">
-                                                                </label>
+                                    <ul class="feature-list list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <div class="feature-list-indicator bg-info"></div>
+                                            <div class="feature-list-content p-0">
+                                                <div class="feature-list-content-wrapper">
+                                                    <div class="feature-list-content-left mr-2">
+                                                        <label class="custom-control">
+                                                            <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-danger btn-import" title="Presione para subir el archivo." @click="setFile('file')">
+                                                                <i class="fa fa-upload"></i>
+                                                            </button>
+                                                            <input type="file" id="file" @change="uploadFile($event)" style="display:none;">
+                                                        </label>
+                                                    </div>
+                                                    <div class="feature-list-content-left">
+                                                        <div class="feature-list-subheading">
+                                                            <div v-if="files">
+                                                                {{ files.name }}
                                                             </div>
-                                                            <div class="feature-list-content-left">
-                                                                <div class="feature-list-subheading">
-                                                                    <div v-if="files">
-                                                                        {{ files.name }}
-                                                                    </div>
-                                                                    <div v-show="!files">
-                                                                        Cargar documento de plan de compras
-                                                                    </div>
-                                                                </div>
-                                                                <div class="feature-list-subheading" id="status_file"
-                                                                        style="display:none;">
-                                                                    <span class="badge badge-success">
-                                                                        <strong>Documento Cargado.</strong>
-                                                                    </span>
-                                                                </div>
+                                                            <div v-show="!files">
+                                                                Cargar documento de plan de compras
                                                             </div>
                                                         </div>
+                                                        <div class="feature-list-subheading" id="status_file" style="display:none;">
+                                                            <span class="badge badge-success">
+                                                                <strong>Documento Cargado.</strong>
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-
                         <div class="card-footer text-right">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
-									@click="clearFilters" data-dismiss="modal">
-								Cerrar
-							</button>
-							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()" data-dismiss="modal">
-								Cancelar
-							</button>
-							<button type="button" @click="createRecord('purchase/purchase_plans/start_diagnosis')" 
-									class="btn btn-primary btn-sm btn-round btn-modal-save">
-								Guardar
-							</button>
+                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
+                                Cerrar
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" @click="reset()" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button type="button" @click="createRecord('purchase/purchase_plans/start_diagnosis')" class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                Guardar
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
-
 <script>
-export default{
-    props:['id'],
-    data(){
-        return{
-            records:[],
+export default {
+    props: ['id'],
+    data() {
+        return {
+            records: [],
             record: {
                 id: '',
                 name: '',
@@ -116,18 +97,18 @@ export default{
                 list_documents: []
             },
             listSelectDocuments: [],
-            files:null,
+            files: null,
         }
     },
-    created(){
+    created() {
         // 
     },
-    mounted(){
+    mounted() {
         if (this.records.purchase_process) {
             this.record = this.records.purchase_process;
         }
     },
-    methods:{
+    methods: {
 
         /**
          * Método que borra todos los datos del formulario
@@ -140,7 +121,7 @@ export default{
             vm.$refs.purchaseShowError.refresh();
         },
 
-        uploadFile(e){
+        uploadFile(e) {
 
             let vm = this;
             const files = e.target.files;
@@ -153,64 +134,64 @@ export default{
                     'custom', 'Error', 'danger', 'screen-error', 'Solo se permiten archivos pdf.'
                 );
                 return;
-            }else{
+            } else {
                 this.files = file;
                 $('#status_file').show("slow");
                 console.log(file)
             }
         },
 
-        createRecord(){
+        createRecord() {
             const vm = this;
             // if (document.querySelector(`#${input_id}`)) {
-                vm.loading = true;
-                // vm.files[input_id] = document.querySelector(`#${input_id}`).files[0];
+            vm.loading = true;
+            // vm.files[input_id] = document.querySelector(`#${input_id}`).files[0];
 
-                /** Se obtiene y da formato para enviar el archivo a la ruta */
-                var formData = new FormData();
+            /** Se obtiene y da formato para enviar el archivo a la ruta */
+            var formData = new FormData();
 
-                /** Se verifica que el usuario alla cargado los documentos a consignar */
-                if (!vm.files) {
-                    vm.errors = [];
-                    vm.errors.push('Debe cargar los documentos a consignar.');
-                    vm.$refs.purchaseShowError.refresh();
-                    vm.loading = false;
-                    return;
-                };
+            /** Se verifica que el usuario alla cargado los documentos a consignar */
+            if (!vm.files) {
+                vm.errors = [];
+                vm.errors.push('Debe cargar los documentos a consignar.');
+                vm.$refs.purchaseShowError.refresh();
+                vm.loading = false;
+                return;
+            };
 
-                formData.append('file', vm.files, vm.files.name);
-                formData.append("purchase_plan_id", vm.records.id);
+            formData.append('file', vm.files, vm.files.name);
+            formData.append("purchase_plan_id", vm.records.id);
 
-                axios.post('/purchase/purchase_plans/start_diagnosis', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(response => {
-                    vm.showMessage('update');
-                    vm.loading = false;
-                    location.reload();
-                }).catch(error => {
-                    if (typeof(error.response) !== "undefined") {
-                        if (error.response.status == 422 || error.response.status == 500) {
-                            for (const i in error.response.data.errors){
-                                vm.showMessage(
-                                    'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-                                );
-                            }
+            axios.post('/purchase/purchase_plans/start_diagnosis', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                vm.showMessage('update');
+                vm.loading = false;
+                location.reload();
+            }).catch(error => {
+                if (typeof(error.response) !== "undefined") {
+                    if (error.response.status == 422 || error.response.status == 500) {
+                        for (const i in error.response.data.errors) {
+                            vm.showMessage(
+                                'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
+                            );
                         }
                     }
-                    vm.loading = false;
-                });
+                }
+                vm.loading = false;
+            });
             // }
         },
     },
-    computed:{
-        purchase_type: function(){
+    computed: {
+        purchase_type: function() {
             if (this.records.purchase_type) {
                 return this.records.purchase_type.name;
             }
         },
-        purchase_process: function(){
+        purchase_process: function() {
             if (this.records.purchase_process) {
                 return this.records.purchase_process.name;
             }

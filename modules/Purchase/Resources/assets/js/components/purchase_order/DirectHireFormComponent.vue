@@ -1,18 +1,21 @@
 <template>
     <section>
         <purchase-show-errors ref="PurchaseOrderFormComponent" />
-        
         <div class="row">
             <div class="col-3">
                 <div class="form-group">
                     <label class="control-label">Fecha de generación</label><br>
-                    <label class="control-label"><h5>{{ format_date(date) }}</h5></label>
+                    <label class="control-label">
+                        <h5>{{ format_date(date) }}</h5>
+                    </label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-group">
                     <label class="control-label">Ejercicio económico</label><br>
-                    <label class="control-label"><h5>{{ (fiscalYear)?fiscalYear.year:'' }}</h5></label>
+                    <label class="control-label">
+                        <h5>{{ (fiscalYear)?fiscalYear.year:'' }}</h5>
+                    </label>
                 </div>
             </div>
             <!-- <div class="col-3">
@@ -30,8 +33,7 @@
             <div class="col-3">
                 <div class="form-group is-required">
                     <label class="control-label" for="institutions">Institución</label><br>
-                    <select2 :options="institutions" id="institutions" v-model="record.institution_id"
-                            @input="getDepartments()"></select2>
+                    <select2 :options="institutions" id="institutions" v-model="record.institution_id" @input="getDepartments()"></select2>
                 </div>
             </div>
             <div class="col-3">
@@ -68,7 +70,7 @@
                     </div>
                 </div>
             </div>
-          <!--   <div class="col-3">
+            <!--   <div class="col-3">
                 <label for="estimated_base_budget">Presupuesto base estimado</label>
                 <label class="custom-control">
                     <button type="button" data-toggle="tooltip"
@@ -104,7 +106,7 @@
                     <input type="text" id="description" v-model="record.description" class="form-control">
                 </div>
             </div>
-<!--             <div class="col-3">
+            <!--             <div class="col-3">
                 <div class="form-group is-required">
                     <label for="Disponibilidad presupuestaria">Disponibilidad presupuestaria</label>
                     <label class="custom-control">
@@ -132,10 +134,9 @@
             </div>
             <div class="col-12">
                 <ul class="feature-list list-group list-group-flush">
-                    <li class="list-group-item"
-                        v-for="(file, idx) in files">
+                    <li class="list-group-item" v-for="(file, idx) in files">
                         <div class="feature-list-indicator bg-info">
-                            <label style="margin-left: 2rem;" >
+                            <label style="margin-left: 2rem;">
                                 {{ idx.replace(/_/g, ' ') }}
                             </label>
                         </div>
@@ -143,16 +144,10 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip" v-has-tooltip
-                                                class="btn btn-sm btn-danger btn-import"
-                                                title="Presione para subir el archivo."
-                                                @click="setFile(idx)">
+                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-danger btn-import" title="Presione para subir el archivo." @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
-                                        <input type="file" 
-                                                :id="idx"
-                                                @change="uploadFile(idx, $event)"
-                                                style="display:none;">
+                                        <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
                                     </label>
                                 </div>
                                 <div class="feature-list-content-left">
@@ -164,8 +159,7 @@
                                             Cargar documento.
                                         </div>
                                     </div>
-                                    <div class="feature-list-subheading" :id="'status_'+idx"
-                                            style="display:none;">
+                                    <div class="feature-list-subheading" :id="'status_'+idx" style="display:none;">
                                         <span class="badge badge-success">
                                             <strong>Documento Cargado.</strong>
                                         </span>
@@ -179,7 +173,7 @@
             <div class="col-12">
                 <hr>
             </div>
-           <!--  <div class="col-12 row">
+            <!--  <div class="col-12 row">
                 <div class="col-3">
                     <label for="acta_inicio">Acta de inicio (inhabilitado temporalmente)</label>
                     <label class="custom-control">
@@ -264,23 +258,18 @@
                     </div>
                 </v-client-table>
             </div> -->
-    
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <div class="col-12">
                 <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
                     <div slot="unit_price" slot-scope="props">
-                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control"
-                                :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
+                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
                     </div>
                     <div slot="qty_price" slot-scope="props">
                         <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
                     </div>
                 </v-client-table>
             </div>
-
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <div class="col-12" v-if="record_items.length > 0">
                 <div class="VueTables VueTables--client" style="margin-top: -1rem;">
                     <div class="table-responsive">
@@ -334,94 +323,94 @@
     </section>
 </template>
 <script>
-export default{
-    props:{
-        record_edit:{
-            type:Object,
+export default {
+    props: {
+        record_edit: {
+            type: Object,
             default: function() {
                 return null;
             }
         },
-        date:{
+        date: {
             type: String,
-            default: function(){
+            default: function() {
                 const dateJs = new Date();
-                return dateJs.getFullYear()+'-'+(dateJs.getMonth()+1)+'-'+dateJs.getDate();
+                return dateJs.getFullYear() + '-' + (dateJs.getMonth() + 1) + '-' + dateJs.getDate();
             }
         },
-        tax:{
-            type:Object,
+        tax: {
+            type: Object,
             default: function() {
                 return null;
             }
         },
-        tax_units:{
-            type:Object,
+        tax_units: {
+            type: Object,
             default: function() {
                 return null;
             }
         },
-        requirements:{
-            type:Array,
-            default: function(){
-                return [];
-            }
-        },
-        suppliers:{
-            type:Array,
-            default: function(){
-                return [];
-            }
-        },
-        currencies:{
-            type:Array,
+        requirements: {
+            type: Array,
             default: function() {
                 return [];
             }
         },
-        purchase_supplier_objects:{
-            type:Array,
-            default: function(){
-                return [{ id:'', text:'Seleccione...'}];
+        suppliers: {
+            type: Array,
+            default: function() {
+                return [];
+            }
+        },
+        currencies: {
+            type: Array,
+            default: function() {
+                return [];
+            }
+        },
+        purchase_supplier_objects: {
+            type: Array,
+            default: function() {
+                return [{ id: '', text: 'Seleccione...' }];
             }
         },
     },
-    data(){
+    data() {
         return {
-            records:[],
-            record:{
-                institution_id             : '',
-                contracting_department_id  : '',
-                user_department_id         : '',
-                warehouse_id               : '',
+            records: [],
+            record: {
+                institution_id: '',
+                contracting_department_id: '',
+                user_department_id: '',
+                warehouse_id: '',
                 purchase_supplier_object_id: '',
-                description                : '',
-                fiscal_year_id             : '',
-                products                   : [],
-                purchase_supplier_id:'',
-                purchase_supplier_object:'',
-                currency:null,
+                description: '',
+                fiscal_year_id: '',
+                products: [],
+                purchase_supplier_id: '',
+                purchase_supplier_object: '',
+                currency: null,
             },
             fiscalYear: null,
-            institutions: [{id:'', text:'Seleccione...'}],
-            departments:[],
-            record_items:[],
-            columns: [  'code',
-                        'description',
-                        'fiscal_year.year',
-                        'contrating_department.name',
-                        'user_department.name',
-                        'purchase_supplier_type.name',
-                        'purchase_base_budget.currency.name',
-                        'id'
-                    ],
-            columns2:[  'requirement_code',
-                        'name',
-                        'quantity',
-                        'measurement_unit.acronym',
-                        'unit_price',
-                        'qty_price',
-                    ],
+            institutions: [{ id: '', text: 'Seleccione...' }],
+            departments: [],
+            record_items: [],
+            columns: ['code',
+                'description',
+                'fiscal_year.year',
+                'contrating_department.name',
+                'user_department.name',
+                'purchase_supplier_type.name',
+                'purchase_base_budget.currency.name',
+                'id'
+            ],
+            columns2: ['requirement_code',
+                'name',
+                'quantity',
+                'measurement_unit.acronym',
+                'unit_price',
+                'qty_price',
+            ],
             table2_options: {
                 pagination: { edge: true },
                 //filterByColumn: true,
@@ -444,61 +433,61 @@ export default{
                     down: 'fa-sort-down cursor-pointer'
                 },
             },
-            requirement_list:[],
-            requirement_list_deleted:[],
-            sub_total:0,
-            tax_value:0,
-            total:0,
-            currency_id:'',
-            purchase_supplier_id:'',
-            convertion_list:[],
-            load_data_edit:false,
-            files:{
-                'Presupuesto_base_estimado' : null,
+            requirement_list: [],
+            requirement_list_deleted: [],
+            sub_total: 0,
+            tax_value: 0,
+            total: 0,
+            currency_id: '',
+            purchase_supplier_id: '',
+            convertion_list: [],
+            load_data_edit: false,
+            files: {
+                'Presupuesto_base_estimado': null,
                 'Disponibilidad_presupuestaria': null,
             },
         }
     },
-    created(){
+    created() {
         const vm = this;
         vm.table_options.headings = {
-            'code':                               'Código',
-            'description':                        'Descripción',
-            'fiscal_year.year':                   'Año fiscal',
-            'contrating_department.name':         'Departamento contatante',
-            'user_department.name':               'Departamento Usuario',
-            'purchase_supplier_type.name':        'Tipo de Proveedor',
+            'code': 'Código',
+            'description': 'Descripción',
+            'fiscal_year.year': 'Año fiscal',
+            'contrating_department.name': 'Departamento contatante',
+            'user_department.name': 'Departamento Usuario',
+            'purchase_supplier_type.name': 'Tipo de Proveedor',
             'purchase_base_budget.currency.name': 'Moneda',
-            'id':                                 'Acción'
+            'id': 'Acción'
         };
 
         vm.table_options.columnsClasses = {
-            'code':                               'col-xs-1 text-center',
-            'description':                        'col-xs-2',
-            'fiscal_year.year':                   'col-xs-1 text-center',
-            'contrating_department.name':         'col-xs-2',
-            'user_department.name':               'col-xs-2',
-            'purchase_supplier_type.name':        'col-xs-2',
+            'code': 'col-xs-1 text-center',
+            'description': 'col-xs-2',
+            'fiscal_year.year': 'col-xs-1 text-center',
+            'contrating_department.name': 'col-xs-2',
+            'user_department.name': 'col-xs-2',
+            'purchase_supplier_type.name': 'col-xs-2',
             'purchase_base_budget.currency.name': 'col-xs-1',
-            'id':                                 'col-xs-1'
+            'id': 'col-xs-1'
         };
 
         vm.table2_options.headings = {
-            'requirement_code':         'Código de requerimiento',
-            'name':                     'Nombre',
-            'quantity':                 'Cantidad',
+            'requirement_code': 'Código de requerimiento',
+            'name': 'Nombre',
+            'quantity': 'Cantidad',
             'measurement_unit.acronym': 'Unidad de medida',
-            'unit_price':               'Precio unitario sin IVA',
-            'qty_price':                'Cantidad * precio unitario',
+            'unit_price': 'Precio unitario sin IVA',
+            'qty_price': 'Cantidad * precio unitario',
         };
 
         vm.table2_options.columnsClasses = {
-            'requirement_code':         'col-xs-1 text-center',
-            'name':                     'col-xs-3',
-            'quantity':                 'col-xs-2',
+            'requirement_code': 'col-xs-1 text-center',
+            'name': 'col-xs-3',
+            'quantity': 'col-xs-2',
             'measurement_unit.acronym': 'col-xs-2',
-            'unit_price':               'col-xs-2',
-            'qty_price':                'col-xs-2',
+            'unit_price': 'col-xs-2',
+            'qty_price': 'col-xs-2',
         };
 
         vm.table2_options.filterable = [];
@@ -508,7 +497,7 @@ export default{
             // console.log(response.data.institutions)
         });
     },
-    mounted(){
+    mounted() {
         const vm = this;
 
         vm.records = vm.requirements;
@@ -531,23 +520,23 @@ export default{
             vm.fiscalYear = response.data.fiscal_year;
         });
     },
-    methods:{
+    methods: {
 
-        reset(){
-            this.record_items             = [];
-            this.requirement_list         = [];
+        reset() {
+            this.record_items = [];
+            this.requirement_list = [];
             this.requirement_list_deleted = [];
             this.record = {
-                purchase_supplier_id:'',
-                currency:'',
+                purchase_supplier_id: '',
+                currency: '',
             };
             this.sub_total = 0;
             this.tax_value = 0;
-            this.total     = 0;
+            this.total = 0;
             this.$refs.PurchaseOrderFormComponent.reset();
         },
 
-        uploadFile(inputID, e){
+        uploadFile(inputID, e) {
             console.log(inputID)
 
             let vm = this;
@@ -561,17 +550,17 @@ export default{
                     'custom', 'Error', 'danger', 'screen-error', 'Solo se permiten archivos pdf.'
                 );
                 return;
-            }else{
+            } else {
                 this.files[inputID] = file;
-                $('#status_'+inputID).show("slow");
+                $('#status_' + inputID).show("slow");
             }
         },
 
-        addDecimals(value){
+        addDecimals(value) {
             return parseFloat(value).toFixed(this.currency_decimal_places);
         },
 
-        indexOf(list, id, returnBoolean){
+        indexOf(list, id, returnBoolean) {
             for (var i = list.length - 1; i >= 0; i--) {
                 if (list[i].id == id) {
                     return (returnBoolean) ? true : i;
@@ -580,74 +569,74 @@ export default{
             return (returnBoolean) ? false : -1;
         },
 
-        requirementCheck(record){
-            axios.get('/purchase/get-convertion/'+this.currency_id+'/'+record.purchase_base_budget.currency_id)
-            .then(response=>{
-                if (record.purchase_base_budget.currency_id != this.currency_id && !response.data.record) {
+        requirementCheck(record) {
+            axios.get('/purchase/get-convertion/' + this.currency_id + '/' + record.purchase_base_budget.currency_id)
+                .then(response => {
+                    if (record.purchase_base_budget.currency_id != this.currency_id && !response.data.record) {
 
-                    if ($('#requirement_check_'+record.id+' input:checkbox').prop('checked')) {
-                        this.showMessage(
-                            'custom', 'Error', 'danger', 'screen-error',
-                            "Imposible realizar la conversión de "+this.record.currency.name
-                            +" a "+record.purchase_base_budget.currency.name
-                            +". Revisar conversiones configuradas en el sistema."
-                        );
-                        $('#requirement_check_'+record.id+' input:checkbox').prop('checked',false);
+                        if ($('#requirement_check_' + record.id + ' input:checkbox').prop('checked')) {
+                            this.showMessage(
+                                'custom', 'Error', 'danger', 'screen-error',
+                                "Imposible realizar la conversión de " + this.record.currency.name +
+                                " a " + record.purchase_base_budget.currency.name +
+                                ". Revisar conversiones configuradas en el sistema."
+                            );
+                            $('#requirement_check_' + record.id + ' input:checkbox').prop('checked', false);
+                        }
+                    } else {
+                        this.convertion_list.push(response.data.record);
+                        this.addToList(record);
                     }
-                }else{
-                    this.convertion_list.push(response.data.record);
-                    this.addToList(record);
-                }
-            });
+                });
         },
 
-        addToList:function(record, prices) {
+        addToList: function(record, prices) {
             var pos = this.indexOf(this.requirement_list, record.id);
-                // se agregan a la lista a guardar
+            // se agregan a la lista a guardar
+            if (pos == -1) {
+                for (var i = 0; i < record.purchase_requirement_items.length; i++) {
+                    record.purchase_requirement_items[i].requirement_code = record.code;
+                    record.purchase_requirement_items[i].unit_price = (prices) ? prices[record.purchase_requirement_items[i].id] : 0;
+                }
+
+                // saca de la lista de registros eliminar
+                pos = this.indexOf(this.requirement_list_deleted, record.id);
+                if (pos != -1) {
+                    this.requirement_list_deleted.splice(pos, 1);
+                }
+
+                this.requirement_list.push(record);
+                this.record_items = this.record_items.concat(record.purchase_requirement_items);
+            } else {
+                // se sacan de la lista a guardar
+                var record_copy = this.requirement_list.splice(pos, 1)[0];
+                var pos = this.indexOf(this.requirement_list_deleted, record_copy.id);
+
+                // agrega a la lista de registros a eliminar
                 if (pos == -1) {
-                    for (var i = 0; i < record.purchase_requirement_items.length; i++) {
-                        record.purchase_requirement_items[i].requirement_code = record.code;
-                        record.purchase_requirement_items[i].unit_price = (prices)?prices[record.purchase_requirement_items[i].id]:0;
-                    }
+                    this.requirement_list_deleted.push(record_copy);
+                }
 
-                    // saca de la lista de registros eliminar
-                    pos = this.indexOf(this.requirement_list_deleted, record.id);
-                    if (pos != -1) {
-                        this.requirement_list_deleted.splice(pos,1);
-                    }
-
-                    this.requirement_list.push(record);
-                    this.record_items = this.record_items.concat(record.purchase_requirement_items);
-                }else{
-                    // se sacan de la lista a guardar
-                    var record_copy = this.requirement_list.splice(pos,1)[0];
-                    var pos = this.indexOf(this.requirement_list_deleted, record_copy.id); 
-
-                    // agrega a la lista de registros a eliminar
-                    if (pos == -1) {
-                        this.requirement_list_deleted.push(record_copy);
-                    }
-
-                    for (var i = 0; i < record.purchase_requirement_items.length; i++) {
-                        for (var x = 0; x < this.record_items.length; x++) {
-                            if (this.record_items[x].id == record.purchase_requirement_items[i].id) {
-                                delete this.record_items[x].qty_price;
-                                this.record_items.splice(x,1);
-                                break;
-                            }
+                for (var i = 0; i < record.purchase_requirement_items.length; i++) {
+                    for (var x = 0; x < this.record_items.length; x++) {
+                        if (this.record_items[x].id == record.purchase_requirement_items[i].id) {
+                            delete this.record_items[x].qty_price;
+                            this.record_items.splice(x, 1);
+                            break;
                         }
                     }
                 }
-                this.CalculateTot();
+            }
+            this.CalculateTot();
         },
 
-       /**
-        * [CalculateTot Calcula el total del debe y haber del asiento contable]
-        * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-        * @param  {[type]} r   [información del registro]
-        * @param  {[type]} pos [posición del registro]
-        */
-        CalculateTot(item, pos){
+        /**
+         * [CalculateTot Calcula el total del debe y haber del asiento contable]
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         * @param  {[type]} r   [información del registro]
+         * @param  {[type]} pos [posición del registro]
+         */
+        CalculateTot(item, pos) {
             const vm = this;
             // console.log(item)
             // vm.record_items[pos] = item;
@@ -659,23 +648,23 @@ export default{
                 r['qty_price'] = r.quantity * r.unit_price;
                 vm.sub_total += r['qty_price'];
             }
-            vm.tax_value = vm.sub_total * (parseFloat(vm.tax.percentage)/100);
+            vm.tax_value = vm.sub_total * (parseFloat(vm.tax.percentage) / 100);
             vm.total = vm.sub_total + vm.tax_value;
         },
 
-        CalculateQtyPrice(qty_price){
-            return (qty_price)?(qty_price).toFixed((this.record.currency)?this.currency_decimal_places:''):0;
+        CalculateQtyPrice(qty_price) {
+            return (qty_price) ? (qty_price).toFixed((this.record.currency) ? this.currency_decimal_places : '') : 0;
         },
 
         /**
-        * Establece la cantidad de decimales correspondientes a la moneda que se maneja
-        *
-        * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-        */
-        cualculateLimitDecimal(){
+         * Establece la cantidad de decimales correspondientes a la moneda que se maneja
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         */
+        cualculateLimitDecimal() {
             var res = "0.";
             if (this.currency) {
-                for (var i = 0; i < this.currency.decimal_places-1; i++) {
+                for (var i = 0; i < this.currency.decimal_places - 1; i++) {
                     res += "0";
                 }
             }
@@ -683,7 +672,7 @@ export default{
             return res;
         },
 
-        createRecord(){
+        createRecord() {
 
             // if (id == 'acta_inicio' || id == 'invitation_bussiness') {
             //     $('#status_'+id).show('slow');
@@ -698,9 +687,9 @@ export default{
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);
             formData.append("subtotal", this.sub_total);
-            formData.append("requirement_list", JSON.stringify(this.requirement_list) );
+            formData.append("requirement_list", JSON.stringify(this.requirement_list));
             vm.loading = true;
-             
+
             if (!this.record_edit) {
                 axios.post('/purchase/purchase_order', formData, {
                     headers: {
@@ -713,7 +702,7 @@ export default{
                 }).catch(error => {
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 422 || error.response.status == 500) {
-                            for (const i in error.response.data.errors){
+                            for (const i in error.response.data.errors) {
                                 vm.showMessage(
                                     'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
                                 );
@@ -722,10 +711,10 @@ export default{
                     }
                     vm.loading = false;
                 });
-            }else{
+            } else {
                 formData.append("list_to_delete", JSON.stringify(this.requirement_list_deleted));
 
-                axios.post('/purchase/purchase_order/'+this.record_edit.id, formData, {
+                axios.post('/purchase/purchase_order/' + this.record_edit.id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -737,7 +726,7 @@ export default{
                 }).catch(error => {
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 422 || error.response.status == 500) {
-                            for (const i in error.response.data.errors){
+                            for (const i in error.response.data.errors) {
                                 vm.showMessage(
                                     'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
                                 );
@@ -775,51 +764,51 @@ export default{
             });
         },
     },
-    watch:{
-        currency_id:function(res, ant){
+    watch: {
+        currency_id: function(res, ant) {
             if (res != ant && !this.load_data_edit) {
-                this.record_items             = [];
+                this.record_items = [];
 
                 this.requirement_list_deleted = [];
                 if (this.requirement_list.length > 0) {
-                    this.requirement_list_deleted = this.requirement_list;    
+                    this.requirement_list_deleted = this.requirement_list;
                 }
-                this.requirement_list         = [];
+                this.requirement_list = [];
 
-                this.sub_total                = 0;
-                this.tax_value                = 0;
-                this.total                    = 0;
-            }else{
+                this.sub_total = 0;
+                this.tax_value = 0;
+                this.total = 0;
+            } else {
                 this.load_data_edit = false;
             }
             if (res) {
-                axios.get('/currencies/info/'+res).then(response=>{
+                axios.get('/currencies/info/' + res).then(response => {
                     this.record.currency = response.data.currency;
                 })
             }
         },
-        purchase_supplier_id:function(res) {
+        purchase_supplier_id: function(res) {
             if (res) {
-                axios.get('/purchase/get-purchase-supplier-object/'+res).then(response=>{
+                axios.get('/purchase/get-purchase-supplier-object/' + res).then(response => {
                     this.record.purchase_supplier_object = response.data;
                     this.record.purchase_supplier_id = res;
                 })
             }
         },
     },
-    computed:{
-        currency_symbol: function(){
-            return (this.record.currency)?this.record.currency.symbol:'';
+    computed: {
+        currency_symbol: function() {
+            return (this.record.currency) ? this.record.currency.symbol : '';
         },
-        currency_decimal_places: function(){
+        currency_decimal_places: function() {
             if (this.record.currency) {
                 return this.record.currency.decimal_places;
             }
         },
-        currency:function(){
-            return (this.record.currency)?this.record.currency:null;
+        currency: function() {
+            return (this.record.currency) ? this.record.currency : null;
         },
-        getRecordItems: function(){
+        getRecordItems: function() {
             return this.record_items;
         }
     }

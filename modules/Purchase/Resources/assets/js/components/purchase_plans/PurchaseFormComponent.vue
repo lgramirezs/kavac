@@ -1,9 +1,7 @@
 <template>
     <div class="form-horizontal">
         <div class="card-body">
-            
             <purchase-show-errors ref="purchaseShowError" />
-
             <div class="row">
                 <div class="col-3">
                     <div class="form-group is-required">
@@ -26,15 +24,13 @@
                 <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label">Fecha Inicial</label>
-                        <input type="date" class="form-control" v-model="record.init_date"
-                                tabindex="1">
+                        <input type="date" class="form-control" v-model="record.init_date" tabindex="1">
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label">Fecha de culminación</label>
-                        <input type="date" class="form-control" v-model="record.end_date"
-                                tabindex="1">
+                        <input type="date" class="form-control" v-model="record.end_date" tabindex="1">
                     </div>
                 </div>
             </div>
@@ -43,131 +39,130 @@
             <buttonsDisplay route_list="/purchese/purchase_plans" display="false" />
         </div>
     </div>
-
 </template>
 <script>
-    export default{
-        props:{
-            purchase_types:{
-                type:Array,
-                default: function(){
-                    return [];
-                }
-            },
-            purchase_process:{
-                type:Array,
-                default: function(){
-                    return [];
-                }
-            },
-            users:{
-                type:Array,
-                default: function(){
-                    return [];
-                }
-            },
-            record_edit:{
-                type:Object,
-                default: function(){
-                    return null;
-                }
-            },
-        },
-        data(){
-            return {
-                record:{
-                    end_date:'',
-                    init_date:'',
-                    purchase_type_id:'',
-                    purchase_processes_id:'',
-                    user_id:'',
-                },
-                disabledInputProcess:false,
+export default {
+    props: {
+        purchase_types: {
+            type: Array,
+            default: function() {
+                return [];
             }
         },
-        mounted(){
-            if (this.record_edit) {
-                this.record = this.record_edit;
+        purchase_process: {
+            type: Array,
+            default: function() {
+                return [];
             }
         },
-        methods:{
-            reset(){
-                const vm = this;
-                vm.record = {
-                    end_date:'',
-                    init_date:'',
-                    purchase_type_id:'',
-                    purchase_processes_id:'',
-                    user_id:'',
-                };
-                vm.$refs.purchaseShowError.reset();
+        users: {
+            type: Array,
+            default: function() {
+                return [];
+            }
+        },
+        record_edit: {
+            type: Object,
+            default: function() {
+                return null;
+            }
+        },
+    },
+    data() {
+        return {
+            record: {
+                end_date: '',
+                init_date: '',
+                purchase_type_id: '',
+                purchase_processes_id: '',
+                user_id: '',
             },
+            disabledInputProcess: false,
+        }
+    },
+    mounted() {
+        if (this.record_edit) {
+            this.record = this.record_edit;
+        }
+    },
+    methods: {
+        reset() {
+            const vm = this;
+            vm.record = {
+                end_date: '',
+                init_date: '',
+                purchase_type_id: '',
+                purchase_processes_id: '',
+                user_id: '',
+            };
+            vm.$refs.purchaseShowError.reset();
+        },
 
-            createRecord(){
-                const vm = this;
+        createRecord() {
+            const vm = this;
 
-                vm.loading = true;
-                if (!vm.record_edit) {
-                    axios.post('/purchase/purchase_plans', vm.record).then(response=>{
-                        vm.loading = false;
-                        vm.showMessage('store');
-                        setTimeout(function() {
-                            location.href = '/purchase/purchase_plans';
-                        }, 2000);
-                    }).catch(error=>{
-                        vm.loading = false;
-                        vm.errors = [];
-                        if (typeof(error.response) != 'undefined') {
-                            for (var index in error.response.data.errors) {
-                                if (error.response.data.errors[index]) {
-                                    vm.errors.push(error.response.data.errors[index][0]);
-                                }
+            vm.loading = true;
+            if (!vm.record_edit) {
+                axios.post('/purchase/purchase_plans', vm.record).then(response => {
+                    vm.loading = false;
+                    vm.showMessage('store');
+                    setTimeout(function() {
+                        location.href = '/purchase/purchase_plans';
+                    }, 2000);
+                }).catch(error => {
+                    vm.loading = false;
+                    vm.errors = [];
+                    if (typeof(error.response) != 'undefined') {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
                             }
-                        }
-                        vm.$refs.purchaseShowError.refresh();
-                    });
-                }else{
-                    axios.put('/purchase/purchase_plans/'+vm.record_edit.id, vm.record).then(response=>{
-                        vm.loading = false;
-                        vm.showMessage('update');
-                        setTimeout(function() {
-                            location.href = '/purchase/purchase_plans';
-                        }, 2000);
-                    }).catch(error=>{
-                        vm.loading = false;
-                        vm.errors = [];
-                        if (typeof(error.response) != 'undefined') {
-                            for (var index in error.response.data.errors) {
-                                if (error.response.data.errors[index]) {
-                                    vm.errors.push(error.response.data.errors[index][0]);
-                                }
-                            }
-                        }
-                        vm.$refs.purchaseShowError.refresh();
-                    });
-                }
-            },
-            loadPurchaseProcess(){
-                const vm = this;
-                for (var i = 0; i < vm.purchase_types.length; i++) {
-                    if(vm.purchase_types[i].id == vm.record.purchase_type_id){
-                        if (vm.record.purchase_processes_id != vm.purchase_types[i].purchase_processes_id) {
-                            vm.record.purchase_processes_id = vm.purchase_types[i].purchase_processes_id;
-
-                            vm.disabledInputProcess = true;
-
-                            if (!vm.purchase_types[i].purchase_processes_id) {
-                                vm.disabledInputProcess = false;    
-                            }
-                            break;
                         }
                     }
-                }
-            },
-
+                    vm.$refs.purchaseShowError.refresh();
+                });
+            } else {
+                axios.put('/purchase/purchase_plans/' + vm.record_edit.id, vm.record).then(response => {
+                    vm.loading = false;
+                    vm.showMessage('update');
+                    setTimeout(function() {
+                        location.href = '/purchase/purchase_plans';
+                    }, 2000);
+                }).catch(error => {
+                    vm.loading = false;
+                    vm.errors = [];
+                    if (typeof(error.response) != 'undefined') {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+                    vm.$refs.purchaseShowError.refresh();
+                });
+            }
         },
-        watch: {
+        loadPurchaseProcess() {
+            const vm = this;
+            for (var i = 0; i < vm.purchase_types.length; i++) {
+                if (vm.purchase_types[i].id == vm.record.purchase_type_id) {
+                    if (vm.record.purchase_processes_id != vm.purchase_types[i].purchase_processes_id) {
+                        vm.record.purchase_processes_id = vm.purchase_types[i].purchase_processes_id;
 
-        }
-    };
+                        vm.disabledInputProcess = true;
+
+                        if (!vm.purchase_types[i].purchase_processes_id) {
+                            vm.disabledInputProcess = false;
+                        }
+                        break;
+                    }
+                }
+            }
+        },
+
+    },
+    watch: {
+
+    }
+};
 </script>
