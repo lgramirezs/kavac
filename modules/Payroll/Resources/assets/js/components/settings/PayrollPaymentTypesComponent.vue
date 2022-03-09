@@ -3,7 +3,7 @@
         <a class="btn-simplex btn-simplex-md btn-simplex-primary" href=""
            title="Registros de tipos de pago" data-toggle="tooltip"
            @click="addRecord('add_payroll_payment_type', 'payroll/payment-types', $event)">
-           <i class="icofont icofont icofont-law-document ico-3x"></i>
+           <i class="icofont icofont-law-document ico-3x"></i>
            <span>Tipos de<br>Pago</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_payroll_payment_type">

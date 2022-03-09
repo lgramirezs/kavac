@@ -2,11 +2,11 @@
     <section id="payrollPermissionPoliciesComponent">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary" href=""
            title="Registros de políticas de perimisos" data-toggle="tooltip"
-           @click="addRecord('add_payroll-permission-policies', 'payroll/permission-policies', $event)">
+           @click="addRecord('add_payroll_permission_policies', 'payroll/permission-policies', $event)">
            <i class="icofont icofont-paper ico-3x"></i>
            <span>Políticas de Permisos</span>
         </a>
-        <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_payroll-permission-policies">
+        <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_payroll_permission_policies">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -261,7 +261,7 @@
         },
         mounted() {
             const vm = this;
-            $("#add_payroll-permission-policies").on('show.bs.modal', function() {
+            $("#add_payroll_permission_policies").on('show.bs.modal', function() {
                 vm.getInstitutions();
             });
         },
