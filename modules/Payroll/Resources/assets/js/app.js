@@ -617,7 +617,7 @@ Vue.component('payroll-permission-policies', () =>
  */
 Vue.component('payroll-permission-request-create', () =>
 	import(
-		/* webpackChunkName: "payroll-permission-policies" */
+		/* webpackChunkName: "payroll-permission-request-create" */
 		'./components/requests/permissions/PayrollPermissionRequestCreateComponent.vue'
 	)
 );
