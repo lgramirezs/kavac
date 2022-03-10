@@ -1,455 +1,436 @@
 <template>
-	<div class="row">
-		<div class="col-12">
-			<div class="card">
-				<div class="card-header">
-					<h6 class="card-title">Registrar los Datos Personales</h6>
-					<div class="card-btns">
-						<a href="#" class="btn btn-sm btn-primary btn-custom" @click="redirect_back(route_list)"
-						   title="Ir atrás" data-toggle="tooltip">
-							<i class="fa fa-reply"></i>
-						</a>
-						<a href="#" class="card-minimize btn btn-card-action btn-round" title="Minimizar"
-						   data-toggle="tooltip">
-							<i class="now-ui-icons arrows-1_minimal-up"></i>
-						</a>
-					</div>
-				</div>
-
-				<div class="card-body">
-					<div class="alert alert-danger" v-if="errors.length > 0">
-						<div class="container">
-							<div class="alert-icon">
-								<i class="now-ui-icons objects_support-17"></i>
-							</div>
-							<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"
-									@click.prevent="errors = []">
-								<span aria-hidden="true">
-									<i class="now-ui-icons ui-1_simple-remove"></i>
-								</span>
-							</button>
-							<ul>
-								<li v-for="error in errors" :key="error">{{ error }}</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="row">
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Nombres</label>
-								<input type="text" class="form-control input-sm" v-model="record.first_name"/>
-                                <input type="hidden" v-model="record.id" v-is-text>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Apellidos</label>
-								<input type="text" class="form-control input-sm" v-model="record.last_name" v-is-text/>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Nacionalidad</label>
-								<select2 :options="payroll_nationalities"
-                                         v-model="record.payroll_nationality_id"></select2>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Cédula de Identidad</label>
-								<input type="text" class="form-control input-sm" v-model="record.id_number" v-is-digits/>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Pasaporte</label>
-								<input type="text" class="form-control input-sm" v-model="record.passport" v-is-digits/>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Correo Electrónico</label>
-								<input type="email" class="form-control input-sm" v-model="record.email"/>
-							</div>
-						</div>
-					</div>
-
-                    <div class="row">
-						<div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Fecha de Nacimiento</label>
-								<input type="date" class="form-control input-sm" v-model="record.birthdate"/>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Género</label>
-								<select2 :options="payroll_genders" v-model="record.payroll_gender_id"></select2>
-							</div>
-						</div>
-					</div>
-
-                    <div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Nombres y Apellidos de la Persona de Contacto</label>
-								<input type="text" class="form-control input-sm" v-model="record.emergency_contact"
-                                       v-is-text/>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Teléfono de la Persona de Contacto</label>
-								<input type="text" class="form-control input-sm" placeholder="+00-000-0000000"
-                                       v-model="record.emergency_phone" v-input-mask
-                                       data-inputmask="'mask': '+99-999-9999999'"/>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>¿Posee una Discapacidad?</label>
-								<div class="col-md-12">
-                                    <div class="col-12 bootstrap-switch-mini">
-    									<input id="has_disability" name="has_disability" type="checkbox"
-                                               class="form-control bootstrap-switch sel_has_disability"
-                                               data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                               title="Indique si el trabajador posee una discapacidad o no"
-                                               v-model="record.has_disability" value="true"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4" v-if="record.has_disability">
-							<div class="form-group is-required">
-								<label>Discapacidad</label>
-								<select2 :options="payroll_disabilities" v-model="record.payroll_disability_id">
-                                </select2>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Tipo de Sangre</label>
-								<select2 :options="payroll_blood_types" v-model="record.payroll_blood_type_id">
-                                </select2>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Seguro Social</label>
-								<input type="text" class="form-control input-sm" v-model="record.social_security"
-                                       title="Indique el número de seguro social"/>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>¿Posee Licencia de Conducir?</label>
-								<div class="col-md-12">
-                                    <div class="col-12 bootstrap-switch-mini">
-    									<input id="has_driver_license" name="has_driver_license" type="checkbox"
-                                               class="form-control bootstrap-switch sel_has_driver_license"
-                                               data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                               title="Indique si el trabajador posee licencia de conducir o no"
-                                               v-model="record.has_driver_license" value="true"/>
-                                    </div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4" v-if="record.has_driver_license">
-							<div class="form-group is-required">
-								<label>Grado de Licencia de Conducir</label>
-								<select2 :options="payroll_license_degrees" v-model="record.payroll_license_degree_id">
-                                </select2>
-							</div>
-						</div>
-					</div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>País</label>
-								<select2 :options="countries" @input="getEstates()" v-model="record.country_id"></select2>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Estado</label>
-								<select2 :options="estates" @input="getMunicipalities()" v-model="record.estate_id"></select2>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Municipio</label>
-								<select2 :options="municipalities" @input="getParishes()" v-model="record.municipality_id"></select2>
-							</div>
-						</div>
-					</div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Parroquia</label>
-								<select2 :options="parishes" v-model="record.parish_id"></select2>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Dirección</label>
-								<input type="text" class="form-control input-sm" v-model="record.address"/>
-							</div>
-						</div>
+    <section id="PayroStaffForm">
+        <div class="card-body">
+            <div class="alert alert-danger" v-if="errors.length > 0">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="now-ui-icons objects_support-17"></i>
                     </div>
+                    <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                            @click.prevent="errors = []">
+                        <span aria-hidden="true">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </span>
+                    </button>
+                    <ul>
+                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                </div>
+            </div>
 
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group is-required">
-								<label>Talla de Uniforme</label>
-								<input type="number" class="form-control input-sm" v-model="record.uniform_size"
-                                       title="Indique la talla del uniforme" min="1"/>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="form-group">
-								<label>Historial Médico</label>
-								<ckeditor :editor="ckeditor.editor" id="medical_history" data-toggle="tooltip"
-	                                      title="Indique el historial médico" :config="ckeditor.editorConfig"
-	                                      class="form-control" tag-name="textarea" rows="2"
-	                                      v-model="record.medical_history">
-	                            </ckeditor>
-							</div>
-						</div>
+            <div class="row">
+                <div class="col-md-4" id="helpStaffName">
+                    <div class="form-group is-required">
+                        <label>Nombres</label>
+                        <input type="text" class="form-control input-sm" v-model="record.first_name"/>
+                        <input type="hidden" v-model="record.id" v-is-text>
                     </div>
+                </div>
+                <div class="col-md-4" id="helpStaffLastName">
+                    <div class="form-group is-required">
+                        <label>Apellidos</label>
+                        <input type="text" class="form-control input-sm" v-model="record.last_name" v-is-text/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffNationality">
+                    <div class="form-group is-required">
+                        <label>Nacionalidad</label>
+                        <select2 :options="payroll_nationalities"
+                                 v-model="record.payroll_nationality_id"></select2>
+                    </div>
+                </div>
+            </div>
 
-					<hr>
-					<h6 class="card-title">
-						Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
-					</h6>
-                    <div class="row phone-row" v-for="(phone, index) in record.phones" :key="index">
-                        <div class="col-3">
-                            <div class="form-group is-required">
-                                <select data-toggle="tooltip" v-model="phone.type" class="select2"
-                                        title="Seleccione el tipo de número telefónico" :data-phone-index="index">
-                                    <option value="">Seleccione...</option>
-                                    <option value="M">Móvil</option>
-                                    <option value="T">Teléfono</option>
-                                    <option value="F">Fax</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group is-required">
-                                <input type="text" placeholder="Cod. Area" data-toggle="tooltip"
-                                       title="Indique el código de área" v-model="phone.area_code"
-                                       class="form-control input-sm" v-is-digits>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group is-required">
-                                <input type="text" placeholder="Número" data-toggle="tooltip"
-                                       title="Indique el número telefónico"
-                                       v-model="phone.number" class="form-control input-sm" v-is-digits>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group">
-                                <input type="text" placeholder="Extensión" data-toggle="tooltip"
-                                       title="Indique la extención telefónica (opcional)"
-                                       v-model="phone.extension" class="form-control input-sm" v-is-digits>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="form-group">
-                                <button class="btn btn-sm btn-danger btn-action" type="button"
-                                        @click="removeRow(index, record.phones)"
-                                        title="Eliminar este dato" data-toggle="tooltip">
-                                    <i class="fa fa-minus-circle"></i>
-                                </button>
+            <div class="row">
+                <div class="col-md-4" id="helpStaffIdNumber">
+                    <div class="form-group is-required">
+                        <label>Cédula de Identidad</label>
+                        <input type="text" class="form-control input-sm" v-model="record.id_number" v-is-digits/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffPassport">
+                    <div class="form-group">
+                        <label>Pasaporte</label>
+                        <input type="text" class="form-control input-sm" v-model="record.passport" v-is-digits/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffEmail">
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" class="form-control input-sm" v-model="record.email"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="helpStaffBirthDate">
+                    <div class="form-group is-required">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" class="form-control input-sm" v-model="record.birthdate"/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffGender">
+                    <div class="form-group is-required">
+                        <label>Género</label>
+                        <select2 :options="payroll_genders" v-model="record.payroll_gender_id"></select2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="helpStaffEmergencyContact">
+                    <div class="form-group">
+                        <label>Nombres y Apellidos de la Persona de Contacto</label>
+                        <input type="text" class="form-control input-sm" v-model="record.emergency_contact"
+                               v-is-text/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffEmergencyContactPhone">
+                    <div class="form-group">
+                        <label>Teléfono de la Persona de Contacto</label>
+                        <input type="text" class="form-control input-sm" placeholder="+00-000-0000000"
+                               v-model="record.emergency_phone" v-input-mask
+                               data-inputmask="'mask': '+99-999-9999999'"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" id="helpStaffDisability">
+                        <label>¿Posee una Discapacidad?</label>
+                        <div class="col-md-12">
+                            <div class="col-12 bootstrap-switch-mini">
+                                <input id="has_disability" name="has_disability" type="checkbox"
+                                       class="form-control bootstrap-switch sel_has_disability"
+                                       data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
+                                       title="Indique si el trabajador posee una discapacidad o no"
+                                       v-model="record.has_disability" value="true"/>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4" id="helpStaffDisabilityName" v-if="record.has_disability">
+                    <div class="form-group is-required">
+                        <label>Discapacidad</label>
+                        <select2 :options="payroll_disabilities" v-model="record.payroll_disability_id">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffBloodType">
+                    <div class="form-group is-required">
+                        <label>Tipo de Sangre</label>
+                        <select2 :options="payroll_blood_types" v-model="record.payroll_blood_type_id">
+                        </select2>
+                    </div>
+                </div>
+            </div>
 
-				<div class="card-footer pull-right">
-					<button class="btn btn-default btn-icon btn-round" data-toggle="tooltip" type="button"
-						title="Borrar datos del formulario" @click="reset"><i class="fa fa-eraser"></i>
-					</button>
-					<button type="button" class="btn btn-warning btn-icon btn-round" data-toggle="tooltip"
-							title="Cancelar y regresar" @click="redirect_back(route_list)">
-						<i class="fa fa-ban"></i>
-					</button>
-					<button type="button" @click="createRecord('payroll/staffs')"
-	                	class="btn btn-success btn-icon btn-round">
-	                	<i class="fa fa-save"></i>
-					</button>
-				</div>
+            <div class="row">
+                <div class="col-md-4" id="helpStaffSocialSecurity">
+                    <div class="form-group">
+                        <label>Seguro Social</label>
+                        <input type="text" class="form-control input-sm" v-model="record.social_security"
+                               title="Indique el número de seguro social"/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffDiverLicense">
+                    <div class="form-group">
+                        <label>¿Posee Licencia de Conducir?</label>
+                        <div class="col-md-12">
+                            <div class="col-12 bootstrap-switch-mini">
+                                <input id="has_driver_license" name="has_driver_license" type="checkbox"
+                                       class="form-control bootstrap-switch sel_has_driver_license"
+                                       data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
+                                       title="Indique si el trabajador posee licencia de conducir o no"
+                                       v-model="record.has_driver_license" value="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffLicenseDegree" v-if="record.has_driver_license">
+                    <div class="form-group is-required">
+                        <label>Grado de Licencia de Conducir</label>
+                        <select2 :options="payroll_license_degrees" v-model="record.payroll_license_degree_id">
+                        </select2>
+                    </div>
+                </div>
+            </div>
 
-			</div>
-		</div>
-	</div>
+            <div class="row">
+                <div class="col-md-4" id="helpStaffCountry">
+                    <div class="form-group is-required">
+                        <label>País</label>
+                        <select2 :options="countries" @input="getEstates()" v-model="record.country_id"></select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffState">
+                    <div class="form-group is-required">
+                        <label>Estado</label>
+                        <select2 :options="estates" @input="getMunicipalities()" v-model="record.estate_id"></select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffMunicipality">
+                    <div class="form-group is-required">
+                        <label>Municipio</label>
+                        <select2 :options="municipalities" @input="getParishes()" v-model="record.municipality_id"></select2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="helpStaffParish">
+                    <div class="form-group is-required">
+                        <label>Parroquia</label>
+                        <select2 :options="parishes" v-model="record.parish_id"></select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffAddress">
+                    <div class="form-group is-required">
+                        <label>Dirección</label>
+                        <input type="text" class="form-control input-sm" v-model="record.address"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="helpStaffUniformSize">
+                    <div class="form-group is-required">
+                        <label>Talla de Uniforme</label>
+                        <input type="number" class="form-control input-sm" v-model="record.uniform_size"
+                               title="Indique la talla del uniforme" min="1"/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpStaffMedicalHistory">
+                    <div class="form-group">
+                        <label>Historial Médico</label>
+                        <ckeditor :editor="ckeditor.editor" id="medical_history" data-toggle="tooltip"
+                                  title="Indique el historial médico" :config="ckeditor.editorConfig"
+                                  class="form-control" tag-name="textarea" rows="2"
+                                  v-model="record.medical_history">
+                        </ckeditor>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <h6 class="card-title" id="helpStaffPhone">
+                Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
+            </h6>
+            <div class="row phone-row" v-for="(phone, index) in record.phones" :key="index">
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <select data-toggle="tooltip" v-model="phone.type" class="select2"
+                                title="Seleccione el tipo de número telefónico" :data-phone-index="index">
+                            <option value="">Seleccione...</option>
+                            <option value="M">Móvil</option>
+                            <option value="T">Teléfono</option>
+                            <option value="F">Fax</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group is-required">
+                        <input type="text" placeholder="Cod. Area" data-toggle="tooltip"
+                               title="Indique el código de área" v-model="phone.area_code"
+                               class="form-control input-sm" v-is-digits>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group is-required">
+                        <input type="text" placeholder="Número" data-toggle="tooltip"
+                               title="Indique el número telefónico"
+                               v-model="phone.number" class="form-control input-sm" v-is-digits>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <input type="text" placeholder="Extensión" data-toggle="tooltip"
+                               title="Indique la extención telefónica (opcional)"
+                               v-model="phone.extension" class="form-control input-sm" v-is-digits>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-danger btn-action" type="button"
+                                @click="removeRow(index, record.phones)"
+                                title="Eliminar este dato" data-toggle="tooltip">
+                            <i class="fa fa-minus-circle"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer pull-right" id="helpParamButtons">
+            <button class="btn btn-default btn-icon btn-round" data-toggle="tooltip" type="button"
+                title="Borrar datos del formulario" @click="reset"><i class="fa fa-eraser"></i>
+            </button>
+            <button type="button" class="btn btn-warning btn-icon btn-round" data-toggle="tooltip"
+                    title="Cancelar y regresar" @click="redirect_back(route_list)">
+                <i class="fa fa-ban"></i>
+            </button>
+            <button type="button" @click="createRecord('payroll/staffs')"
+                class="btn btn-success btn-icon btn-round">
+                <i class="fa fa-save"></i>
+            </button>
+        </div>
+    </section>
 </template>
 
 <script>
-	export default {
-		props: {
-			payroll_staff_id: Number,
-		},
-		data() {
-			return {
-				record: {
-					id: '',
-					first_name: '',
-					last_name: '',
-					payroll_nationality_id: '',
-					id_number: '',
-					passport: '',
+    export default {
+        props: {
+            payroll_staff_id: Number,
+        },
+        data() {
+            return {
+                record: {
+                    id: '',
+                    first_name: '',
+                    last_name: '',
+                    payroll_nationality_id: '',
+                    id_number: '',
+                    passport: '',
                     email: '',
                     birthdate: '',
                     payroll_gender_id: '',
-					has_disability: '',
-					payroll_disability_id: '',
-					payroll_blood_type_id: '',
-					social_security: '',
-					has_driver_license: '',
-					payroll_license_degree_id: '',
+                    has_disability: '',
+                    payroll_disability_id: '',
+                    payroll_blood_type_id: '',
+                    social_security: '',
+                    has_driver_license: '',
+                    payroll_license_degree_id: '',
                     emergency_contact: '',
                     emergency_phone: '',
-					country_id: '',
-					estate_id: '',
-					municipality_id: '',
+                    country_id: '',
+                    estate_id: '',
+                    municipality_id: '',
                     parish_id: '',
                     address: '',
-					uniform_size: '',
-					medical_history: '',
-					phones: [],
-				},
-				errors: [],
-				payroll_nationalities: [],
-				payroll_genders: [],
+                    uniform_size: '',
+                    medical_history: '',
+                    phones: [],
+                },
+                errors: [],
+                payroll_nationalities: [],
+                payroll_genders: [],
                 countries: [],
                 estates: [],
                 municipalities: [],
                 parishes: [],
-				payroll_license_degrees: [],
-				payroll_blood_types: [],
-				payroll_disabilities: [],
-			}
-		},
-		methods: {
-			/**
-			 * Método que borra todos los datos del formulario
-			 *
-			 * @author  William Páez <wpaez@cenditel.gob.ve>
-			 */
-			reset() {
+                payroll_license_degrees: [],
+                payroll_blood_types: [],
+                payroll_disabilities: [],
+            }
+        },
+        methods: {
+            /**
+             * Método que borra todos los datos del formulario
+             *
+             * @author  William Páez <wpaez@cenditel.gob.ve>
+             */
+            reset() {
 
-			},
+            },
 
-			async getStaff() {
-				let vm = this;
-				await axios.get(`${window.app_url}/payroll/staffs/${vm.payroll_staff_id}`).then(response => {
-					vm.record = response.data.record;
-					vm.record.country_id = vm.record.parish.municipality.estate.country_id;
-				});
-			},
-			/**
-	         * Obtiene los Estados del Pais seleccionado
-	         *
-	         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-			 * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
-	         */
-	        async getEstates() {
-	            const vm = this;
-	            vm.estates = [];
-	            if (vm.record.country_id) {
-	                await axios.get(`${window.app_url}/get-estates/${vm.record.country_id}`).then(response => {
-	                    vm.estates = response.data;
-	                });
-	                if (vm.record.id) {
-	                    vm.record.estate_id = vm.record.parish.municipality.estate_id;
-	                }
-	            }
-	        },
-			/**
-	         * Obtiene los Municipios del Estado seleccionado
-	         *
-	         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-			 * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
-	         */
-			async getMunicipalities() {
-	            const vm = this;
-	            vm.municipalities = [];
-	            if (vm.record.estate_id) {
-	                await axios.get(`${window.app_url}/get-municipalities/${vm.record.estate_id}`).then(response => {
-	                    vm.municipalities = response.data;
-	                });
-	                if (vm.record.id) {
-	                    vm.record.municipality_id = vm.record.parish.municipality_id;
-	                }
-	            }
-	        },
-			/**
-	         * Obtiene las Parroquias del Municipio seleccionado
-	         *
-	         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-			 * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
-	         */
-			async getParishes() {
-	            const vm = this;
-	            vm.parishes = [];
-	            if (vm.record.municipality_id) {
-	                await axios.get(`${window.app_url}/get-parishes/${vm.record.municipality_id}`).then(response => {
-	                    vm.parishes = response.data;
-	                });
-	                if (vm.record.id) {
-	                    vm.record.parish_id = vm.record.parish.id;
-	                }
-	            }
-	        },
-		},
-		created() {
+            async getStaff() {
+                let vm = this;
+                await axios.get(`${window.app_url}/payroll/staffs/${vm.payroll_staff_id}`).then(response => {
+                    vm.record = response.data.record;
+                    vm.record.country_id = vm.record.parish.municipality.estate.country_id;
+                });
+            },
+            /**
+             * Obtiene los Estados del Pais seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
+             */
+            async getEstates() {
+                const vm = this;
+                vm.estates = [];
+                if (vm.record.country_id) {
+                    await axios.get(`${window.app_url}/get-estates/${vm.record.country_id}`).then(response => {
+                        vm.estates = response.data;
+                    });
+                    if (vm.record.id) {
+                        vm.record.estate_id = vm.record.parish.municipality.estate_id;
+                    }
+                }
+            },
+            /**
+             * Obtiene los Municipios del Estado seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
+             */
+            async getMunicipalities() {
+                const vm = this;
+                vm.municipalities = [];
+                if (vm.record.estate_id) {
+                    await axios.get(`${window.app_url}/get-municipalities/${vm.record.estate_id}`).then(response => {
+                        vm.municipalities = response.data;
+                    });
+                    if (vm.record.id) {
+                        vm.record.municipality_id = vm.record.parish.municipality_id;
+                    }
+                }
+            },
+            /**
+             * Obtiene las Parroquias del Municipio seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author  William Páez <wpaez@cenditel.gob.ve> | paez.william8@gmail.com
+             */
+            async getParishes() {
+                const vm = this;
+                vm.parishes = [];
+                if (vm.record.municipality_id) {
+                    await axios.get(`${window.app_url}/get-parishes/${vm.record.municipality_id}`).then(response => {
+                        vm.parishes = response.data;
+                    });
+                    if (vm.record.id) {
+                        vm.record.parish_id = vm.record.parish.id;
+                    }
+                }
+            },
+        },
+        created() {
             this.getPayrollNationalities();
             this.getPayrollGenders();
-			this.getCountries();
-			this.getEstates();
+            this.getCountries();
+            this.getEstates();
             this.getMunicipalities();
-			this.getPayrollLicenseDegrees();
-			this.getPayrollBloodTypes();
-			this.getPayrollDisabilities();
-			this.record.has_disability = false;
-			this.record.has_driver_license = false;
-			this.record.phones = [];
-		},
-		mounted() {
-			const vm = this;
-			if(vm.payroll_staff_id) {
-				vm.getStaff();
-			}
-			vm.switchHandler('has_disability');
-			vm.switchHandler('has_driver_license');
-		},
-		watch: {
-			record: {
-				deep: true,
-				handler: function() {
-					const vm = this;
-					if (vm.record.has_disability) {
-						$('#has_disability').bootstrapSwitch('state', true, true);
-					}
-					if (vm.record.has_driver_license) {
-						$('#has_driver_license').bootstrapSwitch('state', true, true);
-					}
-				}
-			}
-		}
-	};
+            this.getPayrollLicenseDegrees();
+            this.getPayrollBloodTypes();
+            this.getPayrollDisabilities();
+            this.record.has_disability = false;
+            this.record.has_driver_license = false;
+            this.record.phones = [];
+        },
+        mounted() {
+            const vm = this;
+            if(vm.payroll_staff_id) {
+                vm.getStaff();
+            }
+            vm.switchHandler('has_disability');
+            vm.switchHandler('has_driver_license');
+        },
+        watch: {
+            record: {
+                deep: true,
+                handler: function() {
+                    const vm = this;
+                    if (vm.record.has_disability) {
+                        $('#has_disability').bootstrapSwitch('state', true, true);
+                    }
+                    if (vm.record.has_driver_license) {
+                        $('#has_driver_license').bootstrapSwitch('state', true, true);
+                    }
+                }
+            }
+        }
+    };
 </script>
