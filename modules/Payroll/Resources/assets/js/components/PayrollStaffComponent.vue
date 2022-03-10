@@ -265,14 +265,15 @@
 
         <div class="card-footer pull-right" id="helpParamButtons">
             <button class="btn btn-default btn-icon btn-round" data-toggle="tooltip" type="button"
-                title="Borrar datos del formulario" @click="reset"><i class="fa fa-eraser"></i>
+                title="Borrar datos del formulario" @click="reset()"><i class="fa fa-eraser"></i>
             </button>
             <button type="button" class="btn btn-warning btn-icon btn-round" data-toggle="tooltip"
                     title="Cancelar y regresar" @click="redirect_back(route_list)">
                 <i class="fa fa-ban"></i>
             </button>
             <button type="button" @click="createRecord('payroll/staffs')"
-                class="btn btn-success btn-icon btn-round">
+                class="btn btn-success btn-icon btn-round" data-toggle="tooltip"
+                    title="Guardar registro">
                 <i class="fa fa-save"></i>
             </button>
         </div>
@@ -330,9 +331,37 @@
              * Método que borra todos los datos del formulario
              *
              * @author  William Páez <wpaez@cenditel.gob.ve>
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
              */
             reset() {
-
+                const vm = this;
+                vm.record = {
+                    id: '',
+                    first_name: '',
+                    last_name: '',
+                    payroll_nationality_id: '',
+                    id_number: '',
+                    passport: '',
+                    email: '',
+                    birthdate: '',
+                    payroll_gender_id: '',
+                    has_disability: '',
+                    payroll_disability_id: '',
+                    payroll_blood_type_id: '',
+                    social_security: '',
+                    has_driver_license: '',
+                    payroll_license_degree_id: '',
+                    emergency_contact: '',
+                    emergency_phone: '',
+                    country_id: '',
+                    estate_id: '',
+                    municipality_id: '',
+                    parish_id: '',
+                    address: '',
+                    uniform_size: '',
+                    medical_history: '',
+                    phones: [],
+                };
             },
 
             async getStaff() {
