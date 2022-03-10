@@ -44,7 +44,7 @@ class PayrollEmploymentController extends Controller
 
         /** Define las reglas de validación para el formulario */
         $this->rules = [
-            'years_apn' => ['required', 'max:2'],
+            'years_apn' => ['max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
             'function_description' => ['nullable'],

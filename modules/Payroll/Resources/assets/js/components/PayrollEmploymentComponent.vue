@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group is-required">
+                            <div class="form-group">
                                 <label>Años en otras instituciones públicas:</label>
                                 <input type="text" class="form-control input-sm"
                                     v-model="record.years_apn" v-input-mask
@@ -54,13 +54,13 @@
                                                     'allowMinus': 'false'"/>
                             </div>
                         </div>
-                        <div class="col-md-12" id="HelpTechnicalSpecifications">
+                        <div class="col-md-12" id="HelpPreviousJobs">
                             <br>
                             <h6 class="card-title">Trabajos anteriores <i class="fa fa-plus-circle cursor-pointer"
                                 @click="addPreviousJob()"></i></h6>
                             <div class="row" v-for="(job, index) in record.previous_jobs">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group is-required">
                                         <label for="organization_name">Nombre de la organización:</label>
                                         <input type="text" id="organization_name" class="form-control input-sm" data-toggle="tooltip"
                                             title="Nombre de la organización" v-model="job.organization_name">
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group is-required">
                                         <label>Fecha de cese:</label>
                                         <input type="date" class="form-control input-sm"
                                             v-model="job.end_date"/>
@@ -241,7 +241,7 @@
                             title="Cancelar y regresar" @click="redirect_back(route_list)">
                         <i class="fa fa-ban"></i>
                     </button>
-                    <button type="button" @click="createRecord('payroll/employments')"
+                    <button type="button" @click="generateRecord()"
                         class="btn btn-success btn-icon btn-round">
                         <i class="fa fa-save"></i>
                     </button>
@@ -367,6 +367,40 @@
                     payroll_contract_type_id: ''
                 };
             },
+
+            generateRecord() {
+                const vm = this;
+                vm.errors = [];
+
+                if (vm.record.previous_jobs){
+                    for (let job of vm.record.previous_jobs){
+                        if (job.organization_name == ''){
+                            vm.errors.push('El campo nombre de la organización es obligatorio')
+                        }
+                        if (job.organization_phone == ''){
+                            vm.errors.push('El campo teléfono de la organización es obligatorio')
+                        }
+                        if (job.payroll_sector_type_id == ''){
+                            vm.errors.push('El campo tipo de sector es obligatorio')
+                        }
+                        if (job.payroll_position_id == ''){
+                            vm.errors.push('El campo cargo es obligatorio')
+                        }
+                        if (job.payroll_staff_type_id == ''){
+                            vm.errors.push('El campo tipo de personal es obligatorio')
+                        }
+                        if (job.start_date == ''){
+                            vm.errors.push('El campo fecha de inicio es obligatorio')
+                        }
+                        if (job.end_date == ''){
+                            vm.errors.push('El campo fecha de cese es obligatorio')
+                        }
+                    }
+                }
+                if (vm.errors < 1) {
+                    vm.createRecord('payroll/employments');
+                }
+            }
         },
         created() {
             this.record.active = true;
