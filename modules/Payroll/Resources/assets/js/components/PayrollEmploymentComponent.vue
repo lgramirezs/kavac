@@ -116,7 +116,7 @@
                             v-model="record.start_date"/>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpEmploymentEndDate">
+                <div v-show="record.active == false" class="col-md-4" id="helpEmploymentEndDate">
                     <div class="form-group">
                         <label>Fecha de egreso de la institución:</label>
                         <input type="date" class="form-control input-sm"
@@ -277,9 +277,13 @@
                     await axios.get(`${window.app_url}/get-departments/${vm.record.institution_id}`).then(response => {
                         vm.departments = response.data;
                     });
-                    /*if (vm.record.id) {
-                        vm.record.department_id = vm.record.department.id;
-                    }*/
+                }
+
+                if(vm.record.id) {
+                    axios.get(`${window.app_url}/payroll/employments/${vm.payroll_employment_id}`).then(response => {
+                        let data = response.data.record;
+                        vm.record.department_id = data.department_id;
+                    });
                 }
             },
             async getEmployment() {
@@ -290,7 +294,7 @@
                     vm.record = {
                         id: data.id,
                         payroll_staff_id: data.payroll_staff_id,
-                        institution_id: data.institution_id,
+                        institution_id: data.department.institution_id,
                         years_apn: data.years_apn,
                         start_date: data.start_date,
                         end_date: data.end_date ? data.end_date : '',
@@ -301,12 +305,10 @@
                         payroll_position_type_id: data.payroll_position_type_id,
                         payroll_position_id: data.payroll_position_id,
                         payroll_staff_type_id: data.payroll_staff_type_id,
-                        department_id: data.department_id,
+                        department_id: data.department.id,
                         payroll_contract_type_id: data.payroll_contract_type_id,
                         previous_jobs: data.payroll_previous_job ? data.payroll_previous_job : '',
                     }
-
-                    vm.record.institution_id = response.data.record.department.institution_id;
                 });
             },
 
