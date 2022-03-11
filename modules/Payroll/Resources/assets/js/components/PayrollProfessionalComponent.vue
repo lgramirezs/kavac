@@ -196,36 +196,38 @@
             </h6>
             <!--Formulario de registros nuevos-->
             <div class="row" v-for="(payroll_cou_ack_file, index) in record.payroll_cou_ack_files" :key="index">
-                <div class="col-3" id="helpProfessionalCourseName">
+                <div class="col-4" id="helpProfessionalCourseName">
                     <div class="form-group is-required">
                         <label>Nombre del Curso:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="payroll_cou_ack_file.course_name"/>
                     </div>
                 </div>
-                <div class="col-2" id="helpProfessionalCourse">
+                <div class="col-4" id="helpProfessionalCourse">
                     <div class="form-group">
                         <label>Curso:</label>
                         <div v-show="payroll_cou_ack_file.course_file_url">
-                            <a :href="`${window.app_url}/${payroll_cou_ack_file.course_file_url}`" target="_blank">Documento</a>
+                            <a :href="`${app_url}/${payroll_cou_ack_file.course_file_url}`" target="_blank">Documento</a>
                         </div>
+                        <br>
                         <input :id="'course_'+index" type="file"
                             accept=".png, .jpg, .pdf, .odt" @change="processFile($event, index)">
                     </div>
                 </div>
-                <div class="col-3" id="helpProfessionalAckName">
+                <div class="col-4" id="helpProfessionalAckName">
                     <div class="form-group is-required">
                         <label>Nombre del Reconocimiento:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="payroll_cou_ack_file.ack_name"/>
                     </div>
                 </div>
-                <div class="col-md-2" id="helpProfessionalAck">
+                <div class="col-md-4" id="helpProfessionalAck">
                     <div class="form-group">
                         <label>Reconocimiento:</label>
                         <div v-show="payroll_cou_ack_file.ack_file_url">
-                            <a :href="`${window.app_url}/${payroll_cou_ack_file.ack_file_url}`" target="_blank">Documento</a>
+                            <a :href="`${app_url}/${payroll_cou_ack_file.ack_file_url}`" target="_blank">Documento</a>
                         </div>
+                        <br>
                         <input :id="'acknowledgment_'+index" type="file"
                             accept=".png, .jpg, .pdf, .odt" @change="processFile($event, index)">
                     </div>
@@ -251,8 +253,8 @@
                     title="Cancelar y regresar" @click="redirect_back(route_list)">
                 <i class="fa fa-ban"></i>
             </button>
-            <button type="button" @click="createRecord('payroll/professionals')"
-                class="btn btn-success btn-icon btn-round">
+            <button type="button" @click="createRecord('payroll/professionals')" data-toggle="tooltip"
+                    title="Guardar registro" class="btn btn-success btn-icon btn-round">
                 <i class="fa fa-save"></i>
             </button>
         </div>
