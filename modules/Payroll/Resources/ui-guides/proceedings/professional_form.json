@@ -5,22 +5,22 @@
     },
     {
         "element" : "#helpProfessionalStaff",
-        "intro" : "Parámetro que establece el trabajador a registrar",
+        "intro" : "Parámetro que establece el personal a registrar",
         "position" : "right"
     },
     {
         "element" : "#helpProfessionalInstructionDegree",
-        "intro" : "Parámetro que establece el grado de instrucción del trabajador",
+        "intro" : "Parámetro que establece el grado de instrucción del personal",
         "position" : "right"
     },
     {
         "element" : "#helpProfessionalUniversityStudy",
-        "intro" : "Parámetro que establece los estudios universitarios del trabajador",
+        "intro" : "Parámetro que establece los estudios universitarios del personal",
         "position" : "right"
     },
     {
         "element" : "#helpProfessionalIsStudent",
-        "intro" : "Parámetro que establece si el trabajador es estudiante",
+        "intro" : "Parámetro que establece si el personal es estudiante",
         "position" : "right"
     },
     {
@@ -30,7 +30,7 @@
     },
     {
         "element" : "#helpProfessionalAcks",
-        "intro" : "Parámetro que agrega la capacitación y reconocimientos del trabajador",
+        "intro" : "Parámetro que agrega la capacitación y reconocimientos del personal",
         "position" : "right"
     },
     {

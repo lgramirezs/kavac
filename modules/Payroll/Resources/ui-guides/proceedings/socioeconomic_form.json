@@ -5,17 +5,17 @@
     },
     {
         "element" : "#helpSocioeconomicStaff",
-        "intro" : "Parámetro que establece el trabajador a registrar",
+        "intro" : "Parámetro que establece el personal a registrar",
         "position" : "right"
     },
     {
         "element" : "#helpSocioeconomicMaritalStatus",
-        "intro" : "Parámetro que establece estado civil del trabajador",
+        "intro" : "Parámetro que establece estado civil del personal",
         "position" : "right"
     },
     {
         "element" : "#helpSocioeconomicChildren",
-        "intro" : "Parámetro que agrega los hijos del trabajador",
+        "intro" : "Parámetro que agrega los hijos del personal",
         "position" : "right"
     },
     {
