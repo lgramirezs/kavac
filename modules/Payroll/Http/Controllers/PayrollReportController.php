@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Repositories\ReportRepository;
+use Modules\DigitalSignature\Repositories\ReportRepositorySign;
 use Carbon\Carbon;
 use Modules\Payroll\Models\PayrollVacationRequest;
 use Modules\Payroll\Models\PayrollStaff;
@@ -15,6 +16,9 @@ use Modules\Payroll\Models\PayrollPositionType;
 use Modules\Payroll\Models\Payroll;
 use Modules\Payroll\Models\Institution;
 use Modules\Payroll\Models\PayrollVacationPolicy;
+
+use Auth;
+use DateTime;
 
 /**
  * @class      PayrollReportController
@@ -145,6 +149,115 @@ class PayrollReportController extends Controller
         return response()->json(['result' => true, 'redirect' => $url], 200);
     }
 
+    public function createReportSign(Request $request)
+    {
+        $user = Auth()->user();
+        $profileUser = $user->profile;
+        if ($profileUser) {
+            $institution = Institution::find($profileUser->institution_id);
+        } else {
+            $institution = Institution::where('active', true)->where('default', true)->first();
+        }
+
+        $pdf = new ReportRepositorySign();
+        $filename = 'payroll-report-' . Carbon::now()->format('Y-m-d') . '.pdf';
+
+        if ($request->current == 'vacation-enjoyment-summaries') {
+            $body = 'payroll::pdf.payroll-vacation-enjoyment-summaries';
+        } elseif ($request->current == 'vacation-status') {
+            $body = 'payroll::pdf.payroll-vacation-status';
+        } elseif ($request->current == 'registers') {
+            $body = 'payroll::pdf.payroll-registers';
+        } elseif ($request->current == 'employment-status') {
+            $body = 'payroll::pdf.payroll-employment-status';
+        } elseif ($request->current == 'staff-vacation-enjoyment') {
+            $body = 'payroll::pdf.payroll-staff-vacation-enjoyment';
+        } else {
+            $body = '';
+        }
+
+        $pdf->setConfig(
+            [
+                'institution' => $institution,
+                'urlVerify'   => url(''),
+                'orientation' => 'P',
+                'filename'    => $filename
+            ]
+        );
+
+        if ($request->current == 'vacation-enjoyment-summaries') {
+
+            $vacationPolicy = PayrollVacationPolicy::where('active', true)->firstOrFail();
+
+            $records = PayrollVacationRequest::where('status', 'approved')
+                ->where('payroll_staff_id', $request->input('id'))
+                ->orderBy('vacation_period_year', 'DESC');
+
+            $payrollStaff = PayrollStaff::find($request->input('id'));
+            $date = new Carbon($payrollStaff->payrollEmployment->start_date);
+            $payrollStaffYear = $date->year;
+            $currentYear = Carbon::now()->year;
+            $years = [];
+
+            while ($payrollStaffYear <= $currentYear) $years[] = $payrollStaffYear++;
+
+            $records = $records->get();
+
+            foreach ($records as $record) {
+                $index = array_search($record->vacation_period_year, $years);
+
+                $record->days_old = $index * $vacationPolicy->additional_days_per_year + $vacationPolicy->vacation_days;
+                $record->pending_days = $index * $vacationPolicy->additional_days_per_year + $vacationPolicy->vacation_days - $record->days_requested;
+            }
+
+            $pdf->setHeader("Reporte de disfrute de vacaciones");
+        } elseif ($request->current == 'vacation-status') {
+            $records = PayrollVacationRequest::find($request->input('id'));
+            $pdf->setHeader("Reporte de estatus de vacaciones");
+        } elseif ($request->current == 'registers') {
+            $payrollRegister = Payroll::find($request->input('id'));
+            $records = $payrollRegister->payrollStaffPayrolls;
+            $pdf->setHeader("Reporte de registros de nómina");
+        } elseif ($request->current == 'employment-status') {
+            $records = PayrollStaff::find($request->input('id'));
+            $pdf->setHeader("Reporte de estatus de los trabajadores");
+        } else if ($request->current == 'staff-vacation-enjoyment') {
+
+            $payroll_staff_id = $request->input('payroll_staff_id');
+
+            $records = PayrollVacationRequest::where('status', 'approved');
+
+            if ($payroll_staff_id) {
+                $records = $records->where('payroll_staff_id', $payroll_staff_id);
+            }
+
+            $records = $records->get();
+
+            $pdf->setHeader("Reporte de Personal en Disfrute de Vacaciones");
+        }
+
+        $pdf->setFooter();
+        $sign = $pdf->setBody(
+            $body,
+            true,
+            [
+                'pdf'    => $pdf,
+                'field'  => $records
+            ]
+        );
+        
+        $url = '/payroll/reports/showPdfSign/' . $sign['filename'];
+        return response()->json(['result' => true, 'redirect' => $url], 200); 
+        /*if($sign['status'] == 'true') {
+            dump("true");
+            dump($sign);
+            return response()->download($sign['file'], $sign['filename'], [], 'inline');
+        }
+        else {
+            return response()->json(['result' => $sign['status'], 'message' => $sign['message']], 200);
+        }*/
+    }
+
     /**
      * Show the specified resource.
      * @param string filename
@@ -153,6 +266,18 @@ class PayrollReportController extends Controller
     public function show($filename)
     {
         $file = storage_path() . DIRECTORY_SEPARATOR . 'reports' . DIRECTORY_SEPARATOR . $filename ?? 'payroll-report-' . Carbon::now() . '.pdf';
+        dump($file);
+        return response()->download($file, $filename, [], 'inline');
+    }
+
+    /**
+     * Show the specified resource.
+     * @param string filename
+     * @return Renderable
+     */
+    public function showPdfSign($filename)
+    {
+        $file = storage_path() . DIRECTORY_SEPARATOR . 'reports' . DIRECTORY_SEPARATOR . $filename ?? 'payroll-report-' . Carbon::now() . '-sign.pdf';
         return response()->download($file, $filename, [], 'inline');
     }
 
