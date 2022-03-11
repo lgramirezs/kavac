@@ -1,0 +1,41 @@
+[
+    {
+        "element" : "#cardPayrollProfessionalForm",
+        "intro" : "Formulario de datos profesionales"
+    },
+    {
+        "element" : "#helpProfessionalStaff",
+        "intro" : "Parámetro que establece el trabajador a registrar",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpProfessionalInstructionDegree",
+        "intro" : "Parámetro que establece el grado de instrucción del trabajador",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpProfessionalUniversityStudy",
+        "intro" : "Parámetro que establece los estudios universitarios del trabajador",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpProfessionalIsStudent",
+        "intro" : "Parámetro que establece si el trabajador es estudiante",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpAddProfessionalLanguage",
+        "intro" : "Parámetro que agrega los idiomas con los que trabaja el personal",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpProfessionalAcks",
+        "intro" : "Parámetro que agrega la capacitación y reconocimientos del trabajador",
+        "position" : "right"
+    },
+    {
+        "element" : "#helpParamButtons",
+        "intro" : "Botones para ejecutar las acciones de limpiar, cancelar o guardar los datos del formulario",
+        "position" : "left"
+    }
+]

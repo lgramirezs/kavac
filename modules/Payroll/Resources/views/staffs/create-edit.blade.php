@@ -24,7 +24,7 @@
                     <h6 class="card-title">Registrar los Datos Personales
                         @include('buttons.help', [
                             'helpId' => 'PayroStaffForm',
-                            'helpSteps' => get_json_resource('ui-guides/staffs/staff_form.json', 'payroll')
+                            'helpSteps' => get_json_resource('ui-guides/proceedings/staff_form.json', 'payroll')
                         ])
                     </h6>
                     <div class="card-btns">
