@@ -1,5 +1,5 @@
 <template>
-    <section id="PayroStaffForm">
+    <section id="PayrollStaffForm">
         <div class="card-body">
             <div class="alert alert-danger" v-if="errors.length > 0">
                 <div class="container">

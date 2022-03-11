@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <h6 class="card-title">Registrar los Datos Personales
                         @include('buttons.help', [
-                            'helpId' => 'PayroStaffForm',
+                            'helpId' => 'PayrollStaffForm',
                             'helpSteps' => get_json_resource('ui-guides/proceedings/staff_form.json', 'payroll')
                         ])
                     </h6>
