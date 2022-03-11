@@ -188,6 +188,7 @@
 			 * @param {string} url 		Ruta que obtiene los datos a ser mostrado en listados
 		 	 * @param {string} modal_id Identificador del modal a mostrar con la información solicitada
 			 */
+			
             initRecords(url, modal_id) {
 				this.errors = [];
 				this.reset();
