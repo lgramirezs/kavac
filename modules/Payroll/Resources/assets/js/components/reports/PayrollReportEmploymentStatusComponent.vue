@@ -54,21 +54,21 @@
                 <div slot="id" slot-scope="props" class="text-center">
                     <button @click="show_info(props.row.id)" v-if="route_show"
                         class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
-                        title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
+                        data-toggle="tooltip" title="Ver registro" data-placement="bottom" type="button">
                         <i class="fa fa-eye"></i>
                      </button>
 
 
                     <button @click="createReport(props.row.id, 'employment-status', $event)" 
                             class="btn btn-primary btn-xs btn-icon btn-action" 
-                            title="Generar reporte" data-toggle="tooltip" 
+                            data-toggle="tooltip" title="Generar reporte" data-placement="bottom"
                             type="button">
                         <i class="fa fa-file-pdf-o"></i>
                     </button>
                      <button @click="createReportSign(props.row.id, 'employment-status', $event)" 
                             class="btn btn-primary btn-xs btn-icon btn-action" 
-                            title="Firmar y generar reporte" data-toggle="tooltip" 
-                            type="button">
+                            data-toggle="tooltip" title="Firmar y generar reporte"
+                            data-placement="bottom" type="button">
                         <i class="fa fa-file-pdf-o"></i>
                     </button>
                 </div>
