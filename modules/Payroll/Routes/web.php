@@ -601,6 +601,12 @@ Route::group([
             ->name('payroll.reports.vacation-enjoyment-summaries.createReportSign');
         Route::post('vacation-status/createsign', 'PayrollReportController@createReportSign')
             ->name('payroll.reports.vacation-status.createReportSign');
+        Route::post('employment-status/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.employment-status.createReportSign');
+        Route::post('vacation-bonus-calculations/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.vacation-bonus-calculations.createReportSign');
+        Route::post('staff-vacation-enjoyment/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.staff-vacation-enjoyment.createReportSign');
         /*Firma*/
         Route::get('vacation-enjoyment-summaries', 'PayrollReportController@vacationEnjoymentSummaries')
             ->name('payroll.reports.vacation-enjoyment-summaries');

@@ -126,6 +126,7 @@ class PayrollReportController extends Controller
             $payroll_staff_id = $request->input('payroll_staff_id');
 
             $records = PayrollVacationRequest::where('status', 'approved');
+            dump($records);
 
             if ($payroll_staff_id) {
                 $records = $records->where('payroll_staff_id', $payroll_staff_id);

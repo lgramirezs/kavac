@@ -65,6 +65,12 @@
                             type="button">
                         <i class="fa fa-file-pdf-o"></i>
                     </button>
+                     <button @click="createReportSign(props.row.id, 'employment-status', $event)" 
+                            class="btn btn-primary btn-xs btn-icon btn-action" 
+                            title="Firmar y generar reporte" data-toggle="tooltip" 
+                            type="button">
+                        <i class="fa fa-file-pdf-o"></i>
+                    </button>
                 </div>
             </v-client-table>
             <div class="modal fade" tabindex="-1" role="dialog" id="show_employment">
@@ -358,6 +364,30 @@
                 };
                 event.preventDefault();
                 axios.post(`${window.app_url}/payroll/reports/${current}/create`, fields).then(response => {
+                    if (typeof(response.data.redirect) !== "undefined") {
+                        window.open(response.data.redirect, '_blank');
+                    }
+                    else {
+                        vm.reset();
+                    }
+                    vm.loading = false;
+                }).catch(error => {
+                    if (typeof(error.response) != "undefined") {
+                        console.log("error");
+                    }
+                    vm.loading = false;
+                });
+            },
+
+            createReportSign(id, current, event) {
+                const vm = this;
+                vm.loading = true;
+                let fields = {
+                    id:      id,
+                    current: current
+                };
+                event.preventDefault();
+                axios.post(`${window.app_url}/payroll/reports/${current}/createsign`, fields).then(response => {
                     if (typeof(response.data.redirect) !== "undefined") {
                         window.open(response.data.redirect, '_blank');
                     }
