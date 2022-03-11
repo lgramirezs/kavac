@@ -588,10 +588,26 @@ Route::group([
         Route::get('show/{filename}', 'PayrollReportController@show')
             ->name('payroll.reports.show');
 
+        Route::get('showPdfSign/{filename}', 'PayrollReportController@showPdfSign')
+            ->name('payroll.reports.showPdfSign');
+        
         /** Ruta que permite generar el reporte de los registros de nómina asociados a un pago */
         Route::post('registers/create', 'PayrollReportController@create')
             ->name('payroll.reports.registers.create');
-
+        /*Firma*/
+        Route::post('registers/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.registers.createReportSign');
+        Route::post('vacation-enjoyment-summaries/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.vacation-enjoyment-summaries.createReportSign');
+        Route::post('vacation-status/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.vacation-status.createReportSign');
+        Route::post('employment-status/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.employment-status.createReportSign');
+        Route::post('vacation-bonus-calculations/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.vacation-bonus-calculations.createReportSign');
+        Route::post('staff-vacation-enjoyment/createsign', 'PayrollReportController@createReportSign')
+            ->name('payroll.reports.staff-vacation-enjoyment.createReportSign');
+        /*Firma*/
         Route::get('vacation-enjoyment-summaries', 'PayrollReportController@vacationEnjoymentSummaries')
             ->name('payroll.reports.vacation-enjoyment-summaries');
         Route::post('vacation-enjoyment-summaries/create', 'PayrollReportController@create')

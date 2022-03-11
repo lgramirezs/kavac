@@ -63,6 +63,17 @@
 							<i class="fa fa-file-pdf-o"></i>
 						</button>
 						<button
+							@click.prevent="
+								createReportSign('staff-vacation-enjoyment')
+							"
+							class="btn btn-primary btn-xs btn-icon btn-action mr-3"
+							title="Firmar y generar reporte"
+							data-toggle="tooltip"
+							type="button"
+						>
+							<i class="fa fa-file-pdf-o"></i>
+						</button>
+						<button
 							type="button"
 							class="btn btn-sm btn-info float-right"
 							title="Buscar registro"
@@ -165,6 +176,28 @@ export default {
 				payroll_staff_id: this.record.payroll_staff_id
 			};
 			axios.post(`${window.app_url}/payroll/reports/${current}/create`, fields).then(response => {
+				if (typeof response.data.redirect !== 'undefined') {
+					window.open(response.data.redirect, '_blank');
+				} else {
+					vm.reset();
+				}
+				vm.loading = false;
+			})
+			.catch(error => {
+				if (typeof error.response != 'undefined') {
+					console.log('error');
+				}
+				vm.loading = false;
+			});
+		},
+		createReportSign(current) {
+			const vm = this;
+			vm.loading = true;
+			let fields = {
+				current,
+				payroll_staff_id: this.record.payroll_staff_id
+			};
+			axios.post(`${window.app_url}/payroll/reports/${current}/createsign`, fields).then(response => {
 				if (typeof response.data.redirect !== 'undefined') {
 					window.open(response.data.redirect, '_blank');
 				} else {
