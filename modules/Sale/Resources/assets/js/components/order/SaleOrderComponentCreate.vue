@@ -18,6 +18,7 @@
           </ul>
         </div>
       </div>
+      <h4 class="card-title">Registrar Pedido</h4>
       <h6 class="card-title">Datos del solicitante:</h6>
       <div class="row">
         <div class="col-md-4">
