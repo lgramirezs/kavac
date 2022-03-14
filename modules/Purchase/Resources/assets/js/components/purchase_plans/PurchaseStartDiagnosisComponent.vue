@@ -67,15 +67,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
-                                Cerrar
-                            </button>
-                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" @click="reset()" data-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="button" @click="createRecord('purchase/purchase_plans/start_diagnosis')" class="btn btn-primary btn-sm btn-round btn-modal-save">
-                                Guardar
-                            </button>
+                            <modal-form-buttons saveRoute="purchase/purchase_plans/start_diagnosis"></modal-form-buttons>
                         </div>
                     </div>
                 </div>

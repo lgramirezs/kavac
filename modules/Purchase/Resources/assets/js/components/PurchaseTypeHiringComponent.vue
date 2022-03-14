@@ -55,19 +55,11 @@
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
-                                Cerrar
-                            </button>
-                            <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" @click="reset()">
-                                Cancelar
-                            </button>
-                            <button type="button" @click="createRecord('purchase/type_hiring')" class="btn btn-primary btn-sm btn-round btn-modal-save">
-                                Guardar
-                            </button>
+                            <modal-form-buttons saveRoute="purchase/type_hiring"></modal-form-buttons>
                         </div>
                     </div>
                     <div class="modal-body modal-table">
-                        <v-client-table :columns="columns" :data="records" :options="table_options">}
+                        <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="date" slot-scope="props">
                                 <strong>{{ format_date(props.row.date) }}</strong>
                             </div>
