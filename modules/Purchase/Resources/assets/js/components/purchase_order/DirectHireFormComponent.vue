@@ -96,8 +96,8 @@
             </div>
             <div class="col-3">
                 <div class="form-group is-required">
-                    <label for="description">Fuente de financiamiento</label>
-                    <input type="text" id="description" v-model="record.description" class="form-control">
+                    <label for="funding_source">Fuente de financiamiento</label>
+                    <input type="text" id="funding_source" v-model="record.funding_source" class="form-control">
                 </div>
             </div>
             <div class="col-3">
@@ -259,7 +259,7 @@
                 </v-client-table>
             </div> -->
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <div class="col-12">
+            <!-- <div class="col-12">
                 <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
                     <div slot="unit_price" slot-scope="props">
                         <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
@@ -268,9 +268,9 @@
                         <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
                     </div>
                 </v-client-table>
-            </div>
+            </div> -->
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <div class="col-12" v-if="record_items.length > 0">
+            <!-- <div class="col-12" v-if="record_items.length > 0">
                 <div class="VueTables VueTables--client" style="margin-top: -1rem;">
                     <div class="table-responsive">
                         <table class="VueTables__table table table-striped table-bordered table-hover">
@@ -315,10 +315,10 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="card-footer text-right">
-            <buttonsDisplay route_list="/purchese/purchase_order" display="false" />
+            <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
         </div>
     </section>
 </template>
@@ -384,6 +384,7 @@ export default {
                 user_department_id: '',
                 warehouse_id: '',
                 purchase_supplier_object_id: '',
+                funding_source:'',
                 description: '',
                 fiscal_year_id: '',
                 products: [],
@@ -691,7 +692,7 @@ export default {
             vm.loading = true;
 
             if (!this.record_edit) {
-                axios.post('/purchase/purchase_order', formData, {
+                axios.post('/purchase/direct_hire', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -714,7 +715,7 @@ export default {
             } else {
                 formData.append("list_to_delete", JSON.stringify(this.requirement_list_deleted));
 
-                axios.post('/purchase/purchase_order/' + this.record_edit.id, formData, {
+                axios.post('/purchase/direct_hire/' + this.record_edit.id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

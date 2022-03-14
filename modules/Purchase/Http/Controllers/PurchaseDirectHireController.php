@@ -103,6 +103,7 @@ class PurchaseDirectHireController extends Controller
             'purchaseBaseBudget.currency'
         )->where('requirement_status', 'PROCESSED')
         ->orderBy('id', 'ASC')->get();
+
         return view('purchase::purchase_order.direct_hire_form', [
             'requirements'    => $requirements,
             'currencies'                => json_encode($currencies),
@@ -127,6 +128,7 @@ class PurchaseDirectHireController extends Controller
      */
     public function store(Request $request)
     {
+        dd("hire");
         //
     }
 
