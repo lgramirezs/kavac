@@ -25,9 +25,7 @@
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
 
-                    <warehouse-reception-info 
-                        :route_list="'warehouse/receptions/info/'+ props.row.id">
-                    </warehouse-reception-info>
+                   
                     
                     <button @click="approvedRequest(props.index)" 
                             class="btn btn-success btn-xs btn-icon btn-action" title="Aceptar solicitud"
@@ -89,7 +87,7 @@
                 const vm = this;
 
                 var dialog = bootbox.confirm({
-                    title: 'Rechazar operación?',
+                    title: '¿Rechazar operación?',
                     message: "<p>¿Seguro que desea rechazar esta operación?. Una vez rechazada la operación no se podrán realizar cambios en la misma.<p>",
                     size: 'medium',
                     buttons: {
@@ -127,7 +125,7 @@
             {
                 const vm = this;
                 var dialog = bootbox.confirm({
-                    title: 'Aprobar operación?',
+                    title: '¿Aprobar operación?',
                     message: "<p>¿Seguro que desea aprobar esta operación?. Una vez aprobada la operación no se podrán realizar cambios en la misma.<p>",
                     size: 'medium',
                     buttons: {

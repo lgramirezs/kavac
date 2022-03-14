@@ -68,6 +68,8 @@ class PayrollEmploymentController extends Controller
             'institution_id' => 'institución',
             'department_id' => 'departamento',
             'payroll_contract_type_id' => 'tipo de contracto',
+            'payroll_staff_id' => 'trabajador',
+            'institution_email' => 'El correo institucional ingresado'
         ];
     }
 

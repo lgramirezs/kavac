@@ -10,7 +10,9 @@
 				{{ (props.row.payroll_staff)?props.row.payroll_staff.first_name+' '+props.row.payroll_staff.last_name:'N/A' }}
 			</span>
 		</div>
-		
+		<div slot="motive" slot-scope="props" class="text-center"
+			 v-html="prepareText(props.row.motive)">
+		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
 				<warehouse-request-info 
@@ -62,6 +64,10 @@
 			 *
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
 			 */
+			prepareText(text) {
+                return text.substr(3, text.length-4); 
+
+            },
 			reset() {
 				
 			},

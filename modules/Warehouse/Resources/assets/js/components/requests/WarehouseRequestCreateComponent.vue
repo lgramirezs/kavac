@@ -49,8 +49,9 @@
                         <ckeditor :editor="ckeditor.editor" data-toggle="tooltip"
                                   title="Indique el motivo de la solicitud (requerido)"
                                   :config="ckeditor.editorConfig" class="form-control" tag-name="textarea" rows="3"
-                                  v-model="record.motive"></ckeditor>
-					   </textarea>
+                                  v-model="record.motive">
+                        </ckeditor>
+					   
                     </div>
 				</div>
 				<div class="col-md-6" id="helpWarehouseRequestProject">
@@ -112,7 +113,8 @@
 							props.row.warehouse_product.name+': ':''
 						}} </b>
 						{{ (props.row.warehouse_product)?
-								props.row.warehouse_product.description:''
+								prepareText(props.row.warehouse_product.description)
+								: ''
 						}}<br>
 					</span>
 					<span>
@@ -242,6 +244,9 @@
 						vm.selected.push(row.id);
 				}
 		    },
+		    prepareText(text) {
+                return text.replace('<p>', '').replace('</p>', ''); 
+            },
 			reset() {
 				this.record = {
 					id: '',

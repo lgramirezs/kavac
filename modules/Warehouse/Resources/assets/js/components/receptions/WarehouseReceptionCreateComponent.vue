@@ -213,14 +213,17 @@
         receptionid: Number, 
         },
         methods: {
-            reset() {
-                this.record = {
-                    id: '',
-                    institution_id: '',
-                    warehouse_id: '',
-                    warehouse_inventory_products: [],
+            reset(all = true) {
+                if (all) {
+                    this.record = {
+                        id: '',
+                        institution_id: '',
+                        warehouse_id: '',
+                        warehouse_inventory_products: [],
 
-                };
+                    };
+
+                }
                 this.warehouse_inventory_product = {
                     id: '',
                     quantity: '',
@@ -325,17 +328,17 @@
 
                 if (this.editIndex === null) {                  
                     vm.records.push(vm.warehouse_inventory_product);
-                    vm.reset();
+                    vm.reset(false);
                 }
                 else if (this.editIndex >= 0 ) {                
                     vm.records.splice(this.editIndex, 1);
                     vm.records.push(vm.warehouse_inventory_product);
-                    vm.reset();
+                    vm.reset(false);
                 }
             },
 
             editProduct(index, event) {
-                this.reset();
+                this.reset(false);
                 this.editIndex = index-1;
                 this.warehouse_inventory_product = this.records[index - 1];
 

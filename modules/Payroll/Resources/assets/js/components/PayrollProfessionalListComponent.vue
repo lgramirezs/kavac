@@ -20,11 +20,16 @@
     			</button>
     		</div>
             <div slot="professions" slot-scope="props" class="text-center">
-                <span v-for="profession in props.row.professions" :key="profession.id">
-                    <div>
-                        {{ profession.name }}
-                    </div>
-                </span>
+                <div v-if="props.row.professions != 0">
+                    <span v-for="profession in props.row.professions" :key="profession.id">
+                        <div>
+                            {{ profession.name }}
+                        </div>
+                    </span>
+                </div>
+                <div v-else>
+                    <span>N/A</span>
+                </div>
             </div>
             <div slot="is_student" slot-scope="props" class="text-center">
                 <span v-if="props.row.is_student">SI</span>
