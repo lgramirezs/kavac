@@ -128,7 +128,8 @@
 							props.row.warehouse_product.name + '.':''
 						}} <br>
 						{{ (props.row.warehouse_product)?
-								props.row.warehouse_product.description:''
+								prepareText(
+								props.row.warehouse_product.description): ''
 						}} <br>
 					</span>
 					<span>
@@ -219,6 +220,9 @@
 					end_date: ''
 				}
 			},
+			prepareText(text) {
+                return text.replace('<p>', '').replace('</p>', ''); 
+            },
 			getWarehouseProducts() {
 				const vm = this;
 				axios.get('/warehouse/get-warehouse-products').then(response => {

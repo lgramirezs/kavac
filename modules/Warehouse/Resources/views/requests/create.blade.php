@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<warehouse-request-create
-					route_list='warehouse/requests'
+					route_list="{{ url('warehouse/requests') }}"
 					:requestid ="{!! (isset($warehouse_request)) ? $warehouse_request->id : 'null' !!}">
 				</warehouse-request-create>
 			</div>
@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<warehouse-request-staff-create
-					route_list='warehouse/requests'
+					route_list="{{ url('warehouse/requests') }}"
 					:requestid ="{!! (isset($warehouse_request)) ? $warehouse_request->id : 'null' !!}">
 				</warehouse-request-staff-create>
 			</div>

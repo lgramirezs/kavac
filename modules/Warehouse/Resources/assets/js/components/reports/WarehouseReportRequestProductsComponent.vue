@@ -175,7 +175,8 @@
                         }} <br>
                         {{ (props.row.warehouse_inventory_product)
                             ? (props.row.warehouse_inventory_product.warehouse_product)
-                                ? props.row.warehouse_inventory_product.warehouse_product.description
+                                ? prepareText(
+                                props.row.warehouse_inventory_product.warehouse_product.description)
                                 : ''
                             : ''
                         }} <br>
@@ -293,6 +294,9 @@
                     start_date: '',
                     end_date: ''
                 }
+            },
+            prepareText(text) {
+                return text.replace('<p>', '').replace('</p>', ''); 
             },
             createReport(current) {
                 const vm = this;
