@@ -1,12 +1,12 @@
 <template>
     <div>
-        <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal">
+        <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" @click="clearFilters" data-dismiss="modal" title="Cerrar ventana modal" data-toggle="tooltip" v-has-tooltip>
             Cerrar
         </button>
-        <button type="button" @click="reset()" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear">
+        <button type="button" @click="reset()" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" title="Limpiar información del formulario" data-toggle="tooltip" v-has-tooltip>
             Cancelar
         </button>
-        <button type="button" @click="saveEvent()" class="btn btn-primary btn-sm btn-round btn-modal-save">
+        <button type="button" @click="saveEvent()" class="btn btn-primary btn-sm btn-round btn-modal-save" title="Guardar información de registro" data-toggle="tooltip" v-has-tooltip>
             Guardar
         </button>
     </div>
