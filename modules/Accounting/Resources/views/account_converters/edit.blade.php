@@ -19,9 +19,15 @@
 @section('content')
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card" id="helpFormConvertion">
 				<div class="card-header">
-					<h6 class="card-title">Editar conversión</h6>
+					<h6 class="card-title">
+						Editar conversión
+						@include('buttons.help', [
+							'helpId' => 'AccountingFormConvertion',
+							'helpSteps' => get_json_resource('ui-guides/account_converters/form_convertions.json', 'accounting')
+						])
+					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => route('accounting.converter.index')])
 						@include('buttons.minimize')
