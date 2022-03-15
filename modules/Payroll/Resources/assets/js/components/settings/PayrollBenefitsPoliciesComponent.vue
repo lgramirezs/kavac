@@ -100,7 +100,7 @@
                                                 <label>Desde:</label>
                                                 <input type="date" id="start_date" placeholder="Desde"
                                                        data-toggle="tooltip" title="Indique la fecha de aplicación asociada a la política de prestaciones"
-                                                       :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]"
+                                                       :min="start_operations_date"
                                                        :max="(record.end_date == '') ? '' : record.end_date"
                                                        class="form-control input-sm" v-model="record.start_date">
                                             </div>
@@ -426,6 +426,13 @@
                     {"id": "dialy_salary",         "text": "Salario Diario"}
                 ],
                 panel:                 'benefitsPolicyForm',
+            }
+        },
+        props:{
+            start_operations_date: {
+                type:     [Date, String],
+                required: false,
+                default:  ''
             }
         },
         created() {

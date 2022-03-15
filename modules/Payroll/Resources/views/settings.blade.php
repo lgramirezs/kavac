@@ -281,7 +281,8 @@
 						</payroll-vacation-policies>
 
 						{{-- Políticas de prestaciones sociales --}}
-						<payroll-benefits-policies></payroll-benefits-policies>
+						<payroll-benefits-policies
+							start_operations_date="{!! (isset($institution)) ? $institution->start_operations_date : '' !!}">></payroll-benefits-policies>
 
 						{{-- Políticas de Permisos --}}
 						<payroll-permission-policies></payroll-permission-policies>
