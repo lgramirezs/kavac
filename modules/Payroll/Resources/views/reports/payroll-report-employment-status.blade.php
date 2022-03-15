@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="card-title">Estatus del trabajador</h6>
+                    <h6 class="card-title">Reporte detallado de trabajadores</h6>
                     <div class="card-btns">
                         @include('buttons.previous', ['route' => url()->previous()])
                         @include('buttons.minimize')
@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <payroll-report-employment-status
-                     route_list="{{ url('payroll/employments/show/vue-list') }}"
+                     route_list="{{ url('payroll/reports/vue-list') }}"
                      route_show="{{ url('payroll/employments/{id}') }}"
                      >
                     </payroll-report-employment-status>

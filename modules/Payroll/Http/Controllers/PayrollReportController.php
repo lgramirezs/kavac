@@ -397,6 +397,11 @@ class PayrollReportController extends Controller
                 $record->days_old = $index * $vacationPolicy->additional_days_per_year + $vacationPolicy->vacation_days;
                 $record->pending_days = $index * $vacationPolicy->additional_days_per_year + $vacationPolicy->vacation_days - $record->days_requested;
             }
+        } else if ($request->current == "employment-status") {
+            $records = PayrollEmployment::with([
+                'payrollStaff', 'payrollInactivityType', 'payrollPositionType',
+                'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType', 'payrollPreviousJob'
+            ])->where('payroll_staff_id', $request->payroll_staff_id)->get();
         }
 
         return response()->json(['records' => $records], 200);
