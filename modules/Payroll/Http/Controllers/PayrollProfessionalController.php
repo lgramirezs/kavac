@@ -134,7 +134,7 @@ class PayrollProfessionalController extends Controller
                 $request,
                 [
                     'payroll_studies.' . $i . '.university_name' => ['required', 'max:200'],
-                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer'],
+                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer', 'after_or_equal:1930'],
                     'payroll_studies.' . $i . '.payroll_study_type_id' => ['required'],
                     'payroll_studies.' . $i . '.profession_id' => ['required'],
                 ],
@@ -396,7 +396,7 @@ class PayrollProfessionalController extends Controller
                 $request,
                 [
                     'payroll_studies.' . $i . '.university_name' => ['required', 'max:200'],
-                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer'],
+                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer', 'after_or_equal:1930'],
                     'payroll_studies.' . $i . '.payroll_study_type_id' => ['required'],
                     'payroll_studies.' . $i . '.profession_id' => ['required'],
                 ],
