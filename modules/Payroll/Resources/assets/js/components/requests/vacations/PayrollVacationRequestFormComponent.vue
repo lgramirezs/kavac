@@ -66,6 +66,8 @@
                     </div>
                 </div>
                 <!-- ./año del período vacacional -->
+            </div>
+            <div class="row">
                 <!-- días solicitudos -->
                 <div class="col-md-4" v-if="record.vacation_period_year > 0" id="helpPayrollVacationDaysRequested">
                     <div class="form-group is-required">
@@ -82,16 +84,13 @@
                     </div>
                 </div>
                 <!-- ./días solicitados -->
-            </div>
-            <div class="row">
                 <!-- fecha de inicio de vacaciones -->
                 <div class="col-md-4" id="helpPayrollVacationStartDate">
                     <div class="form-group is-required">
                         <label>Fecha de inicio de vacaciones:</label>
                         <input type="date"
-                               data-toggle="tooltip"
-                               title="Fecha de inicio de vacaciones"
-                               class="form-control input-sm" v-model="record.start_date">
+                               data-toggle="tooltip" title="Fecha de inicio de vacaciones"
+                               :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]" class="form-control input-sm no-restrict" v-model="record.start_date">
                     </div>
                 </div>
                 <!-- ./fecha de inicio de vacaciones -->
@@ -99,10 +98,10 @@
                 <div class="col-md-4" id="helpPayrollVacationEndDate">
                     <div class="form-group is-required">
                         <label>Fecha de culminación de vacaciones:</label>
-                        <input type="date"
+                        <input type="date" :min="record.start_date"
                                data-toggle="tooltip"
                                title="Fecha de culminación de vacaciones"
-                               class="form-control input-sm" v-model="record.end_date">
+                               class="form-control input-sm no-restrict" v-model="record.end_date">
                     </div>
                 </div>
                 <!-- ./fecha de culminación de vacaciones -->

@@ -67,6 +67,11 @@ class EstateController extends Controller
             'name' => ['required', 'max:100'],
             'code' => ['required', 'max:10', new UniqueEstateCode],
             'country_id' => ['required']
+        ], [
+            'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),   
+            'code.required' => ('El campo código es obligatorio.'),
+            'code.max' => ('El campo código no debe ser mayor que 10 caracteres.'),
+            'country_id.required' => ('El campo país es obligatorio.'),
         ]);
 
         if (!restore_record(Estate::class, ['name' => $request->name, 'country_id' => $request->country_id])) {
