@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Models\User;
-use App\Traits\ModelsTrait;
 /**
  * @class AssetRequestExtension
  * @brief Datos de las prorrogas asociados a una solicitud
@@ -21,7 +20,6 @@ use App\Traits\ModelsTrait;
 class AssetRequestExtension extends Model implements Auditable
 {
     use AuditableTrait;
-    use ModelsTrait;
 
     /**
      * Lista de atributos que pueden ser asignados masivamente

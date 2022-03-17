@@ -5,7 +5,6 @@ namespace Modules\Warehouse\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use App\Traits\ModelsTrait;
 /**
  * @class WarehouseInventoryProductRequest
  * @brief Datos de los productos solicitados
@@ -20,7 +19,6 @@ use App\Traits\ModelsTrait;
 class WarehouseInventoryProductRequest extends Model implements Auditable
 {
     use AuditableTrait;
-    use ModelsTrait;
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *
