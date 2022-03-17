@@ -96,7 +96,9 @@ class PurchaseSupplierBranchController extends Controller
     {
         /** @var object Datos de la rama de proveedores */
         $supplierBranch = PurchaseSupplierBranch::find($id);
-        $supplierBranch->delete();
+        if ($supplierBranch) {
+            $supplierBranch->delete();
+        }
         return response()->json(['record' => $supplierBranch, 'message' => 'Success'], 200);
     }
 }
