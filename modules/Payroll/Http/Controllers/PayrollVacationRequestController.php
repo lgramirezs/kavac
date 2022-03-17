@@ -47,10 +47,10 @@ class PayrollVacationRequestController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        //$this->middleware('permission:payroll.vacation-requests.list',   ['only' => ['index', 'vueList']]);
-        //$this->middleware('permission:payroll.vacation-requests.create', ['only' => ['create', 'store']]);
-        //$this->middleware('permission:payroll.vacation-requests.edit',   ['only' => ['edit', 'update']]);
-        //$this->middleware('permission:payroll.vacation-requests.delete', ['only' => 'destroy']);
+        $this->middleware('permission:payroll.vacation-requests.list',   ['only' => ['index', 'vueList']]);
+        $this->middleware('permission:payroll.vacation-requests.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:payroll.vacation-requests.edit',   ['only' => ['edit', 'update']]);
+        $this->middleware('permission:payroll.vacation-requests.delete', ['only' => 'destroy']);
 
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [

@@ -747,6 +747,87 @@ class PayrollRoleAndPermissionsTableSeeder extends Seeder
                 'model_prefix' => 'nomina',
                 'slug_alt' => 'discapacidad.eliminar'
             ],
+            /**
+             * Vacation requests
+             */
+            [
+                'name' => 'Ver solicitudes de vacaciones', 'slug' => 'payroll.vacation-requests.list',
+                'description' => 'Acceso para ver solicitudes de vacaciones',
+                'model' => 'Modules\Payroll\Models\PayrollVacationRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.vacaciones.ver'
+            ],
+            [
+                'name' => 'Crear solicitudes de vacaciones', 'slug' => 'payroll.vacation-requests.create',
+                'description' => 'Acceso para crear solicitudes de vacaciones',
+                'model' => 'Modules\Payroll\Models\PayrollVacationRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.vacaciones.crear'
+            ],
+            [
+                'name' => 'Editar solicitudes de vacaciones', 'slug' => 'payroll.vacation-requests.edit',
+                'description' => 'Acceso para editar los solicitudes de vacaciones',
+                'model' => 'Modules\Payroll\Models\PayrollVacationRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.vacaciones.editar'
+            ],
+            [
+                'name' => 'Eliminar solicitudes de vacaciones', 'slug' => 'payroll.vacation-requests.delete',
+                'description' => 'Acceso para eliminar solicitudes de vacaciones',
+                'model' => 'Modules\Payroll\Models\PayrollVacationRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.vacaciones.eliminar'
+            ],
+            /**
+             * Benefits requests
+             */
+            [
+                'name' => 'Ver solicitudes de prestaciones', 'slug' => 'payroll.benefits-requests.list',
+                'description' => 'Acceso para ver solicitudes de prestaciones',
+                'model' => 'Modules\Payroll\Models\PayrollBenefitsRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.prestaciones.ver'
+            ],
+            [
+                'name' => 'Crear solicitudes de prestaciones', 'slug' => 'payroll.benefits-requests.create',
+                'description' => 'Acceso para crear solicitudes de prestaciones',
+                'model' => 'Modules\Payroll\Models\PayrollBenefitsRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.prestaciones.crear'
+            ],
+            [
+                'name' => 'Editar solicitudes de prestaciones', 'slug' => 'payroll.benefits-requests.edit',
+                'description' => 'Acceso para editar los solicitudes de prestaciones',
+                'model' => 'Modules\Payroll\Models\PayrollBenefitsRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.prestaciones.editar'
+            ],
+            [
+                'name' => 'Eliminar solicitudes de prestaciones', 'slug' => 'payroll.benefits-requests.delete',
+                'description' => 'Acceso para eliminar solicitudes de prestaciones',
+                'model' => 'Modules\Payroll\Models\PayrollBenefitsRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.prestaciones.eliminar'
+            ],
+            /**
+             * Benefits requests
+             */
+            [
+                'name' => 'Ver solicitudes de permisos', 'slug' => 'payroll.permission-requests.list',
+                'description' => 'Acceso para ver solicitudes de permisos',
+                'model' => 'Modules\Payroll\Models\PayrollPermissionRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.permisos.ver'
+            ],
+            [
+                'name' => 'Crear solicitudes de permisos', 'slug' => 'payroll.permission-requests.create',
+                'description' => 'Acceso para crear solicitudes de permisos',
+                'model' => 'Modules\Payroll\Models\PayrollPermissionRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.permisos.crear'
+            ],
+            [
+                'name' => 'Editar solicitudes de permisos', 'slug' => 'payroll.permission-requests.edit',
+                'description' => 'Acceso para editar los solicitudes de permisos',
+                'model' => 'Modules\Payroll\Models\PayrollPermissionRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.permisos.editar'
+            ],
+            [
+                'name' => 'Eliminar solicitudes de permisos', 'slug' => 'payroll.permission-requests.delete',
+                'description' => 'Acceso para eliminar solicitudes de permisos',
+                'model' => 'Modules\Payroll\Models\PayrollPermissionRequest', 'model_prefix' => 'nomina',
+                'slug_alt' => 'solicitud.permisos.eliminar'
+            ]
         ];
 
         foreach ($permissions as $permission) {

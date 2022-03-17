@@ -42,6 +42,11 @@ class PayrollPermissionRequestController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:payroll.permission-requests.list',   ['only' => ['index', 'vueList']]);
+        $this->middleware('permission:payroll.permission-requests.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:payroll.permission-requests.edit',   ['only' => ['edit', 'update']]);
+        $this->middleware('permission:payroll.permission-requests.delete', ['only' => 'destroy']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'date'                             => ['required'],
