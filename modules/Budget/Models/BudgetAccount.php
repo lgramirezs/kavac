@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use Module;
-
+use App\Traits\ModelsTrait;
 /**
  * @class BudgetAccount
  * @brief Datos de cuentas del Clasificador Presupuestario
@@ -24,6 +24,7 @@ class BudgetAccount extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
+    use ModelsTrait;
 
     /**
      * The attributes that should be mutated to dates.
