@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Models\User;
-
+use App\Traits\ModelsTrait;
 /**
  * @class AssetRequestDelivery
  * @brief Datos de las entregas de equipos asociados a una solicitud
@@ -21,7 +21,8 @@ use App\Models\User;
 class AssetRequestDelivery extends Model implements Auditable
 {
     use AuditableTrait;
-
+    use ModelsTrait;
+    
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *

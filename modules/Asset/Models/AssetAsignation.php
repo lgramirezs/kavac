@@ -8,6 +8,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use Module;
 use App\Models\User;
+use App\Traits\ModelsTrait;
 
 /**
  * @class AssetAsignation
@@ -24,6 +25,7 @@ class AssetAsignation extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
+    use ModelsTrait;
 
     /**
      * Lista de atributos para la gestión de fechas

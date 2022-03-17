@@ -5,7 +5,7 @@ namespace Modules\Asset\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
+use App\Traits\ModelsTrait;
 /**
  * @class AssetInventoryAsset
  * @brief Datos del listado de bienes inventariados
@@ -20,7 +20,8 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 class AssetInventoryAsset extends Model implements Auditable
 {
     use AuditableTrait;
-
+    use ModelsTrait;
+    
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *
