@@ -63,7 +63,10 @@ class InstitutionTypeController extends Controller
     {
         $this->validate($request, [
             'name' => ['required', 'max:100'],
-            'acronym' => ['max:4']
+            'acronym' => ['required', 'max:4']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'acronym.required' => 'El campo acrónimo es obligatorio.',
         ]);
 
         if (!restore_record(InstitutionType::class, ['name' => $request->name])) {
