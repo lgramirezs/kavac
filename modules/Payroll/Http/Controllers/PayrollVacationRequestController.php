@@ -57,8 +57,8 @@ class PayrollVacationRequestController extends Controller
             'payroll_staff_id'     => ['required'],
             'vacation_period_year' => ['required'],
             'days_requested'       => ['required'],
-            'start_date'           => ['required'],
-            'end_date'             => ['required']
+            'start_date'           => ['required', 'before:end_date'],
+            'end_date'             => ['required', 'after:start_date']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -67,7 +67,9 @@ class PayrollVacationRequestController extends Controller
             'vacation_period_year.required' => 'El campo año del período vacacional es obligatorio.',
             'days_requested.required'       => 'El campo días solicitados es obligatorio.',
             'start_date.required'           => 'El campo fecha de inicio de las vacaciones es obligatorio.',
-            'end_date.required'             => 'El campo fecha de culminación de las vacaciones es obligatorio.'
+            'start_date.before'           => 'El campo fecha de inicio debe ser menor a la fecha de culminación.',
+            'end_date.required'             => 'El campo fecha de culminación de las vacaciones es obligatorio.',
+            'end_date.after'             => 'El campo fecha de culminación debe ser mayor a la fecha de inicio.'
         ];
     }
 
