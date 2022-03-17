@@ -66,6 +66,8 @@
                     </div>
                 </div>
                 <!-- ./año del período vacacional -->
+            </div>
+            <div class="row">
                 <!-- días solicitudos -->
                 <div class="col-md-4" v-if="record.vacation_period_year > 0" id="helpPayrollVacationDaysRequested">
                     <div class="form-group is-required">
@@ -82,8 +84,6 @@
                     </div>
                 </div>
                 <!-- ./días solicitados -->
-            </div>
-            <div class="row">
                 <!-- fecha de inicio de vacaciones -->
                 <div class="col-md-4" id="helpPayrollVacationStartDate">
                     <div class="form-group is-required">
