@@ -91,7 +91,7 @@
                 </div>
             </div>  
             <div class="card-body">
-                <rejected-payments-list route_list="{{ url('sale/payment/payment_approve') }}"></rejected-payments-list>
+                <rejected-payments-list route_list="{{ url('sale/payment/payment_rejected') }}"></rejected-payments-list>
                 {{-- <payment-registered-list route_edit="{{ url('sale/payment/{id}/edit') }}" /> --}}
             </div>
         </div>
