@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Models\User;
-
+use App\Traits\ModelsTrait;
 /**
  * @class WarehouseMovement
  * @brief Datos de los movimientos de almacén
@@ -23,7 +23,7 @@ class WarehouseMovement extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
-
+    use ModelsTrait;
     /**
      * Lista de atributos para la gestión de fechas
      *

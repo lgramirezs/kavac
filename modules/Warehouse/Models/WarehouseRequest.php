@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use Module;
-
+use App\Traits\ModelsTrait;
 /**
  * @class WarehouseRequest
  * @brief Datos de las solicitudes de los productos del almacén
@@ -23,7 +23,7 @@ class WarehouseRequest extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
-
+    use ModelsTrait;
     /**
      * Lista de atributos para la gestión de fechas
      *
