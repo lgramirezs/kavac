@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Models\User;
-
+use App\Traits\ModelsTrait;
 /**
  * @class SaleWarehouseInventoryRule
  * @brief Datos de las reglas del inventario
@@ -23,7 +23,7 @@ class SaleWarehouseInventoryRule extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
-
+    use ModelsTrait;
     /**
      * Lista de atributos para la gestión de fechas
      *
