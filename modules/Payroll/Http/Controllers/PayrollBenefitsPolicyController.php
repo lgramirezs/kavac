@@ -180,8 +180,8 @@ class PayrollBenefitsPolicyController extends Controller
             'additional_maximum_days_per_year' => $request->input('additional_maximum_days_per_year'),
             'work_interruption_days'           => $request->input('work_interruption_days'),
             'month_worked_days'                => $request->input('month_worked_days'),
-            'benfits_advance_payment'          => !empty($request->benfits_advance_payment)
-                                                    ? $request->benfits_advance_payment
+            'benefits_advance_payment'          => !empty($request->benefits_advance_payment)
+                                                    ? $request->benefits_advance_payment
                                                     : false,
             'maximum_advance_percentage'       => $request->input('maximum_advance_percentage'),
             'number_advances_per_year'         => $request->input('number_advances_per_year'),
@@ -275,8 +275,8 @@ class PayrollBenefitsPolicyController extends Controller
             'additional_maximum_days_per_year' => $request->input('additional_maximum_days_per_year'),
             'work_interruption_days'           => $request->input('work_interruption_days'),
             'month_worked_days'                => $request->input('month_worked_days'),
-            'benfits_advance_payment'          => !empty($request->benfits_advance_payment)
-                                                    ? $request->benfits_advance_payment
+            'benefits_advance_payment'          => !empty($request->benefits_advance_payment)
+                                                    ? $request->benefits_advance_payment
                                                     : false,
             'maximum_advance_percentage'       => $request->input('maximum_advance_percentage'),
             'number_advances_per_year'         => $request->input('number_advances_per_year'),

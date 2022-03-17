@@ -37,7 +37,7 @@ class PayrollBenefitsPolicy extends Model implements Auditable
     protected $fillable = [
         'name', 'start_date', 'end_date', 'benefit_days', 'minimum_number_months', 'additional_days_per_year',
         'minimum_number_years', 'additional_maximum_days_per_year', 'work_interruption_days', 'month_worked_days',
-        'benfits_advance_payment', 'maximum_advance_percentage', 'number_advances_per_year', 'salary_type',
+        'benefits_advance_payment', 'maximum_advance_percentage', 'number_advances_per_year', 'salary_type',
         'institution_id', 'payroll_payment_type_id', 'active'
     ];
 
