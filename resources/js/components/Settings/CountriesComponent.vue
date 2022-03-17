@@ -22,7 +22,7 @@
 						<form-errors :listErrors="errors"></form-errors>
 						<div class="row">
 							<div class="col-12 col-md-6">
-								<div class="form-group">
+								<div class="form-group is-required">
 									<label>Prefijo:</label>
 									<input type="text" placeholder="Prefijo" data-toggle="tooltip"
 										   title="Indique el prefijo del Pais (requerido)"

@@ -55,6 +55,9 @@ class CountryController extends Controller
         $this->validate($request, [
             'name' => ['required', 'max:100'],
             'prefix' => ['required', 'max:3']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'prefix.required' => 'El campo prefijo es obligatorio.',
         ]);
 
         if (!restore_record(Country::class, ['name' => $request->name])) {
