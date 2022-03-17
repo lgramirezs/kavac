@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
+use App\Traits\ModelsTrait;
 
 /**
  * @class AccountingAccount
@@ -23,7 +24,8 @@ class AccountingAccountConverter extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
-
+    use ModelsTrait;
+    
     protected $fillable = [
         'accounting_account_id',
         'budget_account_id',
