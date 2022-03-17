@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
+use App\Traits\ModelsTrait;
 /**
  * @class AssetReport
  * @brief Datos del historico de los reportes del modulo de bienes
@@ -22,7 +22,8 @@ class AssetReport extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
-
+    use ModelsTrait;
+    
     /**
      * Lista de atributos para la gestión de fechas
      *
