@@ -11,6 +11,10 @@
                         </a>
                     </h6>
                     <div class="card-btns">
+                        <a href="#" class="btn btn-sm btn-primary btn-custom" @click="redirect_back(route_list)"
+                           title="Ir atrás" data-toggle="tooltip">
+                            <i class="fa fa-reply"></i>
+                        </a>
                         <a href="javascript:void(0)" class="card-minimize btn btn-card-action btn-round"
                            title="Minimizar" data-toggle="tooltip">
                             <i class="now-ui-icons arrows-1_minimal-up"></i>
@@ -281,7 +285,7 @@
         created() {
             const vm = this;
             vm.table_options.headings = {
-                'status': '',
+                'status': 'Estatus',
                 'date': 'Fecha - Hora',
                 'ip': 'IP',
                 'module': 'Módulo',
