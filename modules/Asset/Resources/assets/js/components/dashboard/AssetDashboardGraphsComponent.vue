@@ -1,7 +1,13 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h6 class="card-title text-uppercase">Gráficos del Inventario de Bienes Institucionales</h6>
+            <h6 class="card-title text-uppercase">
+                Gráficos del Inventario de Bienes Institucionales
+                <a href="javascript:void(0)" title="haz click para ver la ayuda guiada de este elemento"
+                    data-toggle="tooltip" class="btn-help" @click="initUIGuide(helpFile)">
+                    <i class="ion ion-ios-help-outline cursor-pointer"></i>
+                </a>
+            </h6>
             <div class="card-btns">
                 <a href="#" class="btn btn-sm btn-primary btn-custom" @click="redirect_back(route_list)"
                        title="Ir atrás" data-toggle="tooltip">

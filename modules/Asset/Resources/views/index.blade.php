@@ -11,7 +11,13 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h6 class="card-title">Histórico de Operaciones del Módulo de Bienes</h6>
+				<h6 class="card-title">
+					Histórico de Operaciones del Módulo de Bienes
+					@include('buttons.help', [
+                        'helpId' => 'developmentTools',
+                        'helpSteps' => get_json_resource('ui-guides/development_tools.json')
+                    ])
+				</h6>
 				<div class="card-btns">
 					@include('buttons.previous', ['route' => url()->previous()]) 
 					@include('buttons.minimize')
