@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-header">
-			<h6 class="card-title text-uppercase">Gráficos del Inventario de Productos en Almacén..!!</h6>
+			<h6 class="card-title text-uppercase">Gráficos del Inventario de Productos en Almacén</h6>
 			<div class="card-btns">
 				<a href="#" class="btn btn-sm btn-primary btn-custom" @click="redirect_back(route_list)"
                        title="Ir atrás" data-toggle="tooltip">

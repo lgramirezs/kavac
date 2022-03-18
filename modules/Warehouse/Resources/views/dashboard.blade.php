@@ -81,6 +81,7 @@
                 <div class="card-header">
                     <h6 class="card-title">Histórico de Operaciones del Módulo de Almacén</h6>
                     <div class="card-btns">
+                        @include('buttons.previous', ['route' => url()->previous()]) 
                         @include('buttons.minimize')
                     </div>
                 </div>
