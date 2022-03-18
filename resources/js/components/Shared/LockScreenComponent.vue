@@ -9,24 +9,6 @@
     export default {
         data() {
             return {}
-        },
-        methods: {
-            async lockScreenNow() {
-                const vm = this;
-                
-                vm.lockscreen.timer_timeout = setTimeout(function() {
-                    $(document.body).addClass('modalBlur');
-                    $(".modal-lockscreen").modal('show');
-                    window.screen_locked = true;
-                    axios.post('/set-lockscreen-data', {
-                        lock_screen: true
-                    }).catch(error => {
-                        console.warn(error);
-                    });
-                }, 0 * 60000);
-                vm.lockscreen.lock = true;
-				vm.lockscreen.time = 0;
-            }
         }
     }
 </script>

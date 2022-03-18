@@ -60,7 +60,8 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="button" class="btn btn-info btn-block" id="helpProfileLockScreen">
+                            <button type="button" class="btn btn-info btn-block" id="helpProfileLockScreen" 
+                                    @click="lockScreenNow">
                                 {{ __('Bloquear Pantalla') }}
                             </button>
                         </div>
