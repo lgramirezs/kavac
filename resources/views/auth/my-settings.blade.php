@@ -54,7 +54,7 @@
                             {!! Form::number('time_lock', auth()->user()->time_lock ?? 0, [
                                 'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
                                 'title' => __('Tiempo de inactividad en minutos para bloquear la pantalla del sistema'),
-                                'readonly' => (!auth()->user()->lock_screen)?true:false
+                                'readonly' => (auth()->user()->time_lock <= 0)?true:false
                             ]) !!}
                         </div>
                     </div>
