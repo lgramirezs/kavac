@@ -107,7 +107,7 @@
 				errors: [],
 				records: [],
 				countries: [],
-				estates: ['0'],
+				estates: {},
 				columns: ['estate.name', 'name', 'code', 'id'],
 			}
 		},
@@ -153,10 +153,10 @@
                 let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
-
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.estate.country_id;
                 vm.selectedEstateId = recordEdit.estate_id;
+                vm.record.estate_id = vm.selectedEstateId;
                 event.preventDefault();
             }
 		},

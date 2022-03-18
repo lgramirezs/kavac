@@ -5,7 +5,6 @@ namespace Modules\Asset\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
 /**
  * @class AssetRequestAsset
  * @brief Datos de los bienes institucionales solicitados
@@ -20,7 +19,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 class AssetRequestAsset extends Model implements Auditable
 {
     use AuditableTrait;
-
+    
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *

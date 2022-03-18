@@ -32,6 +32,11 @@ class CitizenServiceRegisterController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:citizenservice.registers.list',   ['only' => ['index', 'vueList']]);
+        $this->middleware('permission:citizenservice.registers.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:citizenservice.registers.edit',   ['only' => ['edit', 'update']]);
+        $this->middleware('permission:citizenservice.registers.delete', ['only' => 'destroy']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'date_register'     => ['required'],

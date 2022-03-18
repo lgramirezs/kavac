@@ -5,7 +5,6 @@ namespace Modules\Asset\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
 /**
  * @class AssetDisincorporationAsset
  * @brief Datos del listado de bienes registrados en una desincorporación
@@ -20,7 +19,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 class AssetDisincorporationAsset extends Model implements Auditable
 {
     use AuditableTrait;
-
+    
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *

@@ -11,7 +11,7 @@
                     props.row.warehouse_product.name+': ':''
                 }} </b>
                 {{ (props.row.warehouse_product)?
-                        props.row.warehouse_product.description:''
+                        replace_txt(props.row.warehouse_product.description):''
                 }}
             </span>
             <span>
@@ -92,6 +92,9 @@
             format_number(number, digit = 4) {
                 return (number * (10 ** digit)).toFixed(0) / (10 ** digit);
 
+            },
+            replace_txt(str) {
+                return (str.replace("<p>","")).replace("</p>","");
             }
         }
     };

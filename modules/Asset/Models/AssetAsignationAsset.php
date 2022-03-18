@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
 /**
  * @class AssetAsignationAsset
  * @brief Datos del listado de bienes registrados en una asignación
@@ -22,7 +21,7 @@ class AssetAsignationAsset extends Model implements Auditable
 {
     //use SoftDeletes;
     use AuditableTrait;
-
+    
     /**
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable

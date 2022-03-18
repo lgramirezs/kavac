@@ -5,7 +5,6 @@ namespace Modules\Sale\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
 /**
  * @class SaleWarehouseInventoryProductMovement
  * @brief Datos de los movimientos de los productos entre almacenes
@@ -20,7 +19,6 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 class SaleWarehouseInventoryProductMovement extends Model implements Auditable
 {
     use AuditableTrait;
-
     /**
      * Lista de atributos que pueden ser asignados masivamente
      *

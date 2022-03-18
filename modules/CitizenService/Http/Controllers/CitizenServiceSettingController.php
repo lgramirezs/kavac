@@ -17,6 +17,11 @@ class CitizenServiceSettingController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
+    public function __construct()
+    {
+         /** Establece permisos de acceso para cada método del controlador */
+         $this->middleware('permission:citizenservice.setting.index', ['only' => 'index']);
+    }
     public function index()
     {
         $codeSettings = CodeSetting::where('module', 'citizenservice')->get();

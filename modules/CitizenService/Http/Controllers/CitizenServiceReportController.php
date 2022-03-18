@@ -23,6 +23,12 @@ class CitizenServiceReportController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
+    public function __construct()
+    {
+         /** Establece permisos de acceso para cada método del controlador */
+         $this->middleware('permission:citizenservice.report.create', ['only' => 'create']);
+         $this->middleware('permission:citizenservice.report.list', ['only' => 'index']);
+    }
     public function index()
     {
 
@@ -123,7 +129,7 @@ class CitizenServiceReportController extends Controller
     public function show($filename)
     {
         $file = storage_path() . '/reports/' . $filename ?? 'citizenservice-report-' . Carbon::now() . '.pdf';
-    
+
         return response()->download($file, $filename, [], 'inline');
     }
 

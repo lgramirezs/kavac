@@ -163,7 +163,8 @@
                 <i class="fa fa-ban"></i>
             </button>
             <button type="button" @click="createRecord('payroll/benefits-requests')"
-                    class="btn btn-success btn-icon btn-round">
+                    class="btn btn-success btn-icon btn-round" data-toggle="tooltip"
+                    title="Guardar registro">
                 <i class="fa fa-save"></i>
             </button>
         </div>
