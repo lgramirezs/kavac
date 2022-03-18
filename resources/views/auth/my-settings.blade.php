@@ -40,7 +40,7 @@
                             {!! Form::label('lock_screen', __('Activar'), []) !!}
                             <div class="col-12">
                                 <div class="bootstrap-switch-mini">
-                                    {!! Form::checkbox('lock_screen', true, auth()->user()->lock_screen, [
+                                    {!! Form::checkbox('lock_screen', true, (auth()->user()->time_lock!==null), [
                                         'id' => 'lock_screen', 'class' => 'form-control bootstrap-switch',
                                         'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                     ]) !!}
@@ -105,7 +105,7 @@
                                 <label for="" class="control-label">{{ $notifySetting->name }}</label>
                                 <div class="col-12 bootstrap-switch-mini">
                                     {!! Form::checkbox($notifySetting->slug, true,
-                                        null, [
+                                        (isset($configuredNotify))?(in_array($notifySetting->slug, $configuredNotify)):null, [
                                         'id' => $notifySetting->slug, 'class' => 'form-control bootstrap-switch',
                                         'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                     ]) !!}

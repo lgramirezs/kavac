@@ -3,17 +3,18 @@
 /** Controladores para la gestión de autenticación de usuarios */
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Profile;
-use App\Models\NotificationSetting;
 use App\Roles\Models\Role;
+use Illuminate\Http\Request;
 use App\Roles\Models\Permission;
+use App\Models\NotificationSetting;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Notifications\UserRegistered;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 /**
  * @class UserController
@@ -490,7 +491,7 @@ class UserController extends Controller
     {
         /** @var User Objeto con información del usuario autenticado en la aplicación */
         $user = auth()->user();
-        /** @var object Objeto con información de los permisos asociados a un usuario */
+        /** @var object|array Objeto con información de los permisos asociados a un usuario */
         $userPermissions = $user->getPermissions()->where('slug', '<>', '')->pluck('slug')->toArray();
         /** @var array Arreglo con información de los permisos asociados a notificaciones de usuarios */
         $arr = array_filter($userPermissions, function ($value, $index) {
@@ -505,6 +506,13 @@ class UserController extends Controller
             $userPermissions
         )->orWhereNull('perm_required')->get();
 
+        /** @var array Arreglo de notificaciones establecidas por el usuario */
+        $myNotifications = auth()->user()->notificationSettings()->select('slug')->get();
+        $configuredNotify = [];
+        foreach ($myNotifications as $myNotify) {
+            $configuredNotify[] = $myNotify->slug;
+        }
+        
         /** @var array Arreglo con los atributos del formulario para el registro de configuraciones del usuario */
         $header_general_settings = [
             'route' => 'set.my.settings', 'method' => 'POST', 'role' => 'form', 'class' => 'form'
@@ -517,7 +525,8 @@ class UserController extends Controller
             'user',
             'notifySettings',
             'header_notify_settings',
-            'header_general_settings'
+            'header_general_settings',
+            'configuredNotify'
         ));
     }
 
