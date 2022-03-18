@@ -14,6 +14,7 @@
 						])
 				</h6>
 				<div class="card-btns">
+					@include('buttons.previous', ['route' => url()->previous()])
 					@include('buttons.minimize')
 				</div>
 			</div>
@@ -39,6 +40,7 @@
 							])
 				</h6>
 				<div class="card-btns">
+					@include('buttons.previous', ['route' => url()->previous()])
 					@include('buttons.minimize')
 				</div>
 			</div>

@@ -61,12 +61,17 @@ class MunicipalityController extends Controller
      *
      * @return JsonResponse         JSON con datos de respuesta a la petición
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $this->validate($request, [
             'name' => ['required', 'max:100'],
             'code' => ['required', 'max:10', new UniqueMunicipalityCode],
             'estate_id' => ['required']
+        ], [
+            'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),   
+            'code.required' => ('El campo código es obligatorio.'),
+            'code.max' => ('El campo código no debe ser mayor que 10 caracteres.'),
+            'estate_id.required' => ('El campo estado es obligatorio.'),
         ]);
 
         if (!restore_record(Municipality::class, ['name' => $request->name, 'estate_id' => $request->estate_id])) {

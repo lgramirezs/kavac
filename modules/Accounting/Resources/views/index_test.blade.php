@@ -32,7 +32,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h6 class="card-title">
-					Reportes de contabilidad
+					Reportes de contabilidad 
 					@include('buttons.help', [
 							'helpId' => 'AccountingReportHistories',
 							'helpSteps' => get_json_resource('ui-guides/dashboard/report_histories.json', 'accounting')
