@@ -16,7 +16,7 @@
                         <div class="lockscreen-item">
                             <div class="lockscreen-image">
                                 @php
-                                    $avatar = file_exists(base_path($img_profile)) 
+                                    $avatar = ($img_profile!== null && !empty($img_profile) && file_exists(base_path($img_profile))) 
                                               ? $img_profile : 'images/default-avatar.png';
                                 @endphp
                                 <img src="{{ asset($avatar, Request::secure()) }}"
