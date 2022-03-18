@@ -53,10 +53,11 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'max:100'],
+            'name' => ['required', 'max:100', 'unique:countries'],
             'prefix' => ['required', 'max:3', 'unique:countries']
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
+            'name.unique' => 'El campo nombre ya ha sido registrado.',
             'prefix.required' => 'El campo prefijo es obligatorio.',
             'prefix.unique' => 'El campo prefijo ya ha sido registrado.',
         ]);
