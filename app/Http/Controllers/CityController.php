@@ -58,7 +58,10 @@ class CityController extends Controller
             $this->validate($request, [
                 'name' => ['required', 'max:100', new UniqueCityName],
                 'estate_id' => ['required']
-            ]);
+            ], [
+            'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),
+            'estate_id.required' => ('El campo estado es obligatorio.'),
+        ]);
         }
 
         /** @var City Objeto con información de la ciudad registrada */

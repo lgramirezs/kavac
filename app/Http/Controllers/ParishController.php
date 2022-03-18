@@ -80,6 +80,11 @@ class ParishController extends Controller
             'name' => ['required', 'max:100'],
             'code' => ['required', 'max:10', new UniqueParishCode],
             'municipality_id' => ['required']
+        ], [
+            'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),   
+            'code.required' => ('El campo código es obligatorio.'),
+            'code.max' => ('El campo código no debe ser mayor que 10 caracteres.'),
+            'municipality_id.required' => ('El campo municipios es obligatorio.'),
         ]);
 
         /** @var Parish Objeto con información de la parroquia registrada */
