@@ -40,6 +40,13 @@ class Profile extends Model implements Auditable
         'first_name', 'last_name', 'image_id', 'user_id', 'institution_id', 'employee_id'
     ];
 
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute()
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
+    }
+
     /**
      * Profile belongs to User.
      *

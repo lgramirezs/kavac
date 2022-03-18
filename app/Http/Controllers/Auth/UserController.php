@@ -162,7 +162,10 @@ class UserController extends Controller
         $header = [
             'route' => ['users.update', $user->id], 'method' => 'PUT', 'role' => 'form', 'class' => 'form',
         ];
-        return view('auth.profile', compact('model', 'header'));
+        $directory = User::with(['profile' => function($q) {
+            $q->with('image');
+        }])->where('id', '<>', auth()->user()->id)->where('username', '<>', 'admin')->get()->toArray();
+        return view('auth.profile', compact('model', 'header', 'directory'));
     }
 
     /**
