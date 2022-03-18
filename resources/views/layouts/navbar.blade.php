@@ -136,10 +136,7 @@
                            title="{{ __('Ver actividad en la aplicación') }}" data-toggle="tooltip"
                            data-placement="left">
 							<i class="ion-ios-star"></i>{{ __('Registro de Actividad') }}</a>
-						<a class="dropdown-item" href="javascript:void(0)"
-                           title="{{ __('Bloquear pantalla de la aplicación') }}" data-toggle="tooltip"
-                           data-placement="left">
-							<i class="ion-android-lock"></i>{{ __('Bloquear Pantalla') }}</a>
+						<lock-screen-option></lock-screen-option>
 						<a id="doc-user" class="dropdown-item" href="" target="_blank"
                            title="{{ __('Ayuda') }} / {{ __('Manual de usuario') }}" data-toggle="tooltip"
                            data-placement="left">

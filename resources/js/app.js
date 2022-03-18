@@ -43,6 +43,16 @@ if (window.auth) {
 Vue.use(window.execution_year);
 
 /**
+ * Componente genérico para el bloqueo de pantall
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ */
+ Vue.component('lock-screen-option', () => import(
+    /* webpackChunkName: "lock-screen" */
+    './components/Shared/LockScreenComponent.vue'
+));
+
+/**
  * Componente genérico para el uso de botones en formularios de ventanas modales
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>

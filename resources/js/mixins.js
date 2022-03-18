@@ -1102,30 +1102,31 @@ Vue.mixin({
 
 
 					/** @type {Array} Eventos que determinan actividad del usuario en la aplicación */
-					/*var activityEvents = [
+					var activityEvents = [
 						'mousedown', 'mousemove', 'keydown',
 						'scroll'
-					];*/
+					];
 
 					/** Reinicia el contador para bloquear la pantalla si el usuario ha estado activo en la aplicación */
+					document.addEventListener(activityEvents, function() {
+						console.log($(".modal-lockscreen").is(':visible'))
+						if (!$(".modal-lockscreen").is(':visible')) {
+							clearTimeout(vm.timer_timeout);
+							window.screen_locked = false;
+							vm.lockscreen.timer_timeout = setTimeout(function() {
+								$(document.body).addClass('modalBlur');
+								$(".modal-lockscreen").modal('show');
+								window.screen_locked = true;
+								axios.post('/set-lockscreen-data', {
+									lock_screen: true
+								}).catch(error => {
+									console.warn(error);
+								});
+							}, vm.lockscreen.time * 60000);
+						}
+					}, true);
 					/*activityEvents.forEach(function(eventName) {
-						document.addEventListener(eventName, function() {
-							console.log($(".modal-lockscreen").is(':visible'))
-							if (!$(".modal-lockscreen").is(':visible')) {
-								clearTimeout(vm.timer_timeout);
-								window.screen_locked = false;
-								vm.lockscreen.timer_timeout = setTimeout(function() {
-									$(document.body).addClass('modalBlur');
-									$(".modal-lockscreen").modal('show');
-									window.screen_locked = true;
-									axios.post('/set-lockscreen-data', {
-										lock_screen: true
-									}).catch(error => {
-										console.warn(error);
-									});
-								}, vm.lockscreen.time * 60000);
-							}
-						}, true);
+						
 					});*/
 				}
 			}
@@ -1220,15 +1221,15 @@ Vue.mixin({
 	async mounted() {
 		let vm = this;
 		if ($('.modal-lockscreen').length > 0) {
-			//vm.lockScreen();
-			//$('.modal-lockscreen').on('hidden.bs.modal', function() {
+			vm.lockScreen();
+			$('.modal-lockscreen').on('hidden.bs.modal', function() {
 				/** Reinicia el valor del campo de la contraseña */
-				//$(".modal-lockscreen").find('#password').val('');
-				//vm.lockScreen();
-			//});
+				$(".modal-lockscreen").find('#password').val('');
+				vm.lockScreen();
+			});
 		}
 		$('.modal').on('hidden.bs.modal', function() {
-			//$("input[class^='VueTables__search']").val('');
+			$("input[class^='VueTables__search']").val('');
 			vm.clearFilters();
 		});
 		$('.modal').on('shown.bs.modal', function() {
