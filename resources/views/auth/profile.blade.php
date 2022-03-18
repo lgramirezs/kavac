@@ -237,7 +237,7 @@
                         </div>
                         <div class="tab-pane" id="activity" role="tabpanel">
                             {{-- Muestra los últimos 20 registros en la línea de tiempo del usuario --}}
-                            <div class="row mg-bottom-20">
+                            {{-- <div class="row mg-bottom-20">
                                 <div class="col-md-9"></div>
                                 <div class="col-md-3">
                                     {!! Form::text('search_timeline', null, [
@@ -245,51 +245,68 @@
                                         'placeholder' => __('buscar...')
                                     ]) !!}
                                 </div>
-                            </div>
+                            </div> --}}
+                            <h4 class="text-center">Últimos 20 registros de actividad en la aplicación</h4>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <ul class="timeline timeline-inverse" style="max-height:500px; overflow-y: auto;">
-                                        <li class="time-label">
-                                            <span class="bg-red">
-                                                10 Feb. 2016
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-envelope bg-blue"></i>
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                                                <div class="timeline-body">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                                </div>
-                                            </div>
-                                        </li>
+                                        @foreach (auth()->user()->audits->take(20) as $audit)
+                                            <li class="time-label">
+                                                @if ($audit->event === 'created')
+                                                    @php 
+                                                        $bgcolor = 'green';
+                                                        $event = 'creó';
+                                                        $title = 'Registro de datos'
+                                                    @endphp
+                                                @elseif ($audit->event === 'updated')
+                                                    @php 
+                                                        $bgcolor = 'orange';
+                                                        $event = 'actualizó';
+                                                        $title = 'Actualización de datos';
+                                                    @endphp
+                                                @elseif ($audit->event === 'deleted')
+                                                    @php 
+                                                        $bgcolor = 'red';
+                                                        $event = 'eliminó';
+                                                        $title = 'Eliminación de datos';
+                                                    @endphp
+                                                @endif
 
-                                        <li class="time-label">
-                                            <span class="bg-green">
-                                                10 Jun. 2016
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-user bg-yellow"></i>
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                                                <div class="timeline-body">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                                @if (array_key_exists('last_login', $audit->new_values))
+                                                    @php
+                                                        $title = 'Último acceso'
+                                                    @endphp
+                                                @endif
+                                                <span class="bg-{{ $bgcolor }}">
+                                                    {{ $audit->updated_at->format('d M. Y') }}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-envelope bg-blue"></i>
+                                                <div class="timeline-item">
+                                                    <span class="time">
+                                                        <i class="fa fa-clock-o"></i> 
+                                                        {{ $audit->updated_at->format('H:i A') }}
+                                                    </span>
+                                                    <h3 class="timeline-header">
+                                                        <a href="javascript::void">{{ $title }}</a>
+                                                    </h3>
+                                                    <div class="timeline-body">
+                                                        @if (array_key_exists('last_login', $audit->new_values))
+                                                            Se ha registrado un acceso a su cuenta desde la IP 
+                                                            {{ $audit->ip_address }}
+                                                        @else
+                                                            Usted {{ $event }} la siguiente información:
+                                                            <ul>
+                                                                @foreach ($audit->new_values as $item)
+                                                                    <li>{{ $item }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                           </div>
-                                        </li>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
