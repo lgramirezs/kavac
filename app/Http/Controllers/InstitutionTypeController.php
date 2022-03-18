@@ -67,6 +67,7 @@ class InstitutionTypeController extends Controller
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'acronym.required' => 'El campo acrónimo es obligatorio.',
+            'acronym.max' => 'El campo acrónimo no debe ser mayor que 4 caracteres.',
         ]);
 
         if (!restore_record(InstitutionType::class, ['name' => $request->name])) {
