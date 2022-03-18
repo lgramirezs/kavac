@@ -281,7 +281,7 @@
         created() {
             const vm = this;
             vm.table_options.headings = {
-                'status': '',
+                'status': 'Estatus',
                 'date': 'Fecha - Hora',
                 'ip': 'IP',
                 'module': 'Módulo',
