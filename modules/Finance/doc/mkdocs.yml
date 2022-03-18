@@ -46,6 +46,11 @@ plugins:
   - search
   - minify:
       minify_html: true
+  - with-pdf:
+      author: CENDITEL Nodo Mérida
+      copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
+      cover_subtitle: KAVAC - Módulo de Finanzas
+      output_path: ../../../public/docs/user_finance_module_manual.pdf
 
 # Customization
 # extra:
