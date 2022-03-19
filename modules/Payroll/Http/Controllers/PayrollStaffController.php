@@ -173,6 +173,7 @@ class PayrollStaffController extends Controller
             ]);
             return response()->json(['result' => false, 'redirect' => route('payroll.settings.index')], 200);
         }
+
         $payrollStaff = PayrollStaff::create([
             'code' => generate_registration_code(
                 $codeSetting->format_prefix,
@@ -189,9 +190,9 @@ class PayrollStaffController extends Controller
             'email' => $request->email,
             'birthdate' => $request->birthdate,
             'payroll_gender_id' => $request->payroll_gender_id,
-            'has_disability' => ($request->has_disability !== null),
+            'has_disability' => ($request->has_disability) ? $request->has_disability : false,
             'payroll_disability_id' => ($request->has_disability) ? $request->payroll_disability_id : null,
-            'has_driver_license' => ($request->has_driver_license !== null),
+            'has_driver_license' => ($request->has_driver_license) ? $request->has_driver_license : false,
             'payroll_license_degree_id' => ($request->has_driver_license) ? $request->payroll_license_degree_id : null,
             'social_security' => $request->social_security,
             'payroll_blood_type_id' => $request->payroll_blood_type_id,
@@ -202,6 +203,7 @@ class PayrollStaffController extends Controller
             'uniform_size' => $request->uniform_size,
             'medical_history' => $request->medical_history,
         ]);
+        dd($payrollStaff);
         if ($request->phones && !empty($request->phones)) {
             foreach ($request->phones as $phone) {
                 $payrollStaff->phones()->save(new Phone([
@@ -324,9 +326,9 @@ class PayrollStaffController extends Controller
         $payrollStaff->email  = $request->email;
         $payrollStaff->birthdate = $request->birthdate;
         $payrollStaff->payroll_gender_id = $request->payroll_gender_id;
-        $payrollStaff->has_disability = ($request->has_disability !== null);
+        $payrollStaff->has_disability = ($request->has_disability) ? ($request->has_disability) : false;
         $payrollStaff->payroll_disability_id = ($request->has_disability) ? $request->payroll_disability_id : null;
-        $payrollStaff->has_driver_license = ($request->has_driver_license !== null);
+        $payrollStaff->has_driver_license = ($request->has_driver_license) ? ($request->has_driver_license) : false;
         $payrollStaff->payroll_license_degree_id = ($request->has_driver_license) ?
             $request->payroll_license_degree_id : null;
         $payrollStaff->social_security = $request->social_security;
