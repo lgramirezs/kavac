@@ -29,7 +29,7 @@
 				)
 					@include('layouts.form-errors')
 				@endif
-				<div class="row" id="helpInstitutionImgs">
+				<div id="helpInstitutionImgs" class="row">
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">{{ __('Logotipo') }}</label>
@@ -48,7 +48,7 @@
                                      class="img-fluid institution-logo" style="cursor:pointer"
                                      title="{{ __('Click para cargar o modificar la imagen') }}" data-toggle="tooltip"
                                      onclick="$('input[name=logo_image]').click()">
-                                <input type="file" id="logo_image" name="logo_image" style="display:none"
+                                <input id="logo_image" type="file" name="logo_image" style="display:none"
                                        onchange="uploadSingleImage('formImgLogo', 'logo_image', 'logo_id', 'institution-logo')">
                                 <div class="row row-delete-img">
                                 	<div class="col-12">
@@ -161,7 +161,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('business_name', __('Razón Social'), []) !!}
 									{!! Form::text('business_name',
 										(isset($model_institution))?$model_institution->business_name:old('business_name'), [
@@ -173,7 +173,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('country_id', __('Pais'), []) !!}
 									{!! Form::select('country_id', (isset($countries))?$countries:[], (isset($model_institution)) ? $model_institution->city->estate->country->id : null, [
 										'class' => 'form-control select2 input-sm', 'id' => 'country_id',
@@ -184,7 +184,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('estate_id', __('Estado'), []) !!}
 									{!! Form::select('estate_id', (isset($estates))?$estates:[], (isset($model_institution)) ? $model_institution->city->estate->id : old('estate_id'), [
 										'class' => 'form-control select2', 'id' => 'estate_id',
@@ -194,7 +194,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('municipality_id', __('Municipio'), []) !!}
 									{!! Form::select(
 										'municipality_id', (isset($municipalities))?$municipalities:[], (isset($model_institution)) ? $model_institution->municipality_id : old('municipality_id'), [
@@ -206,7 +206,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('city_id', __('Ciudad'), []) !!}
 									{!! Form::select('city_id', (isset($cities))?$cities:[], (isset($model_institution))? $model_institution->city_id : old('city_id'), [
 										'class' => 'form-control select2', 'id' => 'city_id',

@@ -53,7 +53,7 @@
 								</div>
 							</div>
 						</div> --}}
-						<div class="col-md-3" id="switchNotify">
+						<div id="switchNotify" class="col-12 col-md-3">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Notificaciones') }}</label>
 								<div class="col-12 bootstrap-switch-mini">
@@ -65,7 +65,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3" id="switchBannerInReport">
+						<div id="switchBannerInReport" class="col-12 col-md-3">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Banner en reportes') }}</label>
 								<div class="col-12 bootstrap-switch-mini">
@@ -77,7 +77,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3" id="switchMultiInstitution">
+						<div id="switchMultiInstitution" class="col-12 col-md-3">
 							<div class="form-group">
 								<label for="" class="control-label">
                                     {{ __('Multi gestión') }}
@@ -94,7 +94,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3" id="switchSign">
+						<div id="switchSign" class="col-12 col-md-3">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Firma electrónica') }}</label>
 								<div class="col-12 bootstrap-switch-mini">
@@ -122,7 +122,7 @@
 				</div>
 				<div class="card-footer text-right">
 					<div class="row">
-						<div class="col-md-3 offset-md-9" id="settingParamButtons">
+						<div id="settingParamButtons" class="col-md-3 offset-md-9">
 							@include('layouts.form-buttons')
 						</div>
 					</div>
