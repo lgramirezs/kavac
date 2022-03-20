@@ -73,7 +73,9 @@ class InstitutionTypeController extends Controller
         if (!restore_record(InstitutionType::class, ['name' => $request->name])) {
             $this->validate($request, [
                 'name' => 'unique:institution_types,name'
-            ]);
+            ], [
+            'name.unique' => 'El nombre ya ha sido registrado.',
+        ]);
         }
 
         /** @var InstitutionType Objeto con información del tipo de organización registrada */

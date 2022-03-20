@@ -64,6 +64,9 @@ class DepartmentController extends Controller
         $this->validate($request, [
             'name' => ['required'],
             'institution_id' => ['required']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'institution_id.required' => 'El campo institución es obligatorio.',
         ]);
 
         /** @var integer Establece la jerarquía del departamento */

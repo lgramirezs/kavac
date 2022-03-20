@@ -70,6 +70,11 @@ class TaxController extends Controller
             'description' => ['required'],
             'operation_date' => ['required', 'date'],
             'percentage' => ['required']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.max' => 'El campo nombre no debe ser mayor que 60 caracteres.',
+            'operation_date.required' => 'El campo fecha entrada en vigencia es obligatorio.',
+            'percentage.required' => 'El campo porcentaje es obligatorio.',
         ]);
 
         /** @var Tax Objeto con información del impuesto registrado */
