@@ -61,6 +61,14 @@ class MeasurementUnitsTableSeeder extends Seeder
                 'model' => MeasurementUnit::class, 'model_prefix' => '0general',
                 'slug_alt' => 'unidades.medida.ver', 'short_description' => 'ver Unidades de Medidas'
             ],
+            [
+                'name' => 'Notificar gestión de unidades de medida',
+                'slug' => 'measurement.unit.notify',
+                'description' => 'Notificar sobre gestión de datos de unidades de medida',
+                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
+                'slug_alt' => 'unidad.medida.notificar',
+                'short_description' => 'notificar la gestión de unidades de medida'
+            ],
         ];
 
         $measurement_units = [

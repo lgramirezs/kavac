@@ -896,42 +896,6 @@ class PermissionsTableSeeder extends Seeder
             ],
         ]);
 
-        /** @var array Permisos para la gestión de unidades de medida */
-        $permissions = array_merge($permissions, [
-            [
-                'name' => 'Crear unidad de medida', 'slug' => 'measurement.unit.create',
-                'description' => 'Acceso al registro de unidades de medida',
-                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
-                'slug_alt' => 'unidad.medida.crear', 'short_description' => 'agregar unidades de medida'
-            ],
-            [
-                'name' => 'Editar unidad de medida', 'slug' => 'measurement.unit.edit',
-                'description' => 'Acceso para editar unidades de medida',
-                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
-                'slug_alt' => 'unidad.medida.editar', 'short_description' => 'editar unidades de medida'
-            ],
-            [
-                'name' => 'Eliminar unidad de medida', 'slug' => 'measurement.unit.delete',
-                'description' => 'Acceso para eliminar unidades de medida',
-                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
-                'slug_alt' => 'unidad.medida.eliminar', 'short_description' => 'eliminar unidades de medida'
-            ],
-            [
-                'name' => 'Ver unidad de medida', 'slug' => 'measurement.unit.list',
-                'description' => 'Acceso para ver unidades de medida',
-                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
-                'slug_alt' => 'unidad.medida.ver', 'short_description' => 'ver unidades de medida'
-            ],
-            [
-                'name' => 'Notificar gestión de unidades de medida',
-                'slug' => 'measurement.unit.notify',
-                'description' => 'Notificar sobre gestión de datos de unidades de medida',
-                'model' => MeasurementUnit::class, 'model_prefix' => '0general',
-                'slug_alt' => 'unidad.medida.notificar',
-                'short_description' => 'notificar la gestión de unidades de medida'
-            ],
-        ]);
-
         DB::transaction(function () use ($permissions, $adminRole) {
             foreach ($permissions as $permission) {
                 $per = Permission::updateOrCreate(
