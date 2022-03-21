@@ -90,19 +90,19 @@ class InstitutionController extends Controller
             'rif.size' => __('El R.I.F. debe contener 10 carácteres.'),
             'acronym.required' => __('El acrónimo es obligatorio.'),
             'acronym.max' => __('El acrónimo debe contener un máximo de 100 carácteres.'),
-            'name.required' => __('El name es obligatorio.'),
-            'name.max' => __('El name debe contener un máximo de 100 carácteres.'),
-            'business_name.required' => __('El name es obligatorio.'),
-            'business_name.max' => __('El name debe contener un máximo de 100 carácteres.'),
+            'name.required' => __('El nombre es obligatorio.'),
+            'name.max' => __('El nombre debe contener un máximo de 100 carácteres.'),
+            'business_name.required' => __('La razón social es obligatoria.'),
+            'business_name.max' => __('La razón social debe contener un máximo de 100 carácteres.'),
             'start_operations_date.required' => __('La fecha de inicio de operaciones es obligatoria.'),
             'start_operations_date.date' => __('La fecha de inicio de operaciones no tiene un formato válido.'),
-            'legal_address.required' => __('La dirección es obligatoria.'),
+            'legal_address.required' => __('La dirección fiscal es obligatoria.'),
             'postal_code.required' => __('El código postal es obligatorio.'),
             'postal_code.max' => __('El código postal debe contener un máximo de 10 carácteres.'),
             'institution_sector_id.required' => __('El sector del organismo es obligatorio.'),
             'institution_type_id.required' => __('El tipo de organismo es obligatorio.'),
-            'municipality_id.required' => __('El Municipio es obligatorio.'),
-            'city_id.required' => __('La Ciudad es obligatoria.')
+            'municipality_id.required' => __('Seleccione un municipio.'),
+            'city_id.required' => __('Seleccione una ciudad.')
         ]);
 
         /**

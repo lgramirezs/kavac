@@ -26,7 +26,7 @@
                         <div class="col-md-2">
                             <b>Filtros</b>
                         </div>
-                        <div class="form-group col-md-2" id="helpAuditFilterFromDate">
+                        <div id="helpAuditFilterFromDate" class="form-group col-md-2">
                             <div class="input-group input-sm">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons ui-1_calendar-60"></i>
@@ -35,7 +35,7 @@
                                        v-model="start_date" id="auditStartDate" placeholder="Fecha">
                             </div>
                         </div>
-                        <div class="form-group col-md-2" id="helpAuditFilterToDate">
+                        <div id="helpAuditFilterToDate" class="form-group col-md-2">
                             <div class="input-group input-sm">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons ui-1_calendar-60"></i>
@@ -44,7 +44,7 @@
                                        v-model="end_date" id="auditEndDate" placeholder="Fecha">
                             </div>
                         </div>
-                        <div class="form-group col-md-2" id="helpAuditFilterUser">
+                        <div id="helpAuditFilterUser" class="form-group col-md-2">
                             <div class="input-group input-sm">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons users_circle-08"></i>
@@ -53,7 +53,7 @@
                                        title="Consulta por usuario" placeholder="Usuario">
                             </div>
                         </div>
-                        <div class="form-group col-md-2" id="helpAuditFilterModule">
+                        <div id="helpAuditFilterModule" class="form-group col-md-2">
                             <select v-model="module" class="form-control select2">
                                 <option value="">Módulo</option>
                                 <option :value="mod.originalName" v-for="(mod, index) in modules" :key="index">
@@ -68,9 +68,9 @@
                                        title="Consulta por módulo de la aplicación" placeholder="Módulo">
                             </div>-->
                         </div>
-                        <div class="form-group col-md-2" id="helpAuditFilterButton">
-                            <button type="button" class="btn btn-info btn-icon btn-xs px-3" data-toggle="tooltip"
-                                    title="Buscar registros del sistema" @click="readRecords">
+                        <div id="helpAuditFilterButton" class="form-group col-md-2">
+                            <button type="button" class="btn btn-info btn-icon btn-xs-responsive px-3"
+                                data-toggle="tooltip" title="Buscar registros del sistema" @click="readRecords">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row mg-bottom-20" id="helpAuditLeyend">
+                    <div id="helpAuditLeyend" class="row mg-bottom-20">
                         <div class="col-12 panel-legend" id="helpAuditLeyendNew">
                             <i class="ion-android-checkbox-blank text-success" title="Registros nuevos"
                                data-toggle="tooltip"></i>
@@ -106,7 +106,7 @@
                             <span>Eliminados</span>
                         </div>
                     </div>
-                    <div class="row" id="helpAuditTable">
+                    <div id="helpAuditTable" class="row">
                         <div class="col-12">
                             <v-client-table :columns="columns" :data="records" :options="table_options">
                                 <div slot="status" slot-scope="props" v-html="props.row.status" class="text-center"></div>

@@ -65,6 +65,13 @@ class MeasurementUnitController extends Controller
             'name' => ['required', 'unique:measurement_units,name'],
             'description' => ['required'],
             'acronym' => ['required', 'max:6', 'unique:measurement_units,acronym']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.unique' => 'El campo nombre El nombre ya ha sido registrado.',
+            'description.required' => 'El campo descripción es obligatorio.',
+            'acronym.required' => 'El campo acrónimo es obligatorio.',
+            'acronym.max' => 'El campo acrónimo no debe ser mayor que 6 caracteres.',
+            'acronym.unique' => 'El campo acrónimo ya ha sido registrado.',
         ]);
 
         /** @var MeasurementUnit Objeto con información de la unidad de medida registrada */

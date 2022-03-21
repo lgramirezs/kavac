@@ -1,5 +1,5 @@
 <div class="main-panel">
-	<div class="content-header-map">
+    <div class="content-header-map">
         <div class="media">
             <div class="pageicon float-left">
                 @section('maproute-icon')
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="app-content" id="app">
-    	@yield('content')
+        @yield('content')
     </div>
     <footer class="footer footer-default">
         @include('layouts.footer')

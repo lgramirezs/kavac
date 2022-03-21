@@ -67,6 +67,15 @@ class CurrencyController extends Controller
             'symbol' => ['required', 'max:4'],
             'country_id' => ['required'],
             'decimal_places' => ['required', 'numeric', 'min:2', 'max:10']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.max' => 'El campo nombre no debe ser mayor a 40 caracteres.',
+            'symbol.required' => 'El campo simbolo es obligatorio.',
+            'symbol.max' => 'El campo simbolo no debe ser mayor a 4 caracteres.',
+            'country_id.required' => 'El campo país es obligatorio.',
+            'decimal_places.required' => 'El campo decimales es obligatorio.',
+            'decimal_places.max' => 'El campo decimales no debe ser mayor a 10 caracteres.',
+            'decimal_places.min' => 'El campo decimales no debe ser menor a 2 caracteres.',
         ]);
 
         if ($request->default || !empty($request->default)) {

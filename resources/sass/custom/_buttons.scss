@@ -12,6 +12,22 @@
 	}
 }
 
+.btn {
+    &.btn-icon {
+        &.btn-xs-responsive {
+            width: 100%;
+            @media (min-width: 768px) {
+                height:1.4rem;
+                min-width:1.4rem;
+                width:1.4rem;
+            }
+            i {
+                font-size: .7rem;
+            }
+        }
+    }
+}
+
 .btn-custom {
 	margin-bottom:2em;
 	font-size: .7rem;

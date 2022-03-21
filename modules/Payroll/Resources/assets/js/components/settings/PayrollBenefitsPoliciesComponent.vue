@@ -300,7 +300,7 @@
                                         <!-- salario a emplear -->
                                         <div class="col-md-6">
                                             <div class="form-group is-required">
-                                                <label>Salario a emplear para el cálculo del bono vacacional:</label>
+                                                <label> Salario a emplear para el cálculo de prestaciones sociales:</label>
                                                 <select2 :options="salary_types"
                                                          v-model="record.salary_type"></select2>
                                             </div>

@@ -67,12 +67,15 @@ class InstitutionTypeController extends Controller
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'acronym.required' => 'El campo acrónimo es obligatorio.',
+            'acronym.max' => 'El campo acrónimo no debe ser mayor que 4 caracteres.',
         ]);
 
         if (!restore_record(InstitutionType::class, ['name' => $request->name])) {
             $this->validate($request, [
                 'name' => 'unique:institution_types,name'
-            ]);
+            ], [
+            'name.unique' => 'El nombre ya ha sido registrado.',
+        ]);
         }
 
         /** @var InstitutionType Objeto con información del tipo de organización registrada */

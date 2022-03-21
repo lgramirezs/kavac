@@ -27,31 +27,31 @@
 					</div>
 				</div>
 				<h6>{{ __('Interfaz') }}</h6>
-                <div class="row" id="helpUIButtons">
-					<div class="col-12 col-md-3" id="helpIconButton">
+                <div id="helpUIButtons" class="row">
+					<div id="helpIconButton" class="col-12 col-md-6 col-lg-3">
 						<a href="{{ route('dev.show.element', ['el' => 'icons']) }}"
-						   class="btn btn-primary btn-simple btn-lg btn-block"
+						   class="btn btn-primary btn-simple btn-block text-nowrap text-truncate"
 						   data-toggle="tooltip" title="{{ __('Listado de íconos disponibles en la aplicación') }}">
 							<i class="icofont icofont-idea"></i> {{ __('Iconos') }}
 						</a>
 					</div>
-					<div class="col-12 col-md-3" id="helpComponentsButton">
+					<div id="helpComponentsButton" class="col-12 col-md-6 col-lg-3">
 						<a href="{{ route('dev.show.element', ['el' => 'components']) }}"
-						   class="btn btn-primary btn-simple btn-lg btn-block" data-toggle="tooltip"
+						   class="btn btn-primary btn-simple btn-block text-nowrap text-truncate" data-toggle="tooltip"
                            title="{{ __('Listado de componentes y elementos disponibles en la aplicación') }}">
 							<i class="icofont icofont-idea"></i> {{ __('Componentes') }}
 						</a>
 					</div>
-					<div class="col-12 col-md-3" id="helpButtons">
+					<div id="helpButtons" class="col-12 col-md-6 col-lg-3">
 						<a href="{{ route('dev.show.element', ['el' => 'buttons']) }}"
-						   class="btn btn-primary btn-simple btn-lg btn-block"
+						   class="btn btn-primary btn-simple btn-block text-nowrap text-truncate"
 						   data-toggle="tooltip" title="{{ __('Listado de estilos de botones') }}">
 							<i class="icofont icofont-idea"></i> {{ __('Botones') }}
 						</a>
 					</div>
-					<div class="col-12 col-md-3" id="helpFormsButton">
+					<div id="helpFormsButton" class="col-12 col-md-6 col-lg-3">
 						<a href="{{ route('dev.show.element', ['el' => 'forms']) }}"
-						   class="btn btn-primary btn-simple btn-lg btn-block"
+						   class="btn btn-primary btn-simple btn-block text-nowrap text-truncate"
 						   data-toggle="tooltip" title="{{ __('Listado de componentes de formulario') }}">
 							<i class="icofont icofont-idea"></i> {{ __('Formularios') }}
 						</a>
@@ -80,13 +80,14 @@
 				</div>
 				{{-- <div class="row">
 					<div class="col-12">
-						<iframe src="{{ asset('documento.pdf') }}" width="50%" height="750" frameborder="0" style="border: 1px solid #636E7B;box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);"></iframe>
+						<iframe src="{{ asset('documento.pdf') }}" width="50%" height="750" frameborder="0"
+							style="border: 1px solid #636E7B;box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);"></iframe>
 					</div>
 				</div> --}}
 				<hr>
 				<h6>{{ __('Ajustes') }}</h6>
-				<div class="row" id="helpUIAdjustements">
-					<div class="col-md-2" id="helpMaintenanceMode">
+				<div id="helpUIAdjustements" class="row">
+					<div id="helpMaintenanceMode" class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Mantenimiento') }}</label>
 							<div class="col-12">
@@ -99,7 +100,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-2" id="helpDemoMode">
+					<div id="helpDemoMode" class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Demostración') }}</label>
 							<div class="col-12">
@@ -112,7 +113,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-2" id="helpDebugMode">
+					<div id="helpDebugMode" class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Debug') }}</label>
 							<div class="col-12">
@@ -128,10 +129,10 @@
 				</div>
 				<hr>
 				<h6>{{ __('Eventos') }}</h6>
-				<div class="row" id="helpLogEvents">
-					<div class="col-12 col-md-3">
+				<div id="helpLogEvents" class="row">
+					<div class="col-12 col-md-6 col-lg-4 col-xl-3">
 						<a href="{{ route('log-viewer::details') }}"
-						   class="btn btn-danger btn-simple btn-lg btn-block"
+						   class="btn btn-danger btn-simple btn-lg btn-block text-nowrap text-truncate"
 						   data-toggle="tooltip" title="{{ __('Registros de eventos del sistema') }}">
 							<i class="ion ion-ios-bookmarks"></i> {{ __('Logs del sistema') }}
 						</a>
@@ -173,13 +174,31 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="form-control visor">
-							<p class="text-warning">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore rem accusamus aut, amet. Neque, veritatis enim laborum magnam eius fuga, et vero reiciendis cumque placeat consequuntur possimus perferendis dolor molestiae.</p>
-							<p class="text-danger">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ipsa veniam, aperiam numquam exercitationem sequi ipsam dolore iste, illo quas impedit corporis! Ab aspernatur sapiente provident porro fuga non praesentium.</p>
-							<p class="text-green">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut voluptatem tempore repellendus officia aspernatur ullam dolor tempora, reprehenderit dolore omnis unde, laborum expedita. Repudiandae beatae natus vitae, minima dicta expedita.</p>
-							<p class="text-blue">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus velit aspernatur assumenda, voluptatem, aperiam dignissimos. A dolores alias illum ipsa minus reiciendis error reprehenderit autem dolorum, laboriosam cum accusantium, tempora.
+							<p class="text-warning">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore rem accusamus aut, amet.
+								Neque, veritatis enim laborum magnam eius fuga, et vero reiciendis cumque placeat
+								consequuntur possimus perferendis dolor molestiae.
 							</p>
-							<p class="text-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore rem accusamus aut, amet. Neque, veritatis enim laborum magnam eius fuga, et vero reiciendis cumque placeat consequuntur possimus perferendis dolor molestiae.</p>
+							<p class="text-danger">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ipsa veniam,
+								aperiam numquam exercitationem sequi ipsam dolore iste, illo quas impedit corporis! Ab
+								aspernatur sapiente provident porro fuga non praesentium.
+							</p>
+							<p class="text-green">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut voluptatem tempore
+								repellendus officia aspernatur ullam dolor tempora, reprehenderit dolore omnis unde,
+								laborum expedita. Repudiandae beatae natus vitae, minima dicta expedita.
+							</p>
+							<p class="text-blue">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus velit aspernatur
+								assumenda, voluptatem, aperiam dignissimos. A dolores alias illum ipsa minus reiciendis
+								error reprehenderit autem dolorum, laboriosam cum accusantium, tempora.
+							</p>
+							<p class="text-gray">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore rem accusamus aut, amet.
+								Neque, veritatis enim laborum magnam eius fuga, et vero reiciendis cumque placeat
+								consequuntur possimus perferendis dolor molestiae.
+							</p>
 						</div>
 					</div>
 				</div> --}}

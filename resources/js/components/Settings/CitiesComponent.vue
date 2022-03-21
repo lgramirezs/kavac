@@ -22,16 +22,16 @@
 						<form-errors :listErrors="errors"></form-errors>
 						<div class="row">
 							<div class="col-12 col-md-6">
-								<div class="form-group">
-									<label>Pais:</label>
+								<div class="form-group is-required">
+									<label>País:</label>
 									<select2 :options="countries" @input="getEstates"
 											 v-model="record.country_id"></select2>
 									<input type="hidden" v-model="record.id">
 			                    </div>
 							</div>
 							<div class="col-12 col-md-6">
-								<div class="form-group">
-									<label>Estados:</label>
+								<div class="form-group is-required">
+									<label>Estado:</label>
 									<select2 :options="estates" v-model="record.estate_id"></select2>
 			                    </div>
 							</div>
@@ -47,15 +47,15 @@
 	                </div>
 	                <div class="modal-footer">
 	                	<div class="form-group">
-	                		<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
+	                		<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
 									@click="clearFilters" data-dismiss="modal">
 								Cerrar
 							</button>
-							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
+							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear"
 									@click="reset()">
 								Cancelar
 							</button>
-							<button type="button" @click="createRecord('cities')" 
+							<button type="button" @click="createRecord('cities')"
 									class="btn btn-primary btn-sm btn-round btn-modal-save">
 								Guardar
 							</button>

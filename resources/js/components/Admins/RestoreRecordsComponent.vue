@@ -5,15 +5,18 @@
                 <div class="card-header">
                     <h6 class="card-title">
                         Restaurar Registros eliminados
-                        <a href="javascript:void(0)" title="haz click para ver la ayuda guiada de este elemento" data-toggle="tooltip" class="btn-help" @click="initUIGuide(helpFile)">
+                        <a class="btn-help" href="javascript:void(0)" data-toggle="tooltip"
+                            title="haz click para ver la ayuda guiada de este elemento" @click="initUIGuide(helpFile)">
                             <i class="ion ion-ios-help-outline cursor-pointer"></i>
                         </a>
                     </h6>
                     <div class="card-btns">
-                        <a :href="route_previous" class="btn btn-sm btn-primary btn-custom" title="Ir atrás" data-toggle="tooltip" v-has-tooltip>
+                        <a class="btn btn-sm btn-primary btn-custom" title="Ir atrás" data-toggle="tooltip"
+                            :href="route_previous" v-has-tooltip>
                             <i class="fa fa-reply"></i>
                         </a>
-                        <a href="javascript:void(0)" class="card-minimize btn btn-card-action btn-round" title="Minimizar" data-toggle="tooltip">
+                        <a class="card-minimize btn btn-card-action btn-round" href="javascript:void(0)"
+                            title="Minimizar" data-toggle="tooltip">
                             <i class="now-ui-icons arrows-1_minimal-up"></i>
                         </a>
                     </div>
@@ -23,32 +26,35 @@
                         <div class="col-md-2">
                             <b>Filtros</b>
                         </div>
-                        <div class="form-group col-md-2" id="helpRestoreFilterFromDate">
+                        <div id="helpRestoreFilterFromDate" class="form-group col-md-2">
                             <div class="input-group input-sm">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons ui-1_calendar-60"></i>
                                 </span>
-                                <input type="date" class="form-control" data-toggle="tooltip" title="Desde la fecha" v-model="start_delete_at" id="startDeleteAt" placeholder="Fecha">
+                                <input id="startDeleteAt" class="form-control" type="date" data-toggle="tooltip"
+                                    placeholder="Fecha" title="Desde la fecha" v-model="start_delete_at">
                             </div>
                         </div>
-                        <div class="form-group col-md-2" id="helpRestoreFilterToDate">
+                        <div id="helpRestoreFilterToDate" class="form-group col-md-2">
                             <div class="input-group input-sm">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons ui-1_calendar-60"></i>
                                 </span>
-                                <input type="date" class="form-control" data-toggle="tooltip" title="Hasta la fecha" v-model="end_delete_at" id="endDeleteAt" placeholder="Fecha">
+                                <input id="endDeleteAt" class="form-control" type="date" data-toggle="tooltip"
+                                    placeholder="Fecha" title="Hasta la fecha" v-model="end_delete_at">
                             </div>
                         </div>
-                        <div class="form-group col-md-2" id="helpRestoreFilterModule">
-                            <select v-model="module_delete_at" class="form-control select2" id="restoreSearchModule">
+                        <div id="helpRestoreFilterModule" class="form-group col-md-2">
+                            <select id="restoreSearchModule" class="form-control select2" v-model="module_delete_at">
                                 <option value="">Módulo</option>
                                 <option :value="mod.originalName" v-for="(mod, index) in modules" :key="index">
                                     {{ mod.name }}
                                 </option>
                             </select>
                         </div>
-                        <div class="form-group col-md-2" id="helpRestoreFilterButton">
-                            <button type="button" class="btn btn-info btn-icon btn-xs px-3" data-toggle="tooltip" title="Buscar registros eliminados" @click="readRecords">
+                        <div id="helpRestoreFilterButton" class="form-group col-md-2">
+                            <button class="btn btn-info btn-icon btn-xs-responsive px-3" type="button"
+                                data-toggle="tooltip" title="Buscar registros eliminados" @click="readRecords">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
@@ -62,12 +68,14 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row" id="helpRestoreTable">
+                    <div id="helpRestoreTable" class="row">
                         <div class="col-12">
                             <v-client-table :columns="columns" :data="records" :options="table_options">
                                 <div slot="registers" slot-scope="props" v-html="props.row.registers"></div>
                                 <div slot="id" slot-scope="props" class="text-center">
-                                    <button @click="restore(props.row.module, props.row.id)" class="btn btn-success btn-xs btn-icon btn-action" title="Restaurar registro" data-toggle="tooltip" type="button">
+                                    <button class="btn btn-success btn-xs btn-icon btn-action" type="button"
+                                        data-toggle="tooltip" title="Restaurar registro"
+                                        @click="restore(props.row.module, props.row.id)">
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </div>

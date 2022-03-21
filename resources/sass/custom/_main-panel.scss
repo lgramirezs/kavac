@@ -5,12 +5,19 @@
 	.content-header-map {
 		padding: 20px;
 		border-bottom: 1px solid $color-white-light;
-		padding-bottom: 20px;
-		height: 90px;
+		padding-bottom: 10px;
 		-webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.03);
 		box-shadow: 0 2px 3px rgba(0,0,0,0.03);
+		overflow: hidden;
+		@media (min-width: 768px) {
+			height: 90px;
+			padding-bottom: 20px;
+		}
 
-		/*.media {padding: 0;clear: both;}*/
+		.media {
+			flex-direction: row;
+			align-items: center;
+		}
 
 		.pageicon {
 			width: 50px;
@@ -22,6 +29,9 @@
 			border-radius: 3px;
 			padding-top: 1px;
 			padding-left: 10px;
+			@media (min-width: 768px) {
+				margin-bottom: 0;
+			}
 		}
 
 		.breadcrumb {
@@ -31,6 +41,10 @@
 			font-size: 11px;
 			color: $color-gray-strong;
 			line-height: 18px;
+			display: none;
+			@media (min-width: 768px) {
+				display: flex;
+			}
 
 			> li {
 				display: inline-block;
@@ -49,10 +63,13 @@
 
 		h4 {
 			margin: -2px 0 0 0;
-			font-size: 28px;
+			font-size: 20px;
 			font-weight: 500;
 			color: $color-gray-strong;
 			line-height: normal;
+		}
+		@media (min-width: 992px) {
+			font-size: 28px;
 		}
 	}
 }

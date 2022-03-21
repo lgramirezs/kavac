@@ -54,14 +54,15 @@ class PayrollVacationPolicyController extends Controller
             'name'                                  => ['required'],
             'start_date'                            => ['required'],
             'vacation_type'                         => ['required'],
-            'staff_antiquity'                       => ['required']
+            'staff_antiquity'                       => ['required'],
+            'institution_id'                        => ['required'],
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
             'name.required'                                  => 'El campo nombre es obligatorio.',
             'start_date.required'                            => 'El campo desde (fecha de aplicación) es obligatorio.',
-            'institution_id.required'                        => 'El campo institución es obligatorio.',
+            'institution_id.required'                        => 'El campo organización es obligatorio.',
             'vacation_periods.required'                      => 'El campo período(s) vacacional es obligatorio.',
             'vacation_type.required'                         => 'El campo tipo de vacaciones es obligatorio.',
             'vacation_periods_accumulated_per_year.required' => 'El campo períodos vacacionales acumulados por año ' .
