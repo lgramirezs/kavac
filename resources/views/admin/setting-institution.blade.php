@@ -263,7 +263,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('institution_sector_id', __('Sector'), []) !!}
 									{!! Form::select('institution_sector_id', (isset($sectors))?$sectors:[], null, [
 										'class' => 'form-control select2', 'id' => 'institution_sector_id'
@@ -271,7 +271,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group is-required">
 									{!! Form::label('institution_type_id', __('Tipo'), []) !!}
 									{!! Form::select('institution_type_id', (isset($types))?$types:[], null, [
 										'class' => 'form-control select2', 'id' => 'institution_type_id'
