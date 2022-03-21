@@ -154,6 +154,9 @@
                     </div>
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
+                            <div slot="description" slot-scope="props" class="text-justify">
+                                <div class="mt-3" v-html="props.row.description"></div>
+                            </div>
                             <div slot="active" slot-scope="props" class="text-center">
                                 <span v-if="props.row.active === true" class="text-bold text-success">SI</span>
                                 <span v-else class="text-bold text-danger">NO</span>
@@ -289,6 +292,12 @@
                 vm.getAccountingAccounts();
             });
             $('.btn-formula').on('click', function() {
+                if ($(this).data('value') === 0 && vm.record.formula.slice(-1) === '/') {
+                    vm.showMessage(
+                        'custom', 'Fórmula Inválida', 'warning', 'screen-warning', 'La división por cero no esta permitida'
+                    );
+                    return false;
+                }
                 vm.record.formula += $(this).data('value');
             });
         }
