@@ -32,15 +32,27 @@
                             <div class="col-12 col-md-4">
                                 <div class="form-group is-required">
                                     <label>Estado:</label>
-                                    <select2 :options="estates" @input="getMunicipalities"
-                                             v-model="record.estate_id"></select2>
+                                    <select v-model="record.estate_id" >
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                            v-for="ste in estates">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                    <!--<select2 :options="estates" @input="getMunicipalities"
+                                             v-model="record.estate_id"></select2>-->
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-group is-required">
                                     <label>Municipio:</label>
-                                    <select2 :options="municipalities" v-model="record.municipality_id">
-                                    </select2>
+                                    <select v-model="record.municipality_id">
+                                        <option :value="ste.id" :selected="ste.id == record.municipality_id"
+                                            v-for="ste in municipalities">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                    <!--<select2 :options="municipalities" v-model="record.municipality_id">
+                                    </select2>-->
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -187,7 +199,6 @@
             async initUpdate(id, event) {
                 let vm = this;
                 vm.errors = [];
-
                 let recordEdit = JSON.parse(JSON.stringify(vm.$refs.tableResults.data.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
@@ -195,10 +206,10 @@
                 vm.recordEdit = recordEdit;
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.municipality.estate.country.id;
-                /*vm.record.estate_id = recordEdit.municipality.estate.id;
-                vm.record.municipality_id = recordEdit.municipality.id;*/
-                /*vm.selectedEstateId = recordEdit.municipality.estate.id;
-                vm.selectedMunicipalityId = recordEdit.municipality.id;*/
+                vm.record.estate_id = recordEdit.estate_id;
+                vm.record.municipality_id = recordEdit.municipality_id;
+                vm.selectedEstateId = recordEdit.estate_id;
+                vm.selectedMunicipalityId = recordEdit.municipality_id;
                 event.preventDefault();
             }
         },

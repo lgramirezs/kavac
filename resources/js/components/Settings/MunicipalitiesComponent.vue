@@ -32,7 +32,12 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label>Estados:</label>
-                                    <select2 :options="estates" v-model="record.estate_id"></select2>
+                                    <select v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                                    v-for="ste in estates">
+                                                {{ ste.text }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -107,7 +112,7 @@
                 errors: [],
                 records: [],
                 countries: [],
-                estates: {},
+                estates: [],
                 columns: ['estate.name', 'name', 'code', 'id'],
             }
         },
