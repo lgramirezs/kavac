@@ -126,20 +126,14 @@ class SaleOrderSettingController extends Controller
      */
     public function store(Request $request)
     {
+      $this->saleOrderValidate($request);
+
       $products = [];
       if (count($request->list_products)) {
         foreach ($request->list_products as $product) {
           $products[] = $product;
         }
       }
-
-      $this->validate($request, [
-        'name' => ['required', 'max:100'],
-        'id_number' => ['required', 'max:100'],
-        'email' => ['required', 'max:200'],
-        'phone' => ['required', 'regex:/^\d{2}-\d{3}-\d{7}$/u'],
-        'type_person' => ['required'],
-      ]);
 
       $order = SaleOrder::create([
         'name'        => $request->name,
@@ -152,6 +146,33 @@ class SaleOrderSettingController extends Controller
       ]);
 
       return response()->json(['record' => $order, 'message' => 'Success', 'redirect' => route('sale.order.index')], 200);
+    }
+
+    /**
+     * Realiza la validación de un pedido
+     *
+     * @method    saleOrderValidate
+     * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+     * @param     object    Request    $request
+     */
+    public function saleOrderValidate(Request $request)
+    {
+        $attributes = [
+          'type_person' => 'Tipo de persona',
+          'name' => 'Nombre',
+          'id_number' => 'Identificación',
+          'phone' => 'Teléfono de contacto',
+          'email' => 'Correo Electrónico',
+
+        ];
+
+        $validation = [];
+        $validation['type_person'] = ['required'];
+        $validation['name'] = ['required', 'max:100'];
+        $validation['id_number'] = ['required', 'digits_between:1,10'];
+        $validation['phone'] = ['required'];
+        $validation['email'] = ['required', 'email'];
+        $this->validate($request, $validation, [], $attributes);
     }
 
     /**
@@ -204,6 +225,7 @@ class SaleOrderSettingController extends Controller
     {
         $order = SaleOrder::find($id);
 
+        $this->saleOrderValidate($request);
         $products = [];
         if ($request->list_products && !empty($request->list_products)) {
           foreach ($request->list_products as $product) {
@@ -211,13 +233,6 @@ class SaleOrderSettingController extends Controller
           }
         }
 
-        $this->validate($request, [
-            'name' => ['required', 'max:100'],
-            'id_number' => ['required', 'max:100'],
-            'email' => ['required', 'max:200'],
-            'phone' => ['required', 'regex:/^\d{2}-\d{3}-\d{7}$/u'],
-            'type_person' => ['required']
-        ]);
         $order->name  = $request->name;
         $order->id_number = $request->id_number;
         $order->email  = $request->email;
