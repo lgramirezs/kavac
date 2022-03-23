@@ -669,7 +669,6 @@ class UserController extends Controller
             return response()->json(['result' => false], 200);
         }
 
-        // Agregar funcionalidad para determinar si el usuario esta autenticado (aplica para cuando expira la sesion)
         if (!auth()->check()) {
             /** @var object Objeto con información de las credenciales de acceso de un usuario */
             $userCredentials = $request->only('username', 'password');
