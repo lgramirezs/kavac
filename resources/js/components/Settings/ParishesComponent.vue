@@ -32,7 +32,7 @@
                             <div class="col-12 col-md-4">
                                 <div class="form-group is-required">
                                     <label>Estado:</label>
-                                    <select v-model="record.estate_id" >
+                                    <select v-model="record.estate_id">
                                         <option :value="ste.id" :selected="ste.id == record.estate_id"
                                             v-for="ste in estates">
                                             {{ ste.text }}
@@ -159,7 +159,7 @@
             estates() {
                 const vm = this;
                 if (vm.record.id && !vm.record.estate_id) {
-                    vm.record.estate_id = vm.recordEdit.municipality.estate.id;
+                    vm.record.estate_id = vm.recordEdit.municipality.estate_id;
                 }
             },
             municipalities() {
@@ -170,6 +170,20 @@
             }
         },
         methods: {
+            /**
+             * Obtiene los Municipios del Estado seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getMunicipalitie(state_id) {
+                const vm = this;
+                vm.municipalities = [];
+                if (state_id) {
+                    axios.get(`/get-municipalities/${vm.record.estate_id}`).then(response => {
+                        vm.municipalities = response.data;
+                    });
+                }
+            },
             /**
              * Método que borra todos los datos del formulario
              *
@@ -202,14 +216,14 @@
                 let recordEdit = JSON.parse(JSON.stringify(vm.$refs.tableResults.data.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
-
                 vm.recordEdit = recordEdit;
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.municipality.estate.country.id;
-                vm.record.estate_id = recordEdit.estate_id;
-                vm.record.municipality_id = recordEdit.municipality_id;
-                vm.selectedEstateId = recordEdit.estate_id;
-                vm.selectedMunicipalityId = recordEdit.municipality_id;
+                vm.record.estate_id = recordEdit.municipality.estate_id;
+                vm.record.municipality_id = recordEdit.municipality.id;
+                vm.selectedEstateId = recordEdit.municipality.estate_id;
+                vm.selectedMunicipalityId = recordEdit.municipality.id;
+                vm.getMunicipalitie(vm.record.estate_id);
                 event.preventDefault();
             }
         },

@@ -5,7 +5,12 @@ use_directory_urls: true
 
 # Page tree
 nav:
-      - Inicio: index.md 
+      - Inicio: index.md
+      - Configuración: 
+        - Formato de Códigos: setting/code_format.md
+        - Configuración General: setting/general_setting.md
+        - Registros Comunes: setting/common_records.md 
+      - Preguntas Frecuentes: frequent_questions.md 
 
 # Repository
 repo_name: Repositorio-Kavac

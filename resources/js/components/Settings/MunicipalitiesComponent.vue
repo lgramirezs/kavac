@@ -160,7 +160,7 @@
                 })[0])) || vm.reset();
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.estate.country_id;
-                vm.selectedEstateId = recordEdit.estate_id;
+                vm.selectedEstateId = recordEdit.estate.id;
                 vm.record.estate_id = vm.selectedEstateId;
                 event.preventDefault();
             }

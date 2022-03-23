@@ -32,7 +32,13 @@
 							<div class="col-12 col-md-6">
 								<div class="form-group is-required">
 									<label>Estado:</label>
-									<select2 :options="estates" v-model="record.estate_id"></select2>
+									<select v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                                    v-for="ste in estates">
+                                                {{ ste.text }}
+                                        </option>
+                                    </select>
+									<!--<select2 :options="estates" v-model="record.estate_id"></select2>-->
 			                    </div>
 							</div>
 							<div class="col-12">
@@ -115,6 +121,27 @@
 					name: '',
 				};
 			},
+
+			/**
+             * Método que carga el formulario con los datos a modificar
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param  {integer} index Identificador del registro a ser modificado
+             * @param {object} event   Objeto que gestiona los eventos
+             */
+            initUpdate(id, event) {
+                let vm = this;
+                vm.errors = [];
+                let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                    return rec.id === id;
+                })[0])) || vm.reset();
+                vm.record = recordEdit;
+                vm.record.country_id = recordEdit.estate.country_id;
+                vm.record.estate_id = recordEdit.estate.id;
+                vm.selectedEstateId = recordEdit.estate.id;
+                event.preventDefault();
+            }
 		},
 		created() {
 			this.table_options.headings = {

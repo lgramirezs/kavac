@@ -3,18 +3,24 @@
 
 ![Screenshot](img/logokavac.png#imagen)
 
-<!-- El Manual de Documentación del sistema KAVAC a nivel de usuario tiene como objetivo facilitar la tarea de conocimiento, uso y aprendizaje del sistema desarrollado. Presenta información acerca de todas las operaciones básicas que el sistema ofrece, así como capturas de pantalla útiles para el seguimiento de la explicación de los procesos. 
+El Manual de Documentación del sistema KAVAC a nivel de usuario tiene como objetivo facilitar la tarea de conocimiento, uso y aprendizaje del sistema desarrollado. Presenta información acerca de todas las operaciones básicas que el sistema ofrece, así como capturas de pantalla útiles para el seguimiento de la explicación de los procesos. A continuación, se presenta la documentación de usuario para el módulo de finanzas, este módulo esta dirigido a la gestión de procesos financieros de la organización usuaria, a través del módulo de finanzas se realiza el registro de órdenes de pago, emisión de cheques, registro y evaluación de movimientos bancarios y la generación de reportes en tiempo real.  Los requerimientos de cada institución para la gestión financiera, pueden ser ajustados a través de la configuración del módulo. En este manual se presenta una descripción de las funcionalidades de este módulo, como usarlo y como ajustarlo a una organización usuaria.
 
-## Módulo 
+## Módulo de finanzas
+
+El módulo de finanzas del sistema KAVAC permite supervisar y atender los procesos contables y financieros de una organización, con el objetivo de ofrecer información en tiempo real sobre la situación financiera de la organización para establecer soluciones que permitan optimizar los principales procesos financieros que se encuentra en el marco de trabajo de la organización.  
+
 
 
 ## Sobre los usuarios
 
-Los usuarios que interactúan en este módulo, serán todos aquellos usuarios con roles y permisos sobre el módulo de talento humano, previamente gestionados por el usuario con el rol de administrador. Para conocer más sobre la gestión de roles y permisos visite el **Manual de Documentación del Sistema KAVAC**.
-
+Los usuarios que interactúan en este módulo, serán todos aquellos usuarios con roles y permisos sobre el módulo de finanzas, previamente gestionados por el usuario con el rol de administrador. Para conocer más sobre la gestión de roles y permisos visite el **Manual de Documentación del Sistema KAVAC**.
 
 ## Funcionalidades
- -->
+
+-  Formulación y seguimiento de las órdenes de pago.
+-  Emisión de cheques.
+-  Gestión de movimientos bancarios. 
+-  Generación de reportes en tiempo real. 
 
 ## Licencia
 
