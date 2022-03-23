@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
             ]);
         }
 
-        if ($exception instanceof Swift_TransportException || $exception->getCode() === 530) {
+        if ($exception instanceof \Swift_TransportException || $exception->getCode() === 530) {
             $msg = 'Error del sistema. Si el problema persiste contacte al administrador';
 
             if ($request->ajax()) {
