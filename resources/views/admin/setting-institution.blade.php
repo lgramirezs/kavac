@@ -150,7 +150,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group is-required{{ $errors->has('acronym') ? ' has-error' : '' }}">
-									{!! Form::label('acronym', __('Acrónimo (Nombre Corto)'), []) !!}
+									{!! Form::label('acronym', __('Acrónimo (Nombre corto)'), []) !!}
 									{!! Form::text('acronym',
 										(isset($model_institution))?$model_institution->acronym:old('acronym'), [
 											'class' => 'form-control input-sm', 'id' => 'acronym',
@@ -174,7 +174,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group is-required">
-									{!! Form::label('country_id', __('Pais'), []) !!}
+									{!! Form::label('country_id', __('País'), []) !!}
 									{!! Form::select('country_id', (isset($countries))?$countries:[], (isset($model_institution)) ? $model_institution->city->estate->country->id : null, [
 										'class' => 'form-control select2 input-sm', 'id' => 'country_id',
 										'onchange' => 'updateSelect($(this), $("#estate_id"), "Estate")'
@@ -471,7 +471,7 @@
 									<th class="col-md-1">{{ __('Código ONAPRE') }}</th>
 									<th class="col-md-6">{{ __('Nombre') }}</th>
 									<th class="col-md-1">{{ __('Activa') }}</th>
-									<th class="col-md-2">{{ __('Acciones') }}</th>
+									<th class="col-md-2">{{ __('Acción') }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -535,14 +535,14 @@
 	<div class="modal-dialog modal-dialog-scrollable modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 id="detailsInstitutionModalLabel" class="modal-title">Modal title</h5>
+				<h5 class="modal-title">DATOS DE LA ORGANIZACIÓN</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				{{-- Imágenes --}}
-				<div class="row justify-content-center pb-3">
+				<div class="row justify-content-center">
 					<div class="col-8 col-lg-3">
 						<p class="text-center mb-1 font-weight-bold">Logotipo</p>
 						<img id="modal-logo" class="w-100" src="{{ asset('/images/no-image2.png', Request::secure()) }}">
@@ -552,42 +552,174 @@
 						<img id="modal-banner" class="w-100" src="{{ asset('/images/no-image3.png') }}">
 					</div>
 				</div>
-
 				{{-- Detalles --}}
-				<h5 class="mb-0">Datos de la institución</h5>
-				<hr>
-				<p id="modal-onapre_code"></p>
-				<p><span class="font-weight-bold">Nombre:</span> <span id="modal-name"></span></p>
-				<p><span class="font-weight-bold">R.I.F.:</span> <span id="modal-rif"></span></p>
-
-				<p><span class="font-weight-bold">Acrónimo (Nombre Corto):</span> <span id="modal-acronym"></span></p>
-				<p><span class="font-weight-bold">Razón Social:</span> <span id="modal-business_name"></span></p>
-				<p><span class="font-weight-bold">Pais:</span> <span id="modal-country_id"></span></p>
-				<p><span class="font-weight-bold">Estado:</span> <span id="modal-estate_id"></span></p>
-				<p><span class="font-weight-bold">Municipio:</span> <span id="modal-municipality_id"></span></p>
-				<p><span class="font-weight-bold">Ciudad:</span> <span id="modal-city_id"></span></p>
-				<p><span class="font-weight-bold">Código Postal:</span> <span id="modal-postal_code"></span></p>
-				<p><span class="font-weight-bold">Fecha de inicio de operaciones:</span> <span id="modal-start_operations_date"></span></p>
-
-				<p id="modal-organism_adscript_id"></p>
-
-				<p><span class="font-weight-bold">Sector:</span> <span id="modal-institution_sector_id"></span></p>
-				<p><span class="font-weight-bold">Tipo:</span> <span id="modal-institution_type_id"></span></p>
-				<p><span class="font-weight-bold">Dirección Fiscal:</span> <span id="modal-legal_address"></span></p>
-
-				<p id="modal-web"></p>
-
-				<p><span class="font-weight-bold">Activa:</span> <span id="modal-active"></span></p>
-				<p><span class="font-weight-bold">Organización por defecto:</span> <span id="modal-default"></span></p>
-				<p><span class="font-weight-bold">Agente de Retención:</span> <span id="modal-retention_agent"></span></p>
-
-				<p id="modal-legal_base"></p>
-				<p id="modal-legal_form"></p>
-				<p id="modal-main_activity"></p>
-				<p id="modal-mission"></p>
-				<p id="modal-vision"></p>
-				<p id="modal-composition_assets"></p>
-			</div>
+                <h6 class="md-title mt-3 mb-3">DATOS BÁSICOS:</h6>
+                <div class="row justify-content-center">
+					<div class="col-3">
+                        <span class="font-weight-bold">Código ONAPRE</span>
+                        <br>
+                        <span id="modal-onapre_code"></span>
+					</div>
+					<div class="col-3">
+                        <span class="font-weight-bold">R.I.F.</span>
+                        <br>
+                        <span id="modal-rif"></span>
+					</div>
+					<div class="col-6">
+                        <span class="font-weight-bold">Nombre</span>
+                        <br>
+                        <span id="modal-name"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Acrónimo (Nombre corto)</span>
+                        <br>
+                        <span id="modal-acronym"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Razón Social</span>
+                        <br>
+                        <span id="modal-business_name"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">País</span>
+                        <br>
+                        <span id="modal-country_id"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Estado</span>
+                        <br>
+                        <span id="modal-estate_id"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Municipio</span>
+                        <br>
+                        <span id="modal-municipality_id"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Ciudad</span>
+                        <br>
+                        <span id="modal-city_id"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Código Postal</span>
+                        <br>
+                        <span id="modal-postal_code"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Fecha de inicio de operaciones</span>
+                        <br>
+                        <span id="modal-start_operations_date"></span>
+					</div>
+					<div class="col-4">
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Adscrito a</span>
+                        <br>
+                        <span id="modal-organism_adscript_id"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Sector</span>
+                        <br>
+                        <span id="modal-institution_sector_id"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Tipo</span>
+                        <br>
+                        <span id="modal-institution_type_id"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-12">
+                        <span class="font-weight-bold">Dirección Fiscal</span>
+                        <br>
+                        <span id="modal-legal_address"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Activa</span>
+                        <br>
+                        <span id="modal-active"></span></p>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Organización por defecto</span>
+                        <br>
+                        <span id="modal-default"></span>
+					</div>
+					<div class="col-4">
+                        <span class="font-weight-bold">Agente de Retención</span>
+                        <br>
+                        <span id="modal-retention_agent"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-4">
+                        <span class="font-weight-bold">Sitio web</span>
+                        <br>
+                        <span id="modal-web"></span>
+					</div>
+					<div class="col-4">
+					</div>
+					<div class="col-4">
+					</div>
+				</div>
+                <hr>
+                <h6 class="md-title mt-3 mb-3">DATOS COMPLEMENTARIOS:</h6>
+                <div class="row justify-content-center">
+					<div class="col-6">
+                        <span class="font-weight-bold">Base Legal</span>
+                        <br>
+                        <span id="modal-legal_base"></span>
+					</div>
+					<div class="col-6">
+                        <span class="font-weight-bold">Forma Jurídica</span>
+                        <br>
+                        <span id="modal-legal_form"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-6">
+                        <span class="font-weight-bold">Actividad Principal</span>
+                        <br>
+                        <span id="modal-main_activity"></span>
+					</div>
+					<div class="col-6">
+                        <span class="font-weight-bold">Misión</span>
+                        <br>
+                        <span id="modal-mission"></span>
+					</div>
+				</div>
+                <hr>
+                <div class="row justify-content-center">
+					<div class="col-6">
+                        <span class="font-weight-bold">Visión</span>
+                        <br>
+                        <span id="modal-vision"></span>
+					</div>
+					<div class="col-6">
+                        <span class="font-weight-bold">Composición de Patrimonio</span>
+                        <br>
+                        <span id="modal-composition_assets"></span>
+					</div>
+				</div>
+            </div>
+            <hr>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 			</div>
@@ -760,7 +892,6 @@
 					var defaultInst = (institution.default) ? 'NO' : 'SI';
 					var retAgentInst = (institution.retention_agent) ? 'NO' : 'SI';
 
-
 					if (institution.logo) {
 						$("#modal-logo").attr('src', `${window.app_url}/${institution.logo.url}`);
 					}
@@ -769,7 +900,7 @@
 					}
 					$("#detailsInstitutionModalLabel").html(institution.name);
 					if (institution.onapre_code){
-						$("#modal-onapre_code").html('<span class="font-weight-bold">Código ONAPRE:</span> ' + institution.onapre_code);
+						$("#modal-onapre_code").html(institution.onapre_code);
 					}
 					$("#modal-name").html(institution.name);
 					$("#modal-rif").html(institution.rif);
@@ -782,14 +913,14 @@
 					$("#modal-postal_code").html(institution.postal_code);
 					$("#modal-start_operations_date").html(institution.start_operations_date);
 					if (institution.organism_adscript_id){
-						$("#modal-organism_adscript_id").html('<span class="font-weight-bold">Adscrito a:</span> ' + institution.organism_adscript_id);
+						$("#modal-organism_adscript_id").html(institution.organism_adscript_id);
 					}
 					$("#modal-institution_sector_id").html(institution.institution_sector_id);
 					$("#modal-institution_type_id").html(institution.institution_type_id);
 					$("#modal-legal_address").html(institution.legal_address);
 
 					if (institution.web){
-						$("#modal-web").html('<span class="font-weight-bold">Sitio web:</span> ' + institution.web);
+						$("#modal-web").html(institution.web);
 					}
 
 					$('#modal-active').html(activeInst);
@@ -797,25 +928,25 @@
 					$('#modal-retention_agent').html(retAgentInst);
 
 					if (institution.legal_base){
-						$("#modal-legal_base").html('<span class="font-weight-bold">Base Legal:</span> ' + institution.legal_base);
+						$("#modal-legal_base").html(institution.legal_base);
 					}
 					if (institution.legal_form){
-						$("#modal-legal_form").html('<span class="font-weight-bold">Forma Jurídica:</span> ' + institution.legal_form);
+						$("#modal-legal_form").html(institution.legal_form);
 					}
 					if (institution.main_activity){
-						$("#modal-main_activity").html('<span class="font-weight-bold">Actividad Principal:</span> ' + institution.main_activity);
+						$("#modal-main_activity").html(institution.main_activity);
 					}
 					if (institution.mission){
-						$("#modal-mission").html('<span class="font-weight-bold">Misión:</span> ' + institution.mission);
+						$("#modal-mission").html(institution.mission);
 					}
 					if (institution.vision){
-						$("#modal-vision").html('<span class="font-weight-bold">Visión:</span> ' + institution.vision);
+						$("#modal-vision").html(institution.vision);
 					}
 					if (institution.composition_assets){
-						$("#modal-composition_assets").html('<span class="font-weight-bold">Composición de Patrimonio:</span> ' + institution.composition_assets);
+						$("#modal-composition_assets").html(institution.composition_assets);
 					}
 
-					// Abre la modal
+                    // Abre la modal
 					$('#detailsInstitutionModal').modal('show');
 				}
 			}).catch(error => {
