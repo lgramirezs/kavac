@@ -33,9 +33,30 @@
                     <div class="form-group">
                         <label>Años en otras instituciones públicas:</label>
                         <input type="text" class="form-control input-sm"
-                            v-model="record.years_apn" v-input-mask
+                            v-model="record.years_apn" disabled="true" v-input-mask
                             data-inputmask="'alias': 'numeric',
                                             'allowMinus': 'false'"/>
+                    </div>
+                </div>
+                <div v-if="record.active" class="col-md-4" id="helpEmploymentYears">
+                    <div class="form-group">
+                        <label>Tiempo laborando en la institución/organización:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.institution_years" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentYears">
+                    <div class="form-group">
+                        <label>Total años de servicio:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.service_years" disabled="true"/>
+                    </div>
+                </div>
+                <div v-if="!record.active" class="col-md-4" id="helpEmploymentYears">
+                    <div class="form-group">
+                        <label>Tiempo laborado en la institución/organización:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.time_worked" disabled="true"/>
                     </div>
                 </div>
                 <div class="col-md-12" id="helpEmploymentPreviousJobs">
@@ -85,14 +106,14 @@
                         <div class="col-md-4">
                             <div class="form-group is-required">
                                 <label>Fecha de inicio:</label>
-                                <input type="date" class="form-control input-sm"
+                                <input @change="antiquity(); diff_datetimes(record.start_date);" type="date" class="form-control input-sm"
                                     v-model="job.start_date"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group is-required">
                                 <label>Fecha de cese:</label>
-                                <input type="date" class="form-control input-sm"
+                                <input @change="antiquity(); diff_datetimes(record.start_date);" type="date" class="form-control input-sm"
                                     v-model="job.end_date"/>
                             </div>
                         </div>
@@ -112,14 +133,14 @@
                 <div class="col-md-4" id="helpEmploymentStartDate">
                     <div class="form-group is-required">
                         <label>Fecha de ingreso a la institución:</label>
-                        <input type="date" class="form-control input-sm"
+                        <input @change="diff_datetimes(record.start_date)" type="date" class="form-control input-sm"
                             v-model="record.start_date"/>
                     </div>
                 </div>
                 <div v-show="record.active == false" class="col-md-4" id="helpEmploymentEndDate">
                     <div class="form-group">
                         <label>Fecha de egreso de la institución:</label>
-                        <input type="date" class="form-control input-sm"
+                        <input @change="time_worked()" type="date" class="form-control input-sm"
                             v-model="record.end_date"/>
                     </div>
                 </div>
@@ -257,6 +278,9 @@
                     department_id: '',
                     payroll_contract_type_id: '',
                     previous_jobs: [],
+                    institution_years: '',
+                    service_years: '',
+                    time_worked: '',
                 },
                 errors: [],
                 payroll_staffs: [],
@@ -382,7 +406,128 @@
                 if (vm.errors < 1) {
                     vm.createRecord('payroll/employments');
                 }
-            }
+            },
+
+            /**
+             * Método que calcula los años en otras instituciones públicas
+             *
+             * @method     antiquity
+             *
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+            antiquity() {
+                const vm = this;
+                let years = 0;
+                for (let job of vm.record.previous_jobs){
+                    for (let sector_type of vm.payroll_sector_types) {
+                        if(job.payroll_sector_type_id == sector_type.id && sector_type.text == 'Público'){
+                            let now = job.start_date;
+                            let ms = moment(job.end_date,"YYYY-MM-DD HH").diff(moment(now,"YYYY-MM-DD"));
+                            let d = moment.duration(ms);
+
+                            years += d._data.years;
+
+                            vm.record.years_apn = years;
+                        }
+                    }
+                }
+            },
+
+            /**
+             * Método que calcula los años en otras instituciones públicas
+             *
+             * @method     time_worked
+             *
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+            time_worked() {
+                const vm = this;
+                var now = vm.record.start_date;
+                var ms = moment(vm.record.end_date,"YYYY-MM-DD HH").diff(moment(now,"YYYY-MM-DD HH"));
+                var d = moment.duration(ms);
+                let data_years = 0;
+                let data_months = 0;
+                let data_days = 0;
+                if (d._data.years < 0){
+                    data_years = d._data.years * -1;
+                } else {
+                    data_years = d._data.years;
+                }
+                if (d._data.months < 0){
+                    data_months = d._data.months * -1;
+                } else {
+                    data_months = d._data.months
+                }
+                if (d._data.days < 0){
+                    data_days = d._data.days * -1;
+                } else {
+                    data_days = d._data.days
+                }
+
+                let time = {
+                    years: `Años: ${data_years}`,
+                    months: `Meses: ${data_months}`,
+                    days: `Días: ${data_days}`,
+                };
+
+                if (data_days > 0) {
+                    vm.record.time_worked = time.years + ' ' + time.months + ' ' + time.days;
+                } else {
+                    vm.record.time_worked = 0;
+                };
+            },
+
+            /**
+             * Método que calcula la diferencia entre dos fechas con marca de tiempo
+             *
+             * @method     diff_datetimes
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             * @param      {string}  dateThen    Fecha a comparar para obtener la diferencia con respecto a la fecha actual
+             *
+             * @return     {[type]}  Objeto con información de la diferencia obtenida entre las dos fechas
+             */
+            diff_datetimes(dateThen) {
+                const vm = this;
+                let now = moment().format("YYYY-MM-DD");
+                let ms = moment(dateThen,"YYYY-MM-DD").diff(moment(now,"YYYY-MM-DD"));
+                let d = moment.duration(ms);
+                let data_years = 0;
+                let data_months = 0;
+                let data_days = 0;
+                if (d._data.years < 0){
+                    data_years = d._data.years * -1;
+                }
+                if (d._data.months < 0){
+                    data_months = d._data.months * -1;
+                }
+                if (d._data.days < 0){
+                    data_days = d._data.days * -1;
+                }
+
+                let time = {
+                    years: `Años: ${data_years}`,
+                    months: `Meses: ${data_months}`,
+                    days: `Días: ${data_days}`,
+                };
+
+                if (data_days > 0) {
+                    vm.record.institution_years = time.years + ' ' + time.months + ' ' + time.days;
+                } else {
+                    vm.record.institution_years = 0;
+                };
+
+                if(data_years) {
+                    vm.record.service_years = data_years + vm.record.years_apn;
+                } else {
+                    vm.record.service_years = 0;
+                }
+            },
+
         },
         created() {
             this.record.active = true;
