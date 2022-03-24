@@ -34,7 +34,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_type_id']) || is_null($row['asset_type_id'])) {
             /** @var object Crea el nuevo tipo de bien a ser asociado al bien */
-            $assetType = Category::create($dataCategory);
+            $assetType = AssetType::updateOrCreate($dataAssetType, $dataAssetType);
         } else {
             /** @var object Contiene los datos del tipo de bien asociado al bien */
             $assetType = AssetType::find($row['asset_type_id']);
@@ -48,7 +48,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_category_id']) || is_null($row['asset_category_id'])) {
             /** @var object Crea la nueva categoría a ser asociada al bien */
-            $assetCategory = Category::create($dataAssetCategory);
+            $assetCategory = AssetCategory::updateOrCreate($dataAssetCategory, $dataAssetCategory);
         } else {
             /** @var object Contiene los datos de la categoría asociada al bien */
             $assetCategory = AssetCategory::find($row['asset_category_id']);
@@ -62,7 +62,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_subcategory_id']) || is_null($row['asset_subcategory_id'])) {
             /** @var object Crea la nueva sub-categoría a ser asociada al bien */
-            $assetSubcategory = Subcategory::create($dataAssetSubcategory);
+            $assetSubcategory = AssetSubcategory::updateOrCreate($dataAssetSubcategory, $dataAssetSubcategory);
         } else {
             /** @var object Contiene los datos de la subcategoría asociada al bien */
             $assetSubcategory = AssetSubcategory::find($row['asset_subcategory_id']);
@@ -70,13 +70,13 @@ class AssetImport extends \App\Imports\DataImport implements
 
         /** @var array Datos de la categoría específica al cual asociar la información del bien */
         $dataAssetSpecificCategory = [
-            'name'              => $row['asset_specific_category'],
+            'name'                 => $row['asset_specific_category'],
             'asset_subcategory_id' => $assetSubcategory->id
         ];
 
         if (empty($row['asset_specific_category_id']) || is_null($row['asset_specific_category_id'])) {
             /** @var object Crea la nueva categoría específica a ser asociada al bien */
-            $assetSpecificCategory = AssetSpecificCategory::create($dataAssetSpecificCategory);
+            $assetSpecificCategory = AssetSpecificCategory::updateOrCreate($dataAssetSpecificCategory, $dataAssetSpecificCategory);
         } else {
             /** @var object Contiene los datos de la categoría específica asociada al bien */
             $assetSpecificCategory = AssetSpecificCategory::find($row['asset_specific_category_id']);
@@ -89,7 +89,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_condition_id']) || is_null($row['asset_condition_id'])) {
             /** @var object Crea la nueva condición física a ser asociada al bien */
-            $assetCondition = AssetCondition::create($dataAssetCondition);
+            $assetCondition = AssetCondition::updateOrCreate($dataAssetCondition, $dataAssetCondition);
         } else {
             /** @var object Contiene los datos de la condición física asociada al bien */
             $assetCondition = AssetCondition::find($row['asset_condition_id']);
@@ -102,7 +102,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_acquisition_type_id']) || is_null($row['asset_acquisition_type_id'])) {
             /** @var object Crea el nuevo tipo de adquisición a ser asociada al bien */
-            $assetAcquisitionType = AssetAcquisitionType::create($dataAssetAcquisitionType);
+            $assetAcquisitionType = AssetAcquisitionType::updateOrCreate($dataAssetAcquisitionType, $dataAssetAcquisitionType);
         } else {
             /** @var object Contiene los datos del tipo de adquisición asociado al bien */
             $assetAcquisitionType = AssetAcquisitionType::find($row['asset_acquisition_type_id']);
@@ -115,7 +115,7 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['asset_status_id']) || is_null($row['asset_status_id'])) {
             /** @var object Crea el nuevo estatus de uso a ser asociada al bien */
-            $assetStatus = AssetStatus::create($dataAssetStatus);
+            $assetStatus = AssetStatus::updateOrCreate($dataAssetStatus, $dataAssetStatus);
         } else {
             /** @var object Contiene los datos del estatus de uso asociado al bien */
             $assetStatus = AssetStatus::find($row['asset_status_id']);
@@ -128,44 +128,56 @@ class AssetImport extends \App\Imports\DataImport implements
 
         if (empty($row['currency_id']) || is_null($row['currency_id'])) {
             /** @var object Crea la nueva moneda a ser asociada al bien */
-            $currency = Currency::create($dataCurrency);
+            $currency = Currency::updateOrCreate($dataCurrency, $dataCurrency);
         } else {
             /** @var object Contiene los datos de la moneda asociada al bien */
             $currency = Currency::find($row['currency_id']);
         }
 
-        if (!(empty($row['institution_id']) || is_null($row['institution_id']))) {
+        /** @var array Datos de la institución al cual asociar la información del bien */
+        $dataInstitution = [
+            'name' => $row['institution']
+        ];
+
+        if (empty($row['institution_id']) || is_null($row['institution_id'])) {
             /** @var object Contiene los datos de la moneda asociada al bien */
+            $institution = Institution::updateOrCreate($dataInstitution, $dataInstitution);
+        } else {
+            /** @var object Contiene los datos de la institución asociada al bien */
             $institution = Institution::find($row['institution_id']);
         }
 
-        /** @var array Datos de la función de uso al cual asociar la información del bien */
-        $dataUseFunction = [
-            'name' => $row['asset_use_function']
-        ];
+        if (!(empty($row['asset_use_function']) || is_null($row['asset_use_function']))) {
+            /** @var array Datos de la función de uso al cual asociar la información del bien */
+            $dataUseFunction = [
+                'name' => $row['asset_use_function']
+            ];
 
-        if (empty($row['asset_use_function_id']) || is_null($row['asset_use_function_id'])) {
-            /** @var object Crea la nueva función de uso a ser asociada al bien */
-            $assetUseFunction = AssetUseFunction::create($dataUseFunction);
-        } else {
-            /** @var object Contiene los datos de la función de uso asociada al bien */
-            $assetUseFunction = AssetUseFunction::find($row['asset_use_function_id']);
+            if (empty($row['asset_use_function_id']) || is_null($row['asset_use_function_id'])) {
+                /** @var object Crea la nueva función de uso a ser asociada al bien */
+                $assetUseFunction = AssetUseFunction::updateOrCreate($dataUseFunction, $dataUseFunction);
+            } else {
+                /** @var object Contiene los datos de la función de uso asociada al bien */
+                $assetUseFunction = AssetUseFunction::find($row['asset_use_function_id']);
+            }
         }
 
-        /** @var array Datos de la parroquia al cual asociar la información del bien */
-        $dataParish = [
-            'name' => $row['parish']
-        ];
+        if (!(empty($row['parish']) || is_null($row['parish']))) {
 
-        if (empty($row['parish_id']) || is_null($row['parish_id'])) {
-            /** @var object Crea la nueva parroquia a ser asociada al bien */
-            $parish = Parish::create($dataParish);
-        } else {
-            /** @var object Contiene los datos de la parroquia asociada al bien */
-            $parish = Parish::find($row['parish_id']);
+            /** @var array Datos de la parroquia al cual asociar la información del bien */
+            $dataParish = [
+                'name' => $row['parish']
+            ];
+
+            if (empty($row['parish_id']) || is_null($row['parish_id'])) {
+                /** @var object Crea la nueva parroquia a ser asociada al bien */
+                $parish = Parish::updateOrCreate($dataParish, $dataParish);
+            } else {
+                /** @var object Contiene los datos de la parroquia asociada al bien */
+                $parish = Parish::find($row['parish_id']);
+            }
         }
-
-
+        
         /** @var array Datos de los bienes a importar */
         $data = [
             'asset_type_id'              => $assetType->id,
@@ -183,17 +195,18 @@ class AssetImport extends \App\Imports\DataImport implements
             'value'                      => $row['value'],
             'currency_id'                => $currency->id,
             'institution_id'             => $institution->id,
-            'asset_use_function_id'      => $assetUseFunction->id,
-            'parish_id'                  => $parish->id,
+            'asset_use_function_id'      => $assetUseFunction->id ?? null,
+            'parish_id'                  => $parish->id ?? null,
             'address'                    => $row['address']
         ];
 
-        if (!empty($row['id']) || !is_null($row['id'])) {
-            return Asset::updateOrCreate(
-                ['id' => $row['id']],
-                $data
-            );
-        }
-        return new Asset($data);
+        $asset = Asset::withTrashed()->updateOrCreate(
+            ['id' => $row['id']],
+            $data
+        );
+        $asset->inventory_serial = $asset->getCode();
+        $asset->deleted_at = null;
+        $asset->save();
+        return $asset;
     }
 }
