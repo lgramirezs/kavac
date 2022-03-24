@@ -555,17 +555,17 @@
 				{{-- Detalles --}}
                 <h6 class="md-title mt-3 mb-3">DATOS BÁSICOS:</h6>
                 <div class="row justify-content-center">
-					<div class="col-3">
+					<div class="col-4">
                         <span class="font-weight-bold">Código ONAPRE</span>
                         <br>
                         <span id="modal-onapre_code"></span>
 					</div>
-					<div class="col-3">
+					<div class="col-4">
                         <span class="font-weight-bold">R.I.F.</span>
                         <br>
                         <span id="modal-rif"></span>
 					</div>
-					<div class="col-6">
+					<div class="col-4">
                         <span class="font-weight-bold">Nombre</span>
                         <br>
                         <span id="modal-name"></span>
