@@ -458,7 +458,7 @@
 						<h6 class="md-title card-title">{{ __('Organizaciones Registradas') }}</h6>
 						<div class="row">
 							<div class="col-12 text-right">
-								@include('buttons.new', ['route' => 'javascript:void(0)', 'btnClass' => 'btn-new-institution'])
+								@include('buttons.new', ['route' => 'javascript:void(0)', 'btnClass' => 'btn btn-sm btn-primary btn-custom btn-mini btn-new btn-new-institution'])
 							</div>
 						</div>
 
