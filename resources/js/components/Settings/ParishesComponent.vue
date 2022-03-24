@@ -30,7 +30,13 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group" v-show="editEstate=='false'">
+                                    <label>Estados:</label>
+                                    <select2 :options="estates" v-model="record.estate_id" @input="getMunicipalities">
+                                    </select2>
+                                </div>
+                                
+                                <div class="form-group is-required" v-show="editEstate == 'true'">
                                     <label>Estado:</label>
                                     <select v-model="record.estate_id">
                                         <option :value="ste.id" :selected="ste.id == record.estate_id"
@@ -38,12 +44,26 @@
                                             {{ ste.text }}
                                         </option>
                                     </select>
-                                    <!--<select2 :options="estates" @input="getMunicipalities"
-                                             v-model="record.estate_id"></select2>-->
                                 </div>
+                                <!--<div class="form-group is-required">
+                                    <label>Estado:</label>
+                                    <select v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                            v-for="ste in estates">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                    <select2 :options="estates" @input="getMunicipalities"
+                                             v-model="record.estate_id"></select2>
+                                </div>-->
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group" v-show="editMunicipalities=='false'">
+                                    <label>Municipio:</label>
+                                    <select2 :options="municipalities" v-model="record.municipality_id">
+                                    </select2>
+                                </div>
+                                <div class="form-group is-required" v-show="editMunicipalities == 'true'">
                                     <label>Municipio:</label>
                                     <select v-model="record.municipality_id">
                                         <option :value="ste.id" :selected="ste.id == record.municipality_id"
@@ -51,9 +71,18 @@
                                             {{ ste.text }}
                                         </option>
                                     </select>
-                                    <!--<select2 :options="municipalities" v-model="record.municipality_id">
-                                    </select2>-->
                                 </div>
+                                <!--<div class="form-group is-required">
+                                    <label>Municipio:</label>
+                                    <select v-model="record.municipality_id">
+                                        <option :value="ste.id" :selected="ste.id == record.municipality_id"
+                                            v-for="ste in municipalities">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                    <select2 :options="municipalities" v-model="record.municipality_id">
+                                    </select2>
+                                </div> -->
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group is-required">
@@ -153,6 +182,8 @@
                 estates: ['0'],
                 municipalities: ['0'],
                 columns: ['municipality.estate.name', 'municipality.name', 'name', 'code', 'id'],
+                editEstate: '',
+                editMunicipalities: '',
             }
         },
         watch: {
@@ -170,6 +201,20 @@
             }
         },
         methods: {
+            /**
+             * Obtiene los Estados del Pais seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getEstate(country_id) {
+                const vm = this;
+                vm.estates = [];
+                if (country_id) {
+                    axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
+                        vm.estates = response.data;
+                    });
+                }
+            },
             /**
              * Obtiene los Municipios del Estado seleccionado
              *
@@ -201,6 +246,8 @@
                 };
                 vm.selectedEstateId = '';
                 vm.selectedMunicipalityId = '';
+                vm.editEstate = 'false';
+                vm.editMunicipalities = 'false';
             },
             /**
              * Método que carga el formulario con los datos a modificar
@@ -210,9 +257,11 @@
              * @param  {integer} index Identificador del registro a ser modificado
              * @param {object} event   Objeto que gestiona los eventos
              */
-            async initUpdate(id, event) {
+            initUpdate(id, event) {
                 let vm = this;
                 vm.errors = [];
+                vm.editEstate = 'true';
+                vm.editMunicipalities = 'true';
                 let recordEdit = JSON.parse(JSON.stringify(vm.$refs.tableResults.data.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
@@ -220,14 +269,17 @@
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.municipality.estate.country.id;
                 vm.record.estate_id = recordEdit.municipality.estate_id;
-                vm.record.municipality_id = recordEdit.municipality.id;
-                vm.selectedEstateId = recordEdit.municipality.estate_id;
-                vm.selectedMunicipalityId = recordEdit.municipality.id;
+                vm.getEstate(vm.record.country_id);
                 vm.getMunicipalitie(vm.record.estate_id);
+                vm.selectedEstateId = vm.record.estate_id;
+                vm.record.municipality_id = recordEdit.municipality.id;
+                vm.selectedMunicipalityId = vm.record.municipality_id;
                 event.preventDefault();
             }
         },
         created() {
+            this.editEstate = 'false';
+            this.editMunicipalities = 'false';
             this.table_options.headings = {
                 'municipality.estate.name': 'Estado',
                 'municipality.name': 'Municipio',
@@ -245,9 +297,11 @@
                 'id': 'col-md-2'
             };
         },
-        async mounted() {
+        mounted() {
             let vm = this;
-            await vm.$nextTick();
+            vm.editEstate = 'false';
+            vm.editMunicipalities = 'false';
+            //await vm.$nextTick();
             $("#add_parish").on('show.bs.modal', function() {
                 vm.getCountries();
             });
