@@ -32,9 +32,9 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label>Estados:</label>
-                                    <select v-model="record.estate_id">
-                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
-                                                    v-for="ste in estates">
+                                    <select id="estate" v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id" 
+                                                v-for="(ste, index) in estates" :key="index">
                                                 {{ ste.text }}
                                         </option>
                                     </select>
@@ -121,11 +121,20 @@
                 deep: true,
                 handler: function(newValue, oldValue) {
                     const vm = this;
-                    if (vm.record.id) {
+                    /*if (vm.record.id) {
                         vm.record.estate_id = vm.selectedEstateId;
-                    }
+                    }*/
                 }
             },
+            selectedEstateId(newValue, oldValue) {
+                const vm = this;
+                if (newValue && newValue!==oldValue) {
+                    setTimeout(() => {
+                        vm.record.estate_id = vm.selectedEstateId.toString();
+                        $("#estate").val(vm.selectedEstateId.toString());
+                    }, 1000);
+                }
+            }
         },
         methods: {
             /**
@@ -185,6 +194,9 @@
             let vm = this;
             $("#add_municipality").on('show.bs.modal', function() {
                 vm.getCountries();
+            });
+            $("#estate").on('change', function() {
+                vm.record.estate_id = $(this).val();
             });
         }
     };
