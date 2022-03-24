@@ -203,10 +203,10 @@ class AppManagementController extends Controller
                 return response()->json(['result' => false, 'message' => __('El usuario no está registrado')], 200);
             }
         }
-        if ($request->module) {
-            $auditables = $auditables->where('auditable_type', 'like', "{$request->module}%")
-                                     ->orWhere('auditable_type', 'like', "%{$request->module}%")
-                                     ->orWhere('auditable_type', 'like', "%{$request->module}");
+        if ($request->module_restore) {
+            $auditables = $auditables->where('auditable_type', 'like', "{$request->module_restore}%")
+                                     ->orWhere('auditable_type', 'like', "%{$request->module_restore}%")
+                                     ->orWhere('auditable_type', 'like', "%{$request->module_restore}");
         }
 
         /** @var array Arreglo con registros a auditar según la acción ejecutada */
