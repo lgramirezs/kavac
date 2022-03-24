@@ -30,7 +30,21 @@
 			                    </div>
 							</div>
 							<div class="col-12 col-md-6">
-								<div class="form-group is-required">
+								<div class="form-group" v-show="editCities=='false'">
+                                    <label>Estados:</label>
+                                    <select2 :options="estates" v-model="record.estate_id">
+                                    </select2>
+                                </div>
+                                <div class="form-group" v-show="editCities == 'true'">
+                                    <label>Estados:</label>
+                                    <select v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                                    v-for="ste in estates">
+                                                {{ ste.text }}
+                                        </option>
+                                    </select>
+                                </div>
+								<!--<div class="form-group is-required">
 									<label>Estado:</label>
 									<select v-model="record.estate_id">
                                         <option :value="ste.id" :selected="ste.id == record.estate_id"
@@ -38,8 +52,8 @@
                                                 {{ ste.text }}
                                         </option>
                                     </select>
-									<!--<select2 :options="estates" v-model="record.estate_id"></select2>-->
-			                    </div>
+									<select2 :options="estates" v-model="record.estate_id"></select2>
+			                    </div>-->
 							</div>
 							<div class="col-12">
 								<div class="form-group is-required">
@@ -105,9 +119,35 @@
 				countries: [],
 				estates: ['0'],
 				columns: ['estate.name', 'name', 'id'],
+				editCities: '',
 			}
 		},
+		 watch: {
+            record: {
+                deep: true,
+                handler: function(newValue, oldValue) {
+                    const vm = this;
+                    if (vm.record.id) {
+                        vm.record.estate_id = vm.selectedEstateId;
+                    }
+                }
+            },
+        },
 		methods: {
+			/**
+             * Obtiene los Estados del Pais seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getEstate(country_id) {
+                const vm = this;
+                vm.estates = [];
+                if (country_id) {
+                    axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
+                        vm.estates = response.data;
+                    });
+                }
+            },
 			/**
 			 * Método que borra todos los datos del formulario
 			 *
@@ -120,6 +160,7 @@
 					estate_id: '',
 					name: '',
 				};
+				this.editCities = 'false';
 			},
 
 			/**
@@ -132,18 +173,21 @@
              */
             initUpdate(id, event) {
                 let vm = this;
+                vm.editCities = 'true'; 
                 vm.errors = [];
                 let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.estate.country_id;
+                vm.getEstate(vm.record.country_id);
                 vm.record.estate_id = recordEdit.estate.id;
                 vm.selectedEstateId = recordEdit.estate.id;
                 event.preventDefault();
             }
 		},
 		created() {
+			this.editCities = 'false'; 
 			this.table_options.headings = {
 				'estate.name': 'Estado',
 				'name': 'Ciudad',
@@ -159,6 +203,7 @@
 		},
 		mounted() {
 			let vm = this;
+			vm.editCities = 'false'; 
 			$("#add_city").on('show.bs.modal', function() {
 				vm.getCountries();
 			});
