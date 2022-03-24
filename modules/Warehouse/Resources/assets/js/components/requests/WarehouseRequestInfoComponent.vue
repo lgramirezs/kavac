@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<a class="btn btn-info btn-xs btn-icon btn-action" 
-		   href="#" title="Ver información del registro" data-toggle="tooltip" 
+		<a class="btn btn-info btn-xs btn-icon btn-action"
+		   href="#" title="Ver información del registro" data-toggle="tooltip"
 		   @click="addRecord('view_warehouse_request', route_list , $event)">
 			<i class="fa fa-info-circle"></i>
 		</a>
@@ -13,11 +13,11 @@
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
-							<i class="icofont icofont-read-book ico-2x"></i> 
+							<i class="icofont icofont-read-book ico-2x"></i>
 							Información de la solicitud registrada
 						</h6>
 					</div>
-					
+
 					<div class="modal-body">
 						<ul class="nav nav-tabs custom-tabs justify-content-center" role="tablist">
 	                        <li class="nav-item">
@@ -25,7 +25,7 @@
 	                                <i class="ion-android-person"></i> Información General
 	                            </a>
 	                        </li>
-	                        
+
 	                        <li class="nav-item">
 	                            <a class="nav-link" data-toggle="tab" href="#equipment" role="tab" @click="loadProducts()">
 	                                <i class="ion-arrow-swap"></i> Insumos Solicitados
@@ -35,8 +35,8 @@
 
 	                    <div class="tab-content">
 	                    	<div class="tab-pane active" id="general" role="tabpanel">
-	                    		<div class="row">        
-									
+	                    		<div class="row">
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<strong>Fecha de registro</strong>
@@ -85,18 +85,18 @@
 									</div>
 							    </div>
 	                    	</div>
-	                    	
-	                    	<div class="tab-pane" id="equipment" role="tabpanel">            
+
+	                    	<div class="tab-pane" id="equipment" role="tabpanel">
 	                    		<div class="modal-table">
 									<v-client-table :columns="columns" :data="records" :options="table_options">
 										<div slot="code" slot-scope="props" class="text-center">
 											<span>
-												{{ props.row.warehouse_inventory_product.code }} 
+												{{ props.row.warehouse_inventory_product.code }}
 											</span>
 										</div>
 										<div slot="quantity" slot-scope="props">
 											<span>
-												{{ props.row.quantity }} 
+												{{ props.row.quantity }}
 												{{ (props.row.warehouse_inventory_product.warehouse_product.measurement_unit)
 													? props.row.warehouse_inventory_product.warehouse_product.measurement_unit.acronym
 													: ''
@@ -105,7 +105,7 @@
 										</div>
 										<div slot="unit_value" slot-scope="props">
 											<span>
-												{{ props.row.warehouse_inventory_product.unit_value }} 
+												{{ props.row.warehouse_inventory_product.unit_value }}
 												{{ (props.row.warehouse_inventory_product.currency)
 													? props.row.warehouse_inventory_product.currency.symbol
 													: ''
@@ -119,8 +119,8 @@
 					</div>
 
 	                <div class="modal-footer">
-	                	
-	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
+
+	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
 	                			data-dismiss="modal">
 	                		Cerrar
 	                	</button>
@@ -145,7 +145,7 @@
 			}
 		},
 		props: {
-			request: Object, 
+			request: Object,
 		},
 		created() {
 			this.table_options.headings = {
@@ -175,7 +175,7 @@
 
 			/**
              * Método que borra todos los datos del formulario
-             * 
+             *
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
@@ -188,14 +188,14 @@
 			 * @param {string} url 		Ruta que obtiene los datos a ser mostrado en listados
 		 	 * @param {string} modal_id Identificador del modal a mostrar con la información solicitada
 			 */
-			
+
             initRecords(url, modal_id) {
 				this.errors = [];
 				this.reset();
 
 				const vm = this;
             	var fields = {};
-            	
+
             	document.getElementById("info_general").click();
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
@@ -204,7 +204,12 @@
 						$(".modal-body #id").val( fields.id );
 		            	document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'';
 		            	document.getElementById('department').innerText = (fields.department)?fields.department.name:'';
-		            	document.getElementById('motive').innerText = (fields.motive)?fields.motive:'';
+                        if(fields.motive){
+						document.getElementById('motive').innerText =fields.motive.replace('<p>', '').replace('</p>', '');
+					}else{
+						document.getElementById('motive').innerText ="";
+					}
+
 		            	document.getElementById('observations').innerText = (fields.observations)?fields.observations:'No definido';
 		            	document.getElementById('state').innerText = (fields.state)?fields.state:'';
 		            	this.records = fields.warehouse_inventory_product_requests;
@@ -226,6 +231,7 @@
 				});
 
 			},
+
 
 			/**
 			 * Actualiza los productos asocados a la solicitud
