@@ -653,7 +653,7 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Activa</span>
                         <br>
-                        <span id="modal-active"></span></p>
+                        <span class="text-bold text-{{ ($institution->active)?'success':'danger' }}" id="modal-active"></span>
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Organización por defecto</span>
@@ -888,9 +888,9 @@
 			axios.get(`get-institution/details/${id}`).then(response => {
 				if (response.data.result){
 					var institution = response.data.institution;
-					var activeInst = (institution.active) ? 'NO' : 'SI';
-					var defaultInst = (institution.default) ? 'NO' : 'SI';
-					var retAgentInst = (institution.retention_agent) ? 'NO' : 'SI';
+					var activeInst = (institution.active) ? 'SI' : 'NO';
+					var defaultInst = (institution.default) ? 'SI' : 'NO';
+					var retAgentInst = (institution.retention_agent) ? 'SI' : 'NO';
 
 					if (institution.logo) {
 						$("#modal-logo").attr('src', `${window.app_url}/${institution.logo.url}`);
