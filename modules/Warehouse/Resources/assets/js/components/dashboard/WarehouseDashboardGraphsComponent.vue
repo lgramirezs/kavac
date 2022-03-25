@@ -1,149 +1,128 @@
 <template>
-    <div class="card">
-        <div class="card-header">
-            <h6 class="card-title text-uppercase">
-                Gráficos del Inventario de Productos en Almacén
-                <a href="javascript:void(0)" title="haz click para ver la ayuda guiada de este elemento"
-                    data-toggle="tooltip" class="btn-help" @click="initUIGuide(helpFile)">
-                    <i class="ion ion-ios-help-outline cursor-pointer"></i>
-                </a>
-            </h6>
-            <div class="card-btns">
-                <a href="#" class="btn btn-sm btn-primary btn-custom" @click="redirect_back(route_list)"
-                       title="Ir atrás" data-toggle="tooltip">
-                        <i class="fa fa-reply"></i>
+    <section>
+        <div class="alert alert-danger" v-if="errors.length > 0">
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-3" id="helpWarehouseGraphExist">
+                <div class=" form-group">
+                    <label>Existencia</label>
+                    <div class="col-12">
+                        <div class="col-12 bootstrap-switch-mini">
+                            <input type="radio" name="type_graph_products" value="exist" id="sel_product_exist"
+                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products"
+                                   data-on-label="SI" data-off-label="NO" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="helpWarehouseGraphMaxRequest">
+                <div class=" form-group">
+                    <label>Más solicitados</label>
+                    <div class="col-12">
+                        <div class="col-12 bootstrap-switch-mini">
+                            <input type="radio" name="type_graph_products" value="max_request"
+                                   id="sel_product_max_request" data-on-label="SI" data-off-label="NO"
+                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3" id="helpWarehouseGraphMinRequest">
+                <div class=" form-group">
+                    <label>Menos solicitados</label>
+                    <div class="col-12">
+                        <div class="col-12 bootstrap-switch-mini">
+                            <input type="radio" name="type_graph_products" value="min_request"
+                                   id="sel_product_min_request" data-on-label="SI" data-off-label="NO"
+                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 d-inline-flex">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-sm btn-default btn-custom" id="list_options_diagram"
+                       data-toggle="dropdown" aria-expanded="false" title="">
+                       <i class="fa fa-refresh" style="color: white;" v-if="this.type =='doughnut'"></i>
+                       <i class="fa fa-pie-chart" style="color: white;" v-if="this.type =='pie'"></i>
+                       <i class="fa fa-line-chart" style="color: white;" v-if="this.type =='line'"></i>
+                       <i class="fa fa-bar-chart" style="color: white;" aria-hidden="true" v-if="this.type =='bar'"></i>
+                       <i class="fa fa-stop" style="color: white;" aria-hidden="true" v-if="this.type ==''"></i>
                     </a>
-                <a href="#" class="card-minimize btn btn-card-action btn-round" title="Minimizar"
-                   data-toggle="tooltip">
-                    <i class="now-ui-icons arrows-1_minimal-up"></i>
-                </a>
+                    <div class="dropdown-menu dropdown-menu-right"
+                         aria-labelledby="list_options_diagram">
+                         <div class="d-inline-flex">
+                            <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('bar')"
+                               title="Vizualizar en gráfico de barras" data-toggle="tooltip">
+                                <i class="fa fa-bar-chart" style="color: white;"></i>
+                            </a>
+                            <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('doughnut')"
+                               title="Vizualizar en gráfico de dona" data-toggle="tooltip">
+                                <i class="fa fa-refresh" style="color: white;"></i>
+                            </a>
+                            <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('pie')"
+                               title="Vizualizar en gráfico de torta" data-toggle="tooltip">
+                                <i class="fa fa-pie-chart" style="color: white;"></i>
+                            </a>
+                            <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('line')"
+                               title="Vizualizar en gráfico de linea" data-toggle="tooltip">
+                                <i class="fa fa-line-chart" style="color: white;"></i>
+                            </a>
+                         </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="alert alert-danger" v-if="errors.length > 0">
-                <ul>
-                    <li v-for="error in errors">{{ error }}</li>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <warehouse-graph-charts
+                    :data="data"
+                    :labels="labels"
+                    :type="type"
+                    :descriptions="descriptions"
+                    :title="title">
+                </warehouse-graph-charts>
+            </div>
+        </div>
+        <!-- Controles -->
+        <div class="VuePagination row col-md-12" v-if="records.length > 0">
+            <nav class="text-center">
+                <ul class="pagination VuePagination__pagination" style="">
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="pag != 1">
+                        <a class="page-link" @click="firstPag()">PRIMERO</a>
+                    </li>
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="pag > num_pag">
+                        <a class="page-link" @click="delPag()">&lt;&lt;</a>
+                    </li>
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-page" v-if="pag > 1">
+                        <a class="page-link" @click="prevPag()">&lt;</a>
+                    </li>
+                    <li :class="(pag ==number)?'VuePagination__pagination-item page-item active':'VuePagination__pagination-item page-item'" v-for="number in numbers" v-if="records.length >= number">
+                        <a class="page-link active" role="button" @click.prevent="pag = number">{{number}}</a>
+                    </li>
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-page" v-if="records.length > pag">
+                        <a class="page-link" @click="nextPag()">&gt;</a>
+                    </li>
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-chunk" v-if="checkPag(num_pag)">
+                        <a class="page-link" @click="addPag()">&gt;&gt;</a>
+                    </li>
+                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="records.length != pag">
+                        <a class="page-link" @click="lastPag()">ÚLTIMO</a>
+                    </li>
                 </ul>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-3">
-                    <div class=" form-group">
-                        <label>Existencia</label>
-                        <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_graph_products" value="exist" id="sel_product_exist"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products"
-                                       data-on-label="SI" data-off-label="NO" checked>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class=" form-group">
-                        <label>Más solicitados</label>
-                        <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_graph_products" value="max_request"
-                                       id="sel_product_max_request" data-on-label="SI" data-off-label="NO"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-3">
-                    <div class=" form-group">
-                        <label>Menos solicitados</label>
-                        <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_graph_products" value="min_request"
-                                       id="sel_product_min_request" data-on-label="SI" data-off-label="NO"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8"></div>
-                <div class="col-md-4 d-inline-flex">
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle btn btn-sm btn-default btn-custom" id="list_options_diagram"
-                           data-toggle="dropdown" aria-expanded="false" title="">
-                           <i class="fa fa-refresh" style="color: white;" v-if="this.type =='doughnut'"></i>
-                           <i class="fa fa-pie-chart" style="color: white;" v-if="this.type =='pie'"></i>
-                           <i class="fa fa-line-chart" style="color: white;" v-if="this.type =='line'"></i>
-                           <i class="fa fa-bar-chart" style="color: white;" aria-hidden="true" v-if="this.type =='bar'"></i>
-                           <i class="fa fa-stop" style="color: white;" aria-hidden="true" v-if="this.type ==''"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right"
-                             aria-labelledby="list_options_diagram">
-                             <div class="d-inline-flex">
-                                <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('bar')"
-                                   title="Vizualizar en gráfico de barras" data-toggle="tooltip">
-                                    <i class="fa fa-bar-chart" style="color: white;"></i>
-                                </a>
-                                <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('doughnut')"
-                                   title="Vizualizar en gráfico de dona" data-toggle="tooltip">
-                                    <i class="fa fa-refresh" style="color: white;"></i>
-                                </a>
-                                <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('pie')"
-                                   title="Vizualizar en gráfico de torta" data-toggle="tooltip">
-                                    <i class="fa fa-pie-chart" style="color: white;"></i>
-                                </a>
-                                <a class="dropdown-item btn btn-sm btn-default" @click="updateGraphType('line')"
-                                   title="Vizualizar en gráfico de linea" data-toggle="tooltip">
-                                    <i class="fa fa-line-chart" style="color: white;"></i>
-                                </a>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <warehouse-graph-charts
-                        :data="data"
-                        :labels="labels"
-                        :type="type"
-                        :descriptions="descriptions"
-                        :title="title">
-                    </warehouse-graph-charts>
-                </div>
-            </div>
-            <!-- Controles -->
-            <div class="VuePagination row col-md-12" v-if="records.length > 0">
-                <nav class="text-center">
-                    <ul class="pagination VuePagination__pagination" style="">
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="pag != 1">
-                            <a class="page-link" @click="firstPag()">PRIMERO</a>
-                        </li>
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="pag > num_pag">
-                            <a class="page-link" @click="delPag()">&lt;&lt;</a>
-                        </li>
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-page" v-if="pag > 1">
-                            <a class="page-link" @click="prevPag()">&lt;</a>
-                        </li>
-                        <li :class="(pag ==number)?'VuePagination__pagination-item page-item active':'VuePagination__pagination-item page-item'" v-for="number in numbers" v-if="records.length >= number">
-                            <a class="page-link active" role="button" @click.prevent="pag = number">{{number}}</a>
-                        </li>
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-page" v-if="records.length > pag">
-                            <a class="page-link" @click="nextPag()">&gt;</a>
-                        </li>
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-chunk" v-if="checkPag(num_pag)">
-                            <a class="page-link" @click="addPag()">&gt;&gt;</a>
-                        </li>
-                        <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="records.length != pag">
-                            <a class="page-link" @click="lastPag()">ÚLTIMO</a>
-                        </li>
-                    </ul>
-
-                </nav>
-            </div>
+            </nav>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
