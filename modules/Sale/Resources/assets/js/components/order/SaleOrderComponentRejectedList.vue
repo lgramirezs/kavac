@@ -139,7 +139,18 @@
         data() {
           return {
             records: [],
-            order_load: {},
+            order_load: {
+              email: '',
+              id: '',
+              id_number: '',
+              list_products: [],
+              name: '',
+              phone: '',
+              status: '',
+              total: 0,
+              total_without_tax: 0,
+              type_person: ''
+            },
             columns: ['name', 'id_number', 'email', 'phone', 'total', 'id'],
             columns_products: [
               'name',

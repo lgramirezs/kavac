@@ -35,9 +35,8 @@
                     route_show="{{ url('sale/order/info/{id}') }}"
                     route_edit="{{ url('sale/order/edit/{id}') }}"
                     route_delete="{{ url('sale/order/delete') }}"
-                    route_update="sale/order"
-                    >
-                  </register-order-pending-list>
+                    route_update="{{ url('sale/order') }}"
+                    ></register-order-pending-list>
                 </div>
             </div>
         </div>
@@ -60,9 +59,8 @@
                         route_show="{{ url('sale/order/info/{id}') }}"
                         route_edit="{{ url('sale/order/edit/{id}') }}"
                         route_delete="{{ url('sale/order/delete') }}"
-                        route_update="sale/order"
-                        >
-                      </register-order-pending-list>
+                        route_update="{{ url('sale/order') }}"
+                        ></register-order-pending-list>
                     </div>
                 </div>
             </div>
@@ -82,9 +80,8 @@
                         <register-order-rejected-list
                           route_list="{{ url('sale/order/list-rejected') }}"
                           route_show="{{ url('sale/order/info/{id}') }}"
-                          route_update='sale/order'
-                        >
-                        </register-order-rejected-list>
+                          route_update="{{ url('sale/order') }}"
+                        ></register-order-rejected-list>
                     </div>
                 </div>
             </div>
@@ -104,9 +101,8 @@
                       <register-order-approved-list
                           route_list="{{ url('sale/order/list-approved') }}"
                           route_show="{{ url('sale/order/info/{id}') }}"
-                          route_update='sale/order'
-                      >
-                      </register-order-approved-list>
+                          route_update="{{ url('sale/order') }}"
+                      ></register-order-approved-list>
                     </div>
                 </div>
             </div>
