@@ -692,7 +692,6 @@
                 if (vm.record.vacation_type == 'collective_vacations') {
                     if ((vm.record.name != '') &&
                         (vm.record.start_date != '') &&
-                        (vm.record.end_date != '') &&
                         (vm.record.institution_id != '') &&
                         (vm.record.vacation_periods != []) &&
                         (vm.record.vacation_periods_accumulated_per_year != '')) {
@@ -704,7 +703,6 @@
                 } else if (vm.record.vacation_type == 'vacation_period') {
                     if ((vm.record.name != '') &&
                         (vm.record.start_date != '') &&
-                        (vm.record.end_date != '') &&
                         (vm.record.institution_id != '') &&
                         (vm.record.vacation_days != '') &&
                         (vm.record.vacation_period_per_year != '') &&
