@@ -380,7 +380,7 @@
                     if(vm.record.type_graph_products == 'exist') {
                         $.each(fields, function(indice, field) {
                             data.push(field.exist);
-                            labels.push(field.code);
+                            labels.push(field.warehouse_product.name);
                             descriptions.push((field.warehouse_product.measurement_unit)
                                 ? ('Unidad: ' + field.warehouse_product.measurement_unit)
                                 : ''

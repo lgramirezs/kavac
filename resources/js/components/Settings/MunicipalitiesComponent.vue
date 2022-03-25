@@ -30,9 +30,18 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <div class="form-group">
+                                <div class="form-group" v-show="editMunicipalities=='false'">
                                     <label>Estados:</label>
                                     <select2 :options="estates" v-model="record.estate_id"></select2>
+                                </div>
+                                <div class="form-group" v-show="editMunicipalities == 'true'">
+                                    <label>Estados:</label>
+                                    <select id="estate" v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id" 
+                                                v-for="(ste, index) in estates" :key="index">
+                                                {{ ste.text }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -63,7 +72,7 @@
                                     @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click="createRecord('municipalities')" 
+                            <button type="button" @click="createRecords('municipalities')" 
                                     class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
@@ -107,8 +116,9 @@
                 errors: [],
                 records: [],
                 countries: [],
-                estates: {},
+                estates: [],
                 columns: ['estate.name', 'name', 'code', 'id'],
+                editMunicipalities: '', 
             }
         },
         watch: {
@@ -116,13 +126,36 @@
                 deep: true,
                 handler: function(newValue, oldValue) {
                     const vm = this;
-                    if (vm.record.id) {
+                    /*if (vm.record.id) {
                         vm.record.estate_id = vm.selectedEstateId;
-                    }
+                    }*/
                 }
             },
+            selectedEstateId(newValue, oldValue) {
+                const vm = this;
+                if (newValue && newValue!==oldValue) {
+                    setTimeout(() => {
+                        vm.record.estate_id = vm.selectedEstateId.toString();
+                        $("#estate").val(vm.selectedEstateId.toString());
+                    }, 1000);
+                }
+            }
         },
         methods: {
+            /**
+             * Obtiene los Estados del Pais seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getEstate(country_id) {
+                const vm = this;
+                vm.estates = [];
+                if (country_id) {
+                    axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
+                        vm.estates = response.data;
+                    });
+                }
+            },
             /**
              * Método que borra todos los datos del formulario
              *
@@ -138,6 +171,7 @@
                     code: ''
                 };
                 vm.selectedEstateId = '';
+                vm.editMunicipalities = 'false';
             },
             /**
              * Método que carga el formulario con los datos a modificar
@@ -149,18 +183,78 @@
              */
             initUpdate(id, event) {
                 let vm = this;
+                vm.editMunicipalities = 'true';
                 vm.errors = [];
                 let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.estate.country_id;
-                vm.selectedEstateId = recordEdit.estate_id;
+                vm.getEstate(vm.record.country_id);
+                vm.selectedEstateId = recordEdit.estate.id;
                 vm.record.estate_id = vm.selectedEstateId;
                 event.preventDefault();
-            }
+            },
+
+            /**
+             * Método que permite crear o actualizar un registro
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param  {string} url    Ruta de la acción a ejecutar para la creación o actualización de datos
+             * @param  {string} list   Condición para establecer si se cargan datos en un listado de tabla.
+             *                         El valor por defecto es verdadero.
+             * @param  {string} reset  Condición que evalúa si se inicializan datos del formulario.
+             *                         El valor por defecto es verdadero.
+             */
+            createRecords(url, list = true, reset = true) {
+                const vm = this;
+                url = vm.setUrl(url);
+                
+                if (vm.record.id) {
+                    vm.updateRecord(url);
+                }
+                else {
+                    vm.loading = true;
+                    var fields = {};
+                    for (var index in vm.record) {
+                        fields[index] = vm.record[index];
+                    }
+                    axios.post(url, fields).then(response => {
+                        if (typeof(response.data.redirect) !== "undefined") {
+                            location.href = response.data.redirect;
+                        }
+                        else {
+                            vm.errors = [];
+                            if (reset) {
+                                vm.reset();
+                            }
+                            if (list) {
+                                vm.readRecords(url);
+                            }
+                            vm.loading = false;
+                            vm.showMessage('store');
+                        }
+
+                    }).catch(error => {
+                        vm.errors = [];
+
+                        if (typeof(error.response) !="undefined") {
+                            for (var index in error.response.data.errors) {
+                                if (error.response.data.errors[index]) {
+                                    vm.errors.push(error.response.data.errors[index][0]);
+                                }
+                            }
+                        }
+
+                        vm.loading = false;
+                    });
+                }
+
+            },
         },
         created() {
+            this.editMunicipalities = 'false';
             this.table_options.headings = {
                 'estate.name': 'Estado',
                 'name': 'Municipio',
@@ -178,8 +272,12 @@
         },
         mounted() {
             let vm = this;
+            vm.editMunicipalities = 'false';
             $("#add_municipality").on('show.bs.modal', function() {
                 vm.getCountries();
+            });
+            $("#estate").on('change', function() {
+                vm.record.estate_id = $(this).val();
             });
         }
     };

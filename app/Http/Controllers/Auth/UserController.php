@@ -663,21 +663,20 @@ class UserController extends Controller
     {
         /** @var User Objeto con información de un usuario */
         $user = User::where('username', $request->username)->first();
-
+        
         /** Verifica si la contraseña es correcta, de lo contrario retorna falso */
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['result' => false], 200);
         }
 
-        // Agregar funcionalidad para determinar si el usuario esta autenticado (aplica para cuando expira la sesion)
         if (!auth()->check()) {
             /** @var object Objeto con información de las credenciales de acceso de un usuario */
-            $userCredentials = $request->only('email', 'password');
+            $userCredentials = $request->only('username', 'password');
             if (!Auth::attempt($userCredentials)) {
                 return response()->json(['result' => false], 200);
             }
         }
-
+        
         /** @var boolean actualiza el campo que determina si la pantalla de bloqueo esta o no activada */
         $user->lock_screen = false;
         $user->save();

@@ -54,6 +54,8 @@ class PayrollEmploymentController extends Controller
             'institution_id' => ['required'],
             'department_id' => ['required'],
             'payroll_contract_type_id' => ['required'],
+            'previous_jobs' => ['sometimes', 'array'],
+            'previous_jobs.*.start_date' => ['sometimes', 'before_or_equal:start_date'],
         ];
 
         /** Define los atributos para los campos personalizados */
@@ -69,7 +71,8 @@ class PayrollEmploymentController extends Controller
             'department_id' => 'departamento',
             'payroll_contract_type_id' => 'tipo de contracto',
             'payroll_staff_id' => 'trabajador',
-            'institution_email' => 'El correo institucional ingresado'
+            'institution_email' => 'El correo institucional ingresado',
+            'previous_jobs.*.start_date' => 'fecha de inicio'
         ];
     }
 

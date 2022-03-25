@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div id="helpAuditFilterModule" class="form-group col-md-2">
-                            <select v-model="module" class="form-control select2">
+                            <select id="restoreSearchModule" class="form-control select2" v-model="module_restore">
                                 <option value="">Módulo</option>
                                 <option :value="mod.originalName" v-for="(mod, index) in modules" :key="index">
                                     {{ mod.name }}
@@ -134,178 +134,183 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                start_date: '',
-                end_date: '',
-                user: '',
-                module: '',
-                records: [],
-                columns: ['status', 'date', 'ip', 'module', 'users', 'id']
-            }
+export default {
+    data() {
+        return {
+            start_date: '',
+            end_date: '',
+            user: '',
+            module_restore: '',
+            records: [],
+            columns: ['status', 'date', 'ip', 'module', 'users', 'id']
+        }
+    },
+    props: {
+        modules: {
+            type: Array,
+            required: false,
+            default: null
+        }
+    },
+    watch: {
+        start_date: function() {
+            const vm = this;
+            $('#auditEndDate').attr('min', vm.start_date);
         },
-        props: {
-            modules: {
-                type: Array,
-                required: false,
-                default: null
-            }
-        },
-        watch: {
-            start_date: function() {
-                const vm = this;
-                $('#auditEndDate').attr('min', vm.start_date);
-            },
-            end_date: function() {
-                const vm = this;
-                if (vm.end_date) {
-                    $('#auditStartDate').attr('max', vm.end_date);
-                } else {
-                    if (!$('#auditStartDate').hasClass('no-restrict')) {
-                        $('#auditStartDate').attr('max', vm.getCurrentDate());
-                    }
+        end_date: function() {
+            const vm = this;
+            if (vm.end_date) {
+                $('#auditStartDate').attr('max', vm.end_date);
+            } else {
+                if (!$('#auditStartDate').hasClass('no-restrict')) {
+                    $('#auditStartDate').attr('max', vm.getCurrentDate());
                 }
             }
+        }
+    },
+    methods: {
+        /**
+         * Método que obtiene los registros a mostrar
+         *
+         * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param  {string} url Ruta que obtiene todos los registros solicitados
+         */
+        async readRecords() {
+            const vm = this;
+            vm.loading = true;
+            await axios.post('/app/audit-records', {
+                start_date: vm.start_date,
+                end_date: vm.end_date,
+                user: vm.user,
+                module_restore: vm.module_restore
+            }).then(response => {
+                if (response.data.result && typeof(response.data.records) !== "undefined") {
+                    vm.records = response.data.records;
+                } else {
+                    vm.showMessage(
+                        'custom', 'Alerta', 'warning', 'screen-warning', response.data.message
+                    );
+                }
+            }).catch(error => {
+                console.error(error);
+            });
+            vm.loading = false;
         },
-        methods: {
-            /**
-             * Método que obtiene los registros a mostrar
-             *
-             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-             *
-             * @param  {string} url Ruta que obtiene todos los registros solicitados
-             */
-            async readRecords() {
-                const vm = this;
-                vm.loading = true;
-                await axios.post('/app/audit-records', {
-                    start_date: vm.start_date,
-                    end_date: vm.end_date,
-                    user: vm.user,
-                    module: vm.module
-                }).then(response => {
-                    if (response.data.result && typeof(response.data.records) !== "undefined") {
-                        vm.records = response.data.records;
-                    } else {
-                        vm.showMessage(
-                            'custom', 'Alerta', 'warning', 'screen-warning', response.data.message
-                        );
+        /**
+         * Muestra los detalles de un registro seleccionado
+         *
+         * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param     {string}    id    Identificador del registro para el cual se desea mostrar los detalles
+         */
+        async details(id) {
+            const vm = this;
+            vm.loading = true;
+            await axios.post('/app/audit-details', {
+                id: id
+            }).then(response => {
+                if (response.data.result) {
+                    let audit = response.data.audit;
+                    let eventType = audit.event;
+                    let eventText = '';
+                    let className = '';
+                    let prevRecord = 'N/A';
+                    let nextRecord = 'N/A';
+
+                    if (eventType === 'created') {
+                        eventText = 'NUEVO';
+                        className = 'success';
+                    } else if (eventType === 'deleted') {
+                        eventText = 'ELIMINADO';
+                        className = 'danger';
+                    } else if (eventType === 'restored') {
+                        eventText = 'RESTAURADO';
+                        className = 'info';
+                    } else if (eventType === 'updated') {
+                        eventText = 'ACTUALIZADO';
+                        className = 'warning';
                     }
-                }).catch(error => {
-                    console.error(error);
-                });
-                vm.loading = false;
-            },
-            /**
-             * Muestra los detalles de un registro seleccionado
-             *
-             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-             *
-             * @param     {string}    id    Identificador del registro para el cual se desea mostrar los detalles
-             */
-            async details(id) {
-                const vm = this;
-                vm.loading = true;
-                await axios.post('/app/audit-details', {
-                    id: id
-                }).then(response => {
-                    if (response.data.result) {
-                        let audit = response.data.audit;
-                        let eventType = audit.event;
-                        let eventText = '';
-                        let className = '';
-                        let prevRecord = 'N/A';
-                        let nextRecord = 'N/A';
 
-                        if (eventType === 'created') {
-                            eventText = 'NUEVO';
-                            className = 'success';
-                        } else if (eventType === 'deleted') {
-                            eventText = 'ELIMINADO';
-                            className = 'danger';
-                        } else if (eventType === 'restored') {
-                            eventText = 'RESTAURADO';
-                            className = 'info';
-                        } else if (eventType === 'updated') {
-                            eventText = 'ACTUALIZADO';
-                            className = 'warning';
-                        }
-
-                        if (audit.old_values) {
-                            prevRecord = '';
-                            Object.keys(audit.old_values).forEach(key => {
-                                prevRecord += `<b>${key}:</b> ${audit.old_values[key]}<br>`;
-                            });
-                        }
-                        if (audit.new_values) {
-                            nextRecord = '';
-                            Object.keys(audit.new_values).forEach(key => {
-                                nextRecord += `<b>${key}:</b> ${audit.new_values[key]}<br>`;
-                            });
-                        }
-
-                        bootbox.dialog({
-                            title: 'Registro',
-                            message:    `<div class="row text-justify">
-                                            <div class="col-12">
-                                                <p>
-                                                    <span class="badge badge-${className} mr-1">${eventText}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 text-left">
-                                                <h5>Datos anteriores</h5>
-                                                <div>${prevRecord}</div>
-                                            </div>
-                                            <div class="col-md-6 text-left">
-                                                <h5>Datos nuevos</h5>
-                                                <div>${nextRecord}</div>
-                                            </div>
-                                        </div>`,
-                            size: 'large',
-                            buttons: {
-                                ok: {
-                                    label: 'Cerrar',
-                                    className: 'btn-primary',
-                                    callback: function() {
-                                        //
-                                    }
-                                }
-                            }
+                    if (audit.old_values) {
+                        prevRecord = '';
+                        Object.keys(audit.old_values).forEach(key => {
+                            prevRecord += `<b>${key}:</b> ${audit.old_values[key]}<br>`;
                         });
                     }
-                }).catch(error => {
-                    console.error(error);
-                });
-                vm.loading = false;
-            }
-        },
-        created() {
-            const vm = this;
-            vm.table_options.headings = {
-                'status': 'Estatus',
-                'date': 'Fecha - Hora',
-                'ip': 'IP',
-                'module': 'Módulo',
-                'users': 'Usuario',
-                'id': 'Acción'
-            };
-            vm.table_options.sortable = ['date', 'ip', 'module', 'users'];
-            vm.table_options.filterable = ['date', 'ip', 'module', 'users'];
-            vm.table_options.columnsClasses = {
-                'status': 'col-md-1',
-                'date': 'col-md-2',
-                'ip': 'col-md-1',
-                'module': 'col-md-5',
-                'users': 'col-md-2',
-                'id': 'col-md-1'
-            };
-        },
-        mounted() {
-            const vm = this;
-            vm.readRecords();
+                    if (audit.new_values) {
+                        nextRecord = '';
+                        Object.keys(audit.new_values).forEach(key => {
+                            nextRecord += `<b>${key}:</b> ${audit.new_values[key]}<br>`;
+                        });
+                    }
+
+                    bootbox.dialog({
+                        title: 'Registro',
+                        message:    `<div class="row text-justify">
+                                        <div class="col-12">
+                                            <p>
+                                                <span class="badge badge-${className} mr-1">${eventText}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <h5>Datos anteriores</h5>
+                                            <div>${prevRecord}</div>
+                                        </div>
+                                        <div class="col-md-6 text-left">
+                                            <h5>Datos nuevos</h5>
+                                            <div>${nextRecord}</div>
+                                        </div>
+                                    </div>`,
+                        size: 'large',
+                        buttons: {
+                            ok: {
+                                label: 'Cerrar',
+                                className: 'btn-primary',
+                                callback: function() {
+                                    //
+                                }
+                            }
+                        }
+                    });
+                }
+            }).catch(error => {
+                console.error(error);
+            });
+            vm.loading = false;
         }
-    };
+    },
+    created() {
+        const vm = this;
+        vm.table_options.headings = {
+            'status': 'Estatus',
+            'date': 'Fecha - Hora',
+            'ip': 'IP',
+            'module': 'Módulo',
+            'users': 'Usuario',
+            'id': 'Acción'
+        };
+        vm.table_options.sortable = ['date', 'ip', 'module', 'users'];
+        vm.table_options.filterable = ['date', 'ip', 'module', 'users'];
+        vm.table_options.columnsClasses = {
+            'status': 'col-md-1',
+            'date': 'col-md-2',
+            'ip': 'col-md-1',
+            'module': 'col-md-5',
+            'users': 'col-md-2',
+            'id': 'col-md-1'
+        };
+    },
+    mounted() {
+        const vm = this;
+
+        vm.readRecords();
+
+        $('#restoreSearchModule').on('change', function() {
+            vm.module_restore = $(this).val();
+        });
+    }
+};
 </script>

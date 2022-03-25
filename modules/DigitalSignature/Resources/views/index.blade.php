@@ -72,14 +72,14 @@
                   <td class="text-center">{{ $Verificado }}</td>
                   <td class="text-center">{{ $Caduca }}</td>
                   <td class="text-center">
+                    <a class="btn btn-info btn-xs btn-icon btn-action" href="#" onclick="certificateDetails()" data-target="#modalDetailCert" data-toggle="modal" title="Detalles del certificado">
+                      <i class="fa fa-eye"></i>
+                    </a>
                     <a class="btn btn-warning btn-xs btn-icon btn-action" href="#" data-target="#modalUpdateCert" data-toggle="modal" title="Actualizar certificado">
                       <i class="fa fa-edit"></i>
                     </a>
                     <a class="btn btn-danger btn-xs btn-icon btn-action" href="#" data-target="#modalConfirmDelete" data-toggle="modal" title="Eliminar certificado">
                       <i class="fa fa-trash-o"></i>
-                    </a>
-                    <a class="btn btn-info btn-xs btn-icon btn-action" href="#" onclick="certificateDetails()" data-target="#modalDetailCert" data-toggle="modal" title="Detalles del certificado">
-                      <i class="fa fa-eye"></i>
                     </a>
                   </td>
                 </tr>
