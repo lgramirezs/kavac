@@ -57,6 +57,9 @@ Ejecute el siguiente comando si desea instalar la última versión estable de mk
 
 	pip install mkdocs-minify-plugin
 	
+###Ejecute el siguiente comando para hacer uso del plugin mkdocs-with-pdf para la generación de la documentación en formato pdf. 
+
+	pip install mkdocs-with-pdf
 
 ##Ejecuntando pruebas
 

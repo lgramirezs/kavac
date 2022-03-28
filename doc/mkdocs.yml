@@ -11,12 +11,16 @@ nav:
         - Gestión de Proyecto: development_methodology.md
         - Información General: information.md
         - Instalación: installation.md
+      - Primeros Pasos : 
+        - Inicio de Sesión: getting_started/login.md
+        - Recuperar Contraseña: getting_started/reset_password.md
+        - Cambiar Contraseña: getting_started/change_password.md
+        - Configuración de Cuenta de Usuario: getting_started/user_account_setting.md
       - Configuración:
         - Configuración: setting/setting.md
         - Configuración General: setting/general_setting.md
         - Configuración de Acceso: setting/access_setting.md
         - Configuración de Módulos: setting/modules_setting.md
-        - Configuración de Cuenta de Usuario: setting/user_account_setting.md
       - Panel de Control:
         - Panel de Control: control_panel/control_panel.md
         - Herramientas para Desarrolladores: control_panel/developers.md
@@ -65,11 +69,11 @@ plugins:
   - search
   - minify:
       minify_html: true
-  - with-pdf:
-      author: CENDITEL Nodo Mérida
-      copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
-      cover_subtitle: KAVAC - ERP para la gestión organizacional
-      output_path: ../../../public/docs/user_base_manual.pdf
+  #- with-pdf:
+  #     author: CENDITEL Nodo Mérida
+  #     copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
+  #     cover_subtitle: KAVAC - ERP para la gestión organizacional
+      # output_path: ../../../public/docs/user_base_manual.pdf
 
 # Customization
 # extra:
