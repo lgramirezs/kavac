@@ -653,7 +653,7 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Activa</span>
                         <br>
-                        <span class="text-bold text-{{ ($institution->active)?'success':'danger' }}" id="modal-active"></span>
+                        <span class="text-bold text-{{ (isset($institution) && $institution->active)?'success':'danger' }}" id="modal-active"></span>
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Organización por defecto</span>
@@ -756,9 +756,11 @@
 					var form = $("#card_config_institution form");
 					var clearEl = {
 						val: [
-							'input[type=text]', 'input[type=date]',
-							'.select2:not(select[name^=DataTable])', 'textarea',
-							"#logo_id", "#banner_id"
+							'input[type=text]', 
+							'input[type=date]',
+							'textarea',
+							"#logo_id", 
+							"#banner_id"
 						],
 						attr: [
 

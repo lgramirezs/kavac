@@ -142,7 +142,7 @@
 				<div class="card-body">
 					@include('layouts.form-errors')
 					<div class="row">
-						<div class="col-md-4" id="work_age">
+						<div class="col-md-4" id="helpWorkAge">
 							<div class="form-group">
 								@if (Modules\Payroll\Models\Parameter::where([
 									'active' => true, 'required_by' => 'payroll',
@@ -160,7 +160,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-footer text-right">
+				<div class="card-footer text-right" id="helpParamButtons">
 					@include('layouts.form-buttons')
 				</div>
 				{!! Form::close() !!}
