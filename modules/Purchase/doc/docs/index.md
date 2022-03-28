@@ -10,19 +10,17 @@ El Manual de Documentación del sistema KAVAC a nivel de usuario tiene como obje
 
 El sistema KAVAC siendo un sistema ERP (Enterprise Resource Planning) incluye el módulo de compras con el objetivo de automatizar los procesos de compra que se llevan a cabo dentro de una organización, permitiendo de esta forma optimizar la gestión de compra, identificar requerimientos, establecer criterios para la toma de decisiones y llevar a acabo el manejo, control y seguimiento de recursos. Facilitando el flujo de trabajo del equipo administrativo encargado del área de compras en una institución u organización.      
 
-La sección **Provedores** del módulo de compras incluye las funcionalidades que permiten gestionar los proveedores.  Desde esta sección se gestiona información detallada sobre cada proveedor, de igual forma es accesible para la consulta de registros de proveedores, mejorando el rendimiento de la cadena de suministro en la organización.   
+Los usuarios encargados de la provisión de materiales y/o servicios de la organización usuaria son gestionados a través de la sección **Provedores** del módulo de compras. A través de esta sección se realizan consultas de los registros de proveedores, mejorando el rendimiento de la cadena de suministro en la organización.  
 
-A través del apartado **Requerimientos** se lleva a cabo la gestión de requerimientos de una organización incluyendo detalles del presupesto base. 
+A través del apartado **Requerimientos** se lleva a cabo la gestión de requerimientos de una organización incluyendo detalles del presupuesto base. 
 
 ## Sobre los usuarios
 
 
-Los usuarios que interactúan en este módulo, serán todos aquellos usuarios con roles y permisos sobre el módulo de bienes, previamente gestionados por el usuario con el rol de administrador. Para conocer más sobre la gestión de roles y permisos visite el **Manual de Documentación del Sistema KAVAC**.
+Los usuarios que interactúan en este módulo, serán todos aquellos usuarios con roles y permisos sobre el módulo de compras, previamente gestionados por el usuario con el rol de administrador. Para conocer más sobre la gestión de roles y permisos visite el **Manual de Documentación del Sistema KAVAC**.
 
 
 ## Funcionalidades
-
-- Relación directa con el Módulo de Presupuesto.
 
 - Gestión de proveedores.
 

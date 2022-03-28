@@ -107,7 +107,7 @@ Para **Editar** o **Eliminar** un registro se debe hacer uso de los botones ubic
 
 ### Procesos de compra
 
-A través de esta funcionalidad se gestionan los tipos de procesos de compras a emplear por la organización.  Cada proceso incluye un listado de documentos requeridos que pueden ser seleccionados, los documentos a consignar se encuentran categorizados como: **"Firmas Personales y Compañias Anonimas"** y  **"Asociaciones Cooperativas"**.    
+A través de esta funcionalidad se gestionan los tipos de procesos de compras a emplear por la organización.  Cada proceso incluye un listado de documentos requeridos que pueden ser seleccionados, los documentos a consignar se encuentran categorizados como: **"Firmas Personales y Compañías Anónimas"** y  **"Asociaciones Cooperativas"**.    
 
 Crear documento requerido: 
 
@@ -146,7 +146,7 @@ Para **Editar** o **Eliminar** un registro se debe hacer uso de los botones ubic
 
 ### Tipos de compra 
 
-A través de esta funcionalidad se gestionan los tipos de compras a emplear en la organización.  Cada tipo de compra puede estar asociado a un proceso de compra registrado.   
+A través de esta funcionalidad se gestionan los tipos de compras a emplear en la organización.  Cada tipo de compra se encuentra asociado a un proceso de compra registrado previamente.   
 
 Crear tipo de compra: 
 
