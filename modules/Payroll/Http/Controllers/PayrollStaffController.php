@@ -203,7 +203,7 @@ class PayrollStaffController extends Controller
             'uniform_size' => $request->uniform_size,
             'medical_history' => $request->medical_history,
         ]);
-        dd($payrollStaff);
+
         if ($request->phones && !empty($request->phones)) {
             foreach ($request->phones as $phone) {
                 $payrollStaff->phones()->save(new Phone([
