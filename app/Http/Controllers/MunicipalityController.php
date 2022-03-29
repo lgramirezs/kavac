@@ -65,7 +65,7 @@ class MunicipalityController extends Controller
     {
         $this->validate($request, [
             'name' => ['required', 'max:100'],
-            'code' => ['required', 'max:10', new UniqueMunicipalityCode],
+            'code' => ['required', 'max:10', new UniqueMunicipalityCode]
             'estate_id' => ['required']
         ], [
             'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),   
