@@ -167,6 +167,7 @@ class PayrollVacationPolicyController extends Controller
                 ]
             );
         }
+        // dd($request->all());
         $this->validate($request, $validateRules, $this->messages);
 
         $profileUser = Auth()->user()->profile;
@@ -202,7 +203,8 @@ class PayrollVacationPolicyController extends Controller
             'vacation_postpone'                     => $request->input('vacation_postpone'),
             'staff_antiquity'                       => $request->input('staff_antiquity'),
             'institution_id'                        => $request->input('institution_id'),
-            'payroll_payment_type_id'               => $request->input('payroll_payment_type_id')
+            'payroll_payment_type_id'               => $request->input('payroll_payment_type_id'),
+            'assign_to'                             => json_encode($request->assign_to),
         ]);
         return response()->json(['record' => $payrollVacationPolicy, 'message' => 'Success'], 200);
     }
@@ -287,7 +289,8 @@ class PayrollVacationPolicyController extends Controller
             'vacation_postpone'                     => $request->input('vacation_postpone'),
             'staff_antiquity'                       => $request->input('staff_antiquity'),
             'institution_id'                        => $request->input('institution_id'),
-            'payroll_payment_type_id'               => $request->input('payroll_payment_type_id')
+            'payroll_payment_type_id'               => $request->input('payroll_payment_type_id'),
+            'assign_to'                             => json_encode($request->assign_to),
         ]);
 
         return response()->json(['message' => 'Success'], 200);

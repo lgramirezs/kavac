@@ -451,6 +451,11 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-3 offset-md-9 text-right mt-4 mb-4" id="helpInstitutionButtons">
+								@include('layouts.form-buttons')
+							</div>
+						</div>
 					</div>
 
 					@if (!is_null($paramMultiInstitution))
@@ -516,13 +521,6 @@
 							</tbody>
 						</table>
 					@endif
-				</div>
-				<div class="card-footer text-right">
-					<div class="row">
-						<div class="col-md-3 offset-md-9" id="helpInstitutionButtons">
-							@include('layouts.form-buttons')
-						</div>
-					</div>
 				</div>
 			{!! Form::close() !!}
 		</div>
@@ -792,6 +790,7 @@
 			axios.get(`get-institution/details/${id}`).then(response => {
 				if (response.data.result) {
 					var institution = response.data.institution;
+					console.log(institution)
                     var activeSwitchRemoveClass = (institution.active) ? 'off' : 'on';
                     var activeSwitchAddClass = (institution.active) ? 'on' : 'off';
                     var defaultSwitchRemoveClass = (institution.default) ? 'off' : 'on';

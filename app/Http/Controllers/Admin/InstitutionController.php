@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Institution;
 use App\Models\Setting;
 use App\Rules\Rif as RifRule;
+use Illuminate\Validation\Rule;
 
 /**
  * @class InstitutionController
@@ -71,7 +72,14 @@ class InstitutionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'rif' => ['required', 'size:10', new RifRule],
+            'rif' => [
+                'required',
+                'size:10',
+                new RifRule,
+                ($request->institution_id !== null)
+                ? Rule::unique('institutions', 'rif')->ignore($request->institution_id)
+                : Rule::unique('institutions', 'rif')
+            ],
             'acronym' => ['required', 'max:100'],
             'name' => ['required', 'max:100'],
             'business_name' => ['required', 'max:100'],
@@ -85,6 +93,7 @@ class InstitutionController extends Controller
         ], [
             'rif.required' => __('El R.I.F. es obligatorio.'),
             'rif.size' => __('El R.I.F. debe contener 10 carácteres.'),
+            'rif.unique' => __('El R.I.F. ya está registrado'),
             'acronym.required' => __('El acrónimo es obligatorio.'),
             'acronym.max' => __('El acrónimo debe contener un máximo de 100 carácteres.'),
             'name.required' => __('El nombre es obligatorio.'),
