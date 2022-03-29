@@ -241,8 +241,8 @@
                                     </div>
                                     <h6 class="card-title"
                                         v-if="record.vacation_type == 'collective_vacations'">
-                                        Período Vacacional <i class="fa fa-plus-circle cursor-pointer"
-                                                              title="Nuevo período vacacional" data-toggle="tooltip"
+                                        Salidas individuales <i class="fa fa-plus-circle cursor-pointer"
+                                                              title="Nuevo salidas individuales" data-toggle="tooltip"
                                                               @click="addVacationPeriod()"></i>
                                     </h6>
                                     <div class="row" v-for="(vacation_period, index) in record.vacation_periods" 
@@ -252,7 +252,7 @@
                                             <div class="form-group is-required">
                                                 <label>Fecha de inicio:</label>
                                                 <input type="date" id="start_date_vacation" placeholder="Fecha de inicio"
-                                                       data-toggle="tooltip" title="Indique la fecha del inicio del período vacacional" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date"
+                                                       data-toggle="tooltip" title="Indique la fecha del inicio del salidas individuales" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date"
                                                        class="form-control input-sm" v-model="vacation_period.start_date">
                                             </div>
                                         </div>
@@ -262,7 +262,7 @@
                                             <div class="form-group is-required">
                                                 <label>Fecha de Finalización:</label>
                                                 <input type="date" id="end_date_vacation" placeholder="Fecha de Finalización"
-                                                       data-toggle="tooltip" title="Indique la fecha de Finalización del período vacacional" :min="vacation_period.start_date"
+                                                       data-toggle="tooltip" title="Indique la fecha de Finalización del salidas individuales" :min="vacation_period.start_date"
                                                        :max="record.end_date"
                                                        :disabled="(vacation_period.start_date == '')"
                                                        class="form-control input-sm" v-model="vacation_period.end_date">
@@ -547,7 +547,10 @@
                                     Vacaciones colectivas
                                 </span>
                                 <span v-else-if="props.row.vacation_type == 'vacation_period'">
-                                    Período vacacional
+                                    Salidas individuales
+                                </span>
+                                <span v-else-if="props.row.vacation_type == 'dual'">
+                                    Dual
                                 </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
@@ -605,8 +608,9 @@
                 payroll_payment_types: [],
                 vacation_types:        [
                     {"id": "",                     "text": "Seleccione..."},
-                    {"id": "collective_vacations", "text": "Vacaciones colectivas"},
-                    {"id": "vacation_period",      "text": "Período vacacional"}
+                    {"id": "collective_vacations", "text": "Colectiva"},
+                    {"id": "vacation_period",      "text": "Salidas individuales"},
+                    {"id": "dual",                 "text": "Dual"},
                 ],
                 salary_types:          [
                     {"id": "",                     "text": "Seleccione..."},
@@ -872,7 +876,7 @@
                 });
             },
             /**
-             * Método que agrega un nuevo período vacacional
+             * Método que agrega un nuevo Salidas individuales
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
              */
