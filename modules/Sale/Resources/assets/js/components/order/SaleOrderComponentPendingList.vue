@@ -162,7 +162,18 @@
     data() {
       return {
         records: [],
-        order_load: {},
+        order_load: {
+          email: '',
+          id: '',
+          id_number: '',
+          list_products: [],
+          name: '',
+          phone: '',
+          status: '',
+          total: 0,
+          total_without_tax: 0,
+          type_person: ''
+        },
         columns: ['name', 'id_number', 'email', 'phone', 'total', 'id'],
         columns_products: [
           'name',
@@ -205,23 +216,23 @@
       this.table_options_products.sortable = [];
       this.table_options_products.filterable = [];
     },
-    mounted () {
-      this.initRecords(this.route_list, '');
+    async mounted () {
+      await this.initRecords(this.route_list, '');
     },
     methods: {
       reset() { },
-      showOrderDetailt(id) {
+      async showOrderDetailt(id) {
         const vm = this;
         if (id) {
           var url = (url)? url : vm.route_show;
           url = vm.setUrl(url);
           url = url.indexOf("{id}") >= 0? url.replace("{id}", id) : url + '/' + id;
-          axios.get(url).then(response => {
-          vm.order_load = response.data.record;
+          await axios.get(url).then(response => {
+            vm.order_load = response.data.record;
+          });
           $('#show_order_detail_pending').modal('show');
-        });
-      }
-    },
+        }
+      },
     rejectedOrden(index)
     {
       const vm = this;
