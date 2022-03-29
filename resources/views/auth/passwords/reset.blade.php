@@ -17,9 +17,10 @@
                 <span class="input-group-addon">
                     <i class="now-ui-icons ui-1_email-85"></i>
                 </span>
-                {!! Form::email('email', old('email'), [
-                    'class' => 'form-control', 'placeholder' => __('Correo'), 'required' => 'required',
-                    'id' => 'email', 'data-toggle' => 'tooltip', 'title' => __('Indique el correo electrónico')
+                {!! Form::email('email', request()->email ?? old('email'), [
+                    'class' => 'form-control', 'placeholder' => __('Correo'), 'required' => 'required', 
+                    'id' => 'email', 'data-toggle' => 'tooltip', 'title' => __('Indique el correo electrónico'),
+                    'readonly' => 'readonly'
                 ]) !!}
             </div>
             @if ($errors->has('email'))
