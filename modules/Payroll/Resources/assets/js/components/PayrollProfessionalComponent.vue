@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col-md-4" id="helpProfessionalDegree" v-show="record.payroll_instruction_degree_id == 6 || record.payroll_instruction_degree_id == 7 ||
                     record.payroll_instruction_degree_id == 8">
-                    <div class="form-group">
+                    <div class="form-group is-required">
                         <label>Nombre de Especialización, Maestría o Doctorado:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="record.instruction_degree_name"/>
@@ -125,14 +125,14 @@
             </div>
             <div class="row d-none" id="block_student">
                 <div class="col-md-4" id="helpProfessionalTypeStudy">
-                    <div class="form-group">
+                    <div class="form-group is-required">
                         <label>Tipo de Estudio:</label>
                         <select2 :options="payroll_study_types" v-model="record.payroll_study_type_id">
                         </select2>
                     </div>
                 </div>
                 <div class="col-md-4" id="helpProfessionalProgramName">
-                    <div class="form-group">
+                    <div class="form-group is-required">
                         <label>Nombre del Programa de Estudio:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="record.study_program_name"/>
