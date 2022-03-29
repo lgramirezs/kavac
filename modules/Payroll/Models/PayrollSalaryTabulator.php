@@ -37,7 +37,7 @@ class PayrollSalaryTabulator extends Model implements Auditable
     protected $fillable = [
         'code', 'name', 'description', 'active', 'payroll_salary_tabulator_type',
         'payroll_horizontal_salary_scale_id', 'payroll_vertical_salary_scale_id',
-        'institution_id', 'currency_id'
+        'institution_id', 'currency_id', 'percentage'
     ];
 
     /**

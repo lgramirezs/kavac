@@ -53,7 +53,6 @@ class PayrollSalaryTabulatorController extends Controller
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'name'                            => ['required', 'max:100', 'unique:payroll_salary_tabulators,name'],
-            'currency_id'                     => ['required'],
             'payroll_staff_types'             => ['required'],
             'institution_id'                  => ['required'],
             'payroll_salary_tabulator_type'   => ['required'],
@@ -114,6 +113,11 @@ class PayrollSalaryTabulatorController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->percentage == false) {
+            $this->validateRules = [
+                'currency_id'             => ['required'],
+            ];
+        }
         $this->validate($request, $this->validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'payroll_salary_tabulators')->first();
@@ -143,6 +147,9 @@ class PayrollSalaryTabulatorController extends Controller
                 'name'                               => $request->input('name'),
                 'active'                             => !empty($request->input('active'))
                                                         ? $request->input('active')
+                                                        : false,
+                'percentage'                         => !empty($request->input('percentage'))
+                                                        ? $request->input('percentage')
                                                         : false,
                 'description'                        => $request->input('description') ?? '',
                 'institution_id'                     => $request->input('institution_id'),
@@ -192,6 +199,11 @@ class PayrollSalaryTabulatorController extends Controller
     public function update(Request $request, $id)
     {
         $salaryTabulator = PayrollSalaryTabulator::where('id', $id)->first();
+        if ($request->percentage == false) {
+            $this->validateRules = [
+                'currency_id'             => ['required'],
+            ];
+        }
         $validateRules = $this->validateRules;
         $validateRules  = array_replace(
             $validateRules,
@@ -205,6 +217,9 @@ class PayrollSalaryTabulatorController extends Controller
                 'active'                             => !empty($request->input('active'))
                                                         ? $request->input('active')
                                                         : $salaryTabulator->active,
+                'percentage'                         => !empty($request->input('percentage'))
+                                                        ? $request->input('percentage')
+                                                        : $salaryTabulator->percentage,
                 'description'                        => $request->input('description') ?? '',
                 'institution_id'                     => $request->input('institution_id'),
                 'currency_id'                        => $request->input('currency_id'),
