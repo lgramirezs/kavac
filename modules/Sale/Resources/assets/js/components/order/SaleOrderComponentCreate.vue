@@ -179,11 +179,11 @@
       <div class="row">
         <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
     	  <button type="button" @click="reset()"
-            class="btn btn-default btn-icon btn-round"
+            class="btn btn-default btn-icon btn-round btn-modal-close"
       	    title ="Borrar datos del formulario">
     	    <i class="fa fa-eraser"></i>
           </button>
-          <button type="button"
+          <button type="button" @click="redirect_back(route_list)"
     	    class="btn btn-warning btn-icon btn-round btn-modal-close"
     	    data-dismiss="modal"
     	    title="Cancelar y regresar">
