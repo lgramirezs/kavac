@@ -90,7 +90,7 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
 
-                            axios.put('/'+vm.route_update+'/request-rejected/'+id, fields).then(response => {
+                            axios.put('/warehouse/requests/request-approved/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
                             }).catch(error => {
@@ -131,7 +131,7 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
 
-                            axios.put('/'+vm.route_update+'/request-approved/'+id, fields).then(response => {
+                            axios.put('/warehouse/requests/request-approved/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
                             }).catch(error => {
