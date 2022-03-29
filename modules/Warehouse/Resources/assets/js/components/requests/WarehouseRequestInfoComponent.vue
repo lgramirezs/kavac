@@ -103,6 +103,14 @@
 												}}
 											</span>
 										</div>
+										<div slot="description" slot-scope="props">
+											<span>
+												{{ (props.row.warehouse_inventory_product.warehouse_product.description)?
+														prepareText(
+														props.row.warehouse_inventory_product.warehouse_product.description) : ''
+												}}<br>
+											</span>
+										</div>
 										<div slot="unit_value" slot-scope="props">
 											<span>
 												{{ props.row.warehouse_inventory_product.unit_value }}
@@ -139,7 +147,7 @@
 				errors: [],
 				columns: ['code',
 					'warehouse_inventory_product.warehouse_product.name',
-					'warehouse_inventory_product.warehouse_product.description',
+					'description',
 					'quantity',
 					'unit_value'],
 			}
@@ -151,21 +159,21 @@
 			this.table_options.headings = {
 				'code': 'Código',
 				'warehouse_inventory_product.warehouse_product.name': 'Nombre',
-				'warehouse_inventory_product.warehouse_product.description': 'Descripción',
+				'description': 'Descripción',
 				'quantity': 'Cantidad Agregada',
 				'unit_value': 'Valor por Unidad'
 			};
 			this.table_options.sortable = [
 				'code',
 				'warehouse_inventory_product.warehouse_product.name',
-				'warehouse_inventory_product.warehouse_product.description',
+				'description',
 				'quantity',
 				'unit_value'
 			];
 			this.table_options.filterable = [
 				'code',
 				'warehouse_inventory_product.warehouse_product.name',
-				'warehouse_inventory_product.warehouse_product.description',
+				'description',
 				'quantity',
 				'unit_value'
 			];
@@ -179,6 +187,11 @@
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
+            },
+
+
+            prepareText(text) {
+                return text.replace('<p>', '').replace('</p>', ''); 
             },
             /**
 			 * Reescribe el método initRecords para cambiar su comportamiento por defecto

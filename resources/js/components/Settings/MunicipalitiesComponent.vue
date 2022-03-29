@@ -30,11 +30,11 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <div class="form-group" v-show="editMunicipalities=='false'">
+                                <div class="form-group" v-if="editMunicipalities=='false'">
                                     <label>Estados:</label>
                                     <select2 :options="estates" v-model="record.estate_id"></select2>
                                 </div>
-                                <div class="form-group" v-show="editMunicipalities == 'true'">
+                                <div class="form-group" v-if="editMunicipalities == 'true'">
                                     <label>Estados:</label>
                                     <select id="estate" v-model="record.estate_id">
                                         <option :value="ste.id" :selected="ste.id == record.estate_id" 
@@ -126,9 +126,9 @@
                 deep: true,
                 handler: function(newValue, oldValue) {
                     const vm = this;
-                    /*if (vm.record.id) {
+                    if (vm.record.id) {
                         vm.record.estate_id = vm.selectedEstateId;
-                    }*/
+                    }
                 }
             },
             selectedEstateId(newValue, oldValue) {
