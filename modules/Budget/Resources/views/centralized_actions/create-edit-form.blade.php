@@ -3,7 +3,27 @@
 @section('maproute-icon')
 	<i class="ion-arrow-graph-up-right"></i>
 @stop
-
+@section('modules-js')
+    @parent
+ 
+	<script type="text/javascript">
+          alert('now2');
+		  function getval(sel)
+{
+    alert(sel.value);
+}
+		let af =  $( "#payroll_staff_id" ).val();
+		console.log(af);
+		$('payroll_staff_id').change(function(e) {
+			alert($( "#payroll_staff_id" ).val() );
+   });
+		$("#payroll_staff_id").on('change', function() {
+  alert($( "#payroll_staff_id" ).val() );
+  console.log($( "#payroll_staff_id" ).val());
+});
+     
+</script>
+@endsection
 @section('maproute-icon-mini')
 	<i class="ion-arrow-graph-up-right"></i>
 @stop
@@ -53,26 +73,32 @@
 								</div>
 							</div>
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
-								<div class="col-3">
+						     	<div class="col-3">
+									<div class="form-group is-required">
+										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
+										{!! Form::select('payroll_staff_id', $staffs, null, [
+											'class' => 'select2', 'data-toggle' => 'tooltip',										
+											'id' => 'payroll_staff_id',
+											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll")',
+											'title' => __('Seleccione una persona responsable del proyecto')
+										]) !!}
+								
+									</div>
+								</div>
+							
+							   <div class="col-3">
 									<div class="form-group is-required">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
 										]) !!}
 										{!! Form::select('payroll_position_id', $positions, null, [
 											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'payroll_position_id',
 											'title' => __('Seleccione el cargo de la persona responsable del proyecto')
 										]) !!}
 									</div>
 								</div>
-								<div class="col-3">
-									<div class="form-group is-required">
-										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
-										{!! Form::select('payroll_staff_id', $staffs, null, [
-											'class' => 'select2', 'data-toggle' => 'tooltip',
-											'title' => __('Seleccione una persona responsable del proyecto')
-										]) !!}
-									</div>
-								</div>
+								
 							@endif
 						</div>
 						<div class="row">
@@ -129,4 +155,6 @@
 			</div>
 		</div>
 	</div>
+
 @stop
+
