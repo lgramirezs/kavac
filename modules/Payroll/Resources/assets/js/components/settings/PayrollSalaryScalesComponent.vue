@@ -496,6 +496,7 @@
              * Método que carga el formulario con los datos a modificar
              *
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
              *
              * @param  {integer} index Identificador del registro a ser modificado
              * @param {object} event   Objeto que gestiona los eventos
@@ -570,6 +571,7 @@
              * Método que obtiene los parámetros de opciones
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
              */
             getOptions() {
                 const vm = this;
