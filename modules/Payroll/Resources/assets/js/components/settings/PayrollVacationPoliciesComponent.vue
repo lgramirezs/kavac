@@ -371,6 +371,18 @@
                                             </div>
                                         </div>
                                         <!-- ./Los días de bonificación se establecen de acuerdo a un escalafón -->
+                                        <!-- El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?</label>
+                                                <div class="col-12">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute" v-model="record.worker_arises">
+                                                        <label slot="off-label"></label>
+                                                    </p-check>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
                                         <!-- día de disfrute -->
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -409,6 +421,16 @@
                                         <!-- ./días a otorgar para el pago de vacaciones -->
                                     </div>
                                     <div class="container">
+                                        <div class="row" v-if="record.worker_arises">
+                                            <!-- Monto del pago vacaciones automáticamente -->
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="group_by">Monto del pago vacaciones: </label>
+                                                    <label>{{ generatePaymentVacation() }}</label>
+                                                </div>
+                                            </div>
+                                            <!-- ./Monto del pago vacaciones automáticamente -->
+                                        </div>
                                         <div class="row" v-if="record.on_scale">
                                             <!-- agrupar por -->
                                             <div class="col-6">
@@ -574,7 +596,30 @@
                                 </div>
                                 <div id="w-vacationRequestForm" :class="panel=='vacationRequestForm' ? 'tab-pane p-3 active' : 'tab-pane p-3'">
                                     <div class="row">
-                                        contenido 3
+                                        <!-- nombre -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Días de anticipación para la realizar la solicitud de vacaciones:</label><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group is-required">
+                                                <label>Días de anticipación (mínimo)</label>
+                                                <input type="text" data-toggle="tooltip" title="Días de anticipación (mínimo)" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.min_days_advance">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group is-required">
+                                                <label>Días de anticipación (máximo)</label>
+                                                <input type="text" data-toggle="tooltip" title="Días de anticipación (máximo)" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.max_days_advance">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -669,6 +714,9 @@ export default {
                 group_by: '',
                 payroll_scales: [],
                 assign_to: '',
+                worker_arises: '',
+                min_days_advance: '',
+                max_days_advance: '',
             },
             scale: {
                 id: '',
@@ -1245,6 +1293,13 @@ export default {
             vm.editIndex = null;
             event.preventDefault();
         },
+        generatePaymentVacation(){
+            axios.get(
+                `${window.app_url}/payroll/generate-payment-vacation/${field['id']}`
+            ).then(response => {
+                vm.options = response.data;
+            });
+        }
     },
 };
 </script>
