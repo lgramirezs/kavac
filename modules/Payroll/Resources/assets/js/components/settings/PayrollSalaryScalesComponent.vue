@@ -146,7 +146,12 @@
                                                             {{ getValueScale(field.value) }}
                                                         </span>
                                                         <span v-else-if="type == 'range'">
-                                                            {{ field.value['from'] + ' - ' + field.value['to'] }}
+                                                            <span v-if="typeof(field.value) == 'object'">
+                                                                {{ field.value['from'] + ' - ' + field.value['to'] }}
+                                                            </span>
+                                                            <span v-else>
+                                                                {{ JSON.parse(field.value)['from'] + ' - ' + JSON.parse(field.value)['to'] }}
+                                                            </span>
                                                         </span>
                                                         <span v-else-if="type == 'boolean'">
                                                             {{ field.value?'SI':'NO' }}
@@ -365,7 +370,8 @@
                     active:         false,
                     institution_id: '',
                     group_by:       '',
-                    payroll_scales: []
+                    payroll_scales: [],
+                    type:           ''
                 },
                 scale: {
                     id:    '',
@@ -381,6 +387,7 @@
                 institutions:                     [],
                 payroll_salary_tabulators_groups: [],
                 resetScale:                       true,
+                resetGroup:                       false,
                 editIndex:                        null
             }
         },
@@ -447,6 +454,7 @@
              */
             reset() {
                 const vm = this;
+                vm.errors = [];
                 vm.record = {
                     id:             '',
                     code:           '',
@@ -456,6 +464,7 @@
                     institution_id: '',
                     group_by:       '',
                     payroll_scales: [],
+                    type: '',
                 };
                 vm.resetScales();
             },
@@ -480,7 +489,51 @@
                 } else {
                     vm.resetScale = true;
                 }
+                vm.record.type = vm.type;
             },
+
+            /**
+             * Método que carga el formulario con los datos a modificar
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param  {integer} index Identificador del registro a ser modificado
+             * @param {object} event   Objeto que gestiona los eventos
+             */
+            initUpdate(id, event) {
+                let vm = this;
+                vm.errors = [];
+
+                let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                    return rec.id === id;
+                })[0])) || vm.reset();
+
+                vm.record = recordEdit;
+                vm.resetScale = true;
+                vm.resetGroup = false;
+
+                /**
+                 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
+                 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
+                 */
+                $.each(vm.record, function(el, value) {
+                    if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
+                        /** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
+                        $("input[name=" + el + "]").each(function() {
+                            if ($(this).val() === value) {
+                                $(this).bootstrapSwitch('state', value, true)
+                            }
+
+                        });
+                    }
+                    if (value === true || value === false) {
+                        $("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
+                    }
+                });
+
+                event.preventDefault();
+            },
+
             /**
              * Método que carga el formulario con los datos a modificar
              *
@@ -520,24 +573,68 @@
              */
             getOptions() {
                 const vm = this;
-                $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
-                    if (typeof(field['children']) != 'undefined') {
-                        $.each(field['children'], function(index, field) {
-                            if (vm.record.group_by == field['id']) {
-                                vm.type = field['type'];
-                                if (field['type'] == 'list') {
-                                    vm.options = [];
-                                    axios.get(
-                                        `${window.app_url}/payroll/get-parameter-options/${field['id']}`
-                                    ).then(response => {
-                                        vm.options = response.data;
-                                    });
+                if (vm.record.id == '') {
+                    $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                        if (typeof(field['children']) != 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (vm.record.group_by == field['id']) {
+                                    vm.type = field['type'];
+                                    vm.record.type = vm.type;
+                                    if (field['type'] == 'list') {
+                                        vm.options = [];
+                                        axios.get(
+                                            `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                        ).then(response => {
+                                            vm.options = response.data;
+                                        });
+                                    }
                                 }
+                            });
+                        }
+                    });
+                    vm.resetScales();
+                } else {
+                    if (vm.resetGroup == true) {
+                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                            if (typeof(field['children']) != 'undefined') {
+                                $.each(field['children'], function(index, field) {
+                                    if (vm.record.group_by == field['id']) {
+                                        vm.type = field['type'];
+                                        vm.record.type = vm.type;
+                                        if (field['type'] == 'list') {
+                                            vm.options = [];
+                                            axios.get(
+                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                            ).then(response => {
+                                                vm.options = response.data;
+                                            });
+                                        }
+                                    }
+                                });
                             }
                         });
+                        vm.resetScales();
+                    } else {
+                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                            if (typeof(field['children']) != 'undefined') {
+                                $.each(field['children'], function(index, field) {
+                                    if (vm.record.group_by == field['id']) {
+                                        vm.type = vm.record.type;
+                                        if (field['type'] == 'list') {
+                                            vm.options = [];
+                                            axios.get(
+                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                            ).then(response => {
+                                                vm.options = response.data;
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        vm.resetGroup = true;
                     }
-                });
-                vm.resetScales();
+                }
             },
             /**
              * Método que obtiene los grupos de tabuladores salariales registrados
@@ -555,11 +652,13 @@
              * Método que agrega una nueva escala
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
              *
              * @param     {object}    event    Objeto que gestiona los eventos
              */
             addScale(event) {
                 const vm = this;
+                vm.errors = [];
                 var field = {};
                 if ((vm.scale.name == '')   ||
                     ((vm.scale.value == '') && (vm.type != 'boolean') && (vm.type != 'range'))) {
@@ -587,9 +686,21 @@
                         field[index] = vm.scale[index];
                     }
                 }
-                if(vm.editIndex == null)
-                    vm.record.payroll_scales.push(field);
-                else {
+                if(vm.editIndex == null) {
+                    if (vm.record.payroll_scales.length > 0) {
+                        for (let scale of vm.record.payroll_scales) {
+                            if (scale.name === field.name) {
+                                vm.errors.push('El nombre de la escala ya ha sido registrado');
+                                return false;
+                            }
+                        }
+                        if (vm.errors.length < 1) {
+                            vm.record.payroll_scales.push(field);
+                        }
+                    } else {
+                        vm.record.payroll_scales.push(field);
+                    }
+                } else {
                     vm.record.payroll_scales[vm.editIndex] = field;
                 }
                 vm.resetScale = false;
@@ -600,6 +711,7 @@
              * Método que carga el formulario de la escala con los datos a modificar
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
              *
              * @param     {integer}    index    Identificador del registro a ser modificado
              * @param     {object}     event    Objeto que gestiona los eventos
@@ -611,10 +723,15 @@
                     vm.scale = {
                         id:    vm.record.payroll_scales[index].id,
                         name:  vm.record.payroll_scales[index].name,
-                        value: ''
+                        value: vm.record.payroll_scales[index].value
                     };
-                    $("#scale-value-from").val(vm.record.payroll_scales[index].value.from);
-                    $("#scale-value-to").val(vm.record.payroll_scales[index].value.to);
+                    if (typeof(vm.record.payroll_scales[index].value) == 'object') {
+                        $("#scale-value-from").val(vm.record.payroll_scales[index].value.from);
+                        $("#scale-value-to").val(vm.record.payroll_scales[index].value.to);
+                    } else {
+                        $("#scale-value-from").val(JSON.parse(vm.record.payroll_scales[index].value).from);
+                        $("#scale-value-to").val(JSON.parse(vm.record.payroll_scales[index].value).to);
+                    }
                 } else {
                     vm.scale = {
                         id:    vm.record.payroll_scales[index].id,
