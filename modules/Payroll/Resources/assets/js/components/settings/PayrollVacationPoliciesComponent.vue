@@ -56,46 +56,6 @@
                                     </a>
                                 </li>
                             </ul>
-                            <!-- <ul class="nav wizard-steps" v-else-if="panel == 'vacationPaymentForm'">
-                                <li class="nav-item">
-                                    <a href="#w-vacationPolicyForm" data-toggle="tab" class="nav-link text-center" id="vacationPolicyForm" @click="changePanel('vacationPolicyForm')">
-                                        <span class="badge">1</span>
-                                        Política vacacional
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a href="#w-vacationPaymentForm" data-toggle="tab" class="nav-link text-center" id="vacationPaymentForm" @click="changePanel('vacationPaymentForm')">
-                                        <span class="badge">2</span>
-                                        Pago de vacaciones
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationRequestForm">
-                                        <span class="badge">3</span>
-                                        Solicitud de vacaciones
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav wizard-steps" v-else>
-                                <li class="nav-item">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationPolicyForm">
-                                        <span class="badge">1</span>
-                                        Política vacacional
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#w-vacationPaymentForm" data-toggle="tab" class="nav-link text-center" id="vacationPaymentForm" @click="changePanel('vacationPaymentForm')">
-                                        <span class="badge">2</span>
-                                        Pago de vacaciones
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationRequestForm">
-                                        <span class="badge">3</span>
-                                        Solicitud de vacaciones
-                                    </a>
-                                </li>
-                            </ul> -->
                         </div>
                         <form class="form-horizontal">
                             <div class="tab-content">
@@ -630,7 +590,7 @@
                                     </button>
                                 </div>
                                 <div class="pull-left" v-if="panel == 'vacationPaymentForm' || panel == 'vacationRequestForm'">
-                                    <button type="button" @click="changePanel(panel=='vacationPaymentForm' ? 'vacationPolicyForm' : 'vacationPaymentForm')" class="btn btn-default btn-wd btn-sm" :disabled="isDisableNextStep()" data-toggle="tooltip" title="">
+                                    <button type="button" @click="changePanel(panel=='vacationPaymentForm' ? 'vacationPolicyForm' : 'vacationPaymentForm', true)" class="btn btn-default btn-wd btn-sm" data-toggle="tooltip" title="">
                                         Regresar
                                     </button>
                                 </div>
@@ -925,18 +885,17 @@ export default {
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
          *
-         * @param     {string}     panel    Panel seleccionado
+         * @param     {string}     panel        Panel seleccionado
+         * @param     {boolean}    complete     Determina si se movera al panel
          */
-        changePanel(panel) {
+        changePanel(panel, complete=false) {
             const vm = this;
-            let complete;
 
-            // vm.panel = panel
-            // if (panel == 'vacationPaymentForm') {
-            complete = !vm.isDisableNextStep();
-            // } else {
-            // complete = true;
-            // }
+            // En caso de true se omite esta validacion
+            if (!complete) {
+                complete = !vm.isDisableNextStep();
+            }
+
             if (complete == true) {
                 vm.panel = panel;
                 let element = document.getElementById(panel);
