@@ -53,7 +53,6 @@ class PayrollSalaryTabulatorController extends Controller
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'name'                            => ['required', 'max:100', 'unique:payroll_salary_tabulators,name'],
-            'payroll_staff_types'             => ['required'],
             'institution_id'                  => ['required'],
             'payroll_salary_tabulator_type'   => ['required'],
             'payroll_salary_tabulator_scales' => ['required', new PayrollSalaryScales()]
@@ -62,7 +61,6 @@ class PayrollSalaryTabulatorController extends Controller
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
             'currency_id.required'                     => 'El campo moneda es obligatorio.',
-            'payroll_staff_types.required'             => 'El campo tipo de personal es obligatorio.',
             'institution_id.required'                  => 'El campo institución es obligatorio.',
             'payroll_salary_tabulator_type.required'   => 'El campo tipo de tabulador es obligatorio.',
             'payroll_salary_tabulator_scales.required' => 'Las escalas del tabulador salarial son obligatorias.'
@@ -160,11 +158,6 @@ class PayrollSalaryTabulatorController extends Controller
             ]);
 
             if ($salaryTabulator) {
-                /** Se agregan los registros de tipos de personal a la tabla intermedia */
-                foreach ($request->payroll_staff_types as $payroll_staff_type) {
-                    $staff_type_id = PayrollStaffType::find($payroll_staff_type['id']);
-                    $salaryTabulator->payrollStaffTypes()->attach($staff_type_id);
-                }
                 /** Se agregan las escalas del tabulador salarial */
                 foreach ($request->payroll_salary_tabulator_scales as $payrollScale) {
                     /**
@@ -232,11 +225,6 @@ class PayrollSalaryTabulatorController extends Controller
             foreach ($salaryTabulator->payrollStaffTypes as $payrollStaffType) {
                 $staffType_id = PayrollStaffType::find($payrollStaffType['id']);
                 $salaryTabulator->payrollStaffTypes()->detach($staffType_id);
-            }
-            /** Se agregan los nuevos registros de tipos de personal a la tabla intermedia */
-            foreach ($request->payroll_staff_types as $payrollStaffType) {
-                $staffType_id = PayrollStaffType::find($payrollStaffType['id']);
-                $salaryTabulator->payrollStaffTypes()->attach($staffType_id);
             }
 
             /**

@@ -137,15 +137,6 @@
                                                     <!-- ./moneda -->
                                                 </div>
                                             </div>
-                                            <!-- tipo de personal -->
-                                            <div class="form-group is-required">
-                                                <label>Tipo de personal</label>
-                                                <v-multiselect :options="payroll_staff_types" track_by="text"
-                                                               :hide_selected="false"
-                                                               v-model="record.payroll_staff_types">
-                                                </v-multiselect>
-                                            </div>
-                                            <!-- ./tipo de personal -->
             							</div>
             							<div class="col-md-6">
                                             <!-- descripción -->
@@ -425,7 +416,6 @@
                     institution_id:                     '',
                     currency_id:                        '',
                     payroll_salary_tabulator_type:      '',
-                    payroll_staff_types:                [],
 
                     payroll_horizontal_salary_scale_id: '',
                     payroll_vertical_salary_scale_id:   '',
@@ -442,7 +432,6 @@
                 ],
                 institutions:                     [],
                 currencies:                       [],
-                payroll_staff_types:              [],
                 payroll_horizontal_salary_scales: [],
                 payroll_vertical_salary_scales:   [],
                 payroll_salary_scale_h:           [],
@@ -521,7 +510,6 @@
                     institution_id:                     '',
                     currency_id:                        '',
                     payroll_salary_tabulator_type:      '',
-                    payroll_staff_types:                [],
                     payroll_horizontal_salary_scale_id: '',
                     payroll_vertical_salary_scale_id:   '',
                     payroll_salary_tabulator_scales:    []
@@ -543,7 +531,7 @@
                 const vm = this;
                 if (vm.record.percentage == false) {
                     if ((vm.record.name != '') && (vm.record.institution_id != '') &&
-                        (vm.record.currency_id != '') && (vm.record.payroll_staff_types != []) &&
+                        (vm.record.currency_id != '') &&
                         (vm.record.payroll_salary_tabulator_type != '')) {
                         if (((vm.record.payroll_salary_tabulator_type == 'vertical') &&
                             (vm.record.payroll_vertical_salary_scale_id != '')) ||
@@ -561,7 +549,7 @@
                     }
                 } else {
                     if ((vm.record.name != '') && (vm.record.institution_id != '') &&
-                        (vm.record.percentage != false) && (vm.record.payroll_staff_types != []) &&
+                        (vm.record.percentage != false) &&
                         (vm.record.payroll_salary_tabulator_type != '')) {
                         if (((vm.record.payroll_salary_tabulator_type == 'vertical') &&
                             (vm.record.payroll_vertical_salary_scale_id != '')) ||
