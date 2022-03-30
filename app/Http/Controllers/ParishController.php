@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Parish;
 use Illuminate\Http\Request;
 use App\Rules\UniqueParishCode;
+use App\Rules\UniqueParishName;
 
 /**
  * @class ParishController
@@ -77,14 +78,14 @@ class ParishController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'max:100'],
+            'name' => ['required', 'max:100', new UniqueParishName],
             'code' => ['required', 'max:10', new UniqueParishCode],
             'municipality_id' => ['required']
         ], [
             'name.max' => ('El campo nombre no debe ser mayor que 100 caracteres.'),   
             'code.required' => ('El campo código es obligatorio.'),
             'code.max' => ('El campo código no debe ser mayor que 10 caracteres.'),
-            'municipality_id.required' => ('El campo municipios es obligatorio.'),
+            'municipality_id.required' => ('El campo municipio es obligatorio.'),
         ]);
 
         /** @var Parish Objeto con información de la parroquia registrada */

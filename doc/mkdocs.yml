@@ -15,7 +15,7 @@ nav:
         - Inicio de Sesión: getting_started/login.md
         - Recuperar Contraseña: getting_started/reset_password.md
         - Cambiar Contraseña: getting_started/change_password.md
-        - Configuración de Cuenta de Usuario: getting_started/user_account_setting.md
+        - Configurar Cuenta de Usuario: getting_started/user_account_setting.md
       - Configuración:
         - Configuración: setting/setting.md
         - Configuración General: setting/general_setting.md

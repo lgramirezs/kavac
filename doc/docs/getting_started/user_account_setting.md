@@ -91,36 +91,9 @@ En esta sección es posible habilitar o deshabilitar notificaciones emitidas por
 
 #### Perfil
 
-Desde esta sección es posible **cambiar contraseña**, **editar imagen de perfil** y **bloquear pantalla**. 
+#### Actividad 
 
-![Screenshot](../img/figure_23.png)<div style="text-align: center;font-weight: bold">Figura 23: Perfil de Usuario</div> 
-
-<!-- Para cambiar contraseña:
-
-- Dirigirse a **Mi configuración y datos** ubicado en el panel superior del sistema.
-- Ingresar a **Mi Perfil** y ubicarse en la sección **Perfil**.
-- Completar los campos **Nueva Contraseña** y **Confirmar Contraseña**.  
-- Presionar el botón **Guardar** ubicado al final de esta sección para registrar los cambios.  
-
-Para cambiar imagen de perfil:
-
-- Dirigirse a **Mi configuración y datos** ubicado en el panel superior del sistema.
-- Ingresar a **Mi Perfil** y ubicarse en la sección **Perfil**.
-- Dar clic sobre la imagen de perfil, y selecionar la nueva imagen.  
-- Presionar el botón **Guardar** ubicado al final de esta sección para registrar los cambios.  
-
-
-#### Mensajes
-
-En esta sección se aloja el buzón de mensajes.  
-
-![Screenshot](../img/figure_24.png)<div style="text-align: center;font-weight: bold">Figura 24: Mensajes</div> 
-
-#### Directorio
-
-En esta sección se listan todos los usuarios registrados en el sistema con sus datos básicos como **nombre**, **dirección**, **número de teléfono** y **correo institucional**.
-
-![Screenshot](../img/figure_25.png)<div style="text-align: center;font-weight: bold">Figura 25: Directorio</div> -->
+#### Directorio 
 
 
 3)	Seleccionar la opción **Bloquear Pantalla**.

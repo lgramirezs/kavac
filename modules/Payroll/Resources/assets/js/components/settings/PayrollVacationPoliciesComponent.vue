@@ -56,46 +56,6 @@
                                     </a>
                                 </li>
                             </ul>
-                            <!-- <ul class="nav wizard-steps" v-else-if="panel == 'vacationPaymentForm'">
-                                <li class="nav-item">
-                                    <a href="#w-vacationPolicyForm" data-toggle="tab" class="nav-link text-center" id="vacationPolicyForm" @click="changePanel('vacationPolicyForm')">
-                                        <span class="badge">1</span>
-                                        Política vacacional
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a href="#w-vacationPaymentForm" data-toggle="tab" class="nav-link text-center" id="vacationPaymentForm" @click="changePanel('vacationPaymentForm')">
-                                        <span class="badge">2</span>
-                                        Pago de vacaciones
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationRequestForm">
-                                        <span class="badge">3</span>
-                                        Solicitud de vacaciones
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav wizard-steps" v-else>
-                                <li class="nav-item">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationPolicyForm">
-                                        <span class="badge">1</span>
-                                        Política vacacional
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#w-vacationPaymentForm" data-toggle="tab" class="nav-link text-center" id="vacationPaymentForm" @click="changePanel('vacationPaymentForm')">
-                                        <span class="badge">2</span>
-                                        Pago de vacaciones
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a href="#" data-toggle="tab" class="nav-link text-center" id="vacationRequestForm">
-                                        <span class="badge">3</span>
-                                        Solicitud de vacaciones
-                                    </a>
-                                </li>
-                            </ul> -->
                         </div>
                         <form class="form-horizontal">
                             <div class="tab-content">
@@ -153,7 +113,7 @@
                                         </div>
                                         <!-- ./tipo de vacaciones -->
                                     </div>
-                                    <div class="row" v-if="record.vacation_type == 'collective_vacations' || record.vacation_type == 'dual'">
+                                    <div class="row" v-if="record.vacation_type == 'collective_vacations'">
                                         <!-- adelanto de vacaciones -->
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -189,8 +149,17 @@
                                             </div>
                                         </div>
                                         <!-- ./períodos vacacionales -->
+                                        <!-- ¿asignar a? -->
+                                        <div class="col-md-12">
+                                            <div class=" form-group is-required">
+                                                <label>¿Asignar a?</label>
+                                                <v-multiselect :options="assign_to" track_by="name" :hide_selected="false" data-toggle="tooltip" title="Indique los registros a los que se les va asignar el concepto" @input="updateAssignOptions" v-model="record.assign_to">
+                                                </v-multiselect>
+                                            </div>
+                                        </div>
+                                        <!-- ./¿asignar a? -->
                                     </div>
-                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations' || record.vacation_type == 'dual'">
+                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations'">
                                         Salidas individuales <i class="fa fa-plus-circle cursor-pointer" title="Nuevo salidas individuales" data-toggle="tooltip" @click="addVacationPeriod()"></i>
                                     </h6>
                                     <div class="row" v-for="(vacation_period, index) in record.vacation_periods" :key="index">
@@ -218,7 +187,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period' || record.vacation_type == 'dual'">
+                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period'">
                                         <!-- días a otorgar para el pago de vacaciones -->
                                         <div class="col-md-3">
                                             <div class="form-group is-required">
@@ -309,8 +278,6 @@
                                             </div>
                                         </div>
                                         <!-- ./posterga de vacaciones -->
-                                    </div>
-                                    <div class="row">
                                         <!-- ¿asignar a? -->
                                         <div class="col-md-12">
                                             <div class=" form-group is-required">
@@ -325,12 +292,12 @@
                                 <div id="w-vacationPaymentForm" :class="panel=='vacationPaymentForm' ? 'tab-pane p-3 active' : 'tab-pane p-3'">
                                     <div class="row">
                                         <!-- salario a emplear -->
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group is-required">
                                                 <label>Salario a emplear para el cálculo del bono vacacional:</label>
                                                 <select2 :options="salary_types" v-model="record.salary_type"></select2>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./salario a emplear -->
                                         <!-- tipo de pago de nómina -->
                                         <div class="col-md-6">
@@ -341,7 +308,7 @@
                                         </div>
                                         <!-- ./tipo de pago de nómina -->
                                         <!-- antiguedad del trabajador -->
-                                        <div class="col-md-3">
+                                        <!-- <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>¿Antiguedad del trabajador?</label>
                                                 <div class="col-12">
@@ -350,8 +317,32 @@
                                                     </p-check>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./antiguedad del trabajador -->
+                                        <!-- Los días de bonificación se establecen de acuerdo a un escalafón -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>¿Los días de bonificación se establecen de acuerdo a un escalafón?</label>
+                                                <div class="col-12">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique los días de bonificación se establecen de acuerdo a un escalafón" v-model="record.on_scale">
+                                                        <label slot="off-label"></label>
+                                                    </p-check>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./Los días de bonificación se establecen de acuerdo a un escalafón -->
+                                        <!-- El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?</label>
+                                                <div class="col-12">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute" v-model="record.worker_arises">
+                                                        <label slot="off-label"></label>
+                                                    </p-check>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
                                         <!-- día de disfrute -->
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -377,7 +368,7 @@
                                         </div>
                                         <!-- ./día general -->
                                         <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-3" v-if="record.payment_calculation == 'general_days' && 
+                                        <div class="col-md-6" v-if="record.payment_calculation == 'general_days' && 
                                                                     record.vacation_type == 'collective_vacations'">
                                             <div class="form-group is-required">
                                                 <label>Días a otorgar para el pago de vacaciones:</label>
@@ -389,10 +380,206 @@
                                         </div>
                                         <!-- ./días a otorgar para el pago de vacaciones -->
                                     </div>
+                                    <div class="container">
+                                        <div class="row" v-if="record.worker_arises">
+                                            <!-- Monto del pago vacaciones automáticamente -->
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="group_by">Monto del pago vacaciones: </label>
+                                                    <label>{{ generatePaymentVacation() }}</label>
+                                                </div>
+                                            </div>
+                                            <!-- ./Monto del pago vacaciones automáticamente -->
+                                        </div>
+                                        <div class="row" v-if="record.on_scale">
+                                            <!-- agrupar por -->
+                                            <div class="col-6">
+                                                <div class="form-group is-required">
+                                                    <label for="group_by">Agrupar por:</label>
+                                                    <select2 :options="payroll_salary_tabulators_groups" @input="getOptions()" v-model="record.group_by"></select2>
+                                                </div>
+                                            </div>
+                                            <!-- ./agrupar por -->
+                                        </div>
+                                        <div class="row" v-if="record.on_scale && record.group_by">
+                                            <div class="col-7 pad-top-10 with-border with-radius table-responsive" style="place-self: baseline;">
+                                                <h6 class="text-center">Escalas o niveles del escalafón</h6>
+                                                <div class="row" v-if="record.payroll_scales.length == 0">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-info" role="alert">
+                                                            <div class="container">
+                                                                <div class="alert-icon">
+                                                                    <i class="now-ui-icons travel_info"></i>
+                                                                </div>
+                                                                <strong>No se encontraron registros</strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div v-else>
+                                                    <table class="table table-hover table-striped table-responsive  table-scale">
+                                                        <thead>
+                                                            <th :colspan="1 + record.payroll_scales.length">
+                                                                <strong>{{ record.name }}</strong>
+                                                            </th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="selected-row text-center">
+                                                                <th>{{ getGroupBy }}</th>
+                                                                <th v-for="(field,index) in record.payroll_scales" :key="index">
+                                                                    <span v-if="type == 'list'
+                                                                             && options.length > 0">
+                                                                        {{ getValueScale(field.value) }}
+                                                                    </span>
+                                                                    <span v-else-if="type == 'range'">
+                                                                        {{ field.value['from'] + ' - ' + field.value['to'] }}
+                                                                    </span>
+                                                                    <span v-else-if="type == 'boolean'">
+                                                                        {{ field.value?'SI':'NO' }}
+                                                                    </span>
+                                                                    <span v-else>
+                                                                        {{ field.value }}
+                                                                    </span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr class="selected-row text-center">
+                                                                <th>Nombre</th>
+                                                                <td v-for="(field,index) in record.payroll_scales" :key="index">
+                                                                    {{ field.name}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="config-row text-center">
+                                                                <th>Acción:</th>
+                                                                <td v-for="(field,index) in record.payroll_scales" :key="index">
+                                                                    <div class="d-inline-flex">
+                                                                        <button @click="editScale(index,$event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </button>
+                                                                        <button @click="removeScale(index,$event)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 offset-1 pad-top-10 with-border with-radius table-responsive">
+                                                <h6 class="text-center">Nueva escala</h6>
+                                                <div class="row" style="align-items: flex-end;" v-if="type != 'boolean'
+                                                        && type != 'list'">
+                                                    <strong class="col-md-12">
+                                                        Expresado en
+                                                    </strong>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Valor puntual</label>
+                                                            <div class="col-12">
+                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado puntualmente" @change="resetScales()" v-model="type" value="value">
+                                                                    <label slot="off-label"></label>
+                                                                </p-radio>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Rango</label>
+                                                            <div class="col-12">
+                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado en rangos" @change="resetScales()" v-model="type" value="range">
+                                                                    <label slot="off-label"></label>
+                                                                </p-radio>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group is-required">
+                                                            <label>Nombre</label>
+                                                            <input type="text" placeholder="Nombre" data-toggle="tooltip" title="Indique un nombre para identificar la agrupación" class="form-control input-sm" v-model="scale.name">
+                                                            <input type="hidden" v-model="scale.id">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" v-if="type == 'list'">
+                                                        <div class="form-group">
+                                                            <label>Valor:</label>
+                                                            <select2 :options="options" v-model="scale.value"></select2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="type == 'value'">
+                                                        <div class="form-group is-required">
+                                                            <label>Valor</label>
+                                                            <input type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" v-model="scale.value" min="0" onfocus="this.select()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="type == 'range'">
+                                                        <div class="form-group is-required">
+                                                            <label>Desde</label>
+                                                            <input id="scale-value-from" type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" min="0" step=".01" onfocus="this.select()">
+                                                        </div>
+                                                        <div class="form-group is-required">
+                                                            <label>Hasta</label>
+                                                            <input id="scale-value-to" type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" min="0" step=".01" onfocus="this.select()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="type == 'boolean'">
+                                                        <div class="form-group">
+                                                            <label>Valor</label>
+                                                            <div class="col-12">
+                                                                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                                                                    <input type="checkbox" data-toggle="tooltip" title="Indique si el campo está activo" v-model="scale.value">
+                                                                    <div class="state p-off">
+                                                                        <label></label>
+                                                                    </div>
+                                                                    <div class="state p-on p-success">
+                                                                        <label></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="button" @click="addScale($event)" class="btn btn-sm btn-primary btn-custom float-right" title="Agregar escala" data-toggle="tooltip">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="w-vacationRequestForm" :class="panel=='vacationRequestForm' ? 'tab-pane p-3 active' : 'tab-pane p-3'">
                                     <div class="row">
-                                        contenido 3
+                                        <!-- nombre -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Días de anticipación para la realizar la solicitud de vacaciones:</label><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group is-required">
+                                                <label>Días de anticipación (mínimo)</label>
+                                                <input type="text" data-toggle="tooltip" title="Días de anticipación (mínimo)" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.min_days_advance">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group is-required">
+                                                <label>Días de anticipación (máximo)</label>
+                                                <input type="text" data-toggle="tooltip" title="Días de anticipación (máximo)" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.max_days_advance">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +590,7 @@
                                     </button>
                                 </div>
                                 <div class="pull-left" v-if="panel == 'vacationPaymentForm' || panel == 'vacationRequestForm'">
-                                    <button type="button" @click="changePanel(panel=='vacationPaymentForm' ? 'vacationPolicyForm' : 'vacationPaymentForm')" class="btn btn-default btn-wd btn-sm" :disabled="isDisableNextStep()" data-toggle="tooltip" title="">
+                                    <button type="button" @click="changePanel(panel=='vacationPaymentForm' ? 'vacationPolicyForm' : 'vacationPaymentForm', true)" class="btn btn-default btn-wd btn-sm" data-toggle="tooltip" title="">
                                         Regresar
                                     </button>
                                 </div>
@@ -441,9 +628,6 @@
                                 </span>
                                 <span v-else-if="props.row.vacation_type == 'vacation_period'">
                                     Salidas individuales
-                                </span>
-                                <span v-else-if="props.row.vacation_type == 'dual'">
-                                    Dual
                                 </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
@@ -486,9 +670,23 @@ export default {
                 vacation_advance: false,
                 vacation_postpone: false,
                 staff_antiquity: false,
+                on_scale: false,
+                group_by: '',
+                payroll_scales: [],
                 assign_to: '',
+                worker_arises: '',
+                min_days_advance: '',
+                max_days_advance: '',
             },
+            scale: {
+                id: '',
+                name: '',
+                value: ''
+            },
+            resetScale: true,
+            options: [],
             assign_to: [],
+            payroll_salary_tabulators_groups: [],
             errors: [],
             records: [],
             columns: ['name', 'application_date', 'vacation_type', 'active', 'id'],
@@ -498,7 +696,6 @@ export default {
                 { "id": "", "text": "Seleccione..." },
                 { "id": "collective_vacations", "text": "Colectiva" },
                 { "id": "vacation_period", "text": "Salidas individuales" },
-                { "id": "dual", "text": "Dual" },
             ],
             salary_types: [
                 { "id": "", "text": "Seleccione..." },
@@ -515,6 +712,36 @@ export default {
             type: [Date, String],
             required: false,
             default: ''
+        }
+    },
+    computed: {
+        /**
+         * Método que obtiene el nombre de la agrupación de los tabuladores
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         * @return    {string}
+         */
+        getGroupBy: function() {
+            const vm = this;
+            let response = '';
+            $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                if (typeof(field['children']) != 'undefined') {
+                    $.each(field['children'], function(index, field) {
+                        if (vm.record.group_by == field['id']) {
+                            response = field['text'];
+                            if (field['type'] == 'list') {
+                                vm.options = [];
+                                axios.get(
+                                    `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                ).then(response => {
+                                    vm.options = response.data;
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            return response;
         }
     },
     created() {
@@ -539,6 +766,7 @@ export default {
             vm.getInstitutions();
             vm.getPayrollPaymentTypes();
             vm.getPayrollConceptAssignTo();
+            vm.getPayrollSalaryTabulatorsGroups();
         });
     },
     methods: {
@@ -570,10 +798,39 @@ export default {
                 active: false,
                 vacation_advance: false,
                 vacation_postpone: false,
-                staff_antiquity: false
+                staff_antiquity: false,
+                on_scale: false,
+                group_by: '',
+                payroll_scales: [],
+                assign_to: '',
             };
+
+            vm.resetScales();
+
             vm.panel = 'vacationPolicyForm';
             document.getElementById("vacationPolicyForm").click();
+        },
+        /**
+         * Método que borra los campos del formulario de la escala
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         */
+        resetScales() {
+            const vm = this;
+            vm.scale = {
+                id: '',
+                name: '',
+                value: ''
+            };
+            vm.editIndex = null;
+            $("#scale-value-from").val('');
+            $("#scale-value-to").val('');
+            if (vm.resetScale) {
+                vm.record.payroll_scales = [];
+            } else {
+                vm.resetScale = true;
+            }
         },
         /**
          * Método que habilita o deshabilita el botón siguiente
@@ -612,8 +869,7 @@ export default {
                     return true;
                 }
             } else if (vm.panel == 'vacationPaymentForm') {
-                if ((vm.record.salary_type != '') &&
-                    (vm.record.payroll_payment_type_id != '') &&
+                if ((vm.record.payroll_payment_type_id != '') &&
                     (vm.record.payment_calculation != '')) {
                     if ((vm.record.payment_calculation == 'general_days' && vm.record.vacation_days == '')) {
                         return true;
@@ -629,18 +885,17 @@ export default {
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
          *
-         * @param     {string}     panel    Panel seleccionado
+         * @param     {string}     panel        Panel seleccionado
+         * @param     {boolean}    complete     Determina si se movera al panel
          */
-        changePanel(panel) {
+        changePanel(panel, complete=false) {
             const vm = this;
-            let complete;
 
-            // vm.panel = panel
-            // if (panel == 'vacationPaymentForm') {
-            complete = !vm.isDisableNextStep();
-            // } else {
-            // complete = true;
-            // }
+            // En caso de true se omite esta validacion
+            if (!complete) {
+                complete = !vm.isDisableNextStep();
+            }
+
             if (complete == true) {
                 vm.panel = panel;
                 let element = document.getElementById(panel);
@@ -852,7 +1107,158 @@ export default {
                     delete vm.record.assign_options[index];
                 }
             });
+        },
+        /**
+         * Método que obtiene los grupos de tabuladores salariales registrados
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         */
+        getPayrollSalaryTabulatorsGroups() {
+            const vm = this;
+            vm.payroll_salary_tabulators_groups = [];
+            axios.get(`${window.app_url}/payroll/get-salary-tabulators-groups`).then(response => {
+                vm.payroll_salary_tabulators_groups = response.data;
+            });
+        },
+        /**
+         * Método que obtiene los parámetros de opciones
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         */
+        getOptions() {
+            const vm = this;
+            $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                if (typeof(field['children']) != 'undefined') {
+                    $.each(field['children'], function(index, field) {
+                        if (vm.record.group_by == field['id']) {
+                            vm.type = field['type'];
+                            if (field['type'] == 'list') {
+                                vm.options = [];
+                                axios.get(
+                                    `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                ).then(response => {
+                                    vm.options = response.data;
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            vm.resetScales();
+        },
+        /**
+         * Método que obtiene el valor de la escala según el identificador único
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {string}    value    Objeto json que contiene el id de la escala
+         * @return    {string}
+         */
+        getValueScale(value) {
+            const vm = this;
+            let id = JSON.parse(value);
+            let response = '';
+            $.each(vm.options, function(index, field) {
+                if (id == field['id']) {
+                    response = field['text'];
+                }
+            });
+            return response;
+        },
+        /**
+         * Método que agrega una nueva escala
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {object}    event    Objeto que gestiona los eventos
+         */
+        addScale(event) {
+            const vm = this;
+            var field = {};
+            if ((vm.scale.name == '') ||
+                ((vm.scale.value == '') && (vm.type != 'boolean') && (vm.type != 'range'))) {
+                return false;
+            }
+
+            for (var index in vm.scale) {
+                if (index == 'value') {
+                    if (vm.type == 'range') {
+                        var fromValue = $("#scale-value-from").val();
+                        var toValue = $("#scale-value-to").val();
+                        if ((fromValue == '') ||
+                            (toValue == '')) {
+                            return false;
+                        }
+                        field[index] = {
+                            from: fromValue,
+                            to: toValue
+                        };
+                    } else {
+                        field[index] = vm.scale[index];
+                    }
+
+                } else {
+                    field[index] = vm.scale[index];
+                }
+            }
+            if (vm.editIndex == null)
+                vm.record.payroll_scales.push(field);
+            else {
+                vm.record.payroll_scales[vm.editIndex] = field;
+            }
+            vm.resetScale = false;
+            vm.resetScales();
+            event.preventDefault();
+        },
+        /**
+         * Método que carga el formulario de la escala con los datos a modificar
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {integer}    index    Identificador del registro a ser modificado
+         * @param     {object}     event    Objeto que gestiona los eventos
+         */
+        editScale(index, event) {
+            const vm = this;
+            vm.editIndex = index;
+            if (vm.type == 'range') {
+                vm.scale = {
+                    id: vm.record.payroll_scales[index].id,
+                    name: vm.record.payroll_scales[index].name,
+                    value: ''
+                };
+                $("#scale-value-from").val(vm.record.payroll_scales[index].value.from);
+                $("#scale-value-to").val(vm.record.payroll_scales[index].value.to);
+            } else {
+                vm.scale = {
+                    id: vm.record.payroll_scales[index].id,
+                    name: vm.record.payroll_scales[index].name,
+                    value: JSON.parse(vm.record.payroll_scales[index].value)
+                };
+            }
+            event.preventDefault();
+        },
+        /**
+         * Método que elimina el elemento seleccionado
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {integer}    index    Identificador del registro a eliminar
+         * @param     {object}     event    Objeto que gestiona los eventos
+         */
+        removeScale(index, event) {
+            const vm = this;
+            vm.record.payroll_scales.splice(index, 1);
+            vm.editIndex = null;
+            event.preventDefault();
+        },
+        generatePaymentVacation(){
+            axios.get(
+                `${window.app_url}/payroll/generate-payment-vacation/${field['id']}`
+            ).then(response => {
+                vm.options = response.data;
+            });
         }
-    }
+    },
 };
 </script>
