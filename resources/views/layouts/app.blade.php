@@ -312,7 +312,7 @@
                     var parent_id = parent_element.val();
                     var parent_name = parent_element.attr('id');
 
-                    target_element.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
+                    target_element.empty();
 
                     if (parent_id) {
                         axios.get(

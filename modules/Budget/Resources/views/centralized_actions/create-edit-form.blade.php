@@ -3,27 +3,7 @@
 @section('maproute-icon')
 	<i class="ion-arrow-graph-up-right"></i>
 @stop
-@section('modules-js')
-    @parent
- 
-	<script type="text/javascript">
-          alert('now2');
-		  function getval(sel)
-{
-    alert(sel.value);
-}
-		let af =  $( "#payroll_staff_id" ).val();
-		console.log(af);
-		$('payroll_staff_id').change(function(e) {
-			alert($( "#payroll_staff_id" ).val() );
-   });
-		$("#payroll_staff_id").on('change', function() {
-  alert($( "#payroll_staff_id" ).val() );
-  console.log($( "#payroll_staff_id" ).val());
-});
-     
-</script>
-@endsection
+
 @section('maproute-icon-mini')
 	<i class="ion-arrow-graph-up-right"></i>
 @stop
