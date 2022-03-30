@@ -158,6 +158,38 @@
                                             </div>
                                         </div>
                                         <!-- ./¿asignar a? -->
+                                        <div class="row col-12" style="align-items: flex-end;" v-if="record.assign_to">
+                                            <div class="col-md-4" v-for="field in record.assign_to" :key="field['id']">
+                                                <div v-if="field['type'] && record.assign_options[field['id']]">
+                                                    <!-- registro de opciones a asignar -->
+                                                    <div class="form-group is-required" v-if="field['type'] == 'list'">
+                                                        <label>{{ field['name'] }}</label>
+                                                        <v-multiselect :options="assign_options_lists" track_by="text" :hide_selected="false" data-toggle="tooltip" title="Indique los registros a los que se les va asignar el concepto" v-model="record.assign_options[field['id']]">
+                                                        </v-multiselect>
+                                                    </div>
+                                                    <!-- ./registro de opciones a asignar -->
+                                                    <!-- registro de rangos a asignar -->
+                                                    <div class="form-group" v-if="field['type'] == 'range' && assign_options[field['id']]">
+                                                        <label>{{ field['name'] }}</label>
+                                                        <div class="row" style="align-items: baseline;">
+                                                            <dir class="col-6">
+                                                                <div class="form-group is-required">
+                                                                    <label>Minimo:</label>
+                                                                    <input type="number" min="0" step=".01" placeholder="Minimo" data-toggle="tooltip" title="Indique el minimo requerido para asignar el concepto" class="form-control input-sm" v-model="record.assign_options[field['id']]['minimum']">
+                                                                </div>
+                                                            </dir>
+                                                            <div class="col-6">
+                                                                <div class="form-group is-required">
+                                                                    <label>Máximo:</label>
+                                                                    <input type="number" min="0" step=".01" placeholder="Máximo" data-toggle="tooltip" title="Indique el máximo requerido para asignar el concepto" class="form-control input-sm" v-model="record.assign_options[field['id']]['maximum']">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ./registro de opciones a asignar -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations'">
                                         Salidas individuales <i class="fa fa-plus-circle cursor-pointer" title="Nuevo salidas individuales" data-toggle="tooltip" @click="addVacationPeriod()"></i>
@@ -674,6 +706,7 @@ export default {
                 group_by: '',
                 payroll_scales: [],
                 assign_to: '',
+                assign_options: {},
                 worker_arises: '',
                 min_days_advance: '',
                 max_days_advance: '',
@@ -686,6 +719,8 @@ export default {
             resetScale: true,
             options: [],
             assign_to: [],
+            assign_options: {},
+            assign_options_lists: [],
             payroll_salary_tabulators_groups: [],
             errors: [],
             records: [],
@@ -767,6 +802,7 @@ export default {
             vm.getPayrollPaymentTypes();
             vm.getPayrollConceptAssignTo();
             vm.getPayrollSalaryTabulatorsGroups();
+            vm.assign_options_lists = [];
         });
     },
     methods: {
@@ -803,6 +839,10 @@ export default {
                 group_by: '',
                 payroll_scales: [],
                 assign_to: '',
+                assign_options: {},
+                worker_arises: '',
+                min_days_advance: '',
+                max_days_advance: '',
             };
 
             vm.resetScales();
@@ -888,7 +928,7 @@ export default {
          * @param     {string}     panel        Panel seleccionado
          * @param     {boolean}    complete     Determina si se movera al panel
          */
-        changePanel(panel, complete=false) {
+        changePanel(panel, complete = false) {
             const vm = this;
 
             // En caso de true se omite esta validacion
@@ -1252,7 +1292,7 @@ export default {
             vm.editIndex = null;
             event.preventDefault();
         },
-        generatePaymentVacation(){
+        generatePaymentVacation() {
             axios.get(
                 `${window.app_url}/payroll/generate-payment-vacation/${field['id']}`
             ).then(response => {
