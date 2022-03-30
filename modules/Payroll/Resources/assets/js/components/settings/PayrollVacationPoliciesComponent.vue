@@ -153,7 +153,7 @@
                                         </div>
                                         <!-- ./tipo de vacaciones -->
                                     </div>
-                                    <div class="row" v-if="record.vacation_type == 'collective_vacations' || record.vacation_type == 'dual'">
+                                    <div class="row" v-if="record.vacation_type == 'collective_vacations'">
                                         <!-- adelanto de vacaciones -->
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -190,7 +190,7 @@
                                         </div>
                                         <!-- ./períodos vacacionales -->
                                     </div>
-                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations' || record.vacation_type == 'dual'">
+                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations'">
                                         Salidas individuales <i class="fa fa-plus-circle cursor-pointer" title="Nuevo salidas individuales" data-toggle="tooltip" @click="addVacationPeriod()"></i>
                                     </h6>
                                     <div class="row" v-for="(vacation_period, index) in record.vacation_periods" :key="index">
@@ -218,7 +218,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period' || record.vacation_type == 'dual'">
+                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period'">
                                         <!-- días a otorgar para el pago de vacaciones -->
                                         <div class="col-md-3">
                                             <div class="form-group is-required">
@@ -442,9 +442,6 @@
                                 <span v-else-if="props.row.vacation_type == 'vacation_period'">
                                     Salidas individuales
                                 </span>
-                                <span v-else-if="props.row.vacation_type == 'dual'">
-                                    Dual
-                                </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
@@ -498,7 +495,6 @@ export default {
                 { "id": "", "text": "Seleccione..." },
                 { "id": "collective_vacations", "text": "Colectiva" },
                 { "id": "vacation_period", "text": "Salidas individuales" },
-                { "id": "dual", "text": "Dual" },
             ],
             salary_types: [
                 { "id": "", "text": "Seleccione..." },
