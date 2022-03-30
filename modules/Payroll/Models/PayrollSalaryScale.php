@@ -35,7 +35,7 @@ class PayrollSalaryScale extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'name', 'code', 'description', 'active', 'group_by', 'institution_id'
+        'name', 'code', 'description', 'active', 'group_by', 'type', 'institution_id'
     ];
 
     /**

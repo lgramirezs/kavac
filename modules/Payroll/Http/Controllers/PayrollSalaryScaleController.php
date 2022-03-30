@@ -49,15 +49,17 @@ class PayrollSalaryScaleController extends Controller
 
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
-            'name'           => ['required'],
+            'name'           => ['required', 'unique:payroll_salary_scales,name'],
             'institution_id' => ['required'],
-            'payroll_scales' => ['required']
+            'payroll_scales' => ['required'],
+            'payroll_scales.*.name' => ['unique:payroll_scales,name']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
             'institution_id.required' => 'El campo institución es obligatorio.',
-            'payroll_scales.required' => 'Debe registrar al menos una escala o nivel.'
+            'payroll_scales.required' => 'Debe registrar al menos una escala o nivel.',
+            'payroll_scales.*.name.unique' => 'El nombre de la escala ya ha sido registrado.'
         ];
     }
 
@@ -120,7 +122,8 @@ class PayrollSalaryScaleController extends Controller
                                                 : false,
                 'description'            => $request->input('description'),
                 'institution_id'         => $request->input('institution_id'),
-                'group_by'               => $request->input('group_by')
+                'group_by'               => $request->input('group_by'),
+                'type'                   => $request->input('type'),
             ]);
             foreach ($request->payroll_scales as $payrollScale) {
                 /**
@@ -153,6 +156,13 @@ class PayrollSalaryScaleController extends Controller
     public function update(Request $request, $id)
     {
         $payrollSalaryScale = PayrollSalaryScale::find($id);
+
+        $this->validateRules = [
+            'name'           => ['required', 'unique:payroll_salary_scales,name,' . $payrollSalaryScale->id],
+            'institution_id' => ['required'],
+            'payroll_scales' => ['required']
+        ];
+
         $this->validate($request, $this->validateRules, $this->messages);
 
         DB::transaction(function () use ($request, $payrollSalaryScale) {
@@ -163,34 +173,25 @@ class PayrollSalaryScaleController extends Controller
                                                               ? $request->input('active')
                                                               : $payrollSalaryScale->active;
             $payrollSalaryScale->group_by               = $request->input('group_by');
+            $payrollSalaryScale->type                   = $request->input('type');
 
             $payrollSalaryScale->save();
-            $updated_at = now();
+            $payrollSalaryScale->payrollScales()->delete();
 
             /** Se agregan los nuevos niveles o escalas y se actualizan los existentes */
             foreach ($request->payroll_scales as $payrollScale) {
                 if ($payrollScale['id'] > 0) {
-                    $scale              = PayrollScale::find($payrollScale['id']);
+                    $scale              = PayrollScale::withTrashed()->find($payrollScale['id']);
                     $scale->name        = $payrollScale['name'];
-                    $scale->value       = json_encode(json_decode($payrollScale['value']));
-                    $scale->updated_at  = $updated_at;
+                    $scale->value       = is_object($payrollScale['value']) ? json_encode($payrollScale['value']) : $payrollScale['value'];
+                    $scale->deleted_at  = null;
                     $scale->save();
                 } else {
-                    $scale = PayrollScale::Create([
+                    $scale = PayrollScale::create([
                         'name'                    => $payrollScale['name'],
                         'value'                   => json_encode($payrollScale['value']),
                         'payroll_salary_scale_id' => $payrollSalaryScale->id,
-                        'updated_at'              => $updated_at,
                     ]);
-                }
-            }
-
-            /** Se eliminan los demas niveles o escalas del escalafón salarial */
-            $payrollScales = PayrollScale::where('payroll_salary_scale_id', $payrollSalaryScale->id)->get();
-
-            foreach ($payrollScales as $payrollScale) {
-                if ($payrollScale->updated_at->format('Y-m-d H:i:s') != $updated_at->format('Y-m-d H:i:s')) {
-                    $payrollScale->delete();
                 }
             }
         });
