@@ -320,8 +320,7 @@
                         ).then(response => {
                             if (response.data.result) {
                                 target_element.attr('disabled', false);
-                                $.each(response.data.records, function(index, record) {
-                                     console.log(record);
+                                $.each(response.data.records, function(index, record) {                                   
                                      target_element.append(
                                         `<option value="${record['payroll_position'].id}">${record['payroll_position'].name}</option>`
                                     );
