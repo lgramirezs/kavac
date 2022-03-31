@@ -183,9 +183,17 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Rutas para la gestión de tipos de instituciones */
     Route::resource('institution-types', 'InstitutionTypeController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-type/{id?}',
+        'InstitutionTypeController@getType'
+    )->name('get-type');
 
     /** Rutas para la gestión de sectores de instituciones */
     Route::resource('institution-sectors', 'InstitutionSectorController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-sector/{id?}',
+        'InstitutionSectorController@getSector'
+    )->name('get-sector');
 
     /** Rutas para la gestión de Países */
     Route::resource('countries', 'CountryController', ['except' => ['create', 'show', 'edit']]);
@@ -198,6 +206,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Rutas para la gestión de Ciudades de Estados */
     Route::resource('cities', 'CityController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-city/{id?}',
+        'CityController@getCity'
+    )->name('get-city');
 
     /** Rutas para la gestión de Parroquias de Municipios */
     Route::resource('parishes', 'ParishController', ['except' => ['create', 'show', 'edit']]);
