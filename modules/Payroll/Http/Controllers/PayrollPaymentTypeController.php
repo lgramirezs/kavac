@@ -342,27 +342,7 @@ class PayrollPaymentTypeController extends Controller
 
     public function calculatePayrollPayment(Request $request)
     {
-        // dd($request->all());
         $this->data = $request->all();
-
-        // $created_at = now();
-        // $payrollParameters = new PayrollAssociatedParametersRepository;
-
-        /**
-         * Objeto asociado al modelo Payroll
-         * @var    Object    $payroll
-         */
-        // $payroll = Payroll::updateOrCreate(
-        //     [
-        //         'id'                        => $this->data['id']
-        //     ],
-        //     [
-        //         'name'                      => $this->data['name'],
-        //         'payroll_payment_period_id' => $this->data['payroll_payment_period_id'],
-        //         'payroll_parameters'        => json_encode($this->data['payroll_parameters']),
-        //         'created_at'                => $this->data['created_at'] ?? $created_at
-        //     ]
-        // );
 
         /** Se recorren los conceptos establecidos para la generación de la nómina */
         $concepts = [];
@@ -387,6 +367,7 @@ class PayrollPaymentTypeController extends Controller
                     /** Se descartan los elementos vacios y las constantes númericas */
                     if ($current == '' || is_numeric($current)) {
                         unset($exploded[$key]);
+                        
                         $complete = true;
                     } else {
                         /** Se recorre el listado de parámetros para sustituirlos por su valor real
@@ -406,7 +387,7 @@ class PayrollPaymentTypeController extends Controller
                         }
                     }
                 }
-                array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula]);
+                array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula ?? $payrollConcept->formula]);
             } elseif ($payrollConcept->calculation_way == 'tabulator') {
                 array_push($concepts, ['field' => $payrollConcept, 'formula' => null]);
             }
@@ -430,83 +411,79 @@ class PayrollPaymentTypeController extends Controller
             });
         })->first();
 
-        // dd($payrollStaffs);
 
-        // foreach ($payrollStaffs as $payrollStaff) {
-            /** Se definen los arreglos de asignaciones y deducciones para clasificar los conceptos */
-            $assignments = [];
-            $deductions  = [];
-            foreach ($concepts as $concept) {
-                $formula = null;
-                if ($concept['field']->calculation_way == 'formula') {
-                    $exploded = multiexplode(
-                        [
-                            'if', '(', ')', '{', '}', ' ',
-                            '==', '<=', '>=', '<', '>', '!=',
-                            '+', '-','*','/'
-                        ],
-                        $concept['formula']
-                    );
-                    while (count($exploded) > 0) {
-                        $complete = false;
-                        $current = max_length($exploded);
-                        // dd($exploded);
-                        $key = array_search($current, $exploded);
-                        /** Se descartan los elementos vacios y las constantes númericas */
-                        if ($current == '' || is_numeric($current)) {
-                            unset($exploded[$key]);
-                            $complete = true;
-                        } else {
-                            /** Se recorre el listado de parámetros asociados a la configuración de vacaciones
-                              * para sustituirlos por su valor real en la formula del concepto */
-                            foreach ($payrollParameters->loadData('associatedVacation') as $parameter) {
-                                if ($parameter['id'] == $current) {
-                                    $records = (is_object($parameter['model']))
-                                        ? $parameter['model']
-                                        : $parameter['model']::where('institution_id', $institution->id)->first();
-                                    unset($exploded[$key]);
-                                    $complete = true;
-                                    $formula = str_replace(
-                                        $parameter['id'],
-                                        $records[$parameter['required'][0]],
-                                        $formula ?? $concept['formula']);
-                                }
+        /** Se definen los arreglos de asignaciones y deducciones para clasificar los conceptos */
+        $assignments = [];
+        $deductions  = [];
+        foreach ($concepts as $concept) {
+            $formula = null;
+            if ($concept['field']->calculation_way == 'formula') {
+                $exploded = multiexplode(
+                    [
+                        'if', '(', ')', '{', '}', ' ',
+                        '==', '<=', '>=', '<', '>', '!=',
+                        '+', '-','*','/'
+                    ],
+                    $concept['formula']
+                );
+                while (count($exploded) > 0) {
+                    $complete = false;
+                    $current = max_length($exploded);
+                    $key = array_search($current, $exploded);
+                    /** Se descartan los elementos vacios y las constantes númericas */
+                    if ($current == '' || is_numeric($current)) {
+                        unset($exploded[$key]);
+                        $complete = true;
+                    } else {
+                        /** Se recorre el listado de parámetros asociados a la configuración de vacaciones
+                          * para sustituirlos por su valor real en la formula del concepto */
+                        foreach ($payrollParameters->loadData('associatedVacation') as $parameter) {
+                            if ($parameter['id'] == $current) {
+                                $records = (is_object($parameter['model']))
+                                    ? $parameter['model']
+                                    : $parameter['model']::where('institution_id', $institution->id)->first();
+                                unset($exploded[$key]);
+                                $complete = true;
+                                $formula = str_replace(
+                                    $parameter['id'],
+                                    $records[$parameter['required'][0]],
+                                    $formula ?? $concept['formula']);
                             }
-                            /** Se recorre el listado de parámetros asociados al expediente del trabajador
-                              * para sustituirlos por su valor real en la formula del concepto */
-                            if ($complete == false) {
-                                foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
-                                    if (!empty($parameter['children'])) {
-                                        foreach ($parameter['children'] as $children) {
-                                            if ($children['id'] == $current) {
-                                                $record = ($parameter['model'] != PayrollStaff::class)
-                                                    ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                    : $payrollStaff;
-                                                unset($exploded[$key]);
-                                                $complete = true;
-                                                if ($children['type'] == 'number') {
-                                                    /** Se calcula el número de registros existentes según sea el caso
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $record->loadCount($children['required'][0]);
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[Str::camel($children['required'][0]) . '_count'],
-                                                        $formula ?? $concept['formula']);
-                                                } elseif ($children['type'] == 'date') {
-                                                    /** Se calcula el número de años según la fecha de ingreso
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[age($record[$children['required'][0]])],
-                                                        $formula ?? $concept['formula']);
-                                                } else {
-                                                    /** Se identifica el valor según el expediente del trabajador
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[$children['required'][0]],
-                                                        $formula ?? $concept['formula']);
-                                                }
+                        }
+                        /** Se recorre el listado de parámetros asociados al expediente del trabajador
+                          * para sustituirlos por su valor real en la formula del concepto */
+                        if ($complete == false) {
+                            foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
+                                if (!empty($parameter['children'])) {
+                                    foreach ($parameter['children'] as $children) {
+                                        if ($children['id'] == $current) {
+                                            $record = ($parameter['model'] != PayrollStaff::class)
+                                                ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                : $payrollStaff;
+                                            unset($exploded[$key]);
+                                            $complete = true;
+                                            if ($children['type'] == 'number') {
+                                                /** Se calcula el número de registros existentes según sea el caso
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $record->loadCount($children['required'][0]);
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[Str::camel($children['required'][0]) . '_count'],
+                                                    $formula ?? $concept['formula']);
+                                            } elseif ($children['type'] == 'date') {
+                                                /** Se calcula el número de años según la fecha de ingreso
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[age($record[$children['required'][0]])],
+                                                    $formula ?? $concept['formula']);
+                                            } else {
+                                                /** Se identifica el valor según el expediente del trabajador
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[$children['required'][0]],
+                                                    $formula ?? $concept['formula']);
                                             }
                                         }
                                     }
@@ -514,310 +491,240 @@ class PayrollPaymentTypeController extends Controller
                             }
                         }
                     }
-                } elseif ($payrollConcept->calculation_way == 'tabulator') {
-                    /** Se carga la propiedad tabulador asociada al concepto */
-                    $payrollConcept->load('payrollSalaryTabulator');
-                    $payrollSalaryTabulator = $payrollConcept->payrollSalaryTabulator;
-                    if ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'horizontal') {
-                        /** Se carga el escalafón horizontal asociado al tabulador */
-                        $payrollSalaryTabulator->load(['payrollHorizontalSalaryScale' => function($q) {
-                            $q->load('payrollScales');
-                        }]);
-                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
-                            if (!empty($parameter['children'])) {
-                                foreach ($parameter['children'] as $children) {
-                                    if ($children['id'] == $payrollSalaryTabulator->payrollHorizontalSalaryScale['group_by']) {
-                                        $record = ($parameter['model'] != PayrollStaff::class)
-                                            ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                            : $payrollStaff;
-                                        foreach ($payrollSalaryTabulator->payrollHorizontalSalaryScale->payrollScales as $scale) {
-                                            if ($children['type'] == 'number') {
-                                                /** Se calcula el número de registros existentes según sea el caso
-                                                 * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                $record->loadCount($children['required'][0]);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
-                                                        ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                            ->where('payroll_vertical_scale_id', null)->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                            ->where('payroll_vertical_scale_id', null)->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
+                }
+            } elseif ($payrollConcept->calculation_way == 'tabulator') {
+                /** Se carga la propiedad tabulador asociada al concepto */
+                $payrollConcept->load('payrollSalaryTabulator');
+                $payrollSalaryTabulator = $payrollConcept->payrollSalaryTabulator;
+                if ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'horizontal') {
+                    /** Se carga el escalafón horizontal asociado al tabulador */
+                    $payrollSalaryTabulator->load(['payrollHorizontalSalaryScale' => function($q) {
+                        $q->load('payrollScales');
+                    }]);
+                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
+                        if (!empty($parameter['children'])) {
+                            foreach ($parameter['children'] as $children) {
+                                if ($children['id'] == $payrollSalaryTabulator->payrollHorizontalSalaryScale['group_by']) {
+                                    $record = ($parameter['model'] != PayrollStaff::class)
+                                        ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                        : $payrollStaff;
+                                    foreach ($payrollSalaryTabulator->payrollHorizontalSalaryScale->payrollScales as $scale) {
+                                        if ($children['type'] == 'number') {
+                                            /** Se calcula el número de registros existentes según sea el caso
+                                             * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            $record->loadCount($children['required'][0]);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
+                                                    ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                        ->where('payroll_vertical_scale_id', null)->first();
+                                                    $formula = json_decode($tabScale['value']);
                                                 }
-                                                
-                                            } elseif ($children['type'] == 'date') {
-                                                /** Se calcula el número de años según la fecha de ingreso
-                                                  * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
-                                                        ($record[age($record[$children['required'][0]])] < $scl['to'])) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                            ->where('payroll_vertical_scale_id', null)->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[age($record[$children['required'][0]])]) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                            ->where('payroll_vertical_scale_id', null)->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                }
-                                                
                                             } else {
-                                                /** Se identifica el valor según el expediente del trabajador
-                                                 * y se sustituye por su valor en el tabulador */
-                                                if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
                                                     $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
                                                         ->where('payroll_horizontal_scale_id', $scale['id'])
                                                         ->where('payroll_vertical_scale_id', null)->first();
                                                     $formula = json_decode($tabScale['value']);
                                                 }
                                             }
-
+                                            
+                                        } elseif ($children['type'] == 'date') {
+                                            /** Se calcula el número de años según la fecha de ingreso
+                                              * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
+                                                    ($record[age($record[$children['required'][0]])] < $scl['to'])) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                        ->where('payroll_vertical_scale_id', null)->first();
+                                                    $formula = json_decode($tabScale['value']);
+                                                }
+                                            } else {
+                                                if ($scl == $record[age($record[$children['required'][0]])]) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                        ->where('payroll_vertical_scale_id', null)->first();
+                                                    $formula = json_decode($tabScale['value']);
+                                                }
+                                            }
+                                            
+                                        } else {
+                                            /** Se identifica el valor según el expediente del trabajador
+                                             * y se sustituye por su valor en el tabulador */
+                                            if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                    ->where('payroll_vertical_scale_id', null)->first();
+                                                $formula = json_decode($tabScale['value']);
+                                            }
                                         }
+
                                     }
                                 }
                             }
                         }
-                    } else if ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'vertical') {
-                        /** Se carga el escalafón vertical asociado al tabulador */
-                        $payrollSalaryTabulator->load(['payrollVerticalSalaryScale' => function($q) {
-                            $q->load('payrollScales');
-                        }]);
-                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
-                            if (!empty($parameter['children'])) {
-                                foreach ($parameter['children'] as $children) {
-                                    if ($children['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
-                                        $record = ($parameter['model'] != PayrollStaff::class)
-                                            ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                            : $payrollStaff;
-                                        foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scale) {
-                                            if ($children['type'] == 'number') {
-                                                /** Se calcula el número de registros existentes según sea el caso
-                                                 * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                $record->loadCount($children['required'][0]);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
-                                                        ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', null)
-                                                            ->where('payroll_vertical_scale_id', $scale['id'])->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', null)
-                                                            ->where('payroll_vertical_scale_id', $scale['id'])->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
+                    }
+                } else if ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'vertical') {
+                    /** Se carga el escalafón vertical asociado al tabulador */
+                    $payrollSalaryTabulator->load(['payrollVerticalSalaryScale' => function($q) {
+                        $q->load('payrollScales');
+                    }]);
+                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
+                        if (!empty($parameter['children'])) {
+                            foreach ($parameter['children'] as $children) {
+                                if ($children['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
+                                    $record = ($parameter['model'] != PayrollStaff::class)
+                                        ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                        : $payrollStaff;
+                                    foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scale) {
+                                        if ($children['type'] == 'number') {
+                                            /** Se calcula el número de registros existentes según sea el caso
+                                             * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            $record->loadCount($children['required'][0]);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
+                                                    ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', null)
+                                                        ->where('payroll_vertical_scale_id', $scale['id'])->first();
+                                                    $formula = json_decode($tabScale['value']);
                                                 }
-                                                
-                                            } elseif ($children['type'] == 'date') {
-                                                /** Se calcula el número de años según la fecha de ingreso
-                                                  * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
-                                                        ($record[age($record[$children['required'][0]])] < $scl['to'])) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', null)
-                                                            ->where('payroll_vertical_scale_id', $scale['id'])->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[age($record[$children['required'][0]])]) {
-                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                            ->where('payroll_horizontal_scale_id', null)
-                                                            ->where('payroll_vertical_scale_id', $scale['id'])->first();
-                                                        $formula = json_decode($tabScale['value']);
-                                                    }
-                                                }
-                                                
                                             } else {
-                                                /** Se identifica el valor según el expediente del trabajador
-                                                 * y se sustituye por su valor en el tabulador */
-                                                if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
                                                     $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
                                                         ->where('payroll_horizontal_scale_id', null)
                                                         ->where('payroll_vertical_scale_id', $scale['id'])->first();
                                                     $formula = json_decode($tabScale['value']);
                                                 }
                                             }
-
+                                            
+                                        } elseif ($children['type'] == 'date') {
+                                            /** Se calcula el número de años según la fecha de ingreso
+                                              * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
+                                                    ($record[age($record[$children['required'][0]])] < $scl['to'])) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', null)
+                                                        ->where('payroll_vertical_scale_id', $scale['id'])->first();
+                                                    $formula = json_decode($tabScale['value']);
+                                                }
+                                            } else {
+                                                if ($scl == $record[age($record[$children['required'][0]])]) {
+                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                        ->where('payroll_horizontal_scale_id', null)
+                                                        ->where('payroll_vertical_scale_id', $scale['id'])->first();
+                                                    $formula = json_decode($tabScale['value']);
+                                                }
+                                            }
+                                            
+                                        } else {
+                                            /** Se identifica el valor según el expediente del trabajador
+                                             * y se sustituye por su valor en el tabulador */
+                                            if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                    ->where('payroll_horizontal_scale_id', null)
+                                                    ->where('payroll_vertical_scale_id', $scale['id'])->first();
+                                                $formula = json_decode($tabScale['value']);
+                                            }
                                         }
+
                                     }
                                 }
                             }
                         }
-                    } else {
-                        /** Se carga el escalafón horizontal asociado al tabulador */
-                        $payrollSalaryTabulator->load([
-                            'payrollHorizontalSalaryScale' => function($q) {
-                                $q->load('payrollScales');
-                            }, 'payrollVerticalSalaryScale' => function($q) {
-                                $q->load('payrollScales');
-                            }
-                        ]);
-                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
-                            if (!empty($parameter['children'])) {
-                                foreach ($parameter['children'] as $children) {
-                                    if ($children['id'] == $payrollSalaryTabulator->payrollHorizontalSalaryScale['group_by']) {
-                                        $record = ($parameter['model'] != PayrollStaff::class)
-                                            ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                            : $payrollStaff;
-                                        foreach ($payrollSalaryTabulator->payrollHorizontalSalaryScale->payrollScales as $scale) {
-                                            if ($children['type'] == 'number') {
-                                                /** Se calcula el número de registros existentes según sea el caso
-                                                 * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                $record->loadCount($children['required'][0]);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
-                                                        ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
+                    }
+                } else {
+                    /** Se carga el escalafón horizontal asociado al tabulador */
+                    $payrollSalaryTabulator->load([
+                        'payrollHorizontalSalaryScale' => function($q) {
+                            $q->load('payrollScales');
+                        }, 'payrollVerticalSalaryScale' => function($q) {
+                            $q->load('payrollScales');
+                        }
+                    ]);
+                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
+                        if (!empty($parameter['children'])) {
+                            foreach ($parameter['children'] as $children) {
+                                if ($children['id'] == $payrollSalaryTabulator->payrollHorizontalSalaryScale['group_by']) {
+                                    $record = ($parameter['model'] != PayrollStaff::class)
+                                        ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                        : $payrollStaff;
+                                    foreach ($payrollSalaryTabulator->payrollHorizontalSalaryScale->payrollScales as $scale) {
+                                        if ($children['type'] == 'number') {
+                                            /** Se calcula el número de registros existentes según sea el caso
+                                             * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            $record->loadCount($children['required'][0]);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[Str::camel($children['required'][0]) . '_count'] >= $scl['from']) &&
+                                                    ($record[Str::camel($children['required'][0]) . '_count'] < $scl['to'])) {
 
-                                                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
-                                                            if (!empty($parameterV['children'])) {
-                                                                foreach ($parameterV['children'] as $childrenV) {
-                                                                    if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
-                                                                        $recordV = ($parameterV['model'] != PayrollStaff::class)
-                                                                            ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                                            : $payrollStaff;
-                                                                        foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
-                                                                            if ($childrenV['type'] == 'number') {
-                                                                                /** Se calcula el número de registros existentes según sea el caso
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                $recordV->loadCount($childrenV['required'][0]);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
-                                                                                        ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
+                                                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
+                                                        if (!empty($parameterV['children'])) {
+                                                            foreach ($parameterV['children'] as $childrenV) {
+                                                                if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
+                                                                    $recordV = ($parameterV['model'] != PayrollStaff::class)
+                                                                        ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                                        : $payrollStaff;
+                                                                    foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
+                                                                        if ($childrenV['type'] == 'number') {
+                                                                            /** Se calcula el número de registros existentes según sea el caso
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            $recordV->loadCount($childrenV['required'][0]);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
+                                                                                    ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
 
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
                                                                                 }
-                                                                            } elseif ($childrenV['type'] == 'date') {
-                                                                                /** Se calcula el número de años según la fecha de ingreso
-                                                                                  * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
-                                                                                        ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                                
                                                                             } else {
-                                                                                /** Se identifica el valor según el expediente del trabajador
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                                if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
                                                                                     $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
                                                                                         ->where('payroll_horizontal_scale_id', $scale['id'])
                                                                                         ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
                                                                                     $formula = json_decode($tabScale['value']);
                                                                                 }
                                                                             }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
-
-                                                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
-                                                            if (!empty($parameterV['children'])) {
-                                                                foreach ($parameterV['children'] as $childrenV) {
-                                                                    if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
-                                                                        $recordV = ($parameterV['model'] != PayrollStaff::class)
-                                                                            ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                                            : $payrollStaff;
-                                                                        foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
-                                                                            if ($childrenV['type'] == 'number') {
-                                                                                /** Se calcula el número de registros existentes según sea el caso
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                $recordV->loadCount($childrenV['required'][0]);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
-                                                                                        ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
-
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                            } elseif ($childrenV['type'] == 'date') {
-                                                                                /** Se calcula el número de años según la fecha de ingreso
-                                                                                  * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
-                                                                                        ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                                
-                                                                            } else {
-                                                                                /** Se identifica el valor según el expediente del trabajador
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                        } elseif ($childrenV['type'] == 'date') {
+                                                                            /** Se calcula el número de años según la fecha de ingreso
+                                                                              * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
+                                                                                    ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
                                                                                     $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
                                                                                         ->where('payroll_horizontal_scale_id', $scale['id'])
                                                                                         ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
                                                                                     $formula = json_decode($tabScale['value']);
                                                                                 }
+                                                                            } else {
+                                                                                if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            }
+                                                                            
+                                                                        } else {
+                                                                            /** Se identifica el valor según el expediente del trabajador
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
                                                                             }
                                                                         }
                                                                     }
@@ -826,156 +733,9 @@ class PayrollPaymentTypeController extends Controller
                                                         }
                                                     }
                                                 }
-                                                
-                                            } elseif ($children['type'] == 'date') {
-                                                /** Se calcula el número de años según la fecha de ingreso
-                                                  * y se sustituye por su valor en el tabulador */
-                                                $scl = json_decode($scale['value']);
-                                                if (isset($scl['from']) && isset($scl['to'])) {
-                                                    if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
-                                                        ($record[age($record[$children['required'][0]])] < $scl['to'])) {
-                                                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
-                                                            if (!empty($parameterV['children'])) {
-                                                                foreach ($parameterV['children'] as $childrenV) {
-                                                                    if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
-                                                                        $recordV = ($parameterV['model'] != PayrollStaff::class)
-                                                                            ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                                            : $payrollStaff;
-                                                                        foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
-                                                                            if ($childrenV['type'] == 'number') {
-                                                                                /** Se calcula el número de registros existentes según sea el caso
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                $recordV->loadCount($childrenV['required'][0]);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
-                                                                                        ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
-
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                            } elseif ($childrenV['type'] == 'date') {
-                                                                                /** Se calcula el número de años según la fecha de ingreso
-                                                                                  * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
-                                                                                        ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                                
-                                                                            } else {
-                                                                                /** Se identifica el valor según el expediente del trabajador
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
-                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                    $formula = json_decode($tabScale['value']);
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                } else {
-                                                    if ($scl == $record[age($record[$children['required'][0]])]) {
-                                                        foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
-                                                            if (!empty($parameterV['children'])) {
-                                                                foreach ($parameterV['children'] as $childrenV) {
-                                                                    if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
-                                                                        $recordV = ($parameterV['model'] != PayrollStaff::class)
-                                                                            ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                                            : $payrollStaff;
-                                                                        foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
-                                                                            if ($childrenV['type'] == 'number') {
-                                                                                /** Se calcula el número de registros existentes según sea el caso
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                $recordV->loadCount($childrenV['required'][0]);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
-                                                                                        ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
-
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                            } elseif ($childrenV['type'] == 'date') {
-                                                                                /** Se calcula el número de años según la fecha de ingreso
-                                                                                  * y se sustituye por su valor en el tabulador */
-                                                                                $sclV = json_decode($scaleV['value']);
-                                                                                if (isset($sclV['from']) && isset($sclV['to'])) {
-                                                                                    if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
-                                                                                        ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                } else {
-                                                                                    if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
-                                                                                        $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                            ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                            ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                        $formula = json_decode($tabScale['value']);
-                                                                                    }
-                                                                                }
-                                                                                
-                                                                            } else {
-                                                                                /** Se identifica el valor según el expediente del trabajador
-                                                                                 * y se sustituye por su valor en el tabulador */
-                                                                                if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
-                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
-                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
-                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
-                                                                                    $formula = json_decode($tabScale['value']);
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                
                                             } else {
-                                                /** Se identifica el valor según el expediente del trabajador
-                                                 * y se sustituye por su valor en el tabulador */
-                                                if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                if ($scl == $record[Str::camel($children['required'][0]) . '_count']) {
+
                                                     foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
                                                         if (!empty($parameterV['children'])) {
                                                             foreach ($parameterV['children'] as $childrenV) {
@@ -1044,46 +804,258 @@ class PayrollPaymentTypeController extends Controller
                                                     }
                                                 }
                                             }
+                                            
+                                        } elseif ($children['type'] == 'date') {
+                                            /** Se calcula el número de años según la fecha de ingreso
+                                              * y se sustituye por su valor en el tabulador */
+                                            $scl = json_decode($scale['value']);
+                                            if (isset($scl['from']) && isset($scl['to'])) {
+                                                if (($record[age($record[$children['required'][0]])] >= $scl['from']) &&
+                                                    ($record[age($record[$children['required'][0]])] < $scl['to'])) {
+                                                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
+                                                        if (!empty($parameterV['children'])) {
+                                                            foreach ($parameterV['children'] as $childrenV) {
+                                                                if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
+                                                                    $recordV = ($parameterV['model'] != PayrollStaff::class)
+                                                                        ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                                        : $payrollStaff;
+                                                                    foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
+                                                                        if ($childrenV['type'] == 'number') {
+                                                                            /** Se calcula el número de registros existentes según sea el caso
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            $recordV->loadCount($childrenV['required'][0]);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
+                                                                                    ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
 
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            } else {
+                                                                                if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            }
+                                                                        } elseif ($childrenV['type'] == 'date') {
+                                                                            /** Se calcula el número de años según la fecha de ingreso
+                                                                              * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
+                                                                                    ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            } else {
+                                                                                if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            }
+                                                                            
+                                                                        } else {
+                                                                            /** Se identifica el valor según el expediente del trabajador
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                if ($scl == $record[age($record[$children['required'][0]])]) {
+                                                    foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
+                                                        if (!empty($parameterV['children'])) {
+                                                            foreach ($parameterV['children'] as $childrenV) {
+                                                                if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
+                                                                    $recordV = ($parameterV['model'] != PayrollStaff::class)
+                                                                        ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                                        : $payrollStaff;
+                                                                    foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
+                                                                        if ($childrenV['type'] == 'number') {
+                                                                            /** Se calcula el número de registros existentes según sea el caso
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            $recordV->loadCount($childrenV['required'][0]);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
+                                                                                    ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
+
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            } else {
+                                                                                if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            }
+                                                                        } elseif ($childrenV['type'] == 'date') {
+                                                                            /** Se calcula el número de años según la fecha de ingreso
+                                                                              * y se sustituye por su valor en el tabulador */
+                                                                            $sclV = json_decode($scaleV['value']);
+                                                                            if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                                if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
+                                                                                    ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            } else {
+                                                                                if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
+                                                                                    $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                        ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                        ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                    $formula = json_decode($tabScale['value']);
+                                                                                }
+                                                                            }
+                                                                            
+                                                                        } else {
+                                                                            /** Se identifica el valor según el expediente del trabajador
+                                                                             * y se sustituye por su valor en el tabulador */
+                                                                            if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                        } else {
+                                            /** Se identifica el valor según el expediente del trabajador
+                                             * y se sustituye por su valor en el tabulador */
+                                            if (json_decode($scale['value']) == $record[$children['required'][0]]) {
+                                                foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameterV) {
+                                                    if (!empty($parameterV['children'])) {
+                                                        foreach ($parameterV['children'] as $childrenV) {
+                                                            if ($childrenV['id'] == $payrollSalaryTabulator->payrollVerticalSalaryScale['group_by']) {
+                                                                $recordV = ($parameterV['model'] != PayrollStaff::class)
+                                                                    ? $parameterV['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                                    : $payrollStaff;
+                                                                foreach ($payrollSalaryTabulator->payrollVerticalSalaryScale->payrollScales as $scaleV) {
+                                                                    if ($childrenV['type'] == 'number') {
+                                                                        /** Se calcula el número de registros existentes según sea el caso
+                                                                         * y se sustituye por su valor en el tabulador */
+                                                                        $sclV = json_decode($scaleV['value']);
+                                                                        $recordV->loadCount($childrenV['required'][0]);
+                                                                        if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                            if (($recordV[Str::camel($childrenV['required'][0]) . '_count'] >= $sclV['from']) &&
+                                                                                ($recordV[Str::camel($childrenV['required'][0]) . '_count'] < $sclV['to'])) {
+
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        } else {
+                                                                            if ($sclV == $recordV[Str::camel($childrenV['required'][0]) . '_count']) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        }
+                                                                    } elseif ($childrenV['type'] == 'date') {
+                                                                        /** Se calcula el número de años según la fecha de ingreso
+                                                                          * y se sustituye por su valor en el tabulador */
+                                                                        $sclV = json_decode($scaleV['value']);
+                                                                        if (isset($sclV['from']) && isset($sclV['to'])) {
+                                                                            if (($recordV[age($recordV[$childrenV['required'][0]])] >= $sclV['from']) &&
+                                                                                ($recordV[age($recordV[$childrenV['required'][0]])] < $sclV['to'])) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        } else {
+                                                                            if ($sclV == $recordV[age($recordV[$childrenV['required'][0]])]) {
+                                                                                $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                    ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                    ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                                $formula = json_decode($tabScale['value']);
+                                                                            }
+                                                                        }
+                                                                        
+                                                                    } else {
+                                                                        /** Se identifica el valor según el expediente del trabajador
+                                                                         * y se sustituye por su valor en el tabulador */
+                                                                        if (json_decode($scaleV['value']) == $recordV[$childrenV['required'][0]]) {
+                                                                            $tabScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $payrollSalaryTabulator->id)
+                                                                                ->where('payroll_horizontal_scale_id', $scale['id'])
+                                                                                ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
+                                                                            $formula = json_decode($tabScale['value']);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
+
                                     }
                                 }
                             }
                         }
                     }
                 }
-                /** Se carga la propiedad payrollConceptType
-                 *  para determinar si clasificar el concepto como asignación o deducción */
-                $concept['field']->load('payrollConceptType');
-                if ($concept['field']->payrollConceptType['sign'] == '+') {
-                    array_push(
-                        $assignments,
-                        [
-                            'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
-                        ]
-                    );
-                } elseif ($concept['field']->payrollConceptType['sign'] == '-') {
-                    array_push(
-                        $deductions,
-                        [
-                            'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
-                        ]
-                    );
-                }
             }
-            dd($assignments);
-            // PayrollStaffPayroll::updateOrCreate(
-            //     [
-            //         'payroll_id'       => $payroll->id,
-            //         'payroll_staff_id' => $payrollStaff->id
-            //     ],
-            //     [
-            //         'assignments' => json_encode($assignments),
-            //         'deductions'  => json_encode($deductions)
-            //     ]
-            // );
-        // }
+            /** Se carga la propiedad payrollConceptType
+             *  para determinar si clasificar el concepto como asignación o deducción */
+            $concept['field']->load('payrollConceptType');
+            if ($concept['field']->payrollConceptType['sign'] == '+') {
+                array_push(
+                    $assignments,
+                    [
+                        'name'  => $concept['field']->name,
+                        'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                    ]
+                );
+            } elseif ($concept['field']->payrollConceptType['sign'] == '-') {
+                array_push(
+                    $deductions,
+                    [
+                        'name'  => $concept['field']->name,
+                        'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                    ]
+                );
+            }
+        }
+
+        $result = 0;
+        foreach ($assignments as $assignment) {
+            $result += $assignment['value'];
+        }
+        return response()->json(['result' => $result, 'message' => 'Success'], 200);
     }
 }

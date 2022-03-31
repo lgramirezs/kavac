@@ -368,7 +368,7 @@
                                             <div class="form-group">
                                                 <label>¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute" v-model="record.worker_arises">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute" v-model="record.worker_arises" @change="generatePaymentVacation()">
                                                         <label slot="off-label"></label>
                                                     </p-check>
                                                 </div>
@@ -418,7 +418,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="group_by">Monto pago de vacaciones: </label>
-                                                    <label>{{ generatePaymentVacation() }}</label>
+                                                    <label>{{ record.generate_worker_arises }}</label>
                                                 </div>
                                             </div>
                                             <!-- ./Monto pago de vacaciones automáticamente -->
@@ -708,6 +708,7 @@ export default {
                 assign_to: '',
                 assign_options: {},
                 worker_arises: false,
+                generate_worker_arises: 0,
                 min_days_advance: '',
                 max_days_advance: '',
             },
@@ -777,7 +778,7 @@ export default {
                 }
             });
             return response;
-        }
+        },
     },
     created() {
         const vm = this;
@@ -841,6 +842,7 @@ export default {
                 assign_to: '',
                 assign_options: {},
                 worker_arises: false,
+                generate_worker_arises: 0,
                 min_days_advance: '',
                 max_days_advance: '',
             };
@@ -1296,20 +1298,20 @@ export default {
         generatePaymentVacation() {
             const vm = this;
 
-            axios.post(
-                `${window.app_url}/payroll/calculate-payment/`, {
-                    payroll_payment_type_id: vm.record.payroll_payment_type_id,
-                    payroll_concepts: [
-                        {
-                            id: vm.record.payroll_payment_type_id,
-                        }
-                    ],
-                    payroll_parameters:[],
-                }
-            ).then(response => {
-                console.log(response.data.result);
-                // vm.options = response.data;
-            });
+            if (vm.record.worker_arises) {
+                axios.post(
+                    `${window.app_url}/payroll/calculate-payment/`, {
+                        payroll_concepts: [
+                            {
+                                id: vm.record.payroll_payment_type_id,
+                            }
+                        ],
+                    }
+                ).then(response => {
+                    console.log(response.data.result)
+                    vm.record.generate_worker_arises = response.data.result;
+                });
+            }
         }
     },
 };
