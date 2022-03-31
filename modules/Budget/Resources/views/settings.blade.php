@@ -36,6 +36,7 @@
 				{!! Form::open(['id' => 'form-codes', 'route' => 'budget.settings.store', 'method' => 'post']) !!}
 					{!! Form::token() !!}
 					<div class="card-body" id="helpCodeSetting">
+						@include('budget::layouts.help-text-budget', ['codeSetting' => true])
 						@include('layouts.form-errors')
 						<div class="row">
 							<div class="col-12">
@@ -129,7 +130,6 @@
 								</div>
 							</div>
 						</div>
-						@include('layouts.help-text', ['codeSetting' => true])
 					</div>
 					<div class="card-footer text-right">
 						@include('layouts.form-buttons')
