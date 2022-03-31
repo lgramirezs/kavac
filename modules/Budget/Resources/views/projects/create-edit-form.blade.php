@@ -59,6 +59,17 @@
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
 								<div class="col-3">
 									<div class="form-group is-required">
+										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
+										{!! Form::select('payroll_staff_id', $staffs, null, [
+											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'payroll_staff_id',
+											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll", "")',
+											'title' => __('Seleccione una persona responsable del proyecto')
+										]) !!}
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="form-group is-required">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
 										]) !!}
@@ -66,15 +77,6 @@
 											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'payroll_position_id',
 											'title' => __('Seleccione el cargo de la persona responsable del proyecto')
-										]) !!}
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="form-group is-required">
-										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
-										{!! Form::select('payroll_staff_id', $staffs, null, [
-											'class' => 'select2', 'data-toggle' => 'tooltip',
-											'title' => __('Seleccione una persona responsable del proyecto')
 										]) !!}
 									</div>
 								</div>
