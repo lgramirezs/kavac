@@ -125,11 +125,11 @@
         <div class="row">
             <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
                 <button type="button" @click="reset()"
-                        class="btn btn-default btn-icon btn-round"
-                        title ="Borrar datos del formulario">
-                        <i class="fa fa-eraser"></i>
+                    class="btn btn-default btn-icon btn-round"
+                    title ="Borrar datos del formulario">
+                    <i class="fa fa-eraser"></i>
                 </button>
-                <button type="button"
+                <button type="button" @click="redirect_back(route_list)"
                     class="btn btn-warning btn-icon btn-round btn-modal-close"
                     data-dismiss="modal"
                     title="Cancelar y regresar">
@@ -196,6 +196,7 @@ export default {
                 code : '',
                 total : '',
             },
+            editIndex: null,
         }
     },
     methods: {
@@ -206,19 +207,18 @@ export default {
          */
         async loadForm(id){
             const vm = this;
-
             await axios.get('/sale/payment/info/'+id).then(response => {
                 if(typeof(response.data.record != "undefined")){
                     let data = response.data.record;
                     vm.record = {
                         id: data.id,
-                        sale_service_id: data.sale_service_id,
-                        sale_order_id: data.sale_order_id,
-                        currency_id: data.currency_id,
-                        bank_id: data.bank_id,
-                        number_reference: data.number_reference,
+                        sale_service_id: (data.order_or_service_define_attributes) ? data.order_service_id :'',
+                        sale_order_id: (!data.order_or_service_define_attributes) ? data.sale_order_id : '',
+                        currency_id: data.way_to_pay,
+                        bank_id: data.banking_entity,
+                        number_reference: data.reference_number,
                         payment_date: data.payment_date,
-                        advance: data.advance,
+                        advance: data.advance_define_attributes,
                     }
                 }
             });
@@ -239,6 +239,7 @@ export default {
                 payment_date: '',
                 advance: '',
             };
+            vm.editIndex = null;
             this.sale_service = [];
         },
 
@@ -374,6 +375,8 @@ export default {
         else {
             vm.record.date = moment(String(new Date())).format('YYYY-MM-DD');
         }
+
+        
     },
     props: {
         paymentid: {

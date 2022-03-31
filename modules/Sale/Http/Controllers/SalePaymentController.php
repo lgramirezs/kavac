@@ -38,6 +38,42 @@ class SalePaymentController extends Controller
     use ValidatesRequests;
 
     /**
+     * Arreglo con las reglas de validación sobre los datos de un formulario
+     * @var Array $validateRules
+     */
+    protected $validateRules;
+
+    /**
+     * Arreglo con los mensajes para las reglas de validación
+     * @var Array $messages
+     */
+    protected $messages;
+
+    /**
+     * Define la configuración de la clase
+     *
+     * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>>
+     */
+    public function __construct()
+    {
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'bank_id'               => ['required'],
+            'currency_id'           => ['required'],
+            'number_reference'      => ['required'],
+            'payment_date'          => ['required'],
+        ];
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+            'bank_id.required'          => 'El campo entidad bancaria es obligatorio.',
+            'currency_id.required'            => 'El campo forma de pago es obligatorio.',
+            'number_reference.required'             => 'El campo número de referencia de la operación es obligatorio.',
+            'payment_date.required' => 'El campo fecha en que se realizó el pago es obligatorio.',
+        ];
+    }
+
+    /**
      * [descripción del método]
      *
      * @method    index
@@ -84,6 +120,8 @@ class SalePaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // Llama la definición de los mensajes de validación.
+        $this->validate($request, $this->validateRules, $this->messages);
 
         //Establecer servicio. (true) pedido, (false).
         $order_or_service_define_attributes = ($request->sale_service_id) ? true : false;
@@ -115,6 +153,7 @@ class SalePaymentController extends Controller
             'number_reference' => ['required'],
             'payment_date' => ['required'],
         ]);
+
         //anticipo
         $advance_define_attributes = ($request->advance == null) ? false : true;
         $SalePayment = SaleRegisterPayment::create([
@@ -218,6 +257,7 @@ class SalePaymentController extends Controller
             ->select('sale_register_payments.id as id', 'code', 'payment_date', 'name', 'total_amount', 'reference_number', 'sale_goods_to_be_traded', 'order_or_service_define_attributes', 'type_person_juridica', 'name', 'id_number', 'organization', 'rif', 'phones', 'emails', 'payment_date', 'payment_refuse')
             ->orderBy('id')            
             ->where('payment_approve', '=', false)
+            ->where('payment_refuse', '=', false)
             ->get();
             /*
             $x6 = SaleService::with(['jose'])
@@ -254,6 +294,9 @@ class SalePaymentController extends Controller
             ->select('sale_register_payments.id as id', 'code', 'payment_date', 'name', 'total_amount', 'reference_number', 'sale_goods_to_be_traded', 'order_or_service_define_attributes', 'type_person_juridica', 'name', 'id_number', 'organization', 'rif', 'phones', 'emails', 'payment_date', 'payment_refuse')
             ->orderBy('id')            
             ->where('payment_approve', '=', true)
+            ->where('payment_refuse', '=', false)
+            ->where('advance_define_attributes', '=', false)
+
             ->get();
 
             /*
@@ -289,7 +332,8 @@ class SalePaymentController extends Controller
             ->join("sale_register_payments","sale_services.id","=","sale_register_payments.order_service_id")
             ->join("sale_clients","sale_services.sale_client_id","=","sale_clients.id")
             ->select('sale_register_payments.id as id', 'code', 'payment_date', 'name', 'total_amount', 'reference_number', 'sale_goods_to_be_traded', 'order_or_service_define_attributes', 'type_person_juridica', 'name', 'id_number', 'organization', 'rif', 'phones', 'emails', 'payment_date', 'payment_refuse')
-            ->orderBy('id')            
+            ->orderBy('id') 
+            ->where('payment_approve', '=', false)
             ->where('payment_refuse', '=', true)
             ->get();
 
@@ -329,6 +373,7 @@ class SalePaymentController extends Controller
             ->orderBy('id')            
             ->where('advance_define_attributes', '=', true)
             ->where('payment_approve', '=', true)
+            ->where('payment_refuse', '=', false)
             ->get();
             /*
             $x6 = SaleService::with(['jose'])
@@ -429,7 +474,7 @@ class SalePaymentController extends Controller
                     ->join("sale_clients","sale_services.sale_client_id","=","sale_clients.id")
                     ->first();
 */
-        $payment = SaleRegisterPayment::with('saleService')->where('id', $id)->get();
+        $payment = SaleRegisterPayment::with('saleService')->where('id', $id)->first();
 
         return response()->json(['record' => $payment], 200);
     }
@@ -546,10 +591,13 @@ class SalePaymentController extends Controller
     public function approvedPayment($id)
     {
         $payment = SaleRegisterPayment::find($id);
-        $payment->payment_approve = true;
-        $payment->save();
-
+        if (!$payment->payment_refuse and !$payment->payment_approve) {
+            $payment->payment_approve = true;
+            $payment->save();
         return response()->json(['record' => $payment, 'message' => 'Success'], 200);
+        }
+        return response()->json(['message' => 'error al guardar'], 404);
+
     }
     /**
      * Rechaza la solicitud realizada
@@ -560,10 +608,12 @@ class SalePaymentController extends Controller
         public function refusePayment($id)
     {
         $payment = SaleRegisterPayment::find($id);
-        $payment->payment_refuse = true;
-        $payment->save();
-
+        if (!$payment->payment_approve and !$payment->payment_refuse) {
+            $payment->payment_refuse = true;
+            $payment->save();
         return response()->json(['record' => $payment, 'message' => 'Success'], 200);
+        }
+        return response()->json(['message' => 'error al guardar'], 404);
     }
 
     /**
