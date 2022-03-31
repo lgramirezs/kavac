@@ -186,6 +186,8 @@ Route::group([
         'PayrollPaymentTypeController',
         ['as' => 'payroll', 'except' => ['show', 'create', 'edit']]
     );
+    /** Rutas para calcular el monto del tipo de pago */
+    Route::post('calculate-payment', 'PayrollPaymentTypeController@calculatePayrollPayment');
 
     /** Ruta que obtiene un arreglo con los tipos de pago registrados */
     Route::get(

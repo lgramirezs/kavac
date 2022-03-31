@@ -364,7 +364,7 @@
                                         </div>
                                         <!-- ./Los días de bonificación se establecen de acuerdo a un escalafón -->
                                         <!-- El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" v-if="record.payroll_payment_type_id">
                                             <div class="form-group">
                                                 <label>¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?</label>
                                                 <div class="col-12">
@@ -414,14 +414,14 @@
                                     </div>
                                     <div class="container">
                                         <div class="row" v-if="record.worker_arises">
-                                            <!-- Monto del pago vacaciones automáticamente -->
+                                            <!-- Monto pago de vacaciones automáticamente -->
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="group_by">Monto del pago vacaciones: </label>
+                                                    <label for="group_by">Monto pago de vacaciones: </label>
                                                     <label>{{ generatePaymentVacation() }}</label>
                                                 </div>
                                             </div>
-                                            <!-- ./Monto del pago vacaciones automáticamente -->
+                                            <!-- ./Monto pago de vacaciones automáticamente -->
                                         </div>
                                         <div class="row" v-if="record.on_scale">
                                             <!-- agrupar por -->
@@ -707,7 +707,7 @@ export default {
                 payroll_scales: [],
                 assign_to: '',
                 assign_options: {},
-                worker_arises: '',
+                worker_arises: false,
                 min_days_advance: '',
                 max_days_advance: '',
             },
@@ -840,7 +840,7 @@ export default {
                 payroll_scales: [],
                 assign_to: '',
                 assign_options: {},
-                worker_arises: '',
+                worker_arises: false,
                 min_days_advance: '',
                 max_days_advance: '',
             };
@@ -1292,11 +1292,23 @@ export default {
             vm.editIndex = null;
             event.preventDefault();
         },
+
         generatePaymentVacation() {
-            axios.get(
-                `${window.app_url}/payroll/generate-payment-vacation/${field['id']}`
+            const vm = this;
+
+            axios.post(
+                `${window.app_url}/payroll/calculate-payment/`, {
+                    payroll_payment_type_id: vm.record.payroll_payment_type_id,
+                    payroll_concepts: [
+                        {
+                            id: vm.record.payroll_payment_type_id,
+                        }
+                    ],
+                    payroll_parameters:[],
+                }
             ).then(response => {
-                vm.options = response.data;
+                console.log(response.data.result);
+                // vm.options = response.data;
             });
         }
     },
