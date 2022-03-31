@@ -34,7 +34,7 @@ A continuación tendrá acceso a la **pantalla principal** o **página de inicio
 
 -   Presione el botón **Accesso** para iniciar sesión.
 
-![Screenshot](../img/logout.png#imagen)
+![Screenshot](../img/login.png#imagen)
 
 
 -   A continuación tendrá acceso a la pantalla prinicipal de su cuenta de usuario.
@@ -57,11 +57,19 @@ A continuación tendrá acceso a la **pantalla principal** o **página de inicio
 
         ![Screenshot](../img/password.png#imagen)
 
-        - A continuación ingrese el **correo electrónico** de la cuenta de usuario y presione el botón **Enviar enlace**.
+        -   A continuación ingrese el **correo electrónico** de la cuenta de usuario y presione el botón **Enviar enlace**.
 
         ![Screenshot](../img/reset.png#imagen)
 
-        - Consulte la bandeja de correos recibidos de su cuenta de correo electrónico y obtenga la nueva contraseña suministrada por el sistema. 
+        -   Consulte la bandeja de correos recibidos de su cuenta de correo electrónico y obtenga el enlace para restablecer contraseña. 
 
-        - Retorne a la página de inicio de sesión e ingrese el **Nombre de usuario** y la **Contraseña** suministrada por el sistema. 
+        ![Screenshot](../img/mail_user.png#imagen)
+
+        -   Ingrese el correo electrónico asociado a la cuenta de usuario y la nueva contraseña, a continuación presione el botón **Modificar** para restablecer contraseña.  
+
+        ![Screenshot](../img/password_2.png#imagen)
+
+        -   Inicie sesión haciendo uso de la nueva contraseña que ha asignado a la cuenta de usuario. 
+
+        ![Screenshot](../img/login.png#imagen)
 

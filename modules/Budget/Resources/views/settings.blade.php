@@ -36,6 +36,7 @@
 				{!! Form::open(['id' => 'form-codes', 'route' => 'budget.settings.store', 'method' => 'post']) !!}
 					{!! Form::token() !!}
 					<div class="card-body" id="helpCodeSetting">
+						@include('budget::layouts.help-text-budget', ['codeSetting' => true])
 						@include('layouts.form-errors')
 						<div class="row">
 							<div class="col-12">
@@ -129,7 +130,6 @@
 								</div>
 							</div>
 						</div>
-						@include('layouts.help-text', ['codeSetting' => true])
 					</div>
 					<div class="card-footer text-right">
 						@include('layouts.form-buttons')
@@ -144,7 +144,6 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Proyectos') }}
-						@include('buttons.help')
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -166,8 +165,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h6 class="card-title">
-						{{ __('Acciones Centralizadas') }}
-						@include('buttons.help')
+						{{ __('Acciones Centralizadas') }}					
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])

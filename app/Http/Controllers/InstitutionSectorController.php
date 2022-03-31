@@ -119,4 +119,18 @@ class InstitutionSectorController extends Controller
         $institutionSector->delete();
         return response()->json(['record' => $institutionSector, 'message' => 'Success'], 200);
     }
+
+    /**
+     * Consulta un sector específico
+     *
+     * @author  Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+     * @param \Illuminate\Http\Request $request Datos de la petición
+     * @param $id ID del sector
+     * @return \Illuminate\Http\JsonResponse con el resultado de la petición
+     */
+    public function getSector(Request $request, $id)
+    {
+        $sector = InstitutionSector::find($id);
+        return response()->json(['result' => $sector], 200);
+    }
 }
