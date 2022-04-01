@@ -96,7 +96,7 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<div class="form-group is-required">
+								<div class="form-group">
 									{!! Form::label('onapre_code', __('Código ONAPRE'), ['class' => 'control-label']) !!}
 									{!! Form::text('onapre_code', (isset($model)) ? $model->onapre_code : old('onapre_code'), [
 										'class' => 'form-control input-sm', 'placeholder' => __('Código de la ONAPRE'),

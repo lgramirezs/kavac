@@ -54,7 +54,6 @@ class BudgetProjectController extends Controller
             'payroll_position_id' => ['required'],
             'payroll_staff_id' => ['required'],
             'code' => ['required'],
-            'onapre_code' => ['required'],
             'name' => ['required'],
         ];
 
@@ -65,7 +64,6 @@ class BudgetProjectController extends Controller
             'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
             'payroll_staff_id.required' => 'El campo responsable es obligatorio. ',
             'code.required' => 'El campo código es obligatorio. ',
-            'onapre_code.required' => 'El campo código ONAPRE es obligatorio. ',
             'name.required' => 'El campo nombre es obligatorio. ',
         ];
     }
