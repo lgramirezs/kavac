@@ -59,7 +59,7 @@
           <div class="form-group is-required">
             <label for="phone">Número de teléfono:</label>
             <input type="text" id="phone" class="form-control input-sm" data-toggle="tooltip" required
-              title="Número de teléfono" v-model="record.phone" placeholder="+00-000-0000000">
+              title="Número de teléfono" v-model="record.phone" placeholder="+00-000-0000000" v-input-mask data-inputmask="'mask': '+99-999-9999999'">
           </div>
         </div>
       </div>
@@ -367,15 +367,13 @@
        */
       updateProduct() {
         const vm = this;
-        var entity_load = 'service';
-        var id = 0;
 
-          entity_load = 'product';
-          vm.record.sale_type_good_id = '';
-          id = vm.record.sale_warehouse_inventory_product_id;
+        let entity_load = 'Producto';
+        vm.record.sale_type_good_id = '';
+        let id = vm.record.sale_warehouse_inventory_product_id;
     
         if (id) {
-          axios.get('/sale/get-quote-price-' + entity_load + '/' + id).then(function (response) {
+          axios.get('/sale/get-bill-product' + '/' + entity_load + '/' + id).then(function (response) {
             let product = response.data.record;
             if (product) {
               let product_value = product.unit_value? product.unit_value : vm.record.value;
@@ -481,7 +479,8 @@
         product.history_tax_id = vm.record.history_tax_id;
         product.history_tax_value = vm.record.history_tax_value;
         product.product_tax_value = (product.total_without_tax * product.history_tax_value);
-        product.total = product.total_without_tax + product.product_tax_value;
+        product.product_tax_value = product.product_tax_value.toFixed(2);
+        product.total = product.total_without_tax + (product.total_without_tax * product.history_tax_value);
         let product_index = parseInt(vm.record.product_position_value);
         let previos_total = 0;
         let previos_total_without_tax = 0;

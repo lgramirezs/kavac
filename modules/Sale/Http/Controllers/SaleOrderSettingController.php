@@ -203,6 +203,7 @@ class SaleOrderSettingController extends Controller
           'total' => $row['total'],
           'measurement_unit_id' => $row['measurement_unit_id'],
           'measurement_unit' => $row['measurement_unit'],
+          'history_tax_id' => $row['history_tax_id'],
           'total_without_tax' => $row['total_without_tax'],
           'currency_id' => $row['currency']['name']
         ];
@@ -312,6 +313,7 @@ class SaleOrderSettingController extends Controller
           'id' => $id,
           'name' => $row['inventory_product']['name'],
           'quantity' => $row['quantity'],
+          'history_tax_id' => $row['history_tax_id'],
           'price_product' => $row["total_without_tax"],
           'iva' => $row["product_tax_value"],
           'total' => $row['total'],

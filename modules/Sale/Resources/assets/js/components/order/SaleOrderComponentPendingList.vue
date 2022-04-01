@@ -253,7 +253,7 @@
             var fields = vm.records[index-1];
             var id = vm.records[index-1].id;
             console.log(id);
-            axios.put('/'+vm.route_update+'/rejected/'+id, fields).then(response => {
+            axios.put('/sale/order/rejected/'+id, fields).then(response => {
               if (typeof(response.data.redirect) !== "undefined")
                 location.href = response.data.redirect;
               }).catch(error => {
@@ -289,7 +289,7 @@
             if (result) {
                var fields = vm.records[index-1];
                var id = vm.records[index-1].id;
-               axios.put('/'+vm.route_update+'/approved/'+id, fields).then(response => {
+               axios.put('/sale/order/approved/'+id, fields).then(response => {
                  if (typeof(response.data.redirect) !== "undefined")
                    location.href = response.data.redirect;
                  }).catch(error => {
