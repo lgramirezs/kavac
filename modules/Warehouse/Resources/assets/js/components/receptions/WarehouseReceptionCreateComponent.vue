@@ -326,6 +326,8 @@
                 }
                 vm.warehouse_inventory_product.warehouse_product_attributes = att;
 
+                if (!vm.validateErrors(vm.warehouse_inventory_product)) return false;
+
                 if (this.editIndex === null) {                  
                     vm.records.push(vm.warehouse_inventory_product);
                     vm.reset(false);
@@ -353,6 +355,27 @@
 
             removeProduct(index, event) {
                 this.records.splice(index-1, 1);
+            },
+
+            validateErrors(field) {
+                const vm = this;
+                vm.errors = [];
+                
+                if (!field["warehouse_product_id"])
+                    vm.errors.push('El campo nombre del insumo es obligatorio.');
+                if (!field["quantity"])
+                    vm.errors.push('El campo cantidad es obligatorio.');
+
+                if (!field["unit_value"])
+                    vm.errors.push('El campo valor es obligatorio.');
+
+                if (!field["currency_id"])
+                    vm.errors.push('El campo moneda es obligatorio.');
+
+                if (vm.errors.length > 0)
+                    return false;
+
+                return true;
             },
 
             createReception(url) {
