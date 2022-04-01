@@ -431,9 +431,9 @@
 
                                     {{-- Directorio institucional --}}
                                     <div class="list-group contact-group">
-                                        <table class="table table-hover table-striped dt-responsive nowrap datatable">
+                                        <table class="table table-hover table-striped dt-responsive nowrap @if (count($directory) > 0) datatable @endif">
                                             <tbody>
-                                                @foreach ($directory as $dir)
+                                                @forelse ($directory as $dir)
                                                     <tr>
                                                         <td>
                                                             <a href="mailto:{{ $dir['email'] }}" class="list-group-item">
@@ -466,7 +466,13 @@
                                                             </a><!-- list-group -->
                                                         </td>
                                                     </tr>
-                                                @endforeach
+                                                @empty
+                                                    <tr>
+                                                        <td>
+                                                            <h5 class="h5 text-center">Sin registros</h5>
+                                                        </td>
+                                                    </tr>
+                                                @endforelse 
                                             </tbody>
                                         </table>
                                     </div>
@@ -483,6 +489,35 @@
 @section('extra-js')
     @parent
     <script>
+        $(document).ready(function() {
+            /** Script para medir la fortaleza de la contraseña */
+            $('#password').complexify({}, function(valid, complexity) {
+                var progressBar = $('#complexity-bar');
+                var progressContainer = progressBar.closest('.progress-container');
+                var color;
+                $('#complexity').removeClass(['text-danger', 'text-warning', 'text-success']);
+                progressContainer.toggleClass('progress-danger', (complexity < 43));
+                progressContainer.toggleClass('progress-warning', (complexity >= 43 && complexity <= 70));
+                progressContainer.toggleClass('progress-success', (complexity > 70));
+        
+                if ((complexity < 43)) {
+                    color = "text-danger";
+                    progressContainer.find('.progress-badge').html('Débil');
+                } else if (complexity >= 43 && complexity <= 70) {
+                    color = "text-warning";
+                    progressContainer.find('.progress-badge').html('Aceptable');
+                } else if (complexity > 70) {
+                    color = "text-success";
+                    progressContainer.find('.progress-badge').html('Fuerte');
+                }
+        
+                progressBar.css({ 'width': complexity + '%' });
+        
+                $('#complexity').addClass(color);
+                $('#complexity').text(Math.round(complexity) + '%');
+                $('#complexity-level').val(Math.round(complexity));
+            });
+        });
         function uploadProfileImage() {
             $('.preloader').show();
             var url = $("#formImgProfile").attr('action');

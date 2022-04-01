@@ -245,14 +245,15 @@ class UserController extends Controller
             $this->validate($request, [
                 'password' => ['min:6', 'confirmed'],
                 'password_confirmation' => ['min:6', 'required_with:password'],
-		/*'complexity-level' => ['numeric', 'min:43', 'max:100']*/
+		        'complexity-level' => ['numeric', 'min:43', 'max:100']
             ], [
                 'confirmed' => __('La contraseña no coincide con la verificación'),
                 'required_with' => __('Debe confirmar la nueva contraseña'),
-               /* 'complexity-level' => __(
+                'complexity-level.numeric' => __('No es posible determinar la complejidad de la contraseña'),
+                'complexity-level.min' => __(
                     'Contraseña muy débil. Intente incorporar símbolos, letras y números, ' .
-                    'en cominación con mayúsculas y minúsculas.'
-	       ),*/
+                    'en combinación con mayúsculas y minúsculas.'
+	            ),
             ]);
 
             $user->password = bcrypt($request->input('password'));
