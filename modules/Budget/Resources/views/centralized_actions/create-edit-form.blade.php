@@ -23,7 +23,10 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Acción Centralizada') }}
-						@include('buttons.help')
+						@include('buttons.help',[
+						'helpId' => 'institution',
+						'helpSteps' => get_json_resource('ui-guides/budget_centralized_action.json','budget')
+					])
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -35,7 +38,7 @@
 						@include('layouts.form-errors')
 						<div class="row">
 							<div class="col-3">
-								<div class="form-group is-required">
+								<div class="form-group is-required" id="institution_id">
 									{!! Form::label('institution_id', __('Institución'), ['class' => 'control-label']) !!}
 									{!! Form::select('institution_id', $institutions, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
@@ -44,7 +47,7 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<div class="form-group is-required">
+								<div class="form-group is-required" id="department_id">
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
 									{!! Form::select('department_id', $departments, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
@@ -54,7 +57,7 @@
 							</div>
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
 						     	<div class="col-3">
-									<div class="form-group is-required">
+									<div class="form-group is-required" id="payroll_staff_id">
 										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
 										{!! Form::select('payroll_staff_id', $staffs, null, [
 											'class' => 'select2', 'data-toggle' => 'tooltip',										
@@ -67,7 +70,7 @@
 								</div>
 							
 							   <div class="col-3">
-									<div class="form-group is-required">
+									<div class="form-group is-required" id="payroll_position_id">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
 										]) !!}
@@ -83,7 +86,7 @@
 						</div>
 						<div class="row">
 							<div class="col-3">
-								<div class="form-group is-required">
+								<div class="form-group is-required" id="fecha">
 									{!! Form::label('custom_date', __('Fecha de creación'), ['class' => 'control-label']) !!}
 									{!! Form::date('custom_date', old('custom_date'), [
 										'class' => 'form-control input-sm', 'placeholder' => 'dd/mm/YY',
@@ -93,7 +96,7 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<div class="form-group is-required">
+								<div class="form-group is-required" id="code">
 									{!! Form::label('code', __('Código'), ['class' => 'control-label']) !!}
 									{!! Form::text('code', old('code'), [
 										'class' => 'form-control input-sm', 'placeholder' => __('Código de proyecto'),
@@ -102,7 +105,7 @@
 								</div>
 							</div>
 							<div class="col-6">
-								<div class="form-group is-required">
+								<div class="form-group is-required" id="name">
 									{!! Form::label('name', __('Nombre'), ['class' => 'control-label']) !!}
 									{!! Form::text('name', old('name'), [
 										'class' => 'form-control input-sm', 'placeholder' => __('Nombre del proyecto'),

@@ -112,14 +112,24 @@ class BudgetCentralizedActionController extends Controller
             'code' => ['required'],
             'custom_date' => ['required', 'date'],
             'name' => ['required'],
+            'payroll_position_id' => ['required'],
+            'payroll_staff_id' => ['required'],
         ];
-
+        $messages = [
+            'institution_id.required'     => 'El campo institucion es obligatorio.',
+            'department_id.required'     => 'El campo departamento es obligatorio.',
+            'code.required'     => 'El campo código es obligatorio.',
+            'custom_date.required'     => 'El campo fecha es obligatorio.',
+            'name.required'     => 'El campo nombre es obligatorio.',
+            'payroll_position_id.required'     => 'El campo cargo es obligatorio.',
+            'payroll_staff_id.required'     => 'El campo responsable es obligatorio.',
+           ];
         if (Module::has('Payroll') && Module::isEnabled('Payroll')) {
             $rules['payroll_position_id'] = 'required';
             $rules['payroll_staff_id'] = 'required';
         }
 
-        $this->validate($request, $rules);
+        $this->validate($request, $rules, $messages );
 
         /**
          * Registra el nuevo proyecto
