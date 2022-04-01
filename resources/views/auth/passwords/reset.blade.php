@@ -2,7 +2,7 @@
 
 @section('content')
     {!! Form::open(['route' => 'password.request', 'method' => 'POST', 'class' => 'form']) !!}
-        {{ csrf_field() }}
+        <input type="hidden" name="token" value="{{ request()->token }}">
         <p class="login-img">
             @include('layouts.logo-images', ['logo_mini' => true])
         </p>
