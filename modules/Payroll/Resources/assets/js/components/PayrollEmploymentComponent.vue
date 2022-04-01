@@ -200,6 +200,7 @@
             </div>
             <hr>
             <div class="row">
+                <h6 class="card-title col-md-12"> Antigüedad del trabajador</h6>
                 <div class="col-md-4" id="helpEmploymentYears">
                     <div class="form-group">
                         <label>Años en otras instituciones públicas:</label>
