@@ -47,4 +47,15 @@ class PayrollConceptAssignOption extends Model implements Auditable
     {
         return $this->belongsTo(PayrollConcept::class);
     }
+
+    /**
+     * PayrollConceptAssignOption belongs to PayrollVacationPolicy.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function payrollVacationPolicy()
+    {
+        // belongsTo(RelatedModel, foreignKey = payrollVacationPolicy_id, keyOnRelatedModel = id)
+        return $this->belongsTo(PayrollVacationPolicy::class);
+    }
 }

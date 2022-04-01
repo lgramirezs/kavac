@@ -37,6 +37,7 @@ class WarehouseReceptionController extends Controller
      * Define la configuración de la clase
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author Yennifer Ramirez <yramirez@cenditel.gob.ve>
      */
     public function __construct()
     {
@@ -46,6 +47,28 @@ class WarehouseReceptionController extends Controller
         $this->middleware('permission:warehouse.movement.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:warehouse.movement.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:warehouse.movement.delete', ['only' => 'destroy']);
+
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'warehouse_inventory_products' => ['required'],
+            'warehouse_id' => ['required'],
+            'institution_id' => ['required'],
+            'warehouse_inventory_products.*.warehouse_product_id' => ['sometimes', 'required'],
+            'warehouse_inventory_products.*.quantity' => ['sometimes', 'required'],
+            'warehouse_inventory_products.*.currency_id' => ['sometimes', 'required'],
+            'warehouse_inventory_products.*.unit_value' => ['sometimes', 'required']
+        ];
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+            'institution_id.required' => 'El campo nombre de la organización es obligatorio.',
+            'warehouse_id.required' => 'El campo nombre del almacén es obligatorio.',
+            'warehouse_inventory_products.required' => 'Ingrese al menos un insumo a la solicitud.',
+            'warehouse_inventory_products.*.warehouse_product_id.required' => 'El campo nombre del insumo es obligatorio.',
+            'warehouse_inventory_products.*.quantity.required' => 'El campo cantidad es obligatorio.',
+            'warehouse_inventory_products.*.unit_value.required' => 'El campo valor es obligatorio.',
+            'warehouse_inventory_products.*.currency_id.required' => 'El campo moneda es obligatorio.',
+        ];
     }
 
     /**
@@ -74,17 +97,13 @@ class WarehouseReceptionController extends Controller
      * Valida y Registra un nuevo Ingreso de Almacén
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author Yennifer Ramirez <yramirez@cenditel.gob.ve>
      * @param  \Illuminate\Http\Request  $request (Datos de la petición)
      * @return \Illuminate\Http\JsonResponse (JSON con los registros a mostrar)
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'warehouse_inventory_products' => ['required'],
-            'warehouse_id' => ['required'],
-            'institution_id' => ['required'],
-
-        ]);
+        $this->validate($request, $this->validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'warehouse_movements')->first();
         if (is_null($codeSetting)) {
@@ -110,31 +129,6 @@ class WarehouseReceptionController extends Controller
                 ]);
             return response()->json(['result' => false, 'redirect' => route('warehouse.setting.index')], 200);
         }
-
-        $tam = count($request->warehouse_inventory_products);
-        $i=0;
-        for ($i=0; $i < $tam; $i++) {
-            $attributes = $request->warehouse_inventory_products[$i]['warehouse_product_attributes'];
-            $att = count($attributes);
-            $j=0;
-            $this->validate($request, [
-                'warehouse_inventory_products.'.$i.'.warehouse_product_id' => ['required'],
-                'warehouse_inventory_products.'.$i.'.quantity' => ['required'],
-                'warehouse_inventory_products.'.$i.'.currency_id' => ['required'],
-                'warehouse_inventory_products.'.$i.'.unit_value' => ['required'],
-
-            ]);
-            /*
-             * Hacer validación mas detallada (ej: diferenciar tipo de dato en atributos)
-             */
-            for ($j=0; $j < $att; $j++) {
-                $this->validate($request, [
-                    'warehouse_inventory_products.'.$i.'.warehouse_product_attributes.'.$j.'.name' => ['required'],
-                    'warehouse_inventory_products.'.$i.'.warehouse_product_attributes.'.$j.'.value' => ['required'],
-                ]);
-            }
-        }
-
 
         /*********************************************************/
 
@@ -288,6 +282,7 @@ class WarehouseReceptionController extends Controller
      * Actualiza la información de los Ingresos de Almacén
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author Yennifer Ramirez <yramirez@cenditel.gob.ve>
      * @param  \Illuminate\Http\Request  $request (Datos de la petición)
      * @param  Integer $id Identificador único del ingreso de almacén
      * @return \Illuminate\Http\JsonResponse (JSON con los registros a mostrar)
@@ -295,32 +290,8 @@ class WarehouseReceptionController extends Controller
     public function update(Request $request, $id)
     {
         $warehouse_movement = WarehouseMovement::find($id);
-        $this->validate($request, [
-            'warehouse_inventory_products' => ['required'],
-            'warehouse_id' => ['required'],
-            'institution_id' => ['required'],
-
-        ]);
-
-        $tam = count($request->warehouse_inventory_products);
-        for ($i=0; $i< $tam; $i++) {
-            $attributes = $request->warehouse_inventory_products[$i]['warehouse_product_attributes'];
-            $att = count($attributes);
-            $this->validate($request, [
-                'warehouse_inventory_products.'.$i.'.warehouse_product_id' => ['required'],
-                'warehouse_inventory_products.'.$i.'.quantity' => ['required'],
-                'warehouse_inventory_products.'.$i.'.currency_id' => ['required'],
-                'warehouse_inventory_products.'.$i.'.unit_value' => ['required'],
-
-            ]);
-
-            for ($j=0; $j < $att; $j++) {
-                $this->validate($request, [
-                    'warehouse_inventory_products.'.$i.'.warehouse_product_attributes.'.$j.'.name' => ['required'],
-                    'warehouse_inventory_products.'.$i.'.warehouse_product_attributes.'.$j.'.value' => ['required'],
-                ]);
-            }
-        }
+        
+        $this->validate($request, $this->validateRules, $this->messages);
 
         $product_movements = WarehouseInventoryProductMovement::where(
             'warehouse_movement_id',

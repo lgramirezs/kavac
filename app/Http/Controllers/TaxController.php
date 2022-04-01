@@ -66,13 +66,14 @@ class TaxController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'max:60'],
+            'name' => 'required|max:60|unique:taxes',
             'description' => ['required'],
             'operation_date' => ['required', 'date'],
             'percentage' => ['required']
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'name.max' => 'El campo nombre no debe ser mayor que 60 caracteres.',
+            'name.unique' => 'El campo nombre ya ha sido registrado.',
             'operation_date.required' => 'El campo fecha entrada en vigencia es obligatorio.',
             'percentage.required' => 'El campo porcentaje es obligatorio.',
         ]);

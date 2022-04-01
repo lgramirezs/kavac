@@ -29,36 +29,105 @@
                         <input type="hidden" v-model="record.id">
                     </div>
                 </div>
-                <div class="col-md-4" id="helpEmploymentYears">
-                    <div class="form-group">
-                        <label>Años en otras instituciones públicas:</label>
-                        <input type="text" class="form-control input-sm"
-                            v-model="record.years_apn" disabled="true" v-input-mask
-                            data-inputmask="'alias': 'numeric',
-                                            'allowMinus': 'false'"/>
+                <div class="col-md-4" id="helpEmploymentStartDate">
+                    <div class="form-group is-required">
+                        <label>Fecha de ingreso a la institución:</label>
+                        <input @change="diff_datetimes(record.start_date)" type="date" class="form-control input-sm"
+                            v-model="record.start_date"/>
                     </div>
                 </div>
-                <div v-if="record.active" class="col-md-4" id="helpEmploymentYears">
+                <div v-show="record.active == false" class="col-md-4" id="helpEmploymentEndDate">
                     <div class="form-group">
-                        <label>Tiempo laborando en la institución/organización:</label>
-                        <input type="text" class="form-control input-sm"
-                            v-model="record.institution_years" disabled="true"/>
+                        <label>Fecha de egreso de la institución:</label>
+                        <input @change="time_worked()" type="date" class="form-control input-sm"
+                            v-model="record.end_date"/>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpEmploymentYears">
+                <div class="col-md-4" id="helpEmploymentIsActive">
                     <div class="form-group">
-                        <label>Total años de servicio:</label>
-                        <input type="text" class="form-control input-sm"
-                            v-model="record.service_years" disabled="true"/>
+                        <label>¿Está Activo?</label>
+                        <div class="col-md-12">
+                            <div class="col-12 bootstrap-switch-mini">
+                                <input id="active" name="active" type="checkbox" class="form-control bootstrap-switch"
+                                    data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
+                                    title="Indique si el trabajador está activo o no"
+                                    v-model="record.active" value="true"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div v-if="!record.active" class="col-md-4" id="helpEmploymentYears">
-                    <div class="form-group">
-                        <label>Tiempo laborado en la institución/organización:</label>
-                        <input type="text" class="form-control input-sm"
-                            v-model="record.time_worked" disabled="true"/>
+                <div class="col-md-4" v-if="!record.active">
+                    <div class="form-group is-required">
+                        <label>Tipo de Inactividad:</label>
+                        <select2 :options="payroll_inactivity_types"
+                            v-model="record.payroll_inactivity_type_id">
+                        </select2>
                     </div>
                 </div>
+                <div class="col-md-4" id="helpEmploymentEmail">
+                    <div class="form-group">
+                        <label>Correo Institucional:</label>
+                        <input type="email" class="form-control input-sm"
+                            v-model="record.institution_email"/>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentFunction">
+                    <div class="form-group">
+                        <label>Descripción de Funciones:</label>
+                        <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
+                                  title="Indique una descripción para las funciones"
+                                  :config="ckeditor.editorConfig" class="form-control"
+                                  name="function_description" tag-name="textarea" rows="3"
+                                  v-model="record.function_description"></ckeditor>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentPossitionType">
+                    <div class="form-group is-required">
+                        <label>Tipo de Cargo:</label>
+                        <select2 :options="payroll_position_types"
+                            v-model="record.payroll_position_type_id">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentPossition">
+                    <div class="form-group is-required">
+                        <label>Cargo:</label>
+                        <select2 :options="payroll_positions"
+                            v-model="record.payroll_position_id">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentStaffType">
+                    <div class="form-group is-required">
+                        <label>Tipo de Personal:</label>
+                        <select2 :options="payroll_staff_types"
+                            v-model="record.payroll_staff_type_id">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentContractType">
+                    <div class="form-group is-required">
+                        <label>Tipo de Contrato:</label>
+                        <select2 :options="payroll_contract_types"
+                            v-model="record.payroll_contract_type_id">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentInstitution">
+                    <div class="form-group is-required">
+                        <label>Institución:</label>
+                        <select2 :options="institutions" @input="getDepartments()"
+                                 v-model="record.institution_id"></select2>
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentDepartment">
+                    <div class="form-group is-required">
+                        <label>Departamento:</label>
+                        <select2 :options="departments" v-model="record.department_id"
+                                 id="department"></select2>
+                    </div>
+                </div>
+                <!-- TRABAJOS ANTERIOS -->
                 <div class="col-md-12" id="helpEmploymentPreviousJobs">
                     <br>
                     <h6 class="card-title">Trabajos anteriores <i class="fa fa-plus-circle cursor-pointer"
@@ -127,115 +196,42 @@
                         </div>
                     </div>
                 </div>
+                <!-- TRABAJOS ANTERIORES -->
             </div>
             <hr>
             <div class="row">
-                <div class="col-md-4" id="helpEmploymentStartDate">
-                    <div class="form-group is-required">
-                        <label>Fecha de ingreso a la institución:</label>
-                        <input @change="diff_datetimes(record.start_date)" type="date" class="form-control input-sm"
-                            v-model="record.start_date"/>
-                    </div>
-                </div>
-                <div v-show="record.active == false" class="col-md-4" id="helpEmploymentEndDate">
+                <h6 class="card-title col-md-12"> Antigüedad del trabajador</h6>
+                <div class="col-md-4" id="helpEmploymentYears">
                     <div class="form-group">
-                        <label>Fecha de egreso de la institución:</label>
-                        <input @change="time_worked()" type="date" class="form-control input-sm"
-                            v-model="record.end_date"/>
+                        <label>Años en otras instituciones públicas:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.years_apn" disabled="true" v-input-mask
+                            data-inputmask="'alias': 'numeric',
+                                            'allowMinus': 'false'"/>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpEmploymentIsActive">
+                <div v-if="record.active" class="col-md-4" id="helpEmploymentYears">
                     <div class="form-group">
-                        <label>¿Está Activo?</label>
-                        <div class="col-md-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input id="active" name="active" type="checkbox" class="form-control bootstrap-switch"
-                                    data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                    title="Indique si el trabajador está activo o no"
-                                    v-model="record.active" value="true"/>
-                            </div>
-                        </div>
+                        <label>Tiempo laborando en la institución/organización:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.institution_years" disabled="true"/>
                     </div>
                 </div>
-                <div class="col-md-4" v-if="!record.active">
-                    <div class="form-group is-required">
-                        <label>Tipo de Inactividad:</label>
-                        <select2 :options="payroll_inactivity_types"
-                            v-model="record.payroll_inactivity_type_id">
-                        </select2>
+                <div class="col-md-4" id="helpEmploymentYears">
+                    <div class="form-group">
+                        <label>Total años de servicio:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.service_years" disabled="true"/>
+                    </div>
+                </div>
+                <div v-if="!record.active" class="col-md-4" id="helpEmploymentYears">
+                    <div class="form-group">
+                        <label>Tiempo laborado en la institución/organización:</label>
+                        <input type="text" class="form-control input-sm"
+                            v-model="record.time_worked" disabled="true"/>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4" id="helpEmploymentEmail">
-                    <div class="form-group">
-                        <label>Correo Institucional:</label>
-                        <input type="email" class="form-control input-sm"
-                            v-model="record.institution_email"/>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentFunction">
-                    <div class="form-group">
-                        <label>Descripción de Funciones:</label>
-                        <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
-                                  title="Indique una descripción para las funciones"
-                                  :config="ckeditor.editorConfig" class="form-control"
-                                  name="function_description" tag-name="textarea" rows="3"
-                                  v-model="record.function_description"></ckeditor>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentPossitionType">
-                    <div class="form-group is-required">
-                        <label>Tipo de Cargo:</label>
-                        <select2 :options="payroll_position_types"
-                            v-model="record.payroll_position_type_id">
-                        </select2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4" id="helpEmploymentPossition">
-                    <div class="form-group is-required">
-                        <label>Cargo:</label>
-                        <select2 :options="payroll_positions"
-                            v-model="record.payroll_position_id">
-                        </select2>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentStaffType">
-                    <div class="form-group is-required">
-                        <label>Tipo de Personal:</label>
-                        <select2 :options="payroll_staff_types"
-                            v-model="record.payroll_staff_type_id">
-                        </select2>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentContractType">
-                    <div class="form-group is-required">
-                        <label>Tipo de Contrato:</label>
-                        <select2 :options="payroll_contract_types"
-                            v-model="record.payroll_contract_type_id">
-                        </select2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4" id="helpEmploymentInstitution">
-                    <div class="form-group is-required">
-                        <label>Institución:</label>
-                        <select2 :options="institutions" @input="getDepartments()"
-                                 v-model="record.institution_id"></select2>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentDepartment">
-                    <div class="form-group is-required">
-                        <label>Departamento:</label>
-                        <select2 :options="departments" v-model="record.department_id"
-                                 id="department"></select2>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <div class="card-footer pull-right" id="helpParamButtons">

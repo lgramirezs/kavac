@@ -298,13 +298,13 @@
                                 <div id="w-benefitsPaymentForm" class="tab-pane p-3">
                                     <div class="row">
                                         <!-- salario a emplear -->
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group is-required">
                                                 <label> Salario a emplear para el cálculo de prestaciones sociales:</label>
                                                 <select2 :options="salary_types"
                                                          v-model="record.salary_type"></select2>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./salario a emplear -->
                                         <!-- tipo de pago de nómina -->
                                         <div class="col-md-6">

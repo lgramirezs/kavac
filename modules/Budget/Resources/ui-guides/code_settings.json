@@ -1,34 +1,35 @@
 [
     {
-        "element" : "#helpCodeSetting",
-        "intro" : "Esta sección permite establecer el formato a utilizar por los códigos en cada uno de los registros descritos, para comenzar en su implementación tenga especial cuidado en seguir las instrucciones en cuanto al formato que acepta esta configuración"
+        "element" : "#institution_id",
+        "intro" : "Esta sección permite ingresar el nombre de la institucion con la cual esta relacionada el proyecto"
     },
     {
-        "element" : "#helpCodeFormulations",
-        "intro" : "La configuración de este código permite identificar los registros de formulaciones mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#department_id",
+        "intro" : "Esta sección permite ingresar la dependencia asociada a la institución"
     },
     {
-        "element" : "#helpCodeCommitments",
-        "intro" : "La configuración de este código permite identificar los registros de compromisos presupuestarios mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#payroll_staff_id",
+        "intro" : "Aqui se debe indicar el nombre de la persona responsable del proyecto"
     },
     {
-        "element" : "#helpCodeCaused",
-        "intro" : "La configuración de este código permite identificar los registros de compromisos presupuestarios causados mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#payroll_position_id",
+        "intro" : "Este campo no requiere ser llenado por el usuario. El sistema seleccionara de manera automatica el cargo del responsable del proyecto"
     },
     {
-        "element" : "#helpCodePayed",
-        "intro" : "La configuración de este código permite identificar los registros de compromisos presupuestarios pagados mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#code",
+        "intro" : "En este campo se debe ingresar el código del proyecto el cual permite su identificacion"
     },
     {
-        "element" : "#helpCodeTransfers",
-        "intro" : "La configuración de este código permite identificar los registros de traspasos presupuestarios mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#onapre_code",
+        "intro" : "Aqui se debe ingresar el codigo asignado por la oficina nacional de presupuesto para la institución"
     },
     {
-        "element" : "#helpCodeReductions",
-        "intro" : "La configuración de este código permite identificar los registros de reducciones presupuestarios mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#name",
+        "intro" : "Indique el nombre del proyecto"
     },
     {
-        "element" : "#helpCodeCredits",
-        "intro" : "La configuración de este código permite identificar los registros de créditos adicionales mediante un formato único, si no se establece esta configuración el sistema generará un código numérico consecutivo"
+        "element" : "#active",
+        "intro" : "Active este boton para señalar si el proyecto es un proyecto activo o no"
     }
+
 ]

@@ -31,6 +31,9 @@ class BudgetProjectController extends Controller
     /** @var array Arreglo con las reglas de validación sobre los datos de un formulario */
     public $validate_rules;
 
+    /** @var array Arreglo con los mensajes de error de cada campo de un formulario */
+    public $messages;
+
     /**
      * Define la configuración de la clase
      *
@@ -51,8 +54,17 @@ class BudgetProjectController extends Controller
             'payroll_position_id' => ['required'],
             'payroll_staff_id' => ['required'],
             'code' => ['required'],
-            'onapre_code' => ['required'],
             'name' => ['required'],
+        ];
+
+        /** @var array Define los mensajes de error para el formulario */
+        $this->messages = [
+            'institution_id.required' => 'El campo institución es obligatorio. ',
+            'department_id.required' => 'El campo dependencia es obligatorio. ',
+            'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
+            'payroll_staff_id.required' => 'El campo responsable es obligatorio. ',
+            'code.required' => 'El campo código es obligatorio. ',
+            'name.required' => 'El campo nombre es obligatorio. ',
         ];
     }
 
@@ -117,7 +129,7 @@ class BudgetProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->validate_rules);
+        $this->validate($request, $this->validate_rules, $this->messages);
 
         /**
          * Registra el nuevo proyecto
@@ -126,7 +138,7 @@ class BudgetProjectController extends Controller
             'name' => $request->name,
             'code' => $request->code,
             'onapre_code' => $request->onapre_code,
-            'active' => ($request->active!==null),
+            'active' => ($request->active !== null),
             'department_id' => $request->department_id,
             'payroll_position_id' => $request->payroll_position_id,
             'payroll_staff_id' => $request->payroll_staff_id
@@ -205,7 +217,7 @@ class BudgetProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validate_rules);
+        $this->validate($request, $this->validate_rules, $this->messages);
 
         /** @var object Objeto con información del proyecto a modificar */
         $budgetProject = BudgetProject::find($id);
@@ -249,8 +261,8 @@ class BudgetProjectController extends Controller
     {
         /** @var object Objeto con información de los proyectos registrados */
         $budgetProjects = ($active !== null)
-                          ? BudgetProject::where('active', $active)->with('payrollStaff')->get()
-                          : BudgetProject::with('payrollStaff')->get();
+            ? BudgetProject::where('active', $active)->with('payrollStaff')->get()
+            : BudgetProject::with('payrollStaff')->get();
         return response()->json(['records' => $budgetProjects], 200);
     }
 

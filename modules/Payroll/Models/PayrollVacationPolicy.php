@@ -39,7 +39,7 @@ class PayrollVacationPolicy extends Model implements Auditable
         'vacation_periods_accumulated_per_year', 'vacation_days', 'vacation_period_per_year',
         'additional_days_per_year', 'minimum_additional_days_per_year', 'maximum_additional_days_per_year',
         'payment_calculation', 'salary_type', 'vacation_advance', 'vacation_postpone', 'staff_antiquity',
-        'institution_id', 'payroll_payment_type_id'
+        'institution_id', 'payroll_payment_type_id', 'assign_to'
     ];
 
     /**
@@ -70,5 +70,17 @@ class PayrollVacationPolicy extends Model implements Auditable
     public function payrollPaymentType()
     {
         return $this->belongsTo(PayrollPaymentType::class);
+    }
+
+    /**
+     * Método que obtiene la información de las opciones a asignar asociadas al concepto
+     *
+     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payrollConceptAssignOptions()
+    {
+        return $this->hasMany(PayrollConceptAssignOption::class);
     }
 }

@@ -451,6 +451,11 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-3 offset-md-9 text-right mt-4 mb-4" id="helpInstitutionButtons">
+								@include('layouts.form-buttons')
+							</div>
+						</div>
 					</div>
 
 					@if (!is_null($paramMultiInstitution))
@@ -516,13 +521,6 @@
 							</tbody>
 						</table>
 					@endif
-				</div>
-				<div class="card-footer text-right">
-					<div class="row">
-						<div class="col-md-3 offset-md-9" id="helpInstitutionButtons">
-							@include('layouts.form-buttons')
-						</div>
-					</div>
 				</div>
 			{!! Form::close() !!}
 		</div>
@@ -792,6 +790,7 @@
 			axios.get(`get-institution/details/${id}`).then(response => {
 				if (response.data.result) {
 					var institution = response.data.institution;
+					console.log(institution)
                     var activeSwitchRemoveClass = (institution.active) ? 'off' : 'on';
                     var activeSwitchAddClass = (institution.active) ? 'on' : 'off';
                     var defaultSwitchRemoveClass = (institution.default) ? 'off' : 'on';
@@ -883,7 +882,7 @@
 		 * Abre una modal con los datos de la institución seleccionada
 		 *
 		 * @author Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
-         *
+		 *
 		 * @param  {integer} id Identificador de la Organización a cargar
 		 */
 		var showInstitution = function(id) {
@@ -911,24 +910,21 @@
 					$("#modal-country_id").html(institution.municipality.estate.country.name);
 					$("#modal-estate_id").html(institution.municipality.estate.name);
 					$("#modal-municipality_id").html(institution.municipality.name);
-					$("#modal-city_id").html(institution.city_id);
+					getCurrentData(institution.city_id, "get-city", "#modal-city_id");
 					$("#modal-postal_code").html(institution.postal_code);
 					$("#modal-start_operations_date").html(institution.start_operations_date);
 					if (institution.organism_adscript_id){
 						$("#modal-organism_adscript_id").html(institution.organism_adscript_id);
 					}
-					$("#modal-institution_sector_id").html(institution.institution_sector_id);
-					$("#modal-institution_type_id").html(institution.institution_type_id);
+					getCurrentData(institution.institution_sector_id, "get-sector", "#modal-institution_sector_id");
+					getCurrentData(institution.institution_type_id, "get-type", "#modal-institution_type_id");
 					$("#modal-legal_address").html(institution.legal_address);
-
 					if (institution.web){
 						$("#modal-web").html(institution.web);
 					}
-
 					$('#modal-active').html(activeInst);
 					$('#modal-default').html(defaultInst);
 					$('#modal-retention_agent').html(retAgentInst);
-
 					if (institution.legal_base){
 						$("#modal-legal_base").html(institution.legal_base);
 					}
@@ -948,11 +944,25 @@
 						$("#modal-composition_assets").html(institution.composition_assets);
 					}
 
-                    // Abre la modal
+					// Abre la modal
 					$('#detailsInstitutionModal').modal('show');
 				}
 			}).catch(error => {
 				logs('setting-institution', 594, error, 'loadInstitution');
+			});
+		}
+		/**
+		 * Busca el nombre del dato requerido y lo agrega a la modal después de realizada la consulta
+		 *
+		 * @author Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+		 *
+		 * @param  {integer} id Identificador de la consulta
+		 * @param  {string} url URL de la consulta
+		 * @param  {string} target ID del target a cambiar
+		 */
+		function getCurrentData(id, url, target) {
+			axios.get(`${url}/${id}`).then(response => {
+				$(target).html(response.data.result.name);
 			});
 		}
 	</script>
