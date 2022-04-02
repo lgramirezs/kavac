@@ -39,7 +39,7 @@
 									{!! Form::label('project', __('Proyecto')) !!}
 									<div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-    										{!! Form::radio('project_centralized_action', 'project', null, [
+    										{!! Form::radio('project_centralized_action', 'project', (isset($model) && strpos($model->specificable_type, 'Project'))?true:null, [
     											'class' => 'form-control bootstrap-switch sel_project_centralized_action',
     											'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
     											'id' => 'sel_project'
@@ -48,7 +48,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									{!! Form::select('project_id', $projects, (isset($model))?$model->specificable_id:old('project_id'), [
+									{!! Form::select('project_id', $projects, (isset($model) && strpos($model->specificable_type, 'Project'))?$model->specificable_id:old('project_id'), [
 										'class' => 'select2', 'data-toggle' => 'tooltip', 'id' => 'project_id',
 										'title' => __('Seleccione un proyecto'),
 										'disabled' => (!$errors->has('project_id'))?'disabled':false
@@ -60,7 +60,7 @@
 									{!! Form::label('centralized_action', __('Acción Centralizada')) !!}
 									<div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-    										{!! Form::radio('project_centralized_action', 'centralized_action', null, [
+    										{!! Form::radio('project_centralized_action', 'centralized_action', (isset($model) && strpos($model->specificable_type, 'CentralizedAction'))?true:null, [
     											'class' => 'form-control bootstrap-switch sel_project_centralized_action',
     											'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
     											'id' => 'sel_centralized_action'
@@ -69,7 +69,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									{!! Form::select('centralized_action_id', $centralized_actions, (isset($model))?$model->specificable_id:old('centralized_action_id'), [
+									{!! Form::select('centralized_action_id', $centralized_actions, (isset($model) && strpos($model->specificable_type, 'CentralizedAction'))?$model->specificable_id:old('centralized_action_id'), [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
 										'id' => 'centralized_action_id',
 										'title' => __('Seleccione una acción centralizada'),
@@ -162,6 +162,12 @@
 					$("#centralized_action_id").closest('.form-group').addClass('is-required');
 					$("#project_id").closest('.form-group').removeClass('is-required');
 				}
+			});
+			$("#from_date").on('change', function() {
+				$("#to_date").attr("min", $(this).val());
+			});
+			$("#to_date").on('change', function() {
+				$("#from_date").attr("max", $(this).val());
 			});
 		});
 	</script>

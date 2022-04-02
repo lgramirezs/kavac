@@ -25,7 +25,7 @@
 						{{ __('Formatos de Códigos') }}
 						@include('buttons.help', [
 							'helpId' => 'BudgetCodeSetting',
-							'helpSteps' => get_json_resource('ui-guides/code_settings.json', 'budget')
+							'helpSteps' => get_json_resource('ui-guides/budget_code_settings.json', 'budget')
 						])
 					</h6>
 					<div class="card-btns">
@@ -188,7 +188,6 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Acciones Específicas') }}
-						@include('buttons.help')
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -196,7 +195,7 @@
 						@include('buttons.minimize')
 					</div>
 				</div>
-				<div class="card-body">
+				<div class="card-body" id="helpBudgetSpecificActionsList">
 					<budget-specific-actions-list route_list="{{ url('budget/specific-actions/vue-list') }}"
 										  route_delete="{{ url('budget/specific-actions') }}"
 										  route_edit="{{ url('budget/specific-actions/{id}/edit') }}">
