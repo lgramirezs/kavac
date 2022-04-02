@@ -35,7 +35,8 @@ class PayrollSettlementType extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['name', 'motive', 'payroll_concept_id'];
+    // protected $fillable = ['name', 'motive', 'payroll_concept_id'];
+    protected $fillable = ['name', 'motive', 'payroll_payment_types_id'];
 
     /**
      * Método que obtiene el tipo de liquidación asociada a un concepto
@@ -44,8 +45,10 @@ class PayrollSettlementType extends Model implements Auditable
      *
      * @return    \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function payrollConcept()
+    // public function payrollConcept()
+    public function payrollPaymentType()
     {
-        return $this->belongsTo(PayrollConcept::class);
+        // return $this->belongsTo(PayrollConcept::class);
+        return $this->belongsTo(PayrollPaymentType::class);
     }
 }

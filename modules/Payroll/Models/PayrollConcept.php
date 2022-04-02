@@ -140,8 +140,8 @@ class PayrollConcept extends Model implements Auditable
      *
      * @return    \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function payrollSettlementTypes()
-    {
-        return $this->hasMany(PayrollSettlementType::class);
-    }
+    // public function payrollSettlementTypes()
+    // {
+    //     return $this->hasMany(PayrollSettlementType::class);
+    // }
 }
