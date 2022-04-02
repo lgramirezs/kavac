@@ -10,21 +10,6 @@
                         <input type="text" class="form-control" data-toggle="tooltip" v-has-tooltip title="Formato para el código de los reportes" name="entries_reference" v-model="code" placeholder="Ej. XXX-00000000-YYYY" :readonly="(ref_code)? true : false">
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <span class="form-text">
-                            <strong>Formato:</strong> prefijo-digitos-año
-                            <ul>
-                                <li>prefijo (requerido): 1 a 3 carácteres</li>
-                                <li>digitos (requerido): 6 carácteres (mínimo), 8 carácteres (máximo)</li>
-                                <li>año (requerido): 2 o 4 caracteres (YY o YYYY)</li>
-                            </ul>
-                            <strong>Longitud total máxima:</strong> 17 carácteres<br>
-                            <strong>Ej.</strong> XXX-000000000-YYYY
-                        </span>
-                    </div>
-                </div>
             </div>
             <div class="card-footer text-right">
                 <buttonsDisplay :route_list="app_url+'/accounting/settings'" display="false" />
