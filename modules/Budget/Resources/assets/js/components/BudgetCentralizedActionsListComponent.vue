@@ -12,6 +12,11 @@
 					type="button">
 				<i class="fa fa-trash-o"></i>
 			</button>
+		
+                      
+           	<budget-centralized-actions-info
+    					:route_list="app_url + '/budget/detail-vue-centralized-actions/' + props.row.id">
+    	    </budget-centralized-actions-info>
 		</div>
 		<div slot="active" slot-scope="props" class="text-center">
 			<span v-if="props.row.active">SI</span>
@@ -58,6 +63,56 @@
 			reset() {
 
 			},
+			 /**
+         * Muestra los detalles de un registro seleccionado
+         *
+         * @author    
+         *
+         * @param     {string}    id    Identificador del registro para el cual se desea mostrar los detalles
+         */
+        async details(id) {
+            const vm = this;
+            vm.loading = true;
+			console.log(id);
+			
+            await axios.get('/budget/detail-vue-centralized-actions/'+ id).then(response => {
+					console.log(response);
+				
+                if (response.data.result) {
+                    let buget = response.data.buget;
+					let cargo = response.data.cargo;
+					let name = "";
+							console.log(this.buget);
+	
+               //    <div class="row">
+            //                             <div class="col-md-6 text-left">
+            //                                 <h5>Código</h5>
+            //                                 <div>${buget.code}</div>
+            //                             </div>
+            //                             <div class="col-md-6 text-left">
+            //                                 <h5>Acción Centralizada</h5>
+            //                                 <div>${buget.name}</div>
+            //                             </div>
+            //                         </div>
+			// 						   <div class="row">
+            //                             <div class="col-md-6 text-left">
+            //                                 <h5>Responsable</h5>
+            //                                 <div>${cargo.first_name}, ${cargo.last_name}</div>
+            //                             </div>
+            //                             <div class="col-md-6 text-left">
+            //                                 <h5>Cargo</h5>
+            //                                 <div>${cargo.payroll_employment.payroll_position.name}</div>
+            //                             </div>
+            //                         </div>
+            
+             
+                
+                }
+            }).catch(error => {
+               
+            });
+            vm.loading = false;
+        }
 		}
 	};
 </script>

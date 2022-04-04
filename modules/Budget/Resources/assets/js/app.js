@@ -33,6 +33,18 @@ Vue.component('budget-centralized-actions-list', () =>
 		'./components/BudgetCentralizedActionsListComponent.vue'
 	)
 );
+/**
+ * Componente para mostrar listado de acciones centralizadas
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ */
+ Vue.component('budget-centralized-actions-info', () =>
+ import(
+	 /* webpackChunkName: "budget-centralized-actions-info" */
+	 './components/BudgetCentralizedActionsInfoComponent.vue'
+ )
+);
+
 
 /**
  * Componente para mostrar listado de acciones centralizadas

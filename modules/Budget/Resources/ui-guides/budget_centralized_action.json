@@ -12,7 +12,7 @@
         "intro" : "Aqui se debe indicar el nombre de la persona responsable del proyecto"
     },
     {
-        "element" : "#payroll_position_id",
+        "element" : "#help_payroll_position_id",
         "intro" : "Este campo no requiere ser llenado por el usuario. El sistema seleccionara de manera automatica el cargo del responsable del proyecto"
     },
     {
