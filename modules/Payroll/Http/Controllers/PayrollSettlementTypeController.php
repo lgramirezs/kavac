@@ -58,7 +58,8 @@ class PayrollSettlementTypeController extends Controller
         $this->rules = [
             'name' => [],
             'motive' => ['required', 'max:10'],
-            'payroll_concept_id' => ['required'],
+            // 'payroll_concept_id' => ['required'],
+            'payroll_payment_types_id' => ['required'],
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -69,7 +70,8 @@ class PayrollSettlementTypeController extends Controller
         /** Define los atributos para los campos personalizados */
         $this->attributes = [
             'motive' => 'motivo',
-            'payroll_concept_id' => 'concepto'
+            // 'payroll_concept_id' => 'concepto'
+            'payroll_payment_types_id' => 'tipo de pago',
         ];
     }
 
@@ -119,7 +121,8 @@ class PayrollSettlementTypeController extends Controller
         $payrollSettlementType = PayrollSettlementType::create([
             'name' => $request->name,
             'motive' => $request->motive,
-            'payroll_concept_id' => $request->payroll_concept_id
+            // 'payroll_concept_id' => $request->payroll_concept_id
+            'payroll_payment_types_id' => $request->payroll_payment_types_id
         ]);
         return response()->json(['record' => $payrollSettlementType, 'message' => 'Success'], 200);
     }
@@ -175,7 +178,8 @@ class PayrollSettlementTypeController extends Controller
         $this->validate($request, $this->rules, $this->messages, $this->attributes);
         $payrollSettlementType->name = $request->name;
         $payrollSettlementType->motive = $request->motive;
-        $payrollSettlementType->payroll_concept_id = $request->payroll_concept_id;
+        // $payrollSettlementType->payroll_concept_id = $request->payroll_concept_id;
+        $payrollSettlementType->payroll_payment_types_id = $request->payroll_payment_types_id;
         $payrollSettlementType->save();
         return response()->json(['message' => 'Success'], 200);
     }

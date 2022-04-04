@@ -2,11 +2,15 @@
 	<div class="col-12">
 		<div class="card" id="helpCodeSaleSettingForm">
 			<div class="card-header">
-				<h6 class="card-title">Formatos de Códigos
-					@include('buttons.help', [
-					    'helpId' => 'SaleCodeSettingForm',
-					    'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'sale')
-			    	])
+				<h6 class="card-title">
+					{{ __('Formatos de Códigos') }}
+					{{--
+						// Issue #96: Solicitaron que no se muestre el botón de ayuda en esta sección
+						@include('buttons.help', [
+							'helpId' => 'SaleCodeSettingForm',
+							'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'sale')
+						])
+					--}}
 				</h6>
 				<div class="card-btns">
 					@include('buttons.previous', ['route' => url()->previous()])
@@ -16,6 +20,7 @@
 			{!! Form::open(['id' => 'form-codes', 'route' => 'sale.settings.store', 'method' => 'post']) !!}
 				{!! Form::token() !!}
 				<div class="card-body">
+					@include('layouts.help-text', ['codeSetting' => true])
 					@include('layouts.form-errors')
 					<div class="row">
 						<div class="col-md-3" id="helpCodeSaleInventoryProduct">
@@ -74,7 +79,6 @@
 							</div>
 						</div>
 					</div>
-					@include('layouts.help-text', ['codeSetting' => true])
 				</div>
 				<div class="card-footer text-right">
 					@include('layouts.form-buttons')

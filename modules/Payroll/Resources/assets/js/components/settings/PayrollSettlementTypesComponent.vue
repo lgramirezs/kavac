@@ -48,9 +48,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group is-required">
-                                    <label>Concepto:</label>
-    								<select2 :options="payroll_concepts"
-    									v-model="record.payroll_concept_id">
+                                    <!-- <label>Concepto:</label> -->
+									<label>Tipo de pago de nómina</label>
+    								<!-- <select2 :options="payroll_concepts" -->
+									<select2 :options="payroll_payment_types" 
+										v-model="record.payroll_payment_types_id">
+    									<!-- v-model="record.payroll_concept_id"> -->
+										
     								</select2>
         	                    </div>
                             </div>
@@ -113,11 +117,13 @@
 					id: '',
 					name: '',
                     motive: '',
-                    payroll_concept_id: '',
+                    // payroll_concept_id: '',
+					payroll_payment_types_id: '',
 				},
 				errors: [],
 				records: [],
-                payroll_concepts: [],
+                // payroll_concepts: [],
+				payroll_payment_types: [],
 				columns: ['name', 'motive', 'id'],
 			}
 		},
@@ -132,7 +138,8 @@
 					id: '',
 					name: '',
                     motive: '',
-                    payroll_concept_id: '',
+                    // payroll_concept_id: '',
+					payroll_payment_types_id: '',
 				};
 			},
 		},
@@ -153,7 +160,8 @@
 		mounted() {
             const vm = this;
             $("#add_payroll_settlement_type").on('show.bs.modal', function() {
-                vm.getPayrollConcepts();
+                // vm.getPayrollConcepts();
+				vm.getPayrollPaymentTypes();
             });
         },
 	};

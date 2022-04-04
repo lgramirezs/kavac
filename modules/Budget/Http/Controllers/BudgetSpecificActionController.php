@@ -3,16 +3,17 @@
 namespace Modules\Budget\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Crypt;
-
 use Modules\Budget\Models\BudgetProject;
-use Modules\Budget\Models\BudgetCentralizedAction;
-use Modules\Budget\Models\BudgetSpecificAction;
-use Modules\Budget\Models\BudgetSubSpecificFormulation;
+use Illuminate\Contracts\Support\Renderable;
+
 use Modules\Budget\Models\BudgetAccountOpen;
+use Modules\Budget\Models\BudgetSpecificAction;
+use Modules\Budget\Models\BudgetCentralizedAction;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Modules\Budget\Models\BudgetSubSpecificFormulation;
 
 /**
  * @class BudgetSpecificActionController
@@ -33,6 +34,11 @@ class BudgetSpecificActionController extends Controller
     public $projects;
     /** @var array Arreglo con información de las acciones centralizadas registradas */
     public $centralized_actions;
+    /** @var array Arreglo con las reglas de validación sobre los datos de un formulario */
+    public $validate_rules;
+
+    /** @var array Arreglo con los mensajes de error de cada campo de un formulario */
+    public $validate_messages;
 
     /**
      * Define la configuración de la clase
@@ -56,6 +62,30 @@ class BudgetSpecificActionController extends Controller
             ['code', '-', 'name'],
             ['active' => true]
         );
+        
+        /** @var array Define las reglas de validación para el formulario */
+        $this->validate_rules = [
+            'from_date' => ['required', 'date'],
+            'to_date' => ['required', 'date'],
+            'code' => ['required'],
+            'name' => ['required', 'max:300'],
+            'description' => ['required'],
+            'project_centralized_action' => ['required'],
+            'project_id' => ['required_if:project_centralized_action,project'],
+            'centralized_action_id' => ['required_if:project_centralized_action,centralized_action']
+        ];
+
+        /** @var array Define los mensajes de error para el formulario */
+        $this->validate_messages = [
+            'from_date.required' => 'El campo fecha de inicio es obligatorio.',
+            'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
+            'to_date.required' => 'El campo fecha final es obligatorio.',
+            'to_date.date' => 'El campo fecha final no tiene un formato válido.',
+            'code.required' => 'El campo código es obligatorio.',
+            'project_centralized_action.required' => 'Debe indicar si el registro es para un proyecto o acción centralizada.',
+            'project_id.required_if' => 'Debe seleccionar un proyecto.',
+            'centralized_action_id.required_if' => 'Debe seleccionar una acción centralizada'
+        ];
     }
 
     /**
@@ -106,16 +136,7 @@ class BudgetSpecificActionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'from_date' => ['required', 'date'],
-            'to_date' => ['required', 'date'],
-            'code' => ['required'],
-            'name' => ['required', 'max:191'],
-            'description' => ['required'],
-            'project_centralized_action' => ['required'],
-            'project_id' => ['required_if:project_centralized_action,project'],
-            'centralized_action_id' => ['required_if:project_centralized_action,centralized_action'],
-        ]);
+        $this->validate($request, $this->validate_rules, $this->validate_messages);
 
         /** @var object Crea una acción específica */
         $budgetSpecificAction = new BudgetSpecificAction([
@@ -193,16 +214,7 @@ class BudgetSpecificActionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'from_date' => ['required', 'date'],
-            'to_date' => ['required', 'date'],
-            'code' => ['required'],
-            'name' => ['required'],
-            'description' => ['required'],
-            'project_centralized_action' => ['required'],
-            'project_id' => ['required_if:project_centralized_action,project'],
-            'centralized_action_id' => ['required_if:project_centralized_action,centralized_action'],
-        ]);
+        $this->validate($request, $this->validate_rules, $this->validate_messages);
 
         if ($request->project_centralized_action === "project") {
             /** @var object Objeto que contiene información de un proyecto */
@@ -321,7 +333,7 @@ class BudgetSpecificActionController extends Controller
         if ($formulated_year && strlen($formulated_year) > 4) {
             try {
                 $formulated_year = Crypt::decrypt($formulated_year);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+            } catch (DecryptException $e) {
                 //
             }
         }

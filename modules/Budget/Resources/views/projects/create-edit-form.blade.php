@@ -25,7 +25,7 @@
 						{{ __('Proyecto') }}
 						@include('buttons.help', [
 							'helpId' => 'BudgetProjectHelp',
-							'helpSteps' => get_json_resource('ui-guides/code_settings.json', 'budget')
+							'helpSteps' => get_json_resource('ui-guides/budget_project.json', 'budget')
 						])
 					</h6>
 					<div class="card-btns">
@@ -37,7 +37,7 @@
 					<div class="card-body">
 						@include('layouts.form-errors')
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpInstitution">
 								<div class="form-group is-required">
 									{!! Form::label('institution_id', __('Institución'), ['class' => 'control-label']) !!}
 									{!! Form::select(
@@ -50,7 +50,7 @@
 									) !!}
 								</div>
 							</div>
-							<div class="col-3">
+							<div class="col-3" id="helpDepartment">
 								<div class="form-group is-required">
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
 									{!! Form::select('department_id', $departments, null, [
@@ -60,7 +60,7 @@
 								</div>
 							</div>
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
-								<div class="col-3">
+								<div class="col-3" id="helpResponsible">
 									<div class="form-group is-required">
 										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
 										{!! Form::select('payroll_staff_id', $staffs, null, [
@@ -71,7 +71,7 @@
 										]) !!}
 									</div>
 								</div>
-								<div class="col-3">
+								<div class="col-3" id="helpPosition">
 									<div class="form-group is-required">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
@@ -86,7 +86,7 @@
 							@endif
 						</div>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpCode">
 								<div class="form-group is-required">
 									{!! Form::label('code', __('Código'), ['class' => 'control-label']) !!}
 									{!! Form::text('code', (isset($model)) ? $model->code : old('code'), [
@@ -95,7 +95,7 @@
 									]) !!}
 								</div>
 							</div>
-							<div class="col-3">
+							<div class="col-3" id="helpOnapreCode">
 								<div class="form-group">
 									{!! Form::label('onapre_code', __('Código ONAPRE'), ['class' => 'control-label']) !!}
 									{!! Form::text('onapre_code', (isset($model)) ? $model->onapre_code : old('onapre_code'), [
@@ -105,7 +105,7 @@
 									]) !!}
 								</div>
 							</div>
-							<div class="col-6">
+							<div class="col-6" id="helpName">
 								<div class="form-group is-required">
 									{!! Form::label('name', __('Nombre'), ['class' => 'control-label']) !!}
 									{!! Form::text('name', (isset($model)) ? $model->name : old('name'), [
@@ -117,7 +117,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpStatus">
 								<div class="form-group">
 									<label for="" class="control-label">{{ __('Activo') }}</label>
 									<div class="col-12">
