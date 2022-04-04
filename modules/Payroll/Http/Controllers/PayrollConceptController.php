@@ -330,7 +330,8 @@ class PayrollConceptController extends Controller
                 PayrollConceptAssignOption::create([
                     'key'                => $assign_to['id'],
                     'value'              => json_encode($request->assign_options[$assign_to['id']]),
-                    'payroll_concept_id' => $payrollConcept->id
+                    'applicable_type' => PayrollConcept::class,
+                    'applicable_id' => $payrollConcept->id,
                 ]);
             } elseif ($assign_to['type'] == 'list') {
                 foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
@@ -340,7 +341,8 @@ class PayrollConceptController extends Controller
                      */
                     $payrollConceptAssignOption = PayrollConceptAssignOption::create([
                         'key'                => $assign_to['id'],
-                        'payroll_concept_id' => $payrollConcept->id
+                        'applicable_type' => PayrollConcept::class,
+                        'applicable_id' => $payrollConcept->id,
                     ]);
                     /** Se guarda la información en el campo morphs */
                     $option = $assign_to['model']::find($assign_option['id']);
@@ -398,18 +400,21 @@ class PayrollConceptController extends Controller
 
 
         /** Se eliminan las opciones de asignación asociadas al concepto */
-        $assignOptions = PayrollConceptAssignOption::where('payroll_concept_id', $payrollConcept->id)->get();
+        $assignOptions = PayrollConceptAssignOption::where('applicable_type', PayrollConcept::class)
+                            ->where('applicable_id', $payrollConcept->id)->get();
         foreach ($assignOptions as $assignOption) {
             $assignOption->forceDelete();
         }
 
         /** Se agregan las nuevas opciones de asignación asociadas al concepto */
+
         foreach ($request->assign_to as $assign_to) {
             if ($assign_to['type'] == 'range') {
                 PayrollConceptAssignOption::create([
                     'key'                => $assign_to['id'],
                     'value'              => json_encode($request->assign_options[$assign_to['id']]),
-                    'payroll_concept_id' => $payrollConcept->id
+                    'applicable_type' => PayrollConcept::class,
+                    'applicable_id' => $payrollConcept->id,
                 ]);
             } elseif ($assign_to['type'] == 'list') {
                 foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
@@ -419,7 +424,8 @@ class PayrollConceptController extends Controller
                      */
                     $payrollConceptAssignOption = PayrollConceptAssignOption::create([
                         'key'                => $assign_to['id'],
-                        'payroll_concept_id' => $payrollConcept->id
+                        'applicable_type' => PayrollConcept::class,
+                        'applicable_id' => $payrollConcept->id,
                     ]);
                     /** Se guarda la información en el campo morphs */
                     $option = $assign_to['model']::find($assign_option['id']);

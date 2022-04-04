@@ -112,4 +112,16 @@ class PayrollVacationPolicy extends Model implements Auditable
     {
         return $this->hasMany(PayrollConceptAssignOption::class);
     }
+
+    /**
+     * Obtiene información de las opciones asignadas asociadas a un género
+     *
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function assignTo()
+    {
+        return $this->morphMany(PayrollConceptAssignOption::class, 'applicable');
+    }
 }
