@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get(
         'get-select-data-custom/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
         'CommonController@getSelectDataCustom'
-    )->name('get-select-data');
+    )->name('get-select-data-custom');
 
     /** Ruta para obtener datos de los departamentos */
     Route::get(

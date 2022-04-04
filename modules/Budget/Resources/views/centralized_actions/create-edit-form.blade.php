@@ -70,7 +70,7 @@
 								</div>
 							
 							   <div class="col-3">
-									<div class="form-group is-required" id="payroll_position_id">
+									<div class="form-group is-required" id="help_payroll_position_id">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
 										]) !!}
