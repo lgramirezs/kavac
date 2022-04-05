@@ -392,8 +392,8 @@
                                         <div class="col-sm-12 col-btn-block text-center">
                                             <div class="btn btn-info btn-sm" data-toggle="tooltip"
                                                  title="Variable a usar cuando se realice el cálculo"
-                                                 :disabled="(((operator == '') ||
-                                                 ((value == '') && (type != 'boolean'))) &&
+                                                 :disabled="((((operator == '') && (type != 'number') && (variable != 'vacation')) ||
+                                                 ((value == '') && (type == 'boolean'))) &&
                                                  ((variable == 'worker_record') || (variable == 'vacation')))"
                                                  @click="getCodeVariable()">
                                                 {{ updateNameVariable }}
@@ -477,7 +477,7 @@
                 value:                     '',
                 operator:                  '',
                 operators:                 [
-                    {"id": "",   "text": "Seleccione..."},
+                    {"id": "",   "text": "Ninguno"},
                     {"id": "==", "text": "Igualdad (==)"},
                     {"id": "!=", "text": "Desigualdad (!=)"},
                     {"id": ">",  "text": "Mayor estricto (>)"},
@@ -851,26 +851,29 @@
                 let showFormula = '';
                 if (((vm.variable != 'worker_record') && (vm.variable != 'vacation')) ||
                     ((vm.operator != '') && (vm.value != '')) ||
-                    ((vm.operator != '') && (vm.type == 'boolean'))) {
+                    ((vm.operator != '') && (vm.type == 'boolean')) ||
+                    ((vm.operator == '') && (vm.type == 'number'))) {
                     if (vm.variable_option != '') {
                         $.each(vm.variable_options, function(index, field) {
                             if (field['id'] == vm.variable_option) {
-                                if (typeof field['code'] !== 'undefined') {
-                                    response = field['code'];
-                                    showFormula = field['code'];
-                                } else if (typeof field['id'] !== 'undefined') {
+                                if (vm.operator == '') {
+                                    response = field['id'];
+                                    showFormula = field['text'];
+                                } else {
                                     response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                    showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                 }
                             } else if (typeof field['children'] !== 'undefined') {
                                 $.each(field['children'], function(index, field) {
-                                    if (field['id'] == vm.variable_option) {
-                                        if (typeof field['code'] !== 'undefined') {
-                                            response = field['code'];
-                                            showFormula = field['code'];
-                                        } else if (typeof field['id'] !== 'undefined') {
-                                            response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                            showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    if (typeof field['id'] !== 'undefined') {
+                                        if (field['id'] == vm.variable_option) {
+                                            if (vm.operator == '') {
+                                                response = field['id'];
+                                                showFormula = field['text'];
+                                            } else {
+                                                response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                                showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                            }
                                         }
                                     }
                                 });
@@ -929,6 +932,13 @@
                             });
                         }
                     });
+                }
+                if (vm.type == 'list') {
+                    axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                        vm.subOptions = response.data;
+                    });
+                } else if (vm.type == 'boolean') {
+                    vm.value = false;
                 }
             },
             /**
