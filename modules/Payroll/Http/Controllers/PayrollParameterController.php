@@ -76,15 +76,11 @@ class PayrollParameterController extends Controller
         $this->validateRules = [
             'parameter_type' => ['required'],
             'name'           => ['required'],
-            'code'           => ['required'],
-            'acronym'        => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'acronym.required'        => 'El campo acrónimo es obligatorio.',
             'parameter_type.required' => 'El campo tipo de parámetro es obligatorio.',
-            'code.required'           => 'El campo código es obligatorio.',
             'value.required'          => 'El campo valor es obligatorio.',
             'formula.required'        => 'El campo fórmula es obligatorio.'
         ];
@@ -313,8 +309,6 @@ class PayrollParameterController extends Controller
                 array_push($listGlobalParameters, [
                     'id'             => $param->id,
                     'name'           => $param->name,
-                    'code'           => $param->code,
-                    'acronym'        => $param->acronym,
                     'description'    => $param->description ?? '',
                     'parameter_type' => $param->parameter_type,
                     'percentage'     => $param->percentage ?? '',
@@ -369,12 +363,6 @@ class PayrollParameterController extends Controller
                 if ($request->name == $param->name) {
                     $errors = array_merge($errors, ["name" => ["El campo nombre contiene un valor duplicado."]]);
                 }
-                if ($request->code == $param->code) {
-                    $errors = array_merge($errors, ["code" => ["El campo código contiene un valor duplicado."]]);
-                }
-                if ($request->acronym == $param->acronym) {
-                    $errors = array_merge($errors, ["acronym" => ["El campo acrónimo contiene un valor duplicado."]]);
-                }
                 if (!empty($errors)) {
                     return response()->json(['errors' => $errors], 422);
                 }
@@ -382,8 +370,6 @@ class PayrollParameterController extends Controller
                 array_push($listGlobalParameters, [
                     'id'             => $param->id,
                     'name'           => $param->name,
-                    'code'           => $param->code,
-                    'acronym'        => $param->acronym,
                     'description'    => $param->description,
                     'parameter_type' => $param->parameter_type,
                     'percentage'     => $param->percentage,
@@ -394,9 +380,7 @@ class PayrollParameterController extends Controller
         }
         $payrollParameter = [
             'id'             => $index + 1,
-            'code'           => $request->code,
             'name'           => $request->name,
-            'acronym'        => $request->acronym,
             'description'    => $request->description ?? '',
             'parameter_type' => $request->parameter_type,
             'percentage'     => !empty($request->input('percentage'))
@@ -463,20 +447,9 @@ class PayrollParameterController extends Controller
                     if ($request->name == $param->name) {
                         $errors = array_merge($errors, ["name" => ["El campo nombre contiene un valor duplicado."]]);
                     }
-                    if ($request->code == $param->code) {
-                        $errors = array_merge($errors, ["code" => ["El campo código contiene un valor duplicado."]]);
-                    }
-                    if ($request->acronym == $param->acronym) {
-                        $errors = array_merge(
-                            $errors,
-                            ["acronym" => ["El campo acrónimo contiene un valor duplicado."]]
-                        );
-                    }
                     array_push($listGlobalParameters, [
                         'id'             => $param->id,
                         'name'           => $param->name,
-                        'code'           => $param->code,
-                        'acronym'        => $param->acronym,
                         'description'    => $param->description ?? '',
                         'parameter_type' => $param->parameter_type,
                         'percentage'     => $param->percentage ?? '',
@@ -487,8 +460,6 @@ class PayrollParameterController extends Controller
                     $payrollParameter = [
                         'id'             => $request->id,
                         'name'           => $request->name,
-                        'code'           => $request->code,
-                        'acronym'        => $request->acronym,
                         'description'    => $request->description ?? '',
                         'parameter_type' => $request->parameter_type,
                         'percentage'     => !empty($request->input('percentage'))
@@ -633,7 +604,6 @@ class PayrollParameterController extends Controller
                     array_push($listGlobalParameters, [
                         'id'             => $param->id,
                         'text'           => $param->name,
-                        'code'           => $param->code
                     ]);
                 }
             }
@@ -665,24 +635,24 @@ class PayrollParameterController extends Controller
                         if ($parameters) {
                             foreach ($parameters as $parameter) {
                                 $jsonValue = json_decode($parameter->p_value);
-                                if (isset($jsonValue->code)) {
-                                    if ($jsonValue->code == $explod) {
+                                if (isset($jsonValue->id)) {
+                                    if ($jsonValue->id == $explod) {
                                         if ($jsonValue->parameter_type == 'global_value') {
                                             /** Si el parámetro es de valor global */
                                             array_push($payrollParameters, [
-                                                'code'  => $jsonValue->code,
+                                                'id'  => $jsonValue->id,
                                                 'value' => $jsonValue->value
                                             ]);
                                         } elseif ($jsonValue->parameter_type == 'resettable_variable') {
                                             /** Si el parámetro es reiniciable a cero por período de nómina */
                                             array_push($payrollParameters, [
-                                                'code'  => $jsonValue->code,
+                                                'id'  => $jsonValue->id,
                                                 'value' => ''
                                             ]);
                                         } elseif ($jsonValue->parameter_type == 'processed_variable') {
                                             /** Si el parámetro es una variable procesada */
                                             array_push($payrollParameters, [
-                                                'code'  => $jsonValue->code,
+                                                'id'  => $jsonValue->id,
                                                 'value' => $jsonValue->formula
                                             ]);
                                         }

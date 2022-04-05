@@ -62,26 +62,6 @@
                                         </div>
                                         <!-- ./nombre -->
                                     </div>
-                                    <div class="col-md-6">
-                                        <!-- código -->
-                                        <div class="form-group is-required">
-                                            <label for="code">Código:</label>
-                                            <input type="text" id="code" placeholder="Código"
-                                                   class="form-control input-sm" v-model="record.code" data-toggle="tooltip"
-                                                   title="Indique el código del parámetro (requerido)">
-                                        </div>
-                                        <!-- ./código -->
-                                    </div>
-                                    <div class="col-md-6">
-                                        <!-- acrónimo -->
-                                        <div class="form-group is-required">
-                                            <label for="acronym">Acrónimo:</label>
-                                            <input type="text" id="acronym" placeholder="Acrónimo"
-                                                   class="form-control input-sm" v-model="record.acronym" data-toggle="tooltip"
-                                                   title="Indique el acrónimo del parámetro (requerido)">
-                                        </div>
-                                        <!-- ./acrónimo -->
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -143,7 +123,7 @@
                                               :class="['form-control input-sm BlockDeletion', isInvalid('formula')]"
                                               data-toggle="tooltip"
                                               title="Fórmula a aplicar para la variable. Utilice la siguiente calculadora para establecer los parámetros de la fórmula"
-                                              rows="3" v-model="record.formula"
+                                              rows="3" v-model="formula"
                                               autocomplete="off"
                                               onkeypress="return (event.charCode >= 24 && event.charCode <= 27)">
                                     </textarea>
@@ -271,7 +251,7 @@
                                         <div class="col-sm-12 text-center">
                                             <div class="btn btn-info btn-sm btn-formula-clear" data-toggle="tooltip"
                                                  title="Reinicia el campo de la fórmula"
-                                                 @click="record.formula = ''">C</div>
+                                                 @click="record.formula = ''; formula = '';">C</div>
                                             <div class="btn btn-info btn-sm btn-formula" data-toggle="tooltip"
                                                  title="presione para agregar este dígito" data-value="0">0</div>
                                             <div class="btn btn-info btn-sm btn-formula" data-toggle="tooltip"
@@ -346,14 +326,13 @@
                 record: {
                     id:             '',
                     name:           '',
-                    code:           '',
-                    acronym:        '',
                     description:    '',
                     parameter_type: '',
                     percentage:     false,
                     value:          '',
                     formula:        ''
                 },
+                formula:         '',
                 variable:        '',
                 variable_option: '',
 
@@ -374,7 +353,7 @@
 
                 errors:          [],
                 records:         [],
-                columns:         ['name', 'code', 'acronym', 'description', 'id'],
+                columns:         ['name', 'description', 'id'],
                 options:         [],
                 parameter_types: []
             }
@@ -383,18 +362,14 @@
             const vm = this;
             vm.table_options.headings = {
                 'name':        'Nombre',
-                'code':        'Código',
-                'acronym':     'Acrónimo',
                 'description': 'Descripción',
                 'id':          'Acción'
             };
-            vm.table_options.sortable       = ['name', 'code', 'acronym', 'description'];
-            vm.table_options.filterable     = ['name', 'code', 'acronym', 'description'];
+            vm.table_options.sortable       = ['name', 'description'];
+            vm.table_options.filterable     = ['name', 'description'];
             vm.table_options.columnsClasses = {
-                'name':        'col-xs-2',
-                'code':        'col-xs-2',
-                'acronym':     'col-xs-2',
-                'description': 'col-xs-4',
+                'name':        'col-xs-4',
+                'description': 'col-xs-6',
                 'id':          'col-xs-2'
             };
         },
@@ -417,12 +392,17 @@
                 });
                 $('.btn-formula').on('click', function() {
                     let keys = vm.record.formula.indexOf('}');
-                    if (keys > 0) {
+                    let showKeys = vm.formula.indexOf('}');
+                    if (keys > 0 && showKeys > 0) {
                         let firstFormula = vm.record.formula.substr(0, keys);
+                        let showFirstFormula = vm.formula.substr(0, showKeys);
                         let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
+                        let showLastFormula = vm.formula.substr(showKeys, vm.formula.length);
                         vm.record.formula = firstFormula + $(this).data('value') + lastFormula;
+                        vm.formula = showFirstFormula + $(this).data('value') + showLastFormula;
                     } else {
                         vm.record.formula += $(this).data('value');
+                        vm.formula += $(this).data('value');
                     }
                 });
             });
@@ -498,8 +478,6 @@
                 vm.record   = {
                     id:             '',
                     name:           '',
-                    code:           '',
-                    acronym:        '',
                     description:    '',
                     parameter_type: '',
                     percentage:     false,
@@ -562,6 +540,7 @@
             getCodeVariable() {
                 const vm = this;
                 let response = '';
+                let showFormula = '';
                 if ((vm.variable != 'worker_record') ||
                     ((vm.operator != '') && (vm.value != '')) ||
                     ((vm.operator != '') && (vm.type == 'boolean'))) {
@@ -570,16 +549,20 @@
                             if (field['id'] == vm.variable_option) {
                                 if (typeof field['code'] !== 'undefined') {
                                     response = field['code'];
+                                    showFormula = field['code'];
                                 } else if (typeof field['id'] !== 'undefined') {
                                     response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                 }
                             } else if (typeof field['children'] !== 'undefined') {
                                 $.each(field['children'], function(index, field) {
                                     if (field['id'] == vm.variable_option) {
                                         if (typeof field['code'] !== 'undefined') {
                                             response = field['code'];
+                                            showFormula = field['code'];
                                         } else if (typeof field['id'] !== 'undefined') {
                                             response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                            showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                         }
                                     }
                                 });
@@ -598,6 +581,20 @@
                             }
                         } else {
                             vm.record.formula += response;
+                        }
+                    }
+                    if (showFormula != '') {
+                        if (vm.formula != '') {
+                            let keys = vm.formula.indexOf('}');
+                            if (keys > 0) {
+                                let firstFormula = vm.formula.substr(0, keys);
+                                let lastFormula = vm.formula.substr(keys, vm.formula.length);
+                                vm.formula = firstFormula + showFormula + lastFormula;
+                            } else {
+                                vm.formula += showFormula;
+                            }
+                        } else {
+                            vm.formula += showFormula;
                         }
                     }
                 }

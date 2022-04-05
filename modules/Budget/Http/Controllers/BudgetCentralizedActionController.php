@@ -174,6 +174,7 @@ class BudgetCentralizedActionController extends Controller
     {
         /** @var object Objeto con información de la acción centralizada a modificar */
         $budgetCentralizedAction = BudgetCentralizedAction::find($id);
+        $budgetCentralizedActionInstitucion = BudgetCentralizedAction::find($id)->department;
 
         /** @var array Arreglo de opciones a implementar en el formulario */
         $header = [
@@ -183,7 +184,7 @@ class BudgetCentralizedActionController extends Controller
         ];
         /** @var object Objeto con datos del modelo a modificar */
         $model = $budgetCentralizedAction;
-
+       $model["institution_id"]= $budgetCentralizedActionInstitucion["institution_id"];
         /** @var array Arreglo de opciones de instituciones a representar en la plantilla para su selección */
         $institutions = template_choices('App\Models\Institution', ['acronym'], ['active' => true]);
         /** @var array Arreglo de opciones de departamentos a representar en la plantilla para su selección */
@@ -319,27 +320,7 @@ class BudgetCentralizedActionController extends Controller
         $budget = BudgetCentralizedAction::find($id);
         $cargo = PayrollStaff::where( "id", $budget->payroll_staff_id)->first();
      
-        return response()->json(['result' => true, 'budget ' =>  $budget, 'cargo' =>  $cargo ], 200);
-
-        /** @var array Arreglo con información de las acciones específicas */
-        $data = [['id' => '', 'text' => 'Seleccione...']];
-        $specificActions = $data;
-        foreach ($specificActions as $specificAction) {
-            /** @var object Objeto que determina si la acción específica ya fue formulada para el último presupuesto */
-            $existsFormulation = BudgetCentralizedAction::where([
-                'budget_specific_action_id' => $specificAction->id,
-                'assigned' => true
-            ])->orderBy('year', 'desc')->first();
-
-            if (!$existsFormulation) {
-                array_push($data, [
-                    'id' => $specificAction->id,
-                    'text' => $specificAction->code . " - " . $specificAction->name
-                ]);
-            }
-        }
-
-        return response()->json($data);
+        return response()->json(['result' => true, 'budget' =>  $budget, 'cargo' =>  $cargo ], 200); 
     }
 
 }
