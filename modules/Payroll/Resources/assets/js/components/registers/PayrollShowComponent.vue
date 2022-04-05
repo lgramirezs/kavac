@@ -19,10 +19,10 @@
                 <div class="form-group">
                     <strong>Parámetros empleados en la nómina:</strong>
                     <div class="row" style="margin: 1px 0">
-                        <div class="col-md-4" :key="payroll_parameter['code']"
+                        <div class="col-md-4" :key="payroll_parameter['id']"
                              v-for="payroll_parameter in record.payroll_parameters">
                             <div class="form-group">
-                                <strong>{{ payroll_parameter['code'] }}:</strong>
+                                <strong>{{ payroll_parameter['id'] }}:</strong>
                                 <div class="row" style="margin: 1px 0">
                                     <span class="col-md-12" id="value">
                                         {{ payroll_parameter['value'] }}

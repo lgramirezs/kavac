@@ -55,31 +55,23 @@ class PayrollConceptController extends Controller
 
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
-            'code'                    => ['required', 'unique:payroll_concepts,code'],
-            'name'                    => ['required'],
+            'name'                    => ['required', 'unique:payroll_concepts,name'],
             'payroll_concept_type_id' => ['required'],
-            'affect'                  => ['required'],
-            'incidence_type'          => ['required'],
-            'accounting_account_id'   => ['required'],
-            'budget_account_id'       => ['required'],
             'institution_id'          => ['required'],
             'calculation_way'         => ['required'],
-            'assign_to'               => ['required']
+            'assign_to'               => ['required'],
+            'currency_id'             => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'code.required'                        => 'El campo código es obligatorio.',
             'payroll_concept_type_id.required'     => 'El campo tipo de concepto es obligatorio.',
-            'affect.required'                      => 'El campo ¿incide sobre? es obligatorio.',
-            'incidence_type.required'              => 'El campo tipo de incidencia es obligatorio.',
-            'accounting_account_id.required'       => 'El campo cuenta contable es obligatorio.',
-            'budget_account_id.required'           => 'El campo cuenta presupuestaria es obligatorio.',
             'institution_id.required'              => 'El campo institución es obligatorio.',
             'calculation_way.required'             => 'El campo forma de cálculo es obligatorio.',
             'assign_to.required'                   => 'El campo "¿asignar a?" es obligatorio.',
             'payroll_salary_tabulator_id.required' => 'El campo tabulador salarial es obligatorio.',
-            'formula.required'                     => 'El campo fórmula es obligatorio.'
+            'formula.required'                     => 'El campo fórmula es obligatorio.',
+            'currency_id.required'                 => 'El campo moneda es obligatorio'
         ];
 
         /** Define las opciones del campo "asignar a" a emplear en el formulario */
@@ -148,7 +140,7 @@ class PayrollConceptController extends Controller
                 'id'    => 'all_staff_with_sons',
                 'name'  => 'Todos los trabajadores con hijos',
                 'model' => 'Modules\Payroll\Models\PayrollStaff',
-                'type'  => ''
+                'type'  => 'range'
             ],
             [
                 'id'    => 'all_staff_with_sons_studying',
@@ -176,7 +168,13 @@ class PayrollConceptController extends Controller
             ],
             [
                 'id'    => 'staff_according_antiquity_years',
-                'name'  => 'Trabajadores de acuerdo a sus años de antiguedad',
+                'name'  => 'Trabajadores de acuerdo a sus años de antiguedad en la institución',
+                'model' => 'Modules\Payroll\Models\PayrollStaff',
+                'type'  => 'range'
+            ],
+            [
+                'id'    => 'staff_according_antiquity_years',
+                'name'  => 'Trabajadores de acuerdo a sus años de antiguedad en la administración pública',
                 'model' => 'Modules\Payroll\Models\PayrollStaff',
                 'type'  => 'range'
             ],
@@ -303,14 +301,11 @@ class PayrollConceptController extends Controller
          * @var Object $payrollConcept
          */
         $payrollConcept = PayrollConcept::create([
-            'code'                        => $request->code,
             'name'                        => $request->name,
             'description'                 => $request->description ?? '',
             'active'                      => !empty($request->active)
                                                  ? $request->active
                                                  : false,
-            'incidence_type'              => $request->incidence_type,
-            'affect'                      => $request->affect,
             'calculation_way'             => $request->calculation_way,
             'formula'                     => ($request->calculation_way == 'formula')
                                                  ? $request->formula
@@ -322,7 +317,8 @@ class PayrollConceptController extends Controller
                                                  : null,
             'accounting_account_id'       => $request->accounting_account_id,
             'budget_account_id'           => $request->budget_account_id,
-            'assign_to'                   => json_encode($request->assign_to)
+            'assign_to'                   => json_encode($request->assign_to),
+            'currency_id'                 => $request->currency_id
 
         ]);
         foreach ($request->assign_to as $assign_to) {
@@ -330,7 +326,8 @@ class PayrollConceptController extends Controller
                 PayrollConceptAssignOption::create([
                     'key'                => $assign_to['id'],
                     'value'              => json_encode($request->assign_options[$assign_to['id']]),
-                    'payroll_concept_id' => $payrollConcept->id
+                    'applicable_type' => PayrollConcept::class,
+                    'applicable_id' => $payrollConcept->id,
                 ]);
             } elseif ($assign_to['type'] == 'list') {
                 foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
@@ -340,7 +337,8 @@ class PayrollConceptController extends Controller
                      */
                     $payrollConceptAssignOption = PayrollConceptAssignOption::create([
                         'key'                => $assign_to['id'],
-                        'payroll_concept_id' => $payrollConcept->id
+                        'applicable_type' => PayrollConcept::class,
+                        'applicable_id' => $payrollConcept->id,
                     ]);
                     /** Se guarda la información en el campo morphs */
                     $option = $assign_to['model']::find($assign_option['id']);
@@ -370,18 +368,15 @@ class PayrollConceptController extends Controller
         $validateRules  = $this->validateRules;
         $validateRules  = array_replace(
             $validateRules,
-            ['code' => ['required', 'unique:payroll_concepts,code,' . $payrollConcept->id]]
+            ['name' => ['required', 'unique:payroll_concepts,name,' . $payrollConcept->id]]
         );
         $this->validate($request, $validateRules, $this->messages);
 
-        $payrollConcept->code                        = $request->code;
         $payrollConcept->name                        = $request->name;
         $payrollConcept->description                 = $request->description ?? '';
         $payrollConcept->active                      = !empty($request->active)
                                                            ? $request->active
                                                            : $payrollConcept->active;
-        $payrollConcept->incidence_type              = $request->incidence_type;
-        $payrollConcept->affect                      = $request->affect;
         $payrollConcept->calculation_way             = $request->calculation_way;
         $payrollConcept->formula                     = ($request->calculation_way == 'formula')
                                                            ? $request->formula
@@ -394,22 +389,26 @@ class PayrollConceptController extends Controller
         $payrollConcept->accounting_account_id       = $request->accounting_account_id;
         $payrollConcept->budget_account_id           = $request->budget_account_id;
         $payrollConcept->assign_to                   = json_encode($request->assign_to);
+        $payrollConcept->currency_id                 = $request->currency_id;
         $payrollConcept->save();
 
 
         /** Se eliminan las opciones de asignación asociadas al concepto */
-        $assignOptions = PayrollConceptAssignOption::where('payroll_concept_id', $payrollConcept->id)->get();
+        $assignOptions = PayrollConceptAssignOption::where('applicable_type', PayrollConcept::class)
+                            ->where('applicable_id', $payrollConcept->id)->get();
         foreach ($assignOptions as $assignOption) {
             $assignOption->forceDelete();
         }
 
         /** Se agregan las nuevas opciones de asignación asociadas al concepto */
+
         foreach ($request->assign_to as $assign_to) {
             if ($assign_to['type'] == 'range') {
                 PayrollConceptAssignOption::create([
                     'key'                => $assign_to['id'],
                     'value'              => json_encode($request->assign_options[$assign_to['id']]),
-                    'payroll_concept_id' => $payrollConcept->id
+                    'applicable_type' => PayrollConcept::class,
+                    'applicable_id' => $payrollConcept->id,
                 ]);
             } elseif ($assign_to['type'] == 'list') {
                 foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
@@ -419,7 +418,8 @@ class PayrollConceptController extends Controller
                      */
                     $payrollConceptAssignOption = PayrollConceptAssignOption::create([
                         'key'                => $assign_to['id'],
-                        'payroll_concept_id' => $payrollConcept->id
+                        'applicable_type' => PayrollConcept::class,
+                        'applicable_id' => $payrollConcept->id,
                     ]);
                     /** Se guarda la información en el campo morphs */
                     $option = $assign_to['model']::find($assign_option['id']);

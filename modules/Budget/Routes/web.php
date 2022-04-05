@@ -109,6 +109,10 @@ Route::group(
             'get-centralized-actions/{centralized_action_id?}',
             'BudgetCentralizedActionController@getCentralizedActions'
         )->name('budget.get-centralized-actions');
+        Route::get(
+            'detail-vue-centralized-actions/{id}',
+            'BudgetCentralizedActionController@getDetailCentralizedActions'
+        )->name('budget.get-centralized-actions.detail');
 
         /**
          * -----------------------------------------------------------------------

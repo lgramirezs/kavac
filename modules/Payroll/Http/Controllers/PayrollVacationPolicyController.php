@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollVacationPolicy;
+use Modules\Payroll\Models\PayrollConceptAssignOption;
 use Modules\Payroll\Models\Institution;
 
 /**
@@ -77,8 +78,8 @@ class PayrollVacationPolicyController extends Controller
                 'por año de servicio es obligatorio.',
             'maximum_additional_days_per_year.required'      => 'El campo días de disfrute de vacaciones máximo ' .
                 'por año de servicio es obligatorio.',
-            'salary_type.required'                           => 'El campo salario a emplear para el cálculo del bono ' .
-                'vacacional es obligatorio.',
+            // 'salary_type.required'                           => 'El campo salario a emplear para el cálculo del bono ' .
+            //     'vacacional es obligatorio.',
             'payroll_payment_type_id.required'               => 'El campo tipo de pago de nómina es obligatorio.'
         ];
     }
@@ -137,6 +138,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validateRules  = $this->validateRules;
         if ($request->input('vacation_type') == 'collective_vacations') {
             $validateRules  = array_merge(
@@ -144,7 +146,7 @@ class PayrollVacationPolicyController extends Controller
                 [
                     'vacation_periods_accumulated_per_year' => ['required'],
                     'vacation_periods'                      => ['required'],
-                    'salary_type'                           => ['required'],
+                    // 'salary_type'                           => ['required'],
                     'payroll_payment_type_id'               => ['required']
                 ]
             );
@@ -198,14 +200,47 @@ class PayrollVacationPolicyController extends Controller
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
             'payment_calculation'                   => $request->input('payment_calculation'),
-            'salary_type'                           => $request->input('salary_type'),
+            // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),
             'vacation_postpone'                     => $request->input('vacation_postpone'),
             'staff_antiquity'                       => $request->input('staff_antiquity'),
             'institution_id'                        => $request->input('institution_id'),
             'payroll_payment_type_id'               => $request->input('payroll_payment_type_id'),
             'assign_to'                             => json_encode($request->assign_to),
+
+            'on_scale'                              => $request->input('on_scale'),
+            'worker_arises'                         => $request->input('worker_arises'),
+            'generate_worker_arises'                => $request->input('generate_worker_arises'),
+            'min_days_advance'                      => $request->input('min_days_advance'),
+            'max_days_advance'                      => $request->input('max_days_advance'),
         ]);
+
+        foreach ($request->assign_to as $assign_to) {
+            if ($assign_to['type'] == 'range') {
+                PayrollConceptAssignOption::create([
+                    'key'                => $assign_to['id'],
+                    'value'              => json_encode($request->assign_options[$assign_to['id']]),
+                    'applicable_type' => PayrollVacationPolicy::class,
+                    'applicable_id' => $payrollVacationPolicy->id,
+                ]);
+            } elseif ($assign_to['type'] == 'list') {
+                foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
+                    /**
+                     * Objeto asociado al modelo PayrollConceptAssignOption
+                     * @var Object $payrollConceptAssignOption
+                     */
+                    $payrollConceptAssignOption = PayrollConceptAssignOption::create([
+                        'key'                => $assign_to['id'],
+                        'applicable_type' => PayrollVacationPolicy::class,
+                        'applicable_id' => $payrollVacationPolicy->id,
+                    ]);
+                    /** Se guarda la información en el campo morphs */
+                    $option = $assign_to['model']::find($assign_option['id']);
+                    $option->payrollConceptAssignOptions()->save($payrollConceptAssignOption);
+                }
+            }
+        };
+
         return response()->json(['record' => $payrollVacationPolicy, 'message' => 'Success'], 200);
     }
 
@@ -235,7 +270,7 @@ class PayrollVacationPolicyController extends Controller
                 [
                     'vacation_periods_accumulated_per_year' => ['required'],
                     'vacation_periods'                      => ['required'],
-                    'salary_type'                           => ['required'],
+                    // 'salary_type'                           => ['required'],
                     'payroll_payment_type_id'               => ['required']
                 ]
             );
@@ -284,13 +319,19 @@ class PayrollVacationPolicyController extends Controller
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
             'payment_calculation'                   => $request->input('payment_calculation'),
-            'salary_type'                           => $request->input('salary_type'),
+            // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),
             'vacation_postpone'                     => $request->input('vacation_postpone'),
             'staff_antiquity'                       => $request->input('staff_antiquity'),
             'institution_id'                        => $request->input('institution_id'),
             'payroll_payment_type_id'               => $request->input('payroll_payment_type_id'),
             'assign_to'                             => json_encode($request->assign_to),
+
+            'on_scale'                              => $request->input('on_scale'),
+            'worker_arises'                         => $request->input('worker_arises'),
+            'generate_worker_arises'                => $request->input('generate_worker_arises'),
+            'min_days_advance'                      => $request->input('min_days_advance'),
+            'max_days_advance'                      => $request->input('max_days_advance'),
         ]);
 
         return response()->json(['message' => 'Success'], 200);

@@ -101,20 +101,20 @@
                             <h6 class="card-title"> Parámetros de nómina </h6>
                             <div class="row">
                                 <!-- parámetros globales de nómina -->
-                                <div class="col-md-6" :key="payroll_parameter['code']"
+                                <div class="col-md-6" :key="payroll_parameter['id']"
                                      v-for="payroll_parameter in payroll_parameters">
                                     <div class="form-group is-required">
-                                        <label>{{ payroll_parameter['code'] }}:</label>
-                                        <input :id="'parameter_' + payroll_parameter['code']"
+                                        <label>{{ payroll_parameter['id'] }}:</label>
+                                        <input :id="'parameter_' + payroll_parameter['id']"
                                                class="form-control input-sm"
                                                type="text" data-toggle="tooltip"
                                                :disabled="payroll_parameter['value'] != ''"
                                                :value="payroll_parameter['value']"
                                                v-if="payroll_parameter['value']">
 
-                                        <input :id="'parameter_' + payroll_parameter['code']"
+                                        <input :id="'parameter_' + payroll_parameter['id']"
                                                type="text" data-toggle="tooltip"
-                                               :title="'Indique el parámetro '+ payroll_parameter['code'] + ' (requerido)'"
+                                               :title="'Indique el parámetro '+ payroll_parameter['id'] + ' (requerido)'"
                                                class="form-control input-sm"
                                                v-input-mask data-inputmask="
                                                     'alias': 'numeric',
@@ -326,9 +326,9 @@
                 let payroll_parameters = [];
 
                 $.each(vm.payroll_parameters, function(index, field) {
-                    let input = document.getElementById('parameter_' + field['code']);
+                    let input = document.getElementById('parameter_' + field['id']);
                     payroll_parameters.push({
-                        code:  field['code'],
+                        id:  field['id'],
                         value: input.value
                     });
                     if(input.value.trim() == '') {

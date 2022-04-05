@@ -29,7 +29,9 @@ class CreatePayrollSettlementTypesTable extends Migration
                 $table->id();
                 $table->string('name', 100)->unique()->comment('Nombre del tipo de liquidación');
                 $table->text('motive')->comment('Motivo de egreso al que se asocia el tipo de liquidación');
-                $table->foreignId('payroll_concept_id')->comment('Identificador del concepto')
+                // $table->foreignId('payroll_concept_id')->comment('Identificador del concepto')
+                //       ->constrained()->onUpdate('cascade')->onDelete('restrict');
+                $table->foreignId('payroll_payment_types_id')->comment('Identificador del tipo de pago')
                       ->constrained()->onUpdate('cascade')->onDelete('restrict');
                 $table->timestamps();
                 $table->softDeletes()->comment('Fecha y hora en la que el registro fue eliminado');

@@ -1,7 +1,11 @@
 	<template>
 	<v-client-table :columns="columns" :data="records" :options="table_options">
 		<div slot="id" slot-scope="props" class="text-center">
-			<button @click="editForm(props.row.id)"
+				<div class="d-inline-flex">
+			<budget-centralized-actions-info
+    				:id="props.row.id"	:route_list="app_url + '/budget/detail-vue-centralized-actions/' + props.row.id">
+    	    </budget-centralized-actions-info>		
+         	<button @click="editForm(props.row.id)"
     				class="btn btn-warning btn-xs btn-icon btn-action"
     				title="Modificar registro" data-toggle="tooltip" type="button">
     			<i class="fa fa-edit"></i>
@@ -12,6 +16,7 @@
 					type="button">
 				<i class="fa fa-trash-o"></i>
 			</button>
+          </div>
 		</div>
 		<div slot="active" slot-scope="props" class="text-center">
 			<span v-if="props.row.active">SI</span>
@@ -41,9 +46,9 @@
 			this.table_options.columnsClasses = {
 				'custom_date': 'col-md-2',
 				'code': 'col-md-2',
-				'name': 'col-md-5',
+				'name': 'col-md-4',
 				'active': 'col-md-1',
-				'id': 'col-md-2'
+				'id': 'col-md-3'
 			};
 		},
 		mounted() {
@@ -58,6 +63,35 @@
 			reset() {
 
 			},
+			 /**
+         * Muestra los detalles de un registro seleccionado
+         *
+         * @author    
+         *
+         * @param     {string}    id    Identificador del registro para el cual se desea mostrar los detalles
+         */
+        async details(id) {
+            const vm = this;
+            vm.loading = true;
+			console.log(id);
+			
+            await axios.get('/budget/detail-vue-centralized-actions/'+ id).then(response => {
+					console.log(response);
+				
+                if (response.data.result) {
+                    let buget = response.data.buget;
+					let cargo = response.data.cargo;
+					let name = "";
+				
+	
+             
+                
+                }
+            }).catch(error => {
+               
+            });
+            vm.loading = false;
+        }
 		}
 	};
 </script>

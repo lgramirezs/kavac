@@ -22,11 +22,14 @@
 			<div class="card" id="helpCodeSettingForm">
 				<div class="card-header">
 					<h6 class="card-title">
-						Formatos de códigos
-						@include('buttons.help', [
-							'helpId' => 'AccountingCodeSetting',
-							'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'accounting')
-						])
+						{{ __('Formatos de Códigos') }}
+						{{--
+							// Issue #96: Solicitaron que no se muestre el botón de ayuda en esta sección
+							@include('buttons.help', [
+								'helpId' => 'AccountingCodeSetting',
+								'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'accounting')
+							])
+						--}}
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -34,6 +37,7 @@
 					</div>
 				</div>
 				<div class="card-body">
+					@include('layouts.help-text', ['codeSetting' => true])
 					<div class="row">
 						<div class="col-12">
 							@if(!is_null($refCode))

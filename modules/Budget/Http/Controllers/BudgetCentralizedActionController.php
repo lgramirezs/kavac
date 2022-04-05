@@ -11,6 +11,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\Department;
 use Modules\Budget\Models\BudgetCentralizedAction;
+use Modules\Payroll\Models\PayrollStaff;
 use Module;
 
 /**
@@ -173,6 +174,7 @@ class BudgetCentralizedActionController extends Controller
     {
         /** @var object Objeto con información de la acción centralizada a modificar */
         $budgetCentralizedAction = BudgetCentralizedAction::find($id);
+        $budgetCentralizedActionInstitucion = BudgetCentralizedAction::find($id)->department;
 
         /** @var array Arreglo de opciones a implementar en el formulario */
         $header = [
@@ -182,7 +184,7 @@ class BudgetCentralizedActionController extends Controller
         ];
         /** @var object Objeto con datos del modelo a modificar */
         $model = $budgetCentralizedAction;
-
+       $model["institution_id"]= $budgetCentralizedActionInstitucion["institution_id"];
         /** @var array Arreglo de opciones de instituciones a representar en la plantilla para su selección */
         $institutions = template_choices('App\Models\Institution', ['acronym'], ['active' => true]);
         /** @var array Arreglo de opciones de departamentos a representar en la plantilla para su selección */
@@ -301,4 +303,24 @@ class BudgetCentralizedActionController extends Controller
             true
         ));
     }
+
+      /**
+     * Obtiene las acciones específicas registradas
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @param  string  $type   Identifica si la acción a buscar es por proyecto o acción centralizada
+     * @param  integer $id     Identificador de la acción centralizada a buscar, este parámetro es opcional
+     * @param  string  $source Fuente de donde se realiza la consulta
+     * @return JSON        JSON con los datos de las acciones específicas
+     */
+    public function getDetailCentralizedActions($id = null)
+    { 
+
+                      
+        $budget = BudgetCentralizedAction::find($id);
+        $cargo = PayrollStaff::where( "id", $budget->payroll_staff_id)->first();
+     
+        return response()->json(['result' => true, 'budget' =>  $budget, 'cargo' =>  $cargo ], 200); 
+    }
+
 }

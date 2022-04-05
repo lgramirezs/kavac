@@ -379,11 +379,6 @@
                                 <span v-html="props.row.description"></span>
                             </div>
 	                		<div slot="id" slot-scope="props" class="text-center">
-	                			<button @click="exportRecord(props.row.id, $event)"
-                                        class="btn btn-primary btn-xs btn-icon btn-action"
-                                        title="Descargar/Exportar tabulador" data-toggle="tooltip" type="button">
-	                                <i class="fa fa-download"></i>
-	                            </button>
 	                			<button @click="changePanel('Form'); initUpdate(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-action"
 		                				title="Modificar registro" data-toggle="tooltip" type="button">
@@ -617,18 +612,6 @@
                     })
                 }
             },
-            /**
-             * Método que exporta el tabulador seleccionado en formato ".xls"
-             *
-             * @author    Henry Paredes <hparedes@cenditel.gob.ve>
-             *
-             * @param     {integer}    index    Identificador del registro a ser exportado
-             * @param     {object}     event    Objeto que gestiona los eventos
-             */
-			exportRecord(id, event) {
-				window.open(`${window.app_url}/payroll/salary-tabulators/export/${id}`);
-				event.preventDefault();
-			},
             /**
              * Método que obtiene los escalafones salariales, para posteriormente,
              * cargarlos en el formulario según sea el tipo de tabulador
