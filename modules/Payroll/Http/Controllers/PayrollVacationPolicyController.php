@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollVacationPolicy;
+use Modules\Payroll\Models\PayrollConceptAssignOption;
 use Modules\Payroll\Models\Institution;
 
 /**
@@ -206,13 +207,40 @@ class PayrollVacationPolicyController extends Controller
             'institution_id'                        => $request->input('institution_id'),
             'payroll_payment_type_id'               => $request->input('payroll_payment_type_id'),
             'assign_to'                             => json_encode($request->assign_to),
-            
+
             'on_scale'                              => $request->input('on_scale'),
             'worker_arises'                         => $request->input('worker_arises'),
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
             'max_days_advance'                      => $request->input('max_days_advance'),
         ]);
+
+        foreach ($request->assign_to as $assign_to) {
+            if ($assign_to['type'] == 'range') {
+                PayrollConceptAssignOption::create([
+                    'key'                => $assign_to['id'],
+                    'value'              => json_encode($request->assign_options[$assign_to['id']]),
+                    'applicable_type' => PayrollVacationPolicy::class,
+                    'applicable_id' => $payrollVacationPolicy->id,
+                ]);
+            } elseif ($assign_to['type'] == 'list') {
+                foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
+                    /**
+                     * Objeto asociado al modelo PayrollConceptAssignOption
+                     * @var Object $payrollConceptAssignOption
+                     */
+                    $payrollConceptAssignOption = PayrollConceptAssignOption::create([
+                        'key'                => $assign_to['id'],
+                        'applicable_type' => PayrollVacationPolicy::class,
+                        'applicable_id' => $payrollVacationPolicy->id,
+                    ]);
+                    /** Se guarda la información en el campo morphs */
+                    $option = $assign_to['model']::find($assign_option['id']);
+                    $option->payrollConceptAssignOptions()->save($payrollConceptAssignOption);
+                }
+            }
+        };
+
         return response()->json(['record' => $payrollVacationPolicy, 'message' => 'Success'], 200);
     }
 

@@ -79,15 +79,15 @@ class PayrollConcept extends Model implements Auditable
     }
 
     /**
-     * Método que obtiene la información de las opciones a asignar asociadas al concepto
+     * Obtiene información de las opciones asignadas asociadas a un género
      *
-     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
      *
-     * @return    \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function payrollConceptAssignOptions()
     {
-        return $this->hasMany(PayrollConceptAssignOption::class);
+        return $this->morphMany(PayrollConceptAssignOption::class, 'applicable');
     }
 
     /**

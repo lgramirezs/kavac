@@ -28,19 +28,19 @@ class WarehouseProductExport extends \App\Exports\DataExport implements
      * @method    headings
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
-     *
+     * @author    Yennifer Ramirez <yramirez@cenditel.gob.ve>
      * @return    array    Arreglo con las cabeceras de los datos a exportar
      */
     public function headings(): array
     {
         return [
             'id',
-            'name',
-            'description',
-            'measurement_unit_id',
-            'measurement_unit',
-            'measurement_unit_acronym',
-            'measurement_unit_description'
+            'Nombre del insumo',
+            'Descripción',
+            'Identificador de la unidad de medida',
+            'Nombre de la unidad de medida',
+            'Acrónimo de la unidad de medida',
+            'Descripción de la unidad de medida'
         ];
     }
 
@@ -50,6 +50,7 @@ class WarehouseProductExport extends \App\Exports\DataExport implements
      * @method    map
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author    Yennifer Ramirez <yramirez@cenditel.gob.ve>
      *
      * @param     object    $warehouseProduct    Objeto con las propiedades del modelo a exportar
      *
@@ -60,7 +61,7 @@ class WarehouseProductExport extends \App\Exports\DataExport implements
         return [
             $warehouseProduct->id,
             $warehouseProduct->name,
-            $warehouseProduct->description,
+            strip_tags($warehouseProduct->description),
             $warehouseProduct->measurementUnit->id,
             $warehouseProduct->measurementUnit->name,
             $warehouseProduct->measurementUnit->acronym,

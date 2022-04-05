@@ -11,6 +11,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\Department;
 use Modules\Budget\Models\BudgetCentralizedAction;
+use Modules\Payroll\Models\PayrollStaff;
 use Module;
 
 /**
@@ -301,4 +302,44 @@ class BudgetCentralizedActionController extends Controller
             true
         ));
     }
+
+      /**
+     * Obtiene las acciones específicas registradas
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @param  string  $type   Identifica si la acción a buscar es por proyecto o acción centralizada
+     * @param  integer $id     Identificador de la acción centralizada a buscar, este parámetro es opcional
+     * @param  string  $source Fuente de donde se realiza la consulta
+     * @return JSON        JSON con los datos de las acciones específicas
+     */
+    public function getDetailCentralizedActions($id = null)
+    { 
+
+                      
+        $budget = BudgetCentralizedAction::find($id);
+        $cargo = PayrollStaff::where( "id", $budget->payroll_staff_id)->first();
+     
+        return response()->json(['result' => true, 'budget ' =>  $budget, 'cargo' =>  $cargo ], 200);
+
+        /** @var array Arreglo con información de las acciones específicas */
+        $data = [['id' => '', 'text' => 'Seleccione...']];
+        $specificActions = $data;
+        foreach ($specificActions as $specificAction) {
+            /** @var object Objeto que determina si la acción específica ya fue formulada para el último presupuesto */
+            $existsFormulation = BudgetCentralizedAction::where([
+                'budget_specific_action_id' => $specificAction->id,
+                'assigned' => true
+            ])->orderBy('year', 'desc')->first();
+
+            if (!$existsFormulation) {
+                array_push($data, [
+                    'id' => $specificAction->id,
+                    'text' => $specificAction->code . " - " . $specificAction->name
+                ]);
+            }
+        }
+
+        return response()->json($data);
+    }
+
 }

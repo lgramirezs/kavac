@@ -53,7 +53,7 @@ class WarehouseProductController extends Controller
 
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
-            'name'                => ['required', 'max:100'],
+            'name'                => ['required', 'max:100', 'unique:warehouse_products,name'],
             'description'         => ['required'],
             'measurement_unit_id' => ['required']
         ];
