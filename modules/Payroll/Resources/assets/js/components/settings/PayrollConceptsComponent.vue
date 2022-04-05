@@ -564,26 +564,33 @@
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     let keys = vm.record.formula.indexOf('}');
-                    if (keys > 0) {
+                    let showKeys = vm.formula.indexOf('}');
+                    if (keys > 0 && showKeys > 0) {
                         let firstFormula = vm.record.formula.substr(0, keys);
+                        let showFirstFormula = vm.formula.substr(0, showKeys);
                         let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
-                        let lastElement = vm.record.formula.substr(keys-1, 1)
+                        let showLastFormula = vm.formula.substr(showKeys, vm.record.formula.length);
+                        let lastElement = vm.record.formula.substr(keys-1, 1);
+                        let showLastElement = vm.formula.substr(showKeys-1, 1);
                         let symbols = ['+', '-', '*', '/', '.'];
-                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) && symbols.includes(showLastElement) ) {
                             let lastFirstFormula = vm.record.formula.substr(0, keys-1)
+                            let showLastFirstFormula = vm.formula.substr(0, showKeys-1)
                             vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
-                            vm.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                            vm.formula = showLastFirstFormula + $(this).data('value').toString().substr(0, 1) + showLastFormula;
                         } else {
                             vm.record.formula = firstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
-                            vm.formula = firstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                            vm.formula = showFirstFormula + $(this).data('value').toString().substr(0, 1) + showLastFormula;
                         }
                     } else {
                         let lastElement = vm.record.formula.substr(vm.record.formula.length-1, 1)
+                        let showLastElement = vm.formula.substr(vm.record.formula.length-1, 1)
                         let symbols = ['+', '-', '*', '/', '.'];
-                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) && symbols.includes(showLastElement) ) {
                             let lastFirstFormula = vm.record.formula.substr(0, vm.record.formula.length-1)
+                            let showLastFirstFormula = vm.formula.substr(0, vm.formula.length-1)
                             vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1);
-                            vm.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1);
+                            vm.formula = showLastFirstFormula + $(this).data('value').toString().substr(0, 1);
                         } else {
                             vm.record.formula += $(this).data('value').toString().substr(0, 1);
                             vm.formula += $(this).data('value').toString().substr(0, 1);
@@ -627,7 +634,7 @@
                     ];
                     $.each(vm.records, function() {
                         vm.variable_options.push({
-                            id: this.code,
+                            id: this.id,
                             text: this.name
                         });
                     });

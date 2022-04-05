@@ -392,11 +392,14 @@
                 });
                 $('.btn-formula').on('click', function() {
                     let keys = vm.record.formula.indexOf('}');
-                    if (keys > 0) {
+                    let showKeys = vm.formula.indexOf('}');
+                    if (keys > 0 && showKeys > 0) {
                         let firstFormula = vm.record.formula.substr(0, keys);
+                        let showFirstFormula = vm.formula.substr(0, showKeys);
                         let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
+                        let showLastFormula = vm.formula.substr(showKeys, vm.formula.length);
                         vm.record.formula = firstFormula + $(this).data('value') + lastFormula;
-                        vm.formula = firstFormula + $(this).data('value') + lastFormula;
+                        vm.formula = showFirstFormula + $(this).data('value') + showLastFormula;
                     } else {
                         vm.record.formula += $(this).data('value');
                         vm.formula += $(this).data('value');
