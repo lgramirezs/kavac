@@ -282,4 +282,17 @@ class BudgetProjectController extends Controller
             true
         ));
     }
+
+    /**
+     * Método que devuelve un proyecto registrado según el id que se le pase
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @param  integer $id Identificador del proyecto a buscar.
+     * @return JSON        JSON con los datos del  proyecto específico.
+     */
+    public function getDetailProject($id)
+    {
+        $project = BudgetProject::find($id);
+        return response()->json(['result' => true, 'project' => $project], 200);
+    }
 }

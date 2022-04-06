@@ -45,7 +45,15 @@
                         </h6>
                     </div>
                     <div class="modal-body">
-                        XXXXXXXXX
+                        <label>Nombre</label>
+                        <input type="text" data-toggle="tooltip"
+                            class="form-control input-sm"
+                            disabled="true" id="name">
+                        <br>
+                        <label>Activo</label>
+                        <input type="text" data-toggle="tooltip"
+                            class="form-control input-sm"
+                            disabled="true" id="active">
                     </div>
                 </div>
             </div>
@@ -93,26 +101,12 @@
              * Método que abre el modal, realiza la consulta y pasa los datos.
              */
             show_info(id) {
-                console.log("Entró aquí");
-                /*
-                axios.get(`${window.app_url}/payroll/employments/${id}`).then(response => {
-                    this.record = response.data.record;
-                    $('#payroll_staff').val(this.record.payroll_staff.first_name + ' ' + this.record.payroll_staff.last_name);
-                    $('#start_date_apn').val(this.record.start_date_apn);
-                    $('#start_date').val(this.record.start_date);
-                    $('#end_date').val(this.record.end_date);
-                    (this.record.active) ? $('#active').bootstrapSwitch('state', true) : $('#active').bootstrapSwitch('state', false);
-                    $('#payroll_inactivity_type').val( (this.record.payroll_inactivity_type) ? this.record.payroll_inactivity_type.name : ' ' );
-                    $('#institution_email').val(this.record.institution_email);
-                    $('#function_description').val(this.record.function_description);
-                    $('#payroll_position_type').val(this.record.payroll_position_type.name);
-                    $('#payroll_position').val(this.record.payroll_position.name);
-                    $('#payroll_staff_type').val(this.record.payroll_staff_type.name);
-                    $('#institution').val(this.record.department.institution.name);
-                    $('#department').val(this.record.department.name);
-                    $('#payroll_contract_type').val(this.record.payroll_contract_type.name);
+                axios.get(`${window.app_url}/budget/projects/get-detail-project/${id}`)
+                .then(response => {
+                    this.record = response.data.project;
+                    $('#name').val(this.record.name);
+                    $('#active').val((this.record.active === true) ? 'Sí' : 'No');
                 });
-                */
                 $('#show_employment').modal('show');
             }
         }
