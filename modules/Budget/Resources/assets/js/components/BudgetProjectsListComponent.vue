@@ -34,7 +34,7 @@
         </v-client-table>
         <!-- Modal -->
         <div class="modal fade" tabindex="-1" role="dialog" id="show_employment">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -45,15 +45,80 @@
                         </h6>
                     </div>
                     <div class="modal-body">
-                        <label>Nombre</label>
-                        <input type="text" data-toggle="tooltip"
-                            class="form-control input-sm"
-                            disabled="true" id="name">
-                        <br>
-                        <label>Activo</label>
-                        <input type="text" data-toggle="tooltip"
-                            class="form-control input-sm"
-                            disabled="true" id="active">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Institución</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="institution">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Dependencia</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="department">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Responsable</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="responsable">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Cargo del responsable</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="payroll_position">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Código</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="code">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Código ONAPRE</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="onapre_code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Activo</label>
+                                    <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="active">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,9 +168,15 @@
             show_info(id) {
                 axios.get(`${window.app_url}/budget/projects/get-detail-project/${id}`)
                 .then(response => {
-                    this.record = response.data.project;
-                    $('#name').val(this.record.name);
-                    $('#active').val((this.record.active === true) ? 'Sí' : 'No');
+                    this.record = response.data;
+                    $('#name').val(this.record.project.name);
+                    $('#institution').val(this.record.cargo.payroll_employment.department.institution.name);
+                    $('#department').val(this.record.cargo.payroll_employment.department.name);
+                    $('#responsable').val(this.record.cargo.first_name + ' ' + this.record.cargo.last_name);
+                    $('#payroll_position').val(this.record.cargo.payroll_employment.payroll_position.name);
+                    $('#code').val(this.record.project.code);
+                    $('#onapre_code').val(this.record.project.onapre_code);
+                    $('#active').val((this.record.project.active === true) ? 'Sí' : 'No');
                 });
                 $('#show_employment').modal('show');
             }
