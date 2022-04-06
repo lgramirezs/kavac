@@ -62,10 +62,14 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required'],
-            'institution_id' => ['required']
+            'name' => ['required', 'unique:departments,name'],
+            'institution_id' => ['required'],
+            'acronym' => ['max:4', 'unique:departments,acronym']
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
+            'name.unique' => 'El campo nombre ya ha sido registrado.',
+            'acronym.max' => 'El campo acrónimo no debe ser mayor que 4 caracteres.',
+            'acronym.unique' => 'El campo acrónimo ya ha sido registrado.',
             'institution_id.required' => 'El campo institución es obligatorio.',
         ]);
 
@@ -110,8 +114,15 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $this->validate($request, [
-            'name' => ['required'],
-            'institution_id' => ['required']
+            'name' => ['required', 'unique:departments,name'],
+            'institution_id' => ['required'],
+            'acronym' => ['max:4', 'unique:departments,acronym']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.unique' => 'El campo nombre ya ha sido registrado.',
+            'acronym.max' => 'El campo acrónimo no debe ser mayor que 4 caracteres.',
+            'acronym.unique' => 'El campo acrónimo ya ha sido registrado.',
+            'institution_id.required' => 'El campo institución es obligatorio.',
         ]);
 
         $hierarchy = 0;
