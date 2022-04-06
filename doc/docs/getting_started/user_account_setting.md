@@ -38,14 +38,14 @@ Para completar la configuración de cuenta de usuario se deben seguir los siguie
 
 ### Configurar cuenta 
 
-![Screenshot](../img/figure_20_1.png)<div style="text-align: center;font-weight: bold">Figura: </div>
+![Screenshot](../img/figure_20_1.png)<div style="text-align: center;font-weight: bold">Figura: Configurar Cuenta de Usuario</div>
 
 
 Al ingresar sobre la opción **Configurar cuenta** el sistema muestra dos secciones titulas **General** y **Notificaciones**.
 
 ![Screenshot](../img/my_setting.png)<div style="text-align: center;font-weight: bold">Figura: Mi Configuración</div>
 
-#### General
+**General**
 
 - Presione el botón **Maximizar Panel** ![Screenshot](../img/arrow.png) para desplegar la sección **General**. 
 
@@ -65,7 +65,7 @@ En esta sección es posible habilitar o deshabilitar la funcionalidad para **Blo
 - Para retornar a la ruta anterior presione el botón ![Screenshot](../img/back.png).
 
 
-#### Notificaciones
+**Notificaciones**
 
 - Presione el botón **Maximizar Panel** ![Screenshot](../img/arrow.png) para desplegar la sección **Notificaciones**. 
 
@@ -87,20 +87,64 @@ En esta sección es posible habilitar o deshabilitar notificaciones emitidas por
 
 ### Mi perfil
 
-![Screenshot](../img/figure_20_2.png)<div style="text-align: center;font-weight: bold">Figura: </div>
+![Screenshot](../img/figure_20_2.png)<div style="text-align: center;font-weight: bold">Figura: Mi Perfil</div>
 
-#### Perfil
+Al ingresar sobre la opción **Mi Perfil** el sistema muestra una pantalla con tres secciones que corresponden a **Perfil**, **Actividad** y **Directorio** (ver Figura ). 
 
-#### Actividad 
 
-#### Directorio 
+**Perfil**
+
+A través de la sección **Perfil** es posible realizar las siguientes acciones: **Cambiar contraseña**, **Bloquear pantalla** y **Cambiar foto de perfil**.
+
+![Screenshot](../img/profile_1_1.png)<div style="text-align: center;font-weight: bold">Figura: Perfil</div>
+
+**Cambiar contraseña**
+
+-	Para cambiar contraseña se requiere completar los campos **Nueva Contraseña** y **Confirmar Contraseña**.
+- 	Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
+
+![Screenshot](../img/password_3.png)<div style="text-align: center;font-weight: bold">Figura: Cambiar Contraseña</div>
+
+**Bloquear pantalla**
+
+-	Presione el botón **Bloquear pantalla** para ejcutar el bloqueo de pantalla. 
+
+![Screenshot](../img/profile_1_2.png)<div style="text-align: center;font-weight: bold">Figura: Bloquear Pantalla desde Perfil de Ususario</div>
+
+-	Para desbloquear pantalla, ingrese la contraseña de la cuenta de usuario y presione el botón **Acceder** ![Screenshot](../img/arrow-right.png)
+
+![Screenshot](../img/block_screen.png)<div style="text-align: center;font-weight: bold">Figura : Pantalla de Bloqueo </div> 
+
+**Cambiar foto de perfil**
+
+-	Para cambiar la imagen de perfil haz clic sobre la imagen de usuario (Figura ) y seleccione el archivo a cargar desde su directorio local.  
+- 	Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.  
+
+![Screenshot](../img/profile_1_3.png)<div style="text-align: center;font-weight: bold">Figura: Foto de Perfil </div>
+
+
+
+**Actividad**
+
+A través de esta sección se realiza un monitoreo sobre los últimos 20 registros de actividad en la aplicación.  
+
+![Screenshot](../img/profile_2.png)<div style="text-align: center;font-weight: bold">Figura: Actividad</div>
+
+
+**Directorio** 
+
+A través de esta sección se listan los registros de cuentas de correos electrónicos de usuarios registrados en el sistema. 
+
+-	Haga clic sobre una cuenta de correo electrónico seleccionada para enviar un correo electrónico a través de una aplicación cliente de correo. 
+
+![Screenshot](../img/profile_3.png)<div style="text-align: center;font-weight: bold">Figura: Directorio</div>
 
 
 3)	Seleccionar la opción **Bloquear Pantalla**.
 
 ### Bloquear pantalla 
 
-![Screenshot](../img/figure_20_3.png)<div style="text-align: center;font-weight: bold">Figura: </div> 
+![Screenshot](../img/figure_20_3.png)<div style="text-align: center;font-weight: bold">Figura: Bloquear Pantalla</div> 
 
 - A continuación el sistema se encuentra en bloqueo de pantalla. 
 
@@ -115,13 +159,13 @@ En esta sección es posible habilitar o deshabilitar notificaciones emitidas por
 
 A través de esta opción el usuario tiene acceso a la documentación de usuario del sistema. 
 
-![Screenshot](../img/figure_20_4.png)<div style="text-align: center;font-weight: bold">Figura: </div>
+![Screenshot](../img/figure_20_4.png)<div style="text-align: center;font-weight: bold">Figura: Solicitar Ayuda</div>
 
 
 ### Salir
 
 A través de esta opción el usuario cierra sesión en el sistema. 
 
-![Screenshot](../img/figure_20_5.png)<div style="text-align: center;font-weight: bold">Figura: </div>
+![Screenshot](../img/figure_20_5.png)<div style="text-align: center;font-weight: bold">Figura: Salir del Sistema</div>
 
 

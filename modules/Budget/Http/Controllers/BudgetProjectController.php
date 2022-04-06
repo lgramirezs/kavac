@@ -293,6 +293,7 @@ class BudgetProjectController extends Controller
     public function getDetailProject($id)
     {
         $project = BudgetProject::find($id);
-        return response()->json(['result' => true, 'project' => $project], 200);
+        $cargo = PayrollStaff::where( "id", $project->payroll_staff_id)->first();
+        return response()->json(['result' => true, 'project' => $project, 'cargo' =>  $cargo], 200);
     }
 }
