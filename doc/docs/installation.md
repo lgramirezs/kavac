@@ -1,15 +1,11 @@
 # Instalación del Sistema
 *************************
 
-     _  __    ___     ___    ____ 
-    | |/ /   / \ \   / / \  / ___|
-    | ' /   / _ \ \ / / _ \| |    
-    | . \  / ___ \ V / ___ \ |___ 
-    |_|\_\/_/   \_\_/_/   \_\____|
-
     Entorno: Desarrollo
     Usaremos $ para describir los comandos que se ejecutaran con usuario regular.
     Usaremos # para describir los comandos que se ejecutaran con superusuario.
+
+## Requisitos
 
 Se requiere de un Sistema Operativo de 64 bits y la instalación de algunos paquetes para el correcto funcionamiento de la aplicación:
 
@@ -596,14 +592,6 @@ Genera nuevo controlador restful para el módulo especificado
 Genera nuevo seeder para el módulo especificado (nombre del modelo en plural)
 
     $ php artisan module:make-seed ModuleNameModelName ModuleName
-
-## Documentación
-
-La aplicación cuenta con una amplia documentación técnica y para usuarios del sistema, las cuales se encuentran bajo las siguientes rutas:
-
-* [Técnica]()
-* [Usuario]()
-
 ## Licencia
 
 Kavac es una aplicación de código abierto y se distribuye estrictamente bajo la licencia [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/).
