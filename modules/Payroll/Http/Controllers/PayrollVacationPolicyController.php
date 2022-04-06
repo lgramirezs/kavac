@@ -95,6 +95,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function index()
     {
+        //dd('initRecords index');
         $profileUser = Auth()->user()->profile;
         if ($profileUser) {
             $institution = Institution::find($profileUser->institution_id);
@@ -102,8 +103,47 @@ class PayrollVacationPolicyController extends Controller
             $institution = Institution::where('active', true)->where('default', true)->first();
         }
 
+        /**
+         * Objeto asociado al modelo PayrollConcept
+         * @var Object $PayrollVacationPolicy
+         */
+        $PayrollVacationPolicies = PayrollVacationPolicy::with('payrollConceptAssignOptions')->where('institution_id', $institution->id)->get();
+        foreach ($PayrollVacationPolicies as $payrollVacationPolicy) {
+            $assign_to = json_decode($payrollVacationPolicy->assign_to);
+            $assign_options = [];
+            if ($assign_to) {
+                foreach ($assign_to as $field) {
+                    if ($field->type) {
+                        $key = $field->id;
+                        $options = [];
+                        if ($payrollVacationPolicy->payrollConceptAssignOptions) {
+                            foreach ($payrollVacationPolicy->payrollConceptAssignOptions as $assign_option) {
+                                if ($key == $assign_option['key']) {
+                                    if ($field->type == 'range') {
+                                        $options = json_decode($assign_option['value']);
+                                    } elseif ($field->type == 'list') {
+                                        $option = $field->model::find($assign_option['assignable_id']);
+                                        array_push(
+                                            $options,
+                                            [
+                                                'id'   => $assign_option['assignable_id'],
+                                                'text' => $option->name
+                                            ]
+                                        );
+                                    }
+                                }
+                            }
+                            $assign_options[$field->id] = $options;
+                        }
+                    }
+                }
+            }
+            $payrollVacationPolicy->assign_to = $assign_to;
+            $payrollVacationPolicy->assign_options = json_decode(json_encode($assign_options));
+        }
+
         return response()->json(
-            ['records' => PayrollVacationPolicy::where('institution_id', $institution->id)->get()],
+            ['records' => $PayrollVacationPolicies],
             200
         );
     }
@@ -121,7 +161,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function show($id)
     {
-        $payrollVacationPolicy = PayrollVacationPolicy::find($id);
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions')->find($id);
         return response()->json(['record' => $payrollVacationPolicy], 200);
     }
 
@@ -379,7 +419,7 @@ class PayrollVacationPolicyController extends Controller
             $institution = Institution::where('active', true)->where('default', true)->first();
         }
 
-        $payrollVacationPolicy = PayrollVacationPolicy::where('institution_id', $institution->id)->first();
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions')->where('institution_id', $institution->id)->first();
         return response()->json(['record' => $payrollVacationPolicy], 200);
     }
 }

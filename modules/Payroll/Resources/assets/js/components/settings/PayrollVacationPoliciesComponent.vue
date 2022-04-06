@@ -153,7 +153,11 @@
                                         <div class="col-md-12">
                                             <div class=" form-group is-required">
                                                 <label>¿Asignar a?</label>
-                                                <v-multiselect :options="assign_to" track_by="name" :hide_selected="false" data-toggle="tooltip" title="Indique los registros a los que se les va asignar el concepto" @input="updateAssignOptions" v-model="record.assign_to">
+                                                <v-multiselect :options="assign_to" track_by="name" 
+                                                    :hide_selected="false" data-toggle="tooltip" 
+                                                    title="Indique los registros a los que se les va asignar el concepto" 
+                                                    @input="updateAssignOptions" 
+                                                    v-model="record.assign_to">
                                                 </v-multiselect>
                                             </div>
                                         </div>
@@ -220,17 +224,6 @@
                                         </div>
                                     </div>
                                     <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period'">
-                                        <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label>Días a otorgar para el pago de vacaciones:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el pago de vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.vacation_days">
-                                            </div>
-                                        </div>
-                                        <!-- ./días a otorgar para el pago de vacaciones -->
                                         <!-- períodos vacacionales -->
                                         <div class="col-md-3">
                                             <div class="form-group is-required">
@@ -310,15 +303,6 @@
                                             </div>
                                         </div>
                                         <!-- ./posterga de vacaciones -->
-                                        <!-- ¿asignar a? -->
-                                        <div class="col-md-12">
-                                            <div class=" form-group is-required">
-                                                <label>¿Asignar a?</label>
-                                                <v-multiselect :options="assign_to" track_by="name" :hide_selected="false" data-toggle="tooltip" title="Indique los registros a los que se les va asignar el concepto" @input="updateAssignOptions" v-model="record.assign_to">
-                                                </v-multiselect>
-                                            </div>
-                                        </div>
-                                        <!-- ./¿asignar a? -->
                                     </div>
                                 </div>
                                 <div id="w-vacationPaymentForm" :class="panel=='vacationPaymentForm' ? 'tab-pane p-3 active' : 'tab-pane p-3'">
@@ -1006,7 +990,9 @@ export default {
                             vacation_postpone: field['vacation_postpone'],
                             staff_antiquity: field['staff_antiquity'],
                             payroll_payment_type_id: field['payroll_payment_type_id'],
-                            payroll_payment_type: field['payroll_payment_type']
+                            payroll_payment_type: field['payroll_payment_type'],
+                            assign_to: field['assign_to'],
+                            assign_options: field['assign_options'],
                         });
                     });
                     vm.records = records;
