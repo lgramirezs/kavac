@@ -393,26 +393,26 @@
                         last_name: data.last_name,
                         payroll_nationality_id: data.payroll_nationality_id,
                         id_number: data.id_number,
-                        passport: data.passport,
-                        email: data.email,
+                        passport: data.passport ? data.passport : '',
+                        email: data.email ? data.email : '',
                         birthdate: data.birthdate,
                         payroll_gender_id: data.payroll_gender_id,
-                        has_disability: data.has_disability,
+                        has_disability: data.has_disability ? data.has_disability : false,
                         payroll_disability_id: data.payroll_disability_id,
                         payroll_blood_type_id: data.payroll_blood_type_id,
                         social_security: data.social_security,
-                        has_driver_license: data.has_driver_license,
+                        has_driver_license: data.has_driver_license ? data.has_driver_license : false,
                         payroll_license_degree_id: data.payroll_license_degree_id,
-                        emergency_contact: data.emergency_contact,
-                        emergency_phone: data.emergency_phone,
+                        emergency_contact: data.emergency_contact ? data.emergency_contact : '',
+                        emergency_phone: data.emergency_phone ? data.emergency_phone : '',
                         country_id: data.country_id,
                         estate_id: data.estate_id,
                         municipality_id: data.municipality_id,
                         parish_id: data.parish_id,
                         address: data.address,
-                        medical_history: data.medical_history,
-                        uniform_sizes: data.uniform_sizes ? data.uniform_sizes : [],
-                        phones: data.phones,
+                        medical_history: data.medical_history ? data.medical_history : '',
+                        uniform_sizes: data.payroll_staff_uniform_size ? data.payroll_staff_uniform_size : [],
+                        phones: data.phones ? data.phones : [],
                     }
                     vm.record.parish = data.parish;
                     vm.record.country_id = vm.record.parish.municipality.estate.country_id;
@@ -508,19 +508,19 @@
             vm.switchHandler('has_disability');
             vm.switchHandler('has_driver_license');
         },
-        watch: {
+        /*watch: {
             record: {
                 deep: true,
                 handler: function() {
                     const vm = this;
                     if (vm.record.has_disability) {
-                        $('#has_disability').bootstrapSwitch('state', true, true);
+                        $('#has_disability').bootstrapSwitch('state', true);
                     }
                     if (vm.record.has_driver_license) {
-                        $('#has_driver_license').bootstrapSwitch('state', true, true);
+                        $('#has_driver_license').bootstrapSwitch('state', true);
                     }
                 }
             }
-        }
+        }*/
     };
 </script>
