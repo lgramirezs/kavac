@@ -20,6 +20,11 @@
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-danger" v-if="errors.length > 0">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                    		<span aria-hidden="true">
+	                   				<i class="now-ui-icons ui-1_simple-remove"></i>
+	                        			</span>
+		                     	</button>
 							<ul>
 								<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
 							</ul>

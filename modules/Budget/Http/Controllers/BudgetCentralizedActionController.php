@@ -318,9 +318,13 @@ class BudgetCentralizedActionController extends Controller
 
                       
         $budget = BudgetCentralizedAction::find($id);
+        $departments = Department::find($id);
+
+
+
         $cargo = PayrollStaff::where( "id", $budget->payroll_staff_id)->first();
      
-        return response()->json(['result' => true, 'budget' =>  $budget, 'cargo' =>  $cargo ], 200); 
+        return response()->json(['result' => true, 'budget' =>  $budget, 'cargo' =>  $cargo, 'departments' =>  $departments], 200); 
     }
 
 }
