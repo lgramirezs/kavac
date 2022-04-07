@@ -40,6 +40,13 @@ class WarehouseInventoryProduct extends Model implements Auditable
         'warehouse_institution_warehouse_id'
     ];
 
+     protected $appends = ['real'];
+
+    public function getRealAttribute()
+    {
+        return $this->exist - $this->reserved;
+    }
+
     /**
      * Método que obtiene el producto registrado
      *

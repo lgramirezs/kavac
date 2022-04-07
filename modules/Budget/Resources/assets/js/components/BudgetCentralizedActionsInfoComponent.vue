@@ -18,8 +18,26 @@
                     </div>
                     <!-- Fromulario -->
                     <div class="modal-body">
+                        <div class="row">
+                              <div class="col-12">
+                                    <div class="form-group">
+                                    <label>Institución :</label>
+                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                        disabled="true" v-model="institution.name" >
+                                </div>
+
+                             </div>
+                         </div>     
                          <div class="row">
-                            <div class="col-6">
+                         
+                               <div class="col-4">
+                                    <div class="form-group">
+                                    <label>Dependencia :</label>
+                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                        disabled="true" v-model="departments.name" >
+                                </div>
+                            </div>  
+                            <div class="col-4">
                                  <div class="form-group">
                                     <label>Código</label>
                                     <input type="text" data-toggle="tooltip" class="form-control input-sm"
@@ -27,15 +45,8 @@
                                 </div>
                             </div>
            
-                            <div class="col-3">
-                                    <div class="form-group">
-                                    <label>Nombre</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" v-model="budget.name" >
-                                </div>
-                            </div>
-      
-                            <div class="col-3">
+                        
+                            <div class="col-4">
                                     <div class="form-group">
                                     <label>Fecha:</label>
                                     <input type="text" data-toggle="tooltip" class="form-control input-sm"
@@ -46,22 +57,24 @@
                           
                         </div>
                         <div class="row" style="padding-top: 1rem;">
-                            <div class="col-3">
+                                <div class="col-4">
                                     <div class="form-group">
-                                    <label>Primer Nombre del Responsable :</label>
+                                    <label>Nombre</label>
                                     <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" v-model="personal.first_name" >
+                                        disabled="true" v-model="budget.name" >
+                                </div>
+                            </div>
+      
+                            <div class="col-4">
+                                    <div class="form-group">
+                                    <label> Nombre del Responsable :</label>
+                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                        disabled="true" v-model="personal.fullname" >
                                 </div>
                             </div>    
-                              <div class="col-3">
-                                    <div class="form-group">
-                                    <label>Apellido del Responsable :</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" v-model="personal.last_name" >
-                                </div>
-                            </div>   
+                         
                                 
-                            <div class="col-6">
+                            <div class="col-4">
                      
                                     <div class="form-group">
                                     <label>Cargo de Responsable:</label>
@@ -91,6 +104,8 @@
 			return {
 				records: [],
                 budget:[],
+                departments:[],
+                institution:[],
                 personal:[],
                 position:[], 
 				errors: [],
@@ -116,9 +131,12 @@
    
             	axios.get(url).then(response => {
       
-              
+               console.log(response);
                vm.budget=response.data.budget;
                vm.personal=response.data.cargo;
+               vm.departments=response.data.departments;
+               vm.institution=response.data.departments.institution;
+               vm.personal.fullname =response.data.cargo.first_name +'.'+response.data.cargo.last_name; 
                vm.position=response.data.cargo.payroll_employment.payroll_position;
      
 

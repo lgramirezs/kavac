@@ -3,11 +3,11 @@
 
 ![Screenshot](../img/logokavac.png#imagen)
 
-Acceda al sistema desde cualquier navegador de Internet es recomendable utilizar Mozilla Firefox o Google Chrome, una vez abierto el navegador ingrese el nombre de dominio que ha sido configurado para el sistema KAVAC.
+Acceda al sistema desde cualquier navegador de internet es recomendable utilizar Mozilla Firefox o Google Chrome, una vez abierto el navegador ingrese el nombre de dominio que ha sido configurado para el sistema KAVAC.
 
 A continuación tendrá acceso a la **pantalla principal** o **página de inicio de sesión** del sistema.
 
-![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura: Inicio de Sesión</div>
+![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura : Inicio de Sesión</div>
 
 !!! note "Nota"
 
@@ -39,7 +39,7 @@ A continuación tendrá acceso a la **pantalla principal** o **página de inicio
 
 -   A continuación tendrá acceso a la pantalla prinicipal de su cuenta de usuario.
 
-![Screenshot](../img/figure_56.png#imagen)<div style="text-align: center;font-weight: bold"> Figura: Pantalla de Inicio</div>
+![Screenshot](../img/figure_56.png#imagen)<div style="text-align: center;font-weight: bold"> Figura : Pantalla de Inicio</div>
 
 <br/>
 
@@ -51,7 +51,11 @@ A continuación tendrá acceso a la **pantalla principal** o **página de inicio
 
 !!! success "Desbloquear cuenta de usuario"
 
-        Para desbloquear una cuenta de usuario se requiere restablecer contraseña, para recuperar contraseña se deben seguir los siguientes pasos: 
+        -   Notifique al equipo de soporte técnico para desbloquear cuenta de usuario. 
+
+        -   A continuación podrá acceder al sistema con su usuario y contraseña.  
+        
+        En caso de que haya olvidado la contraseña puede restablecer contraseña siguiendo los pasos que se detallan a continuación: 
 
         -   Presionar el enlace ¿Olvidaste la contraseña?
 

@@ -73,10 +73,10 @@
         async details(id) {
             const vm = this;
             vm.loading = true;
-			console.log(id);
+
 			
             await axios.get('/budget/detail-vue-centralized-actions/'+ id).then(response => {
-					console.log(response);
+				
 				
                 if (response.data.result) {
                     let buget = response.data.buget;

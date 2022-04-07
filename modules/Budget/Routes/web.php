@@ -81,11 +81,9 @@ Route::group(
          * Gestiona los datos de los proyectos
          */
         Route::resource('projects', 'BudgetProjectController', ['as' => 'budget', 'except' => ['index', 'show']]);
-        Route::get(
-            'projects/vue-list/{active?}',
-            'BudgetProjectController@vueList'
-        )->name('budget.projects.vuelist');
+        Route::get('projects/vue-list/{active?}','BudgetProjectController@vueList')->name('budget.projects.vuelist');
         Route::get('get-projects/{project_id?}', 'BudgetProjectController@getProjects')->name('budget.get-projects');
+        Route::get('projects/get-detail-project/{id?}','BudgetProjectController@getDetailProject')->name('budget.projects.getDetailProject');
 
         /**
          * -----------------------------------------------------------------------

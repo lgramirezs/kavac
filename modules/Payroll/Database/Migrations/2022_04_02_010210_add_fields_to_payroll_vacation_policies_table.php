@@ -25,9 +25,9 @@ class AddFieldsToPayrollVacationPoliciesTable extends Migration
     public function up()
     {
         Schema::table('payroll_vacation_policies', function (Blueprint $table) {
-            $table->boolean('on_scale')->default('false')->nullable()->comment('¿Los días de bonificación se establecen de acuerdo a un escalafón?');
+            $table->boolean('on_scale')->default(false)->nullable()->comment('¿Los días de bonificación se establecen de acuerdo a un escalafón?');
 
-            $table->boolean('worker_arises')->default('false')->nullable()->comment('¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?');
+            $table->boolean('worker_arises')->default(false)->nullable()->comment('¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?');
 
             $table->string('generate_worker_arises', 15, 8)->nullable()->comment('Monto pago de vacaciones automáticamente');
             

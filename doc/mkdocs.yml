@@ -16,18 +16,21 @@ nav:
         - Recuperar Contraseña: getting_started/reset_password.md
         - Cambiar Contraseña: getting_started/change_password.md
         - Configurar Cuenta de Usuario: getting_started/user_account_setting.md
-      - Configuración:
-        - Configuración: setting/setting.md
-        - Configuración General: setting/general_setting.md
-        - Configuración de Acceso: setting/access_setting.md
-        - Configuración de Módulos: setting/modules_setting.md
-      - Panel de Control:
-        - Panel de Control: control_panel/control_panel.md
-        - Herramientas para Desarrolladores: control_panel/developers.md
-        - Control de Acceso: control_panel/access_control.md
-        - Módulo de Contabilidad: control_panel/accounting_module.md
-        - Módulo de Bienes: control_panel/asset_module.md
-        - Módulo de Almacén: control_panel/warehouse_module.md
+      - Acciones del Administrador:
+        - Configuración del Sistema: setting/setting.md
+        - Configurar Organización: setting/organization_setup.md
+        - Configuración:
+          - Configuración General: setting/general_setting.md
+          - Configuración de Acceso: setting/access_setting.md
+          - Configuración de Módulos: setting/modules_setting.md
+        - Panel de Control:
+          - Panel de Control: control_panel/control_panel.md
+          - Herramientas para Desarrolladores: control_panel/developers.md
+          - Control de Acceso: control_panel/access_control.md
+          - Módulo de Contabilidad: control_panel/accounting_module.md
+          - Módulo de Bienes: control_panel/asset_module.md
+          - Módulo de Almacén: control_panel/warehouse_module.md
+      - Desarrolladores: control_panel/developers.md
       - Preguntas Frecuentes: frequent_questions.md
 
 # Repository
@@ -69,10 +72,10 @@ plugins:
   - search
   - minify:
       minify_html: true
-  #- with-pdf:
-  #    author: CENDITEL Nodo Mérida
-  #    copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
-  #    cover_subtitle: KAVAC - ERP para la gestión organizacional
+  - with-pdf:
+      author: CENDITEL Nodo Mérida
+      copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
+      cover_subtitle: KAVAC - ERP para la gestión organizacional
       # output_path: ../../../public/docs/user_base_manual.pdf
 
 # Customization
