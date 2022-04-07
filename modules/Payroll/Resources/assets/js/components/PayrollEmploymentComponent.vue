@@ -152,7 +152,7 @@
                             <div class="form-group is-required">
                                 <label>Tipo de sector:</label>
                                 <select2 :options="payroll_sector_types"
-                                    v-model="job.payroll_sector_type_id">
+                                    v-model="job.payroll_sector_type_id" @input="antiquity(); diff_datetimes(record.start_date);">
                                 </select2>
                             </div>
                         </div>
@@ -329,6 +329,9 @@
                         payroll_contract_type_id: data.payroll_contract_type_id,
                         previous_jobs: data.payroll_previous_job ? data.payroll_previous_job : '',
                     }
+
+                    vm.antiquity();
+                    vm.diff_datetimes(vm.record.start_date);
                 });
             },
 
@@ -414,6 +417,7 @@
              */
             antiquity() {
                 const vm = this;
+                vm.record.years_apn = 0;
                 let years = 0;
                 for (let job of vm.record.previous_jobs){
                     for (let sector_type of vm.payroll_sector_types) {
@@ -520,8 +524,23 @@
                 if(data_years) {
                     vm.record.service_years = data_years + vm.record.years_apn;
                 } else {
-                    vm.record.service_years = 0;
+                    vm.record.service_years = vm.record.years_apn;
                 }
+            },
+            /**
+             * Elimina la fila del elemento indicado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             *
+             * @param  {integer}      index Indice del elemento a eliminar
+             * @param  {object|array} el    Elemento del cual se va a eliminar un elemento
+             */
+            removeRow: function(index, el) {
+                const vm = this;
+                el.splice(index, 1);
+                vm.antiquity();
+                vm.diff_datetimes(vm.record.start_date);
             },
 
         },
