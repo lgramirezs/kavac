@@ -37,7 +37,7 @@
                         </select2>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpProfessionalInstruction" v-show="record.payroll_instruction_degree_id == 4 || record.payroll_instruction_degree_id == 5">
+                <!-- <div class="col-md-4" id="helpProfessionalInstruction" v-show="record.payroll_instruction_degree_id == 4 || record.payroll_instruction_degree_id == 5">
                     <div class="form-group is-required">
                         <label>Profesiones:</label>
                         <v-multiselect :options="json_professions" v-if="payroll_professional_id" track_by="name"
@@ -47,10 +47,10 @@
                             :hide_selected="false" :selected="record.professions" v-model="record.professions">
                         </v-multiselect>
                     </div>
-                </div>
+                </div> -->
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-4" id="helpProfessionalDegree" v-show="record.payroll_instruction_degree_id == 6 || record.payroll_instruction_degree_id == 7 ||
                     record.payroll_instruction_degree_id == 8">
                     <div class="form-group is-required">
@@ -59,7 +59,7 @@
                             v-model="record.instruction_degree_name"/>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <hr>
             <h6 class="card-title" id="helpProfessionalUniversityStudy">
@@ -76,7 +76,7 @@
                 <div class="col-2" id="helpProfessionalGraduationYear">
                     <div class="form-group is-required">
                         <label>Año de Graduación:</label>
-                        <input type="text" class="form-control input-sm"
+                        <input type="date" class="form-control input-sm"
                             v-model="payroll_study.graduation_year"/>
                     </div>
                 </div>
