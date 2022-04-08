@@ -34,7 +34,7 @@ class PurchaseSupplier extends Model implements Auditable
 
     protected $with = [
         'purchaseSupplierSpecialty', 'purchaseSupplierType', 'purchaseSupplierBranch', 'purchaseSupplierObject',
-        'phones', 'city'
+        'phones', 'city', 'contacts'
     ];
 
     protected $fillable = [
@@ -53,6 +53,17 @@ class PurchaseSupplier extends Model implements Auditable
     public function phones()
     {
         return $this->morphMany(\App\Models\Phone::class, 'phoneable');
+    }
+
+    /**
+     * PurchaseSupplier morphs many contact.
+     *
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function contacts()
+    {
+        return $this->morphMany(\App\Models\Contact::class, 'contactable');
     }
 
     /**

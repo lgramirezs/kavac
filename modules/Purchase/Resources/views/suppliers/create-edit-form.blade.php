@@ -164,7 +164,9 @@
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_object_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
 											{!! Form::select('purchase_supplier_object_id', $supplier_objects, null, [
-												'class' => 'form-control select2'
+												'class' => 'form-control',
+												'multiple' => 'multiple',
+												'name' => 'purchase_supplier_object_id[]'
 											]) !!}
 										</div>
 									</div>
@@ -256,6 +258,18 @@
 										</div>
 									</div>
 								</div>
+								{{-- @php
+									$contacts = [];
+									if (isset($model) && $model->contacts) {
+										foreach ($model->contacts as $contact) {
+											array_push($contacts, [
+												'name' => $contact->name,
+												'email' => $contact->email
+											]);
+										}
+									}
+								@endphp --}}
+								{{-- <contacts initial_data="{{ ($contacts) ? json_encode($contacts) : '' }}"></contacts> --}}
 								<hr>
 								@php
 									$phones = [];

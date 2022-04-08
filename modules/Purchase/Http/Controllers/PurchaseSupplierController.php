@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Estate;
 use App\Models\RequiredDocument;
 use App\Models\Phone;
+use App\Models\Contact;
 use App\Rules\Rif as RifRule;
 use Modules\Purchase\Models\PurchaseSupplierBranch;
 use Modules\Purchase\Models\PurchaseSupplierObject;
@@ -40,7 +41,7 @@ class PurchaseSupplierController extends Controller
         $this->supplier_branches = template_choices(PurchaseSupplierBranch::class);
         $this->supplier_specialties = template_choices(PurchaseSupplierSpecialty::class);
 
-        $supplier_objects = ['' => 'Seleccione...', 'Bienes' => [], 'Obras' => [], 'Servicios' => []];
+        $supplier_objects = ['Bienes' => [], 'Obras' => [], 'Servicios' => []];
         $assets = $works = $services = [];
 
         foreach (PurchaseSupplierObject::all() as $so) {
@@ -148,6 +149,18 @@ class PurchaseSupplierController extends Controller
             'social_purpose'                 => $request->social_purpose,
             
         ]);
+
+
+        /** Registros asociados a contactos */
+        // if ($request->contacts && !empty($request->contacts)) {
+        //     foreach ($request->contacts as $key => $contact) {
+        //         $supplier->contacts()->save(new Contact([
+        //             'name' => $contact->name,
+        //             'email' => $contact->email,
+        //         ]));
+        //     }
+        // }
+
 
         /** Asociación de números telefónicos */
         if ($request->phone_type && !empty($request->phone_type)) {
