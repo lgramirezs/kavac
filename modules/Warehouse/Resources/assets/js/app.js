@@ -306,17 +306,17 @@ Vue.mixin({
          * Operaciones del modulo de talento humano requeridas por el módulo de almacén
          */
 
-        getPayrollPositions() {
+        async getPayrollPositions() {
             const vm = this;
             vm.payroll_positions = [];
-            axios.get('/warehouse/get-payroll-positions').then(response => {
+            await axios.get('/warehouse/get-payroll-positions').then(response => {
                 vm.payroll_positions = response.data;
             });
         },
 
-        getPayrollStaffs() {
+        async getPayrollStaffs() {
             this.payroll_staffs = [];
-            axios.get('/warehouse/get-payroll-staffs').then(response => {
+            await axios.get('/warehouse/get-payroll-staffs').then(response => {
                 this.payroll_staffs = response.data;
             });
         },
@@ -364,7 +364,7 @@ Vue.mixin({
          * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          * @param {string} type Tipo de registro
          */
-        getBudgetSpecificActions(type) {
+        async getBudgetSpecificActions(type) {
             const vm = this;
 
             var id = type === 'Project' ? this.record.budget_project_id : this.record.budget_centralized_action_id;
@@ -372,9 +372,10 @@ Vue.mixin({
             vm.budget_specific_actions = [];
 
             if (id) {
-                axios.get('/warehouse/get-budget-specific-actions/' + type + "/" + id + "/formulation").then(function (response) {
+                await axios.get('/warehouse/get-budget-specific-actions/' + type + "/" + id + "/formulation").then(function (response) {
                     vm.budget_specific_actions = response.data;
                 });
+                vm.record.budget_specific_action_id = vm.record.budget_specific_action.id;
             }
         },
         /**

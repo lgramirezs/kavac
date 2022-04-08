@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollStaff;
+use Modules\Payroll\Models\PayrollStaffUniformSize;
 use App\Models\Phone;
 use App\Models\CodeSetting;
 use App\Rules\AgeToWork;
@@ -60,8 +61,8 @@ class PayrollStaffController extends Controller
             'municipality_id' => ['required'],
             'parish_id' => ['required'],
             'address' => ['required', 'max:200'],
-            'uniform_size' => ['required', 'integer', 'min:1'],
             'medical_history' => ['nullable'],
+            'uniform_sizes' => ['required']
         ];
 
         /** Define los atributos para los campos personalizados*/
@@ -76,7 +77,7 @@ class PayrollStaffController extends Controller
             'estate_id' => 'estado',
             'municipality_id' => 'muncipio',
             'parish_id' => 'parroquia',
-            'uniform_size' => 'talla de uniforme',
+            'uniform_sizes' => 'talla de uniforme',
             'medical_history' => 'historial médico'
         ];
     }
@@ -200,9 +201,18 @@ class PayrollStaffController extends Controller
             'emergency_phone' => $request->emergency_phone,
             'parish_id' => $request->parish_id,
             'address' => $request->address,
-            'uniform_size' => $request->uniform_size,
             'medical_history' => $request->medical_history,
         ]);
+
+        if ($request->uniform_sizes && !empty($request->uniform_sizes)) {
+            foreach ($request->uniform_sizes as $size) {
+                $uniformSize = PayrollStaffUniformSize::create([
+                    'name'          => $size['name'],
+                    'size'          => $size['size'],
+                    'payroll_staff_id' => $payrollStaff->id
+                ]);
+            }
+        }
 
         if ($request->phones && !empty($request->phones)) {
             foreach ($request->phones as $phone) {
@@ -337,9 +347,21 @@ class PayrollStaffController extends Controller
         $payrollStaff->emergency_phone = $request->emergency_phone;
         $payrollStaff->parish_id = $request->parish_id;
         $payrollStaff->address = $request->address;
-        $payrollStaff->uniform_size = $request->uniform_size;
         $payrollStaff->medical_history = $request->medical_history;
         $payrollStaff->save();
+
+        foreach ($payrollStaff->payrollStaffUniformSize as $uniformSize) {
+            $uniformSize->delete();
+        }
+        if ($payrollStaff->payrollStaffUniformSize == true) {
+            foreach ($request->uniform_sizes as $size) {
+                $uniformSize = PayrollStaffUniformSize::create([
+                    'name'          => $size['name'],
+                    'size'          => $size['size'],
+                    'payroll_staff_id' => $payrollStaff->id
+                ]);
+            }
+        }
         foreach ($payrollStaff->phones as $phone) {
             $phone->delete();
         }
@@ -371,6 +393,8 @@ class PayrollStaffController extends Controller
     public function destroy($id)
     {
         $payrollStaff = PayrollStaff::find($id);
+        $payrollStaffUniformSize = PayrollStaffUniformSize::where('payroll_staff_id', $id);
+        $payrollStaffUniformSize->delete();
         $payrollStaff->delete();
         return response()->json(['record' => $payrollStaff, 'message' => 'Success'], 200);
     }
