@@ -131,7 +131,7 @@
    
             	axios.get(url).then(response => {
       
-               console.log(response);
+        
                vm.budget=response.data.budget;
                vm.personal=response.data.cargo;
                vm.departments=response.data.departments;
