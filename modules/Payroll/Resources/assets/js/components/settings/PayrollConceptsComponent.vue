@@ -160,10 +160,8 @@
                             </div>
                             <!-- ./¿asignar a? -->
                         </div>
-                        <div class="row" style="align-items: flex-end;"
-                             v-if="record.assign_to">
-                             <div class="col-md-4"
-                                  v-for="field in record.assign_to" :key="field['id']">
+                        <div class="row" style="align-items: flex-end;" v-if="record.assign_to">
+                             <div class="col-md-4" v-for="field in record.assign_to" :key="field['id']">
                                 <div v-if="field['type'] && record.assign_options[field['id']]">
                                     <!-- registro de opciones a asignar -->
                                     <div class="form-group is-required"

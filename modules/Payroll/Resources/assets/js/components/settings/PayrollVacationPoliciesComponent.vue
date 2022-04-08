@@ -149,6 +149,8 @@
                                             </div>
                                         </div>
                                         <!-- ./períodos vacacionales -->
+                                    </div>
+                                    <div class="row">
                                         <!-- ¿asignar a? -->
                                         <div class="col-md-12">
                                             <div class=" form-group is-required">
@@ -782,12 +784,14 @@ export default {
     mounted() {
         const vm = this;
         $("#add_payroll_vacation_policy").on('show.bs.modal', function() {
-            vm.reset();
-            vm.getInstitutions();
-            vm.getPayrollPaymentTypes();
-            vm.getPayrollConceptAssignTo();
-            vm.getPayrollSalaryTabulatorsGroups();
             vm.assign_options_lists = [];
+            
+            vm.reset();
+            vm.getPayrollPaymentTypes();
+            vm.getInstitutions();
+            vm.getPayrollSalaryTabulatorsGroups();
+            vm.getPayrollConceptAssignTo();
+            
         });
     },
     methods: {
@@ -1012,55 +1016,6 @@ export default {
                         vm.logs('resources/js/all.js', 343, error, 'initRecords');
                     }
                 }
-            });
-        },
-        /**
-         * Reescribe el método initRecords para cambiar su comportamiento por defecto
-         * Método que obtiene los registros a mostrar
-         *
-         * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-         *
-         * @param     {string}    url    Ruta que obtiene todos los registros solicitados
-         */
-        readRecords(url) {
-            const vm = this;
-            vm.loading = true;
-            url = vm.setUrl(url);
-
-            axios.get(url).then(response => {
-                if (typeof(response.data.records) !== "undefined") {
-                    let records = [];
-                    $.each(response.data.records, function(index, field) {
-                        records.push({
-                            id: field['id'],
-                            name: field['name'],
-                            start_date: field['start_date'],
-                            end_date: field['end_date'],
-                            active: field['active'],
-                            institution_id: field['institution_id'],
-                            institution: field['institution'],
-                            vacation_type: field['vacation_type'],
-                            vacation_periods: JSON.parse(field['vacation_periods']),
-                            vacation_periods_accumulated_per_year: field['vacation_periods_accumulated_per_year'],
-                            vacation_days: field['vacation_days'],
-                            vacation_period_per_year: field['vacation_period_per_year'],
-                            additional_days_per_year: field['additional_days_per_year'],
-                            minimum_additional_days_per_year: field['minimum_additional_days_per_year'],
-                            maximum_additional_days_per_year: field['maximum_additional_days_per_year'],
-                            payment_calculation: field['payment_calculation'],
-                            salary_type: field['salary_type'],
-                            vacation_advance: field['vacation_advance'],
-                            vacation_postpone: field['vacation_postpone'],
-                            staff_antiquity: field['staff_antiquity'],
-                            payroll_payment_type_id: field['payroll_payment_type_id'],
-                            payroll_payment_type: field['payroll_payment_type']
-                        });
-                    });
-                    vm.records = records;
-                }
-                vm.loading = false;
-            }).catch(error => {
-                vm.logs('mixins.js', 285, error, 'readRecords');
             });
         },
         /**
