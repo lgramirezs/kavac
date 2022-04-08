@@ -1,8 +1,8 @@
 <template>
     <div class="col-xs-2 text-center">
-        <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de tipos de compras" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_purchase_types', '/purchase/purchase_types', $event)">
+        <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de modalidades de compras" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_purchase_types', '/purchase/purchase_types', $event)">
             <i class="now-ui-icons shopping_tag-content ico-3x"></i>
-            <span>Tipos de<br>Compras</span>
+            <span>Modalidades de<br>Compras</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_purchase_types">
             <div class="modal-dialog vue-crud" role="document">
@@ -13,7 +13,7 @@
                         </button>
                         <h6>
                             <i class="icofont icofont-box inline-block"></i>
-                            Tipos de Compras
+                            Modalidades de compras
                         </h6>
                     </div>
                     <div class="modal-body">
