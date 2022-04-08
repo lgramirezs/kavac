@@ -32,11 +32,11 @@
         "intro" : "Gestiona información acerca de modalidades de compras."
     },
     {
-        "element" : "#purchase_type_hiring",
-        "intro" : "Gestiona información acerca de tipos de contratación."
-    },
-    {
         "element" : "#purchase_type_operations",
         "intro" : "Gestiona información acerca de tipos de operaciones."
+    },
+    {
+        "element" : "#purchase_type_hiring",
+        "intro" : "Gestiona información acerca de tipos de contratación."
     }
 ]

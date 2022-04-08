@@ -196,8 +196,8 @@
 							title="Registros de documentos requeridos de proveedor"></required-documents>
 						<purchase-processes id="purchase_processes"></purchase-processes>
 						<purchase-type id="purchase_type"></purchase-type>
-						<purchase-type-hiring id="purchase_type_hiring"></purchase-type-hiring>
 						<purchase-type-operations id="purchase_type_operations"></purchase-type-operations>
+						<purchase-type-hiring id="purchase_type_hiring"></purchase-type-hiring>
 					</div>
 				</div>
 			</div>
