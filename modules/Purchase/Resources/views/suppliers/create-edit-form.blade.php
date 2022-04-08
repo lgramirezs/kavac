@@ -134,10 +134,18 @@
 											'onclick' => ''
 										]) !!}
 									</div>
-									<div class="col-6 offset-1">
+									<div class="col-3 offset-1">
 										<div class="form-group is-required{{ $errors->has('name') ? ' has-error' : '' }}">
 											{!! Form::label('name', 'Nombre o Razón Social') !!}
 											{!! Form::text('name', null, [
+												'class' => 'form-control input-sm'
+											]) !!}
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="form-group {{ $errors->has('social_purpose') ? ' has-error' : '' }}">
+											{!! Form::label('social_purpose', 'Objeto Social de la organización') !!}
+											{!! Form::text('social_purpose', null, [
 												'class' => 'form-control input-sm'
 											]) !!}
 										</div>

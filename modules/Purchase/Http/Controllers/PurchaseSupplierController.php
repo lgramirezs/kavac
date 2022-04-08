@@ -144,7 +144,9 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => $request->estate_id,
             'city_id'                        => $request->city_id,
             'rnc_status'                     => $request->rnc_status ?? 'NOI',
-            'rnc_certificate_number'         => $request->rnc_certificate_number ?? null
+            'rnc_certificate_number'         => $request->rnc_certificate_number ?? null,
+            'social_purpose'                 => $request->social_purpose,
+            
         ]);
 
         /** Asociación de números telefónicos */
@@ -263,6 +265,7 @@ class PurchaseSupplierController extends Controller
         $supplier->city_id                        = $request->city_id;
         $supplier->rnc_status                     = $request->rnc_status ?? 'NOI';
         $supplier->rnc_certificate_number         = $request->rnc_certificate_number ?? null;
+        $supplier->social_purpose                 = $request->social_purpose;
 
         $supplier->save();
 
