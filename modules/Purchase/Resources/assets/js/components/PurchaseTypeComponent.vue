@@ -26,8 +26,8 @@
                                     <input type="text" placeholder="Nombre del tipo de compra" data-toggle="tooltip" v-has-tooltip v-model="record.name" title="Indique el nombre del tipo de compra (requerido)" class="form-control input-sm">
                                 </div>
                             </div>
-                            <div class="col-md-6 is-required">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group is-required">
                                     <label class="control-label" for="purchase_process">Proceso de compra:</label><br>
                                     <select2 :options="purchaseProcesses" id="purchase_process" placeholder="Proceso de compra asociado" v-model="record.purchase_processes_id">
                                     </select2>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <modal-form-buttons saveRoute="purchase/purchase_types"></modal-form-buttons>
+                            <modal-form-buttons saveRoute="/purchase/purchase_types"></modal-form-buttons>
                         </div>
                     </div>
                     <div class="modal-body modal-table">
