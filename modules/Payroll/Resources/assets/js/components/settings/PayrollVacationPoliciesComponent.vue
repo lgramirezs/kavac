@@ -993,6 +993,8 @@ export default {
                             payroll_payment_type: field['payroll_payment_type'],
                             assign_to: field['assign_to'],
                             assign_options: field['assign_options'],
+                            min_days_advance: field['min_days_advance'],
+                            max_days_advance: field['max_days_advance'],
                         });
                     });
                     vm.records = records;
