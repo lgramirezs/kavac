@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('de/d6a/classModules_1_1Asset_1_1Models
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../da/dca/classModules_1_1Asset_1_1Models_1_1AssetType__coll__graph.png" border="0" usemap="#AssetType_coll__map" alt="Collaboration graph"/></div>
+<map name="AssetType_coll__map" id="AssetType_coll__map">
+<area shape="rect" title="Datos de los tipo de bienes." alt="" coords="5,5,157,112"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -160,10 +163,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany Objeto con los registros relacionados al modelo <a class="el" href="../../da/d40/classModules_1_1Asset_1_1Models_1_1AssetCategory.html" title="Datos de las categorias generales de un bien.">AssetCategory</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00047">47</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(AssetCategory::class);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00048">48</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(AssetCategory::class);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -186,10 +189,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo <a class="el" href="../../d1/d18/classModules_1_1Asset_1_1Models_1_1Asset.html" title="Datos de los bienes institucionales.">Asset</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00058">58</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Asset::class);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00059">59</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Asset::class);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -216,7 +219,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos para la gestión de fechas. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00031">31</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00032">32</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
 
 </div>
 </div>
@@ -242,7 +245,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos que pueden ser asignados masivamente. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00038">38</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d25/AssetType_8php_source.html#l00039">39</a> del archivo <a class="el" href="../../d6/d25/AssetType_8php_source.html">AssetType.php</a>.</p>
 
 </div>
 </div>
@@ -255,7 +258,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Asset</b></li><li class="navelem"><b>Models</b></li><li class="navelem"><a class="el" href="../../de/d6a/classModules_1_1Asset_1_1Models_1_1AssetType.html">AssetType</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:38 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

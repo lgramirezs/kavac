@@ -179,6 +179,9 @@ var annotated_dup =
           [ "BudgetServiceProvider", "dd/de9/classModules_1_1Budget_1_1Providers_1_1BudgetServiceProvider.html", "dd/de9/classModules_1_1Budget_1_1Providers_1_1BudgetServiceProvider" ]
         ] ]
       ] ],
+      [ "CitizenService", null, [
+        [ "Database", null, null ]
+      ] ],
       [ "DigitalSignature", null, [
         [ "Http", null, [
           [ "Controllers", null, [
@@ -210,17 +213,7 @@ var annotated_dup =
       ] ],
       [ "Payroll", null, [
         [ "Database", null, [
-          [ "Seeders", null, [
-            [ "PayrollContractTypesTableSeeder", "de/d14/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollContractTypesTableSeeder.html", "de/d14/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollContractTypesTableSeeder" ],
-            [ "PayrollGendersTableSeeder", "d9/def/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollGendersTableSeeder.html", "d9/def/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollGendersTableSeeder" ],
-            [ "PayrollInstructionDegreesTableSeeder", "de/db4/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollInstructionDegreesTableSeeder.html", "de/db4/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollInstructionDegreesTableSeeder" ],
-            [ "PayrollLanguageLevelsTableSeeder", "d3/d90/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollLanguageLevelsTableSeeder.html", "d3/d90/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollLanguageLevelsTableSeeder" ],
-            [ "PayrollLanguagesTableSeeder", "df/d92/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollLanguagesTableSeeder.html", "df/d92/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollLanguagesTableSeeder" ],
-            [ "PayrollNationalitiesTableSeeder", "d1/da5/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollNationalitiesTableSeeder.html", "d1/da5/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollNationalitiesTableSeeder" ],
-            [ "PayrollSectorTypesTableSeeder", "d9/d04/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollSectorTypesTableSeeder.html", "d9/d04/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollSectorTypesTableSeeder" ],
-            [ "PayrollStaffTypesTableSeeder", "d8/d6f/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollStaffTypesTableSeeder.html", "d8/d6f/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollStaffTypesTableSeeder" ],
-            [ "PayrollStudyTypesTableSeeder", "db/d22/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollStudyTypesTableSeeder.html", "db/d22/classModules_1_1Payroll_1_1Database_1_1Seeders_1_1PayrollStudyTypesTableSeeder" ]
-          ] ]
+          [ "Seeders", "d7/d0e/namespaceModules_1_1Payroll_1_1Database_1_1Seeders.html", "d7/d0e/namespaceModules_1_1Payroll_1_1Database_1_1Seeders" ]
         ] ],
         [ "Exports", null, [
           [ "PayrollSalaryAssignmentExport", "de/d4c/classModules_1_1Payroll_1_1Exports_1_1PayrollSalaryAssignmentExport.html", "de/d4c/classModules_1_1Payroll_1_1Exports_1_1PayrollSalaryAssignmentExport" ],
@@ -258,7 +251,8 @@ var annotated_dup =
         [ "Http", null, [
           [ "Controllers", "d7/daa/namespaceModules_1_1Sale_1_1Http_1_1Controllers.html", "d7/daa/namespaceModules_1_1Sale_1_1Http_1_1Controllers" ]
         ] ],
-        [ "Models", "dd/d68/namespaceModules_1_1Sale_1_1Models.html", "dd/d68/namespaceModules_1_1Sale_1_1Models" ]
+        [ "Models", "dd/d68/namespaceModules_1_1Sale_1_1Models.html", "dd/d68/namespaceModules_1_1Sale_1_1Models" ],
+        [ "Notifications", "db/de3/namespaceModules_1_1Sale_1_1Notifications.html", "db/de3/namespaceModules_1_1Sale_1_1Notifications" ]
       ] ],
       [ "TechnicalSupport", null, [
         [ "Database", null, [
@@ -317,6 +311,9 @@ var annotated_dup =
         ] ]
       ] ]
     ] ],
+    [ "$CLASS", "dc/d05/class_0bCLASS.html", null ],
+    [ "$CLASS", "dc/d05/class_0bCLASS.html", null ],
+    [ "$CLASS", "dc/d05/class_0bCLASS.html", null ],
     [ "AccountingAccountsTableSeeder", "d9/d3b/classAccountingAccountsTableSeeder.html", null ],
     [ "AccountingConfigurationCategoryController", "d1/d00/classAccountingConfigurationCategoryController.html", null ],
     [ "AccountingReportPdfAnalyticalMajorController", "df/d74/classAccountingReportPdfAnalyticalMajorController.html", null ],
@@ -328,9 +325,12 @@ var annotated_dup =
     [ "AccountingReportPdfDailyBookController", "d1/d0d/classAccountingReportPdfDailyBookController.html", null ],
     [ "AccountingReportPdfStateOfResultsController", "d3/db4/classAccountingReportPdfStateOfResultsController.html", null ],
     [ "AccountingSeatCategoriesTableSeeder", "d1/d53/classAccountingSeatCategoriesTableSeeder.html", null ],
+    [ "AddCountryIdToPurchaseSuppliersTable", "d6/d3f/classAddCountryIdToPurchaseSuppliersTable.html", "d6/d3f/classAddCountryIdToPurchaseSuppliersTable" ],
     [ "AddFielAttributesToSubservices", "de/d22/classAddFielAttributesToSubservices.html", "de/d22/classAddFielAttributesToSubservices" ],
     [ "AddFieldAssetStatusIdToAssetReportsTable", "d1/d66/classAddFieldAssetStatusIdToAssetReportsTable.html", "d1/d66/classAddFieldAssetStatusIdToAssetReportsTable" ],
+    [ "AddFieldAssignToPayrollVacationPolicies", "dc/d81/classAddFieldAssignToPayrollVacationPolicies.html", "dc/d81/classAddFieldAssignToPayrollVacationPolicies" ],
     [ "AddFieldCodeToSaleBillsTable", "d0/dc9/classAddFieldCodeToSaleBillsTable.html", "d0/dc9/classAddFieldCodeToSaleBillsTable" ],
+    [ "AddFieldDateVerificationToCitizenServiceRequestsTable", "da/d71/classAddFieldDateVerificationToCitizenServiceRequestsTable.html", "da/d71/classAddFieldDateVerificationToCitizenServiceRequestsTable" ],
     [ "AddFieldDisaggregateTaxToBudgetAccountsTable", "d4/dae/classAddFieldDisaggregateTaxToBudgetAccountsTable.html", "d4/dae/classAddFieldDisaggregateTaxToBudgetAccountsTable" ],
     [ "AddFieldDocumentIdToAssetRequestEventsTable", "dd/db8/classAddFieldDocumentIdToAssetRequestEventsTable.html", "dd/db8/classAddFieldDocumentIdToAssetRequestEventsTable" ],
     [ "AddFieldGenderIdToPayrollStaffsTable", "dc/d9c/classAddFieldGenderIdToPayrollStaffsTable.html", "dc/d9c/classAddFieldGenderIdToPayrollStaffsTable" ],
@@ -341,29 +341,41 @@ var annotated_dup =
     [ "AddFieldInstitutionIdToPayrollVacationRequestsTable", "d7/d7b/classAddFieldInstitutionIdToPayrollVacationRequestsTable.html", "d7/d7b/classAddFieldInstitutionIdToPayrollVacationRequestsTable" ],
     [ "AddFieldInstitutionIdToWarehouseRequestsTable", "d3/d35/classAddFieldInstitutionIdToWarehouseRequestsTable.html", "d3/d35/classAddFieldInstitutionIdToWarehouseRequestsTable" ],
     [ "AddFieldMeasurementUnitIdToWarehouseProductsTable", "d3/dcc/classAddFieldMeasurementUnitIdToWarehouseProductsTable.html", "d3/dcc/classAddFieldMeasurementUnitIdToWarehouseProductsTable" ],
+    [ "AddFieldMorphToPayrollConceptAssignOptionsTable", "d3/dbc/classAddFieldMorphToPayrollConceptAssignOptionsTable.html", "d3/dbc/classAddFieldMorphToPayrollConceptAssignOptionsTable" ],
     [ "AddFieldNationalityIdToPayrollStaffsTable", "d9/d68/classAddFieldNationalityIdToPayrollStaffsTable.html", "d9/d68/classAddFieldNationalityIdToPayrollStaffsTable" ],
     [ "AddFieldObservationToCitizenServiceRequestsTable", "da/df3/classAddFieldObservationToCitizenServiceRequestsTable.html", "da/df3/classAddFieldObservationToCitizenServiceRequestsTable" ],
     [ "AddFieldPassphraseToSignprofilesTable", "da/d8d/classAddFieldPassphraseToSignprofilesTable.html", "da/d8d/classAddFieldPassphraseToSignprofilesTable" ],
     [ "AddFieldPayrollDisabilityIdToPayrollStaffsTable", "da/de5/classAddFieldPayrollDisabilityIdToPayrollStaffsTable.html", "da/de5/classAddFieldPayrollDisabilityIdToPayrollStaffsTable" ],
     [ "AddFieldPayrollPaymentTypeIdToPayrollBenefitsPoliciesTable", "d6/d04/classAddFieldPayrollPaymentTypeIdToPayrollBenefitsPoliciesTable.html", "d6/d04/classAddFieldPayrollPaymentTypeIdToPayrollBenefitsPoliciesTable" ],
     [ "AddFieldPayrollRoleIdToPayrollEmploymentInformationsTable", "d9/d3f/classAddFieldPayrollRoleIdToPayrollEmploymentInformationsTable.html", "d9/d3f/classAddFieldPayrollRoleIdToPayrollEmploymentInformationsTable" ],
+    [ "AddFieldPercentageToPayrollSalaryTabulatorsTable", "d6/de1/classAddFieldPercentageToPayrollSalaryTabulatorsTable.html", "d6/de1/classAddFieldPercentageToPayrollSalaryTabulatorsTable" ],
+    [ "AddFieldRejectedReasonToSaleBillsTable", "de/d1f/classAddFieldRejectedReasonToSaleBillsTable.html", "de/d1f/classAddFieldRejectedReasonToSaleBillsTable" ],
+    [ "AddFieldSocialPurposeToPurchaseSuppliersTable", "de/d91/classAddFieldSocialPurposeToPurchaseSuppliersTable.html", "de/d91/classAddFieldSocialPurposeToPurchaseSuppliersTable" ],
     [ "AddFieldStatusParametersToPayrollVacationRequestsTable", "d3/d6f/classAddFieldStatusParametersToPayrollVacationRequestsTable.html", "d3/d6f/classAddFieldStatusParametersToPayrollVacationRequestsTable" ],
     [ "AddFieldsToPayrollConceptsTable", "de/d37/classAddFieldsToPayrollConceptsTable.html", "de/d37/classAddFieldsToPayrollConceptsTable" ],
     [ "AddFieldsToPayrollSalaryScalesTable", "d1/d89/classAddFieldsToPayrollSalaryScalesTable.html", "d1/d89/classAddFieldsToPayrollSalaryScalesTable" ],
     [ "AddFieldsToPayrollSalaryTabulatorsTable", "da/d1b/classAddFieldsToPayrollSalaryTabulatorsTable.html", "da/d1b/classAddFieldsToPayrollSalaryTabulatorsTable" ],
     [ "AddFieldsToPayrollStaffsTable", "d0/d30/classAddFieldsToPayrollStaffsTable.html", "d0/d30/classAddFieldsToPayrollStaffsTable" ],
+    [ "AddFieldsToPayrollVacationPoliciesTable", "d7/d97/classAddFieldsToPayrollVacationPoliciesTable.html", "d7/d97/classAddFieldsToPayrollVacationPoliciesTable" ],
+    [ "AddFieldsToSaleRegisterPayments", "d5/dcc/classAddFieldsToSaleRegisterPayments.html", "d5/dcc/classAddFieldsToSaleRegisterPayments" ],
+    [ "AddFieldsToSaleWarehousesTable", "d3/dc7/classAddFieldsToSaleWarehousesTable.html", "d3/dc7/classAddFieldsToSaleWarehousesTable" ],
     [ "AddFieldToPayrollChildrensTable", "de/d0b/classAddFieldToPayrollChildrensTable.html", "de/d0b/classAddFieldToPayrollChildrensTable" ],
-    [ "AddFieldTypeToCodeSettingsTable", "d9/d81/classAddFieldTypeToCodeSettingsTable.html", "d9/d81/classAddFieldTypeToCodeSettingsTable" ],
+    [ "AddFieldToPayrollEmploymentsTable", "d3/d85/classAddFieldToPayrollEmploymentsTable.html", "d3/d85/classAddFieldToPayrollEmploymentsTable" ],
+    [ "AddFieldToSaleWarehouseInventoryProductsTable", "d0/dfe/classAddFieldToSaleWarehouseInventoryProductsTable.html", "d0/dfe/classAddFieldToSaleWarehouseInventoryProductsTable" ],
+    [ "AddFieldTypeToPayrollSalaryScalesTable", "df/d69/classAddFieldTypeToPayrollSalaryScalesTable.html", "df/d69/classAddFieldTypeToPayrollSalaryScalesTable" ],
     [ "AddFieldUniformSizeAndMedicalHistoryToPayrollStaffsTable", "da/d59/classAddFieldUniformSizeAndMedicalHistoryToPayrollStaffsTable.html", "da/d59/classAddFieldUniformSizeAndMedicalHistoryToPayrollStaffsTable" ],
+    [ "AddStateIdToPurchaseSuppliersTable", "d4/db9/classAddStateIdToPurchaseSuppliersTable.html", "d4/db9/classAddStateIdToPurchaseSuppliersTable" ],
     [ "AddUniqueFieldToAssetAcquisitionTypesTable", "dd/dec/classAddUniqueFieldToAssetAcquisitionTypesTable.html", "dd/dec/classAddUniqueFieldToAssetAcquisitionTypesTable" ],
     [ "AddUniqueFieldToAssetCategoriesTable", "d7/de2/classAddUniqueFieldToAssetCategoriesTable.html", "d7/de2/classAddUniqueFieldToAssetCategoriesTable" ],
     [ "AddUniqueFieldToAssetConditionsTable", "d4/dca/classAddUniqueFieldToAssetConditionsTable.html", "d4/dca/classAddUniqueFieldToAssetConditionsTable" ],
     [ "AddUniqueFieldToAssetStatusTable", "d5/d49/classAddUniqueFieldToAssetStatusTable.html", "d5/d49/classAddUniqueFieldToAssetStatusTable" ],
     [ "AddUniqueFieldToAssetUseFunctionsTable", "d7/d65/classAddUniqueFieldToAssetUseFunctionsTable.html", "d7/d65/classAddUniqueFieldToAssetUseFunctionsTable" ],
     [ "AssetSpecificcategoriesTableSeeder", "dd/d4f/classAssetSpecificcategoriesTableSeeder.html", null ],
+    [ "BillReportController", "da/d54/classBillReportController.html", null ],
     [ "BudgatAccount", "d1/d6a/classBudgatAccount.html", null ],
     [ "BudgetAccountOpenController", "d3/d13/classBudgetAccountOpenController.html", null ],
     [ "BudgetRoleAndPermissionsTableSeeder", "dd/df4/classBudgetRoleAndPermissionsTableSeeder.html", null ],
+    [ "ChangeDescriptionToPurchaseTypesTable", "db/d24/classChangeDescriptionToPurchaseTypesTable.html", "db/d24/classChangeDescriptionToPurchaseTypesTable" ],
     [ "ChangeFieldsSaleGoodsToBeTradeds", "da/d61/classChangeFieldsSaleGoodsToBeTradeds.html", "da/d61/classChangeFieldsSaleGoodsToBeTradeds" ],
     [ "ChangeFieldToPayrollLanguageLanguageLevelProfessionalTable", "dd/d0e/classChangeFieldToPayrollLanguageLanguageLevelProfessionalTable.html", "dd/d0e/classChangeFieldToPayrollLanguageLanguageLevelProfessionalTable" ],
     [ "ChangeFieldToPayrollSocioeconomicInformationsTable", "d2/d15/classChangeFieldToPayrollSocioeconomicInformationsTable.html", "d2/d15/classChangeFieldToPayrollSocioeconomicInformationsTable" ],
@@ -392,6 +404,7 @@ var annotated_dup =
     [ "CreateAssetSubcategoriesTable", "d7/d8c/classCreateAssetSubcategoriesTable.html", "d7/d8c/classCreateAssetSubcategoriesTable" ],
     [ "CreateAssetTypesTable", "db/d22/classCreateAssetTypesTable.html", "db/d22/classCreateAssetTypesTable" ],
     [ "CreateAssetUseFunctionsTable", "d4/de5/classCreateAssetUseFunctionsTable.html", "d4/de5/classCreateAssetUseFunctionsTable" ],
+    [ "CreateContactsTable", "d5/d7e/classCreateContactsTable.html", "d5/d7e/classCreateContactsTable" ],
     [ "CreateCountriesTable", "d9/d56/classCreateCountriesTable.html", "d9/d56/classCreateCountriesTable" ],
     [ "CreateFinancePaymentMethodsTable", "d2/d22/classCreateFinancePaymentMethodsTable.html", "d2/d22/classCreateFinancePaymentMethodsTable" ],
     [ "CreatePayrollAcknowledgmentFilesTable", "d6/d57/classCreatePayrollAcknowledgmentFilesTable.html", "d6/d57/classCreatePayrollAcknowledgmentFilesTable" ],
@@ -423,6 +436,7 @@ var annotated_dup =
     [ "CreatePayrollOrganizationsTable", "d9/d68/classCreatePayrollOrganizationsTable.html", "d9/d68/classCreatePayrollOrganizationsTable" ],
     [ "CreatePayrollPaymentPeriodsTable", "d8/d6b/classCreatePayrollPaymentPeriodsTable.html", "d8/d6b/classCreatePayrollPaymentPeriodsTable" ],
     [ "CreatePayrollPaymentTypesTable", "d0/d7d/classCreatePayrollPaymentTypesTable.html", "d0/d7d/classCreatePayrollPaymentTypesTable" ],
+    [ "CreatePayrollPreviousJobsTable", "d4/d6a/classCreatePayrollPreviousJobsTable.html", "d4/d6a/classCreatePayrollPreviousJobsTable" ],
     [ "CreatePayrollProfessionalInformationProfessionTable", "d6/dfa/classCreatePayrollProfessionalInformationProfessionTable.html", null ],
     [ "CreatePayrollProfessionalInformationsTable", "d8/dc8/classCreatePayrollProfessionalInformationsTable.html", "d8/dc8/classCreatePayrollProfessionalInformationsTable" ],
     [ "CreatePayrollProfessionalProfessionTable", "dc/d94/classCreatePayrollProfessionalProfessionTable.html", "dc/d94/classCreatePayrollProfessionalProfessionTable" ],
@@ -445,6 +459,7 @@ var annotated_dup =
     [ "CreatePayrollStaffPayrollsTable", "df/dc7/classCreatePayrollStaffPayrollsTable.html", "df/dc7/classCreatePayrollStaffPayrollsTable" ],
     [ "CreatePayrollStaffsTable", "d1/d6c/classCreatePayrollStaffsTable.html", "d1/d6c/classCreatePayrollStaffsTable" ],
     [ "CreatePayrollStaffTypesTable", "d2/de9/classCreatePayrollStaffTypesTable.html", "d2/de9/classCreatePayrollStaffTypesTable" ],
+    [ "CreatePayrollStaffUniformSizesTable", "d8/d03/classCreatePayrollStaffUniformSizesTable.html", "d8/d03/classCreatePayrollStaffUniformSizesTable" ],
     [ "CreatePayrollStudiesTable", "d1/dfd/classCreatePayrollStudiesTable.html", "d1/dfd/classCreatePayrollStudiesTable" ],
     [ "CreatePayrollStudyTypesTable", "de/d79/classCreatePayrollStudyTypesTable.html", "de/d79/classCreatePayrollStudyTypesTable" ],
     [ "CreatePayrollVacationPoliciesTable", "d2/dbc/classCreatePayrollVacationPoliciesTable.html", "d2/dbc/classCreatePayrollVacationPoliciesTable" ],
@@ -456,6 +471,7 @@ var annotated_dup =
     [ "CreatePositionTypesTable", "d4/d73/classCreatePositionTypesTable.html", null ],
     [ "CreatePurchaseCompromiseDetailsTable", "dc/d24/classCreatePurchaseCompromiseDetailsTable.html", "dc/d24/classCreatePurchaseCompromiseDetailsTable" ],
     [ "CreatePurchaseCompromisesTable", "d8/dd2/classCreatePurchaseCompromisesTable.html", "d8/dd2/classCreatePurchaseCompromisesTable" ],
+    [ "CreatePurchaseDirectHiresTable", "da/d68/classCreatePurchaseDirectHiresTable.html", "da/d68/classCreatePurchaseDirectHiresTable" ],
     [ "CreatePurchaseStatesTable", "da/def/classCreatePurchaseStatesTable.html", "da/def/classCreatePurchaseStatesTable" ],
     [ "CreateSaleBillInventoryProductsTable", "d3/d46/classCreateSaleBillInventoryProductsTable.html", "d3/d46/classCreateSaleBillInventoryProductsTable" ],
     [ "CreateSaleBillsTable", "d5/d7f/classCreateSaleBillsTable.html", "d5/d7f/classCreateSaleBillsTable" ],
@@ -474,6 +490,7 @@ var annotated_dup =
     [ "CreateSaleProposalSpecificationsTable", "da/dee/classCreateSaleProposalSpecificationsTable.html", "da/dee/classCreateSaleProposalSpecificationsTable" ],
     [ "CreateSaleQuoteTable", "dc/dad/classCreateSaleQuoteTable.html", "dc/dad/classCreateSaleQuoteTable" ],
     [ "CreateSaleRegisterPaymentsTable", "d4/d41/classCreateSaleRegisterPaymentsTable.html", "d4/d41/classCreateSaleRegisterPaymentsTable" ],
+    [ "CreateSaleReportsTable", "d1/d4a/classCreateSaleReportsTable.html", null ],
     [ "CreateSaleServiceRequerimentsTable", "d3/d4a/classCreateSaleServiceRequerimentsTable.html", null ],
     [ "CreateSaleServicesTable", "d7/dc7/classCreateSaleServicesTable.html", "d7/dc7/classCreateSaleServicesTable" ],
     [ "CreateSaleSettingFrecuenciesTable", "da/d7c/classCreateSaleSettingFrecuenciesTable.html", "da/d7c/classCreateSaleSettingFrecuenciesTable" ],
@@ -508,9 +525,12 @@ var annotated_dup =
     [ "CreateWarehousesTable", "d8/dac/classCreateWarehousesTable.html", "d8/dac/classCreateWarehousesTable" ],
     [ "DeleteFieldDocumentIdToAssetRequestEventsTable", "d2/d36/classDeleteFieldDocumentIdToAssetRequestEventsTable.html", "d2/d36/classDeleteFieldDocumentIdToAssetRequestEventsTable" ],
     [ "DeleteFieldMeasurementUnitIdToWarehouseInventoryProductsTable", "da/d32/classDeleteFieldMeasurementUnitIdToWarehouseInventoryProductsTable.html", "da/d32/classDeleteFieldMeasurementUnitIdToWarehouseInventoryProductsTable" ],
+    [ "DeleteFieldSalaryTypeToPayrollVacationPoliciesTable", "d8/d35/classDeleteFieldSalaryTypeToPayrollVacationPoliciesTable.html", "d8/d35/classDeleteFieldSalaryTypeToPayrollVacationPoliciesTable" ],
     [ "DeleteFieldsToPayrollPaymentTypes", "d2/dea/classDeleteFieldsToPayrollPaymentTypes.html", "d2/dea/classDeleteFieldsToPayrollPaymentTypes" ],
     [ "DeleteFieldsToPayrollProfessionalInformationsTable", "d5/d7c/classDeleteFieldsToPayrollProfessionalInformationsTable.html", "d5/d7c/classDeleteFieldsToPayrollProfessionalInformationsTable" ],
     [ "DeleteFieldToPayrollProfessionalInformationsTable", "db/d63/classDeleteFieldToPayrollProfessionalInformationsTable.html", "db/d63/classDeleteFieldToPayrollProfessionalInformationsTable" ],
+    [ "DeleteFieldUniformSizeToPayrollStaffsTable", "d0/da2/classDeleteFieldUniformSizeToPayrollStaffsTable.html", "d0/da2/classDeleteFieldUniformSizeToPayrollStaffsTable" ],
+    [ "DeletePayrollPaymentTypeIdToPayrollConceptAssignOptionsTable", "dc/d24/classDeletePayrollPaymentTypeIdToPayrollConceptAssignOptionsTable.html", "dc/d24/classDeletePayrollPaymentTypeIdToPayrollConceptAssignOptionsTable" ],
     [ "DeletePayrollSalaryAssignmentTypesTable", "de/df2/classDeletePayrollSalaryAssignmentTypesTable.html", "de/df2/classDeletePayrollSalaryAssignmentTypesTable" ],
     [ "DeleteSaleCodeFormatsTable", "d5/d4a/classDeleteSaleCodeFormatsTable.html", "d5/d4a/classDeleteSaleCodeFormatsTable" ],
     [ "DeleteTablePayrollSalaryAssignmentsTable", "d3/d66/classDeleteTablePayrollSalaryAssignmentsTable.html", "d3/d66/classDeleteTablePayrollSalaryAssignmentsTable" ],
@@ -535,8 +555,10 @@ var annotated_dup =
     [ "RemoveFieldsToPayrollStaffsTable", "d4/d09/classRemoveFieldsToPayrollStaffsTable.html", null ],
     [ "RemoveFieldToPayrollChildrensTable", "d7/dbd/classRemoveFieldToPayrollChildrensTable.html", "d7/dbd/classRemoveFieldToPayrollChildrensTable" ],
     [ "RemoveFieldToPayrollOrganizationsTable", "d6/d87/classRemoveFieldToPayrollOrganizationsTable.html", "d6/d87/classRemoveFieldToPayrollOrganizationsTable" ],
+    [ "RemoveFieldToSaleWarehouseMovementsTable", "d6/d53/classRemoveFieldToSaleWarehouseMovementsTable.html", "d6/d53/classRemoveFieldToSaleWarehouseMovementsTable" ],
     [ "RemoveTablePayrollRoleTable", "d5/d28/classRemoveTablePayrollRoleTable.html", "d5/d28/classRemoveTablePayrollRoleTable" ],
     [ "RemoveTablePayrollWorkAgeSettingsTable", "d5/d01/classRemoveTablePayrollWorkAgeSettingsTable.html", "d5/d01/classRemoveTablePayrollWorkAgeSettingsTable" ],
+    [ "RenameAccountingEntryCategoriesIdInAccountingEntriesTable", "d8/d4a/classRenameAccountingEntryCategoriesIdInAccountingEntriesTable.html", "d8/d4a/classRenameAccountingEntryCategoriesIdInAccountingEntriesTable" ],
     [ "RolesServiceProvider", "da/de3/classRolesServiceProvider.html", null ],
     [ "SaleQuoteControlle", "d9/df6/classSaleQuoteControlle.html", null ],
     [ "SaleServiceRequeriment", "d5/dee/classSaleServiceRequeriment.html", null ],
@@ -566,6 +588,7 @@ var annotated_dup =
     [ "UpdateFieldsPayrollScalesTable", "dd/da3/classUpdateFieldsPayrollScalesTable.html", "dd/da3/classUpdateFieldsPayrollScalesTable" ],
     [ "UpdateFieldsToAssetReportsTable", "dd/dc8/classUpdateFieldsToAssetReportsTable.html", "dd/dc8/classUpdateFieldsToAssetReportsTable" ],
     [ "UpdateFieldsToCitizenServiceRegistersTable", "dc/d1d/classUpdateFieldsToCitizenServiceRegistersTable.html", "dc/d1d/classUpdateFieldsToCitizenServiceRegistersTable" ],
+    [ "UpdateFieldsToPayrollConceptsTable", "d0/d1c/classUpdateFieldsToPayrollConceptsTable.html", "d0/d1c/classUpdateFieldsToPayrollConceptsTable" ],
     [ "UpdateFieldsToPayrollPaymentTypesTable", "de/d2d/classUpdateFieldsToPayrollPaymentTypesTable.html", "de/d2d/classUpdateFieldsToPayrollPaymentTypesTable" ],
     [ "UpdateFieldsToPayrollSalaryScalesTable", "d5/d1a/classUpdateFieldsToPayrollSalaryScalesTable.html", "d5/d1a/classUpdateFieldsToPayrollSalaryScalesTable" ],
     [ "UpdateFieldsToPayrollSalaryTabulatorsTable", "d3/d54/classUpdateFieldsToPayrollSalaryTabulatorsTable.html", "d3/d54/classUpdateFieldsToPayrollSalaryTabulatorsTable" ],
@@ -578,6 +601,8 @@ var annotated_dup =
     [ "UpdateFieldsToSignprofilesTable", "d6/d51/classUpdateFieldsToSignprofilesTable.html", "d6/d51/classUpdateFieldsToSignprofilesTable" ],
     [ "UpdateFieldsToWarehouseReportsTable", "d3/d31/classUpdateFieldsToWarehouseReportsTable.html", "d3/d31/classUpdateFieldsToWarehouseReportsTable" ],
     [ "UpdateFieldToCitizenServiceRequestsTable", "dd/d7e/classUpdateFieldToCitizenServiceRequestsTable.html", "dd/d7e/classUpdateFieldToCitizenServiceRequestsTable" ],
+    [ "UpdateFieldToPayrollBenefitsPoliciesTable", "d7/d2c/classUpdateFieldToPayrollBenefitsPoliciesTable.html", "d7/d2c/classUpdateFieldToPayrollBenefitsPoliciesTable" ],
+    [ "UpdateNameFieldToBudgetSpecificActionsTable", "de/d6e/classUpdateNameFieldToBudgetSpecificActionsTable.html", "de/d6e/classUpdateNameFieldToBudgetSpecificActionsTable" ],
     [ "UpdateSaleGoodsToBeTradeds", "db/dd3/classUpdateSaleGoodsToBeTradeds.html", "db/dd3/classUpdateSaleGoodsToBeTradeds" ],
     [ "UpdateSaleQuoteProductsTable", "de/d6a/classUpdateSaleQuoteProductsTable.html", "de/d6a/classUpdateSaleQuoteProductsTable" ],
     [ "UpdateSaleQuoteTable", "d0/d9c/classUpdateSaleQuoteTable.html", "d0/d9c/classUpdateSaleQuoteTable" ],

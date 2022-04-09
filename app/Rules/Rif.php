@@ -18,7 +18,7 @@ use Illuminate\Contracts\Validation\Rule;
 class Rif implements Rule
 {
     /**
-     * Create a new rule instance.
+     * Crea una nueva instancia de la regla de validación.
      *
      * @method  __construct
      *
@@ -30,7 +30,7 @@ class Rif implements Rule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Determinar si la regla de validación pasa.
      *
      * @method  passes
      *
@@ -45,7 +45,7 @@ class Rif implements Rule
     }
 
     /**
-     * Get the validation error message.
+     * Obtener el mensaje de error de validación.
      *
      * @method  message
      *

@@ -200,7 +200,6 @@
 										'municipality_id', (isset($municipalities))?$municipalities:[], (isset($model_institution)) ? $model_institution->municipality_id : old('municipality_id'), [
 											'class' => 'form-control select2', 'id' => 'municipality_id',
 											'onchange' => 'updateSelect($(this), $("#parish_id"), "Parish")',
-											//'disabled' => (!isset($model_institution))
 										]
 									) !!}
 								</div>
@@ -210,21 +209,11 @@
 									{!! Form::label('city_id', __('Ciudad'), []) !!}
 									{!! Form::select('city_id', (isset($cities))?$cities:[], (isset($model_institution))? $model_institution->city_id : old('city_id'), [
 										'class' => 'form-control select2', 'id' => 'city_id',
-										//'disabled' => (!isset($model_institution))
 									]) !!}
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							{{-- <div class="col-md-4">
-								<div class="form-group">
-									{!! Form::label('parish_id', 'Parroquia', []) !!}
-									{!! Form::select('parish_id', (isset($parishes))?$parishes:[], null, [
-										'class' => 'form-control select2', 'id' => 'parish_id',
-										'disabled' => (!isset($model_institution))
-									]) !!}
-								</div>
-							</div> --}}
 							<div class="col-md-4">
 								<div class="form-group is-required">
 									{!! Form::label('postal_code', __('Código Postal'), []) !!}
@@ -345,17 +334,6 @@
                                     ) !!}
                                 </div>
 							</div>
-							{{-- <div class="col-md-4">
-								<div class="form-group">
-									{!! Form::label('social_networks', __('Redes Sociales'), []) !!}
-									{!! Form::select(
-										'social_networks', (isset($social_networks))?$social_networks:[], null, [
-											'class' => 'form-control select2', 'multiple' => 'multiple',
-											'id' => 'social_networks'
-										]
-									) !!}
-								</div>
-							</div> --}}
 						</div>
 					</div>
 					<hr>

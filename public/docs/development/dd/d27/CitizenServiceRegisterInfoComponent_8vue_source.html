@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('dd/d27/CitizenServiceRegisterInfoCompo
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                &lt;div class=&quot;modal-body&quot;&gt;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        &lt;div class=&quot;alert alert-danger&quot; v-if=&quot;errors.length &gt; 0&quot;&gt;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            &lt;ul&gt;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                                &lt;li v-for=&quot;error in errors&quot;&gt;{{ error }}&lt;/li&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                                &lt;li v-for=&quot;(error, index) in errors&quot; :key=&quot;index&quot;&gt;{{ error }}&lt;/li&gt;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                            &lt;/ul&gt;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                        &lt;/div&gt;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                        &lt;ul class=&quot;nav nav-tabs custom-tabs justify-content-center&quot; role=&quot;tablist&quot;&gt;</div>
@@ -273,7 +273,7 @@ $(document).ready(function(){initNavTree('dd/d27/CitizenServiceRegisterInfoCompo
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                document.getElementById(&quot;info_general&quot;).click();</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                axios.get(&#39;/&#39; + url).then(response =&gt; {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                axios.get(`${window.app_url}/${url}`).then(response =&gt; {</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                    if (typeof(response.data.record) !== &quot;undefined&quot;) {</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                        fields = response.data.record;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
@@ -315,7 +315,7 @@ $(document).ready(function(){initNavTree('dd/d27/CitizenServiceRegisterInfoCompo
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_2b877f4db4e79c600ee3d66925c92f73.html">CitizenService</a></li><li class="navelem"><a class="el" href="../../dir_56cdb10b17bbe7baef088905afa50686.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_e34d2c73a67a667f3930d5c010f3a561.html">assets</a></li><li class="navelem"><a class="el" href="../../dir_c76bfd4776e4cf1b9b55b1f68454c47a.html">js</a></li><li class="navelem"><a class="el" href="../../dir_4e75ca4ea797a1631b41dc1cadda29aa.html">components</a></li><li class="navelem"><a class="el" href="../../dir_d3b9d683d5645408c14d2de07a1f0580.html">registers</a></li><li class="navelem"><b>CitizenServiceRegisterInfoComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

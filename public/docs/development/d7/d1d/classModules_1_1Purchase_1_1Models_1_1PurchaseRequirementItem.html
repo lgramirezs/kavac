@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('d7/d1d/classModules_1_1Purchase_1_1Mod
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dd/d93/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirementItem__coll__graph.png" border="0" usemap="#PurchaseRequirementItem_coll__map" alt="Collaboration graph"/></div>
+<map name="PurchaseRequirementItem_coll__map" id="PurchaseRequirementItem_coll__map">
+<area shape="rect" title="Datos de los productos o servicios en los requerimientos de compras." alt="" coords="5,5,200,171"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -150,7 +153,7 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section user"><dt>Licencia: </dt><dd>LICENCIA DE SOFTWARE CENDITEL  </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00023">23</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00024">24</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="a7165bf9fc8939d1396020e9fa2b4c5b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7165bf9fc8939d1396020e9fa2b4c5b4">&#9670;&nbsp;</a></span>getUnitPriceAttribute()</h2>
@@ -172,14 +175,14 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>string|null Devuelve el nombre de un pais si esta definido, de lo contrario devuelve nulo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00084">84</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                           : ?String</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        $r = PurchasePivotModelsToRequirementItem::where(<span class="stringliteral">&#39;purchase_requirement_item_id&#39;</span>, $this-&gt;<span class="keywordtype">id</span>)-&gt;first();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> $r</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                ? $r-&gt;unit_price</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                : <span class="keyword">null</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00086">86</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                                           : ?String</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        $r = PurchasePivotModelsToRequirementItem::where(<span class="stringliteral">&#39;purchase_requirement_item_id&#39;</span>, $this-&gt;<span class="keywordtype">id</span>)-&gt;first();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span> $r</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                ? $r-&gt;unit_price</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                : <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -201,11 +204,11 @@ Atributos protegidos</h2></td></tr>
 <p><a class="el" href="../../d7/d1d/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirementItem.html" title="Datos de los productos o servicios en los requerimientos de compras.">PurchaseRequirementItem</a> has one PurchasePivotModelsToRequirementItem. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasOne </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00069">69</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">// hasOne(RelatedModel, foreignKeyOnRelatedModel = purchaseRequirementItem_id, localKey = id)</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(PurchasePivotModelsToRequirementItem::class);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00071">71</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">// hasOne(RelatedModel, foreignKeyOnRelatedModel = purchaseRequirementItem_id, localKey = id)</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(PurchasePivotModelsToRequirementItem::class);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -227,10 +230,10 @@ Atributos protegidos</h2></td></tr>
 <p><a class="el" href="../../d7/d1d/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirementItem.html" title="Datos de los productos o servicios en los requerimientos de compras.">PurchaseRequirementItem</a> belongs to <a class="el" href="../../d2/dc4/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirement.html" title="Datos de los requerimientos de compras.">PurchaseRequirement</a>. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00049">49</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(PurchaseRequirement::class);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00051">51</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(PurchaseRequirement::class);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -252,11 +255,11 @@ Atributos protegidos</h2></td></tr>
 <p><a class="el" href="../../d7/d1d/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirementItem.html" title="Datos de los productos o servicios en los requerimientos de compras.">PurchaseRequirementItem</a> belongs to WarehouseProduct. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00058">58</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// belongsTo(RelatedModel, foreignKey = warehouse_product_id, keyOnRelatedModel = id)</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(<span class="stringliteral">&#39;Modules\Warehouse\Models\WarehouseProduct&#39;</span>, <span class="stringliteral">&#39;warehouse_product_id&#39;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00060">60</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// belongsTo(RelatedModel, foreignKey = warehouse_product_id, keyOnRelatedModel = id)</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(<span class="stringliteral">&#39;Modules\Warehouse\Models\WarehouseProduct&#39;</span>, <span class="stringliteral">&#39;warehouse_product_id&#39;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -285,7 +288,7 @@ Atributos protegidos</h2></td></tr>
 <div class="line">        <span class="stringliteral">&#39;warehouse_product_id&#39;</span>, <span class="stringliteral">&#39;purchase_requirement_id&#39;</span></div>
 <div class="line">    ]</div>
 </div><!-- fragment -->
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00039">39</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html#l00041">41</a> del archivo <a class="el" href="../../d5/d4f/PurchaseRequirementItem_8php_source.html">PurchaseRequirementItem.php</a>.</p>
 
 </div>
 </div>
@@ -298,7 +301,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Purchase</b></li><li class="navelem"><a class="el" href="../../dd/dcd/namespaceModules_1_1Purchase_1_1Models.html">Models</a></li><li class="navelem"><a class="el" href="../../d7/d1d/classModules_1_1Purchase_1_1Models_1_1PurchaseRequirementItem.html">PurchaseRequirementItem</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:03 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:41 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

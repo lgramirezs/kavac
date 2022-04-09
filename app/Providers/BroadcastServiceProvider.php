@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Broadcast;
 class BroadcastServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Bootstrap cualquier servicio de aplicación.
      *
      * @method  boot
      *

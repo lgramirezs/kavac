@@ -1,7 +1,9 @@
 var namespaceModules_1_1Sale_1_1Models =
 [
+    [ "Institution", "d9/d98/classModules_1_1Sale_1_1Models_1_1Institution.html", "d9/d98/classModules_1_1Sale_1_1Models_1_1Institution" ],
     [ "PeriodicCost", "da/df1/classModules_1_1Sale_1_1Models_1_1PeriodicCost.html", "da/df1/classModules_1_1Sale_1_1Models_1_1PeriodicCost" ],
     [ "PeriodicCostAttribute", "de/d70/classModules_1_1Sale_1_1Models_1_1PeriodicCostAttribute.html", "de/d70/classModules_1_1Sale_1_1Models_1_1PeriodicCostAttribute" ],
+    [ "Profile", "dc/d27/classModules_1_1Sale_1_1Models_1_1Profile.html", "dc/d27/classModules_1_1Sale_1_1Models_1_1Profile" ],
     [ "SaleChargeMoney", "d1/d1d/classModules_1_1Sale_1_1Models_1_1SaleChargeMoney.html", "d1/d1d/classModules_1_1Sale_1_1Models_1_1SaleChargeMoney" ],
     [ "SaleClientsEmail", "d8/dca/classModules_1_1Sale_1_1Models_1_1SaleClientsEmail.html", "d8/dca/classModules_1_1Sale_1_1Models_1_1SaleClientsEmail" ],
     [ "SaleDiscount", "d0/da4/classModules_1_1Sale_1_1Models_1_1SaleDiscount.html", "d0/da4/classModules_1_1Sale_1_1Models_1_1SaleDiscount" ],
@@ -34,5 +36,6 @@ var namespaceModules_1_1Sale_1_1Models =
     [ "SaleWarehouseInventoryProductMovement", "d5/d06/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProductMovement.html", "d5/d06/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProductMovement" ],
     [ "SaleWarehouseInventoryRule", "d6/d0e/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryRule.html", "d6/d0e/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryRule" ],
     [ "SaleWarehouseMovement", "df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html", "df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement" ],
-    [ "SaleWarehouseProductValue", "de/dab/classModules_1_1Sale_1_1Models_1_1SaleWarehouseProductValue.html", "de/dab/classModules_1_1Sale_1_1Models_1_1SaleWarehouseProductValue" ]
+    [ "SaleWarehouseProductValue", "de/dab/classModules_1_1Sale_1_1Models_1_1SaleWarehouseProductValue.html", "de/dab/classModules_1_1Sale_1_1Models_1_1SaleWarehouseProductValue" ],
+    [ "SaleWarehouseReport", "d4/dc2/classModules_1_1Sale_1_1Models_1_1SaleWarehouseReport.html", "d4/dc2/classModules_1_1Sale_1_1Models_1_1SaleWarehouseReport" ]
 ];

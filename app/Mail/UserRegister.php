@@ -1,5 +1,5 @@
 <?php
-/** Gestión correos del sistema */
+/** Gestión de correos del sistema */
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;

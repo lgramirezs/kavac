@@ -37,7 +37,7 @@ class $CLASS$
      *
      * @param     object    $event    Objeto con información del evento
      *
-     * @return    void    [description de los datos devueltos]
+     * @return    void    [descripción de los datos devueltos]
      */
     public function handle($event)
     {

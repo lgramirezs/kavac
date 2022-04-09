@@ -18,6 +18,7 @@ var classModules_1_1Payroll_1_1Models_1_1PayrollStaff =
     [ "payrollProfessional", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#a3573069a5de286c729b5c8a3e2b88ea0", null ],
     [ "payrollSocioeconomic", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#a9801dc19b6b398d7a43416a0a74de7e7", null ],
     [ "payrollStaffPayrolls", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#af249a12644ed140c60920a2867ed14db", null ],
+    [ "payrollStaffUniformSize", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#aff94676e700a96fe4b2223602f81aad7", null ],
     [ "payrollVacationRequests", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#a6281b9a206f5d3d9b7e57a6f1fbeda5d", null ],
     [ "phones", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#af4fe82a2a1c2ebe71c2633cd53c27ecb", null ],
     [ "$dates", "df/d3d/classModules_1_1Payroll_1_1Models_1_1PayrollStaff.html#a6ed295a3b7371b42773cab86fd367af8", null ],

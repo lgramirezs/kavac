@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -265,7 +265,9 @@ clave: 123456
 <h2>Probar la aplicación</h2>
 <p>Para identificar si la aplicación se encuentra correctamente instalada, puedes ejecutar el comando de artisan que te permite levantar un servidor en entornos de desarrollo de la siguiente forma: </p><pre class="fragment">$ php artisan serve
 </pre><p>Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en el puerto 8000, para verificarlo puedes acceder a el enlace <a href="127.0.0.1:8000">127.0.0.1:8000</a></p>
-<p>Puedes, de igual forma asignarle una dirección IP o dominio a este comando y un puerto en donde atenderá las peticiones para lo cual se puede agregar las opciones &ndash;host y/o &ndash;port, un ejemplo de su uso sería: </p><pre class="fragment">$ php artisan serve --port 192.168.1.1 --port 9000
+<p>Puedes, de igual forma asignarle una dirección IP o dominio a este comando y un puerto en donde atenderá las peticiones para lo cual se puede agregar las opciones &ndash;host y/o &ndash;port, un ejemplo de su uso sería: </p><pre class="fragment">$ php artisan serve --host=192.168.1.1 --port 9000
+</pre><h2>Procesamiento de colas</h2>
+<p>Ciertos procedimientos del sistema permiten y requieren establecer colas de trabajo para peticiones y registros con grandes cantidades de información. Para entornos de producción se recomienda realizar una configuración previa antes de iniciar la aplicación, la descripción de esta configuración se encuentra en la sección 'Configuración extra para entornos de producción &gt; Procesamiento de colas' de este archivo. Para activar los workers en un entorno de desarrollo, se debe ejecutar el siguiente comando, el cual debe quedar iniciado y mantenerse en una consola de comandos: </p><pre class="fragment">$ php artisan queue:work
 </pre><p>Llegado a este punto ya se debe contar con la aplicación funcional en un entorno local de desarrollo, a continuación se describen configuraciones para entornos de producción.</p>
 <h2>Configuración extra para entornos de producción</h2>
 <pre class="fragment">Entorno: Producción
@@ -282,7 +284,8 @@ supervisor
 <p>Lo primero que se debe realizar es la instalación del servidor de aplicaciones con el comando </p><pre class="fragment"># apt install nginx
 </pre><p>Una vez completada la instalación, inicie el servicio nginx y agréguelo para que se inicie automáticamente con sistema operativo mediante el comando systemctl. </p><pre class="fragment"># systemctl start nginx
 # systemctl enable nginx
-</pre><p>El servidor Nginx se ejecutará en el puerto 80, para verificar si se ejecutó correctamente debe ejecutar el comando </p><pre class="fragment"># netstat -plntu
+</pre><p>El servidor Nginx se ejecutará en el puerto 80, para verificar si se ejecutó correctamente debe ejecutar el comando </p><pre class="fragment"># sudo systemctl status nginx
+</pre><p>o </p><pre class="fragment"># netstat -plntu
 </pre><p>Si todo lo muestra correctamente, nginx estará instalado y en ejecución.</p>
 <h3>Instalar PHP-FPM</h3>
 <p>Para instalar la extensión FPM (FastCGI Process Manager) de la versión de PHP instalada en el sistema operativo se debe ejecutar el comando </p><pre class="fragment"># apt install php-fpm
@@ -446,7 +449,7 @@ vendor/beyondcode/laravel-er-diagram-generator/config/config.php
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:04 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:41 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -7,8 +7,7 @@ return [
     'backup' => [
 
         /*
-         * The name of this application. You can use this name to monitor
-         * the backups.
+         * El nombre de esta aplicación. Puede usar este nombre para monitorear las copias de seguridad.
          */
         'name' => config('app.name'),
 
@@ -17,16 +16,16 @@ return [
             'files' => [
 
                 /*
-                 * The list of directories and files that will be included in the backup.
+                 * La lista de directorios y archivos que se incluirán en la copia de seguridad.
                  */
                 'include' => [
                     //base_path(),
                 ],
 
                 /*
-                 * These directories and files will be excluded from the backup.
+                 * Estos directorios y archivos se excluirán de la copia de seguridad.
                  *
-                 * Directories used by the backup process will automatically be excluded.
+                 * Los directorios utilizados por el proceso de copia de seguridad se excluirán automáticamente.
                  */
                 'exclude' => [
                     base_path('vendor'),
@@ -34,14 +33,14 @@ return [
                 ],
 
                 /*
-                 * Determines if symlinks should be followed.
+                 * Determina si se deben seguir los enlaces simbólicos.
                  */
                 'followLinks' => false,
             ],
 
             /*
-             * The names of the connections to the databases that should be backed up
-             * MySQL, PostgreSQL, SQLite and Mongo databases are supported.
+             * Los nombres de las conexiones a las bases de datos que se deben respaldar.
+             * Son soportadas las base de datos MySQL, PostgreSQL, SQLite y Mongo.
              */
             'databases' => [
                 env('DB_CONNECTION'),
@@ -49,19 +48,19 @@ return [
         ],
 
         /*
-         * The database dump can be gzipped to decrease diskspace usage.
+         * El volcado de la base de datos se puede comprimir para disminuir el uso del espacio en disco.
          */
         'gzip_database_dump' => false,
 
         'destination' => [
 
             /*
-             * The filename prefix used for the backup zip file.
+             * El prefijo del nombre de archivo utilizado para el archivo zip de copia de seguridad.
              */
             'filename_prefix' => '',
 
             /*
-             * The disk names on which the backups will be stored.
+             * Los nombres de los discos en los que se almacenarán las copias de seguridad.
              */
             'disks' => [
                 'snapshots',
@@ -70,11 +69,11 @@ return [
     ],
 
     /*
-     * You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
-     * For Slack you need to install guzzlehttp/guzzle.
+     * Puede recibir notificaciones cuando ocurran eventos específicos. Fuera de la caja, puede usar 'correo' y 'slack'.
+     * Para Slack necesitas instalar guzzlehttp/guzzle.
      *
-     * You can also use your own notification classes, just make sure the class is named after one of
-     * the `Spatie\Backup\Events` classes.
+     * También puede usar sus propias clases de notificación, solo asegúrese de que la clase tenga el nombre de una de las clases 
+     * `Spatie\Backup\Events`.
      */
     'notifications' => [
 
@@ -88,8 +87,8 @@ return [
         ],
 
         /*
-         * Here you can specify the notifiable to which the notifications should be sent. The default
-         * notifiable will use the variables specified in this config file.
+         * Aquí puede especificar el notificable al que se deben enviar las notificaciones. 
+         * El notificable predeterminado utilizará las variables especificadas en este archivo de configuración.
          */
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
@@ -101,7 +100,7 @@ return [
             'webhook_url' => '',
 
             /*
-             * If this is set to null the default channel of the webhook will be used.
+             * Si se establece en nulo, se utilizará el canal predeterminado del webhook.
              */
             'channel' => null,
 
@@ -113,9 +112,9 @@ return [
     ],
 
     /*
-     * Here you can specify which backups should be monitored.
-     * If a backup does not meet the specified requirements the
-     * UnHealthyBackupWasFound event will be fired.
+     * Aquí puede especificar qué copias de seguridad deben monitorearse. 
+     * Si una copia de seguridad no cumple con los requisitos especificados, 
+     * se activará el evento UnHealthyBackupWasFound.
      */
     'monitorBackups' => [
         [
@@ -124,59 +123,49 @@ return [
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
-
-        /*
-        [
-            'name' => 'name of the second app',
-            'disks' => ['local', 's3'],
-            'newestBackupsShouldNotBeOlderThanDays' => 1,
-            'storageUsedMayNotBeHigherThanMegabytes' => 5000,
-        ],
-        */
     ],
 
     'cleanup' => [
         /*
-         * The strategy that will be used to cleanup old backups. The default strategy
-         * will keep all backups for a certain amount of days. After that period only
-         * a daily backup will be kept. After that period only weekly backups will
-         * be kept and so on.
+         * La estrategia que se utilizará para limpiar las copias de seguridad antiguas. 
+         * La estrategia predeterminada mantendrá todas las copias de seguridad durante una cierta cantidad de días. 
+         * Después de ese período solo se mantendrá una copia de seguridad diaria. 
+         * Después de ese período solo se mantendrán copias de seguridad semanales y así sucesivamente.
          *
-         * No matter how you configure it the default strategy will never
-         * delete the newest backup.
+         * No importa cómo lo configure, la estrategia predeterminada nunca eliminará la copia de seguridad más reciente.
          */
         'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
 
         'defaultStrategy' => [
 
             /*
-             * The number of days for which backups must be kept.
+             * El número de días durante los cuales se deben conservar las copias de seguridad.
              */
             'keepAllBackupsForDays' => 7,
 
             /*
-             * The number of days for which daily backups must be kept.
+             * El número de días durante los cuales se deben conservar las copias de seguridad diarias.
              */
             'keepDailyBackupsForDays' => 16,
 
             /*
-             * The number of weeks for which one weekly backup must be kept.
+             * El número de semanas durante las cuales se debe conservar una copia de seguridad semanal.
              */
             'keepWeeklyBackupsForWeeks' => 8,
 
             /*
-             * The number of months for which one monthly backup must be kept.
+             * El número de meses durante los cuales se debe mantener una copia de seguridad mensual.
              */
             'keepMonthlyBackupsForMonths' => 4,
 
             /*
-             * The number of years for which one yearly backup must be kept.
+             * El número de años durante los cuales se debe mantener una copia de seguridad anual.
              */
             'keepYearlyBackupsForYears' => 2,
 
             /*
-             * After cleaning up the backups remove the oldest backup until
-             * this amount of megabytes has been reached.
+             * Después de limpiar las copias de seguridad, elimine la copia de seguridad más antigua hasta alcanzar 
+             * esta cantidad de megabytes.
              */
             'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 5000,
         ],

@@ -135,8 +135,10 @@ class InstitutionTypeController extends Controller
      * Consulta un tipo específico
      *
      * @author  Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+     * 
      * @param \Illuminate\Http\Request $request Datos de la petición
-     * @param $id ID del tipo
+     * @param integer $id ID del tipo
+     * 
      * @return \Illuminate\Http\JsonResponse con el resultado de la petición
      */
     public function getType(Request $request, $id)

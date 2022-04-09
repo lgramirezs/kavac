@@ -3,10 +3,11 @@
 /** Repositorios del sistema */
 namespace App\Repositories;
 
-use App\Repositories\Contracts\ReportInterface;
-use App\Models\Parameter;
 use Carbon\Carbon;
+use App\Models\Parameter;
 use Elibyy\TCPDF\TCPDF as PDF;
+use Illuminate\Support\Facades\View;
+use App\Repositories\Contracts\ReportInterface;
 
 /**
  * @class ReportRepository
@@ -143,6 +144,7 @@ class ReportRepository implements ReportInterface
             'qrCodeStyle' => $this->qrCodeStyle,
             'lineStyle' => $this->lineStyle,
             'hasQR' => $hasQR,
+            'hasBarCode' => $hasBarCode,
             'urlVerify' => $this->urlVerify,
             'title' => $title,
             'titleAlign' => $titleAlign,
@@ -275,20 +277,6 @@ class ReportRepository implements ReportInterface
             );
             /** Línea de separación entre el encabezado del reporte y el cuerpo */
             $pdf->Line(7, $params->headerY + 15, 205, $params->headerY + 15, $params->lineStyle);
-
-            /*$pdf->write1DBarcode(
-                '123', 'C128', 80, 90, 60, 10, '', $barCodeStyle, 'N'
-            );*/
-            /*$pdf->write1DBarcode('1234567890', 'UPCA', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-            /*$pdf->write1DBarcode('1234567890', 'CODABAR', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-            /*$pdf->write1DBarcode('1234567890', 'CODE11', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-            //$pdf->Text(80, 85, 'PDF417 (ISO/IEC 15438:2006)');
-            //
-            //ESTE DE ACA ABAJO
-            /*$pdf->write2DBarcode(
-                'www.tcpdf.org', 'PDF417,4,6,1,99998,,filename.txt', 80, 90, 60, 15, $barCodeStyle, 'N'
-            );
-            $pdf->Text(80, 85, 'PDF417 (ISO/IEC 15438:2006)');*/
         });
     }
 
@@ -330,7 +318,7 @@ class ReportRepository implements ReportInterface
         $this->pdf->AddPage($this->orientation, $this->format);
 
         if ($isHTML) {
-            $view = \View::make($body, $htmlParams);
+            $view = View::make($body, $htmlParams);
             $htmlContent = $view->render();
         }
         /** Escribre el contenido del reporte */

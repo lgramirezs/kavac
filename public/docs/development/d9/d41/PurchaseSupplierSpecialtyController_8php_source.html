@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -173,7 +173,7 @@ $(document).ready(function(){initNavTree('d9/d41/PurchaseSupplierSpecialtyContro
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">     * @param  Request $request</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">     * @return JsonResponse</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> update(Request $request)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> update(Request $request, $id)</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    {<span class="comment"></span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">        /** @var object Datos de la especialidad de proveedores */</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        $supplierSpecialty = PurchaseSupplierSpecialty::find($id);</div>
@@ -183,32 +183,33 @@ $(document).ready(function(){initNavTree('d9/d41/PurchaseSupplierSpecialtyContro
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        ]);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        $supplierSpecialty-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        $supplierSpecialty-&gt;save();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>], 200);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">     * Remove the specified resource from storage.</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">     * @return JsonResponse</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> destroy()</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {<span class="comment"></span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">        /** @var object Datos de la especialidad de proveedores */</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        $supplierSpecialty = PurchaseSupplierSpecialty::find($id);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $supplierSpecialty-&gt;delete();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $supplierSpecialty, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        $supplierSpecialty-&gt;description = $request-&gt;description ?? <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        $supplierSpecialty-&gt;save();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>], 200);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">     * Remove the specified resource from storage.</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     * @return JsonResponse</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> destroy($id)</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {<span class="comment"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">        /** @var object Datos de la especialidad de proveedores */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $supplierSpecialty = PurchaseSupplierSpecialty::find($id);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $supplierSpecialty-&gt;delete();</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $supplierSpecialty, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassModules_1_1Purchase_1_1Models_1_1PurchaseSupplierSpecialty_html"><div class="ttname"><a href="../../d8/d92/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplierSpecialty.html">Modules\Purchase\Models\PurchaseSupplierSpecialty</a></div><div class="ttdoc">Datos de las especialidades de proveedores.</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d70/PurchaseSupplierSpecialty_8php_source.html#l00021">PurchaseSupplierSpecialty.php:21</a></div></div>
+<div class="ttc" id="aclassModules_1_1Purchase_1_1Models_1_1PurchaseSupplierSpecialty_html"><div class="ttname"><a href="../../d8/d92/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplierSpecialty.html">Modules\Purchase\Models\PurchaseSupplierSpecialty</a></div><div class="ttdoc">Datos de las especialidades de proveedores.</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d70/PurchaseSupplierSpecialty_8php_source.html#l00022">PurchaseSupplierSpecialty.php:22</a></div></div>
 <div class="ttc" id="anamespaceModules_1_1Purchase_1_1Http_1_1Controllers_html"><div class="ttname"><a href="../../d4/d38/namespaceModules_1_1Purchase_1_1Http_1_1Controllers.html">Modules\Purchase\Http\Controllers</a></div><div class="ttdoc">[descripción del namespace]</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d98/PurchaseBaseBudgetController_8php_source.html#l00003">PurchaseBaseBudgetController.php:3</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_1a7f16d625b68127205b7b7b2277f8ef.html">Purchase</a></li><li class="navelem"><a class="el" href="../../dir_3edbe04198f9051d1add862b167ed578.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_09b745eb5b134ea40b635fb862f7c84c.html">Controllers</a></li><li class="navelem"><b>PurchaseSupplierSpecialtyController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

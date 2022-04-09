@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\BackupRepository;
+use Illuminate\Support\Facades\Response;
 
 /**
  * @class BackupController
@@ -85,12 +86,12 @@ class BackupController extends Controller
 
         /** @var string Texto con el contenido del archivo */
         $stream = $down['stream'];
-        /** @var string Texto con el nombre del driver a usar para el sistema de archivos */
+        /** @var string|object Texto con el nombre del driver a usar para el sistema de archivos */
         $fs = $down['fs'];
         /** @var string Ruta en donde se encuentra el archivo a descargar */
         $file = $down['file'];
 
-        return \Response::stream(function () use ($stream) {
+        return Response::stream(function () use ($stream) {
             fpassthru($stream);
         }, 200, [
             "Content-Type" => $fs->getMimetype($file),

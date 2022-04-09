@@ -29,7 +29,6 @@ trait RequirementsTrait
     {
         if (count($models) > 0) {
             foreach ($models as $model => $permission) {
-                //if ($model::all()->count() === 0 || !$user->hasPermission($permission)) {
                 if ($model::all()->count() === 0) {
                     return false;
                 }

@@ -1,5 +1,5 @@
 <?php
-
+/** Gestión de correos del sistema */
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -16,7 +16,7 @@ class SystemMail extends Mailable
     public $fromEmail;
 
     /**
-     * Create a new message instance.
+     * Crea una nueva instancia del mensaje
      *
      * @return void
      */
@@ -28,7 +28,7 @@ class SystemMail extends Mailable
     }
 
     /**
-     * Build the message.
+     * Construye el mensaje
      *
      * @return $this
      */

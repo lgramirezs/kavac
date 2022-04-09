@@ -7,6 +7,6 @@ var classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController =
     [ "getLockScreenData", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a2bd48e81c906e4abdebda68cc548c34a", null ],
     [ "index", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a149eb92716c1084a935e04a8d95f7347", null ],
     [ "indexRolesPermissions", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a342adf348321f63adfc7b2f17ed281df", null ],
-    [ "unlock", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a67f4ff005fbb573159370df2a33ee578", null ],
-    [ "update", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a45835822d3af4f6b70500212c7da02ba", null ]
+    [ "setAdminUserSetting", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a4ae6bd7e645a723cc4749a105d4cee76", null ],
+    [ "unlock", "d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#a67f4ff005fbb573159370df2a33ee578", null ]
 ];

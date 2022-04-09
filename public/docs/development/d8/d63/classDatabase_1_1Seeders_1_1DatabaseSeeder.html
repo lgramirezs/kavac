@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -112,6 +112,9 @@ $(document).ready(function(){initNavTree('d8/d63/classDatabase_1_1Seeders_1_1Dat
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d81/classDatabase_1_1Seeders_1_1DatabaseSeeder__coll__graph.png" border="0" usemap="#DatabaseSeeder_coll__map" alt="Collaboration graph"/></div>
+<map name="DatabaseSeeder_coll__map" id="DatabaseSeeder_coll__map">
+<area shape="rect" title="Gestiona los seeder de la aplicación." alt="" coords="5,5,135,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -124,9 +127,9 @@ Métodos públicos</h2></td></tr>
 <div class="textblock"><p>Gestiona los seeder de la aplicación. </p>
 <p>Invoca las clases de los seeder encargados de registrar información inicial en el sistema</p>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
-<dl class="section user"><dt>Licencia: </dt><dd>LICENCIA DE SOFTWARE CENDITEL  </dd></dl>
+<dl class="section user"><dt>Licencia: </dt><dd><a href="http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/">LICENCIA DE SOFTWARE CENDITEL</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html#l00017">17</a> del archivo <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html">DatabaseSeeder.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html#l00016">16</a> del archivo <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html">DatabaseSeeder.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="afb0fafe7e02a3ae1993c01c19fad2bae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb0fafe7e02a3ae1993c01c19fad2bae">&#9670;&nbsp;</a></span>run()</h2>
@@ -164,45 +167,45 @@ Métodos públicos</h2></td></tr>
 <p>Unidades de medida</p>
 <p>Configuración de notificaciones en aplicación base</p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html#l00024">24</a> del archivo <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html">DatabaseSeeder.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {<span class="comment"></span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">        /** Roles disponibles para el acceso al sistema */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        $this-&gt;call(RolesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">        /** Permisos disponibles para el acceso al sistema */</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        $this-&gt;call(PermissionsTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">        /** Usuarios por defecto */</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        $this-&gt;call(UsersTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">        /** Configuración por defecto */</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        $this-&gt;call(SettingsTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">        /** Parámetros de configuración por defecto */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        $this-&gt;call(ParametersTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">        /** Registros de países */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        $this-&gt;call(CountriesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">        /** Registros de Estados asociados a los países */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        $this-&gt;call(EstatesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">        /** Registros de Municipios asociados a los Estados */</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        $this-&gt;call(MunicipalitiesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">        /** Registros de Parroquias asociadas a los Municipios */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        $this-&gt;call(ParishesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">        /** Registros de Ciudades asociadas a los Estados */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        $this-&gt;call(CitiesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">        /** Sectores por defecto para el registro de organizaciones */</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        $this-&gt;call(InstitutionSectorsTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">        /** Tipos de organizaciones por defecto */</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        $this-&gt;call(InstitutionTypesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">        /** Estados civiles */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        $this-&gt;call(MaritalStatusTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">        /** Profesiones */</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        $this-&gt;call(ProfessionsTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">        /** Estatus de los documentos */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        $this-&gt;call(DocumentStatusTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">        /** Tipos de moneda por defecto */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        $this-&gt;call(CurrenciesTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">        /** Unidades de medida */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        $this-&gt;call(MeasurementUnitsTableSeeder::class);<span class="comment"></span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">        /** Configuración de notificaciones en aplicación base */</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        $this-&gt;call(CoreNotificationSettingsTableSeeder::class);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html#l00023">23</a> del archivo <a class="el" href="../../de/db3/DatabaseSeeder_8php_source.html">DatabaseSeeder.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {<span class="comment"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">        /** Roles disponibles para el acceso al sistema */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        $this-&gt;call(RolesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">        /** Permisos disponibles para el acceso al sistema */</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        $this-&gt;call(PermissionsTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">        /** Usuarios por defecto */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        $this-&gt;call(UsersTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">        /** Configuración por defecto */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        $this-&gt;call(SettingsTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">        /** Parámetros de configuración por defecto */</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        $this-&gt;call(ParametersTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">        /** Registros de países */</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        $this-&gt;call(CountriesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">        /** Registros de Estados asociados a los países */</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        $this-&gt;call(EstatesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">        /** Registros de Municipios asociados a los Estados */</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        $this-&gt;call(MunicipalitiesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">        /** Registros de Parroquias asociadas a los Municipios */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        $this-&gt;call(ParishesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">        /** Registros de Ciudades asociadas a los Estados */</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        $this-&gt;call(CitiesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">        /** Sectores por defecto para el registro de organizaciones */</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        $this-&gt;call(InstitutionSectorsTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">        /** Tipos de organizaciones por defecto */</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        $this-&gt;call(InstitutionTypesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">        /** Estados civiles */</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        $this-&gt;call(MaritalStatusTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">        /** Profesiones */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        $this-&gt;call(ProfessionsTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">        /** Estatus de los documentos */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        $this-&gt;call(DocumentStatusTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">        /** Tipos de moneda por defecto */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        $this-&gt;call(CurrenciesTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">        /** Unidades de medida */</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        $this-&gt;call(MeasurementUnitsTableSeeder::class);<span class="comment"></span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">        /** Configuración de notificaciones en aplicación base */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        $this-&gt;call(CoreNotificationSettingsTableSeeder::class);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -215,7 +218,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Database</b></li><li class="navelem"><b>Seeders</b></li><li class="navelem"><a class="el" href="../../d8/d63/classDatabase_1_1Seeders_1_1DatabaseSeeder.html">DatabaseSeeder</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:37 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

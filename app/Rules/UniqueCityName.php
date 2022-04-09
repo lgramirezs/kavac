@@ -1,22 +1,33 @@
 <?php
-
+/** Reglas de validación personalizadas */
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use App\Models\City;
 
+/**
+ * @class UniqueCityName
+ * @brief Reglas de validación para los registros de Ciudades
+ *
+ * Gestiona las reglas de validación para los registros de Ciudades
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ *
+ * @license
+ *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
+ */
 class UniqueCityName implements Rule, DataAwareRule
 {
     /**
-     * All of the data under validation.
+     * Todos los datos en validación.
      *
      * @var array
      */
     protected $data = [];
 
     /**
-     * Set the data under validation.
+     * Establecer los datos bajo validación.
      *
      * @param  array  $data
      * @return $this
@@ -29,7 +40,7 @@ class UniqueCityName implements Rule, DataAwareRule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Determinar si la regla de validación pasa.
      *
      * @param  string  $attribute
      * @param  mixed  $value
@@ -42,7 +53,7 @@ class UniqueCityName implements Rule, DataAwareRule
     }
 
     /**
-     * Get the validation error message.
+     * Obtener el mensaje de error de validación.
      *
      * @return string
      */

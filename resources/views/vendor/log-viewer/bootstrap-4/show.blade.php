@@ -247,14 +247,6 @@
                                                                             "<b>[stacktrace]</b>",
                                                                             $stack
                                                                         );
-                                                                        /**
-                                                                         * reemplazar la numeración #1, #2, etc,
-                                                                         * con una búsqueda de regex y colocarla
-                                                                         * en negrita
-                                                                         */
-                                                                        /*$stack = str_replace(
-                                                                            "/#[]/", replace, $stack
-                                                                        );*/
                                                                      @endphp
                                                                     {!! $stack !!}
                                                                 </div>

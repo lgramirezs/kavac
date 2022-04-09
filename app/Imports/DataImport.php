@@ -1,5 +1,5 @@
 <?php
-/** Gestión da importación de datos */
+/** Gestión la importación de datos */
 namespace App\Imports;
 
 use Illuminate\Support\Collection;

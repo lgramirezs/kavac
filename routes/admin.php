@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Route;
+
 /**
  * -----------------------------------------------------------------------
  * Grupo de rutas de acceso exclusivo del usuario administrador

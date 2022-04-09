@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Module;
+use Nwidart\Modules\Facades\Module;
 
 /**
  * @class CompileModules
@@ -19,7 +19,7 @@ use Module;
 class CompileModules extends Command
 {
     /**
-     * El combre y firma del comando, así como las opciones y argumentos que recibe
+     * El nombre y firma del comando, así como las opciones y argumentos que recibe
      *
      * @var string
      */
@@ -72,7 +72,7 @@ class CompileModules extends Command
         $this->line('<fg=yellow>---------------------------------------------------------</>');
         $this->line('');
 
-        /** @var string Guarda el listado d elos módulos compilados */
+        /** @var array Guarda el listado de los módulos compilados */
         $m = [];
         /** @var string Modo de compilación. dev = desarrollo, prod = producción */
         $compileMode = ($this->option('prod'))?'prod':'dev';
@@ -95,7 +95,7 @@ class CompileModules extends Command
         $count = (!$this->argument('module'))?count($modules):1;
         /** @var integer contador que registra el número de modulo que se compila */
         $index = 1;
-
+        /** @var string Título de la acción a ejecutar */
         $moduleCompileTitle = (!empty($withUpdate))
                               ?"Actualizando paquetes y "
                               :((!empty($withInstall))?"Instalando paquetes y ":"");

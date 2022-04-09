@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -135,7 +135,7 @@ $(document).ready(function(){initNavTree('d3/dc1/PayrollConceptAssignOption_8php
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">     * Lista de atributos que pueden ser asignados masivamente</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">     * @var array $fillable</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a13601d3af66d109458e268a3eb4afc49">   37</a></span>&#160;    <span class="keyword">protected</span> <a class="code" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a13601d3af66d109458e268a3eb4afc49">$fillable</a> = [<span class="stringliteral">&#39;payroll_concept_id&#39;</span>, <span class="stringliteral">&#39;key&#39;</span>, <span class="stringliteral">&#39;value&#39;</span>];</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a13601d3af66d109458e268a3eb4afc49">   37</a></span>&#160;    <span class="keyword">protected</span> <a class="code" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a13601d3af66d109458e268a3eb4afc49">$fillable</a> = [<span class="stringliteral">&#39;payroll_concept_id&#39;</span>, <span class="stringliteral">&#39;key&#39;</span>, <span class="stringliteral">&#39;value&#39;</span>, <span class="stringliteral">&#39;applicable_type&#39;</span>, <span class="stringliteral">&#39;applicable_id&#39;</span>];</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">    /**</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">     * Método que obtine la información del concepto asociado al registro</span></div>
@@ -148,19 +148,45 @@ $(document).ready(function(){initNavTree('d3/dc1/PayrollConceptAssignOption_8php
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(PayrollConcept::class);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">     * PayrollConceptAssignOption belongs to PayrollVacationPolicy.</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#adf18ddf3a6828704302f3b1017255b20">   56</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#adf18ddf3a6828704302f3b1017255b20">payrollVacationPolicy</a>()</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">// belongsTo(RelatedModel, foreignKey = payrollVacationPolicy_id, keyOnRelatedModel = id)</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(PayrollVacationPolicy::class);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">     * File morphs to models in applicable_type.</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\MorphTo</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a1b24db73daa7e73b33e3027edbb8f246">   67</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a1b24db73daa7e73b33e3027edbb8f246">applicable</a>()</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">// morphTo($name = applicable, $type = applicable_type, $id = applicable_id)</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">// requires applicable_type and applicable_id fields on $this-&gt;table</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> $this-&gt;morphTo();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html_a13601d3af66d109458e268a3eb4afc49"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a13601d3af66d109458e268a3eb4afc49">Modules\Payroll\Models\PayrollConceptAssignOption\$fillable</a></div><div class="ttdeci">$fillable</div><div class="ttdoc">Lista de atributos que pueden ser asignados masivamente.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00037">PayrollConceptAssignOption.php:37</a></div></div>
 <div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html">Modules\Payroll\Models\PayrollConceptAssignOption</a></div><div class="ttdoc">Datos de las opciones a asignar de un concepto.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00021">PayrollConceptAssignOption.php:21</a></div></div>
 <div class="ttc" id="anamespaceModules_1_1Payroll_1_1Models_html"><div class="ttname"><a href="../../dd/dd6/namespaceModules_1_1Payroll_1_1Models.html">Modules\Payroll\Models</a></div><div class="ttdoc">Modelos de talento humano de base de datos.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/df9/modules_2Payroll_2Models_2Country_8php_source.html#l00003">modules/Payroll/Models/Country.php:3</a></div></div>
 <div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html_a6ed295a3b7371b42773cab86fd367af8"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a6ed295a3b7371b42773cab86fd367af8">Modules\Payroll\Models\PayrollConceptAssignOption\$dates</a></div><div class="ttdeci">$dates</div><div class="ttdoc">Lista de atributos para la gestión de fechas.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00031">PayrollConceptAssignOption.php:31</a></div></div>
+<div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html_a1b24db73daa7e73b33e3027edbb8f246"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a1b24db73daa7e73b33e3027edbb8f246">Modules\Payroll\Models\PayrollConceptAssignOption\applicable</a></div><div class="ttdeci">applicable()</div><div class="ttdoc">File morphs to models in applicable_type.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00067">PayrollConceptAssignOption.php:67</a></div></div>
 <div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html_a127bf6f0060176dd8a298a3acc2d6e22"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#a127bf6f0060176dd8a298a3acc2d6e22">Modules\Payroll\Models\PayrollConceptAssignOption\payrollConcept</a></div><div class="ttdeci">payrollConcept()</div><div class="ttdoc">Método que obtine la información del concepto asociado al registro.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00046">PayrollConceptAssignOption.php:46</a></div></div>
+<div class="ttc" id="aclassModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption_html_adf18ddf3a6828704302f3b1017255b20"><div class="ttname"><a href="../../d3/dd3/classModules_1_1Payroll_1_1Models_1_1PayrollConceptAssignOption.html#adf18ddf3a6828704302f3b1017255b20">Modules\Payroll\Models\PayrollConceptAssignOption\payrollVacationPolicy</a></div><div class="ttdeci">payrollVacationPolicy()</div><div class="ttdoc">PayrollConceptAssignOption belongs to PayrollVacationPolicy.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dc1/PayrollConceptAssignOption_8php_source.html#l00056">PayrollConceptAssignOption.php:56</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_5d2bef04a6d76a5c763302bfa2fa021f.html">Payroll</a></li><li class="navelem"><a class="el" href="../../dir_e0a3c5d1b28d92990037daf887df1b91.html">Models</a></li><li class="navelem"><b>PayrollConceptAssignOption.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -137,11 +137,11 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="dc/d5a/classApp_1_1Http_1_1Controllers_1_1NotificationSettingController.html#aae7852baf669baf9182f3ecdf888fe2a">NotificationSettingController</a>
 , <a class="el" href="dc/df9/classApp_1_1Http_1_1Controllers_1_1ParishController.html#a1383515c2dc8074ae3e0cc4f520f40f2">ParishController</a>
 , <a class="el" href="de/d2c/classApp_1_1Http_1_1Controllers_1_1ProfessionController.html#ade18ef228e13219cb1325beac0b0515f">ProfessionController</a>
+, <a class="el" href="da/d07/classApp_1_1Http_1_1Controllers_1_1ReceiverController.html#aee016b7cf22eba94513d51e4586be32a">ReceiverController</a>
 , <a class="el" href="d4/da0/classApp_1_1Http_1_1Controllers_1_1RequiredDocumentController.html#a69114fb8f3db03553ba56b9fe5d880bd">RequiredDocumentController</a>
 , <a class="el" href="de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html#a4e4b7dff82942fbaf28a59cb90cef7af">TaxController</a>
 , <a class="el" href="d3/d67/classApp_1_1Http_1_1Controllers_1_1TaxUnitController.html#a8493558310f6cf6a5192c7c6e28d6417">TaxUnitController</a>
 , <a class="el" href="d9/d62/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingEntryCategoryController.html#a726fa8a4b4b187b9ca32ba427aac8137">AccountingEntryCategoryController</a>
-, <a class="el" href="d4/d4d/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingEntryController.html#a726fa8a4b4b187b9ca32ba427aac8137">AccountingEntryController</a>
 , <a class="el" href="d4/d45/classModules_1_1Asset_1_1Http_1_1Controllers_1_1AssetAcquisitionTypeController.html#abc89494532607ce1140f5feac8e8a58b">AssetAcquisitionTypeController</a>
 , <a class="el" href="df/ddc/classModules_1_1Asset_1_1Http_1_1Controllers_1_1AssetAsignationController.html#afcc6327dcdbc7bef731f3eb8c3bd4903">AssetAsignationController</a>
 , <a class="el" href="d0/d35/classModules_1_1Asset_1_1Http_1_1Controllers_1_1AssetCategoryController.html#aba5531a1b22676663615fc2b6ede0e6f">AssetCategoryController</a>
@@ -186,9 +186,11 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d1/d6d/classModules_1_1Payroll_1_1Http_1_1Controllers_1_1PayrollStaffController.html#a726fa8a4b4b187b9ca32ba427aac8137">PayrollStaffController</a>
 , <a class="el" href="da/d8c/classModules_1_1Payroll_1_1Http_1_1Controllers_1_1PayrollStudyTypeController.html#a726fa8a4b4b187b9ca32ba427aac8137">PayrollStudyTypeController</a>
 , <a class="el" href="d4/d1d/classModules_1_1Purchase_1_1Http_1_1Controllers_1_1PurchaseDirectHireController.html#a726fa8a4b4b187b9ca32ba427aac8137">PurchaseDirectHireController</a>
+, <a class="el" href="d0/d4e/classModules_1_1Purchase_1_1Http_1_1Controllers_1_1PurchaseTypeController.html#a726fa8a4b4b187b9ca32ba427aac8137">PurchaseTypeController</a>
 , <a class="el" href="df/d40/classModules_1_1Sale_1_1Http_1_1Controllers_1_1FrecuencyController.html#a311753976b5e47e142f211c38a97847f">FrecuencyController</a>
 , <a class="el" href="d3/dc1/classModules_1_1Sale_1_1Http_1_1Controllers_1_1PeriodicCostAttributeController.html#ab8d7b605119f3866c79d20eda19a5a76">PeriodicCostAttributeController</a>
 , <a class="el" href="d0/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1PeriodicCostController.html#a42f97e53aa03429e3f065500871765ff">PeriodicCostController</a>
+, <a class="el" href="d8/dc3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleServiceRequestController.html#a726fa8a4b4b187b9ca32ba427aac8137">SaleServiceRequestController</a>
 , <a class="el" href="d7/db7/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleBillController.html#a726fa8a4b4b187b9ca32ba427aac8137">SaleBillController</a>
 , <a class="el" href="d3/d72/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleClientsEmailController.html#afa9105d0cbd3609513a8345b8e548490">SaleClientsEmailController</a>
 , <a class="el" href="d4/d98/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsAttributeController.html#acf85763132240d2a53812bf82b8a3aa6">SaleGoodsAttributeController</a>
@@ -243,9 +245,12 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="df/d47/classModules_1_1Purchase_1_1Models_1_1PurchaseCompromise.html#a649e68c3356260846b3196094c945c9f">PurchaseCompromise</a>
 </li>
 <li>down()
-: <a class="el" href="de/d22/classAddFielAttributesToSubservices.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFielAttributesToSubservices</a>
+: <a class="el" href="d6/d3f/classAddCountryIdToPurchaseSuppliersTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddCountryIdToPurchaseSuppliersTable</a>
+, <a class="el" href="de/d22/classAddFielAttributesToSubservices.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFielAttributesToSubservices</a>
 , <a class="el" href="d1/d66/classAddFieldAssetStatusIdToAssetReportsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldAssetStatusIdToAssetReportsTable</a>
+, <a class="el" href="dc/d81/classAddFieldAssignToPayrollVacationPolicies.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldAssignToPayrollVacationPolicies</a>
 , <a class="el" href="d0/dc9/classAddFieldCodeToSaleBillsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldCodeToSaleBillsTable</a>
+, <a class="el" href="da/d71/classAddFieldDateVerificationToCitizenServiceRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldDateVerificationToCitizenServiceRequestsTable</a>
 , <a class="el" href="d4/dae/classAddFieldDisaggregateTaxToBudgetAccountsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldDisaggregateTaxToBudgetAccountsTable</a>
 , <a class="el" href="dd/db8/classAddFieldDocumentIdToAssetRequestEventsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldDocumentIdToAssetRequestEventsTable</a>
 , <a class="el" href="dc/d9c/classAddFieldGenderIdToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldGenderIdToPayrollStaffsTable</a>
@@ -256,25 +261,36 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d7/d7b/classAddFieldInstitutionIdToPayrollVacationRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldInstitutionIdToPayrollVacationRequestsTable</a>
 , <a class="el" href="d3/d35/classAddFieldInstitutionIdToWarehouseRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldInstitutionIdToWarehouseRequestsTable</a>
 , <a class="el" href="d3/dcc/classAddFieldMeasurementUnitIdToWarehouseProductsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldMeasurementUnitIdToWarehouseProductsTable</a>
+, <a class="el" href="d3/dbc/classAddFieldMorphToPayrollConceptAssignOptionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldMorphToPayrollConceptAssignOptionsTable</a>
 , <a class="el" href="d9/d68/classAddFieldNationalityIdToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldNationalityIdToPayrollStaffsTable</a>
 , <a class="el" href="da/df3/classAddFieldObservationToCitizenServiceRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldObservationToCitizenServiceRequestsTable</a>
 , <a class="el" href="da/d8d/classAddFieldPassphraseToSignprofilesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldPassphraseToSignprofilesTable</a>
 , <a class="el" href="da/de5/classAddFieldPayrollDisabilityIdToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldPayrollDisabilityIdToPayrollStaffsTable</a>
 , <a class="el" href="d6/d04/classAddFieldPayrollPaymentTypeIdToPayrollBenefitsPoliciesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldPayrollPaymentTypeIdToPayrollBenefitsPoliciesTable</a>
 , <a class="el" href="d9/d3f/classAddFieldPayrollRoleIdToPayrollEmploymentInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldPayrollRoleIdToPayrollEmploymentInformationsTable</a>
+, <a class="el" href="d6/de1/classAddFieldPercentageToPayrollSalaryTabulatorsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldPercentageToPayrollSalaryTabulatorsTable</a>
+, <a class="el" href="de/d1f/classAddFieldRejectedReasonToSaleBillsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldRejectedReasonToSaleBillsTable</a>
+, <a class="el" href="de/d91/classAddFieldSocialPurposeToPurchaseSuppliersTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldSocialPurposeToPurchaseSuppliersTable</a>
 , <a class="el" href="d3/d6f/classAddFieldStatusParametersToPayrollVacationRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldStatusParametersToPayrollVacationRequestsTable</a>
 , <a class="el" href="de/d37/classAddFieldsToPayrollConceptsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToPayrollConceptsTable</a>
 , <a class="el" href="d1/d89/classAddFieldsToPayrollSalaryScalesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToPayrollSalaryScalesTable</a>
 , <a class="el" href="da/d1b/classAddFieldsToPayrollSalaryTabulatorsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToPayrollSalaryTabulatorsTable</a>
 , <a class="el" href="d0/d30/classAddFieldsToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToPayrollStaffsTable</a>
+, <a class="el" href="d7/d97/classAddFieldsToPayrollVacationPoliciesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToPayrollVacationPoliciesTable</a>
+, <a class="el" href="d5/dcc/classAddFieldsToSaleRegisterPayments.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToSaleRegisterPayments</a>
+, <a class="el" href="d3/dc7/classAddFieldsToSaleWarehousesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldsToSaleWarehousesTable</a>
 , <a class="el" href="de/d0b/classAddFieldToPayrollChildrensTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldToPayrollChildrensTable</a>
-, <a class="el" href="d9/d81/classAddFieldTypeToCodeSettingsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldTypeToCodeSettingsTable</a>
+, <a class="el" href="d3/d85/classAddFieldToPayrollEmploymentsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldToPayrollEmploymentsTable</a>
+, <a class="el" href="d0/dfe/classAddFieldToSaleWarehouseInventoryProductsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldToSaleWarehouseInventoryProductsTable</a>
+, <a class="el" href="df/d69/classAddFieldTypeToPayrollSalaryScalesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldTypeToPayrollSalaryScalesTable</a>
 , <a class="el" href="da/d59/classAddFieldUniformSizeAndMedicalHistoryToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddFieldUniformSizeAndMedicalHistoryToPayrollStaffsTable</a>
+, <a class="el" href="d4/db9/classAddStateIdToPurchaseSuppliersTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddStateIdToPurchaseSuppliersTable</a>
 , <a class="el" href="dd/dec/classAddUniqueFieldToAssetAcquisitionTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddUniqueFieldToAssetAcquisitionTypesTable</a>
 , <a class="el" href="d7/de2/classAddUniqueFieldToAssetCategoriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddUniqueFieldToAssetCategoriesTable</a>
 , <a class="el" href="d4/dca/classAddUniqueFieldToAssetConditionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddUniqueFieldToAssetConditionsTable</a>
 , <a class="el" href="d5/d49/classAddUniqueFieldToAssetStatusTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddUniqueFieldToAssetStatusTable</a>
 , <a class="el" href="d7/d65/classAddUniqueFieldToAssetUseFunctionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">AddUniqueFieldToAssetUseFunctionsTable</a>
+, <a class="el" href="db/d24/classChangeDescriptionToPurchaseTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">ChangeDescriptionToPurchaseTypesTable</a>
 , <a class="el" href="da/d61/classChangeFieldsSaleGoodsToBeTradeds.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">ChangeFieldsSaleGoodsToBeTradeds</a>
 , <a class="el" href="dd/d0e/classChangeFieldToPayrollLanguageLanguageLevelProfessionalTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">ChangeFieldToPayrollLanguageLanguageLevelProfessionalTable</a>
 , <a class="el" href="d2/d15/classChangeFieldToPayrollSocioeconomicInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">ChangeFieldToPayrollSocioeconomicInformationsTable</a>
@@ -302,6 +318,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d7/d8c/classCreateAssetSubcategoriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateAssetSubcategoriesTable</a>
 , <a class="el" href="db/d22/classCreateAssetTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateAssetTypesTable</a>
 , <a class="el" href="d4/de5/classCreateAssetUseFunctionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateAssetUseFunctionsTable</a>
+, <a class="el" href="d5/d7e/classCreateContactsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateContactsTable</a>
 , <a class="el" href="d9/d56/classCreateCountriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateCountriesTable</a>
 , <a class="el" href="d2/d22/classCreateFinancePaymentMethodsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateFinancePaymentMethodsTable</a>
 , <a class="el" href="d6/d57/classCreatePayrollAcknowledgmentFilesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollAcknowledgmentFilesTable</a>
@@ -333,6 +350,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d9/d68/classCreatePayrollOrganizationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollOrganizationsTable</a>
 , <a class="el" href="d8/d6b/classCreatePayrollPaymentPeriodsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollPaymentPeriodsTable</a>
 , <a class="el" href="d0/d7d/classCreatePayrollPaymentTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollPaymentTypesTable</a>
+, <a class="el" href="d4/d6a/classCreatePayrollPreviousJobsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollPreviousJobsTable</a>
 , <a class="el" href="d8/dc8/classCreatePayrollProfessionalInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollProfessionalInformationsTable</a>
 , <a class="el" href="dc/d94/classCreatePayrollProfessionalProfessionTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollProfessionalProfessionTable</a>
 , <a class="el" href="d3/d60/classCreatePayrollProfessionalsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollProfessionalsTable</a>
@@ -351,6 +369,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="df/dc7/classCreatePayrollStaffPayrollsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStaffPayrollsTable</a>
 , <a class="el" href="d1/d6c/classCreatePayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStaffsTable</a>
 , <a class="el" href="d2/de9/classCreatePayrollStaffTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStaffTypesTable</a>
+, <a class="el" href="d8/d03/classCreatePayrollStaffUniformSizesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStaffUniformSizesTable</a>
 , <a class="el" href="d1/dfd/classCreatePayrollStudiesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStudiesTable</a>
 , <a class="el" href="de/d79/classCreatePayrollStudyTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollStudyTypesTable</a>
 , <a class="el" href="d2/dbc/classCreatePayrollVacationPoliciesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePayrollVacationPoliciesTable</a>
@@ -360,6 +379,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="dc/dd3/classCreatePeriodicCostsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePeriodicCostsTable</a>
 , <a class="el" href="dc/d24/classCreatePurchaseCompromiseDetailsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePurchaseCompromiseDetailsTable</a>
 , <a class="el" href="d8/dd2/classCreatePurchaseCompromisesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePurchaseCompromisesTable</a>
+, <a class="el" href="da/d68/classCreatePurchaseDirectHiresTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePurchaseDirectHiresTable</a>
 , <a class="el" href="da/def/classCreatePurchaseStatesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreatePurchaseStatesTable</a>
 , <a class="el" href="d3/d46/classCreateSaleBillInventoryProductsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateSaleBillInventoryProductsTable</a>
 , <a class="el" href="d5/d7f/classCreateSaleBillsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateSaleBillsTable</a>
@@ -409,9 +429,12 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d8/dac/classCreateWarehousesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">CreateWarehousesTable</a>
 , <a class="el" href="d2/d36/classDeleteFieldDocumentIdToAssetRequestEventsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldDocumentIdToAssetRequestEventsTable</a>
 , <a class="el" href="da/d32/classDeleteFieldMeasurementUnitIdToWarehouseInventoryProductsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldMeasurementUnitIdToWarehouseInventoryProductsTable</a>
+, <a class="el" href="d8/d35/classDeleteFieldSalaryTypeToPayrollVacationPoliciesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldSalaryTypeToPayrollVacationPoliciesTable</a>
 , <a class="el" href="d2/dea/classDeleteFieldsToPayrollPaymentTypes.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldsToPayrollPaymentTypes</a>
 , <a class="el" href="d5/d7c/classDeleteFieldsToPayrollProfessionalInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldsToPayrollProfessionalInformationsTable</a>
 , <a class="el" href="db/d63/classDeleteFieldToPayrollProfessionalInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldToPayrollProfessionalInformationsTable</a>
+, <a class="el" href="d0/da2/classDeleteFieldUniformSizeToPayrollStaffsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteFieldUniformSizeToPayrollStaffsTable</a>
+, <a class="el" href="dc/d24/classDeletePayrollPaymentTypeIdToPayrollConceptAssignOptionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeletePayrollPaymentTypeIdToPayrollConceptAssignOptionsTable</a>
 , <a class="el" href="de/df2/classDeletePayrollSalaryAssignmentTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeletePayrollSalaryAssignmentTypesTable</a>
 , <a class="el" href="d5/d4a/classDeleteSaleCodeFormatsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteSaleCodeFormatsTable</a>
 , <a class="el" href="d3/d66/classDeleteTablePayrollSalaryAssignmentsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">DeleteTablePayrollSalaryAssignmentsTable</a>
@@ -424,8 +447,10 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="df/d1d/classRemoveFieldPayrollRoleIdToPayrollEmploymentInformationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveFieldPayrollRoleIdToPayrollEmploymentInformationsTable</a>
 , <a class="el" href="d7/dbd/classRemoveFieldToPayrollChildrensTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveFieldToPayrollChildrensTable</a>
 , <a class="el" href="d6/d87/classRemoveFieldToPayrollOrganizationsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveFieldToPayrollOrganizationsTable</a>
+, <a class="el" href="d6/d53/classRemoveFieldToSaleWarehouseMovementsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveFieldToSaleWarehouseMovementsTable</a>
 , <a class="el" href="d5/d28/classRemoveTablePayrollRoleTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveTablePayrollRoleTable</a>
 , <a class="el" href="d5/d01/classRemoveTablePayrollWorkAgeSettingsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RemoveTablePayrollWorkAgeSettingsTable</a>
+, <a class="el" href="d8/d4a/classRenameAccountingEntryCategoriesIdInAccountingEntriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">RenameAccountingEntryCategoriesIdInAccountingEntriesTable</a>
 , <a class="el" href="dc/dd7/classUpdateConstraintToAssetCategoriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateConstraintToAssetCategoriesTable</a>
 , <a class="el" href="d2/d42/classUpdateConstraintToAssetSubcategoriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateConstraintToAssetSubcategoriesTable</a>
 , <a class="el" href="dc/db7/classUpdateContraintToAssetSpecificCategoriesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateContraintToAssetSpecificCategoriesTable</a>
@@ -449,6 +474,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="dd/da3/classUpdateFieldsPayrollScalesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsPayrollScalesTable</a>
 , <a class="el" href="dd/dc8/classUpdateFieldsToAssetReportsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToAssetReportsTable</a>
 , <a class="el" href="dc/d1d/classUpdateFieldsToCitizenServiceRegistersTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToCitizenServiceRegistersTable</a>
+, <a class="el" href="d0/d1c/classUpdateFieldsToPayrollConceptsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToPayrollConceptsTable</a>
 , <a class="el" href="de/d2d/classUpdateFieldsToPayrollPaymentTypesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToPayrollPaymentTypesTable</a>
 , <a class="el" href="d5/d1a/classUpdateFieldsToPayrollSalaryScalesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToPayrollSalaryScalesTable</a>
 , <a class="el" href="d3/d54/classUpdateFieldsToPayrollSalaryTabulatorsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToPayrollSalaryTabulatorsTable</a>
@@ -460,6 +486,8 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 , <a class="el" href="d6/d51/classUpdateFieldsToSignprofilesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToSignprofilesTable</a>
 , <a class="el" href="d3/d31/classUpdateFieldsToWarehouseReportsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldsToWarehouseReportsTable</a>
 , <a class="el" href="dd/d7e/classUpdateFieldToCitizenServiceRequestsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldToCitizenServiceRequestsTable</a>
+, <a class="el" href="d7/d2c/classUpdateFieldToPayrollBenefitsPoliciesTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateFieldToPayrollBenefitsPoliciesTable</a>
+, <a class="el" href="de/d6e/classUpdateNameFieldToBudgetSpecificActionsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateNameFieldToBudgetSpecificActionsTable</a>
 , <a class="el" href="db/dd3/classUpdateSaleGoodsToBeTradeds.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateSaleGoodsToBeTradeds</a>
 , <a class="el" href="de/d6a/classUpdateSaleQuoteProductsTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateSaleQuoteProductsTable</a>
 , <a class="el" href="d0/d9c/classUpdateSaleQuoteTable.html#af5fda92f47a449c7a33f9dd5ef5aa6c3">UpdateSaleQuoteTable</a>
@@ -475,7 +503,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:04 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:43 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

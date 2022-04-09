@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['laravel_1901',['Laravel',['../db/d99/namespaceLaravel.html',1,'']]]
+  ['laravel_2017',['Laravel',['../db/d99/namespaceLaravel.html',1,'']]]
 ];

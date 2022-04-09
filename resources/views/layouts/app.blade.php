@@ -150,14 +150,6 @@
                     /** Coloca el año actual en el pie de página */
                     $('.currentYear').text(new Date().getFullYear());
 
-
-
-                    /** Restringe el rango de fechas del campo tipo date al año de ejercicio económico */
-                    /*$("input[type=date]").attr({
-                        min: `${window.execution_year}-01-01`,
-                        max: `${window.execution_year}-12-31`
-                    });*/
-
                     /** Previene el uso de carácteres no permitidos en campos numéricos */
                     $(".numeric").on('input keypress keyup blur', function(event) {
                         $(this).val($(this).val().replace(/[^\d].+/, ""));
@@ -204,7 +196,9 @@
                  * Función que permite eliminar registros mediante ajax
                  *
                  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                 *
                  * @param {string} url URL del controlador que realiza la acción de eliminación
+                 *
                  * @return Un mensaje al usuario solicitando confirmación de la eliminación del registro
                  */
                 function delete_record(url) {
@@ -266,6 +260,7 @@
                  * Actualiza información de un select a partir de otro
                  *
                  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                 *
                  * @param  {object}  parent_element Objeto con los datos del elemento que genera la acción
                  * @param  {object}  target_element Objeto que se cargara con la información
                  * @param  {string}  target_model   Modelo en el cual se va a realizar la consulta
@@ -301,7 +296,6 @@
                  /**
                  * Actualiza información de un select a partir de otro
                  *
-                 * @author
                  * @param  {object}  parent_element Objeto con los datos del elemento que genera la acción
                  * @param  {object}  target_element Objeto que se cargara con la información
                  * @param  {string}  target_model   Modelo en el cual se va a realizar la consulta
@@ -339,6 +333,7 @@
                  * Permite restaurar registros eliminados del sistema
                  *
                  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                 *
                  * @param  {string} url URL que recibe la petición y ejecuta la acción
                  */
                 function undelete_record(url) {
@@ -378,6 +373,7 @@
                      * Muestra información relacionada a un usuario
                      *
                      * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                     *
                      * @param  {integer} id Identificador del usuario del cual se desea obtener información
                      */
                     var view_user_info = function(id) {
@@ -437,6 +433,7 @@
                  * Registro de eventos del sistema
                  *
                  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                 *
                  * @param  {string}  v  Vista
                  * @param  {integer} l  Línea
                  * @param  {string}  lg Mensaje
@@ -535,6 +532,11 @@
                     });
                 }
 
+                /**
+                * Muestra la aplicación en pantalla completa
+                *
+                * @author       Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+                */
                 function fullScreen(elem) {
                     var elem = (typeof(elem) !== "undefined") ? elem : document.documentElement;
                     if (elem.requestFullscreen) {

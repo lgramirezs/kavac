@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('da/d35/SaleWarehouseMovement_8php_sour
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use OwenIt\Auditing\Contracts\Auditable;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use OwenIt\Auditing\Auditable as AuditableTrait;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use <a class="code" href="../../dc/d3b/classApp_1_1Models_1_1User.html">App\Models\User</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use App\Traits\ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * @class SaleWarehouseMovement</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * @brief Datos de los movimientos de almacén</span></div>
@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('da/d35/SaleWarehouseMovement_8php_sour
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    use SoftDeletes;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    use AuditableTrait;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    use ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    /**</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     * Lista de atributos para la gestión de fechas</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">     *</span></div>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('da/d35/SaleWarehouseMovement_8php_sour
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">     */</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#a13601d3af66d109458e268a3eb4afc49">   39</a></span>&#160;    <span class="keyword">protected</span> <a class="code" href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#a13601d3af66d109458e268a3eb4afc49">$fillable</a> = [</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="stringliteral">&#39;code&#39;</span>, <span class="stringliteral">&#39;type&#39;</span>, <span class="stringliteral">&#39;observations&#39;</span>, <span class="stringliteral">&#39;state&#39;</span>, <span class="stringliteral">&#39;sale_warehouse_institution_warehouse_initial_id&#39;</span>,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="stringliteral">&#39;sale_warehouse_institution_warehouse_end_id&#39;</span>, <span class="stringliteral">&#39;user_id&#39;</span>, <span class="stringliteral">&#39;history_tax_id&#39;</span>, <span class="stringliteral">&#39;description&#39;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="stringliteral">&#39;sale_warehouse_institution_warehouse_end_id&#39;</span>, <span class="stringliteral">&#39;user_id&#39;</span>, <span class="stringliteral">&#39;description&#39;</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    ];</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment"></span></div>
@@ -198,14 +198,14 @@ $(document).ready(function(){initNavTree('da/d35/SaleWarehouseMovement_8php_sour
 <div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement_html_a1beb9d8cf91f8e86ef4cf18d25a5507d"><div class="ttname"><a href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#a1beb9d8cf91f8e86ef4cf18d25a5507d">Modules\Sale\Models\SaleWarehouseMovement\saleWarehouseInstitutionWarehouseInitial</a></div><div class="ttdeci">saleWarehouseInstitutionWarehouseInitial()</div><div class="ttdoc">Método que obtiene el registro de institución gestiona almacén de donde parten los artículos.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d35/SaleWarehouseMovement_8php_source.html#l00052">SaleWarehouseMovement.php:52</a></div></div>
 <div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement_html_ae8a275690ff1b618e1947378b0ed73ae"><div class="ttname"><a href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#ae8a275690ff1b618e1947378b0ed73ae">Modules\Sale\Models\SaleWarehouseMovement\user</a></div><div class="ttdeci">user()</div><div class="ttdoc">Método que obtiene el usuario que registra el movimiento.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d35/SaleWarehouseMovement_8php_source.html#l00075">SaleWarehouseMovement.php:75</a></div></div>
 <div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement_html_a6ed295a3b7371b42773cab86fd367af8"><div class="ttname"><a href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#a6ed295a3b7371b42773cab86fd367af8">Modules\Sale\Models\SaleWarehouseMovement\$dates</a></div><div class="ttdeci">$dates</div><div class="ttdoc">Lista de atributos para la gestión de fechas.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d35/SaleWarehouseMovement_8php_source.html#l00032">SaleWarehouseMovement.php:32</a></div></div>
-<div class="ttc" id="anamespaceModules_1_1Sale_1_1Models_html"><div class="ttname"><a href="../../dd/d68/namespaceModules_1_1Sale_1_1Models.html">Modules\Sale\Models</a></div><div class="ttdoc">[descripción del namespace]</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/dc7/modules_2Sale_2Models_2Parish_8php_source.html#l00003">modules/Sale/Models/Parish.php:3</a></div></div>
+<div class="ttc" id="anamespaceModules_1_1Sale_1_1Models_html"><div class="ttname"><a href="../../dd/d68/namespaceModules_1_1Sale_1_1Models.html">Modules\Sale\Models</a></div><div class="ttdoc">[descripción del namespace]</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d13/modules_2Sale_2Models_2Institution_8php_source.html#l00003">modules/Sale/Models/Institution.php:3</a></div></div>
 <div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement_html_a9b898186ba418fefeffb24402b63effc"><div class="ttname"><a href="../../df/d3c/classModules_1_1Sale_1_1Models_1_1SaleWarehouseMovement.html#a9b898186ba418fefeffb24402b63effc">Modules\Sale\Models\SaleWarehouseMovement\saleWarehouseInventoryProductMovements</a></div><div class="ttdeci">saleWarehouseInventoryProductMovements()</div><div class="ttdoc">Método que obtiene los cambios en los productos relacionados con el movimiento de almacén.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d35/SaleWarehouseMovement_8php_source.html#l00087">SaleWarehouseMovement.php:87</a></div></div>
 <div class="ttc" id="aclassApp_1_1Models_1_1User_html"><div class="ttname"><a href="../../dc/d3b/classApp_1_1Models_1_1User.html">App\Models\User</a></div><div class="ttdoc">Datos de Usuarios.</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/d5e/app_2Models_2User_8php_source.html#l00027">app/Models/User.php:27</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_98ac1e57f40504a9487c57868589c7b0.html">Sale</a></li><li class="navelem"><a class="el" href="../../dir_ac9f3294487dbdd7efe6d14bd3571184.html">Models</a></li><li class="navelem"><b>SaleWarehouseMovement.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

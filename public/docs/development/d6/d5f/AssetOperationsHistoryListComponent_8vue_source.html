@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('d6/d5f/AssetOperationsHistoryListCompo
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        &lt;div slot=&quot;id&quot; slot-scope=&quot;props&quot; class=&quot;text-center&quot;&gt;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;            &lt;div class=&quot;d-inline-flex&quot;&gt;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                &lt;asset-operations-history-info</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                    route_list=&quot;/asset/dashboard/operations/info&quot;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                    :route_list=&quot;app_url+&#39;/asset/dashboard/operations/info&#39;&quot;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                    :operation=&quot;props.row&quot;&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                &lt;/asset-operations-history-info&gt;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                &lt;button @click=&quot;showReport(props.index, $event)&quot; </div>
@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('d6/d5f/AssetOperationsHistoryListCompo
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                const vm = this;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                vm.record = vm.records[index-1];</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                var url = &#39;/asset/dashboard/get-operation/&#39; + vm.record.type_operation + &#39;/&#39; + vm.record.code;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                var url = `${window.app_url}/asset/dashboard/get-operation/${vm.record.type_operation}/${vm.record.code}`;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                event.preventDefault();</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                axios.get(url).then(response =&gt; {</div>
@@ -184,7 +184,7 @@ $(document).ready(function(){initNavTree('d6/d5f/AssetOperationsHistoryListCompo
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_7b3fcb102f79a4d8ecbf49ec4c3cc818.html">Asset</a></li><li class="navelem"><a class="el" href="../../dir_9fb454adc1ccdd7842a20a7986576ffe.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_f85075413e4bcabb0727fb8f8a277c05.html">assets</a></li><li class="navelem"><a class="el" href="../../dir_813144df13a41c3e340ede4b5ca1712e.html">js</a></li><li class="navelem"><a class="el" href="../../dir_b9fdf0c8c9c70e93305bae635ee77609.html">components</a></li><li class="navelem"><a class="el" href="../../dir_b0022e2f7b166d7385a27977e226b1ec.html">dashboard</a></li><li class="navelem"><b>AssetOperationsHistoryListComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

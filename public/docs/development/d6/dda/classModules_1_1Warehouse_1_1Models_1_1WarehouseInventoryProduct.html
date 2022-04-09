@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('d6/dda/classModules_1_1Warehouse_1_1Mo
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dc/d80/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct__coll__graph.png" border="0" usemap="#WarehouseInventoryProduct_coll__map" alt="Collaboration graph"/></div>
+<map name="WarehouseInventoryProduct_coll__map" id="WarehouseInventoryProduct_coll__map">
+<area shape="rect" title="Datos del inventario de los productos." alt="" coords="5,5,263,185"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -120,6 +123,9 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:af36afd820af603713c3267293f98c769"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">currency</a> ()</td></tr>
 <tr class="memdesc:af36afd820af603713c3267293f98c769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método que obtiene la moneda en que se expresa el valor del producto.  <a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">Más...</a><br /></td></tr>
 <tr class="separator:af36afd820af603713c3267293f98c769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1515784b0a48ed63286aff99912a335"><td class="memItemLeft" align="right" valign="top"><a id="af1515784b0a48ed63286aff99912a335"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>getRealAttribute</b> ()</td></tr>
+<tr class="separator:af1515784b0a48ed63286aff99912a335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a442e34331e0d44c3f1bebe09e43b3538"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">warehouseInstitutionWarehouse</a> ()</td></tr>
 <tr class="memdesc:a442e34331e0d44c3f1bebe09e43b3538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método que obtiene el almacen donde esta inventariado el producto.  <a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">Más...</a><br /></td></tr>
 <tr class="separator:a442e34331e0d44c3f1bebe09e43b3538"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,6 +141,9 @@ Métodos públicos</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Atributos protegidos</h2></td></tr>
+<tr class="memitem:a29ec873a375ecb374d2e2ec92490cd41"><td class="memItemLeft" align="right" valign="top"><a id="a29ec873a375ecb374d2e2ec92490cd41"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$appends</b> = ['real']</td></tr>
+<tr class="separator:a29ec873a375ecb374d2e2ec92490cd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ed295a3b7371b42773cab86fd367af8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a6ed295a3b7371b42773cab86fd367af8">$dates</a> = ['deleted_at']</td></tr>
 <tr class="memdesc:a6ed295a3b7371b42773cab86fd367af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lista de atributos para la gestión de fechas.  <a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a6ed295a3b7371b42773cab86fd367af8">Más...</a><br /></td></tr>
 <tr class="separator:a6ed295a3b7371b42773cab86fd367af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,10 +178,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo Currency </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00073">73</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00080">80</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -195,10 +204,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo <a class="el" href="../../d1/d22/classModules_1_1Warehouse_1_1Models_1_1WarehouseInstitutionWarehouse.html" title="Datos de los almacenes gestionados por cada institución.">WarehouseInstitutionWarehouse</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00085">85</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseInstitutionWarehouse::class);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00092">92</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseInstitutionWarehouse::class);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -221,10 +230,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo <a class="el" href="../../dc/d8f/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryRule.html" title="Datos de las reglas del inventario.">WarehouseInventoryRule</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00097">97</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasOne(WarehouseInventoryRule::class);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00104">104</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasOne(WarehouseInventoryRule::class);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -247,10 +256,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo <a class="el" href="../../d1/d77/classModules_1_1Warehouse_1_1Models_1_1WarehouseProduct.html" title="Datos de los productos.">WarehouseProduct</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00050">50</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseProduct::class);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00057">57</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseProduct::class);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -273,10 +282,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo <a class="el" href="../../d0/d6c/classModules_1_1Warehouse_1_1Models_1_1WarehouseProductValue.html" title="Datos de los valores de los atributos de los productos de almacén.">WarehouseProductValue</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00062">62</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(WarehouseProductValue::class);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00069">69</a> del archivo <a class="el" href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html">WarehouseInventoryProduct.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(WarehouseProductValue::class);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -346,7 +355,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Warehouse</b></li><li class="navelem"><b>Models</b></li><li class="navelem"><a class="el" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html">WarehouseInventoryProduct</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:04 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:41 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

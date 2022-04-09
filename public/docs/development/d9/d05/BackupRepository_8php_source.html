@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -104,12 +104,12 @@ $(document).ready(function(){initNavTree('d9/d05/BackupRepository_8php_source.ht
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/** Repositorios del sistema */</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="../../d5/d76/namespaceApp_1_1Repositories.html">    4</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d5/d76/namespaceApp_1_1Repositories.html">App\Repositories</a>;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Artisan;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use Log;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use Storage;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use Session;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use Exception;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use ZipArchive;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Exception;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use ZipArchive;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use Illuminate\Support\Facades\Log;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use Illuminate\Support\Facades\Artisan;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use Illuminate\Support\Facades\Session;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use Illuminate\Support\Facades\Storage;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * @class BackupRepository</span></div>
@@ -271,7 +271,7 @@ $(document).ready(function(){initNavTree('d9/d05/BackupRepository_8php_source.ht
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">        /** @var object Objeto con información del disco a usar para obtener el archivo */</span></div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        $storage_disk = Storage::disk($disk[0]);</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">if</span> ($storage_disk-&gt;exists($file)) {<span class="comment"></span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">            /** @var string Driver del disco a usar */</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">            /** @var string|object Driver del disco a usar */</span></div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            $fs = Storage::disk($disk[0])-&gt;getDriver();<span class="comment"></span></div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="comment">            /** @var string Contenido del archivo */</span></div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            $stream = $fs-&gt;readStream($file);</div>
@@ -344,7 +344,7 @@ $(document).ready(function(){initNavTree('d9/d05/BackupRepository_8php_source.ht
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_19ce3a9874efe8b4891899d3a87d33ca.html">Repositories</a></li><li class="navelem"><b>BackupRepository.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

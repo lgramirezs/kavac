@@ -15,7 +15,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
+     * Las asignaciones de políticas para la aplicación.
      *
      * @var array
      */
@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any authentication / authorization services.
+     * Registre cualquier servicio de autenticación/autorización.
      *
      * @method  boot
      *

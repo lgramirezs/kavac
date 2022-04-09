@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -155,20 +155,22 @@ $(document).ready(function(){initNavTree('d3/df8/Accounting_2Resources_2views_2e
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">                    @if(!isset($entry))</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="stringliteral">                    &lt;accounting-entry-form-account :accounting_accounts=&quot;</span>{{ $AccountingAccounts }}<span class="stringliteral">&quot; /&gt;</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="stringliteral">                    @else</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="stringliteral">                        &lt;accounting-entry-form-account :accounting_accounts=&quot;</span>{{ $AccountingAccounts }}<span class="stringliteral">&quot; :entries=&quot;</span>{{ $entry }}<span class="stringliteral">&quot; route_list=&quot;</span>{{ url(<span class="stringliteral">&#39;accounting/entries/unapproved&#39;</span>) }}<span class="stringliteral">&quot;/&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="stringliteral">                    @endif</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="stringliteral">                &lt;/div&gt;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="stringliteral">            &lt;/div&gt;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="stringliteral">        &lt;/div&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="stringliteral">    &lt;/div&gt;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="stringliteral">@stop</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="stringliteral">                        &lt;accounting-entry-form-account :accounting_accounts=&quot;</span>{{ $AccountingAccounts }}<span class="stringliteral">&quot; </span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="stringliteral">                                                       :entries=&quot;</span>{{ $entry }}<span class="stringliteral">&quot; </span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="stringliteral">                                                       route_list=&quot;</span>{{ url(<span class="stringliteral">&#39;accounting/entries/unapproved&#39;</span>) }}<span class="stringliteral">&quot;/&gt;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="stringliteral">                    @endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="stringliteral">                &lt;/div&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="stringliteral">            &lt;/div&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="stringliteral">        &lt;/div&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="stringliteral">    &lt;/div&gt;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="stringliteral">@stop</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_e9c51124d36e4406d93a0c0797fbe518.html">Accounting</a></li><li class="navelem"><a class="el" href="../../dir_501290b7233389ca32691a7df2f78736.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_6e1859c1b9c992230562a670e77ebff5.html">views</a></li><li class="navelem"><a class="el" href="../../dir_ec27da9b67713f954b8b4e456a25f46a.html">entries</a></li><li class="navelem"><b>form.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

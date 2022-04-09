@@ -7,7 +7,7 @@
     "Finance": true,
     "Payroll": true,
     "Purchase": true,
-    "TechnicalSupport": true,
+    "TechnicalSupport": false,
     "Warehouse": true,
     "Sale": true,
     "Prueba": true

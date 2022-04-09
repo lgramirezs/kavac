@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('d6/d30/classModules_1_1Payroll_1_1Mode
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dd/d56/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment__coll__graph.png" border="0" usemap="#PayrollEmployment_coll__map" alt="Collaboration graph"/></div>
+<map name="PayrollEmployment_coll__map" id="PayrollEmployment_coll__map">
+<area shape="rect" title="Datos laborales del trabajador." alt="" coords="5,5,188,229"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -135,6 +138,9 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a41196dd418f4f47784b27ed677023173"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a41196dd418f4f47784b27ed677023173">payrollPositionType</a> ()</td></tr>
 <tr class="memdesc:a41196dd418f4f47784b27ed677023173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método que obtiene el dato laboral del trabajador asociado a un tipo de cargo.  <a href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a41196dd418f4f47784b27ed677023173">Más...</a><br /></td></tr>
 <tr class="separator:a41196dd418f4f47784b27ed677023173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac5637cc14629768782504538880428"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#abac5637cc14629768782504538880428">payrollPreviousJob</a> ()</td></tr>
+<tr class="memdesc:abac5637cc14629768782504538880428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método que obtiene los trabajos anteriores asociados al trabajador.  <a href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#abac5637cc14629768782504538880428">Más...</a><br /></td></tr>
+<tr class="separator:abac5637cc14629768782504538880428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a731f1984ad6764a2eed857e39ef89ce9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a731f1984ad6764a2eed857e39ef89ce9">payrollStaff</a> ()</td></tr>
 <tr class="memdesc:a731f1984ad6764a2eed857e39ef89ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método que obtiene el dato laboral del trabajador asociado a un dato personal del mismo.  <a href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a731f1984ad6764a2eed857e39ef89ce9">Más...</a><br /></td></tr>
 <tr class="separator:a731f1984ad6764a2eed857e39ef89ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,6 +324,32 @@ Atributos protegidos</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="abac5637cc14629768782504538880428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abac5637cc14629768782504538880428">&#9670;&nbsp;</a></span>payrollPreviousJob()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">payrollPreviousJob </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Método que obtiene los trabajos anteriores asociados al trabajador. </p>
+<dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\hasMany </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d37/PayrollEmployment_8php_source.html#l00144">144</a> del archivo <a class="el" href="../../d9/d37/PayrollEmployment_8php_source.html">PayrollEmployment.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(PayrollPreviousJob::class);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a731f1984ad6764a2eed857e39ef89ce9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a731f1984ad6764a2eed857e39ef89ce9">&#9670;&nbsp;</a></span>payrollStaff()</h2>
 
@@ -417,7 +449,7 @@ Atributos protegidos</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Valor inicial:</b><div class="fragment"><div class="line">= [</div>
-<div class="line">        <span class="stringliteral">&#39;active&#39;</span>, <span class="stringliteral">&#39;start_date_apn&#39;</span>, <span class="stringliteral">&#39;start_date&#39;</span>, <span class="stringliteral">&#39;end_date&#39;</span>, <span class="stringliteral">&#39;institution_email&#39;</span>, <span class="stringliteral">&#39;function_description&#39;</span>,</div>
+<div class="line">        <span class="stringliteral">&#39;active&#39;</span>, <span class="stringliteral">&#39;years_apn&#39;</span>, <span class="stringliteral">&#39;start_date&#39;</span>, <span class="stringliteral">&#39;end_date&#39;</span>, <span class="stringliteral">&#39;institution_email&#39;</span>, <span class="stringliteral">&#39;function_description&#39;</span>,</div>
 <div class="line">        <span class="stringliteral">&#39;payroll_inactivity_type_id&#39;</span>, <span class="stringliteral">&#39;payroll_position_type_id&#39;</span>, <span class="stringliteral">&#39;payroll_position_id&#39;</span>, <span class="stringliteral">&#39;department_id&#39;</span>,</div>
 <div class="line">        <span class="stringliteral">&#39;payroll_staff_type_id&#39;</span>, <span class="stringliteral">&#39;payroll_contract_type_id&#39;</span>, <span class="stringliteral">&#39;payroll_staff_id&#39;</span></div>
 <div class="line">    ]</div>
@@ -463,7 +495,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Payroll</b></li><li class="navelem"><a class="el" href="../../dd/dd6/namespaceModules_1_1Payroll_1_1Models.html">Models</a></li><li class="navelem"><a class="el" href="../../d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html">PayrollEmployment</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:03 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:40 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

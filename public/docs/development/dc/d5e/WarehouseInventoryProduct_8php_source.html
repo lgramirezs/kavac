@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('dc/d5e/WarehouseInventoryProduct_8php_
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Illuminate\Database\Eloquent\SoftDeletes;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use OwenIt\Auditing\Contracts\Auditable;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use OwenIt\Auditing\Auditable as AuditableTrait;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use App\Traits\ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * @class WarehouseInventoryProduct</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * @brief Datos del inventario de los productos</span></div>
@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('dc/d5e/WarehouseInventoryProduct_8php_
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    use SoftDeletes;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    use AuditableTrait;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    use ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    /**</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">     * Lista de atributos para la gestión de fechas</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     *</span></div>
@@ -140,81 +140,88 @@ $(document).ready(function(){initNavTree('dc/d5e/WarehouseInventoryProduct_8php_
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="stringliteral">&#39;code&#39;</span>, <span class="stringliteral">&#39;exist&#39;</span>, <span class="stringliteral">&#39;reserved&#39;</span>, <span class="stringliteral">&#39;unit_value&#39;</span>, <span class="stringliteral">&#39;currency_id&#39;</span>, <span class="stringliteral">&#39;warehouse_product_id&#39;</span>,</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="stringliteral">&#39;warehouse_institution_warehouse_id&#39;</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    ];</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">     * Método que obtiene el producto registrado</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">     * WarehouseProduct</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">   50</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">warehouseProduct</a>()</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseProduct::class);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">     * Método que obtiene los valores de los atributos del producto registrado</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">     * WarehouseProductValue</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">   62</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">warehouseProductValues</a>()</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(WarehouseProductValue::class);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">     * Método que obtiene la moneda en que se expresa el valor del producto</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo Currency</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">   73</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">currency</a>()</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">     * Método que obtiene el almacen donde esta inventariado el producto</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">     * WarehouseInstitutionWarehouse</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">   85</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">warehouseInstitutionWarehouse</a>()</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseInstitutionWarehouse::class);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">     * Método que obtiene las reglas de almacenamiento del producto en el inventario</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">     * WarehouseInventoryRule</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">   97</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">warehouseInventoryRule</a>()</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasOne(WarehouseInventoryRule::class);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;     <span class="keyword">protected</span> $appends = [<span class="stringliteral">&#39;real&#39;</span>];</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> getRealAttribute()</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> $this-&gt;exist - $this-&gt;reserved;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">     * Método que obtiene el producto registrado</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">     * WarehouseProduct</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">   57</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">warehouseProduct</a>()</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseProduct::class);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">     * Método que obtiene los valores de los atributos del producto registrado</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">     * WarehouseProductValue</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">   69</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">warehouseProductValues</a>()</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(WarehouseProductValue::class);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">     * Método que obtiene la moneda en que se expresa el valor del producto</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo Currency</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">   80</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">currency</a>()</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">     * Método que obtiene el almacen donde esta inventariado el producto</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">     * WarehouseInstitutionWarehouse</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">   92</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">warehouseInstitutionWarehouse</a>()</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(WarehouseInstitutionWarehouse::class);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">     * Método que obtiene las reglas de almacenamiento del producto en el inventario</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">     * @author Henry Paredes &lt;hparedes@cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">     * WarehouseInventoryRule</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">  104</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">warehouseInventoryRule</a>()</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasOne(WarehouseInventoryRule::class);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a6ed295a3b7371b42773cab86fd367af8"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a6ed295a3b7371b42773cab86fd367af8">Modules\Warehouse\Models\WarehouseInventoryProduct\$dates</a></div><div class="ttdeci">$dates</div><div class="ttdoc">Lista de atributos para la gestión de fechas.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00031">WarehouseInventoryProduct.php:31</a></div></div>
-<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_af36afd820af603713c3267293f98c769"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">Modules\Warehouse\Models\WarehouseInventoryProduct\currency</a></div><div class="ttdeci">currency()</div><div class="ttdoc">Método que obtiene la moneda en que se expresa el valor del producto.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00073">WarehouseInventoryProduct.php:73</a></div></div>
-<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_ad00f62109b6cd0dfe580ce5afa2775fa"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseInventoryRule</a></div><div class="ttdeci">warehouseInventoryRule()</div><div class="ttdoc">Método que obtiene las reglas de almacenamiento del producto en el inventario.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00097">WarehouseInventoryProduct.php:97</a></div></div>
-<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a5d80cc00c9b7aa7b08bb4b78d3822145"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseProductValues</a></div><div class="ttdeci">warehouseProductValues()</div><div class="ttdoc">Método que obtiene los valores de los atributos del producto registrado.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00062">WarehouseInventoryProduct.php:62</a></div></div>
-<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a442e34331e0d44c3f1bebe09e43b3538"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseInstitutionWarehouse</a></div><div class="ttdeci">warehouseInstitutionWarehouse()</div><div class="ttdoc">Método que obtiene el almacen donde esta inventariado el producto.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00085">WarehouseInventoryProduct.php:85</a></div></div>
+<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_af36afd820af603713c3267293f98c769"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#af36afd820af603713c3267293f98c769">Modules\Warehouse\Models\WarehouseInventoryProduct\currency</a></div><div class="ttdeci">currency()</div><div class="ttdoc">Método que obtiene la moneda en que se expresa el valor del producto.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00080">WarehouseInventoryProduct.php:80</a></div></div>
+<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_ad00f62109b6cd0dfe580ce5afa2775fa"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ad00f62109b6cd0dfe580ce5afa2775fa">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseInventoryRule</a></div><div class="ttdeci">warehouseInventoryRule()</div><div class="ttdoc">Método que obtiene las reglas de almacenamiento del producto en el inventario.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00104">WarehouseInventoryProduct.php:104</a></div></div>
+<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a5d80cc00c9b7aa7b08bb4b78d3822145"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a5d80cc00c9b7aa7b08bb4b78d3822145">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseProductValues</a></div><div class="ttdeci">warehouseProductValues()</div><div class="ttdoc">Método que obtiene los valores de los atributos del producto registrado.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00069">WarehouseInventoryProduct.php:69</a></div></div>
+<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a442e34331e0d44c3f1bebe09e43b3538"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a442e34331e0d44c3f1bebe09e43b3538">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseInstitutionWarehouse</a></div><div class="ttdeci">warehouseInstitutionWarehouse()</div><div class="ttdoc">Método que obtiene el almacen donde esta inventariado el producto.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00092">WarehouseInventoryProduct.php:92</a></div></div>
 <div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html">Modules\Warehouse\Models\WarehouseInventoryProduct</a></div><div class="ttdoc">Datos del inventario de los productos.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00021">WarehouseInventoryProduct.php:21</a></div></div>
-<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_ab63eeb05fda487c780fcbda270be4297"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseProduct</a></div><div class="ttdeci">warehouseProduct()</div><div class="ttdoc">Método que obtiene el producto registrado.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00050">WarehouseInventoryProduct.php:50</a></div></div>
+<div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_ab63eeb05fda487c780fcbda270be4297"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#ab63eeb05fda487c780fcbda270be4297">Modules\Warehouse\Models\WarehouseInventoryProduct\warehouseProduct</a></div><div class="ttdeci">warehouseProduct()</div><div class="ttdoc">Método que obtiene el producto registrado.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00057">WarehouseInventoryProduct.php:57</a></div></div>
 <div class="ttc" id="aclassModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct_html_a13601d3af66d109458e268a3eb4afc49"><div class="ttname"><a href="../../d6/dda/classModules_1_1Warehouse_1_1Models_1_1WarehouseInventoryProduct.html#a13601d3af66d109458e268a3eb4afc49">Modules\Warehouse\Models\WarehouseInventoryProduct\$fillable</a></div><div class="ttdeci">$fillable</div><div class="ttdoc">Lista de atributos que pueden ser asignados masivamente.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d5e/WarehouseInventoryProduct_8php_source.html#l00038">WarehouseInventoryProduct.php:38</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_82d048051464370bc2cc1bb0848ae305.html">Warehouse</a></li><li class="navelem"><a class="el" href="../../dir_d5d6bc8db43f4ad245ccf60c4a793309.html">Models</a></li><li class="navelem"><b>WarehouseInventoryProduct.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:32 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

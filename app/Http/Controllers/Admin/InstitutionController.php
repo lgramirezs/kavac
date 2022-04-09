@@ -153,8 +153,8 @@ class InstitutionController extends Controller
         ];
 
         if (is_null($setting->multi_institution) || !$setting->multi_institution) {
-            // Crea o actualiza información de una organización si la aplicación esta configurada para el uso de un solo
-            // organismo
+            // Crea o actualiza información de una organización si la aplicación esta configurada 
+            // para el uso de un solo organismo
 
             $data['default'] = true;
             Institution::updateOrCreate(['rif' => $request->rif], $data);

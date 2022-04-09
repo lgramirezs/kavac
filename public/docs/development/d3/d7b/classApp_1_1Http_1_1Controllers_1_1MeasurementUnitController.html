@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('d3/d7b/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d30/classApp_1_1Http_1_1Controllers_1_1MeasurementUnitController__inherit__graph.png" border="0" usemap="#MeasurementUnitController_inherit__map" alt="Inheritance graph"/></div>
+<map name="MeasurementUnitController_inherit__map" id="MeasurementUnitController_inherit__map">
+<area shape="rect" title="Gestiona información de las unidades de medida." alt="" coords="5,131,208,252"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="63,5,150,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para MeasurementUnitController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('d3/d7b/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d0/d3f/classApp_1_1Http_1_1Controllers_1_1MeasurementUnitController__coll__graph.png" border="0" usemap="#MeasurementUnitController_coll__map" alt="Collaboration graph"/></div>
+<map name="MeasurementUnitController_coll__map" id="MeasurementUnitController_coll__map">
+<area shape="rect" title="Gestiona información de las unidades de medida." alt="" coords="5,131,208,252"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="63,5,150,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -201,11 +209,11 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con información sobre la eliminación de la unidad de medida </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html#l00119">119</a> del archivo <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html">MeasurementUnitController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        $measurementUnit-&gt;delete();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $measurementUnit, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html#l00126">126</a> del archivo <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html">MeasurementUnitController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        $measurementUnit-&gt;delete();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $measurementUnit, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -274,21 +282,21 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con información sobre la actualización de la unidad de medida </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html#l00092">92</a> del archivo <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html">MeasurementUnitController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;unique:measurement_units,name,&#39;</span> . $measurementUnit-&gt;id],</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="stringliteral">&#39;description&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:6&#39;</span>, <span class="stringliteral">&#39;unique:measurement_units,acronym,&#39;</span> . $measurementUnit-&gt;id]</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        ]);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        $measurementUnit-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        $measurementUnit-&gt;description = $request-&gt;description;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        $measurementUnit-&gt;acronym = $request-&gt;acronym;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        $measurementUnit-&gt;save();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html#l00099">99</a> del archivo <a class="el" href="../../d7/d02/MeasurementUnitController_8php_source.html">MeasurementUnitController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;unique:measurement_units,name,&#39;</span> . $measurementUnit-&gt;id],</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="stringliteral">&#39;description&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:6&#39;</span>, <span class="stringliteral">&#39;unique:measurement_units,acronym,&#39;</span> . $measurementUnit-&gt;id]</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        ]);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        $measurementUnit-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        $measurementUnit-&gt;description = $request-&gt;description;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        $measurementUnit-&gt;acronym = $request-&gt;acronym;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        $measurementUnit-&gt;save();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -301,7 +309,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../d3/d7b/classApp_1_1Http_1_1Controllers_1_1MeasurementUnitController.html">MeasurementUnitController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

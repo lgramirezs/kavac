@@ -3,23 +3,23 @@
 return [
 
     /*
-     * The name of the disk on which the snapshots are stored.
+     * El nombre del disco en el que se almacenan las instantáneas.
      */
     'disk' => 'snapshots',
 
     /*
-     * The connection to be used to create snapshots. Set this to null
-     * to use the default configured in `config/databases.php`
+     * La conexión que se utilizará para crear instantáneas. 
+     * Establézcalo en nulo para usar el valor predeterminado configurado en `config/databases.php`
      */
     'default_connection' => null,
 
     /*
-     * The directory where temporary files will be stored.
+     * El directorio donde se almacenarán los archivos temporales.
      */
     'temporary_directory_path' => storage_path('app/laravel-db-snapshots/temp'),
 
     /*
-     * Create dump files that are gzipped
+     * Crear archivos de volcado comprimidos con gzip
      */
     'compress' => false,
 ];

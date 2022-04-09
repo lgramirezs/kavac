@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -173,14 +173,14 @@ $(document).ready(function(){initNavTree('d2/df6/modules_2DigitalSignature_2Reso
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                  &lt;td <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;{{ $Verificado }}&lt;/td&gt;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                  &lt;td <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;{{ $Caduca }}&lt;/td&gt;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                  &lt;td <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-warning btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> data-target=<span class="stringliteral">&quot;#modalUpdateCert&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Actualizar certificado&quot;</span>&gt;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-edit&quot;</span>&gt;&lt;/i&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-info btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> onclick=<span class="stringliteral">&quot;certificateDetails()&quot;</span> data-target=<span class="stringliteral">&quot;#modalDetailCert&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Detalles del certificado&quot;</span>&gt;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-eye&quot;</span>&gt;&lt;/i&gt;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                    &lt;/a&gt;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-danger btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> data-target=<span class="stringliteral">&quot;#modalConfirmDelete&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Eliminar certificado&quot;</span>&gt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-trash-o&quot;</span>&gt;&lt;/i&gt;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-warning btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> data-target=<span class="stringliteral">&quot;#modalUpdateCert&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Actualizar certificado&quot;</span>&gt;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-edit&quot;</span>&gt;&lt;/i&gt;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                    &lt;/a&gt;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-info btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> onclick=<span class="stringliteral">&quot;certificateDetails()&quot;</span> data-target=<span class="stringliteral">&quot;#modalDetailCert&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Detalles del certificado&quot;</span>&gt;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-eye&quot;</span>&gt;&lt;/i&gt;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    &lt;a <span class="keyword">class</span>=<span class="stringliteral">&quot;btn btn-danger btn-xs btn-icon btn-action&quot;</span> href=<span class="stringliteral">&quot;#&quot;</span> data-target=<span class="stringliteral">&quot;#modalConfirmDelete&quot;</span> data-toggle=<span class="stringliteral">&quot;modal&quot;</span> title=<span class="stringliteral">&quot;Eliminar certificado&quot;</span>&gt;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                      &lt;i <span class="keyword">class</span>=<span class="stringliteral">&quot;fa fa-trash-o&quot;</span>&gt;&lt;/i&gt;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                    &lt;/a&gt;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                  &lt;/td&gt;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                &lt;/tr&gt;</div>
@@ -437,7 +437,7 @@ $(document).ready(function(){initNavTree('d2/df6/modules_2DigitalSignature_2Reso
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_40969eb8d60860dcb5820c727b1a131a.html">DigitalSignature</a></li><li class="navelem"><a class="el" href="../../dir_519f0c11af1eb03ca2b6a2263222498f.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_a56519398f89dd4003c1435b2fcb06a7.html">views</a></li><li class="navelem"><b>index.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

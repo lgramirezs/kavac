@@ -6,6 +6,7 @@ var classModules_1_1Payroll_1_1Models_1_1PayrollEmployment =
     [ "payrollOrganizations", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a1542b573b013e732df5a8e3c93a0ff9c", null ],
     [ "payrollPosition", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#ad0562361bd36615b414848a4320f9745", null ],
     [ "payrollPositionType", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a41196dd418f4f47784b27ed677023173", null ],
+    [ "payrollPreviousJob", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#abac5637cc14629768782504538880428", null ],
     [ "payrollStaff", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a731f1984ad6764a2eed857e39ef89ce9", null ],
     [ "payrollStaffType", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#aec8e9470b3131a028edf8fe126260d50", null ],
     [ "$dates", "d6/d30/classModules_1_1Payroll_1_1Models_1_1PayrollEmployment.html#a6ed295a3b7371b42773cab86fd367af8", null ],

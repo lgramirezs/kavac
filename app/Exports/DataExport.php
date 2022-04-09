@@ -43,6 +43,15 @@ class DataExport implements FromCollection, WithHeadingRow
         $this->model = $model;
     }
 
+    /**
+     * Gestiona la colección de registros a exportar
+     * 
+     * @method    collection()
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
     public function collection()
     {
         return $this->model::all();

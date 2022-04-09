@@ -1,4 +1,8 @@
 <?php
+use Illuminate\Support\Facades\Route;
+use Elibyy\TCPDF\Facades\TCPDF as PDF;
+use App\Notifications\SystemNotification;
+
 /*
 |--------------------------------------------------------------------------
 | Test Routes
@@ -73,18 +77,6 @@ Route::get('test-reports', function () {
         $pdf->MultiCell(72, 4, \Carbon\Carbon::now(), 0, 'R', false, 1, 113, 30, true, 1, false, true, 0, 'T', true);
         /** Línea de separación entre el encabezado del reporte y el cuerpo */
         $pdf->Line(7, 35, 205, 35, $lineStyle);
-
-        /*$pdf->write1DBarcode(
-        '$2y$10$syg39jYYUGB/PDi/i9MI5u53FMza75uWPaBmU8XtYrBgWuloA8Xva', 'C128', 80, 90, 60, 10, '', $barCodeStyle, 'N'
-        );*/
-        /*$pdf->write1DBarcode('1234567890', 'UPCA', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-        /*$pdf->write1DBarcode('1234567890', 'CODABAR', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-        /*$pdf->write1DBarcode('1234567890', 'CODE11', 80, 90, 60, 10, '', $barCodeStyle, 'N');*/
-        //$pdf->Text(80, 85, 'PDF417 (ISO/IEC 15438:2006)');
-        //
-        //ESTE DE ACA ABAJO
-        /*$pdf->write2DBarcode('www.tcpdf.org', 'PDF417,4,6,1,99998,,filename.txt', 80, 90, 60, 15, $barCodeStyle, 'N');
-        $pdf->Text(80, 85, 'PDF417 (ISO/IEC 15438:2006)');*/
     });
 
     /** @var string Dirección o texto a mostrar en el pie de página del reporte */

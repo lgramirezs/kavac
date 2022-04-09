@@ -86,6 +86,7 @@ class MaritalStatusController extends Controller
      *
      * @param  Request        $request          Objeto con información de la petición
      * @param  MaritalStatus  $MaritalStatus    Objeto con información del estado civil a actualizar
+     * 
      * @return JsonResponse
      */
     public function update(Request $request, MaritalStatus $maritalStatus)

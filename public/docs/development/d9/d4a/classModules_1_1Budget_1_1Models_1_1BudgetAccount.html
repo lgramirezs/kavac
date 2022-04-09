@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -117,6 +117,9 @@ $(document).ready(function(){initNavTree('d9/d4a/classModules_1_1Budget_1_1Model
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../de/d3f/classModules_1_1Budget_1_1Models_1_1BudgetAccount__coll__graph.png" border="0" usemap="#BudgetAccount_coll__map" alt="Collaboration graph"/></div>
+<map name="BudgetAccount_coll__map" id="BudgetAccount_coll__map">
+<area shape="rect" title="Datos de cuentas del Clasificador Presupuestario." alt="" coords="5,5,193,215"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -190,12 +193,12 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Juan Rosas <a href="#" onclick="location.href='mai'+'lto:'+'Jua'+'nF'+'Bas'+'s1'+'7@g'+'ma'+'il.'+'co'+'m'; return false;">JuanF<span style="display: none;">.nosp@m.</span>Bass<span style="display: none;">.nosp@m.</span>17@gm<span style="display: none;">.nosp@m.</span>ail.<span style="display: none;">.nosp@m.</span>com</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasOne </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00105">105</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span> (Module::has(<span class="stringliteral">&#39;Accounting&#39;</span>) &amp;&amp; Module::isEnabled(<span class="stringliteral">&#39;Accounting&#39;</span>))</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;               ? $this-&gt;hasOne(\Modules\Accounting\Models\AccountingAccountConverter::class)</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;               : [];</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00106">106</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">return</span> (Module::has(<span class="stringliteral">&#39;Accounting&#39;</span>) &amp;&amp; Module::isEnabled(<span class="stringliteral">&#39;Accounting&#39;</span>))</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;               ? $this-&gt;hasOne(\Modules\Accounting\Models\AccountingAccountConverter::class)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;               : [];</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -218,10 +221,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00083">83</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(BudgetAccountOpen::class);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00084">84</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(BudgetAccountOpen::class);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -251,18 +254,18 @@ Atributos protegidos</h2></td></tr>
 <p>Reescribe el método boot para establecer comportamientos por defecto en la consulta del modelo. </p>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00064">64</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        parent::boot();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        static::addGlobalScope(<span class="stringliteral">&#39;order&#39;</span>, <span class="keyword">function</span> (Builder $builder) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            $builder-&gt;orderBy(<span class="stringliteral">&#39;group&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;item&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;generic&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;specific&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;subspecific&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        });</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00065">65</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        parent::boot();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        static::addGlobalScope(<span class="stringliteral">&#39;order&#39;</span>, <span class="keyword">function</span> (Builder $builder) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            $builder-&gt;orderBy(<span class="stringliteral">&#39;group&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;item&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;generic&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;specific&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>)</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                    -&gt;orderBy(<span class="stringliteral">&#39;subspecific&#39;</span>, <span class="stringliteral">&#39;asc&#39;</span>);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        });</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -285,10 +288,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>string Retorna el código de la cuenta </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00175">175</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    {</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;{$this-&gt;group}.{$this-&gt;item}.{$this-&gt;generic}.{$this-&gt;specific}.{$this-&gt;subspecific}&quot;</span>;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00176">176</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;{$this-&gt;group}.{$this-&gt;item}.{$this-&gt;generic}.{$this-&gt;specific}.{$this-&gt;subspecific}&quot;</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -358,33 +361,33 @@ Atributos protegidos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>mixed Retorna falso si no existe una cuenta de nivel superior, de lo contrario obtiene los datos de la misma </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00141">141</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    {</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">if</span> ($item !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            $parent = self::where(<span class="stringliteral">&#39;group&#39;</span>, $group);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">if</span> ($generic !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                $parent = $parent-&gt;where(<span class="stringliteral">&#39;item&#39;</span>, $item);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                <span class="keywordflow">if</span> ($specific !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                    $parent = $parent-&gt;where(<span class="stringliteral">&#39;generic&#39;</span>, $generic);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                    <span class="keywordflow">if</span> ($subspecific !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                        $parent = $parent-&gt;where(<span class="stringliteral">&#39;specific&#39;</span>, $specific);</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                        $parent = $parent-&gt;where(<span class="stringliteral">&#39;subspecific&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                    }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                    $parent = $parent-&gt;where(<span class="stringliteral">&#39;specific&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                $parent = $parent-&gt;where(<span class="stringliteral">&#39;generic&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            }</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        }</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">if</span> (!isset($parent)) {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keywordflow">return</span> $parent-&gt;first();</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00142">142</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span> ($item !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            $parent = self::where(<span class="stringliteral">&#39;group&#39;</span>, $group);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">if</span> ($generic !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                $parent = $parent-&gt;where(<span class="stringliteral">&#39;item&#39;</span>, $item);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                <span class="keywordflow">if</span> ($specific !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                    $parent = $parent-&gt;where(<span class="stringliteral">&#39;generic&#39;</span>, $generic);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                    <span class="keywordflow">if</span> ($subspecific !== <span class="stringliteral">&#39;00&#39;</span>) {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                        $parent = $parent-&gt;where(<span class="stringliteral">&#39;specific&#39;</span>, $specific);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                        $parent = $parent-&gt;where(<span class="stringliteral">&#39;subspecific&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                    }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                    $parent = $parent-&gt;where(<span class="stringliteral">&#39;specific&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                }</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                $parent = $parent-&gt;where(<span class="stringliteral">&#39;generic&#39;</span>, <span class="stringliteral">&#39;00&#39;</span>);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">if</span> (!isset($parent)) {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        }</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">return</span> $parent-&gt;first();</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -407,10 +410,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00094">94</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(BudgetModificationAccount::class);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00095">95</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(BudgetModificationAccount::class);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -433,14 +436,14 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>boolean Devuelve verdadero si la cuenta esta restringida para ser eliminada, de lo contrario retorna verdadero </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00120">120</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="comment">// Se debe agregar a esta comprobación todos los métodos con relación a otro modelo</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">return</span> (</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            $this-&gt;has(<span class="stringliteral">&#39;account_opens&#39;</span>)-&gt;<span class="keyword">get</span>() || $this-&gt;has(<span class="stringliteral">&#39;modificationAccounts&#39;</span>)-&gt;<span class="keyword">get</span>() ||</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            $this-&gt;has(<span class="stringliteral">&#39;account_converters&#39;</span>)-&gt;<span class="keyword">get</span>() || $this-&gt;parent_id !== <span class="keyword">null</span> || $this-&gt;original</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        );</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00121">121</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="comment">// Se debe agregar a esta comprobación todos los métodos con relación a otro modelo</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">return</span> (</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            $this-&gt;has(<span class="stringliteral">&#39;account_opens&#39;</span>)-&gt;<span class="keyword">get</span>() || $this-&gt;has(<span class="stringliteral">&#39;modificationAccounts&#39;</span>)-&gt;<span class="keyword">get</span>() ||</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            $this-&gt;has(<span class="stringliteral">&#39;account_converters&#39;</span>)-&gt;<span class="keyword">get</span>() || $this-&gt;parent_id !== <span class="keyword">null</span> || $this-&gt;original</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        );</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -469,7 +472,7 @@ Atributos protegidos</h2></td></tr>
 <div class="line">        <span class="stringliteral">&#39;egress&#39;</span>, <span class="stringliteral">&#39;tax_id&#39;</span>, <span class="stringliteral">&#39;parent_id&#39;</span>, <span class="stringliteral">&#39;original&#39;</span>, <span class="stringliteral">&#39;disaggregate_tax&#39;</span></div>
 <div class="line">    ]</div>
 </div><!-- fragment -->
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00040">40</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html#l00041">41</a> del archivo <a class="el" href="../../d8/d25/Budget_2Models_2BudgetAccount_8php_source.html">Budget/Models/BudgetAccount.php</a>.</p>
 
 </div>
 </div>
@@ -482,7 +485,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Budget</b></li><li class="navelem"><b>Models</b></li><li class="navelem"><a class="el" href="../../d9/d4a/classModules_1_1Budget_1_1Models_1_1BudgetAccount.html">BudgetAccount</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:38 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -30,76 +30,7 @@
 				<div class="card-body" style="padding-bottom: 2.25rem">
                     <manage-modules :modules='{!! json_encode($listModules) !!}'></manage-modules>
 					<div class="row">
-                        {{--
-						@foreach ($modules as $module)
-							<div class="col-3" style="margin-bottom:30px">
-								<div class="info-box">
-									<div class="info-box-content info-box-content-lg">
-										<div class="info-box-img">
-											<i class="{{ $module->icon["name"] ?? "fa fa-cubes" }}"
-											   style="color:{{ $module->icon["color"] ?? '#636E7B' }}"></i>
-										</div>
-										<div class="info-box-title">
-											<h6>{{ $module->get('name_es') ?? $module->getName() }}</h6>
-										</div>
-										<div class="info-box-description">
-											<p>{{ $module->getDescription() }}</p>
-											@if (count($module->getRequires()) > 0)
-												<p class="text-bold">{{ __('Requerimientos') }}:</p>
-												<ul>
-													@foreach ($module->getRequires() as $key => $version)
-														<li>{{ $key }} v{{ $version }}</li>
-													@endforeach
-												</ul>
-											@endif
-											@if (!is_null($module->get('authors')) && count($module->get('authors')) > 0)
-												<p>{{ __('Autor(es)') }}:</p>
-												<ul>
-													@foreach ($module->get('authors') as $author)
-														<li>
-															{{ $author['name'] }}<br/>
-															@if (is_array($author['email']))
-																@foreach ($author['email'] as $email)
-																	{{ $email }}<br/>
-																@endforeach
-															@else
-																{{ $author['email'] }}
-															@endif
-														</li>
-													@endforeach
-												</ul>
-											@endif
-										</div>
-										<div class="info-box-footer buttons">
-											<div class="row">
-												<div class="col-4 text-left">
-													<a href="javascript:void(0)" data-module="{!! $module->getName() !!}"
-													   class="btn btn-sm btn-round btn-success btn-enable"
-													   title="{{ __('Instalar módulo') }}" data-toggle="tooltip">
-														<i class="ion ion-android-done"></i>
-													</a>
-												</div>
-												<div class="col-4"></div>
-												<div class="col-4 text-right">
-													<a href="javascript:void(0)" data-module="{!! $module->getName() !!}"
-													   class="btn btn-sm btn-round btn-danger btn-disable"
-													   title="{{ __('Desinstalar módulo') }}" data-toggle="tooltip">
-														<i class="ion ion-android-close"></i>
-													</a>
-												</div>
-											</div>
-											@php
-												$moduleStatus = ($module->isEnabled()) ? 'installed' : 'uninstalled';
-											@endphp
-											<span class="status {!! $moduleStatus !!}">
-												{{ ($moduleStatus === "installed") ? __('Instalado') : __('Desinstalado') }}
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						@endforeach
-                        --}}
+                        
 					</div>
 				</div>
 			</div>

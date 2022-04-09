@@ -1,5 +1,6 @@
 var classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController =
 [
+    [ "__construct", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a095c5d389db211932136b53f25f39685", null ],
     [ "destroy", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#ab25307f32b6a026ef5f35255425635a7", null ],
     [ "getCurrencies", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a321867bc55dc8d370aa96fefd6671c49", null ],
     [ "getDepartments", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a7701e233de004633673f828902357d2f", null ],
@@ -10,5 +11,7 @@ var classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController
     [ "getTaxes", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a9710b4ee4b39cf755a6153feea5c8999", null ],
     [ "index", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a149eb92716c1084a935e04a8d95f7347", null ],
     [ "store", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a9ef485163104597c12185b53cdacf638", null ],
-    [ "update", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#affb03cc19897a1800a0f411264d6c7cc", null ]
+    [ "update", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#affb03cc19897a1800a0f411264d6c7cc", null ],
+    [ "$messages", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#ae7715468b3957bb3cc52320a1da96b7e", null ],
+    [ "$validateRules", "d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a08fdb9625ef4d58fe9846c962a0b0dd6", null ]
 ];

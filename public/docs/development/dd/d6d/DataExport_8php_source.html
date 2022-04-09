@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -143,22 +143,32 @@ $(document).ready(function(){initNavTree('dd/d6d/DataExport_8php_source.html','.
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        $this-&gt;model = $model;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> collection()</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> $this-&gt;model::all();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">     * Gestiona la colección de registros a exportar</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">     * </span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">     * @method    collection()</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">     * @author Ing. Roldan Vargas &lt;roldandvg at gmail.com&gt; | &lt;rvargas at cenditel.gob.ve&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">     * @return void </span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="../../df/dfd/classApp_1_1Exports_1_1DataExport.html#ab24fa179a41ab9c933c32181e3d3ed84">   55</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../df/dfd/classApp_1_1Exports_1_1DataExport.html#ab24fa179a41ab9c933c32181e3d3ed84">collection</a>()</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> $this-&gt;model::all();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespaceApp_1_1Exports_html"><div class="ttname"><a href="../../d9/d16/namespaceApp_1_1Exports.html">App\Exports</a></div><div class="ttdoc">Gestiona la exportación de datos.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d6d/DataExport_8php_source.html#l00004">DataExport.php:4</a></div></div>
 <div class="ttc" id="aclassApp_1_1Exports_1_1DataExport_html"><div class="ttname"><a href="../../df/dfd/classApp_1_1Exports_1_1DataExport.html">App\Exports\DataExport</a></div><div class="ttdoc">Permite la exportación de datos.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d6d/DataExport_8php_source.html#l00021">DataExport.php:21</a></div></div>
+<div class="ttc" id="aclassApp_1_1Exports_1_1DataExport_html_ab24fa179a41ab9c933c32181e3d3ed84"><div class="ttname"><a href="../../df/dfd/classApp_1_1Exports_1_1DataExport.html#ab24fa179a41ab9c933c32181e3d3ed84">App\Exports\DataExport\collection</a></div><div class="ttdeci">collection()</div><div class="ttdoc">Gestiona la colección de registros a exportar.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d6d/DataExport_8php_source.html#l00055">DataExport.php:55</a></div></div>
 <div class="ttc" id="aclassApp_1_1Exports_1_1DataExport_html_aa363a22dfaf3a42dd4e2060699bd2c03"><div class="ttname"><a href="../../df/dfd/classApp_1_1Exports_1_1DataExport.html#aa363a22dfaf3a42dd4e2060699bd2c03">App\Exports\DataExport\__contruct</a></div><div class="ttdeci">__contruct($model=null)</div><div class="ttdoc">Método constructor de la clase.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d6d/DataExport_8php_source.html#l00041">DataExport.php:41</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_cda34c69f3f9e18121923ccbd5bc1dc8.html">Exports</a></li><li class="navelem"><b>DataExport.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

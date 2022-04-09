@@ -35,17 +35,6 @@
 				<hr>
 				<h6>Ajustes</h6>
 				<div class="row">
-					{{-- <div class="col-md-2">
-						<div class="form-group">
-							<label for="" class="control-label">{{ __('Mantenimiento') }}</label>
-							<div class="col-12">
-								{!! Form::checkbox('maintenance', true, false, [
-									'id' => 'maintenance', 'class' => 'form-control bootstrap-switch',
-									'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-								]) !!}
-							</div>
-						</div>
-					</div> --}}
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Demostración') }}</label>

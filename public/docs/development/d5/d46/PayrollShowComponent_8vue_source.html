@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -120,10 +120,10 @@ $(document).ready(function(){initNavTree('d5/d46/PayrollShowComponent_8vue_sourc
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                &lt;div class=&quot;form-group&quot;&gt;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                    &lt;strong&gt;Parámetros empleados en la nómina:&lt;/strong&gt;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                    &lt;div class=&quot;row&quot; style=&quot;margin: 1px 0&quot;&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        &lt;div class=&quot;col-md-4&quot;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        &lt;div class=&quot;col-md-4&quot; :key=&quot;payroll_parameter[&#39;id&#39;]&quot;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                             v-for=&quot;payroll_parameter in record.payroll_parameters&quot;&gt;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                            &lt;div class=&quot;form-group&quot;&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                                &lt;strong&gt;{{ payroll_parameter[&#39;code&#39;] }}:&lt;/strong&gt;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                                &lt;strong&gt;{{ payroll_parameter[&#39;id&#39;] }}:&lt;/strong&gt;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                                &lt;div class=&quot;row&quot; style=&quot;margin: 1px 0&quot;&gt;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                                    &lt;span class=&quot;col-md-12&quot; id=&quot;value&quot;&gt;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                                        {{ payroll_parameter[&#39;value&#39;] }}</div>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('d5/d46/PayrollShowComponent_8vue_sourc
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            &lt;/div&gt;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            &lt;div slot=&quot;assignments&quot; slot-scope=&quot;props&quot;&gt;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                &lt;span&gt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    &lt;div v-for=&quot;att in props.row.assignments&quot;&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    &lt;div v-for=&quot;att in props.row.assignments&quot; :key=&quot;att.id&quot;&gt;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                        &lt;p&gt;&lt;strong&gt; Concepto: &lt;/strong&gt; {{ att.name }} &lt;/p&gt;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                        &lt;p&gt;&lt;strong&gt; Valor: &lt;/strong&gt; {{ att.value }} &lt;/p&gt;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                    &lt;/div&gt;</div>
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('d5/d46/PayrollShowComponent_8vue_sourc
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            &lt;/div&gt;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            &lt;div slot=&quot;deductions&quot; slot-scope=&quot;props&quot;&gt;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                &lt;span&gt;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    &lt;div v-for=&quot;att in props.row.deductions&quot;&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    &lt;div v-for=&quot;att in props.row.deductions&quot; :key=&quot;att.id&quot;&gt;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                        &lt;p&gt;&lt;strong&gt; Concepto: &lt;/strong&gt; {{ att.name }} &lt;/p&gt;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                        &lt;p&gt;&lt;strong&gt; Valor: &lt;/strong&gt; {{ att.value }} &lt;/p&gt;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                    &lt;/div&gt;</div>
@@ -218,7 +218,7 @@ $(document).ready(function(){initNavTree('d5/d46/PayrollShowComponent_8vue_sourc
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;             */</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            showRecord(id) {</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                const vm = this;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                axios.get(&#39;/payroll/registers/vue-info/&#39; + id).then(response =&gt; {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                axios.get(`${window.app_url}/payroll/registers/vue-info/${id}`).then(response =&gt; {</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                    $.each(response.data.record.payroll_staff_payrolls, function(index, field) {</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                        vm.records.push({</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                            &#39;assignments&#39;:   JSON.parse(field[&#39;assignments&#39;]),</div>
@@ -255,7 +255,7 @@ $(document).ready(function(){initNavTree('d5/d46/PayrollShowComponent_8vue_sourc
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_5d2bef04a6d76a5c763302bfa2fa021f.html">Payroll</a></li><li class="navelem"><a class="el" href="../../dir_2b961be39cb698d0f63d01cac6291d9b.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_0dc1c798b4469742e187d600d6e1ec60.html">assets</a></li><li class="navelem"><a class="el" href="../../dir_64aba6a1cb95e47ee2f9f79906a839cd.html">js</a></li><li class="navelem"><a class="el" href="../../dir_44fb1c7acc6f40bfc133c28112fc9e56.html">components</a></li><li class="navelem"><a class="el" href="../../dir_f755a258572cdf8ef8dd9d6e626ee083.html">registers</a></li><li class="navelem"><b>PayrollShowComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -9,5 +9,6 @@ var classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded =
     [ "saleService", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a2cd41947dcbe76824a0d669c66898a30", null ],
     [ "saleTypeGood", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#ac1209a9460ab43fa138e202b2829f7e7", null ],
     [ "$dates", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a6ed295a3b7371b42773cab86fd367af8", null ],
-    [ "$fillable", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a13601d3af66d109458e268a3eb4afc49", null ]
+    [ "$fillable", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a13601d3af66d109458e268a3eb4afc49", null ],
+    [ "$with", "d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a575ec3cd45566351149a2d4f1d4bbd58", null ]
 ];

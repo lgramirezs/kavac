@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DocumentStatus;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Validation\ValidationException;
 
 /**
  * @class DocumentStatusController

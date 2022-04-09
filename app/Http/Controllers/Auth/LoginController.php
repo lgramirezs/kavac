@@ -3,14 +3,13 @@
 /** Controladores para la gestión de autenticación de usuarios */
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Mews\Captcha\Facades\Captcha;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
-use App\Models\User;
-
-use Captcha;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 /**
  * @class LoginController

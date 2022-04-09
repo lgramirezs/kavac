@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -112,6 +112,9 @@ $(document).ready(function(){initNavTree('d7/da3/classCreatePayrollSettlementTyp
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d0/ddd/classCreatePayrollSettlementTypesTable__coll__graph.png" border="0" usemap="#CreatePayrollSettlementTypesTable_coll__map" alt="Collaboration graph"/></div>
+<map name="CreatePayrollSettlementTypesTable_coll__map" id="CreatePayrollSettlementTypesTable_coll__map">
+<area shape="rect" title="Crear tabla tipos de liquidación." alt="" coords="5,5,224,112"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -149,10 +152,10 @@ Métodos públicos</h2></td></tr>
 <p>Revierte las migraciones. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>void </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d1e/2021__02__09__155817__create__payroll__settlement__types__table_8php_source.html#l00045">45</a> del archivo <a class="el" href="../../d8/d1e/2021__02__09__155817__create__payroll__settlement__types__table_8php_source.html">2021_02_09_155817_create_payroll_settlement_types_table.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;payroll_settlement_types&#39;</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d1e/2021__02__09__155817__create__payroll__settlement__types__table_8php_source.html#l00047">47</a> del archivo <a class="el" href="../../d8/d1e/2021__02__09__155817__create__payroll__settlement__types__table_8php_source.html">2021_02_09_155817_create_payroll_settlement_types_table.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;payroll_settlement_types&#39;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -181,13 +184,15 @@ Métodos públicos</h2></td></tr>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                $table-&gt;id();</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                $table-&gt;string(<span class="stringliteral">&#39;name&#39;</span>, 100)-&gt;unique()-&gt;comment(<span class="stringliteral">&#39;Nombre del tipo de liquidación&#39;</span>);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                $table-&gt;text(<span class="stringliteral">&#39;motive&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Motivo de egreso al que se asocia el tipo de liquidación&#39;</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                $table-&gt;foreignId(<span class="stringliteral">&#39;payroll_concept_id&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Identificador del concepto&#39;</span>)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                      -&gt;constrained()-&gt;onUpdate(<span class="stringliteral">&#39;cascade&#39;</span>)-&gt;onDelete(<span class="stringliteral">&#39;restrict&#39;</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                $table-&gt;timestamps();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                $table-&gt;softDeletes()-&gt;comment(<span class="stringliteral">&#39;Fecha y hora en la que el registro fue eliminado&#39;</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            });</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                <span class="comment">// $table-&gt;foreignId(&#39;payroll_concept_id&#39;)-&gt;comment(&#39;Identificador del concepto&#39;)</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                <span class="comment">//       -&gt;constrained()-&gt;onUpdate(&#39;cascade&#39;)-&gt;onDelete(&#39;restrict&#39;);</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                $table-&gt;foreignId(<span class="stringliteral">&#39;payroll_payment_types_id&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Identificador del tipo de pago&#39;</span>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                      -&gt;constrained()-&gt;onUpdate(<span class="stringliteral">&#39;cascade&#39;</span>)-&gt;onDelete(<span class="stringliteral">&#39;restrict&#39;</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                $table-&gt;timestamps();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                $table-&gt;softDeletes()-&gt;comment(<span class="stringliteral">&#39;Fecha y hora en la que el registro fue eliminado&#39;</span>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            });</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -200,7 +205,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../d7/da3/classCreatePayrollSettlementTypesTable.html">CreatePayrollSettlementTypesTable</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:35 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

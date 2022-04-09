@@ -1,10 +1,20 @@
 <?php
-
+/** Controladores base de la aplicación */
 namespace App\Http\Controllers;
 
 use App\Models\Receiver;
 use Illuminate\Http\Request;
 
+/**
+ * @class ReceiverController
+ * @brief Gestiona información de receptores
+ *
+ * Controlador para gestionar a los receptores de procesos
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ * @license
+ *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
+ */
 class ReceiverController extends Controller
 {
     /**

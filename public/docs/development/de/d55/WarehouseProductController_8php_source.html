@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('de/d55/WarehouseProductController_8php
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">        /** Define las reglas de validación para el formulario */</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        $this-&gt;validateRules = [</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="stringliteral">&#39;name&#39;</span>                =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="stringliteral">&#39;name&#39;</span>                =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>, <span class="stringliteral">&#39;unique:warehouse_products,name&#39;</span>],</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="stringliteral">&#39;description&#39;</span>         =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="stringliteral">&#39;measurement_unit_id&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        ];</div>
@@ -406,7 +406,7 @@ $(document).ready(function(){initNavTree('de/d55/WarehouseProductController_8php
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_82d048051464370bc2cc1bb0848ae305.html">Warehouse</a></li><li class="navelem"><a class="el" href="../../dir_d0c8279b06263df18ce625740a86b3cb.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_c315b2a29a9062da5499cb6b654be419.html">Controllers</a></li><li class="navelem"><b>WarehouseProductController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:32 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

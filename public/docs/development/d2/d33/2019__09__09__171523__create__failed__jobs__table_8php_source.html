@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -120,27 +120,28 @@ $(document).ready(function(){initNavTree('d2/d33/2019__09__09__171523__create__f
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            $table-&gt;text(<span class="stringliteral">&#39;queue&#39;</span>);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            $table-&gt;longText(<span class="stringliteral">&#39;payload&#39;</span>);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            $table-&gt;longText(<span class="stringliteral">&#39;exception&#39;</span>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            $table-&gt;timestamp(<span class="stringliteral">&#39;failed_at&#39;</span>)-&gt;useCurrent();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        });</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">     * Reverse the migrations.</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">     * @return void</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> down()</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;failed_jobs&#39;</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            $table-&gt;string(<span class="stringliteral">&#39;uuid&#39;</span>)-&gt;after(<span class="stringliteral">&#39;id&#39;</span>)-&gt;nullable()-&gt;unique();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            $table-&gt;timestamp(<span class="stringliteral">&#39;failed_at&#39;</span>)-&gt;useCurrent();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        });</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     * Reverse the migrations.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">     * @return void</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> down()</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;failed_jobs&#39;</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_f32c53f2c0f0ccaeb11076e30674d5f4.html">database</a></li><li class="navelem"><a class="el" href="../../dir_60ac0e461401d42a1487e6744db0f9b7.html">migrations</a></li><li class="navelem"><b>2019_09_09_171523_create_failed_jobs_table.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:56 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:28 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

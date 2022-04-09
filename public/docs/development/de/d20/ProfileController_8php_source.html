@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -120,39 +120,33 @@ $(document).ready(function(){initNavTree('de/d20/ProfileController_8php_source.h
 <div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html">ProfileController</a> <span class="keyword">extends</span> <a class="code" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html">Controller</a></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{<span class="comment"></span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">     * Store a newly created resource in storage.</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">     * Registra un nuevo perfil de usuario</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">     * @param  \Illuminate\Http\Request  $request</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">     * @return \Illuminate\Http\JsonResponse</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">     */</span><span class="comment"></span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     * Registra un nuevo perfil de usuario</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">     * @method    store</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">     * @author     Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     * @param     Request    $request    Objeto con información de la petición</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">     * @method    store</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">     * @author     Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">     * @param     Request    $request    Objeto con información de la petición</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">     * @return    JsonResponse          JSON con el resultado del registro</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">   38</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">store</a>(Request $request)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        Profile::updateOrCreate(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            [<span class="stringliteral">&#39;user_id&#39;</span> =&gt; $request-&gt;user_id],</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            [</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                <span class="stringliteral">&#39;first_name&#39;</span> =&gt; $request-&gt;first_name,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <span class="stringliteral">&#39;last_name&#39;</span> =&gt; $request-&gt;last_name ?? <span class="keyword">null</span>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <span class="stringliteral">&#39;image_id&#39;</span> =&gt; $request-&gt;image_id ?? <span class="keyword">null</span>,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            ]</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>], 200);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">     * @return    JsonResponse          JSON con el resultado del registro</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">   32</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">store</a>(Request $request)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        Profile::updateOrCreate(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            [<span class="stringliteral">&#39;user_id&#39;</span> =&gt; $request-&gt;user_id],</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            [</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <span class="stringliteral">&#39;first_name&#39;</span> =&gt; $request-&gt;first_name,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <span class="stringliteral">&#39;last_name&#39;</span> =&gt; $request-&gt;last_name ?? <span class="keyword">null</span>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <span class="stringliteral">&#39;image_id&#39;</span> =&gt; $request-&gt;image_id ?? <span class="keyword">null</span>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            ]</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        );</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>], 200);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassApp_1_1Models_1_1Profile_html"><div class="ttname"><a href="../../d9/de5/classApp_1_1Models_1_1Profile.html">App\Models\Profile</a></div><div class="ttdoc">Datos de Perfiles de usuario.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/d1a/app_2Models_2Profile_8php_source.html#l00022">app/Models/Profile.php:22</a></div></div>
-<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1ProfileController_html_a9ef485163104597c12185b53cdacf638"><div class="ttname"><a href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">App\Http\Controllers\ProfileController\store</a></div><div class="ttdeci">store(Request $request)</div><div class="ttdoc">Store a newly created resource in storage.</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d20/ProfileController_8php_source.html#l00038">ProfileController.php:38</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1ProfileController_html_a9ef485163104597c12185b53cdacf638"><div class="ttname"><a href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">App\Http\Controllers\ProfileController\store</a></div><div class="ttdeci">store(Request $request)</div><div class="ttdoc">Registra un nuevo perfil de usuario.</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d20/ProfileController_8php_source.html#l00032">ProfileController.php:32</a></div></div>
 <div class="ttc" id="anamespaceApp_1_1Http_1_1Controllers_html"><div class="ttname"><a href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">App\Http\Controllers</a></div><div class="ttdoc">Controladores base de la aplicación.</div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1ProfileController_html"><div class="ttname"><a href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html">App\Http\Controllers\ProfileController</a></div><div class="ttdoc">Gestiona información de Perfiles de usuario.</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d20/ProfileController_8php_source.html#l00019">ProfileController.php:19</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1Controller_html"><div class="ttname"><a href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html">App\Http\Controllers\Controller</a></div><div class="ttdoc">Controlador principal del framework del cual extienden los demás controladores.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d82/Controller_8php_source.html#l00019">Controller.php:19</a></div></div>
@@ -160,7 +154,7 @@ $(document).ready(function(){initNavTree('de/d20/ProfileController_8php_source.h
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_0c4ee04d587063ecca91a7f35642b9f3.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_27ba1f74dc73f44d4e9ca42f2dd266ec.html">Controllers</a></li><li class="navelem"><b>ProfileController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

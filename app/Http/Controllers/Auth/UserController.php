@@ -583,9 +583,7 @@ class UserController extends Controller
      *
      * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @license    [description]
-     *
-     * @param      Request               $request    [description]
+     * @param      Request               $request    Objeto con información de la petición
      */
     public function setMyNotifications(Request $request)
     {

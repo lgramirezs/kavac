@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -718,7 +718,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160; */</div>
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;Vue.component(&#39;payroll-permission-request-create&#39;, () =&gt;</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    import(</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        /* webpackChunkName: &quot;payroll-permission-policies&quot; */</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        /* webpackChunkName: &quot;payroll-permission-request-create&quot; */</div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;        &#39;./components/requests/permissions/PayrollPermissionRequestCreateComponent.vue&#39;</div>
 <div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    )</div>
 <div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;);</div>
@@ -812,7 +812,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;        getPayrollConcepts() {</div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;            vm.payroll_concepts = [];</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;            axios.get(&#39;/payroll/get-concepts&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;            axios.get(`${window.app_url}/payroll/get-concepts`).then(response =&gt; {</div>
 <div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;                vm.payroll_concepts = response.data;</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;            });</div>
 <div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;        },</div>
@@ -824,7 +824,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;        getPayrollConceptTypes() {</div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;            vm.payroll_concept_types = [];</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            axios.get(&#39;/payroll/get-concept-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            axios.get(`${window.app_url}/payroll/get-concept-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;                vm.payroll_concept_types = response.data;</div>
 <div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;            });</div>
 <div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;        },</div>
@@ -836,7 +836,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;        getPayrollPaymentTypes() {</div>
 <div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;            vm.payroll_payment_types = [];</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;            axios.get(&#39;/payroll/get-payment-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;            axios.get(`${window.app_url}/payroll/get-payment-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;                vm.payroll_payment_types = response.data;</div>
 <div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;            });</div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;        },</div>
@@ -848,7 +848,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;        getPayrollSalaryTabulators() {</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;            vm.payroll_salary_tabulators = [];</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;            axios.get(&#39;/payroll/get-salary-tabulators&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;            axios.get(`${window.app_url}/payroll/get-salary-tabulators`).then(response =&gt; {</div>
 <div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;                vm.payroll_salary_tabulators = response.data;</div>
 <div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;            });</div>
 <div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;        },</div>
@@ -860,7 +860,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;         */</div>
 <div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;        getPayrollNationalities() {</div>
 <div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;            this.payroll_nationalities = [];</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            axios.get(&#39;/payroll/get-nationalities&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            axios.get(`${window.app_url}/payroll/get-nationalities`).then(response =&gt; {</div>
 <div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;                this.payroll_nationalities = response.data;</div>
 <div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;            });</div>
 <div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;        },</div>
@@ -872,7 +872,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;         */</div>
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;        getPayrollGenders() {</div>
 <div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;            this.payroll_genders = [];</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;            axios.get(&#39;/payroll/get-genders&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;            axios.get(`${window.app_url}/payroll/get-genders`).then(response =&gt; {</div>
 <div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;                this.payroll_genders = response.data;</div>
 <div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;            });</div>
 <div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;        },</div>
@@ -885,7 +885,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;        getPayrollPositionTypes() {</div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;            vm.payroll_position_types = [];</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;            axios.get(&#39;/payroll/get-position-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;            axios.get(`${window.app_url}/payroll/get-position-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;                vm.payroll_position_types = response.data;</div>
 <div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;            });</div>
 <div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;        },</div>
@@ -898,7 +898,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;        getPayrollPositions() {</div>
 <div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;            const vm = this;</div>
 <div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;            vm.payroll_positions = [];</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;            axios.get(&#39;/payroll/get-positions&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;            axios.get(`${window.app_url}/payroll/get-positions`).then(response =&gt; {</div>
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;                vm.payroll_positions = response.data;</div>
 <div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;            });</div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;        },</div>
@@ -910,7 +910,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;         */</div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;        getPayrollStaffs() {</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;            this.payroll_staffs = [];</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;            axios.get(&#39;/payroll/get-staffs&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;            axios.get(`${window.app_url}/payroll/get-staffs`).then(response =&gt; {</div>
 <div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;                this.payroll_staffs = response.data;</div>
 <div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;            });</div>
 <div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;        },</div>
@@ -922,7 +922,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;         */</div>
 <div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;        getPayrollStudyTypes() {</div>
 <div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;            this.payroll_study_types = [];</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;            axios.get(&#39;/payroll/get-study-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;            axios.get(`${window.app_url}/payroll/get-study-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;                this.payroll_study_types = response.data;</div>
 <div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;            });</div>
 <div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;        },</div>
@@ -934,7 +934,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;         */</div>
 <div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;        getPayrollLanguages() {</div>
 <div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;            this.payroll_languages = [];</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;            axios.get(&#39;/payroll/get-languages&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;            axios.get(`${window.app_url}/payroll/get-languages`).then(response =&gt; {</div>
 <div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;                this.payroll_languages = response.data;</div>
 <div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;            });</div>
 <div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;        },</div>
@@ -946,7 +946,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;         */</div>
 <div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;        getPayrollLanguageLevels() {</div>
 <div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;            this.payroll_language_levels = [];</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;            axios.get(&#39;/payroll/get-language-levels&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;            axios.get(`${window.app_url}/payroll/get-language-levels`).then(response =&gt; {</div>
 <div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;                this.payroll_language_levels = response.data;</div>
 <div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;            });</div>
 <div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;        },</div>
@@ -958,7 +958,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;         */</div>
 <div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;        getPayrollInstructionDegrees() {</div>
 <div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;            this.payroll_instruction_degree = [];</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;            axios.get(&#39;/payroll/get-instruction-degrees&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;            axios.get(`${window.app_url}/payroll/get-instruction-degrees`).then(response =&gt; {</div>
 <div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;                this.payroll_instruction_degrees = response.data;</div>
 <div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;            });</div>
 <div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;        },</div>
@@ -970,7 +970,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;         */</div>
 <div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;        getJsonProfessions() {</div>
 <div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;            this.json_professions = [];</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;            axios.get(&#39;/payroll/get-json-professions&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;            axios.get(`${window.app_url}/payroll/get-json-professions`).then(response =&gt; {</div>
 <div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;                this.json_professions = response.data.jsonProfessions;</div>
 <div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;            });</div>
 <div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;        },</div>
@@ -982,7 +982,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;         */</div>
 <div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;        getPayrollInactivityTypes() {</div>
 <div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;            this.payroll_inactivity_types = [];</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;            axios.get(&#39;/payroll/get-inactivity-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;            axios.get(`${window.app_url}/payroll/get-inactivity-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;                this.payroll_inactivity_types = response.data;</div>
 <div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;            });</div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;        },</div>
@@ -994,7 +994,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;         */</div>
 <div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;        getPayrollStaffTypes() {</div>
 <div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;            this.payroll_staff_types = [];</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;            axios.get(&#39;/payroll/get-staff-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;            axios.get(`${window.app_url}/payroll/get-staff-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;                this.payroll_staff_types = response.data;</div>
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;            });</div>
 <div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;        },</div>
@@ -1006,7 +1006,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;         */</div>
 <div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;        getPayrollContractTypes() {</div>
 <div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;            this.payroll_contract_types = [];</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;            axios.get(&#39;/payroll/get-contract-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;            axios.get(`${window.app_url}/payroll/get-contract-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;                this.payroll_contract_types = response.data;</div>
 <div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;            });</div>
 <div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;        },</div>
@@ -1018,7 +1018,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;         */</div>
 <div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;        getPayrollSectorTypes() {</div>
 <div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;            this.payroll_sector_types = [];</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;            axios.get(&#39;/payroll/get-sector-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;            axios.get(`${window.app_url}/payroll/get-sector-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                this.payroll_sector_types = response.data;</div>
 <div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;            });</div>
 <div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;        },</div>
@@ -1030,7 +1030,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;         */</div>
 <div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;        getPayrollLicenseDegrees() {</div>
 <div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;            this.payroll_license_degrees = [];</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;            axios.get(&#39;/payroll/get-license-degrees&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;            axios.get(`${window.app_url}/payroll/get-license-degrees`).then(response =&gt; {</div>
 <div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;                this.payroll_license_degrees = response.data;</div>
 <div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;            });</div>
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;        },</div>
@@ -1042,7 +1042,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;         */</div>
 <div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;        getPayrollBloodTypes() {</div>
 <div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;            this.payroll_blood_types = [];</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;            axios.get(&#39;/payroll/get-blood-types&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;            axios.get(`${window.app_url}/payroll/get-blood-types`).then(response =&gt; {</div>
 <div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;                this.payroll_blood_types = response.data;</div>
 <div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;            });</div>
 <div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;        },</div>
@@ -1054,7 +1054,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;         */</div>
 <div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;        getPayrollPermissionPolicies() {</div>
 <div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;            this.payroll_permission_policies = [];</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;            axios.get(&#39;/payroll/get-permission-policies&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;            axios.get(`${window.app_url}/payroll/get-permission-policies`).then(response =&gt; {</div>
 <div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;                this.payroll_permission_policies = response.data;</div>
 <div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;            });</div>
 <div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;        },</div>
@@ -1066,7 +1066,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;         */</div>
 <div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;        getPayrollDisabilities() {</div>
 <div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;            this.payroll_disabilities = [];</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;            axios.get(&#39;/payroll/get-disabilities&#39;).then(response =&gt; {</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;            axios.get(`${window.app_url}/payroll/get-disabilities`).then(response =&gt; {</div>
 <div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;                this.payroll_disabilities = response.data;</div>
 <div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;            });</div>
 <div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;        }</div>
@@ -1078,7 +1078,7 @@ $(document).ready(function(){initNavTree('d3/d55/modules_2Payroll_2Resources_2as
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_5d2bef04a6d76a5c763302bfa2fa021f.html">Payroll</a></li><li class="navelem"><a class="el" href="../../dir_2b961be39cb698d0f63d01cac6291d9b.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_0dc1c798b4469742e187d600d6e1ec60.html">assets</a></li><li class="navelem"><a class="el" href="../../dir_64aba6a1cb95e47ee2f9f79906a839cd.html">js</a></li><li class="navelem"><b>app.js</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

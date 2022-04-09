@@ -237,16 +237,6 @@
                             {!! Form::close() !!}
                         </div>
                         <div class="tab-pane" id="activity" role="tabpanel">
-                            {{-- Muestra los últimos 20 registros en la línea de tiempo del usuario --}}
-                            {{-- <div class="row mg-bottom-20">
-                                <div class="col-md-9"></div>
-                                <div class="col-md-3">
-                                    {!! Form::text('search_timeline', null, [
-                                        'class' => 'form-control input-sm', 'id' => 'search_timeline',
-                                        'placeholder' => __('buscar...')
-                                    ]) !!}
-                                </div>
-                            </div> --}}
                             <h4 class="text-center">Últimos 20 registros de actividad en la aplicación</h4>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -312,122 +302,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="tab-pane" id="messages" role="tabpanel">
-                            <ul class="media-list msg-list">
-                                <li class="media unread">
-                                    <div class="float-left">
-                                        <input type="checkbox" name="checkbox1" id="checkbox1" class="form-control bootstrap-switch" data-on-label="{{ __('SI') }}" data-off-label="{{ __('NO') }}">
-                                        <label for="checkbox1"></label>
-                                    </div>
-                                    <a href="#" class="float-left">
-                                        <img class="media-object rounded-circle img-raised" src="{{ asset('images/default-avatar.png') }}"
-                                             alt="usuario">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="float-right media-option">
-                                            <i class="fa fa-paperclip mr5"></i>
-                                            <small>Yesterday 5:51am</small>
-                                        </div>
-                                        <h4 class="sender">Renov Leonga</h4>
-                                        <p>
-                                            <a href="#">
-                                                <strong class="subject">Hi Hello!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
-                                            </a>
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li class="media unread">
-                                    <div class="float-left">
-                                        <input type="checkbox" name="checkbox2" id="checkbox2" class="form-control bootstrap-switch" data-on-label="SI" data-off-label="NO">
-                                        <label for="checkbox1"></label>
-                                    </div>
-                                    <a href="#" class="float-left">
-                                        <img class="media-object rounded-circle img-raised" src="{{ asset('images/default-avatar.png') }}"
-                                             alt="usuario">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="float-right media-option">
-                                            <i class="fa fa-paperclip mr5"></i>
-                                            <small>Yesterday 5:51am</small>
-                                        </div>
-                                        <h4 class="sender">Renov Leonga</h4>
-                                        <p>
-                                            <a href="#">
-                                                <strong class="subject">Hi Hello!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
-                                            </a>
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li class="media unread">
-                                    <div class="float-left">
-                                        <input type="checkbox" name="checkbox3" id="checkbox3" class="form-control bootstrap-switch" data-on-label="SI" data-off-label="NO">
-                                        <label for="checkbox1"></label>
-                                    </div>
-                                    <a href="#" class="float-left">
-                                        <img class="media-object rounded-circle img-raised" src="{{ asset('images/default-avatar.png') }}"
-                                             alt="usuario">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="float-right media-option">
-                                            <i class="fa fa-paperclip mr5"></i>
-                                            <small>Yesterday 5:51am</small>
-                                        </div>
-                                        <h4 class="sender">Renov Leonga</h4>
-                                        <p>
-                                            <a href="#">
-                                                <strong class="subject">Hi Hello!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
-                                            </a>
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li class="media unread">
-                                    <div class="float-left">
-                                        <input type="checkbox" name="checkbox4" id="checkbox4" class="form-control bootstrap-switch" data-on-label="SI" data-off-label="NO">
-                                    </div>
-                                    <a href="#" class="float-left">
-                                        <img class="media-object rounded-circle img-raised" src="{{ asset('images/default-avatar.png') }}"
-                                             alt="usuario">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="float-right media-option">
-                                            <i class="fa fa-paperclip mr5"></i>
-                                            <small>Yesterday 5:51am</small>
-                                        </div>
-                                        <h4 class="sender">Renov Leonga</h4>
-                                        <p>
-                                            <a href="#">
-                                                <strong class="subject">Hi Hello!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
-                                            </a>
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div> --}}
                         <div class="tab-pane" id="directory" role="tabpanel">
                             <div class="row">
                                 <div class="col-sm-12">
                                     {{-- Búsqueda de contacto en el directorio institucional --}}
-                                    {{-- <div class="well mt10">
-                                        <div class="row">
-                                            <div class="col-sm-9">
-                                                <div class="form-group">
-                                                    <input type="text" name="" class="form-control" placeholder="Buscar...">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <select id="search-type" class="width100p select2-offscreen select2" data-placeholder="Tipo de Consulta" tabindex="-1" title="">
-                                                    <option value="">Seleccione...</option>
-                                                    <option value="full_name">Nombre completo</option>
-                                                    <option value="position">Cargo</option>
-                                                    <option value="email">Correo Electrónico</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> --}}
 
                                     {{-- Directorio institucional --}}
                                     <div class="list-group contact-group">
@@ -446,15 +324,9 @@
                                                                     <div class="media-body">
                                                                         <h4 class="media-heading">
                                                                             {{ $dir['profile']['full_name'] }} 
-                                                                            {{-- <small>Cargo</small> --}}
                                                                         </h4>
                                                                         <div class="media-content">
-                                                                            {{-- <i class="fa fa-map-marker"></i> Dirección --}}
                                                                             <ul class="list-unstyled">
-                                                                                {{-- <li>
-                                                                                    <i class="fa fa-mobile"></i> 
-                                                                                    Número de teléfono
-                                                                                </li> --}}
                                                                                 <li>
                                                                                     <i class="fa fa-envelope-o"></i> 
                                                                                     {{ $dir['email'] }}

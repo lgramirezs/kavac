@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -142,13 +142,14 @@ $(document).ready(function(){initNavTree('dc/d72/SaleSettingProductTypeTableSeed
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        DB::transaction(<span class="keyword">function</span> () use ($saleSettingProductType) {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">foreach</span> ($saleSettingProductType as $saleSettingProductType) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                saleSettingProductType::Create(</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                saleSettingProductType::updateOrCreate(</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                    [<span class="stringliteral">&#39;name&#39;</span> =&gt; $saleSettingProductType[<span class="stringliteral">&#39;name&#39;</span>]],</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                );</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        });</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                    [<span class="stringliteral">&#39;name&#39;</span> =&gt; $saleSettingProductType[<span class="stringliteral">&#39;name&#39;</span>]],</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        });</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassModules_1_1Sale_1_1Database_1_1Seeders_1_1SaleSettingProductTypeTableSeeder_html"><div class="ttname"><a href="../../d0/dc9/classModules_1_1Sale_1_1Database_1_1Seeders_1_1SaleSettingProductTypeTableSeeder.html">Modules\Sale\Database\Seeders\SaleSettingProductTypeTableSeeder</a></div><div class="ttdoc">Inicializar los tipos de producto.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d72/SaleSettingProductTypeTableSeeder_8php_source.html#l00021">SaleSettingProductTypeTableSeeder.php:21</a></div></div>
@@ -159,7 +160,7 @@ $(document).ready(function(){initNavTree('dc/d72/SaleSettingProductTypeTableSeed
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_98ac1e57f40504a9487c57868589c7b0.html">Sale</a></li><li class="navelem"><a class="el" href="../../dir_32529895d3f30a65bef308bea3484ef5.html">Database</a></li><li class="navelem"><a class="el" href="../../dir_00c77bf3b376f42bc7bdc60c2052c19b.html">Seeders</a></li><li class="navelem"><b>SaleSettingProductTypeTableSeeder.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

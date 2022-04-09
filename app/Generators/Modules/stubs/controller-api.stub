@@ -26,7 +26,7 @@ class $CLASS$ extends Controller
      *
      * @author    [nombre del autor] [correo del autor]
      *
-     * @return    Response    [description de los datos devueltos]
+     * @return    Response    [descripción de los datos devueltos]
      */
     public function index()
     {
@@ -42,7 +42,7 @@ class $CLASS$ extends Controller
      *
      * @param     object    Request    $request    Objeto con información de la petición
      *
-     * @return    Response    [description de los datos devueltos]
+     * @return    Response    [descripción de los datos devueltos]
      */
     public function store(Request $request)
     {
@@ -58,7 +58,7 @@ class $CLASS$ extends Controller
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Response    [description de los datos devueltos]
+     * @return    Response    [descripción de los datos devueltos]
      */
     public function show($id)
     {
@@ -75,18 +75,13 @@ class $CLASS$ extends Controller
      * @param     object    Request    $request         Objeto con datos de la petición
      * @param     integer   $id        Identificador del registro
      *
-     * @return    Response    [description de los datos devueltos]
+     * @return    Response    [descripción de los datos devueltos]
      */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
     /**
      * [descripción del módulo]
      *

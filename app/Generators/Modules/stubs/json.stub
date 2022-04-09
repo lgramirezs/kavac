@@ -2,7 +2,10 @@
     "name": "$STUDLY_NAME$",
     "alias": "$LOWER_NAME$",
     "description": "",
-    "keywords": [],
+    "keywords": [
+        "CENDITEL",
+        "KAVAC"
+    ],
     "order": 0,
     "providers": [
         "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\$PROVIDER_NAMESPACE$\\$STUDLY_NAME$ServiceProvider"

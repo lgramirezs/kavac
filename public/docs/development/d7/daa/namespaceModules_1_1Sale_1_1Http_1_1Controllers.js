@@ -1,7 +1,9 @@
 var namespaceModules_1_1Sale_1_1Http_1_1Controllers =
 [
     [ "Reports", null, [
-      [ "SaleBillController", "dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController.html", "dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController" ]
+      [ "SaleBillController", "dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController.html", "dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController" ],
+      [ "SaleQuoteReportController", "dd/dfb/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleQuoteReportController.html", "dd/dfb/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleQuoteReportController" ],
+      [ "SaleServiceRequestController", "d8/dc3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleServiceRequestController.html", "d8/dc3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleServiceRequestController" ]
     ] ],
     [ "FrecuencyController", "df/d40/classModules_1_1Sale_1_1Http_1_1Controllers_1_1FrecuencyController.html", "df/d40/classModules_1_1Sale_1_1Http_1_1Controllers_1_1FrecuencyController" ],
     [ "PeriodicCostAttributeController", "d3/dc1/classModules_1_1Sale_1_1Http_1_1Controllers_1_1PeriodicCostAttributeController.html", "d3/dc1/classModules_1_1Sale_1_1Http_1_1Controllers_1_1PeriodicCostAttributeController" ],

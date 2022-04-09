@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -112,6 +112,9 @@ $(document).ready(function(){initNavTree('da/dbc/classModules_1_1Accounting_1_1H
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dd/d97/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountController__coll__graph.png" border="0" usemap="#AccountingAccountController_coll__map" alt="Collaboration graph"/></div>
+<map name="AccountingAccountController_coll__map" id="AccountingAccountController_coll__map">
+<area shape="rect" title="Clase que gestiona las Cuentas patrimoniales." alt="" coords="5,5,216,127"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -199,12 +202,12 @@ Métodos públicos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Juan Rosas &lt;<a href="#" onclick="location.href='mai'+'lto:'+'jro'+'sa'+'s@c'+'en'+'dit'+'el'+'.go'+'b.'+'ve'; return false;">jrosa<span style="display: none;">.nosp@m.</span>s@ce<span style="display: none;">.nosp@m.</span>ndite<span style="display: none;">.nosp@m.</span>l.go<span style="display: none;">.nosp@m.</span>b.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'jua'+'n.'+'ros'+'as'+'r01'+'@g'+'mai'+'l.'+'com'; return false;">juan.<span style="display: none;">.nosp@m.</span>rosa<span style="display: none;">.nosp@m.</span>sr01@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt;</dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>object Objeto que permite descargar el archivo con la información a ser exportada </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html#l00434">434</a> del archivo <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html">AccountingAccountController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    {</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        Excel::import(<span class="keyword">new</span> AccountingAccountImport, request()-&gt;file(<span class="stringliteral">&#39;file&#39;</span>));</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>, <span class="stringliteral">&#39;records&#39;</span> =&gt; $this-&gt;getAccounts()], 200);</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html#l00435">435</a> del archivo <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html">AccountingAccountController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    {</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;        Excel::import(<span class="keyword">new</span> AccountingAccountImport, request()-&gt;file(<span class="stringliteral">&#39;file&#39;</span>));</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>, <span class="stringliteral">&#39;records&#39;</span> =&gt; $this-&gt;getAccounts()], 200);</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -271,41 +274,41 @@ Métodos públicos</h2></td></tr>
 <dl class="section return"><dt>Devuelve</dt><dd>[Json] [informacion de la operacion y listado de los registros actualizados] </dd></dl>
 <p>Actualiza el registro de la cuenta</p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html#l00147">147</a> del archivo <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html">AccountingAccountController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        $this-&gt;validate(</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            $request,</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            [</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                <span class="stringliteral">&#39;group&#39;</span>          =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                <span class="stringliteral">&#39;subgroup&#39;</span>       =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                <span class="stringliteral">&#39;item&#39;</span>           =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                <span class="stringliteral">&#39;generic&#39;</span>        =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                <span class="stringliteral">&#39;specific&#39;</span>       =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                <span class="stringliteral">&#39;subspecific&#39;</span>    =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                <span class="stringliteral">&#39;institutional&#39;</span>  =&gt; <span class="stringliteral">&#39;required|digits:3&#39;</span>,</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                <span class="stringliteral">&#39;denomination&#39;</span>   =&gt; <span class="stringliteral">&#39;required&#39;</span>,</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                <span class="stringliteral">&#39;active&#39;</span>         =&gt; <span class="stringliteral">&#39;required&#39;</span>,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            ]</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        );</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">        /**</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">         * Actualiza el registro de la cuenta</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">         */</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        $record               = AccountingAccount::find($id);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        $record-&gt;group          = $request[<span class="stringliteral">&#39;group&#39;</span>];</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        $record-&gt;subgroup       = $request[<span class="stringliteral">&#39;subgroup&#39;</span>];</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        $record-&gt;item           = $request[<span class="stringliteral">&#39;item&#39;</span>];</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        $record-&gt;generic        = $request[<span class="stringliteral">&#39;generic&#39;</span>];</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        $record-&gt;specific       = $request[<span class="stringliteral">&#39;specific&#39;</span>];</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        $record-&gt;subspecific    = $request[<span class="stringliteral">&#39;subspecific&#39;</span>];</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        $record-&gt;institutional  = $request[<span class="stringliteral">&#39;institutional&#39;</span>];</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        $record-&gt;denomination   = $request[<span class="stringliteral">&#39;denomination&#39;</span>];</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        $record-&gt;active         = $request[<span class="stringliteral">&#39;active&#39;</span>];</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        $record-&gt;save();</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span>=&gt;$this-&gt;getAccounts(), <span class="stringliteral">&#39;message&#39;</span>=&gt;<span class="stringliteral">&#39;Success&#39;</span>]);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html#l00148">148</a> del archivo <a class="el" href="../../d0/dc0/AccountingAccountController_8php_source.html">AccountingAccountController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        $this-&gt;validate(</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            $request,</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            [</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                <span class="stringliteral">&#39;group&#39;</span>          =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                <span class="stringliteral">&#39;subgroup&#39;</span>       =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                <span class="stringliteral">&#39;item&#39;</span>           =&gt; <span class="stringliteral">&#39;required|digits:1&#39;</span>,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                <span class="stringliteral">&#39;generic&#39;</span>        =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                <span class="stringliteral">&#39;specific&#39;</span>       =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                <span class="stringliteral">&#39;subspecific&#39;</span>    =&gt; <span class="stringliteral">&#39;required|digits:2&#39;</span>,</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                <span class="stringliteral">&#39;institutional&#39;</span>  =&gt; <span class="stringliteral">&#39;required|digits:3&#39;</span>,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                <span class="stringliteral">&#39;denomination&#39;</span>   =&gt; <span class="stringliteral">&#39;required&#39;</span>,</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                <span class="stringliteral">&#39;active&#39;</span>         =&gt; <span class="stringliteral">&#39;required&#39;</span>,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            ]</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        );</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">        /**</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">         * Actualiza el registro de la cuenta</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">         */</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        $record               = AccountingAccount::find($id);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        $record-&gt;group          = $request[<span class="stringliteral">&#39;group&#39;</span>];</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        $record-&gt;subgroup       = $request[<span class="stringliteral">&#39;subgroup&#39;</span>];</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        $record-&gt;item           = $request[<span class="stringliteral">&#39;item&#39;</span>];</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        $record-&gt;generic        = $request[<span class="stringliteral">&#39;generic&#39;</span>];</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        $record-&gt;specific       = $request[<span class="stringliteral">&#39;specific&#39;</span>];</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        $record-&gt;subspecific    = $request[<span class="stringliteral">&#39;subspecific&#39;</span>];</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        $record-&gt;institutional  = $request[<span class="stringliteral">&#39;institutional&#39;</span>];</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        $record-&gt;denomination   = $request[<span class="stringliteral">&#39;denomination&#39;</span>];</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        $record-&gt;active         = $request[<span class="stringliteral">&#39;active&#39;</span>];</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        $record-&gt;save();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span>=&gt;$this-&gt;getAccounts(), <span class="stringliteral">&#39;message&#39;</span>=&gt;<span class="stringliteral">&#39;Success&#39;</span>]);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -318,7 +321,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Accounting</b></li><li class="navelem"><b>Http</b></li><li class="navelem"><b>Controllers</b></li><li class="navelem"><a class="el" href="../../da/dbc/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountController.html">AccountingAccountController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:37 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

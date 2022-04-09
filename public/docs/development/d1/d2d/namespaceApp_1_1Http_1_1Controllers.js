@@ -29,6 +29,7 @@ var namespaceApp_1_1Http_1_1Controllers =
     [ "ParishController", "dc/df9/classApp_1_1Http_1_1Controllers_1_1ParishController.html", "dc/df9/classApp_1_1Http_1_1Controllers_1_1ParishController" ],
     [ "ProfessionController", "de/d2c/classApp_1_1Http_1_1Controllers_1_1ProfessionController.html", "de/d2c/classApp_1_1Http_1_1Controllers_1_1ProfessionController" ],
     [ "ProfileController", "d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html", "d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController" ],
+    [ "ReceiverController", "da/d07/classApp_1_1Http_1_1Controllers_1_1ReceiverController.html", "da/d07/classApp_1_1Http_1_1Controllers_1_1ReceiverController" ],
     [ "ReportController", "d6/d1c/classApp_1_1Http_1_1Controllers_1_1ReportController.html", "d6/d1c/classApp_1_1Http_1_1Controllers_1_1ReportController" ],
     [ "RequiredDocumentController", "d4/da0/classApp_1_1Http_1_1Controllers_1_1RequiredDocumentController.html", "d4/da0/classApp_1_1Http_1_1Controllers_1_1RequiredDocumentController" ],
     [ "TaxController", "de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html", "de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController" ],

@@ -81,7 +81,6 @@ class AppManagementController extends Controller
             }
         } else {
             foreach ($this->getModels() as $model_name) {
-                //if (Cache::has($cacheKey)) {}
                 /** @var object|string Nombre del modelo del cual se va a buscar registros eliminados */
                 $model = app($model_name);
                 
@@ -118,6 +117,19 @@ class AppManagementController extends Controller
         return response()->json(['result' => true, 'records' => $trashed]);
     }
 
+    /**
+     * Establece un listado de registros eliminados
+     * 
+     * @method   setDeletedRecords(array $trashed, array $deleted, string $model_name)
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  array   $trashed    Arreglo en el cual agregar los registros eliminados
+     * @param  array   $deleted    Arreglo de registros eliminados
+     * @param  string  $model_name Nombre del modelo
+     *
+     * @return void               
+     */
     public function setDeletedRecords($trashed, $deleted, $model_name = null)
     {
         foreach ($deleted as $del) {

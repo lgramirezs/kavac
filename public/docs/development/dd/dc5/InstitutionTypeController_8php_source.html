@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -164,82 +164,105 @@ $(document).ready(function(){initNavTree('dd/dc5/InstitutionTypeController_8php_
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        $this-&gt;validate($request, [</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;max:4&#39;</span>]</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        ]);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">if</span> (!restore_record(InstitutionType::class, [<span class="stringliteral">&#39;name&#39;</span> =&gt; $request-&gt;name])) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;unique:institution_types,name&#39;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            ]);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">        /** @var InstitutionType Objeto con información del tipo de organización registrada */</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        $institutionType = InstitutionType::updateOrCreate([</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; $request-&gt;name</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        ], [</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; ($request-&gt;acronym)?$request-&gt;acronym:<span class="keyword">null</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        ]);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $institutionType, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">     * Actualiza la información del tipo de organización</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">     * @method  update</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">     * @param  Request          $request            Objeto con información de la petición</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     * @param  InstitutionType  $institutionType    Objeto con información del tipo de organización a actualizar</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información de respuesta a la petición</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">   97</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">update</a>(Request $request, InstitutionType $institutionType)</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;max:4&#39;</span>]</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        ]);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        $institutionType-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        $institutionType-&gt;acronym = ($request-&gt;acronym)?$request-&gt;acronym:<span class="keyword">null</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        $institutionType-&gt;save();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">     * Elimina el tipo de organización</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">     * @method  destroy</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">     * @param  InstitutionType  $institutionType    Objeto con información del tipo de organización a eliminar</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:4&#39;</span>]</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        ], [</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="stringliteral">&#39;name.required&#39;</span> =&gt; <span class="stringliteral">&#39;El campo nombre es obligatorio.&#39;</span>,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="stringliteral">&#39;acronym.required&#39;</span> =&gt; <span class="stringliteral">&#39;El campo acrónimo es obligatorio.&#39;</span>,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="stringliteral">&#39;acronym.max&#39;</span> =&gt; <span class="stringliteral">&#39;El campo acrónimo no debe ser mayor que 4 caracteres.&#39;</span>,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        ]);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> (!restore_record(InstitutionType::class, [<span class="stringliteral">&#39;name&#39;</span> =&gt; $request-&gt;name])) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;unique:institution_types,name&#39;</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            ], [</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="stringliteral">&#39;name.unique&#39;</span> =&gt; <span class="stringliteral">&#39;El nombre ya ha sido registrado.&#39;</span>,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        ]);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">        /** @var InstitutionType Objeto con información del tipo de organización registrada */</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        $institutionType = InstitutionType::updateOrCreate([</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; $request-&gt;name</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        ], [</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; ($request-&gt;acronym)?$request-&gt;acronym:<span class="keyword">null</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        ]);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $institutionType, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">     * Actualiza la información del tipo de organización</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">     * @method  update</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">     * @param  Request          $request            Objeto con información de la petición</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">     * @param  InstitutionType  $institutionType    Objeto con información del tipo de organización a actualizar</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información de respuesta a la petición</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">  103</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">update</a>(Request $request, InstitutionType $institutionType)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="stringliteral">&#39;acronym&#39;</span> =&gt; [<span class="stringliteral">&#39;max:4&#39;</span>]</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        ]);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        $institutionType-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        $institutionType-&gt;acronym = ($request-&gt;acronym)?$request-&gt;acronym:<span class="keyword">null</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        $institutionType-&gt;save();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">     * Elimina el tipo de organización</span></div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información sobre la eliminación del tipo de organización</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">  122</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">destroy</a>(InstitutionType $institutionType)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        $institutionType-&gt;delete();</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $institutionType, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">     * @method  destroy</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">     * @param  InstitutionType  $institutionType    Objeto con información del tipo de organización a eliminar</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información sobre la eliminación del tipo de organización</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">  128</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">destroy</a>(InstitutionType $institutionType)</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    {</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        $institutionType-&gt;delete();</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $institutionType, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">     * Consulta un tipo específico</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">     * @author  Angelo Osorio &lt;adosorio@cenditel.gob.ve&gt; | &lt;danielking.321@gmail.com&gt;</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">     * </span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment">     * @param \Illuminate\Http\Request $request Datos de la petición</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">     * @param integer $id ID del tipo</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">     * </span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">     * @return \Illuminate\Http\JsonResponse con el resultado de la petición</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#ab3d6ee03590bae8815531ed434bc128d">  144</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#ab3d6ee03590bae8815531ed434bc128d">getType</a>(Request $request, $id)</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        $type = InstitutionType::find($id);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; $type], 200);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a0f49c5ae145392b534151e9bb424338b"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">App\Http\Controllers\InstitutionTypeController\destroy</a></div><div class="ttdeci">destroy(InstitutionType $institutionType)</div><div class="ttdoc">Elimina el tipo de organización.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00122">InstitutionTypeController.php:122</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a0f49c5ae145392b534151e9bb424338b"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a0f49c5ae145392b534151e9bb424338b">App\Http\Controllers\InstitutionTypeController\destroy</a></div><div class="ttdeci">destroy(InstitutionType $institutionType)</div><div class="ttdoc">Elimina el tipo de organización.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00128">InstitutionTypeController.php:128</a></div></div>
 <div class="ttc" id="anamespaceApp_1_1Http_1_1Controllers_html"><div class="ttname"><a href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">App\Http\Controllers</a></div><div class="ttdoc">Controladores base de la aplicación.</div></div>
-<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a486a797a6cab2c05a33f158c727b8f08"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">App\Http\Controllers\InstitutionTypeController\update</a></div><div class="ttdeci">update(Request $request, InstitutionType $institutionType)</div><div class="ttdoc">Actualiza la información del tipo de organización.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00097">InstitutionTypeController.php:97</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a486a797a6cab2c05a33f158c727b8f08"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a486a797a6cab2c05a33f158c727b8f08">App\Http\Controllers\InstitutionTypeController\update</a></div><div class="ttdeci">update(Request $request, InstitutionType $institutionType)</div><div class="ttdoc">Actualiza la información del tipo de organización.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00103">InstitutionTypeController.php:103</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a149eb92716c1084a935e04a8d95f7347"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a149eb92716c1084a935e04a8d95f7347">App\Http\Controllers\InstitutionTypeController\index</a></div><div class="ttdeci">index()</div><div class="ttdoc">Listado de todos los registros de los tipos de organización.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00046">InstitutionTypeController.php:46</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#a095c5d389db211932136b53f25f39685">App\Http\Controllers\InstitutionTypeController\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdoc">Define la configuración de la clase.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00028">InstitutionTypeController.php:28</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html">App\Http\Controllers\InstitutionTypeController</a></div><div class="ttdoc">Gestiona información de los tipos de Organizaciones.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00019">InstitutionTypeController.php:19</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1Controller_html"><div class="ttname"><a href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html">App\Http\Controllers\Controller</a></div><div class="ttdoc">Controlador principal del framework del cual extienden los demás controladores.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d82/Controller_8php_source.html#l00019">Controller.php:19</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1InstitutionTypeController_html_ab3d6ee03590bae8815531ed434bc128d"><div class="ttname"><a href="../../d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#ab3d6ee03590bae8815531ed434bc128d">App\Http\Controllers\InstitutionTypeController\getType</a></div><div class="ttdeci">getType(Request $request, $id)</div><div class="ttdoc">Consulta un tipo específico.</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/dc5/InstitutionTypeController_8php_source.html#l00144">InstitutionTypeController.php:144</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_0c4ee04d587063ecca91a7f35642b9f3.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_27ba1f74dc73f44d4e9ca42f2dd266ec.html">Controllers</a></li><li class="navelem"><b>InstitutionTypeController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

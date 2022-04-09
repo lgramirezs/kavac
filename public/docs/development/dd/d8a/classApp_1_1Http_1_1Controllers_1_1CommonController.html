@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('dd/d8a/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/dc4/classApp_1_1Http_1_1Controllers_1_1CommonController__inherit__graph.png" border="0" usemap="#CommonController_inherit__map" alt="Inheritance graph"/></div>
+<map name="CommonController_inherit__map" id="CommonController_inherit__map">
+<area shape="rect" title="Gestiona información de común de la aplicación." alt="" coords="5,131,195,237"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="57,5,143,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para CommonController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('dd/d8a/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/dd7/classApp_1_1Http_1_1Controllers_1_1CommonController__coll__graph.png" border="0" usemap="#CommonController_coll__map" alt="Collaboration graph"/></div>
+<map name="CommonController_coll__map" id="CommonController_coll__map">
+<area shape="rect" title="Gestiona información de común de la aplicación." alt="" coords="5,131,195,237"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="57,5,143,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -124,6 +132,12 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a26a3ce682820952eca99ee59f089a617"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#a26a3ce682820952eca99ee59f089a617">getSelectData</a> (Request $request, $parent_model, $parent_id, $model, $module_name=null, $fk=null)</td></tr>
 <tr class="memdesc:a26a3ce682820952eca99ee59f089a617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene Datos de modelos relacionados.  <a href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#a26a3ce682820952eca99ee59f089a617">Más...</a><br /></td></tr>
 <tr class="separator:a26a3ce682820952eca99ee59f089a617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af72c7a542ded407a6054dfc81affe4bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#af72c7a542ded407a6054dfc81affe4bf">getSelectDataCustom</a> (Request $request, $parent_model, $parent_id, $model, $module_name=null, $fk=null)</td></tr>
+<tr class="memdesc:af72c7a542ded407a6054dfc81affe4bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene Datos de modelos relacionos pero para tablas que no poseen campo name.  <a href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#af72c7a542ded407a6054dfc81affe4bf">Más...</a><br /></td></tr>
+<tr class="separator:af72c7a542ded407a6054dfc81affe4bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecb4c06b4e1888db334d9351be71a039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#aecb4c06b4e1888db334d9351be71a039">isDeleted</a> (Request $request)</td></tr>
+<tr class="memdesc:aecb4c06b4e1888db334d9351be71a039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determina si un registro se encuentra eliminado.  <a href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#aecb4c06b4e1888db334d9351be71a039">Más...</a><br /></td></tr>
+<tr class="separator:aecb4c06b4e1888db334d9351be71a039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Gestiona información de común de la aplicación. </p>
@@ -131,7 +145,7 @@ Métodos públicos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
 <dl class="section user"><dt>Licencia:</dt><dd><a href="http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/">LICENCIA DE SOFTWARE CENDITEL</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00017">17</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00018">18</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="a26a3ce682820952eca99ee59f089a617"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26a3ce682820952eca99ee59f089a617">&#9670;&nbsp;</a></span>getSelectData()</h2>
@@ -184,36 +198,161 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Obtiene Datos de modelos relacionados. </p>
-<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
+<p>@method getSelectData</p>
+<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">\Illuminate\Http\Request</td><td class="paramname">$request</td><td>Datos de la petición </td></tr>
+    <tr><td class="paramtype">Request</td><td class="paramname">$request</td><td>Datos de la petición </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$parent_model</td><td>Nombre del modelo padre </td></tr>
     <tr><td class="paramtype">integer</td><td class="paramname">$parent_id</td><td>Identificador del elemento relacionado </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$model</td><td>Nombre del modelo </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$module_name</td><td>Nombre del módulo </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$fk</td><td>Clave foránea </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$fk</td><td>Clave foránea</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse Datos con los registros relacionados </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>JsonResponse Datos con los registros relacionados </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00031">31</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        $model_name = ($model == <span class="stringliteral">&#39;User&#39;</span>)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                      ? <span class="stringliteral">&quot;App\\Models\\{$model}&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                      : ((!is_null($module_name))?<span class="stringliteral">&quot;Modules\\{$module_name}&quot;</span>:<span class="stringliteral">&#39;App&#39;</span>) . <span class="stringliteral">&quot;\\Models\\{$model}&quot;</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        $fk = (is_null($fk))</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;              ? ((strpos($parent_model, <span class="stringliteral">&#39;_id&#39;</span>) === <span class="keyword">false</span>)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;              ? strtolower($parent_model) . <span class="stringliteral">&#39;_id&#39;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;              : $parent_model)</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;              : $fk;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>, <span class="stringliteral">&#39;records&#39;</span> =&gt; $model_name::where($fk, $parent_id)-&gt;orderBy(<span class="stringliteral">&#39;name&#39;</span>)-&gt;<span class="keyword">get</span>()</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        ], 200);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00036">36</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        $model_name = ($model == <span class="stringliteral">&#39;User&#39;</span>)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                      ? <span class="stringliteral">&quot;App\\Models\\{$model}&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                      : ((!is_null($module_name))?<span class="stringliteral">&quot;Modules\\{$module_name}&quot;</span>:<span class="stringliteral">&#39;App&#39;</span>) . <span class="stringliteral">&quot;\\Models\\{$model}&quot;</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        $fk = (is_null($fk))</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;              ? ((strpos($parent_model, <span class="stringliteral">&#39;_id&#39;</span>) === <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;              ? strtolower($parent_model) . <span class="stringliteral">&#39;_id&#39;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;              : $parent_model)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;              : $fk;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>, <span class="stringliteral">&#39;records&#39;</span> =&gt; $model_name::where($fk, $parent_id)-&gt;orderBy(<span class="stringliteral">&#39;name&#39;</span>)-&gt;<span class="keyword">get</span>()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        ], 200);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af72c7a542ded407a6054dfc81affe4bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af72c7a542ded407a6054dfc81affe4bf">&#9670;&nbsp;</a></span>getSelectDataCustom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getSelectDataCustom </td>
+          <td>(</td>
+          <td class="paramtype">Request&#160;</td>
+          <td class="paramname"><em>$request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$parent_model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$parent_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$module_name</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$fk</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtiene Datos de modelos relacionos pero para tablas que no poseen campo name. </p>
+<p>@method getSelectData</p>
+<dl class="section author"><dt>Autor</dt><dd><br  />
+</dd></dl>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">Request</td><td class="paramname">$request</td><td>Datos de la petición </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$parent_model</td><td>Nombre del modelo padre </td></tr>
+    <tr><td class="paramtype">integer</td><td class="paramname">$parent_id</td><td>Identificador del elemento relacionado </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$model</td><td>Nombre del modelo </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$module_name</td><td>Nombre del módulo </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$fk</td><td>Clave foránea</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>JsonResponse Datos con los registros relacionados </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00069">69</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        $model_name = ($model == <span class="stringliteral">&#39;User&#39;</span>)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                      ? <span class="stringliteral">&quot;App\\Models\\{$model}&quot;</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                      : ((!is_null($module_name))?<span class="stringliteral">&quot;Modules\\{$module_name}&quot;</span>:<span class="stringliteral">&#39;App&#39;</span>) . <span class="stringliteral">&quot;\\Models\\{$model}&quot;</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        $fk = (is_null($fk))</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;              ? ((strpos($parent_model, <span class="stringliteral">&#39;_id&#39;</span>) === <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;              ? strtolower($parent_model) . <span class="stringliteral">&#39;_id&#39;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;              : $parent_model)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;              : $fk;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>, <span class="stringliteral">&#39;records&#39;</span> =&gt; $model_name::where($fk, $parent_id)-&gt;<span class="keyword">get</span>()</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        ], 200);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aecb4c06b4e1888db334d9351be71a039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecb4c06b4e1888db334d9351be71a039">&#9670;&nbsp;</a></span>isDeleted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">isDeleted </td>
+          <td>(</td>
+          <td class="paramtype">Request&#160;</td>
+          <td class="paramname"><em>$request</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determina si un registro se encuentra eliminado. </p>
+<p>@method isDeleted</p>
+<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">Request</td><td class="paramname">$request</td><td>Datos de la petición</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>JsonResponse Datos con el resultado de la verificación. Devuelve verdadero si el registro se encuentra eliminado, de lo contrario retorna falso </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../d6/dd4/CommonController_8php_source.html#l00097">97</a> del archivo <a class="el" href="../../d6/dd4/CommonController_8php_source.html">CommonController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $model = ucfirst(Str::camel($request-&gt;source));</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        $filters = $request-&gt;filters;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        $record = $model::onlyTrashed()-&gt;where($filters)-&gt;first();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $record], 200);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -226,7 +365,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html">CommonController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

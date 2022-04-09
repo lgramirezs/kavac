@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -104,14 +104,14 @@ $(document).ready(function(){initNavTree('d2/d7e/AccountingAccountConverterContr
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">namespace </span>Modules\Accounting\Http\Controllers;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;use Illuminate\Http\Request;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Illuminate\Contracts\Support\Renderable;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use Illuminate\Routing\Controller;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use Illuminate\Foundation\Validation\ValidatesRequests;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use <a class="code" href="../../db/d20/classModules_1_1Accounting_1_1Models_1_1Accountable.html">Modules\Accounting\Models\Accountable</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use <a class="code" href="../../de/dea/classModules_1_1Accounting_1_1Models_1_1AccountingAccount.html">Modules\Accounting\Models\AccountingAccount</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use Modules\Accounting\Models\BudgetAccount;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Illuminate\Routing\Controller;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use Nwidart\Modules\Facades\Module;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use <a class="code" href="../../db/d20/classModules_1_1Accounting_1_1Models_1_1Accountable.html">Modules\Accounting\Models\Accountable</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use Illuminate\Contracts\Support\Renderable;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use Modules\Accounting\Models\BudgetAccount;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use <a class="code" href="../../de/dea/classModules_1_1Accounting_1_1Models_1_1AccountingAccount.html">Modules\Accounting\Models\AccountingAccount</a>;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;use Module;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;use Illuminate\Foundation\Validation\ValidatesRequests;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * @class AccountingAccountConverterController</span></div>
@@ -585,7 +585,7 @@ $(document).ready(function(){initNavTree('d2/d7e/AccountingAccountConverterContr
 </div><!-- doc-content -->
 <div class="ttc" id="aclassModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="../../d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html#a095c5d389db211932136b53f25f39685">Modules\Accounting\Http\Controllers\AccountingAccountConverterController\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdoc">Define la configuración de la clase.</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d7e/AccountingAccountConverterController_8php_source.html#l00035">AccountingAccountConverterController.php:35</a></div></div>
 <div class="ttc" id="aclassModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController_html_affb03cc19897a1800a0f411264d6c7cc"><div class="ttname"><a href="../../d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html#affb03cc19897a1800a0f411264d6c7cc">Modules\Accounting\Http\Controllers\AccountingAccountConverterController\update</a></div><div class="ttdeci">update(Request $request, $id)</div><div class="ttdoc">[update Actualiza los datos de la conversión] ejemplo de datos que recibe la función en $request { 'm...</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d7e/AccountingAccountConverterController_8php_source.html#l00225">AccountingAccountConverterController.php:225</a></div></div>
-<div class="ttc" id="aclassModules_1_1Accounting_1_1Models_1_1AccountingAccount_html"><div class="ttname"><a href="../../de/dea/classModules_1_1Accounting_1_1Models_1_1AccountingAccount.html">Modules\Accounting\Models\AccountingAccount</a></div><div class="ttdoc">Datos de cuentas del Clasificador Patrimoniales.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d38/AccountingAccount_8php_source.html#l00020">AccountingAccount.php:20</a></div></div>
+<div class="ttc" id="aclassModules_1_1Accounting_1_1Models_1_1AccountingAccount_html"><div class="ttname"><a href="../../de/dea/classModules_1_1Accounting_1_1Models_1_1AccountingAccount.html">Modules\Accounting\Models\AccountingAccount</a></div><div class="ttdoc">Datos de cuentas del Clasificador Patrimoniales.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d38/AccountingAccount_8php_source.html#l00021">AccountingAccount.php:21</a></div></div>
 <div class="ttc" id="aclassModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController_html_a7dfbc1bb9a2813e496bfa2918b463571"><div class="ttname"><a href="../../d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html#a7dfbc1bb9a2813e496bfa2918b463571">Modules\Accounting\Http\Controllers\AccountingAccountConverterController\getAllRecordsBudgetVuejs</a></div><div class="ttdeci">getAllRecordsBudgetVuejs()</div><div class="ttdoc">[getAllRecordsBudgetVuejs registros de las cuentas presupuestarias al componente]</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d7e/AccountingAccountConverterController_8php_source.html#l00076">AccountingAccountConverterController.php:76</a></div></div>
 <div class="ttc" id="aclassModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController_html"><div class="ttname"><a href="../../d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html">Modules\Accounting\Http\Controllers\AccountingAccountConverterController</a></div><div class="ttdoc">Controlador para la conversión de cuentas presupuestarias y patrimoniales.</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d7e/AccountingAccountConverterController_8php_source.html#l00026">AccountingAccountConverterController.php:26</a></div></div>
 <div class="ttc" id="aclassModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController_html_a9ef485163104597c12185b53cdacf638"><div class="ttname"><a href="../../d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html#a9ef485163104597c12185b53cdacf638">Modules\Accounting\Http\Controllers\AccountingAccountConverterController\store</a></div><div class="ttdeci">store(Request $request)</div><div class="ttdoc">Crea una nuevas conversiones ejemplo de datos que recibe la función { 'module' : 'Budget',...</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d7e/AccountingAccountConverterController_8php_source.html#l00127">AccountingAccountConverterController.php:127</a></div></div>
@@ -595,7 +595,7 @@ $(document).ready(function(){initNavTree('d2/d7e/AccountingAccountConverterContr
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_e9c51124d36e4406d93a0c0797fbe518.html">Accounting</a></li><li class="navelem"><a class="el" href="../../dir_d8000a64c51c84aba9bc911d9de4eee2.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_10fed8921d2fb8e909c2ae0b80c2451a.html">Controllers</a></li><li class="navelem"><b>AccountingAccountConverterController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:56 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:28 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

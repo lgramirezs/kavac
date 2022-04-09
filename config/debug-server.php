@@ -2,7 +2,7 @@
 
 return [
     /*
-     * The host to use when listening for debug server connections.
+     * El host que se usará al escuchar las conexiones del servidor de depuración.
      */
     'host' => 'tcp://127.0.0.1:9912',
 ];
