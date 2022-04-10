@@ -1,6 +1,11 @@
 <template>
 	<v-client-table :columns="columns" :data="records" :options="table_options">
 		<div slot="id" slot-scope="props" class="text-center">
+			<button @click="show_info(props.row.id)" v-if="route_show"
+        				class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
+        				title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
+        		<i class="fa fa-eye"></i>
+        	</button>
 			<button @click="editForm(props.row.id)"
     				class="btn btn-warning btn-xs btn-icon btn-action"
     				title="Modificar registro" data-toggle="tooltip" type="button">
