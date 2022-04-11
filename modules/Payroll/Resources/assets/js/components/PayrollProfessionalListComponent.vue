@@ -96,7 +96,7 @@
                             </div>
     						<div class="col-3">
     							<div class="form-group is-required">
-    								<label>Año de Graduación:</label>
+    								<label>Fecha de graduación:</label>
     								<input type="text" class="form-control input-sm"
     									disabled="true" v-model="payroll_study.graduation_year"/>
     							</div>
