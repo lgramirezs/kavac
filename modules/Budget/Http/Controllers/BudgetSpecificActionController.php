@@ -77,12 +77,12 @@ class BudgetSpecificActionController extends Controller
 
         /** @var array Define los mensajes de error para el formulario */
         $this->validate_messages = [
-            'code.unique' => 'El campo código ya ha sido registrado.',
             'from_date.required' => 'El campo fecha de inicio es obligatorio.',
             'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
             'to_date.required' => 'El campo fecha final es obligatorio.',
             'to_date.date' => 'El campo fecha final no tiene un formato válido.',
             'code.required' => 'El campo código es obligatorio.',
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'project_centralized_action.required' => 'Debe indicar si el registro es para un proyecto o acción centralizada.',
             'project_id.required_if' => 'Debe seleccionar un proyecto.',
             'centralized_action_id.required_if' => 'Debe seleccionar una acción centralizada'
