@@ -67,7 +67,7 @@ class BudgetSpecificActionController extends Controller
         $this->validate_rules = [
             'from_date' => ['required', 'date'],
             'to_date' => ['required', 'date'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_specific_actions'],
             'name' => ['required'],
             'description' => ['required'],
             'project_centralized_action' => ['required'],
@@ -77,6 +77,7 @@ class BudgetSpecificActionController extends Controller
 
         /** @var array Define los mensajes de error para el formulario */
         $this->validate_messages = [
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'from_date.required' => 'El campo fecha de inicio es obligatorio.',
             'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
             'to_date.required' => 'El campo fecha final es obligatorio.',
