@@ -65,7 +65,7 @@
                                         disabled="true" id="payroll_instruction_degree">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Profesiones</label>
                                     <v-multiselect :options="(record.professions) ? record.professions : []" track_by="name"
@@ -79,7 +79,7 @@
                                     <input type="text" data-toggle="tooltip" class="form-control input-sm"
                                         disabled="true" id="instruction_degree_name">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <hr>
@@ -96,7 +96,7 @@
                             </div>
     						<div class="col-3">
     							<div class="form-group is-required">
-    								<label>Anño de Graduación:</label>
+    								<label>Año de Graduación:</label>
     								<input type="text" class="form-control input-sm"
     									disabled="true" v-model="payroll_study.graduation_year"/>
     							</div>
