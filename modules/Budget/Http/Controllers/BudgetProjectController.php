@@ -53,12 +53,13 @@ class BudgetProjectController extends Controller
             'department_id' => ['required'],
             'payroll_position_id' => ['required'],
             'payroll_staff_id' => ['required'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_projects'],
             'name' => ['required'],
         ];
 
         /** @var array Define los mensajes de error para el formulario */
         $this->messages = [
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'institution_id.required' => 'El campo institución es obligatorio. ',
             'department_id.required' => 'El campo dependencia es obligatorio. ',
             'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
