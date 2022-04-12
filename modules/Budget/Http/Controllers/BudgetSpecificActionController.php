@@ -67,7 +67,7 @@ class BudgetSpecificActionController extends Controller
         $this->validate_rules = [
             'from_date' => ['required', 'date'],
             'to_date' => ['required', 'date'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_specific_actions'],
             'name' => ['required'],
             'description' => ['required'],
             'project_centralized_action' => ['required'],
@@ -82,6 +82,7 @@ class BudgetSpecificActionController extends Controller
             'to_date.required' => 'El campo fecha final es obligatorio.',
             'to_date.date' => 'El campo fecha final no tiene un formato válido.',
             'code.required' => 'El campo código es obligatorio.',
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'project_centralized_action.required' => 'Debe indicar si el registro es para un proyecto o acción centralizada.',
             'project_id.required_if' => 'Debe seleccionar un proyecto.',
             'centralized_action_id.required_if' => 'Debe seleccionar una acción centralizada'

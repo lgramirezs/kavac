@@ -110,7 +110,7 @@ class BudgetCentralizedActionController extends Controller
         $rules = [
             'institution_id' => ['required'],
             'department_id' => ['required'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_centralized_actions'],
             'custom_date' => ['required', 'date'],
             'name' => ['required'],
             'payroll_position_id' => ['required'],
@@ -120,11 +120,12 @@ class BudgetCentralizedActionController extends Controller
             'institution_id.required'     => 'El campo institucion es obligatorio.',
             'department_id.required'     => 'El campo departamento es obligatorio.',
             'code.required'     => 'El campo código es obligatorio.',
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'custom_date.required'     => 'El campo fecha es obligatorio.',
             'name.required'     => 'El campo nombre es obligatorio.',
             'payroll_position_id.required'     => 'El campo cargo es obligatorio.',
             'payroll_staff_id.required'     => 'El campo responsable es obligatorio.',
-           ];
+        ];
         if (Module::has('Payroll') && Module::isEnabled('Payroll')) {
             $rules['payroll_position_id'] = 'required';
             $rules['payroll_staff_id'] = 'required';

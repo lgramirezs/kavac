@@ -53,7 +53,7 @@ class BudgetProjectController extends Controller
             'department_id' => ['required'],
             'payroll_position_id' => ['required'],
             'payroll_staff_id' => ['required'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_projects'],
             'name' => ['required'],
         ];
 
@@ -64,6 +64,7 @@ class BudgetProjectController extends Controller
             'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
             'payroll_staff_id.required' => 'El campo responsable es obligatorio. ',
             'code.required' => 'El campo código es obligatorio. ',
+            'code.unique' => 'El campo código ya ha sido registrado.',
             'name.required' => 'El campo nombre es obligatorio. ',
         ];
     }
