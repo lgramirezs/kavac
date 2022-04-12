@@ -38,7 +38,7 @@ class PurchaseSupplier extends Model implements Auditable
     ];
 
     protected $fillable = [
-        'rif', 'code', 'name', 'direction', 'person_type', 'company_type', 'contact_name', 'contact_email', 'website',
+        'rif', 'code', 'name', 'direction', 'person_type', 'company_type', 'website',
         'active', 'purchase_supplier_specialty_id', 'purchase_supplier_type_id', 'purchase_supplier_object_id',
         'purchase_supplier_branch_id', 'country_id', 'estate_id', 'city_id', 'rnc_status', 'rnc_certificate_number', 
         'social_purpose'

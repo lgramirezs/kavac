@@ -239,26 +239,7 @@
 									</div>
 								</div>
 								<hr>
-								<h6 class="card-title">Datos de Contacto</h6>
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group is-required{{ $errors->has('contact_name') ? ' has-error' : '' }}">
-											{!! Form::label('contact_name', 'Nombre') !!}
-											{!! Form::text('contact_name', null, [
-												'class' => 'form-control input-sm'
-											]) !!}
-										</div>
-									</div>
-									<div class="col-6">
-										<div class="form-group is-required{{ $errors->has('contact_email') ? ' has-error' : '' }}">
-											{!! Form::label('contact_email', 'Correo electrónico') !!}
-											{!! Form::text('contact_email', null, [
-												'class' => 'form-control input-sm'
-											]) !!}
-										</div>
-									</div>
-								</div>
-								{{-- @php
+								@php
 									$contacts = [];
 									if (isset($model) && $model->contacts) {
 										foreach ($model->contacts as $contact) {
@@ -268,8 +249,8 @@
 											]);
 										}
 									}
-								@endphp --}}
-								{{-- <contacts initial_data="{{ ($contacts) ? json_encode($contacts) : '' }}"></contacts> --}}
+								@endphp
+								<contacts initial_data="{{ ($contacts) ? json_encode($contacts) : '' }}"></contacts>
 								<hr>
 								@php
 									$phones = [];

@@ -126,6 +126,7 @@ class PurchaseSupplierController extends Controller
             'contact_name.required'                   => 'El campo nombre de contacto es obligatorio.',
             'contact_email.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
+        dd($request->all());
         $supplier = PurchaseSupplier::create([
             'person_type'                    => $request->person_type,
             'company_type'                   => $request->company_type,
@@ -133,8 +134,6 @@ class PurchaseSupplierController extends Controller
             'code'                           => generate_code(PurchaseSupplier::class, 'code'),
             'name'                           => $request->name,
             'direction'                      => $request->direction,
-            'contact_name'                   => $request->contact_name,
-            'contact_email'                  => $request->contact_email,
             'website'                        => $request->website ?? null,
             'active'                         => $request->active ? true : false,
             'purchase_supplier_object_id'    => $request->purchase_supplier_object_id,
@@ -147,20 +146,18 @@ class PurchaseSupplierController extends Controller
             'rnc_status'                     => $request->rnc_status ?? 'NOI',
             'rnc_certificate_number'         => $request->rnc_certificate_number ?? null,
             'social_purpose'                 => $request->social_purpose,
-            
         ]);
 
 
         /** Registros asociados a contactos */
-        // if ($request->contacts && !empty($request->contacts)) {
-        //     foreach ($request->contacts as $key => $contact) {
-        //         $supplier->contacts()->save(new Contact([
-        //             'name' => $contact->name,
-        //             'email' => $contact->email,
-        //         ]));
-        //     }
-        // }
-
+        if ($request->contacts && !empty($request->contacts)) {
+            foreach ($request->contacts as $key => $contact) {
+                $supplier->contacts()->save(new Contact([
+                    'name' => $contact->name,
+                    'email' => $contact->email,
+                ]));
+            }
+        }
 
         /** Asociación de números telefónicos */
         if ($request->phone_type && !empty($request->phone_type)) {
@@ -265,8 +262,6 @@ class PurchaseSupplierController extends Controller
         $supplier->code                           = $supplier->code;
         $supplier->name                           = $request->name;
         $supplier->direction                      = $request->direction;
-        $supplier->contact_name                   = $request->contact_name;
-        $supplier->contact_email                  = $request->contact_email;
         $supplier->website                        = $request->website ?? null;
         $supplier->active                         = $request->active ? true : false;
         $supplier->purchase_supplier_object_id    = $request->purchase_supplier_object_id;

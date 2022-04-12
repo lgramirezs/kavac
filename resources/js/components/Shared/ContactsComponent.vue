@@ -6,13 +6,13 @@
         <div class="row contact-row" v-for="(contact, index) in contacts">
             <div class="col-5">
                 <div class="form-group is-required">
-                    <input type="text" placeholder="Nombre del contacto" data-toggle="tooltip" name="phone_name[]"
+                    <input type="text" placeholder="Nombre del contacto" data-toggle="tooltip" name="contact_name[]"
                            title="Indique el nombre del contacto" v-model="contact.name" class="form-control input-sm">
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group is-required">
-                    <input type="email" placeholder="Electrónico del contacto" data-toggle="tooltip" name="phone_email[]"
+                    <input type="email" placeholder="Electrónico del contacto" data-toggle="tooltip" name="contact_email[]"
                            title="Indique el correo electrónico del contacto" v-model="contact.email" class="form-control input-sm">
                 </div>
             </div>
