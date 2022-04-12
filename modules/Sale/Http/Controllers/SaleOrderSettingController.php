@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Sale\Models\SaleOrder;
 use Modules\Sale\Models\SaleSettingProduct;
+use Modules\Sale\Models\SaleWarehouseInventoryProduct;
 
 /**
  * @class SaleOrderSettingController
@@ -293,6 +294,15 @@ class SaleOrderSettingController extends Controller
         $sale_order = SaleOrder::find($id);
         $sale_order->status = 'aprobado';
         $sale_order->save();
+
+        $products = json_decode($sale_order->products, true);
+        foreach ($products as $id => $row) {
+          $inventory_product = SaleWarehouseInventoryProduct::find($row['inventory_product']['id']);
+          $exist = $inventory_product->exist;
+          $exist -= $row['quantity'];
+          $inventory_product->exist = $exist;
+          $inventory_product->save();
+        }
 
         $request->session()->flash('message', ['type' => 'update']);
         return response()->json(['result' => true, 'redirect' => route('sale.order.index')], 200);
