@@ -21,7 +21,7 @@
 			    <span aria-hidden="true">×</span>
 			  </button>
 		      <h6>
-			    <i class="icofont icofont-read-book ico-2x"></i> Información del servicio aprovado
+			    <i class="icofont icofont-read-book ico-2x"></i> Información del pedido aprobado
 		      </h6>
 		    </div>
             <div class="modal-body">
