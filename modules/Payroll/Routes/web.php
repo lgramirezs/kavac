@@ -18,7 +18,7 @@ Route::group([
     'prefix' => 'payroll'
 ], function () {
 
-    /* Ruta para manejar manipular la informacion de los niveles de escolaridad */ */
+    /* Ruta para manejar manipular la informacion de los niveles de escolaridad */
     Route::resource(
         'schooling-levels',
         'PayrollSchoolingLevelController',
