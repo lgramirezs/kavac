@@ -692,6 +692,17 @@ Vue.component('payroll-disabilities', () =>
 );
 
 /**
+ * Componente para listar, crear, actualizar y borrar datos niveles de escolaridad
+ * 
+ * @author José Briceño <josejorgebriceno9@gmail.com>
+ */
+Vue.component('payroll-schooling-levels', () =>
+	import(
+		/* webpackChunkName: "schooling-level" */
+		'./components/settings/PayrollSchoolingLevelComponent.vue')
+);
+
+/**
  * Componente para la gestión de calculos de salario
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
@@ -967,6 +978,18 @@ Vue.mixin({
 			this.payroll_disabilities = [];
 			axios.get(`${window.app_url}/payroll/get-disabilities`).then(response => {
 				this.payroll_disabilities = response.data;
+			});
+		},
+
+		/**
+		 * Obtiene los datos de nivel de escolaridad
+		 *
+		 * @author José Briceño <josejorgebriceno9@gmail.com> 
+		 */
+		getPayrollSchoolingLevels() {
+			this.payroll_schooling_levels = [];
+			axios.get(`${window.app_url}/payroll/get-schooling-levels`).then(response => {
+				this.payroll_schooling_levels = response.data;
 			});
 		}
 	}

@@ -237,6 +237,9 @@
 
 						{{-- Discapacidades --}}
 						<payroll-disabilities></payroll-disabilities>
+
+						{{-- Niveles de escolaridad --}}
+						<payroll-schooling-levels></payroll-schooling-levels>
 					</div>
 				</div>
 			</div>

@@ -18,6 +18,20 @@ Route::group([
     'prefix' => 'payroll'
 ], function () {
 
+    /* Ruta para manejar manipular la informacion de los niveles de escolaridad */ */
+    Route::resource(
+        'schooling-levels',
+        'PayrollSchoolingLevelController',
+        ['as' => 'payroll', 'except' => ['show', 'create', 'edit']]
+    );
+
+    /* Ruta para obtener la lista de los niveles de escolaridad */
+    Route::get(
+        'get-schooling-levels',
+        [Modules\Payroll\Http\Controllers\PayrollSchoolingLevelController::class, 'getPayrollSchoolingLevels']
+    )->name('payroll.get-payroll-schooling-levels');
+
+
     /** Rutas para gestionar la nómina de trabajadores de la institución */
     Route::resource('registers', 'PayrollController', ['as' => 'payroll', 'except' => ['edit', 'show']]);
 
@@ -538,7 +552,7 @@ Route::group([
     );
     /** Ruta que muestra información sobre la solicitud de permiso */
     Route::get('permission-requests/vue-info/{permission_request}', 'PayrollPermissionRequestController@vueInfo')
-    ->name('payroll.permission-requests.vue-info');
+        ->name('payroll.permission-requests.vue-info');
 
     /** Ruta que obtiene un listado de las solicitudes de permiso */
     Route::get(
@@ -592,7 +606,7 @@ Route::group([
 
         Route::get('showPdfSign/{filename}', 'PayrollReportController@showPdfSign')
             ->name('payroll.reports.showPdfSign');
-        
+
         /** Ruta que permite generar el reporte de los registros de nómina asociados a un pago */
         Route::post('registers/create', 'PayrollReportController@create')
             ->name('payroll.reports.registers.create');
