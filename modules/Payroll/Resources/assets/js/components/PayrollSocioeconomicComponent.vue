@@ -83,22 +83,54 @@
                             class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="form-group">
                         <input type="text" placeholder="Cédula de Identidad del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la cédula de indentidad del hijo del trabajador"
                             v-model="payroll_children.id_number" class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="form-group is-required">
                         <input type="date" placeholder="Fecha de Nacimiento del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la fecha de nacimiento del hijo del trabajador"
                             v-model="payroll_children.birthdate" class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col-3" id="helpProfessionalIsStudent">
                     <div class="form-group">
+                        <label>¿Es Estudiante?</label>
+                        <div class="col-md-12">
+                            <div class="col-1 bootstrap-switch-mini">
+                                <!-- <input :id="`${index}`" type="checkbox" -->
+                                <input type="checkbox" :id="'mySwicth' + `${index}`"
+                                    class="form-control bootstrap-switch" data-toggle="tooltip"
+                                    data-on-label="SI" data-off-label="NO"
+                                    title="Indique si el hijo es estudiante o no"
+                                    value="true"
+                                    v-model="payroll_children.student"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-none col-3" :id="`${index}`">
+                    <div class="form-group is-required">
+						<label>¿Nivel de escolaridad?</label>
+						<select2 :options="payroll_schooling_levels"
+							    v-model="payroll_children.payroll_schooling_level_id">
+    					</select2>
+        	        </div>
+                    <div class="form-group is-required">
+                        <label>Centro de estudio</label>
+                        <input type="text" placeholder="Nombre del centro de estudio" data-toggle="tooltip"
+                            title="Indique el nombre del centro de estudio"
+                            v-model="payroll_children.study_center" class="form-control input-sm">
+                    </div>
+                    <br>
+                </div>
+                <div class="row col-1">
+                    <div class="form-group">
+                        <br>
                         <button class="btn btn-sm btn-danger btn-action" type="button"
                             @click="removeRow(index, record.payroll_childrens)"
                             title="Eliminar este dato" data-toggle="tooltip" data-placement="right">
@@ -144,6 +176,7 @@
                 errors: [],
                 payroll_staffs: [],
                 marital_status: [],
+                payroll_schooling_levels: []
             }
         },
         methods: {
@@ -180,18 +213,43 @@
                     first_name: '',
                     last_name: '',
                     id_number: '',
-                    birthdate: ''
+                    birthdate: '',
+                    student: false,
+                    payroll_schooling_level_id: '',
+                    study_center: ''
                 });
             },
         },
+
         created() {
+            this.getPayrollSchoolingLevels();
             this.getPayrollStaffs();
             this.getMaritalStatus();
             this.record.payroll_childrens = [];
         },
+
         mounted() {
+            const vm = this;
             if(this.payroll_socioeconomic_id) {
                 this.getSocioeconomic();
+            }
+        },
+
+        watch: {
+            record: {
+                deep: true,
+                handler: function(event) {
+                    const vm = this;
+                    for(const i in vm.record.payroll_childrens){
+                        // console.log(`STUDEN ${i} IS: `, vm.record.payroll_childrens[i].student);
+                        console.log(vm.record.payroll_childrens[i].study_center);
+                        if(vm.record.payroll_childrens[i].student){
+                            $(`#${i}`).removeClass('d-none');
+                        }else{
+                            $(`#${i}`).addClass('d-none');
+                        }
+                    }
+                }
             }
         }
     };
