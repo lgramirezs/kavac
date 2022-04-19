@@ -284,7 +284,7 @@
                                                     </div>
 												</label>
 												<label class="radio-inline mt-4 mr-4">
-													<span class="left">Inscrito y habilitado</span>
+													<span class="left">Inscrito y habilitado para contratar</span>
                                                     <div class="col-12 bootstrap-switch-mini mt-3 text-center">
     													{!! Form::radio('rnc_status', 'ISH', null, [
     														'class' => 'form-control bootstrap-switch',
@@ -292,7 +292,7 @@
     													]) !!}
                                                     </div>
 												</label>
-												<label class="radio-inline mt-4 mr-4">
+												{{-- <label class="radio-inline mt-4 mr-4">
 													<span class="left">Inscrito, habilitado y calificado</span>
                                                     <div class="col-12 bootstrap-switch-mini mt-3 text-center">
     													{!! Form::radio('rnc_status', 'IHC', null, [
@@ -300,7 +300,7 @@
                                                             'data-on-label' => 'SI', 'data-off-label' => 'NO'
     													]) !!}
                                                     </div>
-												</label>
+												</label> --}}
 											</div>
 										</div>
 									</div>

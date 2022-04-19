@@ -89,6 +89,7 @@ class PurchaseSupplierController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->validate($request, [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
@@ -126,7 +127,7 @@ class PurchaseSupplierController extends Controller
             'contact_names.required'                   => 'El campo nombre de contacto es obligatorio.',
             'contact_emails.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
-        //dd($request->all());
+        
         //$supplier = PurchaseSupplier::first();
         $supplier = PurchaseSupplier::create([
             'person_type'                    => $request->person_type,
@@ -232,7 +233,7 @@ class PurchaseSupplierController extends Controller
             'direction'                      => ['required'],
             'contact_names'                   => ['required'],
             'contact_emails'                  => ['required'],
-            'rnc_certificate_number'         => ['required_with:rnc_status'],
+            'rnc_certificate_number'         => ['required'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
