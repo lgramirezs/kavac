@@ -67,6 +67,16 @@ class PurchaseSupplier extends Model implements Auditable
     }
 
     /**
+     * Obtiene todos los documentos asociados al proveedor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function documents()
+    {
+        return $this->morphMany(\App\Models\Document::class, 'documentable');
+    }
+
+    /**
      * PurchaseSupplier belongs to PurchaseSupplierSpecialty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -25,7 +25,7 @@ class PayrollPermissionPolicy extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'name', 'anticipation_day', 'day_min', 'day_max', 'active', 'institution_id'
+        'name', 'anticipation_day', 'time_min', 'time_max', 'active', 'institution_id', 'unit_time'
     ];
 
     public function payrollPermissionRequests()
