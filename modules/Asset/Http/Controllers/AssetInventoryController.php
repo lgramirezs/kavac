@@ -72,12 +72,12 @@ class AssetInventoryController extends Controller
         $assigned = $disincorporated = $reserved = 0;
 
         foreach ($assets as $asset) {
-            if ($asset->status_id = 1) {
-                $assigned += $assigned;
-            } elseif ($asset->status_id = 6) {
-                $reserved += $reserved;
-            } elseif (in_array($asset->status_id, [5,7,8,9])) {
-                $disincorporated += $disincorporated;
+            if ($asset->asset_status_id == 1) {
+                $assigned++;
+            } elseif ($asset->asset_status_id == 6) {
+                $reserved++;
+            } elseif (in_array($asset->asset_status_id, [5,7,8,9])) {
+                $disincorporated++;
             }
 
             $inventory_asset = AssetInventoryAsset::create([

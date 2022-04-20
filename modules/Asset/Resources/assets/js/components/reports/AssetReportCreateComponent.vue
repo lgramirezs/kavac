@@ -476,7 +476,7 @@
 				for (var index in this.record) {
 					fields[index] = this.record[index];
 				}
-				axios.post('/' + url, fields).then(response => {
+				axios.post(url, fields).then(response => {
 					if (response.data.result == false) {
 						location.href = response.data.redirect;
                     }
