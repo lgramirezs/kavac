@@ -771,7 +771,8 @@ class PayrollParameterController extends Controller
         foreach ($this->associatedVacation as $record) {
             array_push($list, [
                 'id'   => $record['id'],
-                'text' => $record['name']
+                'text' => $record['name'],
+                'type' => 'number'
             ]);
         }
         return $list;

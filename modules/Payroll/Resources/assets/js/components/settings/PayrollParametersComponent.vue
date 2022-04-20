@@ -199,6 +199,7 @@
                                                    data-toggle="tooltip"
                                                    title="Indique el valor de comparación (requerido)"
                                                    class="form-control input-sm" v-model="value"
+                                                   :disabled="operator == ''" 
                                                    v-input-mask data-inputmask="
                                                        'alias': 'numeric',
                                                        'allowMinus': 'false'">
@@ -267,8 +268,8 @@
                                         <div class="col-sm-12 col-btn-block text-center">
                                             <div class="btn btn-info btn-sm" data-toggle="tooltip"
                                                  title="Variable a usar cuando se realice el cálculo"
-                                                 :disabled="(((operator == '') ||
-                                                 ((value == '') && (type != 'boolean'))) &&
+                                                 :disabled="((((operator == '') && (type != 'number')) ||
+                                                 ((value == '') && (type == 'boolean'))) &&
                                                  (variable == 'worker_record'))"
                                                  @click="getCodeVariable()">
                                                 {{ updateNameVariable }}
@@ -340,7 +341,7 @@
                 value:                     '',
                 operator:                  '',
                 operators:                 [
-                    {"id": "",   "text": "Seleccione..."},
+                    {"id": "",   "text": "Ninguno"},
                     {"id": "==", "text": "Igualdad (==)"},
                     {"id": "!=", "text": "Desigualdad (!=)"},
                     {"id": ">",  "text": "Mayor estricto (>)"},
@@ -543,26 +544,29 @@
                 let showFormula = '';
                 if ((vm.variable != 'worker_record') ||
                     ((vm.operator != '') && (vm.value != '')) ||
-                    ((vm.operator != '') && (vm.type == 'boolean'))) {
+                    ((vm.operator != '') && (vm.type == 'boolean')) ||
+                    ((vm.operator == '') && (vm.type == 'number'))) {
                     if (vm.variable_option != '') {
                         $.each(vm.options, function(index, field) {
                             if (field['id'] == vm.variable_option) {
-                                if (typeof field['code'] !== 'undefined') {
-                                    response = field['code'];
-                                    showFormula = field['code'];
+                                if (typeof field['id'] !== 'undefined') {
+                                    response = field['id'];
+                                    showFormula = field['text'];
                                 } else if (typeof field['id'] !== 'undefined') {
                                     response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                    showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                 }
                             } else if (typeof field['children'] !== 'undefined') {
                                 $.each(field['children'], function(index, field) {
-                                    if (field['id'] == vm.variable_option) {
-                                        if (typeof field['code'] !== 'undefined') {
-                                            response = field['code'];
-                                            showFormula = field['code'];
-                                        } else if (typeof field['id'] !== 'undefined') {
-                                            response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                            showFormula = 'if(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    if (typeof field['id'] !== 'undefined') {
+                                        if (field['id'] == vm.variable_option) {
+                                            if (vm.operator == '') {
+                                                response = field['id'];
+                                                showFormula = field['text'];
+                                            } else {
+                                                response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                                showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                            }
                                         }
                                     }
                                 });
@@ -601,10 +605,15 @@
             },
             getOptionType() {
                 const vm = this;
-                vm.type = '';
+                //vm.type = '';
                 if (vm.variable_option != '') {
                     $.each(vm.options, function(index, field) {
                         if (field['id'] == vm.variable_option) {
+                            if (vm.type == field['type']) {
+                                axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                    vm.subOptions = response.data;
+                                });
+                            }
                             if (typeof field['type'] !== 'undefined') {
                                 vm.type = field['type'];
                                 return;
@@ -612,6 +621,11 @@
                         } else if (typeof field['children'] !== 'undefined') {
                             $.each(field['children'], function(index, field) {
                                 if (field['id'] == vm.variable_option) {
+                                    if (vm.type == field['type']) {
+                                        axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                            vm.subOptions = response.data;
+                                        });
+                                    }
                                     if (typeof field['type'] !== 'undefined') {
                                         vm.type = field['type'];
                                         return;
