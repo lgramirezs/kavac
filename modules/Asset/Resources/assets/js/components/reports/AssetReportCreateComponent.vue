@@ -216,14 +216,14 @@
 				</div>
 			</div>
 			<hr>
-			<div class="form-group form-inline pull-right VueTables__limit-2">
+			<!--div class="form-group form-inline pull-right VueTables__limit-2">
 				<div class="VueTables__limit-field">
 					<label class="">Registros</label>
 					<select2 :options="perPageValues"
 						v-model="perPage">
 					</select2>
 				</div>
-			</div>
+			</div-->
 			<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
 
 				<div slot="institution" slot-scope="props" class="text-center">
@@ -238,7 +238,7 @@
 				</div>
 
 			</v-client-table>
-			<div class="VuePagination-2 row col-md-12 ">
+			<!--div class="VuePagination-2 row col-md-12 ">
 				<nav class="text-center">
 					<ul class="pagination VuePagination__pagination" style="">
 						<li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="page != 1">
@@ -265,7 +265,7 @@
 					</ul>
 					<p class="VuePagination__count text-center col-md-12" style=""> </p>
 				</nav>
-			</div>
+			</div-->
 		</div>
 
         <div class="card-footer text-right">
@@ -379,7 +379,7 @@
             },
         },
 		created() {
-			this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
+			//this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
 			this.getInstitutions();
 			this.getAssetTypes();
 			this.getAssetStatus();

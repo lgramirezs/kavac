@@ -202,8 +202,7 @@
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<asset-report-create
-				route_list="{{ url('asset/registers/vue-list') }}">
+			<asset-report-create>
 			</asset-report-create>
 		</div>
 	</div>
