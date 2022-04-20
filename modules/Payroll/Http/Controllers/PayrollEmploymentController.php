@@ -347,7 +347,9 @@ class PayrollEmploymentController extends Controller
     {
         return response()->json(['records' => PayrollEmployment::with([
             'payrollStaff', 'payrollInactivityType', 'payrollPositionType',
-            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType', 'payrollPreviousJob'
-        ])->get()], 200);
+            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType',
+            'payrollPreviousJob' => function ($query) {
+                $query->with(['payrollPosition', 'payrollStaffType', 'payrollSectorType']);
+            }])->get()], 200);
     }
 }
