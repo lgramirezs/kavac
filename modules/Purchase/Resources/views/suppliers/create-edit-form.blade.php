@@ -336,7 +336,7 @@
 									                                </div>
 									                            </div>
 									                            <div class="feature-list-subheading">
-									                            	<i>{{ $reqDoc->description ?? '' }}</i>
+									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
 									                            </div>
 									                        </div>
 									                        <div class="feature-list-content-right feature-list-content-actions">
