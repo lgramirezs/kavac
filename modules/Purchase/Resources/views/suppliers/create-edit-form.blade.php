@@ -322,6 +322,7 @@
 										<input type="hidden" id="documents" name="documents" readonly>
 										<ul class="feature-list list-group list-group-flush">
 											@foreach ($requiredDocuments as $reqDoc)
+												{{$reqDoc}}
 									            <li class="list-group-item">
 									                <div class="feature-list-indicator bg-info"></div>
 									                <div class="feature-list-content p-0">
@@ -343,7 +344,7 @@
 									                        	<button class="btn btn-simple btn-success btn-events"
 									                        			title="Presione para cargar el documento"
 									                        			data-toggle="tooltip" type="button"
-									                        			onclick="$('#doc').click()">
+									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
 									                        		<i class="fa fa-cloud-upload fa-2x"></i>
 									                        	</button>
 									                        	<button class="btn btn-simple btn-primary btn-events"
@@ -351,7 +352,7 @@
 									                        			data-toggle="tooltip" type="button">
 									                        		<i class="fa fa-cloud-download fa-2x"></i>
 									                        	</button>
-									                        	<input type="file" id="doc" name="doc" style="display:none"
+									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
 									                        		   accept=".doc, .pdf, .odt, .docx">
 									                        </div>
 									                    </div>
@@ -380,5 +381,8 @@
 		$(document).ready(function() {
 			$(".nav-link").tooltip();
 		});
+		function clickUploadDoc(id){
+			$('#doc'+id).click();
+		};
 	</script>
 @stop
