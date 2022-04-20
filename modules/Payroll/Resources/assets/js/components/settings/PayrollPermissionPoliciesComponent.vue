@@ -85,13 +85,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12"> <h6> Dias solicitados para el permiso </h6> </div>
+                            <div class="col-md-12"> <h6> Tiempo solicitado para el permiso </h6> </div>
                             <div class="col-md-6">
                                 <div class="form-group is-required">
                                     <label for="day_min">Rango mínimo:</label>
                                     <input type="text" data-toggle="tooltip" id="day_min"
-                                           placeholder="Número mínimo de días del permiso"
-                                           title="Indique el número mínimo de días permitidos para el permiso"
+                                           placeholder="Tiempo mínimo para el permiso"
+                                           title="Indique el tiempo mínimo permitido para el permiso"
                                            class="form-control input-sm"
                                            v-input-mask data-inputmask="
                                                 'alias': 'numeric',
@@ -104,8 +104,8 @@
                                 <div class="form-group is-required">
                                     <label for="day_max">Rango máximo:</label>
                                     <input type="text" data-toggle="tooltip" id="day_max"
-                                           placeholder="Número máximo de días del permiso"
-                                           title="Indique el número máximo de días permitidos para el permiso"
+                                           placeholder="Tiempo máximo permitido para el permiso"
+                                           title="Indique el tiempo máximo permitido para el permiso"
                                            class="form-control input-sm"
                                            v-input-mask data-inputmask="
                                                 'alias': 'numeric',
@@ -245,7 +245,7 @@
             this.table_options.headings = {
                 'name':             'Nombre',
                 'anticipation_day': 'Dias de anticipación',
-                'day_range':        'Rango de días solicitados',
+                'day_range':        'Rango de tiempo solicitado',
                 'active':           'Activo',
                 'id':               'Acción'
             };
