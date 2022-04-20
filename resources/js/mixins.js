@@ -1014,6 +1014,7 @@ Vue.mixin({
 		 * @param  {object|array} el    Elemento del cual se va a eliminar un elemento
 		 */
 		removeRow: function(index, el) {
+			$('.tooltip:last').remove();
 			el.splice(index, 1);
 		},
 		/**
