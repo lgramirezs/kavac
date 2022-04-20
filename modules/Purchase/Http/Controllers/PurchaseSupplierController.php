@@ -11,6 +11,7 @@ use App\Models\Estate;
 use App\Models\RequiredDocument;
 use App\Models\Phone;
 use App\Models\Contact;
+use App\Repositories\UploadDocRepository;
 use App\Rules\Rif as RifRule;
 use Modules\Purchase\Models\PurchaseSupplierBranch;
 use Modules\Purchase\Models\PurchaseSupplierObject;
@@ -72,6 +73,7 @@ class PurchaseSupplierController extends Controller
             'route' => 'purchase.suppliers.store',
             'method' => 'POST',
             'role' => 'form',
+            'enctype'=>'multipart/form-data'
         ];
 
         return view('purchase::suppliers.create-edit-form', [
@@ -87,7 +89,7 @@ class PurchaseSupplierController extends Controller
      * @param  Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(Request $request, UploadDocRepository $upDoc)
     {
         //dd($request->all());
         $this->validate($request, [
@@ -174,6 +176,22 @@ class PurchaseSupplierController extends Controller
         }
 
         /** Registro y asociación de documentos */
+        $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
+        if ($request->file('docs')) {
+            foreach ($request->file('docs') as $file) {
+                
+                $extensionFile = $file->getClientOriginalExtension();
+
+                if (in_array($extensionFile, $documentFormat)) {
+                    $upDoc->uploadDoc(
+                        $file,
+                        'documents',
+                        PurchaseSupplier::class,
+                        $supplier->id
+                    );
+                }
+            }
+        }
 
         session()->flash('message', ['type' => 'store']);
 
@@ -201,6 +219,7 @@ class PurchaseSupplierController extends Controller
             'route' => ['purchase.suppliers.update', $model->id],
             'method' => 'PUT',
             'role' => 'form',
+            'enctype'=>'multipart/form-data'
         ];
 
         return view('purchase::suppliers.create-edit-form', [
@@ -216,8 +235,9 @@ class PurchaseSupplierController extends Controller
      * @param  Request $request
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, UploadDocRepository $upDoc, $id)
     {
+        //dd($request->all());
         $this->validate($request, [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
@@ -318,7 +338,36 @@ class PurchaseSupplierController extends Controller
             }
         }
 
+
+        /** Se elimina la relacion y los documentos previos **/
+        $supp_docs = $supplier->documents()->get();
+        if (count($supp_docs) > 0) {
+            foreach ($supp_docs as $value) {
+                $upDoc->deleteDoc(
+                    $value->file,
+                    'documents'
+                );
+                $value->delete();
+            }
+        }
+
         /** Registro y asociación de documentos */
+        $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
+        if ($request->file('docs')) {
+            foreach ($request->file('docs') as $file) {
+                
+                $extensionFile = $file->getClientOriginalExtension();
+
+                if (in_array($extensionFile, $documentFormat)) {
+                    $upDoc->uploadDoc(
+                        $file,
+                        'documents',
+                        PurchaseSupplier::class,
+                        $supplier->id
+                    );
+                }
+            }
+        }
 
         session()->flash('message', ['type' => 'store']);
 
@@ -356,6 +405,15 @@ class PurchaseSupplierController extends Controller
             $supp_ph = $supplier->phones()->get();
             if (count($supp_ph) > 0) {
                 foreach ($supp_ph as $value) {
+                    $value->delete();
+                }
+            }
+
+            /** Se elimina la relacion y los documentos previos **/
+            $supp_docs = $supplier->documents()->get();
+            if (count($supp_docs) > 0) {
+                foreach ($supp_docs as $value) {
+                    $upDoc->deleteDoc($value->file, 'documents');
                     $value->delete();
                 }
             }
