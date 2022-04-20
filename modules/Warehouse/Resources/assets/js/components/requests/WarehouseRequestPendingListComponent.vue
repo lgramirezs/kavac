@@ -90,7 +90,7 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
 
-                            axios.put('/warehouse/requests/request-approved/'+id, fields).then(response => {
+                            axios.put('/warehouse/requests/request-rejected/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
                             }).catch(error => {

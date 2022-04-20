@@ -323,6 +323,7 @@
                                                    data-toggle="tooltip"
                                                    title="Indique el valor de comparación (requerido)"
                                                    class="form-control input-sm" v-model="value"
+                                                   :disabled="operator == ''" 
                                                    v-input-mask data-inputmask="
                                                        'alias': 'numeric',
                                                        'allowMinus': 'false'">
@@ -911,10 +912,15 @@
             },
             getOptionType() {
                 const vm = this;
-                vm.type = '';
+                //vm.type = '';
                 if (vm.variable_option != '') {
                     $.each(vm.variable_options, function(index, field) {
                         if (field['id'] == vm.variable_option) {
+                            if (vm.type == field['type']) {
+                                axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                    vm.subOptions = response.data;
+                                });
+                            }
                             if (typeof field['type'] !== 'undefined') {
                                 vm.type = field['type'];
                                 return;
@@ -922,6 +928,11 @@
                         } else if (typeof field['children'] !== 'undefined') {
                             $.each(field['children'], function(index, field) {
                                 if (field['id'] == vm.variable_option) {
+                                    if (vm.type == field['type']) {
+                                        axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                            vm.subOptions = response.data;
+                                        });
+                                    }
                                     if (typeof field['type'] !== 'undefined') {
                                         vm.type = field['type'];
                                         return;

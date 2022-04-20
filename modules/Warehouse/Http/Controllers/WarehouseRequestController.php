@@ -347,6 +347,7 @@ class WarehouseRequestController extends Controller
                 }
             }
         });
+
         if ($warehouse_request->state != 'Aprobado') {
             $request->session()->flash(
                 'message',
