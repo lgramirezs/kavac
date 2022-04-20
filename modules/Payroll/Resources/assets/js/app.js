@@ -283,6 +283,18 @@ Vue.component('payroll-employment', () =>
 );
 
 /**
+ * Componente para mostrar la información detallada de datos laborales
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('payroll-employment-info', () =>
+    import(
+        /* webpackChunkName: "payroll-employment-info" */
+        './components/PayrollEmploymentInfoComponent.vue'
+    )
+);
+
+/**
  * Componente para la gestión de los parámetros de nómina
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
