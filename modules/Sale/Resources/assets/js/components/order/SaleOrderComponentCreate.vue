@@ -14,12 +14,71 @@
             </span>
           </button>
           <ul>
-            <li v-for="error in errors">{{ error }}</li>
+						<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
           </ul>
         </div>
       </div>
       <h4 class="card-title">Registrar Pedido</h4>
-      <h6 class="card-title">Datos del solicitante:</h6>
+      <h6 class="card-title">Datos del solicitante:
+        <a class="btn btn-info btn-xs btn-icon btn-action display-inline" 
+          href="#" title="Ver información del registro" data-toggle="tooltip" 
+          @click.prevent="showModal('view_sale_clients')">
+          <i class="icofont icofont-business-man ico-2x"></i>
+        </a>
+      </h6>
+      <div class="client-list">
+        <div class="modal fade text-left" tabindex="-1" role="dialog" id="view_sale_clients" ref="clients-modal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h6><i class="icofont icofont-business-man ico-2x"></i> Clientes</h6>
+              </div>
+              <div class="modal-body modal-table">
+                <v-client-table :columns="columns_clients" :data="quote_clients" :options="table_options_clients">
+                  <div slot="id" slot-scope="props" class="text-center">
+                    <span>
+                      <i class="fa fa-plus-circle cursor-pointer" @click="addClient(props.index, props.row)"></i>
+                    </span>
+                  </div>
+                  <div slot="name_client" slot-scope="props" class="text-center">
+                    <span>
+                      {{ (props.row.name_client)? props.row.name_client : props.row.name }}
+                    </span>
+                  </div>
+                  <div slot="rif" slot-scope="props" class="text-center">
+                    <span>
+                      {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
+                    </span>
+                  </div>
+                  <div slot="phones" slot-scope="props">
+                    <div v-if="props.row.phones">
+                      <ul v-for="phone in props.row.phones">
+                        <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                      </ul>
+                    </div>
+                    <div v-else>
+                      <span>N/A</span>
+                    </div>
+                  </div>
+                  <div slot="sale_clients_email" slot-scope="props">
+                    <div v-if="props.row.sale_clients_email">
+                      <ul v-for="client_email in props.row.sale_clients_email">
+                        <li>{{ client_email.email }}</li>
+                      </ul>
+                    </div>
+                    <div v-else>
+                      <span>N/A</span>
+                    </div>
+                  </div>
+                </v-client-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <div class="form-group is-required">
@@ -254,6 +313,7 @@
           'currency.name',
           'id',
         ],
+        columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email'],
         types_person:  [
           {'id' : '', 'text' : "Seleccione..."},
           {'id' : 'Natural', 'text' : 'Natural'},
@@ -268,6 +328,18 @@
       }
     },
     methods: {
+      /**
+       * Agrega la informacion del cliente desde el modal de clientes
+       */
+      addClient(index, client) {
+        this.record.type_person = client.type_person_juridica;
+        this.record.name = client.name_client? client.name_client : client.name;
+        this.record.id_number = client.rif? client.rif : client.id_number;
+        this.record.id_number = this.record.id_number.replace(/\D/g, "");
+        this.record.phone = client.phones && client.phones.length? parseInt(client.phones[0].area_code) + '-' + client.phones[0].number : '';
+        this.record.email = client.sale_clients_email && client.sale_clients_email.length? client.sale_clients_email[0].email : '';
+        $("#view_sale_clients").modal('hide');
+      },
       /**
        * Limpia el formulario por completo
        */
@@ -513,6 +585,15 @@
         }
       },
       /**
+       * Muestra el modal de clientes en el formulario
+       *
+       */
+      showModal(modal_id = '') {
+        if ($("#" + modal_id).length) {
+          $("#" + modal_id).modal('show');
+        }
+      },
+      /**
        * Agrega los campos de la cotización al formulario
        */
       extractQuote() {
@@ -626,6 +707,25 @@
         'currency_id': 'col-xs-1',
         'id': 'col-xs-2'
       };
+      this.table_options_clients = {};
+      this.table_options_clients.headings = {
+        'id': 'Acción',
+        'type_person_juridica': 'Tipo de Persona',
+        'rif': 'Identificación del Cliente',
+        'name_client': 'Nombre',
+        'phones': 'Telefonos',
+        'sale_clients_email': 'Correo Electrónico'
+      };
+      this.table_options_clients.sortable = [
+        'type_person_juridica',
+      ];
+      this.table_options_clients.filterable = [
+        'type_person_juridica',
+        'rif',
+        'id_number',
+        'name',
+        'name_client',
+      ];
     },
     mounted() {
       const vm = this;
@@ -639,6 +739,7 @@
       vm.getQuoteMeasurementUnits();
       vm.getQuotePayments();
       vm.getQuoteInventoryProducts();
+      vm.getQuoteClients();
       vm.extractQuote();
     },
   };
