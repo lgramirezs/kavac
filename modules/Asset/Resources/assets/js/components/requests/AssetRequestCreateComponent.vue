@@ -43,7 +43,8 @@
                                 <i class="now-ui-icons ui-1_calendar-60"></i>
                             </span>
                             <input
-                                type="date" class="form-control input-sm"
+                                type="date"
+                                class="form-control input-sm no-restrict"
                                 data-toggle="tooltip"
                                 title="Indique la fecha de entrega de los equipos"
                                 v-model="record.delivery_date">
