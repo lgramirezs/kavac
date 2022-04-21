@@ -126,6 +126,8 @@ class FinanceBankController extends Controller
             'code' => ['required', 'max:4', 'unique:finance_banks,code,' . $financeBank->id],
             'name' => ['required', 'max:100', 'unique:finance_banks,name,' . $financeBank->id],
             'short_name' => ['required', 'max:50', 'unique:finance_banks,short_name,' . $financeBank->id]
+        ], [
+            'code.unique' => 'El campo código ya ha sido registrado.',
         ]);
 
         $financeBank->code = $request->code;
