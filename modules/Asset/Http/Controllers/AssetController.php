@@ -434,7 +434,8 @@ class AssetController extends Controller
             $request->asset_category,
             $request->asset_subcategory,
             $request->asset_specific_category
-        )->with('institution', 'assetCondition', 'assetStatus');
+        )->with('institution', 'assetCondition', 'assetStatus')
+         ->where('institution_id', $request->institution);
         if ($request->asset_status > 0) {
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }
@@ -451,10 +452,21 @@ class AssetController extends Controller
      */
     public function searchGeneral(Request $request)
     {
-        $assets = Asset::DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
-            ->with('institution', 'assetCondition', 'assetStatus');
-        if ($request->asset_status > 0) {
-            $assets = $assets->where('asset_status_id', $request->asset_status);
+        if ($request->start_date && $request->end_date && $request->mes_id && $request->year) {
+            $assets = Asset::where('institution_id', $request->institution)->DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
+                ->with('institution', 'assetCondition', 'assetStatus');
+            if ($request->asset_status > 0) {
+                $assets = $assets->where('asset_status_id', $request->asset_status);
+            }
+        } else {
+            if ($request->asset_status > 0) {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('asset_status_id', $request->asset_status)
+                                    ->where('institution_id', $request->institution);
+            } else {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('institution_id', $request->institution);
+            }
         }
 
         return response()->json(['records' => $assets->get()], 200);
@@ -474,7 +486,6 @@ class AssetController extends Controller
          *  Validar tambien para múltiples instituciones
          *
          */
-        //Asset::with('assetCondition','assetStatus')->get();
         return response()->json(['records' => []], 200);
     }
 

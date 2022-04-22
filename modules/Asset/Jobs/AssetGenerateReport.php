@@ -97,6 +97,13 @@ class AssetGenerateReport implements ShouldQueue
                     $this->data->mes_id,
                     $this->data->year_id
                 )->get();
+            } else if ($this->data->asset_type_id) {
+                $assets = Asset::CodeClasification(
+                    $this->data->asset_type_id,
+                    $this->data->asset_category_id,
+                    $this->data->asset_subcategory_id,
+                    $this->data->asset_specific_category_id
+                )->get();
             } else {
                 $assets = Asset::all();
             }
@@ -116,7 +123,7 @@ class AssetGenerateReport implements ShouldQueue
                 'institution' => $institution,
                 'urlVerify'   => url(''),
                 'orientation' => 'L',
-                'filename'    => 'asset-report-' . Carbon::now() . '.pdf'
+                'filename'    => $this->data->code ? 'asset-report-' . $this->data->code . '.pdf' : 'asset-report-' . Carbon::now() . '.pdf'
             ]
         );
 
