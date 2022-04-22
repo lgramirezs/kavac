@@ -95,6 +95,7 @@
                         <div class="tab-pane active" id="profile" role="tabpanel">
                             {!! Form::model($model, $header) !!}
                                 @include('layouts.form-errors')
+                                <input type="hidden" name="source" value="profile">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

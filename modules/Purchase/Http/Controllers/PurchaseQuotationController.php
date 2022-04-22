@@ -99,7 +99,7 @@ class PurchaseQuotationController extends Controller
 			'purchase_supplier_id.integer'    => 'El campo proveedor debe ser numerico.',
 			'currency_id.required'            => 'El campo de tipo de moneda es obligatorio.',
 			'currency_id.integer'             => 'El campo de tipo de moneda debe ser numerico.',
-			'base_budget_list'                => 'Debe seleccionar almenos un requerimiento.',
+			'base_budget_list'                => 'Debe seleccionar al menos un requerimiento.',
 		]);
 
 		$code = $this->generateCodeAvailable();

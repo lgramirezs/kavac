@@ -59,6 +59,12 @@ class FinanceBankAccountController extends Controller
             'opened_at' => ['required', 'date'],
             'finance_banking_agency_id' => ['required'],
             'finance_account_type_id' => ['required']
+        ],[
+            'ccc_number.required' => 'El campo código cuenta cliente es obligatorio.',
+            'description.required' => 'El campo descripción es obligatorio.',
+            'opened_at.required' => 'El campo fecha de apertura es obligatorio.',
+            'finance_banking_agency_id.required' => 'El campo agencia es obligatorio.',
+            'finance_account_type_id.required' => 'El campo tipo de cuenta es obligatorio.',
         ]);
 
         $financeBankAccount = FinanceBankAccount::create([

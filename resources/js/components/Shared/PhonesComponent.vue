@@ -1,9 +1,11 @@
 <template>
 	<div>
 		<h6 class="card-title">
-			Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
+			Números Telefónicos&#160;
+			<i class="fa fa-plus-circle cursor-pointer" @click="addPhone" title="Agregar número telefónico" 
+			   data-toggle="tooltip"></i>
 		</h6>
-		<div class="row phone-row" v-for="(phone, index) in phones">
+		<div class="row phone-row" v-for="(phone, index) in phones" :key="index">
 			<div class="col-3">
 				<div class="form-group is-required">
 					<select data-toggle="tooltip" v-model="phone.type" name="phone_type[]" class="select2"

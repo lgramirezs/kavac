@@ -69,27 +69,27 @@ class AssetController extends Controller
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'institution_id'                       => 'El campo organización es obligatorio.',
-            'aseet_type_id.required'               => 'El campo tipo de bien es obligatorio.',
-            'aseet_category_id.required'           => 'El campo categoria general es obligatorio.',
-            'aseet_subcategory_id.required'        => 'El campo subcategoria es obligatorio.',
-            'aseet_specific_category_id.required'  => 'El campo categoria especifica es obligatorio.',
-            'asset_acquisition_type_id'            => 'El campo forma de adquisición es obligatorio.',
-            'acquisition_date'                     => 'El campo fecha de adquisición es obligatorio.',
-            'asset_status_id'                      => 'El campo estatus de uso es obligatorio.',
-            'value'                                => 'El campo valor es obligatorio.',
-            'currency_id'                          => 'El campo moneda es obligatorio.',
-            'serial'                               => 'El campo serial es obligatorio.',
-            'marca'                                => 'El campo marca es obligatorio.',
-            'model'                                => 'El campo modelo es obligatorio.',
-            'asset_use_function_id'                => 'El campo función de uso es obligatorio.',
-            'parish_id'                            => 'El campo país es obligatorio.',
-            'address'                              => 'El campo dirección es obligatorio.',
+            'institution_id.required'                       => 'El campo organización es obligatorio.',
+            'asset_type_id.required'                        => 'El campo tipo de bien es obligatorio.',
+            'asset_category_id.required'                    => 'El campo categoria general es obligatorio.',
+            'asset_subcategory_id.required'                 => 'El campo subcategoria es obligatorio.',
+            'asset_specific_category_id.required'           => 'El campo categoria especifica es obligatorio.',
+            'asset_acquisition_type_id.required'            => 'El campo forma de adquisición es obligatorio.',
+            'acquisition_date.required'                     => 'El campo fecha de adquisición es obligatorio.',
+            'asset_status_id.required'                      => 'El campo estatus de uso es obligatorio.',
+            'value.required'                                => 'El campo valor es obligatorio.',
+            'currency_id.required'                          => 'El campo moneda es obligatorio.',
+            'serial.required'                               => 'El campo serial es obligatorio.',
+            'marca.required'                                => 'El campo marca es obligatorio.',
+            'model.required'                                => 'El campo modelo es obligatorio.',
+            'asset_use_function_id.required'                => 'El campo función de uso es obligatorio.',
+            'parish_id.required'                            => 'El campo país es obligatorio.',
+            'address.required'                              => 'El campo dirección es obligatorio.',
+            'asset_condition_id.required'                   => 'El campo condición física es obligatorio.',
+        ];
 
-
-
-
-
+        $this->attributes = [
+            'value' => 'valor'
         ];
     }
 
@@ -141,9 +141,9 @@ class AssetController extends Controller
 
                 ]
             );
-            $this->validate($request, $validateRules, $this->messages);
+            $this->validate($request, $validateRules, $this->messages, $this->attributes);
         } else {
-            $this->validate($request, $this->validateRules, $this->messages);
+            $this->validate($request, $this->validateRules, $this->messages, $this->attributes);
         }
         $asset = Asset::create([
             'asset_type_id'              => $request->asset_type_id,
@@ -318,11 +318,11 @@ class AssetController extends Controller
                 $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id');
             } else {
                 $assets = Asset::where('institution_id', $institution_id)
-                ->with([
-                    'institution',
-                    'assetCondition',
-                    'assetStatus'
-                ])->orderBy('id');
+                    ->with([
+                        'institution',
+                        'assetCondition',
+                        'assetStatus'
+                    ])->orderBy('id');
             }
         } elseif ($operation_id == null) {
             if ($operation == 'asignations') {

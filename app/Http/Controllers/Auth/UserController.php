@@ -220,50 +220,54 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->validate($request, [
-            'first_name' => ['required_without:staff'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'username' => ['required', 'string', 'max:25', 'unique:users,username,' . $user->id],
-            'role' => ['required_without:permission', 'array'],
-            'permission' => ['required_without:role', 'array']
-        ], [
-            'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado'
-        ]);
+        if (!$request->has('source') || $request->source !== 'profile') {
+            $this->validate($request, [
+                'first_name' => ['required_without:staff'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'username' => ['required', 'string', 'max:25', 'unique:users,username,' . $user->id],
+                'role' => ['required_without:permission', 'array'],
+                'permission' => ['required_without:role', 'array']
+            ], [
+                'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado'
+            ]);
+    
+            $user->name = $request->first_name;
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->save();
 
-        $user->name = $request->first_name;
-        $user->email = $request->email;
-        $user->username = $request->username;
-        $user->save();
-
-        $profile = Profile::where('user_id', $user->id)->first();
-
-        if (!$request->staff && !$profile) {
-            /** @var Profile Instancia al modelo de perfil de usuario */
-            $profile = new Profile();
-            $profile->first_name = $request->first_name;
-            $profile->user_id = $user->id;
-            $profile->save();
-        } else if(!$request->staff && $profile){
-            $profile->first_name = $request->first_name;
-            $profile->user_id = $user->id;
-            $profile->save();
-        } else {
-            /** @var Profile Objeto con información del perfil del usuario */
-            $profile = Profile::find($request->staff);
-            $profile->first_name = $request->first_name;
-            $profile->user_id = $user->id;
-            $profile->save();
+            $profile = Profile::where('user_id', $user->id)->first();
+    
+            if (!$request->staff && !$profile) {
+                /** @var Profile Instancia al modelo de perfil de usuario */
+                $profile = new Profile();
+                $profile->first_name = $request->first_name;
+                $profile->user_id = $user->id;
+                $profile->save();
+            } else if(!$request->staff && $profile){
+                $profile->first_name = $request->first_name;
+                $profile->user_id = $user->id;
+                $profile->save();
+            } else {
+                /** @var Profile Objeto con información del perfil del usuario */
+                $profile = Profile::find($request->staff);
+                $profile->first_name = $request->first_name;
+                $profile->user_id = $user->id;
+                $profile->save();
+            }
+    
+            if ($request->role) {
+                $user->detachAllRoles();
+                $user->syncRoles($request->role);
+            }
+            if ($request->permission) {
+                $user->detachAllPermissions();
+                $user->syncPermissions($request->permission);
+            }
         }
 
-        if ($request->role) {
-            $user->detachAllRoles();
-            $user->syncRoles($request->role);
-        }
-        if ($request->permission) {
-            $user->detachAllPermissions();
-            $user->syncPermissions($request->permission);
-        }
-        if ($request->password) {
+
+        if ($request->has('password') && $request->password !== null) {
             $this->validate($request, [
                 'password' => ['min:6', 'confirmed'],
                 'password_confirmation' => ['min:6', 'required_with:password'],
