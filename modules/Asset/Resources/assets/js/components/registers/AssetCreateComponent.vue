@@ -170,7 +170,7 @@
 				<div class="col-md-3" id="helpAssetValue">
 					<div class="form-group is-required">
 						<label>Valor</label>
-						<input type="number" min="0" step=".01"
+						<input type="decimal" min="0"
 								placeholder="Precio por unidad" data-toggle="tooltip"
 								title="Indique el precio del bien"
 								class="form-control input-sm" v-model="record.value">
@@ -242,7 +242,7 @@
 		        	<button type="button" @click="reset()"
 							class="btn btn-default btn-icon btn-round"
 							data-toggle="tooltip"
-							title ="Borrar datos del formulario">
+							title="Borrar datos del formulario">
 							<i class="fa fa-eraser"></i>
 					</button>
 
