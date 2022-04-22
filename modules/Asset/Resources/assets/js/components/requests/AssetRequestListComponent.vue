@@ -17,31 +17,45 @@
             </div>
             <div v-html="props.row.motive" slot="motive" slot-scope="props"
                 class="text-center">
-			</div>
+            </div>
             <div slot="id" slot-scope="props" class="text-center d-inline-flex">
 
-                <asset-request-info :route_list="app_url + 'requests/vue-info/' + props.row.id"></asset-request-info>
+                <asset-request-info
+                    :route_list="app_url+'/asset/requests/vue-info/'+props.row.id">
+                </asset-request-info>
 
-                <asset-request-extension :requestid="props.row.id" :state="props.row.state"></asset-request-extension>
+                <asset-request-extension
+                    :requestid="props.row.id"
+                    :state="props.row.state">
+                </asset-request-extension>
 
-                <asset-request-event :id="props.row.id" :state="props.row.state"></asset-request-event>
+                <asset-request-event
+                    :id="props.row.id"
+                    :state="props.row.state">
+                </asset-request-event>
 
-                <button @click="deliverEquipment(props.index)"
-                        class="btn btn-primary btn-xs btn-icon btn-action"
-                        :disabled="((props.row.state == 'Aprobado')||(props.row.state == 'Pendiente por entrega'))?false:true"
-                        data-toggle="tooltip" title="Entregar Equipos" type="button">
+                <button
+                    @click="deliverEquipment(props.index)"
+                    class="btn btn-primary btn-xs btn-icon btn-action"
+                    :disabled="((props.row.state == 'Aprobado')||(props.row.state == 'Pendiente por entrega'))?false:true"
+                    data-toggle="tooltip" title="Entregar Equipos" type="button">
                     <i class="icofont icofont-computer"></i>
                 </button>
 
-                <button @click="editForm(props.row.id)"
-                        class="btn btn-warning btn-xs btn-icon btn-action"
-                        :disabled="(props.row.state == 'Pendiente')?false:true"
-                        title="Editar Solicitud" data-toggle="tooltip" type="button">
+                <button
+                    @click="editForm(props.row.id)"
+                    class="btn btn-warning btn-xs btn-icon btn-action"
+                    :disabled="(props.row.state == 'Pendiente')?false:true"
+                    title="Editar Solicitud" data-toggle="tooltip" type="button">
                     <i class="icofont icofont-edit"></i>
                 </button>
 
-                <button @click="deleteRecord(props.index, '')"
-                        class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
+                <button
+                    @click="deleteRecord(props.index, '')"
+                    class="btn btn-danger btn-xs btn-icon btn-action"
+                    title="Eliminar registro"
+                    data-toggle="tooltip"
+                    type="button">
                     <i class="fa fa-trash-o"></i>
                 </button>
 
