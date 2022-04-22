@@ -330,7 +330,7 @@
 				const vm = this;
                 vm.record.warehouse_inventory_products = [];
                 if(!vm.selected.length > 0){
-                	bootbox.alert("Debe agregar almenos un elemento a la solicitud");
+                    bootbox.alert("Debe agregar al menos un elemento a la solicitud");
 					return false;
 				};
                 $.each(vm.selected,function(index,campo){
