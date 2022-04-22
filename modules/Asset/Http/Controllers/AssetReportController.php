@@ -11,6 +11,7 @@ use Modules\Asset\Jobs\AssetGenerateReport;
 use Modules\Asset\Pdf\AssetReport as ReportRepository;
 use Modules\Asset\Models\AssetReport;
 use App\Models\CodeSetting;
+use Carbon\Carbon;
 
 /**
  * @class      AssetReportController
@@ -129,7 +130,8 @@ class AssetReportController extends Controller
                     ? 'asset::pdf.asset_general'
                     : 'asset::pdf.asset_detallado';
             AssetGenerateReport::dispatch($report, $body);
-            return response()->json(['result' => true], 200);
+            $url = '/asset/reports/show/' . $report->code;
+            return response()->json(['result' => true, 'redirect' => $url], 200);
         }
     }
 
@@ -143,7 +145,9 @@ class AssetReportController extends Controller
     public function show($code_report)
     {
         $report = AssetReport::where('code', $code_report)->with('document')->first();
-        $pdf    = new ReportRepository();
-        $pdf->show($report->document->file);
+
+        $file = storage_path() . '/reports/asset-report-' .  $report->code . '.pdf';
+
+        return response()->download($file, $report->code, [], 'inline');
     }
 }
