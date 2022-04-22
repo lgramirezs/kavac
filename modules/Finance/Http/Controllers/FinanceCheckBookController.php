@@ -93,15 +93,31 @@ class FinanceCheckBookController extends Controller
             'code' => ['required'],
             'finance_bank_account_id' => ['required'],
             'numbers' => ['required', 'array', 'min:1']
+        ], [
+            'code.required' => ('El campo serial / código es obligatorio.'),
+            'finance_bank_account_id.required' => ('El campo Banco es obligatorio.'),
+            'numbers.required' => ('El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +'),
+            'numbers.min' => ('Debe ingresar al menos 1 numero de cheque.'),
         ]);
 
         foreach ($request->numbers as $number) {
-            FinanceCheckBook::create([
-                'code' => $request->code,
-                'finance_bank_account_id' => $request->finance_bank_account_id,
-                'number' => $number
-            ]);
+            if($number == ""){
+                 $error[0]= "El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +";
+                return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+
+            }
+     
         }
+
+        foreach ($request->numbers as $number) {
+
+              FinanceCheckBook::create([
+                 'code' => $request->code,
+                'finance_bank_account_id' => $request->finance_bank_account_id,
+               'number' => $number,
+              ]);
+           }
+
 
         return response()->json(['result' => true, 'message' => 'Success'], 200);
     }
