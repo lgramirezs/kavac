@@ -220,7 +220,37 @@
                         </div>
                     </div>
                     <div class="modal-body modal-table">
-                        <v-client-table :columns="columns" :data="records" :options="table_options">
+                        <v-client-table :columns="columns_clients" :data="quote_clients" :options="table_options_clients">
+                            <div slot="name_client" slot-scope="props" class="text-center">
+                                <span>
+                                {{ (props.row.name_client)? props.row.name_client : props.row.name }}
+                                </span>
+                            </div>
+                            <div slot="rif" slot-scope="props" class="text-center">
+                                <span>
+                                {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
+                                </span>
+                            </div>
+                            <div slot="phones" slot-scope="props">
+                                <div v-if="props.row.phones">
+                                    <ul v-for="(phone, index) in props.row.phones" :key="index">
+                                        <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    <span>N/A</span>
+                                </div>
+                            </div>
+                            <div slot="sale_clients_email" slot-scope="props">
+                                <div v-if="props.row.sale_clients_email">
+                                    <ul v-for="(client_email, index) in props.row.sale_clients_email" :key="index">
+                                        <li>{{ client_email.email }}</li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    <span>N/A</span>
+                                </div>
+                            </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
                                     class="btn btn-warning btn-xs btn-icon btn-action"
@@ -253,24 +283,26 @@
                     representative_name: '',
                     name: '',
                     country_id: '',
+                    quote_clients: [],
                     estate_id: '',
                     municipality_id: '',
                     parish_id: '',
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phones: [],
+                    phone: [],
                     id_type: '',
                     id_number: '',
                 },
                 errors: [],
+                quote_clients: [],
                 records: [],
                 countries: [],
                 estates: [],
                 cities: [],
                 municipalities: [],
                 parishes: [],
-                columns: ['type_person_juridica', 'rif', 'name_client', 'id'],
+                columns_clients: ['type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email', 'id'],
                 types_person:  [
                     {'id':'', 'text':"Seleccione..."},
                     {'id':'Natural', 'text':'Natural'},
@@ -293,7 +325,7 @@
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phones: []
+                    phone: []
                 };
             },
             /**
@@ -319,23 +351,32 @@
         },
         created() {
             this.getCountries();
-            this.record.phones = [];
+            this.record.phone = [];
             this.record.emails = [];
 
-            this.table_options.headings = {
+            this.table_options_clients = {};
+            this.table_options_clients.headings = {
+                'id': 'Acción',
                 'type_person_juridica': 'Tipo de Persona',
-                'rif': 'Rif',
-                'name_client': 'Nombre o razón social',
-                'id': 'Acción'
+                'rif': 'Identificación del Cliente',
+                'name_client': 'Nombre',
+                'phones': 'Telefonos',
+                'sale_clients_email': 'Correo Electrónico'
             };
-            this.table_options.sortable = ['rif'];
-            this.table_options.filterable = ['rif'];
-            this.table_options.columnsClasses = {
-                'type_person_juridica': 'col-xs-3',
-                'rif': 'col-xs-3',
-                'name_client': 'col-xs-4',
-                'id': 'col-xs-2'
-            };
-        }
+            this.table_options_clients.sortable = [
+                'type_person_juridica',
+            ];
+            this.table_options_clients.filterable = [
+                'type_person_juridica',
+                'rif',
+                'id_number',
+                'name',
+                'name_client',
+            ];
+        },
+        mounted() {
+            const vm = this;
+            vm.getQuoteClients();
+        },
     };
 </script>

@@ -55,7 +55,7 @@
                   </div>
                   <div slot="phones" slot-scope="props">
                     <div v-if="props.row.phones">
-                      <ul v-for="phone in props.row.phones">
+                      <ul v-for="(phone, index) in props.row.phones" :key="index">
                         <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
                       </ul>
                     </div>
@@ -65,7 +65,7 @@
                   </div>
                   <div slot="sale_clients_email" slot-scope="props">
                     <div v-if="props.row.sale_clients_email">
-                      <ul v-for="client_email in props.row.sale_clients_email">
+                      <ul v-for="(client_email, index) in props.row.sale_clients_email" :key="index">
                         <li>{{ client_email.email }}</li>
                       </ul>
                     </div>
@@ -237,22 +237,22 @@
     <div class="card-footer text-right">
       <div class="row">
         <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
-    	  <button type="button" @click="reset()"
+    	    <button type="button" @click="reset()"
             class="btn btn-default btn-icon btn-round btn-modal-close"
       	    title ="Borrar datos del formulario">
-    	    <i class="fa fa-eraser"></i>
+    	      <i class="fa fa-eraser"></i>
           </button>
           <button type="button" @click="redirect_back(route_list)"
-    	    class="btn btn-warning btn-icon btn-round btn-modal-close"
-    	    data-dismiss="modal"
-    	    title="Cancelar y regresar">
-    	    <i class="fa fa-ban"></i>
-    	  </button>
+    	      class="btn btn-warning btn-icon btn-round btn-modal-close"
+    	      data-dismiss="modal"
+    	      title="Cancelar y regresar">
+    	      <i class="fa fa-ban"></i>
+    	    </button>
           <button type="button" @click="createQuote('sale/order')"
-    	    class="btn btn-success btn-icon btn-round btn-modal-save"
-    	    title="Guardar registro">
-    	    <i class="fa fa-save"></i>
-    	  </button>
+    	      class="btn btn-success btn-icon btn-round btn-modal-save"
+    	      title="Guardar registro">
+    	      <i class="fa fa-save"></i>
+    	    </button>
         </div>
       </div>
     </div>
