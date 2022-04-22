@@ -52,7 +52,7 @@
 				<div class="card-body">
 					<sale-warehouse-reception-pending-list
 						route_list="{{ url('sale/receptions/vue-list') }}"
-						route_update="{{ url('sale/receptions') }}">
+						route_update="sale/receptions">
 					</sale-warehouse-reception-pending-list>
 				</div>
 			</div>
