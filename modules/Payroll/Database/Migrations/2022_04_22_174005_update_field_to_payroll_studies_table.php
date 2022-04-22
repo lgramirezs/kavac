@@ -27,7 +27,13 @@ class UpdateFieldToPayrollStudiesTable extends Migration
         if (Schema::hasTable('payroll_studies')) {
             Schema::table('payroll_studies', function (Blueprint $table) {
                 if (Schema::hasColumn('payroll_studies', 'graduation_year')) {
-                    $table->date('graduation_year')->change();
+                    $table->dropColumn('graduation_year');
+                }
+            });
+
+            Schema::table('payroll_studies', function (Blueprint $table) {
+                if (!Schema::hasColumn('payroll_studies', 'graduation_year')) {
+                    $table->date('graduation_year');
                 }
             });
         }
@@ -43,7 +49,13 @@ class UpdateFieldToPayrollStudiesTable extends Migration
         if (Schema::hasTable('payroll_studies')) {
             Schema::table('payroll_studies', function (Blueprint $table) {
                 if (Schema::hasColumn('payroll_studies', 'graduation_year')) {
-                    $table->year('graduation_year')->change();
+                    $table->dropColumn('graduation_year');
+                };
+            });
+
+            Schema::table('payroll_studies', function (Blueprint $table) {
+                if (!Schema::hasColumn('payroll_studies', 'graduation_year')) {
+                    $table->year('graduation_year');
                 };
             });
         }
