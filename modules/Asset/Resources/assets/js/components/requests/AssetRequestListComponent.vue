@@ -18,7 +18,7 @@
             <div v-html="props.row.motive" slot="motive" slot-scope="props"
                 class="text-center">
             </div>
-            <div slot="id" slot-scope="props" class="text-center d-inline-flex">
+            <div slot="id" slot-scope="props" class="d-flex justify-content-center">
 
                 <asset-request-info
                     :route_list="app_url+'/asset/requests/vue-info/'+props.row.id">
