@@ -39,7 +39,7 @@ class PayrollSchoolingLevel extends Model implements Auditable
      */
     protected $fillable = ['name', 'description'];
 
-    public function payrollChildren()
+    public function payrollChildrens()
     {
         return $this->hasMany(PayrollChildren::class);
     }
