@@ -163,7 +163,8 @@
 									<div class="col-3">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_object_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
-											{!! Form::select('purchase_supplier_object_id', $supplier_objects, null, [
+											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
+													(isset($model_supplier_objects)) ? $model_supplier_objects : null, [
 												'class' => 'form-control',
 												'multiple' => 'multiple',
 												'name' => 'purchase_supplier_object_id[]'
@@ -328,7 +329,6 @@
 									                    <div class="feature-list-content-wrapper">
 									                        <div class="feature-list-content-left">
 									                            <div class="feature-list-heading">
-									                                {{ $reqDoc->name }}
 									                                <div class="badge badge-danger ml-2"
 									                                	 title="El documento aún no ha sido cargado"
 									                                	 data-toggle="tooltip">
@@ -346,11 +346,14 @@
 									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
 									                        		<i class="fa fa-cloud-upload fa-2x"></i>
 									                        	</button>
-									                        	<button class="btn btn-simple btn-primary btn-events"
-									                        			title="Presione para descargar el documento"
-									                        			data-toggle="tooltip" type="button">
-									                        		<i class="fa fa-cloud-download fa-2x"></i>
-									                        	</button>
+																<a class="btn btn-simple btn-primary btn-events" 
+																	title="Presione para descargar el documento"
+																	data-toggle="tooltip"
+																	{{-- href="{{'/purchase/document/download/'}}" --}}
+																	{{-- download="{{'.geojson'}}" --}}
+																	>
+																	<i class="fa fa-cloud-download fa-2x"></i>
+																</a>
 									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
 									                        		   accept=".doc, .pdf, .odt, .docx">
 									                        </div>

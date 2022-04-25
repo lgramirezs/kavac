@@ -152,6 +152,9 @@ class PurchaseSupplierController extends Controller
             'social_purpose'                 => $request->social_purpose,
         ]);
 
+        /** sincroniza la relacion en la tabla pivote de purchase_object_supplier **/
+        $supplier->purchaseSupplierObjects()->sync($request->purchase_supplier_object_id);
+
         //dd($request->all());
         /** Registros asociados a contactos */
         if ($request->contact_names && !empty($request->contact_names)) {
@@ -214,7 +217,12 @@ class PurchaseSupplierController extends Controller
     public function edit($id)
     {
         $model = PurchaseSupplier::find($id);
+        
+        $purchase_supplier_objects = [];
 
+        foreach ($model->purchaseSupplierObjects as $record) {
+            array_push($purchase_supplier_objects, $record->id);
+        }
         $header = [
             'route' => ['purchase.suppliers.update', $model->id],
             'method' => 'PUT',
@@ -226,7 +234,8 @@ class PurchaseSupplierController extends Controller
             'countries' => $this->countries, 'estates' => $this->estates, 'cities' => $this->cities,
             'supplier_types' => $this->supplier_types, 'supplier_objects' => $this->supplier_objects,
             'supplier_branches' => $this->supplier_branches, 'supplier_specialties' => $this->supplier_specialties,
-            'header' => $header, 'model' => $model, 'requiredDocuments' => $this->requiredDocuments
+            'header' => $header, 'requiredDocuments' => $this->requiredDocuments, 'model' => $model, 
+            'model_supplier_objects' => $purchase_supplier_objects
         ]);
     }
 
@@ -298,6 +307,9 @@ class PurchaseSupplierController extends Controller
         $supplier->social_purpose                 = $request->social_purpose;
 
         $supplier->save();
+
+        /** sincroniza la relacion en la tabla pivote de purchase_object_supplier **/
+        $supplier->purchaseSupplierObjects()->sync($request->purchase_supplier_object_id);
 
         /** Se elimina la relacion de proveedor con los contactos anteriores **/
         $supp_contacts = $supplier->contacts()->get();
