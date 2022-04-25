@@ -427,7 +427,7 @@ class AssetController extends Controller
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchClasification(Request $request)
+    public function searchClasification(Request $request, $perPage = 10, $page = 1)
     {
         $assets = Asset::CodeClasification(
             $request->asset_type,
@@ -440,7 +440,17 @@ class AssetController extends Controller
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
@@ -450,7 +460,7 @@ class AssetController extends Controller
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchGeneral(Request $request)
+    public function searchGeneral(Request $request, $perPage = 10, $page = 1)
     {
         if ($request->start_date && $request->end_date && $request->mes_id && $request->year) {
             $assets = Asset::where('institution_id', $request->institution)->DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
@@ -469,7 +479,17 @@ class AssetController extends Controller
             }
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**

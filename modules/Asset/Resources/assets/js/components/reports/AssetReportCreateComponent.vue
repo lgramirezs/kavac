@@ -225,14 +225,14 @@
                 </div>
             </div>
             <hr>
-            <!--div class="form-group form-inline pull-right VueTables__limit-2">
+            <div class="form-group form-inline pull-right VueTables__limit-2">
                 <div class="VueTables__limit-field">
                     <label class="">Registros</label>
                     <select2 :options="perPageValues"
                         v-model="perPage">
                     </select2>
                 </div>
-            </div-->
+            </div>
             <v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
 
                 <div slot="institution" slot-scope="props" class="text-center">
@@ -247,7 +247,7 @@
                 </div>
 
             </v-client-table>
-            <!--div class="VuePagination-2 row col-md-12 ">
+            <div class="VuePagination-2 row col-md-12 ">
                 <nav class="text-center">
                     <ul class="pagination VuePagination__pagination" style="">
                         <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="page != 1">
@@ -274,7 +274,7 @@
                     </ul>
                     <p class="VuePagination__count text-center col-md-12" style=""> </p>
                 </nav>
-            </div-->
+            </div>
         </div>
 
         <div class="card-footer text-right">
@@ -317,6 +317,7 @@
 
                 errors: [],
                 records: [],
+                search: '',
                 page: 1,
                 total: '',
                 perPage: 10,
@@ -377,18 +378,21 @@
         },
         watch: {
             perPage(res) {
+                let search = this.search;
                 if (this.page == 1){
-                    this.loadAssets(`${window.app_url}/asset/registers/vue-list/${res}/${this.page}`);
+                    this.loadAssets(`${window.app_url}/asset/registers/search/${search}/${this.perPage}/${this.page}`);
+                    this.filterRecords();
                 } else {
                     this.changePage(1);
                 }
             },
             page(res) {
-                this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${res}`);
+                let search = this.search;
+                this.loadAssets(`${window.app_url}/asset/registers/search/${search}/${this.perPage}/${res}`);
+                this.filterRecords();
             },
         },
         created() {
-            //this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
             this.getInstitutions();
             this.getAssetTypes();
             this.getAssetStatus();
@@ -434,9 +438,9 @@
                 });
             },
 
-            loadAssets(url) {
+            loadAssets(url, fields) {
                 const vm = this;
-                axios.get(url).then(response => {
+                axios.post(url, fields).then(response => {
                     if (typeof(response.data.records) !== "undefined") {
                         vm.records  = response.data.records;
                         vm.total    = response.data.total;
@@ -520,6 +524,7 @@
                 var fields = {};
 
                 if(vm.record.type_report == 'general'){
+                    vm.search = 'general';
                     url += '/general';
                     if(vm.record.type_search == 'date'){
                         fields = {
@@ -544,6 +549,7 @@
                     }
                 }
                 else if(vm.record.type_report == 'clasification') {
+                    vm.search = 'clasification';
                     url += '/clasification';
                     fields = {
                         asset_type: vm.record.asset_type_id,
@@ -555,6 +561,7 @@
                     };
                 }
                 else if(vm.record.type_report == 'dependence') {
+                    vm.search = 'dependence';
                     url += '/dependence';
                     fields = {
                         department: vm.record.department_id,
@@ -563,9 +570,8 @@
                     };
                 }
                 if((vm.record.type_report != '')||((vm.record.type_report == 'general')&&(vm.record.type_search != ''))){
-                    axios.post(url, fields).then(response => {
-                        vm.records = response.data.records;
-                    });
+                    url = url + `/${vm.perPage}/${vm.page}`
+                    vm.loadAssets(url, fields);
                 }
             },
         }
