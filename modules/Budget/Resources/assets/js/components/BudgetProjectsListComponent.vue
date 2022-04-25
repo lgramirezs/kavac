@@ -19,7 +19,7 @@
                     <i class="fa fa-edit"></i>
                 </button>
                 <button
-                    @click="deleteRecord(props.index, '')"
+                    @click="deleteRecord(props.row.id, '')"
                     class="btn btn-danger btn-xs btn-icon btn-action"
                     title="Eliminar registro"
                     data-toggle="tooltip"
