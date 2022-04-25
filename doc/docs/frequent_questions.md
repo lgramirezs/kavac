@@ -48,6 +48,6 @@
 ??? question "¿Por qué se muestra un error al ingresar a enlaces recibidos a través del correo electrónico?"
     Los enlaces emitidos por el sistema ya sea por verificación de usuario, recuperación de contraseña entre otros, tienen una vigencia de 60 minutos. 
 
-    ![Screenshot](../img/403.png#imagen)
+    ![Screenshot](img/403.png#imagen)
     
 
