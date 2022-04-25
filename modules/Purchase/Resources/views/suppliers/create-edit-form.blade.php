@@ -322,7 +322,6 @@
 										<input type="hidden" id="documents" name="documents" readonly>
 										<ul class="feature-list list-group list-group-flush">
 											@foreach ($requiredDocuments as $reqDoc)
-												{{$reqDoc}}
 									            <li class="list-group-item">
 									                <div class="feature-list-indicator bg-info"></div>
 									                <div class="feature-list-content p-0">
