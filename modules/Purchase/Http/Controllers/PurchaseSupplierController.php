@@ -105,8 +105,8 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_names'                   => ['required'],
-            'contact_emails'                  => ['required'],
+            'contact_names'                  => ['required'],
+            'contact_emails'                 => ['required'],
             'rnc_certificate_number'         => ['required_with:rnc_status'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
@@ -126,8 +126,8 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_names.required'                   => 'El campo nombre de contacto es obligatorio.',
-            'contact_emails.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
+            'contact_names.required'                  => 'El campo nombre de contacto es obligatorio.',
+            'contact_emails.required'                 => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
         
         //$supplier = PurchaseSupplier::first();

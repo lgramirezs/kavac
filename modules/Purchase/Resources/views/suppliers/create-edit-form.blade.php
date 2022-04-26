@@ -328,13 +328,20 @@
 									                <div class="feature-list-content p-0">
 									                    <div class="feature-list-content-wrapper">
 									                        <div class="feature-list-content-left">
-									                            <div class="feature-list-heading">
+									                            <div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
 									                                <div class="badge badge-danger ml-2"
-									                                	 title="El documento aún no ha sido cargado"
-									                                	 data-toggle="tooltip">
+																		title="El documento aún no ha sido cargado"
+									                                	data-toggle="tooltip">
 									                                	por cargar
 									                                </div>
 									                            </div>
+																<div class="feature-list-subheading" id="{{'loaded_doc'.$reqDoc->id}}" style="display:none;">
+																	<span class="badge badge-success"
+																		title="El documento se ha cargado"
+									                                	data-toggle="tooltip">
+																		<strong>Documento cargado</strong>
+																	</span>
+																</div>
 									                            <div class="feature-list-subheading">
 									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
 									                            </div>
@@ -355,7 +362,7 @@
 																	<i class="fa fa-cloud-download fa-2x"></i>
 																</a>
 									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
-									                        		   accept=".doc, .pdf, .odt, .docx">
+									                        		   onchange="uploadFile(event)" accept=".doc, .pdf, .odt, .docx">
 									                        </div>
 									                    </div>
 									                </div>
@@ -380,11 +387,38 @@
 	@parent
 	{!! Html::script('js/ckeditor.js', [], Request::secure()) !!}
 	<script>
+		let idclicker = 0;
 		$(document).ready(function() {
 			$(".nav-link").tooltip();
 		});
-		function clickUploadDoc(id){
+		function clickUploadDoc(id, ){
+			idclicker = id;
 			$('#doc'+id).click();
 		};
+
+		function uploadFile(e) {
+            const files = e.target.files;
+
+            Array.from(files).forEach(file => addFile(file, idclicker));
+        };
+        function addFile(file, inputID) {
+			$('#loaded_doc' + inputID).show("slow");
+			$('#toload_doc' + inputID).hide("slow");
+        };
+
+		function conditi(){
+			if (!file.type.match('application/pdf') || 
+				!file.type.match('application/msword') || 
+				!file.type.match('application/vnd.oasis.opendocument.text') || 
+				!file.type.match('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                this.showMessage(
+                    'custom', 'Error', 'danger', 'screen-error', 'Solo se permiten archivos pdf.'
+                );
+                return;
+            } else {
+                //this.files[inputID] = file;
+                $('#status_' + inputID).show("slow");
+            }
+		}
 	</script>
 @stop
