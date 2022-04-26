@@ -104,7 +104,7 @@
 				<div class="col-md-3" v-if="((record.asset_type_id == 1) || ((record.asset_type) && (record.asset_type.id == 1)))">
 					<div class="form-group">
 						<label>Proveedor</label>
-						<select2 :options="proveedores"
+						<select2 :options="supplier"
 								v-model="record.proveedor_id"></select2>
 					</div>
 				</div>
@@ -309,7 +309,7 @@
 				asset_specific_categories: [],
 
 				asset_acquisition_types: [],
-				proveedores: [],
+				supplier: [],
 				asset_conditions: [],
 				asset_status: [],
 				asset_use_functions: [],
@@ -380,6 +380,7 @@
 				vm.asset_conditions = [];
 				axios.get(`${window.app_url}/asset/get-conditions`).then(response => {
 					vm.asset_conditions = response.data;
+					console.log(vm.asset_conditions );
 				});
 			},
 			/**
@@ -448,6 +449,24 @@
 	          		}
 				}
 			},
+            
+				/**
+			 * * Reescribe el método getMunicipalities para cambiar su comportamiento por defecto
+			 * Obtiene los Municipios del Estado seleccionado
+			 *
+			 */
+			async getSuppliers() {
+				const vm = this;
+				vm.supplier = [];
+
+			
+					await axios.get(`${window.app_url}/purchase/suppliers-list`).then(response => {
+						vm.supplier = response.data;
+						console.log(response);
+					});
+			
+		
+			},
 
 			/**
 			 * * Reescribe el método getMunicipalities para cambiar su comportamiento por defecto
@@ -510,6 +529,7 @@
 			vm.getAssetUseFunctions();
 			vm.getCountries();
 			vm.getCurrencies();
+			vm.getSuppliers();
 		},
 		mounted() {
 			const vm = this;
