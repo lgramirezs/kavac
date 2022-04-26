@@ -419,8 +419,25 @@ class PayrollStaffController extends Controller
      * @author  William Páez <wpaez@cenditel.gob.ve>
      * @return \Illuminate\Http\JsonResponse    Json con los datos de la información personal de los trabajadores
      */
-    public function getPayrollStaffs()
+    public function getPayrollStaffs($type = 'all')
     {
-        return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        if ($type === 'all') {
+            return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        } else if (is_numeric($type)) {
+            return response()->json(
+                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
+            );
+        }
+
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+
+        /** Filtra por el personal que aún no tiene registrado los datos laborales */
+        $staffs = PayrollStaff::doesnthave('payrollEmployment')->get();
+
+        foreach ($staffs as $staff) {
+            $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+        }
+
+        return response()->json($options);
     }
 }

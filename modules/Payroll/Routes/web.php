@@ -115,7 +115,9 @@ Route::group([
     Route::get('staffs/show/vue-list', 'PayrollStaffController@vueList')->name('payroll.staffs.vue-list');
 
     /** Ruta que obtiene un arreglo con los registros del personal registrados */
-    Route::get('get-staffs', 'PayrollStaffController@getPayrollStaffs')->name('payroll.get-payroll-staffs');
+    Route::get(
+        'get-staffs/{type?}', 'PayrollStaffController@getPayrollStaffs'
+    )->name('payroll.get-payroll-staffs');
 
     /** Rutas para gestionar los grados de instrucción */
     Route::resource(
