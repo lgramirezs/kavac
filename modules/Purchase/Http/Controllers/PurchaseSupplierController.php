@@ -38,6 +38,8 @@ class PurchaseSupplierController extends Controller
         $this->countries = template_choices(Country::class);
         $this->estates = template_choices(Estate::class);
         $this->cities = template_choices(City::class);
+        $this->supplier = template_choices(PurchaseSupplier::class);
+
         $this->supplier_types = template_choices(PurchaseSupplierType::class);
         $this->supplier_branches = template_choices(PurchaseSupplierBranch::class);
         $this->supplier_specialties = template_choices(PurchaseSupplierSpecialty::class);
@@ -209,7 +211,18 @@ class PurchaseSupplierController extends Controller
     {
         return response()->json(['records' => PurchaseSupplier::find($id)], 200);
     }
+  
+     /**
+     * Show the specified resource.
+     * @return Renderable
+     */
+    public function showall()
+    {
+  
+      return template_choices(PurchaseSupplier::class, 'name', '', true);
 
+        // return response()->json(['records' => PurchaseSupplier::all()], 200);
+    }
     /**
      * Show the form for editing the specified resource.
      * @return Renderable
