@@ -38,6 +38,8 @@ class PurchaseSupplierController extends Controller
         $this->countries = template_choices(Country::class);
         $this->estates = template_choices(Estate::class);
         $this->cities = template_choices(City::class);
+        $this->supplier = template_choices(PurchaseSupplier::class);
+
         $this->supplier_types = template_choices(PurchaseSupplierType::class);
         $this->supplier_branches = template_choices(PurchaseSupplierBranch::class);
         $this->supplier_specialties = template_choices(PurchaseSupplierSpecialty::class);
@@ -105,8 +107,8 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_names'                   => ['required'],
-            'contact_emails'                  => ['required'],
+            'contact_names'                  => ['required'],
+            'contact_emails'                 => ['required'],
             'rnc_certificate_number'         => ['required_with:rnc_status'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
@@ -126,8 +128,8 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_names.required'                   => 'El campo nombre de contacto es obligatorio.',
-            'contact_emails.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
+            'contact_names.required'                  => 'El campo nombre de contacto es obligatorio.',
+            'contact_emails.required'                 => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
         
         //$supplier = PurchaseSupplier::first();
@@ -209,15 +211,26 @@ class PurchaseSupplierController extends Controller
     {
         return response()->json(['records' => PurchaseSupplier::find($id)], 200);
     }
+  
+     /**
+     * Show the specified resource.
+     * @return Renderable
+     */
+    public function showall()
+    {
+  
+      return template_choices(PurchaseSupplier::class, 'name', '', true);
 
+  
+    }
     /**
      * Show the form for editing the specified resource.
      * @return Renderable
      */
     public function edit($id)
     {
-        $model = PurchaseSupplier::find($id);
-        
+        $model = PurchaseSupplier::with('documents')->find($id);
+        //dd($model->documents);
         $purchase_supplier_objects = [];
 
         foreach ($model->purchaseSupplierObjects as $record) {
