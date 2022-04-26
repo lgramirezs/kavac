@@ -380,7 +380,7 @@
 				vm.asset_conditions = [];
 				axios.get(`${window.app_url}/asset/get-conditions`).then(response => {
 					vm.asset_conditions = response.data;
-					console.log(vm.asset_conditions );
+
 				});
 			},
 			/**
@@ -451,8 +451,7 @@
 			},
             
 				/**
-			 * * Reescribe el método getMunicipalities para cambiar su comportamiento por defecto
-			 * Obtiene los Municipios del Estado seleccionado
+			 * * realizado por Francisco Escala fjescala@gmail.com
 			 *
 			 */
 			async getSuppliers() {
@@ -462,7 +461,7 @@
 			
 					await axios.get(`${window.app_url}/purchase/suppliers-list`).then(response => {
 						vm.supplier = response.data;
-						console.log(response);
+				
 					});
 			
 		

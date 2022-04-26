@@ -221,7 +221,7 @@ class PurchaseSupplierController extends Controller
   
       return template_choices(PurchaseSupplier::class, 'name', '', true);
 
-        // return response()->json(['records' => PurchaseSupplier::all()], 200);
+  
     }
     /**
      * Show the form for editing the specified resource.
