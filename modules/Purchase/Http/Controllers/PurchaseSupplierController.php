@@ -216,8 +216,8 @@ class PurchaseSupplierController extends Controller
      */
     public function edit($id)
     {
-        $model = PurchaseSupplier::find($id);
-        
+        $model = PurchaseSupplier::with('documents')->find($id);
+        //dd($model->documents);
         $purchase_supplier_objects = [];
 
         foreach ($model->purchaseSupplierObjects as $record) {

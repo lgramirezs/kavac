@@ -327,6 +327,27 @@
 									                <div class="feature-list-indicator bg-info"></div>
 									                <div class="feature-list-content p-0">
 									                    <div class="feature-list-content-wrapper">
+															<div class="feature-list-content-right feature-list-content-actions">
+									                        	<button class="btn btn-simple btn-success btn-events"
+									                        			title="Presione para cargar el documento"
+									                        			data-toggle="tooltip" type="button"
+									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
+									                        		<i class="fa fa-cloud-upload fa-2x"></i>
+									                        	</button>
+																@if(isset($model) && isset($model->documents))
+																	<a class="btn btn-simple btn-primary btn-events"
+																		title="Presione para descargar el documento"
+																		data-toggle="tooltip"
+																		{{-- href="{{'/purchase/document/download/'}}" --}}
+																		{{-- download="{{'.geojson'}}" --}}
+																		>
+																		<i class="fa fa-cloud-download fa-2x"></i>
+																	</a>
+																@endif
+									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
+									                        		   onchange="uploadFile(event)" accept=".doc, .pdf, .odt, .docx">
+																<input type="number" id="{{'reqDoc'.$reqDoc->id}}" name="reqDocs[]" style="display:none">
+									                        </div>
 									                        <div class="feature-list-content-left">
 									                            <div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
 									                                <div class="badge badge-danger ml-2"
@@ -345,24 +366,6 @@
 									                            <div class="feature-list-subheading">
 									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
 									                            </div>
-									                        </div>
-									                        <div class="feature-list-content-right feature-list-content-actions">
-									                        	<button class="btn btn-simple btn-success btn-events"
-									                        			title="Presione para cargar el documento"
-									                        			data-toggle="tooltip" type="button"
-									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
-									                        		<i class="fa fa-cloud-upload fa-2x"></i>
-									                        	</button>
-																<a class="btn btn-simple btn-primary btn-events" 
-																	title="Presione para descargar el documento"
-																	data-toggle="tooltip"
-																	{{-- href="{{'/purchase/document/download/'}}" --}}
-																	{{-- download="{{'.geojson'}}" --}}
-																	>
-																	<i class="fa fa-cloud-download fa-2x"></i>
-																</a>
-									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
-									                        		   onchange="uploadFile(event)" accept=".doc, .pdf, .odt, .docx">
 									                        </div>
 									                    </div>
 									                </div>
@@ -402,6 +405,8 @@
             Array.from(files).forEach(file => addFile(file, idclicker));
         };
         function addFile(file, inputID) {
+			
+			$('#reqDoc'+inputID).val(inputID);
 			$('#loaded_doc' + inputID).show("slow");
 			$('#toload_doc' + inputID).hide("slow");
         };
