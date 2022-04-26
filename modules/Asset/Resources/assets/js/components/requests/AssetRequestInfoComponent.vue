@@ -213,7 +213,7 @@
                         $(".modal-body #id").val( fields.id );
 
                         document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'N/A';
-                        document.getElementById('motive').innerText = (fields.motive)?fields.motive:'N/A';
+                        document.getElementById('motive').innerHTML = (fields.motive)?fields.motive:'N/A';
                         document.getElementById('type').innerText = (fields.type)?vm.types[fields.type].text:'N/A';
                         document.getElementById('delivery_date').innerText = (fields.delivery_date)?fields.delivery_date:'N/A';
                         document.getElementById('ubication').innerText = (fields.ubication)?fields.ubication:'N/A';
