@@ -151,7 +151,7 @@
 							<i class="fa fa-eraser"></i>
 					</button>
 
-		        	<button type="button"
+		        	<button type="button" @click="redirect_back(route_list)"
 		        			class="btn btn-warning btn-icon btn-round btn-modal-close"
 		        			data-dismiss="modal"
 		        			title="Cancelar y regresar">
