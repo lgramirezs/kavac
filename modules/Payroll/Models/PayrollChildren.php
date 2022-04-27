@@ -38,7 +38,8 @@ class PayrollChildren extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'first_name', 'last_name', 'id_number', 'birthdate', 'payroll_socioeconomic_id', 'payroll_schooling_level_id'
+        'first_name', 'last_name', 'id_number', 'birthdate', 'payroll_socioeconomic_id',
+        'payroll_schooling_level_id', 'study_center', 'payroll_disability_id', 'is_student', 'has_disability'
     ];
 
     /**
@@ -55,5 +56,10 @@ class PayrollChildren extends Model implements Auditable
     public function payrollSchoolingLevel()
     {
         return $this->belongsTo(PayrollSchoolingLevel::class);
+    }
+
+    public function payrollDisability()
+    {
+        return $this->belongsTo(PayrollDisability::class);
     }
 }

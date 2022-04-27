@@ -134,7 +134,7 @@
             </div>
             <div class="col-12">
                 <ul class="feature-list list-group list-group-flush">
-                    <li class="list-group-item" v-for="(file, idx) in files">
+                    <li class="list-group-item" v-for="(file, idx) in files" :key="idx">
                         <div class="feature-list-indicator bg-info">
                             <label style="margin-left: 2rem;">
                                 {{ idx.replace(/_/g, ' ') }}
@@ -144,7 +144,8 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-danger btn-import" title="Presione para subir el archivo." @click="setFile(idx)">
+                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-success btn-import" 
+                                            title="Presione para subir el archivo." @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
                                         <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
@@ -538,8 +539,6 @@ export default {
         },
 
         uploadFile(inputID, e) {
-            console.log(inputID)
-
             let vm = this;
             const files = e.target.files;
 

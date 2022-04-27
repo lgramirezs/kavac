@@ -27,8 +27,7 @@ class CreatePayrollStudiesTable extends Migration
         Schema::create('payroll_studies', function (Blueprint $table) {
             $table->id();
             $table->string('university_name', 200)->comment('Nombre de la universidad');
-            // $table->year('graduation_year');
-            $table->date('graduation_year');
+            $table->year('graduation_year');
             $table->foreignId('payroll_study_type_id')
                   ->comment('Identificador del tipo de estudio')->constrained()
                   ->onUpdate('cascade')->onDelete('restrict');

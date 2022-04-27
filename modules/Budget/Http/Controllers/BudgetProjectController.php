@@ -218,8 +218,24 @@ class BudgetProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validate_rules, $this->messages);
-
+        //$this->validate($request, $this->validate_rules, $this->messages);
+        $this->validate($request, [
+            'institution_id'       => ['required'],
+            'department_id'        => ['required'],
+            'payroll_position_id'  => ['required'],
+            'payroll_staff_id'     => ['required'],
+            'name'                 => ['required'],
+            'code'                 => ['required', 'unique:budget_projects,code,'. $id],
+        ], [
+            'institution_id.required'      => 'El campo institución es obligatorio. ',
+            'department_id.required'       => 'El campo dependencia es obligatorio. ',
+            'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
+            'payroll_staff_id.required'    => 'El campo responsable es obligatorio. ',
+            'code.required'                => 'El campo código es obligatorio. ',
+            'code.unique'                => 'El campo código ya ha sido registrado en otro proyecto.',
+            'name.required'                => 'El campo nombre es obligatorio. ',
+        ]);
+        
         /** @var object Objeto con información del proyecto a modificar */
         $budgetProject = BudgetProject::find($id);
         $budgetProject->fill($request->all());

@@ -47,13 +47,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     )->name('asset.register.vuelist');
 
     /** Ruta que obtiene un listado de los bienes institucionales, de acuerdo al tipo de busqueda general */
-    Route::post('registers/search/general', 'AssetController@searchGeneral');
+    Route::post('registers/search/general/{perPage?}/{page?}', 'AssetController@searchGeneral');
 
     /** Ruta que obtiene un listado de los bienes institucionales, de acuerdo al tipo de busqueda clasificación */
-    Route::post('registers/search/clasification', 'AssetController@searchClasification');
+    Route::post('registers/search/clasification/{perPage?}/{page?}', 'AssetController@searchClasification');
 
     /** Ruta que obtiene un listado de los bienes institucionales, de acuerdo al tipo de busqueda dependencia */
-    Route::post('registers/search/dependence', 'AssetController@searchDependence');
+    Route::post('registers/search/dependence/{perPage?}/{page?}', 'AssetController@searchDependence');
 
     /** Ruta que permite exportar la información de los bienes institucionales registrados */
     Route::get('registers/export/all', 'AssetController@export');

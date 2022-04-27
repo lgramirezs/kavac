@@ -427,19 +427,30 @@ class AssetController extends Controller
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchClasification(Request $request)
+    public function searchClasification(Request $request, $perPage = 10, $page = 1)
     {
         $assets = Asset::CodeClasification(
             $request->asset_type,
             $request->asset_category,
             $request->asset_subcategory,
             $request->asset_specific_category
-        )->with('institution', 'assetCondition', 'assetStatus');
+        )->with('institution', 'assetCondition', 'assetStatus')
+         ->where('institution_id', $request->institution);
         if ($request->asset_status > 0) {
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
@@ -449,15 +460,36 @@ class AssetController extends Controller
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchGeneral(Request $request)
+    public function searchGeneral(Request $request, $perPage = 10, $page = 1)
     {
-        $assets = Asset::DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
-            ->with('institution', 'assetCondition', 'assetStatus');
-        if ($request->asset_status > 0) {
-            $assets = $assets->where('asset_status_id', $request->asset_status);
+        if ($request->start_date && $request->end_date && $request->mes_id && $request->year) {
+            $assets = Asset::where('institution_id', $request->institution)->DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
+                ->with('institution', 'assetCondition', 'assetStatus');
+            if ($request->asset_status > 0) {
+                $assets = $assets->where('asset_status_id', $request->asset_status);
+            }
+        } else {
+            if ($request->asset_status > 0) {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('asset_status_id', $request->asset_status)
+                                    ->where('institution_id', $request->institution);
+            } else {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('institution_id', $request->institution);
+            }
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
@@ -474,7 +506,6 @@ class AssetController extends Controller
          *  Validar tambien para múltiples instituciones
          *
          */
-        //Asset::with('assetCondition','assetStatus')->get();
         return response()->json(['records' => []], 200);
     }
 

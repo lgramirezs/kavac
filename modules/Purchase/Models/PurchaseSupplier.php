@@ -8,6 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
+use Modules\Purchase\Models\PurchaseSupplierObject;
+
 /**
  * @class PurchaseSupplier
  * @brief Datos de los proveedores
@@ -33,7 +35,7 @@ class PurchaseSupplier extends Model implements Auditable
     protected $dates = ['deleted_at'];
 
     protected $with = [
-        'purchaseSupplierSpecialty', 'purchaseSupplierType', 'purchaseSupplierBranch', 'purchaseSupplierObject',
+        'purchaseSupplierSpecialty', 'purchaseSupplierType', 'purchaseSupplierBranch', 'purchaseSupplierObjects',
         'phones', 'city', 'contacts'
     ];
 
@@ -137,13 +139,13 @@ class PurchaseSupplier extends Model implements Auditable
     }
 
     /**
-     * PurchaseSupplier belongs to PurchaseSupplierObject.
+     * The purchaseSupplierObjects that belong to the PurchaseSupplier
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function purchaseSupplierObject()
+    public function purchaseSupplierObjects()
     {
-        return $this->belongsTo(PurchaseSupplierObject::class);
+        return $this->belongsToMany(PurchaseSupplierObject::class, 'purchase_object_supplier');
     }
 
     /**

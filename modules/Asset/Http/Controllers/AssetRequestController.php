@@ -157,7 +157,7 @@ class AssetRequestController extends Controller
             ]);
         }
 
-        if ($request->files) {
+        if ($request->has('files')) {
             foreach ($request->file('files') as $file) {
                 $upDoc->uploadDoc(
                     $file,

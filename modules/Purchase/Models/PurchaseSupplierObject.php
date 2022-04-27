@@ -8,6 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
+use Modules\Purchase\Models\PurchaseSupplier;
+
 /**
  * @class PurchaseSupplierObject
  * @brief Datos de los objetos de proveedores
@@ -34,13 +36,14 @@ class PurchaseSupplierObject extends Model implements Auditable
 
     protected $fillable = ['type', 'name', 'description'];
 
+
     /**
-     * PurchaseSupplierBranch has many PurchaseSuppliers.
+     * The PurchaseSupplierObject that belong to the PurchaseSuppliers
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function purchaseSuppliers()
+    public function suppliers()
     {
-        return $this->hasMany(PurchaseSupplier::class);
+        return $this->belongsToMany(PurchaseSupplier::class, 'purchase_object_supplier');
     }
 }

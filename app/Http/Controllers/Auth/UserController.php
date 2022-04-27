@@ -140,7 +140,7 @@ class UserController extends Controller
         $user->sendEmailVerificationNotification();
         $request->session()->flash('message', ['type' => 'store']);
 
-        return redirect()->route('access.settings.users');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -289,7 +289,7 @@ class UserController extends Controller
 
         $request->session()->flash('message', ['type' => 'update']);
 
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 
     /**

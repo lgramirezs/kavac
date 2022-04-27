@@ -24,6 +24,20 @@ Route::group([
      */
     Route::get('/', 'PurchaseController@index')->name('purchase.index');
 
+    /** Ruta que descargar archivos. */
+    Route::get('document/download/{file_name}', function ($fileName) {
+        $path = storage_path('documents/' . $fileName);
+        if (!File::exists($path)) {
+            abort(404);
+        }
+        $file = File::get($path);
+        /** @var array|string Tipo de archivo */
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    });
+
     /*
      * -----------------------------------------------------------------------
      * Rutas para la configuración general del módulo de compras
@@ -113,6 +127,8 @@ Route::group([
         'PurchaseSupplierController@vueList'
     )->name('purchase.suppliers.vuelist');
     Route::resource('suppliers', 'PurchaseSupplierController', ['as' => 'purchase',]);
+    Route::get('suppliers-list', 'PurchaseSupplierController@showall', ['as' => 'showallpurchase']);
+
 
     Route::get(
         'get-purchase-supplier-object/{id}',

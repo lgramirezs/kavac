@@ -254,7 +254,7 @@
 
                     <button
                         type="button"
-                        @click="createRecord('asset/requests'); redirect_back(route_list);"
+                        @click="createRecord('asset/requests')"
                         class="btn btn-success btn-icon btn-round btn-modal-save"
                         title="Guardar registro"
                     >
