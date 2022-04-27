@@ -198,23 +198,104 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 -   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
 -   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
 
+![Screenshot](../img/figure_55.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estados</div>
+
+***Gestión de registros***
+
+-   Para editar un registro de **estado** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Estados** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **estado** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_56_1.png)<div style="text-align: center;font-weight: bold">Figura: Registros Estados</div>
+
 
 **Municipios**
 
+-   Ingresar a la opción **Municipios** dando clic sobre el recuadro. 
+
 ![Screenshot](../img/common_8.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Municipios</div>
+
+***Registro de municipios***
+
+-   Complete el formulario **Municipios** (ver Figura). Seleccione el país y estado asociado, asigne un código y nombre del municipio a registrar.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_57.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Municipios</div>
+
+***Gestión de registros***
+
+-   Para editar un registro de **municipio** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Municipios** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **municipio** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_58.png)<div style="text-align: center;font-weight: bold">Figura: Registros Estados</div>
 
 **Parroquias**
 
+-   Ingresar a la opción **Parroquias** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_9.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Parroquias</div>
 
+***Registro de parroquias***
+
+-   Complete el formulario **Parroquias** (ver Figura). Seleccione el país, estado y municipio asociado, asigne un código y nombre de la parroquia a registrar.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_59.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Parroquias</div>
+
+***Gestión de registros***
+
+-   Para editar un registro de **parroquia** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Parroquias** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **parroquia** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_60.png)<div style="text-align: center;font-weight: bold">Figura: Registros Parroquias</div>
 
 **Ciudades**
 
+-   Ingresar a la opción **Ciudades** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_10.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Ciudades</div>
+
+***Registro de ciudades***
+
+-   Complete el formulario **Ciudades** (ver Figura). Seleccione el país y estado asociado, asigne un nombre de la ciudad a registrar.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_61.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Ciudades</div>
+
+***Gestión de registros***
+
+-   Para editar un registro de **ciudad** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Ciudades** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **ciudad** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_62.png)<div style="text-align: center;font-weight: bold">Figura: Registros Ciudades</div>
 
 **Monedas**
 
+-   Ingresar a la opción **Monedas** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_11.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Monedas</div>
+
+***Registro de monedas***
+
+-   Complete el formulario **Monedas** (ver Figura). Seleccione el país, asigne un símbolo, nombre y cantidad de decimales de la moneda a registrar.
+-   Para configurar una moneda registrada por defecto en el sistema indique la opción ![Screenshot](../img/select.png) del botón de selección del campo **Por defecto**.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_63.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Monedas</div>
+
+***Gestión de registros***
+
+-   Para editar un registro de **moneda** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Monedas** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **moneda** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_64.png)<div style="text-align: center;font-weight: bold">Figura: Registros Monedas</div>
 
 
 **Tipos de cambio**
