@@ -191,7 +191,7 @@
 
 
             prepareText(text) {
-                return text.replace('<p>', '').replace('</p>', ''); 
+                return text.replace('<p>', '').replace('</p>', '');
             },
             /**
 			 * Reescribe el método initRecords para cambiar su comportamiento por defecto
