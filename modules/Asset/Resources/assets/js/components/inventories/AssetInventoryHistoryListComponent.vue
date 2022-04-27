@@ -60,7 +60,7 @@
 							<div class="col-md-12">
 								<strong>Tipo de Reporte</strong>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="form-group">
 									<label>General</label>
 									<div class="col-12">
@@ -71,7 +71,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="form-group">
 									<label>Por Clasificación</label>
 									<div class="col-12">
@@ -79,14 +79,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<!--div class="col-md-4">
 								<div class="form-group">
 									<label>Por Dependencia</label>
 									<div class="col-12">
 										<input type="radio" name="type_report" value="dependence" id="sel_dependence_report" class="form-control bootstrap-switch bootstrap-switch-mini sel_type_report" data-on-label="SI" data-off-label="NO">
 									</div>
 								</div>
-							</div>
+							</div-->
 						</div>
 					</div>
 
