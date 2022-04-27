@@ -45,8 +45,8 @@ class RecordFailedLoginAttempt
     public function handle(Failed $event)
     {
         /** @var string Establece la fecha y hora en la que fue bloqueado el usuario */
-        $event->user->blocked_at = date('Y-m-d H:i:s');
-        $event->user->save();
+        /**$event->user->blocked_at = date('Y-m-d H:i:s');
+        $event->user->save();*/
 
         $blackListIp = Parameter::where(['p_key' => 'black_list_ip'])->first();
         $myIp = request()->ip();
@@ -64,7 +64,7 @@ class RecordFailedLoginAttempt
             }
         }
 
-	    $event->user->notify(new UserBlocked(User::find($event->user->id)));
+	    //$event->user->notify(new UserBlocked(User::find($event->user->id)));
 
         /** Registra el evento de intento fallido */
         FailedLoginAttempt::record(
