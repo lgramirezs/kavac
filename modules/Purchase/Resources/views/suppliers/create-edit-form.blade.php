@@ -163,7 +163,8 @@
 									<div class="col-3">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_object_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
-											{!! Form::select('purchase_supplier_object_id', $supplier_objects, null, [
+											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
+													(isset($model_supplier_objects)) ? $model_supplier_objects : null, [
 												'class' => 'form-control',
 												'multiple' => 'multiple',
 												'name' => 'purchase_supplier_object_id[]'
@@ -322,38 +323,49 @@
 										<input type="hidden" id="documents" name="documents" readonly>
 										<ul class="feature-list list-group list-group-flush">
 											@foreach ($requiredDocuments as $reqDoc)
-												{{$reqDoc}}
 									            <li class="list-group-item">
 									                <div class="feature-list-indicator bg-info"></div>
 									                <div class="feature-list-content p-0">
 									                    <div class="feature-list-content-wrapper">
-									                        <div class="feature-list-content-left">
-									                            <div class="feature-list-heading">
-									                                {{ $reqDoc->name }}
-									                                <div class="badge badge-danger ml-2"
-									                                	 title="El documento aún no ha sido cargado"
-									                                	 data-toggle="tooltip">
-									                                	por cargar
-									                                </div>
-									                            </div>
-									                            <div class="feature-list-subheading">
-									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
-									                            </div>
-									                        </div>
-									                        <div class="feature-list-content-right feature-list-content-actions">
+															<div class="feature-list-content-right feature-list-content-actions">
 									                        	<button class="btn btn-simple btn-success btn-events"
 									                        			title="Presione para cargar el documento"
 									                        			data-toggle="tooltip" type="button"
 									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
 									                        		<i class="fa fa-cloud-upload fa-2x"></i>
 									                        	</button>
-									                        	<button class="btn btn-simple btn-primary btn-events"
-									                        			title="Presione para descargar el documento"
-									                        			data-toggle="tooltip" type="button">
-									                        		<i class="fa fa-cloud-download fa-2x"></i>
-									                        	</button>
+																@if(isset($model) && isset($model->documents))
+																	<a class="btn btn-simple btn-primary btn-events"
+																		title="Presione para descargar el documento"
+																		data-toggle="tooltip"
+																		{{-- href="{{'/purchase/document/download/'}}" --}}
+																		{{-- download="{{'.geojson'}}" --}}
+																		>
+																		<i class="fa fa-cloud-download fa-2x"></i>
+																	</a>
+																@endif
 									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
-									                        		   accept=".doc, .pdf, .odt, .docx">
+									                        		   onchange="uploadFile(event)" accept=".doc, .pdf, .odt, .docx">
+																<input type="number" id="{{'reqDoc'.$reqDoc->id}}" name="reqDocs[]" style="display:none">
+									                        </div>
+									                        <div class="feature-list-content-left">
+									                            <div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
+									                                <div class="badge badge-danger ml-2"
+																		title="El documento aún no ha sido cargado"
+									                                	data-toggle="tooltip">
+									                                	por cargar
+									                                </div>
+									                            </div>
+																<div class="feature-list-subheading" id="{{'loaded_doc'.$reqDoc->id}}" style="display:none;">
+																	<span class="badge badge-success"
+																		title="El documento se ha cargado"
+									                                	data-toggle="tooltip">
+																		<strong>Documento cargado</strong>
+																	</span>
+																</div>
+									                            <div class="feature-list-subheading">
+									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
+									                            </div>
 									                        </div>
 									                    </div>
 									                </div>
@@ -378,11 +390,40 @@
 	@parent
 	{!! Html::script('js/ckeditor.js', [], Request::secure()) !!}
 	<script>
+		let idclicker = 0;
 		$(document).ready(function() {
 			$(".nav-link").tooltip();
 		});
-		function clickUploadDoc(id){
+		function clickUploadDoc(id, ){
+			idclicker = id;
 			$('#doc'+id).click();
 		};
+
+		function uploadFile(e) {
+            const files = e.target.files;
+
+            Array.from(files).forEach(file => addFile(file, idclicker));
+        };
+        function addFile(file, inputID) {
+			
+			$('#reqDoc'+inputID).val(inputID);
+			$('#loaded_doc' + inputID).show("slow");
+			$('#toload_doc' + inputID).hide("slow");
+        };
+
+		function conditi(){
+			if (!file.type.match('application/pdf') || 
+				!file.type.match('application/msword') || 
+				!file.type.match('application/vnd.oasis.opendocument.text') || 
+				!file.type.match('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                this.showMessage(
+                    'custom', 'Error', 'danger', 'screen-error', 'Solo se permiten archivos pdf.'
+                );
+                return;
+            } else {
+                //this.files[inputID] = file;
+                $('#status_' + inputID).show("slow");
+            }
+		}
 	</script>
 @stop

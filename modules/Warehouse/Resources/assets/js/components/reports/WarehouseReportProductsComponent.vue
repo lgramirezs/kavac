@@ -289,7 +289,7 @@
 			this.getInstitutions();
 			this.getWarehouseProducts();
 			this.getWarehouses();
-			this.loadInventoryProduct('inventory-products');
+			//this.loadInventoryProduct('inventory-products');
 		}
 	};
 </script>

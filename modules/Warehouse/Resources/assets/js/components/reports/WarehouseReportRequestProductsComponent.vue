@@ -8,6 +8,23 @@
             </div>
 
             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Institución:</label>
+                        <select2 :options="institutions"
+                                 @input="getDepartments()"
+                                 v-model="record.institution_id"></select2>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Departamento/Dependencia:</label>
+                        <select2 :options="departments"
+                                v-model="record.department_id"></select2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <strong>Filtros</strong>
                 </div>
@@ -48,23 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Institución:</label>
-                        <select2 :options="institutions"
-                                 @input="getDepartments()"
-                                 v-model="record.institution_id"></select2>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Departamento/Dependencia:</label>
-                        <select2 :options="departments"
-                                v-model="record.department_id"></select2>
-                    </div>
-                </div>
-            </div>
+        
             <div class="row text-center">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -330,10 +331,15 @@
                 for (var index in this.record) {
                     fields[index] = this.record[index];
                 }
+                vm.records = [];
                 fields["current"] = current;
                 axios.post("/warehouse/reports/inventory-products/vue-list", fields).then(response => {
                     if (typeof(response.data.records) != "undefined") {
                         vm.records = response.data.records;
+                        console.log(response.data.records);
+                    }else{
+                        console.log("Yo");
+                        vm.records = [];
                     }
                     vm.loading = false;
                 }).catch(error => {
@@ -370,7 +376,7 @@
             this.getInstitutions();
             this.getBudgetProjects();
             this.getBudgetCentralizedActions();
-            this.loadInventoryProduct('request-products');
+            //this.loadInventoryProduct('request-products');
             /**
              * Evento para determinar los datos a requerir según el tipo de formulación
              * (por proyecto o acción centralizada)
