@@ -281,6 +281,8 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     /** Ruta que obtiene un array con los tipos de solicitudes registrados */
     Route::get('get-request-types', 'AssetRequestController@getTypes');
 
+    Route::get('get-payroll-staffs-info/{id}', 'AssetServiceController@getPayrollStaffInfo');
+
     /**
      * -------------------------------------------------------------
      * Rutas para gestionar el panel de control del módulo de bienes
