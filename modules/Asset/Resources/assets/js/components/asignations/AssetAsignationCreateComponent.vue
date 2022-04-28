@@ -223,7 +223,6 @@
 	export default {
 		data() {
 			return {
-				staffIdInfo: {},
 				record: {
 					id: '',
 					payroll_position_type_id: '',
