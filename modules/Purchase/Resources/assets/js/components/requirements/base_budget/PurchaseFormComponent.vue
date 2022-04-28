@@ -4,13 +4,6 @@
             <purchase-show-errors ref="purchaseShowError" />
             <div class="card-body">
                 <div class="row">
-                    <div class="col-3">
-                        <div class="form-group is-required">
-                            <label class="control-label">Tipo de moneda
-                            </label>
-                            <select2 :options="currencies" v-model="currency_id" tabindex="1"></select2>
-                        </div>
-                    </div>
                     <div class="col-12">
                         <v-client-table :columns="columns" :data="records" :options="table_options" class="row">
                             <div slot="requirement_status" slot-scope="props" class="text-center">
@@ -38,8 +31,16 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="form-horizontal">
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group is-required">
+                    <label class="control-label">Tipo de moneda
+                    </label>
+                    <select2 :options="currencies" v-model="currency_id" tabindex="1"></select2>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal" v-if="currency_id">
             <div class="card-body">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -48,7 +49,7 @@
                             <th tabindex="0" class="col-3" style="border: 1px solid #dee2e6; position: relative;">Nombre</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Cantidad</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Unidad de medida</th>
-                            <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Precio Unitario sin IVA</th>
+                            <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Precio unitario sin IVA</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">cantidad * Precio unitario</th>
                         </tr>
                     </thead>
@@ -69,7 +70,8 @@
                                 </p>
                             </td>
                             <td style="border: 1px solid #dee2e6;" tabindex="0" class="col-2">
-                                <input type="number" :disabled="!currency_id" :step="cualculateLimitDecimal()" class="form-control" v-model="(varr.pivot_purchase)?varr.pivot_purchase.unit_price:varr.unit_price" @input="CalculateTot">
+                                <input type="number" :disabled="!currency_id" :step="cualculateLimitDecimal()" class="form-control" 
+                                v-model="(varr.pivot_purchase)?varr.pivot_purchase.unit_price:varr.unit_price" @input="CalculateTot">
                             </td>
                             <td style="border: 1px solid #dee2e6;" tabindex="0" class="col-2">
                                 <h6 align="right">{{ CalculateQtyPrice(varr.qty_price) }}</h6>

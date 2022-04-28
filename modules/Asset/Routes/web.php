@@ -224,6 +224,8 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
             ->name('asset.inventory-history.vuelist');
     Route::delete('inventory-history/delete/{code_inventory}', 'AssetInventoryController@destroy')
             ->name('asset.inventory-history.destroy');
+    /** Ruta que genera el reporte de un registro */
+    Route::get('reports/{type_report}/show/{code_report}', 'AssetInventoryReportController@pdf');
 
     /** Rutas para gestionar la generación de reportes */
     Route::resource('reports', 'AssetReportController', ['only' => ['store']]);
@@ -278,6 +280,8 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
 
     /** Ruta que obtiene un array con los tipos de solicitudes registrados */
     Route::get('get-request-types', 'AssetRequestController@getTypes');
+
+    Route::get('get-payroll-staffs-info/{id}', 'AssetServiceController@getPayrollStaffInfo');
 
     /**
      * -------------------------------------------------------------
