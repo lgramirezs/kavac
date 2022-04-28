@@ -172,6 +172,45 @@ class WarehouseReportController extends Controller
                     }
                 ]
             );
+            
+            if ($request->type_search == "date") {
+                if (!is_null($request->start_date)) {
+                    if (!is_null($request->end_date)) {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                $request->end_date
+                            ]
+                        );
+                    } else {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                now()
+                            ]
+                        );
+                    }
+                }
+            }
+
+            if ($request->type_search == "mes") {
+
+                if (!is_null($request->mes_id)) {
+                    if (!is_null($request->year)) {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        )->whereYear('created_at', $request->year);
+                    } else {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        );
+                    }
+                }
+            }
         /*
         Revisar filtros
             whereHas
@@ -190,6 +229,7 @@ class WarehouseReportController extends Controller
 
     public function create(Request $request)
     {
+
         if ($request->current == "inventory-products") {
             $fields = WarehouseInventoryProduct::with(
                 [
@@ -265,6 +305,8 @@ class WarehouseReportController extends Controller
                 }
             }
         } elseif ($request->current == "request-products") {
+
+
             $fields = WarehouseInventoryProductRequest::with(
                 [
                     'warehouseInventoryProduct' => function ($query) {
@@ -291,6 +333,7 @@ class WarehouseReportController extends Controller
                     }
                 ]
             );
+
         /*
         Revisar filtros
             whereHas

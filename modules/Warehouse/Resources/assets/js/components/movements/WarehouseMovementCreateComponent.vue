@@ -116,8 +116,8 @@
 							props.row.warehouse_product.name+': ':''
 						}} </b>
 						{{ (props.row.warehouse_product)?
-								props.row.warehouse_product.description:''
-						}}
+								prepareText (props.row.warehouse_product.description):''
+						}}<br>
 					</span>
 					<span>
 						<div v-for="att in props.row.warehouse_product_values">
@@ -151,7 +151,7 @@
 							<i class="fa fa-eraser"></i>
 					</button>
 
-		        	<button type="button"
+		        	<button type="button" @click="redirect_back(route_list)"
 		        			class="btn btn-warning btn-icon btn-round btn-modal-close"
 		        			data-dismiss="modal"
 		        			title="Cancelar y regresar">
@@ -235,6 +235,10 @@
 						vm.selected.push(row.id);
 				}
 		    },
+
+			prepareText(text) {
+				return text.replace('<p>', '').replace('</p>', '');
+			},
 
 			reset() {
 				this.record = {

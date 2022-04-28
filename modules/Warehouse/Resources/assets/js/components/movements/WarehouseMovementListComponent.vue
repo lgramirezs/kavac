@@ -10,6 +10,9 @@
 				{{ (props.row.warehouse_institution_warehouse_initial)?props.row.warehouse_institution_warehouse_initial.warehouse.name:'N/A' }}
 			</span>
 		</div>
+		<div slot="description" slot-scope="props" class="text-center"
+			 v-html="prepareText(props.row.description)">
+		</div>
 		<div slot="warehouse_end" slot-scope="props">
 			<span>
 				{{ (props.row.warehouse_institution_warehouse_end)?props.row.warehouse_institution_warehouse_end.warehouse.name:'N/A' }}
@@ -22,18 +25,19 @@
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
-				<warehouse-movement-info 
-					:route_list="'warehouse/movements/info/'+ props.row.id">
-				</warehouse-movement-info>
 
-				<button @click="editForm(props.row.id)" 
-	    				class="btn btn-warning btn-xs btn-icon btn-action" 
+				<warehouse-movement-info 
+                    :route_list="'movements/info/'+ props.row.id">
+                </warehouse-movement-info>
+
+				<button @click="editForm(props.row.id)"
+	    				class="btn btn-warning btn-xs btn-icon btn-action"
 	    				title="Modificar registro" data-toggle="tooltip" type="button"
 	    				:disabled="props.row.state != 'Pendiente'">
 	    			<i class="fa fa-edit"></i>
 	    		</button>
-	    		<button @click="deleteRecord(props.index, '')" 
-						class="btn btn-danger btn-xs btn-icon btn-action" 
+	    		<button @click="deleteRecord(props.index, '')"
+						class="btn btn-danger btn-xs btn-icon btn-action"
 						title="Eliminar registro" data-toggle="tooltip" type="button"
 						:disabled="props.row.state != 'Pendiente'">
 					<i class="fa fa-trash-o"></i>
@@ -72,8 +76,12 @@
 			 *
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
 			 */
+			prepareText(text) {
+				 return text.substr(3, text.length-4);
+
+			 },
 			reset() {
-				
+
 			},
 		}
 	};

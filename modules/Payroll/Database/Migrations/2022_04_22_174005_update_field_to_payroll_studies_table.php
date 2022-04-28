@@ -33,7 +33,7 @@ class UpdateFieldToPayrollStudiesTable extends Migration
 
             Schema::table('payroll_studies', function (Blueprint $table) {
                 if (!Schema::hasColumn('payroll_studies', 'graduation_year')) {
-                    $table->date('graduation_year');
+                    $table->date('graduation_year')->nullable();
                 }
             });
         }

@@ -22,6 +22,10 @@
 					<div class="modal-body">
 						<input type="hidden" v-model="record.id">
 						<div class="alert alert-danger" v-if="errors.length > 0">
+								<div class="alert-icon">
+						<i class="now-ui-icons objects_support-17"></i>
+					</div>
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
 											<button type="button" class="close" data-dismiss="alert" aria-label="Close"
 							@click.prevent="errors = []">
 						<span aria-hidden="true">

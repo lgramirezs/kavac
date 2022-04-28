@@ -38,6 +38,12 @@
                     </div>
 
 				</div>
+				<div class="col-md-4" id="helpStaff">
+					<div class="form-group is-required">
+						<label>Trabajador:</label>
+						<select2 :options="payroll_staffs" v-model="getStaffIdInfo"></select2>
+                    </div>
+				</div>
 				<div class="col-md-4" id="helpPositionType">
 					<div class="form-group">
 						<label>Puesto de trabajo:</label>
@@ -49,12 +55,6 @@
 					<div class="form-group">
 						<label>Cargo:</label>
 						<select2 :options="payroll_positions" v-model="record.payroll_position_id"></select2>
-                    </div>
-				</div>
-				<div class="col-md-4" id="helpStaff">
-					<div class="form-group is-required">
-						<label>Trabajador:</label>
-						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
                     </div>
 				</div>
 
@@ -197,7 +197,7 @@
 		        	<button type="button" @click="reset()"
 							class="btn btn-default btn-icon btn-round"
 							data-toggle="tooltip"
-							title ="Borrar datos del formulario">
+							title="Borrar datos del formulario">
 							<i class="fa fa-eraser"></i>
 					</button>
 
@@ -237,6 +237,8 @@
 					asset_subcategory_id: '',
 					asset_specific_category_id: '',
 				},
+				getStaffIdInfo:'',
+
 				errors: [],
 				records: [],
 				page: 1,
@@ -296,6 +298,10 @@
 			}
 		},
 		watch: {
+			getStaffIdInfo(id){
+				this.getPayrollStaffInfo(id);
+			},
+
             perPage(res) {
             	if (this.page == 1){
             		this.loadAssets(`${window.app_url}/asset/registers/vue-list/${res}/${this.page}`);
@@ -310,8 +316,8 @@
 		created() {
 			const vm = this;
 			vm.getPayrollStaffs();
-			vm.getPayrollPositionTypes();
-			vm.getPayrollPositions();
+			// vm.getPayrollPositionTypes();
+			// vm.getPayrollPositions();
 			vm.getAssetTypes();
 			vm.getInstitutions();
 		},
