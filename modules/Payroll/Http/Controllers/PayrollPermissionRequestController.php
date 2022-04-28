@@ -54,7 +54,7 @@ class PayrollPermissionRequestController extends Controller
             'payroll_permission_policy_id'     => ['required'],
             'start_date'                       => ['required'],
             'end_date'                         => ['required', 'date', 'after_or_equal:start_date'],
-            'day_permission'                   => ['required'],
+            'time_permission'                   => ['required'],
             'motive_permission'                => ['required', 'max:200'],
 
         ];
@@ -65,7 +65,7 @@ class PayrollPermissionRequestController extends Controller
             'start_date.required'                   => 'El campo desde es obligatorio.',
             'end_date.required'                     => 'El campo hasta es obligatorio.',
             'end_date.after_or_equal'    => 'La fecha hasta debe ser una fecha posterior o igual a la fecha desde.',
-            'day_permission.required'               => 'El campo días de permiso es obligatorio.',
+            'time_permission.required'               => 'El campo días de permiso es obligatorio.',
             'motive_permission.required'            => 'El campo motivos del permiso es obligatorio.',
             'motive_permission.max'                 => 'El campo motivos del permiso no debe
                                                         contener más de 200 caracteres.',
@@ -107,7 +107,9 @@ class PayrollPermissionRequestController extends Controller
             'payroll_permission_policy_id'     => $request->payroll_permission_policy_id,
             'start_date'                       => $request->start_date,
             'end_date'                         => $request->end_date,
-            'day_permission'                   => $request->day_permission,
+            'start_time'                       => $request->start_time,
+            'end_time'                         => $request->end_time,
+            'time_permission'                  => $request->time_permission,
             'motive_permission'                => $request->motive_permission,
         ]);
 
@@ -171,7 +173,9 @@ class PayrollPermissionRequestController extends Controller
         $payrollPermissionRequest->payroll_permission_policy_id     = $request->payroll_permission_policy_id;
         $payrollPermissionRequest->start_date                       = $request->start_date;
         $payrollPermissionRequest->end_date                         = $request->end_date;
-        $payrollPermissionRequest->day_permission                   = $request->day_permission ;
+        $payrollPermissionRequest->start_time                       = $request->start_time;
+        $payrollPermissionRequest->end_time                         = $request->end_time;
+        $payrollPermissionRequest->time_permission                  = $request->time_permission;
         $payrollPermissionRequest->motive_permission                = $request->motive_permission;
         $payrollPermissionRequest->save();
 
