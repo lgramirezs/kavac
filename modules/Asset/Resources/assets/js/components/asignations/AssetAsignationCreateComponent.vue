@@ -41,7 +41,7 @@
 				<div class="col-md-4" id="helpStaff">
 					<div class="form-group is-required">
 						<label>Trabajador:</label>
-						<select2 :options="payroll_staffs" v-model="getStaffIdInfo"></select2>
+						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
                     </div>
 				</div>
 				<div class="col-md-4" id="helpPositionType">
@@ -298,10 +298,9 @@
 			}
 		},
 		watch: {
-			getStaffIdInfo(id){
-				this.getPayrollStaffInfo(id);
+			'record.payroll_staff_id'(new_id) {
+				this.getPayrollStaffInfo(new_id);
 			},
-
             perPage(res) {
             	if (this.page == 1){
             		this.loadAssets(`${window.app_url}/asset/registers/vue-list/${res}/${this.page}`);
@@ -468,7 +467,8 @@
 					asset_type: vm.record.asset_type_id,
 					asset_category: vm.record.asset_category_id,
 					asset_subcategory: vm.record.asset_subcategory_id,
-					asset_specific_category: vm.record.asset_specific_category_id
+					asset_specific_category: vm.record.asset_specific_category_id,
+					institution_id: vm.record.institution_id,
 				};
 
 				axios.post(url, filters).then(response => {
