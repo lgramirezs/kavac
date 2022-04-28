@@ -25,16 +25,16 @@ class AssetServiceController extends Controller
         return (Module::has('Payroll')) ?
             template_choices('Modules\Payroll\Models\PayrollStaff', ['id_number', '-', 'full_name'], '', true) : [];
     }
-    public function getPayrollPositionTypes()
-    {
-        return (Module::has('Payroll')) ?
-            template_choices('Modules\Payroll\Models\PayrollPositionType', 'name', '', true) : [];
-    }
-    public function getPayrollPositions()
-    {
-        return (Module::has('Payroll')) ?
-            template_choices('Modules\Payroll\Models\PayrollPosition', 'name', '', true) : [];
-    }
+    // public function getPayrollPositionTypes()
+    // {
+    //     return (Module::has('Payroll')) ?
+    //         template_choices('Modules\Payroll\Models\PayrollPositionType', 'name', '', true) : [];
+    // }
+    // public function getPayrollPositions()
+    // {
+    //     return (Module::has('Payroll')) ?
+    //         template_choices('Modules\Payroll\Models\PayrollPosition', 'name', '', true) : [];
+    // }
     public function getPayrollStaffInfo($id)
     {
         $payroll_position_id_and_type_id = (Module::has('Payroll')) ?
