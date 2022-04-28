@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * @class DepartmentController
@@ -114,9 +115,9 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $this->validate($request, [
-            'name' => ['required', 'unique:departments,name'],
+            'name' => ['required', Rule::unique('departments', 'name')->ignore($department->id)],
             'institution_id' => ['required'],
-            'acronym' => ['max:4', 'unique:departments,acronym']
+            'acronym' => ['max:4', Rule::unique('departments', 'acronym')->ignore($department->id)]
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'name.unique' => 'El campo nombre ya ha sido registrado.',
