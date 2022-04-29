@@ -283,7 +283,7 @@
             <div class="row">
                 <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
     	        <button type="button" @click="reset()"
-                    class="btn btn-default btn-icon btn-round btn-modal-close"
+                    class="btn btn-default btn-icon btn-round btn-modal-clear"
       	            title ="Borrar datos del formulario">
     	                <i class="fa fa-eraser"></i>
                     </button>
