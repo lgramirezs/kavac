@@ -35,7 +35,7 @@ class PurchaseRequirement extends Model implements Auditable
     protected $with = ['purchaseSupplierObject','fiscalYear'];
 
     protected $fillable = [
-        'code', 'description', 'fiscal_year_id', 'contracting_department_id', 'user_department_id',
+        'code', 'description', 'date', 'fiscal_year_id', 'contracting_department_id', 'user_department_id',
         'purchase_supplier_object_id', 'requirement_status', 'purchase_base_budget_id', 'institution_id'
     ];
     

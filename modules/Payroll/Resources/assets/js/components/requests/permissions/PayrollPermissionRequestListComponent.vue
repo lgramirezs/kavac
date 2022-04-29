@@ -16,7 +16,7 @@
     		<div slot="id" slot-scope="props" class="text-center">
     			<section class="d-inline-flex">
     				<payroll-permission-request-info
-    					:route_list="app_url + '/payroll/permission-requests/vue-info/' + props.row.id">
+    					:route_list="'payroll/permission-requests/vue-info/' + props.row.id">
     				</payroll-permission-request-info>
 
     	    		<button @click="editForm(props.row.id)"

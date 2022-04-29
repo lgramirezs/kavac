@@ -435,7 +435,7 @@ class AssetController extends Controller
             $request->asset_subcategory,
             $request->asset_specific_category
         )->with('institution', 'assetCondition', 'assetStatus')
-         ->where('institution_id', $request->institution);
+         ->where('institution_id', $request->institution_id);
         if ($request->asset_status > 0) {
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }

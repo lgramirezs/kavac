@@ -23,23 +23,19 @@
         <div slot="id" slot-scope="props" class="text-center">
             <div class="d-inline-flex">
 
-                <warehouse-movement-info 
-                    :route_list="'movements/info/'+ props.row.id">
-                </warehouse-movement-info>
-
                 <warehouse-movement-confirm-create
                     :movementid="props.row.id"
                     route_update="warehouse/movements/movement-complete"
                     v-if="props.row.state == 'Aprobado'">
                 </warehouse-movement-confirm-create>
-                
-                <button @click="approvedRequest(props.index)" 
+
+                <button @click="approvedRequest(props.index)"
                         class="btn btn-success btn-xs btn-icon btn-action" title="Aceptar solicitud"
                         data-toggle="tooltip" type="button"
                         :disabled="props.row.state != 'Pendiente'">
                     <i class="fa fa-check"></i>
                 </button>
-                <button @click="rejectedRequest(props.index)" 
+                <button @click="rejectedRequest(props.index)"
                         class="btn btn-danger btn-xs btn-icon btn-action" title="Rechazar solicitud"
                         data-toggle="tooltip" type="button"
                         :disabled="props.row.state != 'Pendiente'">
@@ -84,7 +80,7 @@
              * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
-                
+
             },
             rejectedRequest(index)
             {
@@ -107,7 +103,7 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
 
-                            axios.put('/'+vm.route_update+'/movement-rejected/'+id, fields).then(response => {
+                            axios.put(vm.route_update+'/movement-rejected/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
                             }).catch(error => {
@@ -123,7 +119,7 @@
                         }
                     }
                 });
-                
+
             },
             approvedRequest(index)
             {
@@ -145,7 +141,7 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
 
-                            axios.put('/'+vm.route_update+'/movement-approved/'+id, fields).then(response => {
+                            axios.put(vm.route_update+'/movement-approved/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
                             }).catch(error => {

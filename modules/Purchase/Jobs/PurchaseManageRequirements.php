@@ -58,9 +58,17 @@ class PurchaseManageRequirements implements ShouldQueue
 	public function handle()
 	{
 		$data = $this->data;
-
 		if ($data['action'] == 'update') {
 			$requirement = PurchaseRequirement::find($data['id_edit']);
+			$requirement->date = $data['date'];
+			$requirement->description = $data['description'];
+			$requirement->save();
+
+			$baseBudget = PurchaseBaseBudget::find($requirement->purchase_base_budget_id);
+			if ($baseBudget) {
+				$baseBudget->date = $data['date'];
+				$baseBudget->save();
+			}
 
 			foreach ($data['toDelete'] as $toDeleteId) {
 				PurchaseRequirementItem::find($toDeleteId)->delete();
@@ -89,6 +97,7 @@ class PurchaseManageRequirements implements ShouldQueue
 		} elseif ($data['action'] == 'create') {
 			$data['code'] = $this->generateCodeAvailable();
 			$baseBudget = PurchaseBaseBudget::create([
+				'date' => $data['date'],
 				'subtotal' => 0,
 			]);
 			$data['purchase_base_budget_id'] = $baseBudget->id;

@@ -95,7 +95,7 @@ class PayrollPermissionPolicyController extends Controller
             'anticipation_day' => $request->anticipation_day,
             'time_min'         => $request->input('time_min'),
             'time_max'         => $request->input('time_max'),
-            'time_unit'        => $request->input('time_max'),
+            'time_unit'        => $request->input('time_unit'),
             'active'           => $request->active,
             'institution_id'   => $request->institution_id
         ]);
@@ -174,6 +174,18 @@ class PayrollPermissionPolicyController extends Controller
 
     public function getPermissionPolicies()
     {
-        return template_choices('Modules\Payroll\Models\PayrollPermissionPolicy', 'name', [], true, null);
+        $records = PayrollPermissionPolicy::where('active', true)->get();
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+        foreach ($records as $rec) {
+            array_push($options, [
+                'id'               => $rec->id,
+                'text'             => $rec->name,
+                'anticipation_day' => $rec->anticipation_day,
+                'time_min'         => $rec->time_min,
+                'time_max'         => $rec->time_max,
+                'time_unit'        => $rec->time_unit
+            ]);
+        };
+        return $options;
     }
 }

@@ -130,13 +130,15 @@ class PurchaseRequirementController extends Controller
 	public function store(Request $request)
 	{
 		$this->validate($request, [
+			'date'                 		  => 'required',
 			'description'                 => 'required|string',
 			'institution_id'              => 'required|integer',
 			'contracting_department_id'   => 'required|integer',
 			'user_department_id'          => 'required|integer',
 			'purchase_supplier_object_id' => 'required|integer'
 		], [
-			'description'                          => 'El campo descripcióm es obligatorio.',
+			'date.required'                        => 'El campo fecha es obligatorio.',
+			'description.required'                 => 'El campo descripcióm es obligatorio.',
 			'institution_id.required'              => 'El campo institución es obligatorio.',
 			'institution_id.integer'               => 'El campo institución no esta en el formato de entero.',
 			'contracting_department_id.required'   => 'El campo unidad contratante es obligatorio.',
@@ -271,21 +273,23 @@ class PurchaseRequirementController extends Controller
 	public function update(Request $request, $id)
 	{
 		$this->validate($request, [
-			'description'               => 'required|string',
-			'institution_id'            => 'required|integer',
-			'contracting_department_id' => 'required|integer',
-			'user_department_id'        => 'required|integer',
-			'purchase_supplier_object_id' => 'required|integer'
+			'date'                 		  	=> 'required',
+			'description'               	=> 'required|string',
+			'institution_id'            	=> 'required|integer',
+			'contracting_department_id' 	=> 'required|integer',
+			'user_department_id'        	=> 'required|integer',
+			'purchase_supplier_object_id' 	=> 'required|integer'
 		], [
-			'description'                        => 'El campo descripcióm es obligatorio.',
-			'institution_id.required'            => 'El campo institución es obligatorio.',
-			'institution_id.integer'             => 'El campo institución no esta en el formato de entero.',
-			'contracting_department_id.required' => 'El campo unidad contratante es obligatorio.',
-			'contracting_department_id.integer'  => 'El campo unidad contratante no esta en el formato de entero.',
-			'user_department_id.required'        => 'El campo unidad usuaria es obligatorio.',
-			'user_department_id.integer'         => 'El campo unidad usuaria no esta en el formato de entero.',
-			'purchase_supplier_object_id.required' => 'El campo tipo es obligatorio.',
-			'purchase_supplier_object_id.integer'  => 'El campo tipo no esta en el formato de entero.'
+			'date.required'                        	=> 'El campo fecha es obligatorio.',
+			'description.required'                  => 'El campo descripcióm es obligatorio.',
+			'institution_id.required'            	=> 'El campo institución es obligatorio.',
+			'institution_id.integer'             	=> 'El campo institución no esta en el formato de entero.',
+			'contracting_department_id.required' 	=> 'El campo unidad contratante es obligatorio.',
+			'contracting_department_id.integer'  	=> 'El campo unidad contratante no esta en el formato de entero.',
+			'user_department_id.required'        	=> 'El campo unidad usuaria es obligatorio.',
+			'user_department_id.integer'         	=> 'El campo unidad usuaria no esta en el formato de entero.',
+			'purchase_supplier_object_id.required' 	=> 'El campo tipo es obligatorio.',
+			'purchase_supplier_object_id.integer'  	=> 'El campo tipo no esta en el formato de entero.'
 		]);
 
 		$data = $request->all();

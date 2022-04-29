@@ -26,7 +26,7 @@ class PayrollPermissionRequest extends Model implements Auditable
      */
     protected $fillable = [
         'status', 'date', 'payroll_staff_id', 'payroll_permission_policy_id', 'start_date',
-        'end_date', 'day_permission', 'motive_permission',
+        'end_date', 'time_permission', 'motive_permission',
     ];
 
     /**

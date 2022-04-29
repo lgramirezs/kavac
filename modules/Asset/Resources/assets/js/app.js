@@ -417,26 +417,34 @@ Vue.mixin({
 		 * Operaciones del modulo de talento humano requeridas por el módulo de bienes
 		 */
 
-		getPayrollPositionTypes() {
-			const vm = this;
-			vm.payroll_position_types = [];
-			axios.get(`${window.app_url}/asset/get-payroll-position-types`).then(response => {
-				vm.payroll_position_types = response.data;
-			});
-		},
+		// getPayrollPositionTypes() {
+		// 	const vm = this;
+		// 	vm.payroll_position_types = [];
+		// 	axios.get(`${window.app_url}/asset/get-payroll-position-types`).then(response => {
+		// 		vm.payroll_position_types = response.data;
+		// 	});
+		// },
 
-		getPayrollPositions() {
-			const vm = this;
-			vm.payroll_positions = [];
-			axios.get(`${window.app_url}/asset/get-payroll-positions`).then(response => {
-				vm.payroll_positions = response.data;
-			});
-		},
+		// getPayrollPositions() {
+		// 	const vm = this;
+		// 	vm.payroll_positions = [];
+		// 	axios.get(`${window.app_url}/asset/get-payroll-positions`).then(response => {
+		// 		vm.payroll_positions = response.data;
+		// 	});
+		// },
 
 		getPayrollStaffs() {
 			this.payroll_staffs = [];
 			axios.get(`${window.app_url}/asset/get-payroll-staffs`).then(response => {
 				this.payroll_staffs = response.data;
+			});
+		},
+
+        getPayrollStaffInfo(id) {
+			this.payroll_staff_info = [];
+			axios.get(`${window.app_url}/asset/get-payroll-staffs-info/${id}`).then(response => {
+                this.payroll_positions = [response.data[0]];
+                this.payroll_position_types = [response.data[1]];
 			});
 		},
 	},

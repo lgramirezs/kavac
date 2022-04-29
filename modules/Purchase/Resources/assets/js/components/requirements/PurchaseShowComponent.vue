@@ -22,7 +22,7 @@
                         <br>
                         <div class="row">
                             <div class="col-3"><strong>Código del requerimiento:</strong> {{ records.code }}</div>
-                            <div class="col-3"><strong>Fecha de generación:</strong> {{ format_date(records.created_at) }}</div>
+                            <div class="col-3"><strong>Fecha de generación:</strong> {{ format_date(records.date) }}</div>
                             <div class="col-3"><strong>Año Fiscal:</strong> {{ fiscal_year }}</div>
                             <div class="col-3"><strong>Unidad contratante:</strong> {{ contracting_department }}</div>
                             <div class="col-3"><strong>Unidad usuario:</strong> {{ user_department }}</div>

@@ -50,43 +50,79 @@
 				<div class="col-md-4">
 					<div class="form-group is-required">
 						<label for="payrollPermissionPolicy">Tipo de Permiso</label>
-						<select2 :options="payroll_permission_policies" v-model="record.payroll_permission_policy_id"></select2>
+						<select2 :options="payroll_permission_policies" @input="getPayrollPermissionPolicy()"
+                                 v-model="record.payroll_permission_policy_id"></select2>
 					</div>
 				</div>
             </div>
 			<label>Periodo del Permiso</label>
 			<div class="row">
 				<div class="col-md-4">
-					<div class="form-group">
-						<label>Desde:</label>
-						<div class="input-group input-sm">
-							<span class="input-group-addon">
-								<i class="now-ui-icons ui-1_calendar-60"></i>
-							</span>
-							<input type="date" id="start_date" @input="getcalculate()" data-toggle="tooltip" title="Indique la fecha de inicio del permiso"
-								   class="form-control no-restrict" :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]"
-								   v-model="record.start_date">
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label>Desde:</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group input-sm">
+                                    <span class="input-group-addon">
+                                        <i class="now-ui-icons ui-1_calendar-60"></i>
+                                    </span>
+                                    <input type="date" id="start_date" :disabled="(record.payroll_permission_policy_id == '')" 
+                                           @input="getcalculate()" data-toggle="tooltip" title="Indique la fecha de inicio del permiso"
+                                           class="form-control no-restrict" :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]"
+                                           v-model="record.start_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" v-if="payrollPermissionPolicy.time_unit =='hours'">
+                            <div class="form-group">
+                                <div class="input-group input-sm">
+                                    <span class="input-group-addon">
+                                        <i class="now-ui-icons ui-1_calendar-60"></i>
+                                    </span>
+                                    <input type="time" id="start_time" :disabled="(record.payroll_permission_policy_id == '')" 
+                                           @input="getcalculate()" data-toggle="tooltip" title="Indique la hora de inicio del permiso"
+                                           class="form-control no-restrict" v-model="record.start_time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 
 				<div class="col-md-4">
 					<div class="form-group">
 						<label>Hasta:</label>
-						<div class="input-group input-sm">
-							<span class="input-group-addon">
-								<i class="now-ui-icons ui-1_calendar-60"></i>
-							</span>
-							<input type="date" id="end_date" @input="getcalculate()" data-toggle="tooltip" title="Indique la fecha final del permiso"
-								   class="form-control input-sm no-restrict" :min="record.start_date" v-model="record.end_date">
-						</div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group input-sm">
+                                    <span class="input-group-addon">
+                                        <i class="now-ui-icons ui-1_calendar-60"></i>
+                                    </span>
+                                    <input type="date" id="end_date" :disabled="(record.payroll_permission_policy_id == '')"
+                                           @input="getcalculate()" data-toggle="tooltip" title="Indique la fecha final del permiso"
+                                           class="form-control input-sm no-restrict"
+                                           :min="getMinDate()" :max="getMaxDate()" v-model="record.end_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" v-if="payrollPermissionPolicy.time_unit =='hours'">
+                            <div class="form-group">
+                                <div class="input-group input-sm">
+                                    <span class="input-group-addon">
+                                        <i class="now-ui-icons ui-1_calendar-60"></i>
+                                    </span>
+                                    <input type="time" id="end_time" :disabled="(record.payroll_permission_policy_id == '')" 
+                                           @input="getcalculate()" data-toggle="tooltip" title="Indique la hora final del permiso" required=""
+                                           class="form-control no-restrict" :min="getMinTime()" v-model="record.end_time">
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group is-required">
-						<label for="day_permission">Dias de permiso</label>
-    					<input type="text" id="day_permission" class="form-control input-sm" data-toggle="tooltip"
-                               title="Días de permiso" v-model="record.day_permission">
+						<label for="time_permission">Tiempo de permiso</label>
+    					<input type="text" id="time_permission" class="form-control input-sm" data-toggle="tooltip"
+                               title="Tiempo de permiso" disabled v-model="record.time_permission">
 				    </div>
 				</div>
 			</div>
@@ -120,7 +156,6 @@
 </template>
 
 <script>
-	//import moment from 'moment';
 	export default {
 		data() {
 			return {
@@ -130,13 +165,21 @@
 					payroll_staff_id: '',
 					payroll_permission_policy_id: '',
 					start_date: '',
+                    start_time: '',
 					end_date: '',
-					day_permission: '',
+					time_permission: '',
 					motive_permission: '',
 				},
 				errors: [],
 				records: [],
 				payroll_staffs: [],
+                payrollPermissionPolicy: {
+                    id:        '',
+                    time_max:  '',
+                    time_min:  '',
+                    time_unit: ''
+
+                },
 				payroll_permission_policies: []
 			}
 		},
@@ -163,21 +206,124 @@
 					payroll_staff_id: '',
 					payroll_permission_policy_id: '',
 					start_date: '',
+                    start_time: '',
 					end_date: '',
-					day_permission: '',
+					time_permission: '',
 					motive_permission: '',
 				};
-				this.payrollPermissionPolicy = '';
+				this.payrollPermissionPolicy = {
+                    id:        '',
+                    time_max:  '',
+                    time_min:  '',
+                    time_unit: ''
+
+                };
 			},
 			getPayrollPermissionPolicy() {
                 const vm = this;
                 $.each(vm.payroll_permission_policies, function(index, field) {
                     if (field['id'] == '') {
-                        vm.payrollPermissionPolicy = '';
+                        vm.payrollPermissionPolicy = {
+                                id:        '',
+                                time_max:  '',
+                                time_min:  '',
+                                time_unit: ''
+
+                            }
                     } else if (field['id'] == vm.record.payroll_permission_policy_id) {
-                        vm.payrollPermissionPolicy = field['text'];
+                        vm.payrollPermissionPolicy = field;
                     }
                 });
+            },
+
+            getMinDate() {
+                const vm = this;
+                if (vm.payrollPermissionPolicy.time_unit == "days") {
+                    if (vm.payrollPermissionPolicy.time_min) {
+                        let dateMin = vm.add_period(vm.record.start_date, vm.payrollPermissionPolicy.time_min, 'days');
+                        let date = dateMin.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else if (vm.payrollPermissionPolicy.time_unit == "weeks") {
+                    if (vm.payrollPermissionPolicy.time_min) {
+                        let dateMin = vm.add_period(vm.record.start_date, (7 * vm.payrollPermissionPolicy.time_min), 'days');
+                        console.log(dateMin);
+                        let date = dateMin.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else if (vm.payrollPermissionPolicy.time_unit == "months") {
+                    if (vm.payrollPermissionPolicy.time_min) {
+                        let dateMin = vm.add_period(vm.record.start_date, vm.payrollPermissionPolicy.time_min, 'months');
+                        console.log(dateMin);
+                        let date = dateMin.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else {
+                    return vm.record.start_date;
+                }
+
+            },
+            getMinTime() {
+                const vm = this;
+                if ((vm.record.start_date != '') && (vm.end_date != '') && (vm.record.start_date == vm.record.end_date)) {
+                    return vm.record.start_time;
+                } else {
+                    return '';
+                }
+
+            },
+            setMinTime() {
+                const vm = this;
+                if ((vm.record.start_date != '') && (vm.end_date != '') && (vm.record.start_date == vm.record.end_date)) {
+                    let start = vm.record.start_time.split(":");
+                    let end = vm.record.end_time.split(":");
+                    if (start[0] > end[0]) {
+                        vm.record.end_time = '';
+                        return;
+                    } else if (start[0] == end[0]) {
+                        if (start[1] > end[1]) {
+                            vm.record.end_time = '';
+                            return;
+                        }
+                    }
+                }
+
+            },
+            getMaxDate() {
+                const vm = this;
+                if (vm.payrollPermissionPolicy.time_unit == "days") {
+                    if (vm.payrollPermissionPolicy.time_max != '') {
+                        let dateMax = vm.add_period(vm.record.start_date, vm.payrollPermissionPolicy.time_max, 'days');
+                        let date = dateMax.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else if (vm.payrollPermissionPolicy.time_unit == "weeks") {
+                    if (vm.payrollPermissionPolicy.time_max != '') {
+                        let dateMax = vm.add_period(vm.record.start_date, 7 * vm.payrollPermissionPolicy.time_max, 'days');
+                        let date = dateMax.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else if (vm.payrollPermissionPolicy.time_unit == "months") {
+                    if (vm.payrollPermissionPolicy.time_max != '') {
+                        let dateMax = vm.add_period(vm.record.start_date, vm.payrollPermissionPolicy.time_max, 'months');
+                        let date = dateMax.split("/");
+                        return date[2] + '-' + date[1] + '-' + date[0];
+                    } else {
+                        return '';
+                    }
+                } else {
+                    return vm.record.start_date;
+                }
             },
 
 			getPayrollStaff() {
@@ -191,29 +337,57 @@
                 });
             },
 
-			getcalculate(){
-				const vm = this;
-		    	// Creo una fecha
-		    	let start_date = new Date(document.getElementById('start_date').value.replaceAll('-', '/'));
-		    	let end_date   = new Date(document.getElementById('end_date').value.replaceAll('-', '/'));
+			getcalculate() {
+                const vm = this;
+                vm.record.time_permission = '';
+                if (vm.record.start_date && vm.record.end_date) {
+                    let start_date = new Date(document.getElementById('start_date').value.replaceAll('-', '/'));
+                    let end_date   = new Date(document.getElementById('end_date').value.replaceAll('-', '/'));
 
-		    	let diff = end_date.getTime() - start_date.getTime()
-		    	let dias = diff/(1000*60*60*24) + 1
-		    	let cont = 0;
-		    	// (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
-		    	// Nuestro método para restar Sábados y Domingos
+                    let diff = end_date.getTime() - start_date.getTime()
+                    let dias = diff/(1000*60*60*24)
+                    let cont = 0;
+                    
+                    const sumarLaborables = (f, n) => {
+                        for(var i=0; i<n; i++) {
+                            f.setTime( f.getTime() + (1000*60*60*24) );
+                            if( (f.getDay()==6) || (f.getDay()==0) )  // sábado o domingo
+                            dias--;                                   // hacemos el bucle una unidad mas larga.
+                        }
 
-		    	const sumarLaborables = (f, n) => {
-		      		for(var i=0; i<n; i++) {
-		        		f.setTime( f.getTime() + (1000*60*60*24) );
-		        		if( (f.getDay()==6) || (f.getDay()==0) )  // sábado o domingo
-		        		dias--;                                   // hacemos el bucle una unidad mas larga.
-		      		}
-		    	}
+                    }
 
-		    	sumarLaborables(start_date, dias);
-		    	vm.record.day_permission = dias;
-			},
+                    sumarLaborables(start_date, dias);
+                    vm.record.time_permission = dias + ' días';
+                }
+                if (vm.record.start_time && vm.record.end_time) {
+                    const newDate = (partes) => {
+                        var date = new Date(0);
+                        date.setHours(partes[0]);
+                        date.setMinutes(partes[1]);
+                        return date;
+                    }
+
+                    const prefijo = (num) => {
+                        return num < 10 ? ("0" + num) : num; 
+                    }
+
+                    var dateDesde = newDate(document.getElementById('start_time').value.split(":"));
+                    var dateHasta = newDate(document.getElementById('end_time').value.split(":"));
+
+                    var minutos = (dateHasta - dateDesde)/1000/60;
+                    var horas = Math.floor(minutos/60);
+                    minutos = minutos % 60;
+                    let time = prefijo(horas) + ':' + prefijo(minutos);
+
+                    if (vm.record.time_permission != '') {
+                        vm.record.time_permission = ' ' + vm.record.time_permission + ' ' + time + ' horas.';
+                    } else {
+                        vm.record.time_permission += '.';
+                    }
+
+                }
+            }
 		},
 
 		mounted() {
