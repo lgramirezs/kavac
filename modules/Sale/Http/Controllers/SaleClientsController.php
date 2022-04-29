@@ -46,9 +46,6 @@ class SaleClientsController extends Controller
             'parish_id'                  => ['required', 'max:200'],
             'address_tax'                => ['required', 'max:200'],
             'phones'                     => ['required'],
-            'phones.*.area_code'         => ['max:3'],
-            'phones.*.number'            => ['max:8'],
-            'phones.*.extension'         => ['max:2'],
             'sale_clients_email'         => ['required'],
             'sale_clients_email.*.email' => ['email'],
         ];
@@ -71,10 +68,8 @@ class SaleClientsController extends Controller
             'id_type.required'                    => 'El campo tipo de identificación es obligatorio.',
             'id_number.required'                  => 'El número de identificación es obligatorio.',
             'id_number.unique'                    => 'El número de identificación ya ha sido registrado.',
-            'phones.required'                     => 'El campo números telefónicos es obligatorio.',
-            'phones.*.area_code.max'              => 'El campo código de área debe contener un máximo de 3 caracteres.',
-            'phones.*.number.max'                 => 'El campo número debe contener un máximo de 8 caracteres.',
-            'phones.*.extension.max'              => 'El campo extensión debe contener un máximo de 2 caracteres.',
+            'id_number.digits_between'            => 'El número de identificación no posee el formato correcto.',
+            'phones.required'                     => 'El campo teléfono de contacto es obligatorio.',
             'sale_clients_email.required'         => 'El campo correo electrónico es obligatorio.',
             'sale_clients_email.*.email.email'    => 'El formato del correo electrónico es incorrecto.',
         ];
@@ -101,16 +96,21 @@ class SaleClientsController extends Controller
         if($request->type_person_juridica == 'Natural'){
             $this->validate($request, [
                 'id_type' => ['required'],
-                'id_number' => ['required', 'unique:sale_clients,id_number'],
+                'id_number' => ['required', 'unique:sale_clients,id_number', 'digits_between:1,10'],
                 'name' => ['required'],
             ], $this->messages);
         } else {
             $this->validate($request, [
-                'rif' => ['required', 'max:17', 'unique:sale_clients,rif'],
+                'rif' => ['required', 'max:17', 'unique:sale_clients,rif', 'digits_between:1,10'],
                 'business_name' => ['required'],
                 'representative_name' => ['required'],
                 'name_client' => ['required'],
             ], $this->messages);
+        }
+
+        $phones = [];
+        foreach ($request->phones as $phone) {
+          $phones[] = $phone;
         }
 
         $client = new SaleClient;
@@ -127,18 +127,8 @@ class SaleClientsController extends Controller
         $client->name_client = $request->name_client;
         $client->id_type = $request->id_type;
         $client->id_number = $request->id_number;
+        $client->phones = json_encode($phones, JSON_FORCE_OBJECT);
         $client->save();
-
-        if ($request->phones && !empty($request->phones)) {
-            foreach ($request->phones as $phone) {
-                $client->phones()->save(new Phone([
-                    'type' => $phone['type'],
-                    'area_code' => $phone['area_code'],
-                    'number' => $phone['number'],
-                    'extension' => $phone['extension']
-                ]));
-            }
-        }
 
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
             foreach ($request->sale_clients_email as $email) {
@@ -186,28 +176,22 @@ class SaleClientsController extends Controller
         if($request->type_person_juridica == 'Natural'){
             $this->validate($request, [
                 'id_type' => ['required'],
-                'id_number' => ['required', 'unique:sale_clients,id_number,' . $client->id],
+                'id_number' => ['required', 'unique:sale_clients,id_number,' . $client->id, 'digits_between:1,10'],
                 'name' => ['required'],
             ], $this->messages);
         } else {
             $this->validate($request, [
-                'rif' => ['required', 'max:17', 'unique:sale_clients,rif,' . $client->id],
+                'rif' => ['required', 'max:17', 'unique:sale_clients,rif,' . $client->id, 'digits_between:1,10'],
                 'business_name' => ['required'],
                 'representative_name' => ['required'],
                 'name_client' => ['required'],
             ], $this->messages);
         }
 
-        // $i = 0;
-        // foreach ($request->phones as $phone) {
-        //     $this->validate($request, [
-        //         'phones.'.$i.'.type' => ['required'],
-        //         'phones.'.$i.'.area_code' => ['required', 'digits:3'],
-        //         'phones.'.$i.'.number' => ['required', 'digits:7'],
-        //         'phones.'.$i.'.extension' => ['nullable', 'digits_between:3,6'],
-        //     ]);
-        //     $i++;
-        // }
+        $phones = [];
+        foreach ($request->phones as $phone) {
+          $phones[] = $phone;
+        }
 
         $client->rif = $request->rif;
         $client->business_name = $request->business_name;
@@ -221,29 +205,10 @@ class SaleClientsController extends Controller
         $client->address_tax = $request->address_tax;
         $client->name_client = $request->name_client;
         $client->emails = $request->emails;
-        $client->phones = $request->phones;
+        $client->phones = json_encode($phones, JSON_FORCE_OBJECT);
         $client->id_type = $request->id_type;
         $client->id_number = $request->id_number;
         $client->save();
-
-        // foreach ($client->phones as $phone) {
-        //     $phone->delete();
-        // }
-
-        if ($request->phones && !empty($request->phones)) {
-            foreach ($request->phones as $phone) {
-                $client->phones()->updateOrCreate(
-                    [
-                        'type' => $phone['type'], 'area_code' => $phone['area_code'],
-                        'number' => $phone['number'], 'extension' => $phone['extension']
-                    ],
-                    [
-                        'type' => $phone['type'], 'area_code' => $phone['area_code'],
-                        'number' => $phone['number'], 'extension' => $phone['extension']
-                    ]
-                );
-            }
-        }
 
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
             foreach ($request->sale_clients_email as $email) {
