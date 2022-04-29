@@ -215,7 +215,21 @@ class BudgetSpecificActionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validate_rules, $this->validate_messages);
+        //$this->validate($request, $this->validate_rules, $this->validate_messages);
+        $this->validate($request, [ 
+            'from_date' => ['required', 'date'],
+            'to_date' => ['required', 'date'],
+            'code' => ['required','unique:budget_specific_actions,code,'. $id],
+            'name' => ['required'],
+            'description' => ['required'],
+        ], [
+            'from_date.required' => 'El campo fecha de inicio es obligatorio.',
+            'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
+            'to_date.required' => 'El campo fecha final es obligatorio.',
+            'to_date.date' => 'El campo fecha final no tiene un formato válido.',
+            'code.required' => 'El campo código es obligatorio.',
+            'code.unique' => 'El campo código ya ha sido registrado.',
+        ]);
 
         if ($request->project_centralized_action === "project") {
             /** @var object Objeto que contiene información de un proyecto */
