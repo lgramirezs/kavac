@@ -26,8 +26,8 @@
 				<div class="col-md-4" id="helpInstitution">
 					<div class="form-group is-required">
 						<label>Organización:</label>
-						<select2 :options="institutions" @input="getDepartments()"
-								 v-model="record.institution_id"></select2>
+						<select2 :options="institutions"
+								 v-model="record.institution_id" @input="getDepartments()"></select2>
                     </div>
 
 				</div>
@@ -228,17 +228,14 @@
 					payroll_position_type_id: '',
 					payroll_position_id: '',
 					payroll_staff_id: '',
-
 					institution_id: '',
 					department_id: '',
-
 					asset_type_id: '',
 					asset_category_id: '',
 					asset_subcategory_id: '',
 					asset_specific_category_id: '',
 				},
 				getStaffIdInfo:'',
-
 				errors: [],
 				records: [],
 				page: 1,
@@ -314,11 +311,11 @@
         },
 		created() {
 			const vm = this;
+			vm.getInstitutions();
 			vm.getPayrollStaffs();
+			vm.getAssetTypes();
 			// vm.getPayrollPositionTypes();
 			// vm.getPayrollPositions();
-			vm.getAssetTypes();
-			vm.getInstitutions();
 		},
 		mounted() {
 			this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
@@ -366,9 +363,8 @@
 					payroll_position_type_id: '',
 					payroll_position_id: '',
 					payroll_staff_id: '',
-
 					institution_id: '',
-
+					department_id: '',
 					asset_type_id: '',
 					asset_category_id: '',
 					asset_subcategory_id: '',
