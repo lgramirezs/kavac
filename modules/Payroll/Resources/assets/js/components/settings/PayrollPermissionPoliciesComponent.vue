@@ -144,7 +144,11 @@
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="day_range" slot-scope="props" class="text-center">
-                                <span>{{props.row.time_min + ' - ' + props.row.time_max}}</span>
+                                <div v-for="time_unit in time_units" :key="time_unit.id">
+                                    <span v-if="props.row.time_unit == time_unit.id">
+                                        {{ props.row.time_min + ' - ' + props.row.time_max + ' ' + time_unit.text }}
+                                    </span>
+                                </div>
                             </div>
                             <div slot="active" slot-scope="props" class="text-center">
                                 <span v-if="props.row.active">Si</span>
@@ -189,11 +193,11 @@
                 records:      [],
                 institutions: [],
                 time_units:   [
-                    {"id": "",                     "text": "Seleccione..."},
-                    {"id": "hours",          "text": "hora(s)"},
-                    {"id": "days",          "text": "día(s)"},
-                    {"id": "weeks",          "text": "semana(s)"},
-                    {"id": "months",          "text": "mese(s)"},
+                    {"id": "",       "text": "Seleccione..."},
+                    {"id": "hours",  "text": "hora(s)"},
+                    {"id": "days",   "text": "día(s)"},
+                    {"id": "weeks",  "text": "semana(s)"},
+                    {"id": "months", "text": "mese(s)"},
 
                 ],
                 columns:      ['name', 'anticipation_day', 'day_range', 'active', 'id'],

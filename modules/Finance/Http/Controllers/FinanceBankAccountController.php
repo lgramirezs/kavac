@@ -67,6 +67,13 @@ class FinanceBankAccountController extends Controller
             'finance_account_type_id.required' => 'El campo tipo de cuenta es obligatorio.',
         ]);
 
+        $ccc_number = $request->bank_code . $request->ccc_number;
+        $ccc_numbers = FinanceBankAccount::where('ccc_number', $ccc_number)->first();
+            if($ccc_numbers){
+                 $error[0]= "El campo código cuenta cliente ya ha sido registrado.";
+                return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+            }
+
         $financeBankAccount = FinanceBankAccount::create([
             'ccc_number' => $request->bank_code . $request->ccc_number,
             'description' => $request->description,

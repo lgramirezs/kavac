@@ -26,7 +26,7 @@ class PurchaseBaseBudget extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['currency_id', 'subtotal'];
+    protected $fillable = ['currency_id', 'date', 'subtotal'];
 
     /**
      * PurchaseBaseBudget belongs to Currency.

@@ -181,6 +181,7 @@
                     warehouse_id: '',
                     warehouse_inventory_products: [],
 
+
                 },
                 warehouse_inventory_product: {
                     id: '',
@@ -221,7 +222,9 @@
                         warehouse_id: '',
                         warehouse_inventory_products: [],
 
+
                     };
+                    this.records = [];
 
                 }
                 this.warehouse_inventory_product = {

@@ -45,6 +45,8 @@
 										$institutions, (isset($model)) ? $model->department->institution->id : null,
 										[
 											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'institution_id',
+											'onchange' => 'updateSelectActive($(this), $("#department_id"), "Department" )',
 											'title' => __('Seleccione una institución')
 										]
 									) !!}
@@ -55,6 +57,8 @@
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
 									{!! Form::select('department_id', $departments, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'department_id',
+										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff")',
 										'title' => __('Seleccione un departamento o dependencia'),
 									]) !!}
 								</div>

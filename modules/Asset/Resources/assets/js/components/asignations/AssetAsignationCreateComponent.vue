@@ -26,8 +26,8 @@
 				<div class="col-md-4" id="helpInstitution">
 					<div class="form-group is-required">
 						<label>Organización:</label>
-						<select2 :options="institutions" @input="getDepartments()"
-								 v-model="record.institution_id"></select2>
+						<select2 :options="institutions"
+								 v-model="record.institution_id" @input="getDepartments()"></select2>
                     </div>
 
 				</div>
@@ -37,6 +37,12 @@
 						<select2 :options="departments" v-model="record.department_id"></select2>
                     </div>
 
+				</div>
+				<div class="col-md-4" id="helpStaff">
+					<div class="form-group is-required">
+						<label>Trabajador:</label>
+						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
+                    </div>
 				</div>
 				<div class="col-md-4" id="helpPositionType">
 					<div class="form-group">
@@ -49,12 +55,6 @@
 					<div class="form-group">
 						<label>Cargo:</label>
 						<select2 :options="payroll_positions" v-model="record.payroll_position_id"></select2>
-                    </div>
-				</div>
-				<div class="col-md-4" id="helpStaff">
-					<div class="form-group is-required">
-						<label>Trabajador:</label>
-						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
                     </div>
 				</div>
 
@@ -197,7 +197,7 @@
 		        	<button type="button" @click="reset()"
 							class="btn btn-default btn-icon btn-round"
 							data-toggle="tooltip"
-							title ="Borrar datos del formulario">
+							title="Borrar datos del formulario">
 							<i class="fa fa-eraser"></i>
 					</button>
 
@@ -228,15 +228,14 @@
 					payroll_position_type_id: '',
 					payroll_position_id: '',
 					payroll_staff_id: '',
-
 					institution_id: '',
 					department_id: '',
-
 					asset_type_id: '',
 					asset_category_id: '',
 					asset_subcategory_id: '',
 					asset_specific_category_id: '',
 				},
+				getStaffIdInfo:'',
 				errors: [],
 				records: [],
 				page: 1,
@@ -296,6 +295,9 @@
 			}
 		},
 		watch: {
+			'record.payroll_staff_id'(new_id) {
+				this.getPayrollStaffInfo(new_id);
+			},
             perPage(res) {
             	if (this.page == 1){
             		this.loadAssets(`${window.app_url}/asset/registers/vue-list/${res}/${this.page}`);
@@ -309,11 +311,11 @@
         },
 		created() {
 			const vm = this;
-			vm.getPayrollStaffs();
-			vm.getPayrollPositionTypes();
-			vm.getPayrollPositions();
-			vm.getAssetTypes();
 			vm.getInstitutions();
+			vm.getPayrollStaffs();
+			vm.getAssetTypes();
+			// vm.getPayrollPositionTypes();
+			// vm.getPayrollPositions();
 		},
 		mounted() {
 			this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
@@ -361,9 +363,8 @@
 					payroll_position_type_id: '',
 					payroll_position_id: '',
 					payroll_staff_id: '',
-
 					institution_id: '',
-
+					department_id: '',
 					asset_type_id: '',
 					asset_category_id: '',
 					asset_subcategory_id: '',
@@ -462,7 +463,8 @@
 					asset_type: vm.record.asset_type_id,
 					asset_category: vm.record.asset_category_id,
 					asset_subcategory: vm.record.asset_subcategory_id,
-					asset_specific_category: vm.record.asset_specific_category_id
+					asset_specific_category: vm.record.asset_specific_category_id,
+					institution_id: vm.record.institution_id,
 				};
 
 				axios.post(url, filters).then(response => {

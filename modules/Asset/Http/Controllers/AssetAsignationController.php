@@ -12,6 +12,7 @@ use Modules\Asset\Models\AssetAsignationAsset;
 use Modules\Asset\Models\AssetAsignation;
 use Modules\Asset\Models\Asset;
 use App\Models\Profile;
+use Attribute;
 
 /**
  * @class      AssetAsignationController
@@ -92,13 +93,13 @@ class AssetAsignationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, $this->validateRules, $this->messages);
-        
+
         $codeSetting = CodeSetting::where('table', 'asset_asignations')->first();
         if (is_null($codeSetting)) {
             $request->session()->flash('message', [
                 'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
                 'text' => 'Debe configurar previamente el formato para el código a generar'
-                ]);
+            ]);
             return response()->json(['result' => false, 'redirect' => route('asset.setting.index')], 200);
         }
 
@@ -117,6 +118,8 @@ class AssetAsignationController extends Controller
          */
         $asignation = AssetAsignation::create([
             'code' => $code,
+            'department_id' => $request->input('department_id'),
+            'institution_id' => $request->input('institution_id'),
             'payroll_staff_id' => $request->input('payroll_staff_id'),
             'user_id' => Auth::id()
         ]);
@@ -180,10 +183,10 @@ class AssetAsignationController extends Controller
              * @var Object $asset_asignation
              */
             $asset_asignation = AssetAsignationAsset::updateOrCreate([
-                    'asset_id' => $asset->id,
-                    'asset_asignation_id' => $asignation->id,
-                    'updated_at' => $update
-                ]);
+                'asset_id' => $asset->id,
+                'asset_asignation_id' => $asignation->id,
+                'updated_at' => $update
+            ]);
         }
         /** Se eliminan los demas elementos de la solicitud */
         $assets_asignation = AssetAsignationAsset::where('asset_asignation_id', $asignation->id)
@@ -226,7 +229,7 @@ class AssetAsignationController extends Controller
         $ids = explode(',', $id);
         if (count($ids) > 1) {
             $asignation = AssetAsignation::whereIn('id', $ids)
-            ->with(['payrollStaff','assetAsignationAssets' =>
+                ->with(['payrollStaff', 'assetAsignationAssets' =>
                 function ($query) {
                     $query->with(
                         ['asset' => function ($query) {
@@ -245,23 +248,23 @@ class AssetAsignationController extends Controller
                 }])->get();
         } else {
             $asignation = AssetAsignation::where('id', $id)
-                ->with(['payrollStaff','assetAsignationAssets' =>
-                    function ($query) {
-                        $query->with(
-                            ['asset' => function ($query) {
-                                $query->with(
-                                    'assetType',
-                                    'assetCategory',
-                                    'assetSubcategory',
-                                    'assetSpecificCategory',
-                                    'assetAcquisitionType',
-                                    'assetCondition',
-                                    'assetStatus',
-                                    'assetUseFunction'
-                                );
-                            }]
-                        );
-                    }])->first();
+                ->with(['payrollStaff', 'assetAsignationAssets' =>
+                function ($query) {
+                    $query->with(
+                        ['asset' => function ($query) {
+                            $query->with(
+                                'assetType',
+                                'assetCategory',
+                                'assetSubcategory',
+                                'assetSpecificCategory',
+                                'assetAcquisitionType',
+                                'assetCondition',
+                                'assetStatus',
+                                'assetUseFunction'
+                            );
+                        }]
+                    );
+                }])->first();
         }
 
         return response()->json(['records' => $asignation], 200);
@@ -286,6 +289,6 @@ class AssetAsignationController extends Controller
             $assetAsignations = AssetAsignation::where('institution_id', $institution_id)
                 ->with('payrollStaff')->get();
         }
-        return response()->json(['records' => $assetAsignations ], 200);
+        return response()->json(['records' => $assetAsignations], 200);
     }
 }
