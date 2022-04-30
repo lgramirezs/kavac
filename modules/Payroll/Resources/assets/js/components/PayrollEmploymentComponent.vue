@@ -132,7 +132,7 @@
                     <br>
                     <h6 class="card-title">Trabajos anteriores <i class="fa fa-plus-circle cursor-pointer"
                         @click="addPreviousJob()"></i></h6>
-                    <div class="row" v-for="(job, index) in record.previous_jobs">
+                    <div class="row" v-for="(job, index) in record.previous_jobs" :key="index">
                         <div class="col-md-4">
                             <div class="form-group is-required">
                                 <label for="organization_name">Nombre de la organización:</label>
@@ -547,7 +547,7 @@
         created() {
             this.record.active = true;
             this.record.previous_jobs = [];
-            this.getPayrollStaffs();
+            this.getPayrollStaffs((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             this.getPayrollInactivityTypes();
             this.getPayrollPositionTypes();
             this.getPayrollPositions();
