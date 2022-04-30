@@ -61,6 +61,6 @@ class UniqueCurrency implements Rule, DataAwareRule
      */
     public function message()
     {
-        return 'Ya existe una moneda con para el Pais seleccionado con el mismo nombre o símbolo.';
+        return 'Ya existe una moneda para el Pais seleccionado con el mismo nombre o símbolo.';
     }
 }
