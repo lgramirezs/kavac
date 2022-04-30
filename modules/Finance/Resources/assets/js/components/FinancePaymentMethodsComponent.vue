@@ -4,8 +4,8 @@
 		   href="#" title="Registros de tipos de cuenta bancaria"
 		   data-toggle="tooltip"
 		   @click="addRecord( 'add_payment_methods', '/finance/payment_methods', $event)">
-			
-			<span><br>Formas de <br>pago</span>
+			<i class="ion ion-card ico-3x"></i>
+			<span>Formas de <br>pago</span>
 		</a>
 		<div class="modal fade text-left" tabindex="-1" role="dialog" id="add_payment_methods">
 			<div class="modal-dialog vue-crud" role="document">
@@ -15,7 +15,7 @@
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
-							
+							<i class="ion ion-card inline-block"></i>
 							Registro de formas de pago
 						</h6>
 					</div>
@@ -36,18 +36,21 @@
 			                    </div>
 							</div>
 						</div>
-	                </div>
-					<div class="row">
-							<div class="col-8">
+						<div class="row">
+							<div class="col-12">
 								<div class="form-group is-required">
 									<label>Descripción</label>
-                                    <ckeditor :editor="ckeditor.editor" id="description" data-toggle="tooltip"
-                                              title="Indique la descripcion de la forma de pago"
-                                              :config="ckeditor.editorConfig" class="form-control input-sm" name="description"
-                                              tag-name="textarea" rows="3" v-model="record.description"></ckeditor>
+									<ckeditor :editor="ckeditor.editor" id="description" 
+												data-toggle="tooltip" 
+												title="Indique la descripcion de la forma de pago" 
+												:config="ckeditor.editorConfig" 
+												class="form-control input-sm" name="description" 
+												tag-name="textarea" rows="3" 
+												v-model="record.description"></ckeditor>
 								</div>
 							</div>
-					</div>
+						</div>
+	                </div>
 	                <div class="modal-footer">
 	                	<div class="form-group">
 	                		<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
@@ -66,6 +69,9 @@
 	                </div>
 	                <div class="modal-body modal-table">
 	                	<v-client-table :columns="columns" :data="records" :options="table_options">
+							<div slot="description" slot-scope="props" class="text-justify">
+								<div v-html="props.row.description"></div>
+							</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
 	                			<button @click="initUpdate(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-round"
@@ -124,9 +130,9 @@
 			this.table_options.sortable = ['name','description'];
 			this.table_options.filterable = ['name','description'];
 			this.table_options.columnsClasses = {
-				'name': 'col-md-10',
-				'description': 'col-md-6',
-				'id': 'col-md-2'
+				'name': 'col-4',
+				'description': 'col-6',
+				'id': 'col-2'
 			};
 		},
 	};
