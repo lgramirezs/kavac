@@ -93,7 +93,11 @@ class PurchaseSupplierController extends Controller
      */
     public function store(Request $request, UploadDocRepository $upDoc)
     {
-        //dd($request->all());
+        // dd($request->all());
+        $requiredContacts = '';
+        if (array_key_exists("contact_names", $request->all())) {
+            $requiredContacts = 'required';
+        }
         $this->validate($request, [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
@@ -107,8 +111,8 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_names'                  => ['required'],
-            'contact_emails'                 => ['required'],
+            'contact_names'                  => [$requiredContacts],
+            'contact_emails'                 => [$requiredContacts],
             'rnc_certificate_number'         => ['required_with:rnc_status'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
