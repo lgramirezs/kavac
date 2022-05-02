@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -187,62 +187,63 @@ $(document).ready(function(){initNavTree('d5/dc1/MaritalStatusController_8php_so
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">     *</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">     * @param  Request        $request          Objeto con información de la petición</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">     * @param  MaritalStatus  $MaritalStatus    Objeto con información del estado civil a actualizar</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">     * @return JsonResponse</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">   91</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">update</a>(Request $request, <a class="code" href="../../d2/d58/classApp_1_1Models_1_1MaritalStatus.html">MaritalStatus</a> $maritalStatus)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>]</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        ]);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        $maritalStatus-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $maritalStatus-&gt;save();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">     * Elimina un estado civil</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">     * @method  destroy</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">     * @param  MaritalStatus  $maritalStatus    Objeto con información del estado civil a eliminar</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información del proceso de eliminación del estado civil</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">  114</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">destroy</a>(<a class="code" href="../../d2/d58/classApp_1_1Models_1_1MaritalStatus.html">MaritalStatus</a> $maritalStatus)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        $maritalStatus-&gt;delete();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $maritalStatus, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">     * Obtiene los estados civiles registrados</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">     * @method  getMaritalStatus</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">     * @param  integer $id                      Identificador del estado civil a buscar, este parámetro es opcional</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">     * @return JsonResponse    JSON con los datos de los estados</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> getMaritalStatus($id = <span class="keyword">null</span>)</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {<span class="comment"></span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">        /** @var array Arreglo con el filtro a través del ID del registro en caso de ser indicado */</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        $filterId = (!is_null($id)) ? [<span class="stringliteral">&#39;id&#39;</span> =&gt; $id] : [];</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json(template_choices(<span class="stringliteral">&#39;App\Models\MaritalStatus&#39;</span>, <span class="stringliteral">&#39;name&#39;</span>, $filterId, <span class="keyword">true</span>));</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">     * </span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">     * @return JsonResponse</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">   92</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">update</a>(Request $request, <a class="code" href="../../d2/d58/classApp_1_1Models_1_1MaritalStatus.html">MaritalStatus</a> $maritalStatus)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>]</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        ]);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $maritalStatus-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $maritalStatus-&gt;save();</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">     * Elimina un estado civil</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">     * @method  destroy</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">     * @param  MaritalStatus  $maritalStatus    Objeto con información del estado civil a eliminar</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">     * @return JsonResponse     JSON con información del proceso de eliminación del estado civil</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">  115</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">destroy</a>(<a class="code" href="../../d2/d58/classApp_1_1Models_1_1MaritalStatus.html">MaritalStatus</a> $maritalStatus)</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        $maritalStatus-&gt;delete();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $maritalStatus, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">     * Obtiene los estados civiles registrados</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">     * @method  getMaritalStatus</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">     * @author  Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">     * @param  integer $id                      Identificador del estado civil a buscar, este parámetro es opcional</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">     * @return JsonResponse    JSON con los datos de los estados</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> getMaritalStatus($id = <span class="keyword">null</span>)</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    {<span class="comment"></span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">        /** @var array Arreglo con el filtro a través del ID del registro en caso de ser indicado */</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        $filterId = (!is_null($id)) ? [<span class="stringliteral">&#39;id&#39;</span> =&gt; $id] : [];</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json(template_choices(<span class="stringliteral">&#39;App\Models\MaritalStatus&#39;</span>, <span class="stringliteral">&#39;name&#39;</span>, $filterId, <span class="keyword">true</span>));</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html">App\Http\Controllers\MaritalStatusController</a></div><div class="ttdoc">Gestiona información de Estados Civiles.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00019">MaritalStatusController.php:19</a></div></div>
-<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a0ebd6878683a3de8d6c3851ef069367b"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">App\Http\Controllers\MaritalStatusController\update</a></div><div class="ttdeci">update(Request $request, MaritalStatus $maritalStatus)</div><div class="ttdoc">Actualiza la información de un estado civil.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00091">MaritalStatusController.php:91</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a0ebd6878683a3de8d6c3851ef069367b"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a0ebd6878683a3de8d6c3851ef069367b">App\Http\Controllers\MaritalStatusController\update</a></div><div class="ttdeci">update(Request $request, MaritalStatus $maritalStatus)</div><div class="ttdoc">Actualiza la información de un estado civil.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00092">MaritalStatusController.php:92</a></div></div>
 <div class="ttc" id="anamespaceApp_1_1Http_1_1Controllers_html"><div class="ttname"><a href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">App\Http\Controllers</a></div><div class="ttdoc">Controladores base de la aplicación.</div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a149eb92716c1084a935e04a8d95f7347"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a149eb92716c1084a935e04a8d95f7347">App\Http\Controllers\MaritalStatusController\index</a></div><div class="ttdeci">index()</div><div class="ttdoc">Listado de todos los registros de estados civiles.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00046">MaritalStatusController.php:46</a></div></div>
-<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a5ebd2ae04966e035660b3d2f8dc79a61"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">App\Http\Controllers\MaritalStatusController\destroy</a></div><div class="ttdeci">destroy(MaritalStatus $maritalStatus)</div><div class="ttdoc">Elimina un estado civil.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00114">MaritalStatusController.php:114</a></div></div>
+<div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a5ebd2ae04966e035660b3d2f8dc79a61"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a5ebd2ae04966e035660b3d2f8dc79a61">App\Http\Controllers\MaritalStatusController\destroy</a></div><div class="ttdeci">destroy(MaritalStatus $maritalStatus)</div><div class="ttdoc">Elimina un estado civil.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00115">MaritalStatusController.php:115</a></div></div>
 <div class="ttc" id="aclassApp_1_1Models_1_1MaritalStatus_html"><div class="ttname"><a href="../../d2/d58/classApp_1_1Models_1_1MaritalStatus.html">App\Models\MaritalStatus</a></div><div class="ttdoc">Datos de los estados civiles.</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d78/app_2Models_2MaritalStatus_8php_source.html#l00024">app/Models/MaritalStatus.php:24</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1MaritalStatusController_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html#a095c5d389db211932136b53f25f39685">App\Http\Controllers\MaritalStatusController\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdoc">Define la configuración de la clase.</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/dc1/MaritalStatusController_8php_source.html#l00028">MaritalStatusController.php:28</a></div></div>
 <div class="ttc" id="aclassApp_1_1Http_1_1Controllers_1_1Controller_html"><div class="ttname"><a href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html">App\Http\Controllers\Controller</a></div><div class="ttdoc">Controlador principal del framework del cual extienden los demás controladores.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d82/Controller_8php_source.html#l00019">Controller.php:19</a></div></div>
@@ -250,7 +251,7 @@ $(document).ready(function(){initNavTree('d5/dc1/MaritalStatusController_8php_so
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_0c4ee04d587063ecca91a7f35642b9f3.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_27ba1f74dc73f44d4e9ca42f2dd266ec.html">Controllers</a></li><li class="navelem"><b>MaritalStatusController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -10,6 +10,7 @@ use Modules\Payroll\Models\PayrollEmployment;
 use Modules\Payroll\Models\PayrollPreviousJob;
 use Modules\Payroll\Models\PayrollStaff;
 use Modules\Payroll\Models\Profile;
+use Modules\Payroll\Models\Institution;
 use App\Models\Phone;
 use App\Models\CodeSetting;
 use App\Rules\AgeToWork;
@@ -54,6 +55,9 @@ class PayrollEmploymentController extends Controller
             'institution_id' => ['required'],
             'department_id' => ['required'],
             'payroll_contract_type_id' => ['required'],
+            'previous_jobs' => ['sometimes', 'array'],
+            'previous_jobs.*.start_date' => ['sometimes', 'before:start_date', 'before:previous_jobs.*.end_date'],
+            'previous_jobs.*.end_date' => ['sometimes', 'before:start_date', 'after:previous_jobs.*.start_date'],
         ];
 
         /** Define los atributos para los campos personalizados */
@@ -69,7 +73,9 @@ class PayrollEmploymentController extends Controller
             'department_id' => 'departamento',
             'payroll_contract_type_id' => 'tipo de contracto',
             'payroll_staff_id' => 'trabajador',
-            'institution_email' => 'El correo institucional ingresado'
+            'institution_email' => 'El correo institucional ingresado',
+            'previous_jobs.*.start_date' => 'fecha de inicio',
+            'previous_jobs.*.end_date' => 'fecha de cese'
         ];
     }
 
@@ -115,11 +121,16 @@ class PayrollEmploymentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->institution_id ? $institution = Institution::whereId($request->institution_id)->first() : $this->rules['institution_id'] = ['required'];
+
         $this->rules['payroll_staff_id'] = ['required', 'unique:payroll_employments,payroll_staff_id'];
         $this->rules['institution_email'] = ['email', 'nullable', 'unique:payroll_employments,institution_email'];
+        if ($request->start_date) {
+            $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
+        }
         if ($request->end_date) {
-            $this->rules['start_date'] = ['before_or_equal:end_date'];
-            $this->rules['end_date'] = ['after_or_equal:start_date'];
+            $this->rules['start_date'] = ['before:end_date', 'after:'.$institution->start_operations_date];
+            $this->rules['end_date'] = ['after:start_date'];
         }
         if (!$request->active) {
             $this->validate(
@@ -233,15 +244,19 @@ class PayrollEmploymentController extends Controller
     public function update(Request $request, $id)
     {
         $payrollEmployment = PayrollEmployment::with('payrollPreviousJob')->find($id);
+        $request->institution_id ? $institution = Institution::whereId($request->institution_id)->first() : $this->validate($request, $this->rules, [], $this->attributes);
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
         ];
         $this->rules['institution_email'] = [
             'email', 'nullable', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id
         ];
+        if ($request->start_date) {
+            $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
+        }
         if ($request->end_date) {
-            $this->rules['start_date'] = ['before_or_equal:end_date'];
-            $this->rules['end_date'] = ['after_or_equal:start_date'];
+            $this->rules['start_date'] = ['before:end_date'];
+            $this->rules['end_date'] = ['after:start_date'];
         }
         if (!$request->active) {
             $this->validate(
@@ -332,7 +347,9 @@ class PayrollEmploymentController extends Controller
     {
         return response()->json(['records' => PayrollEmployment::with([
             'payrollStaff', 'payrollInactivityType', 'payrollPositionType',
-            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType', 'payrollPreviousJob'
-        ])->get()], 200);
+            'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType',
+            'payrollPreviousJob' => function ($query) {
+                $query->with(['payrollPosition', 'payrollStaffType', 'payrollSectorType']);
+            }])->get()], 200);
     }
 }

@@ -66,16 +66,43 @@ class CodeSetting extends Model implements Auditable
         return "{$this->format_prefix}-{$this->format_digits}-{$this->format_year}";
     }
 
+    /**
+     * Establece los datos del campo format_prefix
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  string $value Formato del prefijo
+     *
+     * @return void          
+     */
     public function setFormatPrefixAttribute($value)
     {
         $this->attributes['format_prefix'] = str_replace("_", "", $value);
     }
 
+    /**
+     * Establece los datos del campo format_digits
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  string $value Formato de los dígitos
+     *
+     * @return void          
+     */
     public function setFormatDigitsAttribute($value)
     {
         $this->attributes['format_digits'] = str_replace("_", "", $value);
     }
 
+    /**
+     * Establece los datos del campo format_year
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  string $value Formato del año
+     *
+     * @return void          
+     */
     public function setFormatYearAttribute($value)
     {
         $this->attributes['format_year'] = str_replace("_", "", $value);

@@ -1,6 +1,9 @@
 var classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier =
 [
     [ "city", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#a2a1a1baf063b1d835a94f918c0d78422", null ],
+    [ "contacts", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#adf7e5165c026279812fb997df6fd1d09", null ],
+    [ "country", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#a46ddc893b380917dbb661f16ae8ec7ee", null ],
+    [ "estate", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#a3f188893c8c3d8fac7711d08080a435d", null ],
     [ "phones", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#af4fe82a2a1c2ebe71c2633cd53c27ecb", null ],
     [ "purchaseOrder", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#a3b4b38807f0f07a820bb0eee97774837", null ],
     [ "purchaseSupplierBranch", "dd/d40/classModules_1_1Purchase_1_1Models_1_1PurchaseSupplier.html#ad483a91c8501c7a45dc24db5b607f8e8", null ],

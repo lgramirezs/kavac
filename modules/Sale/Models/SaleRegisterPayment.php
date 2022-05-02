@@ -46,7 +46,7 @@ class SaleRegisterPayment extends Model implements Auditable
     /**
      * Método que obtiene las formas de pago almacenadas en el sistema
      *
-     * @author Daniel Contreras <mnarvaez@cenditel.gob.ve>
+     * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
      * Currency
      */
@@ -59,7 +59,7 @@ class SaleRegisterPayment extends Model implements Auditable
     /**
      * Método que obtiene los bancos registrados
      *
-     * @author Daniel Contreras <mnarvaez@cenditel.gob.ve>
+     * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
      * Currency
      */
@@ -71,7 +71,7 @@ class SaleRegisterPayment extends Model implements Auditable
     /**
      * Método que obtiene las formas de cobro 
      *
-     * @author Daniel Contreras <mnarvaez@cenditel.gob.ve>
+     * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
      * Currency
      */

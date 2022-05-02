@@ -1,209 +1,223 @@
 <template>
     <div>
-        <v-client-table :columns="columns" :data="records" :options="table_options">
-    		<div slot="id" slot-scope="props" class="text-center">
-    			<button @click="show_info(props.row.id)" v-if="route_show"
-        				class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
-        				title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
-        			<i class="fa fa-eye"></i>
-        		</button>
-    			<button @click="editForm(props.row.id)" v-if="!props.row.assigned"
-        				class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
-        				title="Modificar registro" data-toggle="tooltip" data-placement="bottom" type="button">
-        			<i class="fa fa-edit"></i>
-        		</button>
-        		<button @click="deleteRecord(props.index, '')"
-    					class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
-    					title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
-    					type="button">
-    				<i class="fa fa-trash-o"></i>
-    			</button>
-    		</div>
+        <v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResults">
+            <div slot="id" slot-scope="props" class="text-center">
+                <button @click.prevent="setDetails('EmploymentInfo', props.row.id, 'PayrollEmploymentInfo')"
+                        class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
+                        title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
+                    <i class="fa fa-eye"></i>
+                </button>
+                <button @click="editForm(props.row.id)" v-if="!props.row.assigned"
+                        class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
+                        title="Modificar registro" data-toggle="tooltip" data-placement="bottom" type="button">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button @click="deleteRecord(props.row.id, '')"
+                        class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
+                        title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
+                        type="button">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
             <div slot="active" slot-scope="props" class="text-center">
                 <span v-if="props.row.active">SI</span>
                 <span v-else>NO</span>
             </div>
-    	</v-client-table>
-        <div class="modal fade" tabindex="-1" role="dialog" id="show_employment">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h6>
-                            <i class="icofont icofont-read-book ico-2x"></i>
-                            Información Detallada de Datos Laborales
-                        </h6>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_staff">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de ingreso a la administración pública</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="start_date_apn">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de ingreso a la institución</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="start_date">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de egreso de la institución</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="end_date">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>¿Está Activo?</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-                                        <input id="active" class="form-control bootstrap-switch"
-                                            data-on-label="SI" data-off-label="NO" type="checkbox">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4" v-if="!record.active">
-                                <div class="form-group">
-                                    <label>Tipo de la Inactividad</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_inactivity_type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Correo Institucional</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="institution_email">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Descripción de las Funciones</label>
-                                    <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
-                                              :disabled="true" :config="ckeditor.editorConfig" class="form-control"
-                                              name="function_description" tag-name="textarea" rows="3"></ckeditor>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Cargo</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_position_type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Cargo</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_position">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Personal</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_staff_type">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Contrato</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_contract_type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Institución</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="institution">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Departamento</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="department">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </v-client-table>
+        <payroll-employment-info
+            ref="EmploymentInfo">
+        </payroll-employment-info>
     </div>
 </template>
 <script>
     export default {
         data() {
-			return {
-				records: [],
+            return {
+                records: [],
                 record: [],
-				columns: ['payroll_staff.first_name', 'institution_email', 'active', 'id'],
-			}
-		},
+                columns: ['payroll_staff.first_name', 'institution_email', 'active', 'id'],
+            }
+        },
 
         created() {
-			this.table_options.headings = {
+            this.table_options.headings = {
                 'payroll_staff.first_name': 'Trabajador',
-				'institution_email': 'Correo Electrónico Institucional',
-				'active': '¿Está Activo?',
-				'id': 'Acción'
-			};
+                'institution_email': 'Correo Electrónico Institucional',
+                'active': '¿Está Activo?',
+                'id': 'Acción'
+            };
             this.table_options.sortable = ['payroll_staff.first_name', 'institution_email'];
-			this.table_options.filterable = ['payroll_staff.first_name', 'institution_email'];
-		},
+            this.table_options.filterable = ['payroll_staff.first_name', 'institution_email'];
+        },
 
-		mounted() {
-			this.initRecords(this.route_list, '');
-		},
+        mounted() {
+            this.initRecords(this.route_list, '');
+        },
 
         methods: {
             reset() {
 
             },
 
-            show_info(id) {
-                axios.get(`${window.app_url}/payroll/employments/${id}`).then(response => {
-					this.record = response.data.record;
-                    $('#payroll_staff').val(this.record.payroll_staff.first_name + ' ' + this.record.payroll_staff.last_name);
-                    $('#start_date_apn').val(this.record.start_date_apn);
-                    $('#start_date').val(this.record.start_date);
-                    $('#end_date').val(this.record.end_date);
-                    (this.record.active) ? $('#active').bootstrapSwitch('state', true) : $('#active').bootstrapSwitch('state', false);
-                    $('#payroll_inactivity_type').val( (this.record.payroll_inactivity_type) ? this.record.payroll_inactivity_type.name : ' ' );
-                    $('#institution_email').val(this.record.institution_email);
-                    $('#function_description').val(this.record.function_description);
-                    $('#payroll_position_type').val(this.record.payroll_position_type.name);
-                    $('#payroll_position').val(this.record.payroll_position.name);
-                    $('#payroll_staff_type').val(this.record.payroll_staff_type.name);
-                    $('#institution').val(this.record.department.institution.name);
-                    $('#department').val(this.record.department.name);
-                    $('#payroll_contract_type').val(this.record.payroll_contract_type.name);
-				});
-                $('#show_employment').modal('show');
-            }
+            /**
+             * Método que establece los datos del registro seleccionado para el cual se desea mostrar detalles
+             *
+             * @method    setDetails
+             *
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             * @param     string   ref       Identificador del componente
+             * @param     integer  id        Identificador del registro seleccionado
+             * @param     object  var_list  Objeto con las variables y valores a asignar en las variables del componente
+             */
+            setDetails(ref, id, modal ,var_list = null) {
+                const vm = this;
+                if (var_list) {
+                    for(var i in var_list){
+                        vm.$refs[ref][i] = var_list[i];
+                    }
+                }else{
+                    vm.$refs[ref].record = vm.$refs.tableResults.data.filter(r => {
+                        return r.id === id;
+                    })[0];
+                }
+                vm.$refs[ref].id = id;
+
+                $(`#${modal}`).modal('show');
+
+                vm.antiquity(vm.$refs[ref].record);
+                vm.time_worked(vm.$refs[ref].record);
+                vm.diff_datetimes(vm.$refs[ref].record.start_date, vm.$refs[ref].record);
+            },
+
+            /**
+             * Método que borra todos los datos del formulario
+             * 
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+             */
+            reset() {
+            },
+
+            /**
+             * Método que calcula los años en otras instituciones públicas
+             *
+             * @method     antiquity
+             *
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+            antiquity(record) {
+                const vm = this;
+                record.years_apn = 0;
+                let years = 0;
+                if (record.payroll_previous_job) {
+                    for (let job of record.payroll_previous_job){
+                        if(job.payroll_sector_type.name == 'Público'){
+                            let now = job.start_date;
+                            let ms = moment(job.end_date,"YYYY-MM-DD HH").diff(moment(now,"YYYY-MM-DD"));
+                            let d = moment.duration(ms);
+
+                            years += d._data.years;
+
+                            record.years_apn = years;
+                        }
+                    }
+                }
+            },
+
+            /**
+             * Método que calcula los años en otras instituciones públicas
+             *
+             * @method     time_worked
+             *
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+            time_worked(record) {
+                const vm = this;
+                var now = record.start_date;
+                var ms = moment(record.end_date,"YYYY-MM-DD HH").diff(moment(now,"YYYY-MM-DD HH"));
+                var d = moment.duration(ms);
+                let data_years = 0;
+                let data_months = 0;
+                let data_days = 0;
+                if (d._data.years < 0){
+                    data_years = d._data.years * -1;
+                } else {
+                    data_years = d._data.years;
+                }
+                if (d._data.months < 0){
+                    data_months = d._data.months * -1;
+                } else {
+                    data_months = d._data.months
+                }
+                if (d._data.days < 0){
+                    data_days = d._data.days * -1;
+                } else {
+                    data_days = d._data.days
+                }
+
+                let time = {
+                    years: `Años: ${data_years}`,
+                    months: `Meses: ${data_months}`,
+                    days: `Días: ${data_days}`,
+                };
+
+                if (data_days > 0) {
+                    record.time_worked = time.years + ' ' + time.months + ' ' + time.days;
+                } else {
+                    record.time_worked = 0;
+                };
+            },
+
+            /**
+             * Método que calcula la diferencia entre dos fechas con marca de tiempo
+             *
+             * @method     diff_datetimes
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             * @param      {string}  dateThen    Fecha a comparar para obtener la diferencia con respecto a la fecha actual
+             *
+             * @return     {[type]}  Objeto con información de la diferencia obtenida entre las dos fechas
+             */
+            diff_datetimes(dateThen, record) {
+                const vm = this;
+                let now = moment().format("YYYY-MM-DD");
+                let ms = moment(dateThen,"YYYY-MM-DD").diff(moment(now,"YYYY-MM-DD"));
+                let d = moment.duration(ms);
+                let data_years = 0;
+                let data_months = 0;
+                let data_days = 0;
+                if (d._data.years < 0){
+                    data_years = d._data.years * -1;
+                }
+                if (d._data.months < 0){
+                    data_months = d._data.months * -1;
+                }
+                if (d._data.days < 0){
+                    data_days = d._data.days * -1;
+                }
+
+                let time = {
+                    years: `Años: ${data_years}`,
+                    months: `Meses: ${data_months}`,
+                    days: `Días: ${data_days}`,
+                };
+
+                if (data_days > 0) {
+                    record.institution_years = time.years + ' ' + time.months + ' ' + time.days;
+                } else {
+                    record.institution_years = 0;
+                };
+
+                if(data_years) {
+                    record.service_years = data_years + record.years_apn;
+                } else {
+                    record.service_years = record.years_apn;
+                }
+            },
         }
     };
 </script>

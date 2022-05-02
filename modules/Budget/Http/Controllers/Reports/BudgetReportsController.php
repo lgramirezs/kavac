@@ -7,6 +7,7 @@ namespace Modules\Budget\Http\Controllers\Reports;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Carbon\Carbon;
 use Modules\Budget\Models\BudgetProject;
 use Modules\Budget\Models\BudgetCentralizedAction;
 use Modules\Budget\Models\BudgetAccountOpen;
@@ -236,9 +237,9 @@ class BudgetReportsController extends Controller
             $data['initialDate'] = $data['finalDate'];
             $data['finalDate'] = $temp;
         }
-
+        // ddd($records);
         $pdf->setConfig(['institution' => $institution]);
-        $pdf->setHeader('Reporte de Presupuesto', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
             'pdf' => $pdf,
@@ -246,6 +247,7 @@ class BudgetReportsController extends Controller
             'institution' => $institution,
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
+            "report_date" => $now = \Carbon\Carbon::today()->format('Y-m-d'),
             'initialDate' => $data['initialDate'],
             'finalDate' => $data['finalDate'],
         ]);

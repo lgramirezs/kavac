@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -101,29 +101,30 @@ $(document).ready(function(){initNavTree('dd/d3c/help-text_8blade_8php_source.ht
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;{{-- Plantilla para textos de ayuda (generales) en formularios --}}</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;@<span class="keywordflow">if</span> (isset($codeSetting))</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    &lt;hr&gt;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;row&quot;</span>&gt;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;        &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;col-12&quot;</span> <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCode&quot;</span>&gt;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;            &lt;span <span class="keyword">class</span>=<span class="stringliteral">&quot;form-text&quot;</span>&gt;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Formato&#39;</span>) }}:&lt;/strong&gt; {{ __(<span class="stringliteral">&#39;prefijo-digitos-año&#39;</span>) }}</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                &lt;ul&gt;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodePrefix&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Prefijo (requerido): 1 a 3 caracteres&#39;</span>) }}&lt;/li&gt;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodeDigits&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Digitos (requerido): 4 caracteres (mínimo), 8 caracteres (máximo)&#39;</span>) }}&lt;/li&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodeYear&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Año (requerido): 2 o 4 caracteres (YY o YYYY)&#39;</span>) }}&lt;/li&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                &lt;/ul&gt;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Longitud total máxima&#39;</span>) }}:&lt;/strong&gt; {{ __(<span class="stringliteral">&#39;20 caracteres&#39;</span>) }}&lt;br&gt;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Ej.&#39;</span>) }}&lt;/strong&gt; XXX-00000000-YYYY</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;row&quot;</span>&gt;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;        &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;col-12&quot;</span> <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCode&quot;</span>&gt;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;            &lt;span <span class="keyword">class</span>=<span class="stringliteral">&quot;form-text&quot;</span>&gt;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Formato&#39;</span>) }}:&lt;/strong&gt; {{ __(<span class="stringliteral">&#39;prefijo-dígitos-año&#39;</span>) }}</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                &lt;ul&gt;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodePrefix&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Prefijo (requerido): 1 a 3 caracteres&#39;</span>) }}&lt;/li&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodeDigits&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Digitos (requerido): 4 caracteres (mínimo), 8 caracteres (máximo)&#39;</span>) }}&lt;/li&gt;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;                    &lt;li <span class="keywordtype">id</span>=<span class="stringliteral">&quot;formatCodeYear&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Año (requerido): 2 o 4 caracteres (YY o YYYY)&#39;</span>) }}&lt;/li&gt;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                &lt;/ul&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Longitud total máxima&#39;</span>) }}:&lt;/strong&gt; {{ __(<span class="stringliteral">&#39;15 caracteres&#39;</span>) }}&lt;br&gt;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Nota&#39;</span>) }}:&lt;/strong&gt; {{ __(<span class="stringliteral">&#39;Todas las letras deben ser mayúsculas&#39;</span>) }}&lt;br&gt;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                &lt;strong&gt;{{ __(<span class="stringliteral">&#39;Ej.&#39;</span>) }}&lt;/strong&gt; FOR-00000000-YYYY</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            &lt;/span&gt;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        &lt;/div&gt;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    &lt;/div&gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">@end</span><span class="keywordflow">if</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    &lt;hr&gt;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">@end</span><span class="keywordflow">if</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_0fc3f8f3ef96ce2d45d66d6e29832317.html">resources</a></li><li class="navelem"><a class="el" href="../../dir_5794a73405254976eadeaaaebebc79b6.html">views</a></li><li class="navelem"><a class="el" href="../../dir_3383e38c1daad0535b81c8fafcf7b43f.html">layouts</a></li><li class="navelem"><b>help-text.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

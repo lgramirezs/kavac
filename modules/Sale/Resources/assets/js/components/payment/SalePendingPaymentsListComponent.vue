@@ -27,14 +27,14 @@
                         data-placement="bottom"
                         class="btn btn-success btn-xs btn-icon btn-action"
                         title="Aprobar."
-                        v-on:click="approvedPayment(props.index,'/sale/payment/approvedPayment')">
+                        v-on:click="approvedPayment(props.index)">
                     <i class="fa fa-check"></i>
                 </button> 
                 <button type="button" data-toggle="tooltip"
                         data-placement="bottom"
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Rechazar."
-                        v-on:click="refusePayment(props.index,'/sale/payment/refusePayment')">
+                        v-on:click="refusePayment(props.index)">
                     <i class="fa fa-ban"></i>
                 </button> 
             </div>
@@ -112,9 +112,18 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
                             //console.log(vm);
-                            axios.put('payment/refusePayment/'+id,).then(response => {
+                            axios.put(app_url + '/sale/payment/refusePayment/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
+                                console.log('exit');
+                                $.gritter.add({
+                                    title: 'Exito!',
+                                    text: "Registro rechazado con exito",
+                                    class_name: 'growl-success',
+                                    image: "/images/screen-ok.png",
+                                    sticky: false,
+                                    time: 2500
+                                });
                             }).catch(error => {
                                 vm.errors = [];
                                 if (typeof(error.response) !="undefined") {
@@ -149,9 +158,18 @@
                             var fields = vm.records[index-1];
                             var id = vm.records[index-1].id;
                             //console.log(vm);
-                            axios.put('payment/approvedPayment/'+id, fields).then(response => {
+                            axios.put(app_url + '/sale/payment/approvedPayment/'+id, fields).then(response => {
                                 if (typeof(response.data.redirect) !== "undefined")
                                     location.href = response.data.redirect;
+                                console.log('exit');
+                                $.gritter.add({
+                                    title: 'Exito!',
+                                    text: "Registro aprobado con exito",
+                                    class_name: 'growl-success',
+                                    image: "/images/screen-ok.png",
+                                    sticky: false,
+                                    time: 2500
+                                });
                             }).catch(error => {
                                 vm.errors = [];
                                 if (typeof(error.response) !="undefined") {

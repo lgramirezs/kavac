@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -102,20 +102,20 @@ $(document).ready(function(){initNavTree('d4/d23/RolesTableSeeder_8php_source.ht
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="keyword">namespace </span>Database\Seeders;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;use Illuminate\Database\Seeder;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;use Exception;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;use <a class="code" href="../../d3/d23/classApp_1_1Roles_1_1Models_1_1Role.html">App\Roles\Models\Role</a>;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use DB;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * @class RolesTableSeeder</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * @brief Información por defecto para Roles</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * Gestiona la información por defecto a registrar inicialmente para los Roles</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * @author Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * @license &lt;a href=&#39;http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/&#39;&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *              LICENCIA DE SOFTWARE CENDITEL</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> *          &lt;/a&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Illuminate\Database\Seeder;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use Illuminate\Support\Facades\DB;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * @class RolesTableSeeder</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * @brief Información por defecto para Roles</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * Gestiona la información por defecto a registrar inicialmente para los Roles</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * @author Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * @license </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> *      [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../dd/d27/classDatabase_1_1Seeders_1_1RolesTableSeeder.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../dd/d27/classDatabase_1_1Seeders_1_1RolesTableSeeder.html">RolesTableSeeder</a> <span class="keyword">extends</span> Seeder</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{<span class="comment"></span></div>
@@ -193,7 +193,7 @@ $(document).ready(function(){initNavTree('d4/d23/RolesTableSeeder_8php_source.ht
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_f32c53f2c0f0ccaeb11076e30674d5f4.html">database</a></li><li class="navelem"><a class="el" href="../../dir_7f39bdd714b5c574825c6c42997ce95d.html">seeders</a></li><li class="navelem"><b>RolesTableSeeder.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('d1/d79/AllNotificationsComponent_8vue_
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            &lt;div class=&quot;row&quot;&gt;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                &lt;div class=&quot;col-12 mt-3&quot;&gt;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                    &lt;ul class=&quot;media-list msg-list&quot;&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        &lt;li class=&quot;media unread&quot; v-for=&quot;notify in notifications&quot;&gt;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        &lt;li class=&quot;media unread&quot; v-for=&quot;(notify, index) in notifications&quot; :key=&quot;index&quot;&gt;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            &lt;div class=&quot;float-left&quot;&gt;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                                &lt;input type=&quot;checkbox&quot; name=&quot;chkNotify&quot; id=&quot;chkNotify&quot; class=&quot;form-control&quot; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                                       v-model=&quot;selected&quot; :value=&quot;notify.id&quot;&gt;</div>
@@ -195,7 +195,7 @@ $(document).ready(function(){initNavTree('d1/d79/AllNotificationsComponent_8vue_
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_0fc3f8f3ef96ce2d45d66d6e29832317.html">resources</a></li><li class="navelem"><a class="el" href="../../dir_a794a5ff81584a815c22a64994c08658.html">js</a></li><li class="navelem"><a class="el" href="../../dir_17c4e49a40fcffc13f27ec9e17c9f676.html">components</a></li><li class="navelem"><a class="el" href="../../dir_e7858f9b9016062b48f9c7e465183a22.html">Notifications</a></li><li class="navelem"><b>AllNotificationsComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

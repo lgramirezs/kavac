@@ -48,4 +48,9 @@ class PayrollDisability extends Model implements Auditable
     {
         return $this->hasMany(PayrollStaff::class);
     }
+
+    public function payrollChildrens()
+    {
+        return $this->hasMany(PayrollChildren::class);
+    }
 }

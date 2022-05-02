@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -104,12 +104,12 @@ $(document).ready(function(){initNavTree('d1/d1e/AppServiceProvider_8php_source.
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/** Proveedores de servicios generales del sistema */</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="../../d2/dd0/namespaceApp_1_1Providers.html">    4</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d2/dd0/namespaceApp_1_1Providers.html">App\Providers</a>;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use Illuminate\Support\ServiceProvider;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use Illuminate\Support\Facades\Schema;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use Illuminate\Pagination\Paginator;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use <a class="code" href="../../db/dd9/classApp_1_1Models_1_1NotificationSetting.html">App\Models\NotificationSetting</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use <a class="code" href="../../d6/d5e/classApp_1_1Observers_1_1ModelObserver.html">App\Observers\ModelObserver</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use Nwidart\Modules\Module;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;use <a class="code" href="../../d6/d5e/classApp_1_1Observers_1_1ModelObserver.html">App\Observers\ModelObserver</a>;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use <a class="code" href="../../db/dd9/classApp_1_1Models_1_1NotificationSetting.html">App\Models\NotificationSetting</a>;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use Nwidart\Modules\Facades\Module;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use Illuminate\Pagination\Paginator;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use Illuminate\Support\Facades\Schema;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;use Illuminate\Support\ServiceProvider;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * @class AppServiceProvider</span></div>
@@ -143,24 +143,19 @@ $(document).ready(function(){initNavTree('d1/d1e/AppServiceProvider_8php_source.
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        Schema::defaultStringLength(255);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        Paginator::useBootstrap();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="comment">/*foreach (\Module::collections(1) as $module) {</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">            foreach (NotificationSetting::where(&#39;module&#39;, $module-&gt;getLowerName())-&gt;get() as $notifySetting) {</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">                $notifySetting::observe(ModelObserve::class);</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">                dd(&quot;entro&quot;);</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">            }</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">        }*/</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">if</span> (!app()-&gt;runningInConsole()) {<span class="comment"></span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">            /** Solo ejecuta esta instrucción si no se esta ejecutando en consola de comandos */</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">foreach</span> (NotificationSetting::all() as $notifySetting) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                <span class="keywordflow">if</span> (!is_null($notifySetting-&gt;module) &amp;&amp; Module::isDisabled($notifySetting-&gt;module)) {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                ($notifySetting-&gt;model)::observe(ModelObserver::class);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">if</span> (!app()-&gt;runningInConsole()) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            $module = <span class="keyword">new</span> Module;<span class="comment"></span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">            /** Solo ejecuta esta instrucción si no se esta ejecutando en consola de comandos */</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">foreach</span> (NotificationSetting::all() as $notifySetting) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keywordflow">if</span> (!is_null($notifySetting-&gt;module) &amp;&amp; $module-&gt;isDisabled($notifySetting-&gt;module)) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                ($notifySetting-&gt;model)::observe(ModelObserver::class);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespaceApp_1_1Providers_html"><div class="ttname"><a href="../../d2/dd0/namespaceApp_1_1Providers.html">App\Providers</a></div><div class="ttdoc">Proveedores de servicios generales del sistema.</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/d1e/AppServiceProvider_8php_source.html#l00004">AppServiceProvider.php:4</a></div></div>
@@ -172,7 +167,7 @@ $(document).ready(function(){initNavTree('d1/d1e/AppServiceProvider_8php_source.
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_07d79607a5b3b5e8afcff74e4c422a5d.html">Providers</a></li><li class="navelem"><b>AppServiceProvider.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

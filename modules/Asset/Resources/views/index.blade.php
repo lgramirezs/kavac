@@ -4,18 +4,39 @@
 @endsection
 
 {{-- Gráficos Estadísticos --}}
-<asset-dashboard-graphs></asset-dashboard-graphs>
+<div class="row">
+    <div class="col-12">
+        <div class="card" id="cardAssetGraph">
+            <div class="card-header">
+                <h6 class="card-title">
+                    Gráficos del Inventario de Bienes Institucionales
+                    @include('buttons.help', [
+                        'helpId' => 'AssetGraph',
+                        'helpSteps' => get_json_resource('ui-guides/dashboard/graph.json', 'asset')
+                    ])
+                </h6>
+                <div class="card-btns">
+                    @include('buttons.previous', ['route' => url()->previous()]) 
+                    @include('buttons.minimize')
+                </div>
+            </div>
+            <div class="card-body">
+                <asset-dashboard-graphs></asset-dashboard-graphs>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Histórico de Operaciones --}}
 <div class="row">
 	<div class="col-12">
-		<div class="card">
+		<div class="card" id="cardAssetOperationsHistoryList">
 			<div class="card-header">
 				<h6 class="card-title">
 					Histórico de Operaciones del Módulo de Bienes
 					@include('buttons.help', [
-                        'helpId' => 'developmentTools',
-                        'helpSteps' => get_json_resource('ui-guides/development_tools.json')
+                        'helpId' => 'AssetOperationsHistory',
+                        'helpSteps' => get_json_resource('ui-guides/dashboard/operations_history.json', 'asset')
                     ])
 				</h6>
 				<div class="card-btns">

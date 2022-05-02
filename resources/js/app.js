@@ -123,6 +123,16 @@ Vue.component('phones', () => import(
 ));
 
 /**
+ * Componente para la gestión de datos de contacto
+ *
+ * @author     Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+ */
+Vue.component('contacts', () => import(
+    /* webpackChunkName: "contacts" */
+    './components/Shared/ContactsComponent.vue'
+));
+
+/**
  * Componente genérico para mostrar motones de limpiar, cancelar o guardar registros cuando la altura del
  * formulario es muy alta
  *

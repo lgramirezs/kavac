@@ -4,10 +4,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Implementation
+    | Implementación de auditoría
     |--------------------------------------------------------------------------
     |
-    | Define which Audit model implementation should be used.
+    | Definir qué implementación del modelo de auditoría se debe utilizar.
     |
     */
 
@@ -15,10 +15,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Morph prefix & Guards
+    | Prefijo Morph de usuario y guards
     |--------------------------------------------------------------------------
     |
-    | Define the morph prefix and authentication guards for the User resolver.
+    | Defina el prefijo morph y las protecciones de autenticación para el resolutor de usuarios.
     |
     */
 
@@ -32,10 +32,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Resolvers
+    | Resolutores de auditoría
     |--------------------------------------------------------------------------
     |
-    | Define the User, IP Address, User Agent and URL resolver implementations.
+    | Definir las implementaciones de usuario, dirección IP, agente de usuario y resolución de URL.
     |
     */
     'resolver' => [
@@ -47,10 +47,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Events
+    | Eventos de auditoría
     |--------------------------------------------------------------------------
     |
-    | The Eloquent events that trigger an Audit.
+    | Los eventos Eloquent que desencadenan una Auditoría.
     |
     */
 
@@ -63,10 +63,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Strict Mode
+    | Modo estricto
     |--------------------------------------------------------------------------
     |
-    | Enable the strict mode when auditing?
+    | ¿Habilitar el modo estricto al auditar?
     |
     */
 
@@ -74,10 +74,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Timestamps
+    | Marcas de tiempo de auditoría
     |--------------------------------------------------------------------------
     |
-    | Should the created_at, updated_at and deleted_at timestamps be audited?
+    | ¿Deberían auditarse las marcas de tiempo created_at, updated_at y delete_at?
     |
     */
 
@@ -85,11 +85,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Threshold
+    | Umbral de auditoría
     |--------------------------------------------------------------------------
     |
-    | Specify a threshold for the amount of Audit records a model can have.
-    | Zero means no limit.
+    | Especifique un umbral para la cantidad de registros de auditoría que puede tener un modelo.
+    | Cero significa sin límite.
     |
     */
 
@@ -97,10 +97,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Driver
+    | Controlador de Auditoría
     |--------------------------------------------------------------------------
     |
-    | The default audit driver used to keep track of changes.
+    | El controlador de auditoría predeterminado utilizado para realizar un seguimiento de los cambios.
     |
     */
 
@@ -108,10 +108,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Driver Configurations
+    | Configuraciones del controlador de auditoría
     |--------------------------------------------------------------------------
     |
-    | Available audit drivers and respective configurations.
+    | Controladores de auditoría disponibles y configuraciones respectivas.
     |
     */
 
@@ -124,10 +124,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Console
+    | Consola de auditoría
     |--------------------------------------------------------------------------
     |
-    | Whether console events should be audited (eg. php artisan db:seed).
+    | Si se deben auditar los eventos de la consola (p. ej., php artisan db:seed).
     |
     */
 

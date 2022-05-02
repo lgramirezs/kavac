@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -102,23 +102,34 @@ $(document).ready(function(){initNavTree('da/de7/ReportInterface_8php_source.htm
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php<span class="comment"></span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">/** Interfaces a implementar en repositorios del sistema */</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno"><a class="line" href="../../df/d4b/namespaceApp_1_1Repositories_1_1Contracts.html">    3</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="../../df/d4b/namespaceApp_1_1Repositories_1_1Contracts.html">App\Repositories\Contracts</a>;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">interface </span>ReportInterface</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setHeader($title);</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setBody($body);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setFooter($pages);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;}</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> * @brief Interfaz para la gestión de reportes</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Interfaz para la gestión de reportes</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * @author Ing. Roldan Vargas &lt;rvargas@cenditel.gob.ve&gt; | &lt;roldandvg@gmail.com&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * @license</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../d2/d9e/interfaceApp_1_1Repositories_1_1Contracts_1_1ReportInterface.html">   15</a></span>&#160;<span class="keyword">interface </span><a class="code" href="../../d2/d9e/interfaceApp_1_1Repositories_1_1Contracts_1_1ReportInterface.html">ReportInterface</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setHeader($title);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setBody($body);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> setFooter($pages);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespaceApp_1_1Repositories_1_1Contracts_html"><div class="ttname"><a href="../../df/d4b/namespaceApp_1_1Repositories_1_1Contracts.html">App\Repositories\Contracts</a></div><div class="ttdoc">Interfaces a implementar en repositorios del sistema.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/de7/ReportInterface_8php_source.html#l00003">ReportInterface.php:3</a></div></div>
+<div class="ttc" id="ainterfaceApp_1_1Repositories_1_1Contracts_1_1ReportInterface_html"><div class="ttname"><a href="../../d2/d9e/interfaceApp_1_1Repositories_1_1Contracts_1_1ReportInterface.html">App\Repositories\Contracts\ReportInterface</a></div><div class="ttdoc">Interfaz para la gestión de reportes.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/de7/ReportInterface_8php_source.html#l00015">ReportInterface.php:15</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_19ce3a9874efe8b4891899d3a87d33ca.html">Repositories</a></li><li class="navelem"><a class="el" href="../../dir_1e7c0027cd6b62f6216a5d67214f796f.html">Contracts</a></li><li class="navelem"><b>ReportInterface.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -130,4 +130,20 @@ class InstitutionTypeController extends Controller
         $institutionType->delete();
         return response()->json(['record' => $institutionType, 'message' => 'Success'], 200);
     }
+
+    /**
+     * Consulta un tipo específico
+     *
+     * @author  Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+     * 
+     * @param \Illuminate\Http\Request $request Datos de la petición
+     * @param integer $id ID del tipo
+     * 
+     * @return \Illuminate\Http\JsonResponse con el resultado de la petición
+     */
+    public function getType(Request $request, $id)
+    {
+        $type = InstitutionType::find($id);
+        return response()->json(['result' => $type], 200);
+    }
 }

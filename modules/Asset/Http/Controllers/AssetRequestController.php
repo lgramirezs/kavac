@@ -91,7 +91,10 @@ class AssetRequestController extends Controller
             'motive'        => ['required'],
             'delivery_date' => ['required'],
             'files.*'       => ['max:5000', 'mimes:pdf,docx,doc,odt']
-
+        ], [
+            'type_id.required' => 'El campo tipo de solicitud es obligatorio.',
+            'motive.required' => 'El campo motivo de la solicitud es obligatorio.',
+            'delivery_date.required' => 'El campo fecha de entrega es obligatorio.',
         ]);
 
         if ($request->type == 2) {
@@ -154,7 +157,7 @@ class AssetRequestController extends Controller
             ]);
         }
 
-        if ($request->files) {
+        if ($request->has('files')) {
             foreach ($request->file('files') as $file) {
                 $upDoc->uploadDoc(
                     $file,

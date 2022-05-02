@@ -1,0 +1,35 @@
+[
+    {
+        "element" : "#institution_id",
+        "intro" : "Esta sección permite ingresar el nombre de la institucion con la cual esta relacionada el proyecto"
+    },
+    {
+        "element" : "#department_id",
+        "intro" : "Esta sección permite ingresar la dependencia asociada a la institución"
+    },
+    {
+        "element" : "#payroll_staff_id",
+        "intro" : "Aqui se debe indicar el nombre de la persona responsable del proyecto"
+    },
+    {
+        "element" : "#help_payroll_position_id",
+        "intro" : "Este campo no requiere ser llenado por el usuario. El sistema seleccionara de manera automatica el cargo del responsable del proyecto"
+    },
+    {
+        "element" : "#fecha",
+        "intro" : "Aqui se debe ingresar fecha requerida"
+    },
+    {
+        "element" : "#code",
+        "intro" : "En este campo se debe ingresar el código del proyecto el cual permite su identificacion"
+    },
+    {
+        "element" : "#name",
+        "intro" : "Indique el nombre"
+    },
+    {
+        "element" : "#active",
+        "intro" : "Active este boton para señalar si el proyecto es un proyecto activo o no"
+    }
+
+]

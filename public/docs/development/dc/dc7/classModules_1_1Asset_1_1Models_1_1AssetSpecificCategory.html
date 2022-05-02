@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('dc/dc7/classModules_1_1Asset_1_1Models
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d0d/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory__coll__graph.png" border="0" usemap="#AssetSpecificCategory_coll__map" alt="Collaboration graph"/></div>
+<map name="AssetSpecificCategory_coll__map" id="AssetSpecificCategory_coll__map">
+<area shape="rect" title="Datos de las categorias especificas de un bien." alt="" coords="5,5,208,141"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -145,7 +148,7 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section user"><dt>Licencia: </dt><dd>LICENCIA DE SOFTWARE CENDITEL  </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00021">21</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00022">22</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="a001ef25210b0bad4876c2a61af527e01"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a001ef25210b0bad4876c2a61af527e01">&#9670;&nbsp;</a></span>assets()</h2>
@@ -166,10 +169,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo <a class="el" href="../../d1/d18/classModules_1_1Asset_1_1Models_1_1Asset.html" title="Datos de los bienes institucionales.">Asset</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00083">83</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Asset::class);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00085">85</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Asset::class);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -192,18 +195,22 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo <a class="el" href="../../d8/ddd/classModules_1_1Asset_1_1Models_1_1AssetSubcategory.html" title="Datos de las subcategorias de un bien.">AssetSubcategory</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00072">72</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(AssetSubcategory::class);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00074">74</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(AssetSubcategory::class);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">Referenciado por <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00056">AssetSpecificCategory\getAssetTypeIdAttribute()</a>.</p>
+<p class="reference">Referenciado por <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00058">AssetSpecificCategory\getAssetTypeIdAttribute()</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Gráfico de llamadas a esta función:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a693fdcc8449a0d44416ff69f9776d405_icgraph.png" border="0" usemap="#dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a693fdcc8449a0d44416ff69f9776d405_icgraph" alt=""/></div>
+<map name="dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a693fdcc8449a0d44416ff69f9776d405_icgraph" id="dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a693fdcc8449a0d44416ff69f9776d405_icgraph">
+<area shape="rect" title="Método que obtiene la subcategoria asociada a la categoria especifica." alt="" coords="232,5,371,32"/>
+<area shape="rect" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a1fbe90039eeef08d03c074bb54d75dc1" title="Método que obtiene el valor asociado al campo asset_type_id." alt="" coords="5,5,184,32"/>
+</map>
 </div>
 
 </div>
@@ -227,22 +234,26 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> | <a href="#" onclick="location.href='mai'+'lto:'+'hen'+'ry'+'p28'+'04'+'@gm'+'ai'+'l.c'+'om'; return false;">henry<span style="display: none;">.nosp@m.</span>p280<span style="display: none;">.nosp@m.</span>4@gma<span style="display: none;">.nosp@m.</span>il.c<span style="display: none;">.nosp@m.</span>om</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>Object Objeto con las propiedades registrados </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00056">56</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        $data = <span class="stringliteral">&#39;&#39;</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span> (isset($this-&gt;<a class="code" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">assetSubcategory</a>)) {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            $data = $this-&gt;<a class="code" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">assetSubcategory</a>-&gt;assetCategory-&gt;assetType-&gt;id;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">return</span> $data;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00058">58</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        $data = <span class="stringliteral">&#39;&#39;</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">if</span> (isset($this-&gt;<a class="code" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">assetSubcategory</a>)) {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            $data = $this-&gt;<a class="code" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">assetSubcategory</a>-&gt;assetCategory-&gt;assetType-&gt;id;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> $data;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">Hace referencia a <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00072">AssetSpecificCategory\assetSubcategory()</a>.</p>
+<p class="reference">Hace referencia a <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00074">AssetSpecificCategory\assetSubcategory()</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Gráfico de llamadas para esta función:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a1fbe90039eeef08d03c074bb54d75dc1_cgraph.png" border="0" usemap="#dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a1fbe90039eeef08d03c074bb54d75dc1_cgraph" alt=""/></div>
+<map name="dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a1fbe90039eeef08d03c074bb54d75dc1_cgraph" id="dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_a1fbe90039eeef08d03c074bb54d75dc1_cgraph">
+<area shape="rect" title="Método que obtiene el valor asociado al campo asset_type_id." alt="" coords="5,5,184,32"/>
+<area shape="rect" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405" title="Método que obtiene la subcategoria asociada a la categoria especifica." alt="" coords="232,5,371,32"/>
+</map>
 </div>
 
 </div>
@@ -273,7 +284,7 @@ Atributos protegidos</h2></td></tr>
 </div><!-- fragment -->
 <p>Lista de atributos personalizados obtenidos por defecto. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00045">45</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00047">47</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
 
 </div>
 </div>
@@ -299,7 +310,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos para la gestión de fechas. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00031">31</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00033">33</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
 
 </div>
 </div>
@@ -325,7 +336,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos que pueden ser asignados masivamente. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00038">38</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00040">40</a> del archivo <a class="el" href="../../d6/d21/AssetSpecificCategory_8php_source.html">AssetSpecificCategory.php</a>.</p>
 
 </div>
 </div>
@@ -334,12 +345,12 @@ Atributos protegidos</h2></td></tr>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_html_a693fdcc8449a0d44416ff69f9776d405"><div class="ttname"><a href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">Modules\Asset\Models\AssetSpecificCategory\assetSubcategory</a></div><div class="ttdeci">assetSubcategory()</div><div class="ttdoc">Método que obtiene la subcategoria asociada a la categoria especifica.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00072">AssetSpecificCategory.php:72</a></div></div>
+<div class="ttc" id="aclassModules_1_1Asset_1_1Models_1_1AssetSpecificCategory_html_a693fdcc8449a0d44416ff69f9776d405"><div class="ttname"><a href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html#a693fdcc8449a0d44416ff69f9776d405">Modules\Asset\Models\AssetSpecificCategory\assetSubcategory</a></div><div class="ttdeci">assetSubcategory()</div><div class="ttdoc">Método que obtiene la subcategoria asociada a la categoria especifica.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d21/AssetSpecificCategory_8php_source.html#l00074">AssetSpecificCategory.php:74</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Asset</b></li><li class="navelem"><b>Models</b></li><li class="navelem"><a class="el" href="../../dc/dc7/classModules_1_1Asset_1_1Models_1_1AssetSpecificCategory.html">AssetSpecificCategory</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:38 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -20,6 +20,15 @@
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-danger" v-if="errors.length > 0">
+									<div class="alert-icon">
+						<i class="now-ui-icons objects_support-17"></i>
+					</div>
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                    		<span aria-hidden="true">
+	                   				<i class="now-ui-icons ui-1_simple-remove"></i>
+	                        			</span>
+		                     	</button>
 							<ul>
 								<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
 							</ul>

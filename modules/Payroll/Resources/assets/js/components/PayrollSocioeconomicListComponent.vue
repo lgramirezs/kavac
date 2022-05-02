@@ -12,7 +12,7 @@
         				title="Modificar registro" data-toggle="tooltip" data-placement="bottom" type="button">
         			<i class="fa fa-edit"></i>
         		</button>
-        		<button @click="deleteRecord(props.index, '')"
+        		<button @click="deleteRecord(props.row.id, '')"
     					class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
     					title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
     					type="button">
@@ -108,6 +108,45 @@
                                         <label>Fecha de Nacimiento</label>
                                         <input type="text" data-toggle="tooltip" class="form-control input-sm"
                                             disabled="true" :value="payroll_children.birthdate">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>¿Es estudiante?</label>
+                                        <div class="bootstrap-switch-mini">
+                                            <input id="has_disability" class="form-control bootstrap-switch"
+                                                data-on-label="SI" data-off-label="NO" type="checkbox" disabled="true"
+                                                :value="payroll_children.is_student">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" v-if="payroll_children.is_student">
+                                    <div class="form-group">
+                                        <label>Nivel de escolaridad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" :value="payroll_children.payroll_schooling_level.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Centro de estudio</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" :value="payroll_children.study_center">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>¿Posee una Discapacidad?</label>
+                                        <div class="bootstrap-switch-mini">
+                                            <input id="has_disability" class="form-control bootstrap-switch"
+                                                data-on-label="SI" data-off-label="NO" type="checkbox" disabled="true"
+                                                :value="payroll_children.has_disability">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" v-if="payroll_children.has_disability">
+                                    <div class="form-group">
+                                        <label>Discapacidad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" :value="payroll_children.payroll_disability.name">
                                     </div>
                                 </div>
                             </div>

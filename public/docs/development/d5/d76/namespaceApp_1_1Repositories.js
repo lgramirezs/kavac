@@ -1,5 +1,6 @@
 var namespaceApp_1_1Repositories =
 [
+    [ "Contracts", "df/d4b/namespaceApp_1_1Repositories_1_1Contracts.html", "df/d4b/namespaceApp_1_1Repositories_1_1Contracts" ],
     [ "BackupRepository", "d5/d76/classApp_1_1Repositories_1_1BackupRepository.html", "d5/d76/classApp_1_1Repositories_1_1BackupRepository" ],
     [ "ParameterRepository", "d0/da4/classApp_1_1Repositories_1_1ParameterRepository.html", "d0/da4/classApp_1_1Repositories_1_1ParameterRepository" ],
     [ "ReportRepository", "db/d2b/classApp_1_1Repositories_1_1ReportRepository.html", "db/d2b/classApp_1_1Repositories_1_1ReportRepository" ],

@@ -193,7 +193,7 @@ class UploadImageRepository
      *
      * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @param  object   $file  Objeto que contiene el archivo a procesar
+     * @param  object|string   $file  Objeto que contiene el archivo a procesar
      * @param  boolean  $image Define si la comprobación corresponde a las dimensiones de una imagen, de lo contrario
      *                         verifica el tamaño de un archivo
      *

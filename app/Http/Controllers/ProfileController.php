@@ -19,12 +19,6 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    /**
      * Registra un nuevo perfil de usuario
      *
      * @method    store

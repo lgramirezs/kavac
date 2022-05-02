@@ -116,7 +116,7 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                         }
                     }
                 }
-                array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula]);
+                array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula ?? $payrollConcept->formula]);
             } elseif ($payrollConcept->calculation_way == 'tabulator') {
                 array_push($concepts, ['field' => $payrollConcept, 'formula' => null]);
             }

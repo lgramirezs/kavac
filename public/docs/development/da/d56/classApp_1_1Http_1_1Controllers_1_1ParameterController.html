@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('da/d56/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../da/df8/classApp_1_1Http_1_1Controllers_1_1ParameterController__inherit__graph.png" border="0" usemap="#ParameterController_inherit__map" alt="Inheritance graph"/></div>
+<map name="ParameterController_inherit__map" id="ParameterController_inherit__map">
+<area shape="rect" title="Gestiona información para la configuración de parámetros del sistema." alt="" coords="5,131,160,223"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="39,5,126,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para ParameterController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('da/d56/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d3f/classApp_1_1Http_1_1Controllers_1_1ParameterController__coll__graph.png" border="0" usemap="#ParameterController_coll__map" alt="Collaboration graph"/></div>
+<map name="ParameterController_coll__map" id="ParameterController_coll__map">
+<area shape="rect" title="Gestiona información para la configuración de parámetros del sistema." alt="" coords="5,131,160,223"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="39,5,126,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -207,25 +215,27 @@ William Páez <a href="#" onclick="location.href='mai'+'lto:'+'wpa'+'ez'+'@ce'+'
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                [</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                    <span class="stringliteral">&#39;p_value&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;integer&#39;</span>, <span class="stringliteral">&#39;min:16&#39;</span>]</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                ],</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                [],</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                [</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                    <span class="stringliteral">&#39;p_value&#39;</span> =&gt; <span class="stringliteral">&#39;edad laboral permitida&#39;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                ]</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            );</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            Parameter::updateOrCreate(</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                [</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                    <span class="stringliteral">&#39;p_key&#39;</span> =&gt; $request-&gt;p_key,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                    <span class="stringliteral">&#39;required_by&#39;</span> =&gt; <span class="stringliteral">&#39;payroll&#39;</span>,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                    <span class="stringliteral">&#39;active&#39;</span> =&gt; <span class="keyword">true</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                ],</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                [</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    <span class="stringliteral">&#39;p_value&#39;</span> =&gt; $request-&gt;p_value</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                ]</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            );</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        $request-&gt;session()-&gt;flash(<span class="stringliteral">&#39;message&#39;</span>, [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;store&#39;</span>]);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> redirect()-&gt;back();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                [</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                    <span class="stringliteral">&#39;p_value.min&#39;</span> =&gt; <span class="stringliteral">&#39;La edad laboral mínima permitida es 16 años.&#39;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                ],</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                [</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    <span class="stringliteral">&#39;p_value&#39;</span> =&gt; <span class="stringliteral">&#39;edad laboral permitida&#39;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                ]</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            );</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            Parameter::updateOrCreate(</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                [</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                    <span class="stringliteral">&#39;p_key&#39;</span> =&gt; $request-&gt;p_key,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                    <span class="stringliteral">&#39;required_by&#39;</span> =&gt; <span class="stringliteral">&#39;payroll&#39;</span>,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                    <span class="stringliteral">&#39;active&#39;</span> =&gt; <span class="keyword">true</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                ],</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                [</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    <span class="stringliteral">&#39;p_value&#39;</span> =&gt; $request-&gt;p_value</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                ]</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            );</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        $request-&gt;session()-&gt;flash(<span class="stringliteral">&#39;message&#39;</span>, [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;store&#39;</span>]);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> redirect()-&gt;back();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -238,7 +248,7 @@ William Páez <a href="#" onclick="location.href='mai'+'lto:'+'wpa'+'ez'+'@ce'+'
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../da/d56/classApp_1_1Http_1_1Controllers_1_1ParameterController.html">ParameterController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

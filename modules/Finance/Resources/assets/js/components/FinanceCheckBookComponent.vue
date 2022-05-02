@@ -22,6 +22,16 @@
 					<div class="modal-body">
 						<input type="hidden" v-model="record.id">
 						<div class="alert alert-danger" v-if="errors.length > 0">
+								<div class="alert-icon">
+						<i class="now-ui-icons objects_support-17"></i>
+					</div>
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close"
+							@click.prevent="errors = []">
+						<span aria-hidden="true">
+							<i class="now-ui-icons ui-1_simple-remove"></i>
+						</span>
+							</button>
 							<ul>
 								<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
 							</ul>
@@ -83,7 +93,7 @@
 									@click="reset()">
 								Cancelar
 							</button>
-							<button type="button" @click="createRecord('finance/check-books')" 
+							<button type="button" @click="createVRecord('finance/check-books')" 
 									class="btn btn-primary btn-sm btn-round btn-modal-save">
 								Guardar
 							</button>
@@ -159,6 +169,15 @@
 					finance_bank_account_id: '',
 					numbers: [],
 				};
+			},
+
+			createVRecord(){
+			if (this.record.numbers.length === 0) {
+				    this.addChecks();
+				 
+				 }
+               this.createRecord('finance/check-books');
+
 			},
 			/**
 			 * Método que permite agregar una cantidad específica de campos para el registro de números de cheques

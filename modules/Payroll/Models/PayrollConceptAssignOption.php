@@ -34,7 +34,7 @@ class PayrollConceptAssignOption extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['payroll_concept_id', 'key', 'value'];
+    protected $fillable = ['payroll_concept_id', 'key', 'value', 'applicable_type', 'applicable_id'];
 
     /**
      * Método que obtine la información del concepto asociado al registro
@@ -47,4 +47,28 @@ class PayrollConceptAssignOption extends Model implements Auditable
     {
         return $this->belongsTo(PayrollConcept::class);
     }
+
+    /**
+     * PayrollConceptAssignOption belongs to PayrollVacationPolicy.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function payrollVacationPolicy()
+    {
+        // belongsTo(RelatedModel, foreignKey = payrollVacationPolicy_id, keyOnRelatedModel = id)
+        return $this->belongsTo(PayrollVacationPolicy::class);
+    }
+
+    /**
+     * File morphs to models in applicable_type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function applicable()
+    {
+        // morphTo($name = applicable, $type = applicable_type, $id = applicable_id)
+        // requires applicable_type and applicable_id fields on $this->table
+        return $this->morphTo();
+    }
+    
 }

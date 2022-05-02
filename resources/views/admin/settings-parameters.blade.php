@@ -29,30 +29,6 @@
 						@include('layouts.form-errors')
 					@endif
 					<div class="row">
-						{{-- <div class="col-md-3" id="switchSupport">
-							<div class="form-group">
-								<label for="" class="control-label">{{ __('Soporte técnico') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
-									{!! Form::checkbox('support', true,
-										(!is_null($paramSupport) && $paramSupport->p_value === 'true'), [
-										'id' => 'support', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-									]) !!}
-								</div>
-							</div>
-						</div> --}}
-						{{-- <div class="col-md-3" id="switchChat">
-							<div class="form-group">
-								<label for="" class="control-label">{{ __('Chat') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
-									{!! Form::checkbox('chat', true,
-										(!is_null($paramChat) && $paramChat->p_value === 'true'), [
-										'id' => 'chat', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-									]) !!}
-								</div>
-							</div>
-						</div> --}}
 						<div id="switchNotify" class="col-12 col-md-3">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Notificaciones') }}</label>
@@ -106,18 +82,6 @@
 								</div>
 							</div>
 						</div>
-						{{-- <div class="col-md-3" id="switchAppMaintenance">
-							<div class="form-group">
-								<label for="" class="control-label">{{ __('Mantenimiento') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
-									{!! Form::checkbox('online', true,
-										(!is_null($paramOnline) && $paramOnline->p_value === 'true'), [
-										'id' => 'online', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-									]) !!}
-								</div>
-							</div>
-						</div> --}}
 					</div>
 				</div>
 				<div class="card-footer text-right">

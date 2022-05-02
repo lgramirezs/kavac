@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -162,10 +162,10 @@ $(document).ready(function(){initNavTree('d6/daf/Asset_2Resources_2views_2regist
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    @parent</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    &lt;script&gt;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">function</span> exportData() {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            location.href = <span class="stringliteral">&#39;/asset/registers/export/all&#39;</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            location.href = `${window.app_url}/asset/registers/export/all`;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        };</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">function</span> importData() {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            var url = <span class="stringliteral">&#39;/asset/registers/import/all&#39;</span> ;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            var url = `${window.app_url}/asset/registers/<span class="keyword">import</span>/all`;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            var formData = <span class="keyword">new</span> FormData();</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            var importFile = document.querySelector(<span class="stringliteral">&#39;#importFile&#39;</span>);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            formData.append(<span class="stringliteral">&quot;file&quot;</span>, importFile.files[0]);</div>
@@ -196,7 +196,7 @@ $(document).ready(function(){initNavTree('d6/daf/Asset_2Resources_2views_2regist
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_7b3fcb102f79a4d8ecbf49ec4c3cc818.html">Asset</a></li><li class="navelem"><a class="el" href="../../dir_9fb454adc1ccdd7842a20a7986576ffe.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_f6c85e9235fe3a908037032cfa30933c.html">views</a></li><li class="navelem"><a class="el" href="../../dir_44da0700b2540fc42ad90e6cd5f634d1.html">registers</a></li><li class="navelem"><b>list.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

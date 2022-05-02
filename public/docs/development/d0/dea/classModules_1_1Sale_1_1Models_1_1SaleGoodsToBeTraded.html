@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('d0/dea/classModules_1_1Sale_1_1Models_
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d2/d6b/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded__coll__graph.png" border="0" usemap="#SaleGoodsToBeTraded_coll__map" alt="Collaboration graph"/></div>
+<map name="SaleGoodsToBeTraded_coll__map" id="SaleGoodsToBeTraded_coll__map">
+<area shape="rect" title="[descripción detallada]" alt="" coords="5,5,177,215"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -150,6 +153,9 @@ Atributos protegidos</h2></td></tr>
 <tr class="memitem:a13601d3af66d109458e268a3eb4afc49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a13601d3af66d109458e268a3eb4afc49">$fillable</a> = ['name', 'description', 'unit_price', 'define_attributes', 'currency_id', 'measurement_unit_id', 'department_id', 'history_tax_id' ,'payroll_staff_id', 'sale_type_good_id']</td></tr>
 <tr class="memdesc:a13601d3af66d109458e268a3eb4afc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lista de atributos que pueden ser asignados masivamente.  <a href="../../d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#a13601d3af66d109458e268a3eb4afc49">Más...</a><br /></td></tr>
 <tr class="separator:a13601d3af66d109458e268a3eb4afc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a575ec3cd45566351149a2d4f1d4bbd58"><td class="memItemLeft" align="right" valign="top"><a id="a575ec3cd45566351149a2d4f1d4bbd58"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$with</b> = ['<a class="el" href="../../d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html#abb2116b8c8d4f6d7d5c401d9326c7bc7">department</a>']</td></tr>
+<tr class="separator:a575ec3cd45566351149a2d4f1d4bbd58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>[descripción detallada] </p>
@@ -178,10 +184,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo Currency </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00047">47</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00053">53</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Currency::class);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -204,10 +210,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo Department </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00071">71</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Department::class);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00077">77</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\Department::class);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -230,10 +236,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo HistoryTax </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00083">83</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\HistoryTax::class);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00089">89</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\HistoryTax::class);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -256,10 +262,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo MeasurementUnit </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00059">59</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\MeasurementUnit::class);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00065">65</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\App\Models\MeasurementUnit::class);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -282,10 +288,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo PayrollStaff </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00095">95</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\Modules\Payroll\Models\PayrollStaff::class);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00101">101</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(\Modules\Payroll\Models\PayrollStaff::class);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -308,10 +314,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\hasMany Objeto con el registro relacionado al modelo saleGoodsAttribute </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00119">119</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(SaleGoodsAttribute::class);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00125">125</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(SaleGoodsAttribute::class);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -334,10 +340,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\hasMany Objeto con el registro relacionado al modelo saleClientsEmail </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00131">131</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(SaleService::class);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00137">137</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(SaleService::class);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -360,10 +366,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Daniel Contreras <a href="#" onclick="location.href='mai'+'lto:'+'dco'+'nt'+'rer'+'as'+'@ce'+'nd'+'ite'+'l.'+'gob'+'.v'+'e'; return false;">dcont<span style="display: none;">.nosp@m.</span>rera<span style="display: none;">.nosp@m.</span>s@cen<span style="display: none;">.nosp@m.</span>dite<span style="display: none;">.nosp@m.</span>l.gob<span style="display: none;">.nosp@m.</span>.ve</a> </dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\belongsTo Objeto con el registro relacionado al modelo saleTypeGood </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00107">107</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(SaleTypeGood::class);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html#l00113">113</a> del archivo <a class="el" href="../../d8/dcc/SaleGoodsToBeTraded_8php_source.html">SaleGoodsToBeTraded.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(SaleTypeGood::class);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -429,7 +435,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Sale</b></li><li class="navelem"><a class="el" href="../../dd/d68/namespaceModules_1_1Sale_1_1Models.html">Models</a></li><li class="navelem"><a class="el" href="../../d0/dea/classModules_1_1Sale_1_1Models_1_1SaleGoodsToBeTraded.html">SaleGoodsToBeTraded</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:03 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:41 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

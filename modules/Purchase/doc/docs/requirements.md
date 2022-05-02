@@ -5,6 +5,4 @@
 
 ## Listado de requerimientos 
 
-
-
 ## Presupuesto base

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('d7/d25/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dbc/classApp_1_1Http_1_1Controllers_1_1ProfileController__inherit__graph.png" border="0" usemap="#ProfileController_inherit__map" alt="Inheritance graph"/></div>
+<map name="ProfileController_inherit__map" id="ProfileController_inherit__map">
+<area shape="rect" title="Gestiona información de Perfiles de usuario." alt="" coords="5,131,133,208"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="26,5,113,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para ProfileController:</div>
@@ -117,12 +121,16 @@ $(document).ready(function(){initNavTree('d7/d25/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../da/d67/classApp_1_1Http_1_1Controllers_1_1ProfileController__coll__graph.png" border="0" usemap="#ProfileController_coll__map" alt="Collaboration graph"/></div>
+<map name="ProfileController_coll__map" id="ProfileController_coll__map">
+<area shape="rect" title="Gestiona información de Perfiles de usuario." alt="" coords="5,131,133,208"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="26,5,113,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
 <tr class="memitem:a9ef485163104597c12185b53cdacf638"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">store</a> (Request $request)</td></tr>
-<tr class="memdesc:a9ef485163104597c12185b53cdacf638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a newly created resource in storage.  <a href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">Más...</a><br /></td></tr>
+<tr class="memdesc:a9ef485163104597c12185b53cdacf638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra un nuevo perfil de usuario.  <a href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html#a9ef485163104597c12185b53cdacf638">Más...</a><br /></td></tr>
 <tr class="separator:a9ef485163104597c12185b53cdacf638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
@@ -149,14 +157,7 @@ Métodos públicos</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Store a newly created resource in storage. </p>
-<dl class="params"><dt>Parámetros</dt><dd>
-  <table class="params">
-    <tr><td class="paramtype">\Illuminate\Http\Request</td><td class="paramname">$request</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse Registra un nuevo perfil de usuario</dd></dl>
+<p>Registra un nuevo perfil de usuario. </p>
 <p>@method store</p>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
@@ -167,18 +168,18 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con el resultado del registro </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../de/d20/ProfileController_8php_source.html#l00038">38</a> del archivo <a class="el" href="../../de/d20/ProfileController_8php_source.html">ProfileController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        Profile::updateOrCreate(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            [<span class="stringliteral">&#39;user_id&#39;</span> =&gt; $request-&gt;user_id],</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            [</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                <span class="stringliteral">&#39;first_name&#39;</span> =&gt; $request-&gt;first_name,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <span class="stringliteral">&#39;last_name&#39;</span> =&gt; $request-&gt;last_name ?? <span class="keyword">null</span>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <span class="stringliteral">&#39;image_id&#39;</span> =&gt; $request-&gt;image_id ?? <span class="keyword">null</span>,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            ]</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>], 200);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../de/d20/ProfileController_8php_source.html#l00032">32</a> del archivo <a class="el" href="../../de/d20/ProfileController_8php_source.html">ProfileController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        Profile::updateOrCreate(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            [<span class="stringliteral">&#39;user_id&#39;</span> =&gt; $request-&gt;user_id],</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            [</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <span class="stringliteral">&#39;first_name&#39;</span> =&gt; $request-&gt;first_name,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <span class="stringliteral">&#39;last_name&#39;</span> =&gt; $request-&gt;last_name ?? <span class="keyword">null</span>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <span class="stringliteral">&#39;image_id&#39;</span> =&gt; $request-&gt;image_id ?? <span class="keyword">null</span>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            ]</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        );</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; <span class="keyword">true</span>], 200);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -191,7 +192,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html">ProfileController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

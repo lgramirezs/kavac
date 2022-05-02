@@ -83,22 +83,78 @@
                             class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="form-group">
                         <input type="text" placeholder="Cédula de Identidad del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la cédula de indentidad del hijo del trabajador"
                             v-model="payroll_children.id_number" class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="form-group is-required">
                         <input type="date" placeholder="Fecha de Nacimiento del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la fecha de nacimiento del hijo del trabajador"
                             v-model="payroll_children.birthdate" class="form-control input-sm">
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col-3">
+                    <div class="row col-md-6">
+                        <div class="form-group">
+                            <label>¿Es estudiante?</label>
+                            <div class="row col-md-14">
+                                <div class="col-14 bootstrap-switch-mini">
+                                    <input type="checkbox" :id="'mySwicth' + `${index}`"
+                                        class="form-control bootstrap-switch" data-toggle="tooltip"
+                                        data-on-label="SI" data-off-label="NO"
+                                        title="Indique si el hijo es estudiante o no"
+                                        value="true"
+                                        v-model="payroll_children.is_student"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-14" v-if="payroll_children.is_student">
+                        <div class="form-group is-required" id="helpChildSchoolingLevelname">
+                                <label>¿Nivel de escolaridad?</label>
+                                <select2 :options="payroll_schooling_levels"
+                                        v-model="payroll_children.payroll_schooling_level_id">
+                                </select2>
+                        </div>
+                        <div class="form-group is-required">
+                            <label>Centro de estudio</label>
+                            <input type="text" placeholder="Nombre del centro de estudio" data-toggle="tooltip"
+                                title="Indique el nombre del centro de estudio"
+                                v-model="payroll_children.study_center" class="form-control input-sm">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-3">
+                    <div class="row col-md-10">
+                        <div class="form-group">
+                            <label>¿Posee una Discapacidad?</label>
+                            <div class="row col-md-14">
+                                <div class="col-14 bootstrap-switch-mini">
+                                    <input id="has_disability" name="has_disability" type="checkbox"
+                                    class="form-control bootstrap-switch sel_has_disability"
+                                    data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
+                                    title="Indique si el trabajador posee una discapacidad o no"
+                                    v-model="payroll_children.has_disability" value="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-14" id="helpChildDisabilityName" v-if="payroll_children.has_disability">
+                        <div class="form-group is-required">
+                            <label>Discapacidad</label>
+                            <select2 :options="payroll_disabilities" v-model="payroll_children.payroll_disability_id">
+                            </select2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-1">
                     <div class="form-group">
+                        <br>
                         <button class="btn btn-sm btn-danger btn-action" type="button"
                             @click="removeRow(index, record.payroll_childrens)"
                             title="Eliminar este dato" data-toggle="tooltip" data-placement="right">
@@ -144,6 +200,8 @@
                 errors: [],
                 payroll_staffs: [],
                 marital_status: [],
+                payroll_schooling_levels: [],
+                payroll_disabilities: []
             }
         },
         methods: {
@@ -180,19 +238,41 @@
                     first_name: '',
                     last_name: '',
                     id_number: '',
-                    birthdate: ''
+                    birthdate: '',
+                    is_student: false,
+                    has_disability: false,
+                    payroll_schooling_level_id: '',
+                    payroll_disability_id:'',
+                    study_center: ''
                 });
             },
         },
+
         created() {
             this.getPayrollStaffs();
             this.getMaritalStatus();
+            this.getPayrollSchoolingLevels();
+            this.getPayrollDisabilities();
             this.record.payroll_childrens = [];
         },
+
         mounted() {
             if(this.payroll_socioeconomic_id) {
                 this.getSocioeconomic();
             }
-        }
+        },
+
+        // watch: {
+        //     record: {
+        //         deep: true,
+        //         handler: function(event) {
+        //             const vm = this;                                                                               
+        //             for(const i in vm.record.payroll_childrens){
+        //                 console.log(vm.record.payroll_childrens[i].is_student);
+                        
+        //             }
+        //         }
+        //     }
+        // }
     };
 </script>

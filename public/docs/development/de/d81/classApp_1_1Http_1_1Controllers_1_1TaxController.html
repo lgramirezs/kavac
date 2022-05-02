@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('de/d81/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/def/classApp_1_1Http_1_1Controllers_1_1TaxController__inherit__graph.png" border="0" usemap="#TaxController_inherit__map" alt="Inheritance graph"/></div>
+<map name="TaxController_inherit__map" id="TaxController_inherit__map">
+<area shape="rect" title="Gestiona información de Impuestos." alt="" coords="5,131,127,267"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="23,5,109,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para TaxController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('de/d81/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../dc/df2/classApp_1_1Http_1_1Controllers_1_1TaxController__coll__graph.png" border="0" usemap="#TaxController_coll__map" alt="Collaboration graph"/></div>
+<map name="TaxController_coll__map" id="TaxController_coll__map">
+<area shape="rect" title="Gestiona información de Impuestos." alt="" coords="5,131,127,267"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="23,5,109,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -204,11 +212,11 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con el resultado de la eliminación </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00138">138</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    {</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        $tax-&gt;delete();</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $tax, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00144">144</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        $tax-&gt;delete();</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $tax, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -232,13 +240,13 @@ Métodos públicos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse Objeto con información de los impuestos </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00153">153</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        $taxes = Tax::with([<span class="stringliteral">&#39;histories&#39;</span> =&gt; <span class="keyword">function</span> ($q) {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            $q-&gt;orderBy(<span class="stringliteral">&#39;operation_date&#39;</span>, <span class="stringliteral">&#39;desc&#39;</span>);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        }])-&gt;where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;get();</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $taxes]);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00159">159</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        $taxes = Tax::with([<span class="stringliteral">&#39;histories&#39;</span> =&gt; <span class="keyword">function</span> ($q) {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            $q-&gt;orderBy(<span class="stringliteral">&#39;operation_date&#39;</span>, <span class="stringliteral">&#39;desc&#39;</span>);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        }])-&gt;where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;get();</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $taxes]);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -309,28 +317,28 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con el resultado de la actualización </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00104">104</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:60&#39;</span>],</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="stringliteral">&#39;description&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="stringliteral">&#39;operation_date&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;date&#39;</span>],</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="stringliteral">&#39;percentage&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        ]);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        $tax-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        $tax-&gt;description = $request-&gt;description;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        $tax-&gt;affect_tax = ($request-&gt;affect_tax) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        $tax-&gt;active = ($request-&gt;active) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        $tax-&gt;save();</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d7/d21/TaxController_8php_source.html#l00110">110</a> del archivo <a class="el" href="../../d7/d21/TaxController_8php_source.html">TaxController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:60&#39;</span>],</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="stringliteral">&#39;description&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="stringliteral">&#39;operation_date&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;date&#39;</span>],</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="stringliteral">&#39;percentage&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        ]);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        $tax-&gt;histories()-&gt;create([</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="stringliteral">&#39;operation_date&#39;</span> =&gt; $request-&gt;operation_date,</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="stringliteral">&#39;percentage&#39;</span> =&gt; $request-&gt;percentage</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        ]);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        $tax-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        $tax-&gt;description = $request-&gt;description;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        $tax-&gt;affect_tax = ($request-&gt;affect_tax) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        $tax-&gt;active = ($request-&gt;active) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        $tax-&gt;save();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        $tax-&gt;histories()-&gt;create([</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="stringliteral">&#39;operation_date&#39;</span> =&gt; $request-&gt;operation_date,</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="stringliteral">&#39;percentage&#39;</span> =&gt; $request-&gt;percentage</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        ]);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
 </div><!-- fragment -->
 <p class="reference">Hace referencia a <a class="el" href="../../d3/deb/app_2Models_2Tax_8php_source.html#l00059">Tax\histories()</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -339,6 +347,10 @@ Métodos públicos</h2></td></tr>
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController_adf6edc3df5ce37437eb1f4fd45e3ac22_cgraph.png" border="0" usemap="#de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController_adf6edc3df5ce37437eb1f4fd45e3ac22_cgraph" alt=""/></div>
+<map name="de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController_adf6edc3df5ce37437eb1f4fd45e3ac22_cgraph" id="de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController_adf6edc3df5ce37437eb1f4fd45e3ac22_cgraph">
+<area shape="rect" title="Actualiza la información de un impuesto." alt="" coords="5,5,72,32"/>
+<area shape="rect" href="../../d6/db0/classApp_1_1Models_1_1Tax.html#a82aca0092d8225e9da311390c226aaa7" title="Método que obtiene los históricos de los impuestos." alt="" coords="120,5,304,32"/>
+</map>
 </div>
 
 </div>
@@ -352,7 +364,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html">TaxController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

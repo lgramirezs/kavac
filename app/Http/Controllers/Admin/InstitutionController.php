@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Institution;
 use App\Models\Setting;
 use App\Rules\Rif as RifRule;
+use Illuminate\Validation\Rule;
 
 /**
  * @class InstitutionController
@@ -71,8 +72,14 @@ class InstitutionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'onapre_code' => ['required', 'max:20'],
-            'rif' => ['required', 'size:10', new RifRule],
+            'rif' => [
+                'required',
+                'size:10',
+                new RifRule,
+                ($request->institution_id !== null)
+                ? Rule::unique('institutions', 'rif')->ignore($request->institution_id)
+                : Rule::unique('institutions', 'rif')
+            ],
             'acronym' => ['required', 'max:100'],
             'name' => ['required', 'max:100'],
             'business_name' => ['required', 'max:100'],
@@ -84,10 +91,9 @@ class InstitutionController extends Controller
             'municipality_id' => ['required'],
             'city_id' => ['required']
         ], [
-            'onapre_code.required' => __('El código onapre es obligatorio.'),
-            'onapre_code.max' => __('El código onapre no puede contener mas de 20 carácteres.'),
             'rif.required' => __('El R.I.F. es obligatorio.'),
             'rif.size' => __('El R.I.F. debe contener 10 carácteres.'),
+            'rif.unique' => __('El R.I.F. ya está registrado'),
             'acronym.required' => __('El acrónimo es obligatorio.'),
             'acronym.max' => __('El acrónimo debe contener un máximo de 100 carácteres.'),
             'name.required' => __('El nombre es obligatorio.'),
@@ -120,7 +126,7 @@ class InstitutionController extends Controller
 
         /** @var array Arreglo con los datos del organismo a registrar */
         $data = [
-            'onapre_code' => $request->onapre_code,
+            'onapre_code' => ($request->onapre_code)?$request->onapre_code:null,
             'rif' => $request->rif,
             'acronym' => $request->acronym,
             'name' => $request->name,
@@ -147,8 +153,8 @@ class InstitutionController extends Controller
         ];
 
         if (is_null($setting->multi_institution) || !$setting->multi_institution) {
-            // Crea o actualiza información de una organización si la aplicación esta configurada para el uso de un solo
-            // organismo
+            // Crea o actualiza información de una organización si la aplicación esta configurada 
+            // para el uso de un solo organismo
 
             $data['default'] = true;
             Institution::updateOrCreate(['rif' => $request->rif], $data);

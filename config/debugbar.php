@@ -4,13 +4,15 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Debugbar Settings
+     | Configuración de la barra de depuración
      |--------------------------------------------------------------------------
      |
-     | Debugbar is enabled by default, when debug is set to true in app.php.
-     | You can override the value by setting enable to true or false instead of null.
+     | La barra de depuración está habilitada de forma predeterminada, cuando la 
+     | depuración se establece en verdadero en app.php. Puede anular el valor 
+     | configurando enable en verdadero o falso en lugar de nulo.
      | 
-     | You can provide an array of URI's that must be ignored (eg. 'api/*')
+     | Puede proporcionar una matriz de URI que deben ignorarse 
+     | (por ejemplo, 'api/*')
      |
      */
 
@@ -21,22 +23,24 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Storage settings
+     | Configuración de almacenamiento
      |--------------------------------------------------------------------------
      |
-     | DebugBar stores data for session/ajax requests.
-     | You can disable this, so the debugbar stores data in headers/session,
-     | but this can cause problems with large data collectors.
-     | By default, file storage (in the storage folder) is used. Redis and PDO
-     | can also be used. For PDO, run the package migrations first.
+     | DebugBar almacena datos para solicitudes de sesión/ajax. 
+     | Puede deshabilitar esto, para que la barra de depuración almacene datos 
+     | en encabezados/sesión, pero esto puede causar problemas con grandes 
+     | recopiladores de datos. De forma predeterminada, se utiliza el 
+     | almacenamiento de archivos (en la carpeta de almacenamiento). 
+     | También se pueden utilizar Redis y PDO. Para PDO, ejecute primero las 
+     | migraciones de paquetes.
      |
      */
     'storage' => [
         'enabled'    => true,
         'driver'     => 'file', // redis, file, pdo, custom
-        'path'       => storage_path('debugbar'), // For file driver
-        'connection' => null,   // Leave null for default connection (Redis/PDO)
-        'provider'   => '' // Instance of StorageInterface for custom driver
+        'path'       => storage_path('debugbar'), // Para controlador file
+        'connection' => null,   // Deje nulo para la conexión predeterminada (Redis/PDO)
+        'provider'   => '' // Instancia de StorageInterface para controlador personalizado
     ],
 
     /*
@@ -44,12 +48,13 @@ return [
      | Vendors
      |--------------------------------------------------------------------------
      |
-     | Vendor files are included by default, but can be set to false.
-     | This can also be set to 'js' or 'css', to only include javascript or css vendor files.
-     | Vendor files are for css: font-awesome (including fonts) and highlight.js (css files)
-     | and for js: jquery and and highlight.js
-     | So if you want syntax highlighting, set it to true.
-     | jQuery is set to not conflict with existing jQuery scripts.
+     | Los archivos vendors se incluyen de forma predeterminada, pero se pueden 
+     | configurar como falsos. Esto también se puede configurar en 'js' o 'css', 
+     | para incluir solo archivos vendors javascript o css. Los archivos vendors 
+     | para css son: font-awesome (incluidas las fuentes) y 
+     | resaltar.js (archivos css) y para js son: jquery y resaltar.js Entonces, 
+     | si desea resaltar la sintaxis, configúrelo en verdadero. jQuery está 
+     | configurado para no entrar en conflicto con los scripts jQuery existentes.
      |
      */
 
@@ -57,13 +62,15 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Capture Ajax Requests
+     | Capturar solicitudes Ajax
      |--------------------------------------------------------------------------
      |
-     | The Debugbar can capture Ajax requests and display them. If you don't want this (ie. because of errors),
-     | you can use this option to disable sending the data through the headers.
+     | La barra de depuración puede capturar solicitudes de Ajax y mostrarlas. 
+     | Si no desea esto (es decir, debido a errores), puede usar esta opción para 
+     | deshabilitar el envío de datos a través de los encabezados.
      |
-     | Optionally, you can also send ServerTiming headers on ajax requests for the Chrome DevTools.
+     | Opcionalmente, también puede enviar encabezados ServerTiming en solicitudes 
+     | ajax para Chrome DevTools.
      */
 
     'capture_ajax' => true,
@@ -71,107 +78,109 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Custom Error Handler for Deprecated warnings
+     | Controlador de errores personalizado para advertencias obsoletas
      |--------------------------------------------------------------------------
      |
-     | When enabled, the Debugbar shows deprecated warnings for Symfony components
-     | in the Messages tab.
+     | Cuando está habilitada, la barra de depuración muestra advertencias obsoletas 
+     | para los componentes de Symfony en la pestaña Mensajes.
      |
      */
     'error_handler' => false,
     
     /*
      |--------------------------------------------------------------------------
-     | Clockwork integration
+     | Integración de Clockwork
      |--------------------------------------------------------------------------
      |
-     | The Debugbar can emulate the Clockwork headers, so you can use the Chrome
-     | Extension, without the server-side code. It uses Debugbar collectors instead.
+     | La barra de depuración puede emular los encabezados de Clockwork, por lo que 
+     | puede usar la extensión de Chrome, sin el código del lado del servidor. 
+     | En su lugar, utiliza recopiladores Debugbar.
      |
      */
     'clockwork' => false,
 
     /*
      |--------------------------------------------------------------------------
-     | DataCollectors
+     | Colectores de datos
      |--------------------------------------------------------------------------
      |
-     | Enable/disable DataCollectors
+     | Habilitar/deshabilitar recopiladores de datos
      |
      */
 
     'collectors' => [
-        'phpinfo'         => true,  // Php version
-        'messages'        => true,  // Messages
-        'time'            => true,  // Time Datalogger
-        'memory'          => true,  // Memory usage
-        'exceptions'      => true,  // Exception displayer
-        'log'             => true,  // Logs from Monolog (merged in messages if enabled)
-        'db'              => true,  // Show database (PDO) queries and bindings
-        'views'           => true,  // Views with their data
-        'route'           => true,  // Current route information
-        'auth'            => true, // Display Laravel authentication status
-        'gate'            => true, // Display Laravel Gate checks
-        'session'         => true,  // Display session data
-        'symfony_request' => true,  // Only one can be enabled..
-        'mail'            => true,  // Catch mail messages
-        'laravel'         => true, // Laravel version and environment
-        'events'          => true, // All events fired
-        'default_request' => false, // Regular or special Symfony request logger
-        'logs'            => true, // Add the latest log messages
-        'files'           => false, // Show the included files
-        'config'          => true, // Display config settings
-        'cache'           => false, // Display cache events
+        'phpinfo'         => true,  // versión php
+        'messages'        => true,  // Mensajes
+        'time'            => true,  // Registrador de datos de tiempo
+        'memory'          => true,  // Uso de memoria
+        'exceptions'      => true,  // visualizador de excepciones
+        'log'             => true,  // Registros de eventos (fusionados en mensajes si están habilitados)
+        'db'              => true,  // Mostrar consultas y enlaces de base de datos (PDO)
+        'views'           => true,  // Vistas con sus datos
+        'route'           => true,  // Información de la ruta actual
+        'auth'            => true, // Mostrar el estado de autenticación de Laravel
+        'gate'            => true, // Mostrar comprobaciones de Laravel Gate
+        'session'         => true,  // Mostrar datos de la sesión
+        'symfony_request' => true,  // Solo se puede habilitar uno.
+        'mail'            => true,  // Capturar mensajes de correo
+        'laravel'         => true, // Versión y entorno de Laravel
+        'events'          => true, // Todos los eventos disparados
+        'default_request' => false, // Registrador de solicitudes de Symfony normal o especial
+        'logs'            => true, // Agregar los últimos mensajes de registro
+        'files'           => false, // Mostrar los archivos incluidos
+        'config'          => true, // Ajustes de configuración de pantalla
+        'cache'           => false, // Mostrar eventos de caché
     ],
 
     /*
      |--------------------------------------------------------------------------
-     | Extra options
+     | Opciones adicionales
      |--------------------------------------------------------------------------
      |
-     | Configure some DataCollectors
+     | Configurar algunos recopiladores de datos
      |
      */
 
     'options' => [
         'auth' => [
-            'show_name' => true,   // Also show the users name/email in the debugbar
+            'show_name' => true,   // También muestra el nombre/correo electrónico de los usuarios en la barra de depuración
         ],
         'db' => [
-            'with_params'       => true,   // Render SQL with the parameters substituted
-            'backtrace'         => true,   // Use a backtrace to find the origin of the query in your files.
-            'timeline'          => true,  // Add the queries to the timeline
-            'explain' => [                 // Show EXPLAIN output on queries
+            'with_params'       => true,   // Renderizar SQL con los parámetros sustituidos
+            'backtrace'         => true,   // Utilice un backtrace para encontrar el origen de la consulta en sus archivos.
+            'timeline'          => true,  // Agregar las consultas a la línea de tiempo
+            'explain' => [                 // Mostrar salida EXPLAIN en consultas
                 'enabled' => false,
-                'types' => ['SELECT'],     // // workaround ['SELECT'] only. https://github.com/barryvdh/laravel-debugbar/issues/888 ['SELECT', 'INSERT', 'UPDATE', 'DELETE']; for MySQL 5.6.3+
+                'types' => ['SELECT'],     // solución alternativa ['SELECT'] solamente. https://github.com/barryvdh/laravel-debugbar/issues/888 ['SELECT', 'INSERT', 'UPDATE', 'DELETE']; para MySQL 5.6.3+
             ],
-            'hints'             => true,    // Show hints for common mistakes
+            'hints'             => true,    // Mostrar sugerencias para errores comunes
         ],
         'mail' => [
             'full_log' => false
         ],
         'views' => [
-            'data' => false,    //Note: Can slow down the application, because the data can be quite large..
+            'data' => false,    //Nota: Puede ralentizar la aplicación porque los datos pueden ser bastante grandes.
         ],
         'route' => [
-            'label' => true  // show complete route on bar
+            'label' => true  // mostrar ruta completa en la barra
         ],
         'logs' => [
             'file' => null
         ],
         'cache' => [
-            'values' => true // collect cache values
+            'values' => true // recopilar valores de caché
         ],
     ],
 
     /*
      |--------------------------------------------------------------------------
-     | Inject Debugbar in Response
+     | Inyectar barra de depuración en respuesta
      |--------------------------------------------------------------------------
      |
-     | Usually, the debugbar is added just before </body>, by listening to the
-     | Response after the App is done. If you disable this, you have to add them
-     | in your template yourself. See http://phpdebugbar.com/docs/rendering.html
+     | Por lo general, la barra de depuración se agrega justo antes de </body>, 
+     | al escuchar la respuesta después de que finaliza la aplicación. 
+     | Si deshabilita esto, debe agregarlos en la plantilla usted mismo. 
+     | Ver http://phpdebugbar.com/docs/rendering.html
      |
      */
 
@@ -179,23 +188,25 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | DebugBar route prefix
+     | Prefijo de ruta DebugBar
      |--------------------------------------------------------------------------
      |
-     | Sometimes you want to set route prefix to be used by DebugBar to load
-     | its resources from. Usually the need comes from misconfigured web server or
-     | from trying to overcome bugs like this: http://trac.nginx.org/nginx/ticket/97
+     | A veces, desea configurar el prefijo de ruta para que DebugBar lo use para 
+     | cargar sus recursos. Por lo general, la necesidad proviene de un servidor 
+     | web mal configurado o de tratar de superar errores como este: 
+     | http://trac.nginx.org/nginx/ticket/97
      |
      */
     'route_prefix' => '_debugbar',
 
     /*
      |--------------------------------------------------------------------------
-     | DebugBar route domain
+     | Dominio de ruta de DebugBar
      |--------------------------------------------------------------------------
      |
-     | By default DebugBar route served from the same domain that request served.
-     | To override default domain, specify it as a non-empty value.
+     | De forma predeterminada, la ruta DebugBar se sirve desde el mismo dominio 
+     | que atendió la solicitud. Para anular el dominio predeterminado, 
+     | especifíquelo como un valor no vacío.
      */
     'route_domain' => null,
 ];

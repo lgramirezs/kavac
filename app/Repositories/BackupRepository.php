@@ -3,12 +3,12 @@
 /** Repositorios del sistema */
 namespace App\Repositories;
 
-use Artisan;
-use Log;
-use Storage;
-use Session;
 use Exception;
 use ZipArchive;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @class BackupRepository
@@ -170,7 +170,7 @@ class BackupRepository
         /** @var object Objeto con información del disco a usar para obtener el archivo */
         $storage_disk = Storage::disk($disk[0]);
         if ($storage_disk->exists($file)) {
-            /** @var string Driver del disco a usar */
+            /** @var string|object Driver del disco a usar */
             $fs = Storage::disk($disk[0])->getDriver();
             /** @var string Contenido del archivo */
             $stream = $fs->readStream($file);

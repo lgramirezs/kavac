@@ -1,7 +1,7 @@
 <template>
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de tipos de compras" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_purchase_type_operation', '/purchase/type_operations', $event)">
-            <i class="fa fa-bookmark-o ico-3x"></i>
+            <i class="ion ion-ios-paper-outline ico-3x"></i>
             <span>Tipos de<br>Operaciones</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_purchase_type_operation">

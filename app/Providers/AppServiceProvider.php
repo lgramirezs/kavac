@@ -3,12 +3,12 @@
 /** Proveedores de servicios generales del sistema */
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Pagination\Paginator;
-use App\Models\NotificationSetting;
 use App\Observers\ModelObserver;
-use Nwidart\Modules\Module;
+use App\Models\NotificationSetting;
+use Nwidart\Modules\Facades\Module;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * @class AppServiceProvider
@@ -42,16 +42,11 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(255);
         Paginator::useBootstrap();
 
-        /*foreach (\Module::collections(1) as $module) {
-            foreach (NotificationSetting::where('module', $module->getLowerName())->get() as $notifySetting) {
-                $notifySetting::observe(ModelObserve::class);
-                dd("entro");
-            }
-        }*/
         if (!app()->runningInConsole()) {
+            $module = new Module;
             /** Solo ejecuta esta instrucción si no se esta ejecutando en consola de comandos */
             foreach (NotificationSetting::all() as $notifySetting) {
-                if (!is_null($notifySetting->module) && Module::isDisabled($notifySetting->module)) {
+                if (!is_null($notifySetting->module) && $module->isDisabled($notifySetting->module)) {
                     continue;
                 }
 

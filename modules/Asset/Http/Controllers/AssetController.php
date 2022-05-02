@@ -69,27 +69,27 @@ class AssetController extends Controller
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'institution_id'                       => 'El campo organización es obligatorio.',
-            'aseet_type_id.required'               => 'El campo tipo de bien es obligatorio.',
-            'aseet_category_id.required'           => 'El campo categoria general es obligatorio.',
-            'aseet_subcategory_id.required'        => 'El campo subcategoria es obligatorio.',
-            'aseet_specific_category_id.required'  => 'El campo categoria especifica es obligatorio.',
-            'asset_acquisition_type_id'            => 'El campo forma de adquisición es obligatorio.',
-            'acquisition_date'                     => 'El campo fecha de adquisición es obligatorio.',
-            'asset_status_id'                      => 'El campo estatus de uso es obligatorio.',
-            'value'                                => 'El campo valor es obligatorio.',
-            'currency_id'                          => 'El campo moneda es obligatorio.',
-            'serial'                               => 'El campo serial es obligatorio.',
-            'marca'                                => 'El campo marca es obligatorio.',
-            'model'                                => 'El campo modelo es obligatorio.',
-            'asset_use_function_id'                => 'El campo función de uso es obligatorio.',
-            'parish_id'                            => 'El campo país es obligatorio.',
-            'address'                              => 'El campo dirección es obligatorio.',
+            'institution_id.required'                       => 'El campo organización es obligatorio.',
+            'asset_type_id.required'                        => 'El campo tipo de bien es obligatorio.',
+            'asset_category_id.required'                    => 'El campo categoria general es obligatorio.',
+            'asset_subcategory_id.required'                 => 'El campo subcategoria es obligatorio.',
+            'asset_specific_category_id.required'           => 'El campo categoria especifica es obligatorio.',
+            'asset_acquisition_type_id.required'            => 'El campo forma de adquisición es obligatorio.',
+            'acquisition_date.required'                     => 'El campo fecha de adquisición es obligatorio.',
+            'asset_status_id.required'                      => 'El campo estatus de uso es obligatorio.',
+            'value.required'                                => 'El campo valor es obligatorio.',
+            'currency_id.required'                          => 'El campo moneda es obligatorio.',
+            'serial.required'                               => 'El campo serial es obligatorio.',
+            'marca.required'                                => 'El campo marca es obligatorio.',
+            'model.required'                                => 'El campo modelo es obligatorio.',
+            'asset_use_function_id.required'                => 'El campo función de uso es obligatorio.',
+            'parish_id.required'                            => 'El campo país es obligatorio.',
+            'address.required'                              => 'El campo dirección es obligatorio.',
+            'asset_condition_id.required'                   => 'El campo condición física es obligatorio.',
+        ];
 
-
-
-
-
+        $this->attributes = [
+            'value' => 'valor'
         ];
     }
 
@@ -141,9 +141,9 @@ class AssetController extends Controller
 
                 ]
             );
-            $this->validate($request, $validateRules, $this->messages);
+            $this->validate($request, $validateRules, $this->messages, $this->attributes);
         } else {
-            $this->validate($request, $this->validateRules, $this->messages);
+            $this->validate($request, $this->validateRules, $this->messages, $this->attributes);
         }
         $asset = Asset::create([
             'asset_type_id'              => $request->asset_type_id,
@@ -318,11 +318,11 @@ class AssetController extends Controller
                 $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id');
             } else {
                 $assets = Asset::where('institution_id', $institution_id)
-                ->with([
-                    'institution',
-                    'assetCondition',
-                    'assetStatus'
-                ])->orderBy('id');
+                    ->with([
+                        'institution',
+                        'assetCondition',
+                        'assetStatus'
+                    ])->orderBy('id');
             }
         } elseif ($operation_id == null) {
             if ($operation == 'asignations') {
@@ -427,37 +427,95 @@ class AssetController extends Controller
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchClasification(Request $request)
+    public function searchClasification(Request $request, $perPage = 10, $page = 1)
     {
         $assets = Asset::CodeClasification(
             $request->asset_type,
             $request->asset_category,
             $request->asset_subcategory,
             $request->asset_specific_category
-        )->with('institution', 'assetCondition', 'assetStatus');
+        )->with('institution', 'assetCondition', 'assetStatus')
+         ->where('institution_id', $request->institution);
         if ($request->asset_status > 0) {
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
      * Filtra por su fecha de registro los bienes registradas
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function searchGeneral(Request $request)
+    public function searchGeneral(Request $request, $perPage = 10, $page = 1)
     {
-        $assets = Asset::DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
-            ->with('institution', 'assetCondition', 'assetStatus');
-        if ($request->asset_status > 0) {
-            $assets = $assets->where('asset_status_id', $request->asset_status);
+        $assets = Asset::where('institution_id', $request->institution)->with('institution', 'assetCondition', 'assetStatus');
+        if ($request->start_date || $request->end_date) {
+            if ($request->start_date != '' && !is_null($request->start_date)) {
+                if ($request->end_date != '' && !is_null($request->end_date)) {
+                    $assets = $assets->whereBetween("created_at", [$request->start_date,$request->end_date]);
+                } else {
+                    $assets = $assets->whereBetween("created_at", [$request->start_date,now()]);
+                }
+            }
+            if ($request->asset_status > 0) {
+                $assets = $assets->where('asset_status_id', $request->asset_status);
+            }
+        } elseif ($request->year || $request->mes_id) {
+            if ($request->mes_id != '' && !is_null($request->mes_id)) {
+                if ($request->year != '' && !is_null($request->year)) {
+                    $assets = $assets->whereMonth('created_at', $request->mes_id)
+                                 ->whereYear('created_at', $request->year);
+                } else {
+                    $assets = $assets->whereMonth('created_at', $request->mes_id);
+                }
+            }
+
+            if ($request->year != '' && !is_null($request->year) && $request->mes_id == '') {
+                $assets = $assets->whereYear('created_at', $request->year);
+            } else {
+                $assets = $assets;
+            }
+
+            if ($request->asset_status > 0) {
+                $assets = $assets->where('asset_status_id', $request->asset_status);
+            }
+        } else {
+            if ($request->asset_status > 0) {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('asset_status_id', $request->asset_status)
+                                    ->where('institution_id', $request->institution);
+            } else {
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->where('institution_id', $request->institution);
+            }
         }
 
-        return response()->json(['records' => $assets->get()], 200);
+        $total = $assets->count();
+        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assets,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
@@ -474,7 +532,6 @@ class AssetController extends Controller
          *  Validar tambien para múltiples instituciones
          *
          */
-        //Asset::with('assetCondition','assetStatus')->get();
         return response()->json(['records' => []], 200);
     }
 

@@ -35,10 +35,18 @@ var namespaces_dup =
           ] ]
         ] ]
       ] ],
+      [ "CitizenService", null, [
+        [ "Database", null, [
+          [ "Seeders", "dd/daf/namespaceModules_1_1CitizenService_1_1Database_1_1Seeders.html", null ]
+        ] ]
+      ] ],
       [ "DigitalSignature", null, [
         [ "Repositories", "dd/dbd/namespaceModules_1_1DigitalSignature_1_1Repositories.html", null ]
       ] ],
       [ "Payroll", null, [
+        [ "Database", null, [
+          [ "Seeders", "d7/d0e/namespaceModules_1_1Payroll_1_1Database_1_1Seeders.html", null ]
+        ] ],
         [ "Http", null, [
           [ "Controllers", "dc/d65/namespaceModules_1_1Payroll_1_1Http_1_1Controllers.html", null ]
         ] ],
@@ -57,7 +65,8 @@ var namespaces_dup =
         [ "Http", null, [
           [ "Controllers", "d7/daa/namespaceModules_1_1Sale_1_1Http_1_1Controllers.html", null ]
         ] ],
-        [ "Models", "dd/d68/namespaceModules_1_1Sale_1_1Models.html", null ]
+        [ "Models", "dd/d68/namespaceModules_1_1Sale_1_1Models.html", null ],
+        [ "Notifications", "db/de3/namespaceModules_1_1Sale_1_1Notifications.html", null ]
       ] ]
     ] ]
 ];

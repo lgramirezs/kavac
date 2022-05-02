@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label" for="purchase_type_operation_id">Tipo:</label><br>
+                                    <label class="control-label" for="purchase_type_operation_id">Tipo de contratación:</label><br>
                                     <select2 :options="type_operations" id="purchase_type_operation_id" placeholder="Tipo de contratación" v-model="record.purchase_type_operation_id">
                                     </select2>
                                 </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <modal-form-buttons saveRoute="purchase/type_hiring"></modal-form-buttons>
+                            <modal-form-buttons saveRoute="/purchase/type_hiring"></modal-form-buttons>
                         </div>
                     </div>
                     <div class="modal-body modal-table">
@@ -184,7 +184,7 @@ export default {
         const vm = this;
         vm.table_options.headings = {
             'date': 'Fecha',
-            'purchase_type_operation.name': 'Tipo',
+            'purchase_type_operation.name': 'Tipo de contratación',
             'ut': 'Unidades tributarias',
             'active': 'Estatus',
             'id': 'Acción'

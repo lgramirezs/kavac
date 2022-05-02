@@ -23,7 +23,10 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Proyecto') }}
-						@include('buttons.help')
+						@include('buttons.help', [
+							'helpId' => 'BudgetProjectHelp',
+							'helpSteps' => get_json_resource('ui-guides/budget_project.json', 'budget')
+						])
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -34,7 +37,7 @@
 					<div class="card-body">
 						@include('layouts.form-errors')
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpInstitution">
 								<div class="form-group is-required">
 									{!! Form::label('institution_id', __('Institución'), ['class' => 'control-label']) !!}
 									{!! Form::select(
@@ -42,22 +45,37 @@
 										$institutions, (isset($model)) ? $model->department->institution->id : null,
 										[
 											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'institution_id',
+											'onchange' => 'updateSelectActive($(this), $("#department_id"), "Department" )',
 											'title' => __('Seleccione una institución')
 										]
 									) !!}
 								</div>
 							</div>
-							<div class="col-3">
+							<div class="col-3" id="helpDepartment">
 								<div class="form-group is-required">
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
 									{!! Form::select('department_id', $departments, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'department_id',
+										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff")',
 										'title' => __('Seleccione un departamento o dependencia'),
 									]) !!}
 								</div>
 							</div>
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
-								<div class="col-3">
+								<div class="col-3" id="helpResponsible">
+									<div class="form-group is-required">
+										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
+										{!! Form::select('payroll_staff_id', $staffs, null, [
+											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'payroll_staff_id',
+											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll", "")',
+											'title' => __('Seleccione una persona responsable del proyecto')
+										]) !!}
+									</div>
+								</div>
+								<div class="col-3" id="helpPosition">
 									<div class="form-group is-required">
 										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
 											'class' => 'control-label'
@@ -69,19 +87,10 @@
 										]) !!}
 									</div>
 								</div>
-								<div class="col-3">
-									<div class="form-group is-required">
-										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
-										{!! Form::select('payroll_staff_id', $staffs, null, [
-											'class' => 'select2', 'data-toggle' => 'tooltip',
-											'title' => __('Seleccione una persona responsable del proyecto')
-										]) !!}
-									</div>
-								</div>
 							@endif
 						</div>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpCode">
 								<div class="form-group is-required">
 									{!! Form::label('code', __('Código'), ['class' => 'control-label']) !!}
 									{!! Form::text('code', (isset($model)) ? $model->code : old('code'), [
@@ -90,8 +99,8 @@
 									]) !!}
 								</div>
 							</div>
-							<div class="col-3">
-								<div class="form-group is-required">
+							<div class="col-3" id="helpOnapreCode">
+								<div class="form-group">
 									{!! Form::label('onapre_code', __('Código ONAPRE'), ['class' => 'control-label']) !!}
 									{!! Form::text('onapre_code', (isset($model)) ? $model->onapre_code : old('onapre_code'), [
 										'class' => 'form-control input-sm', 'placeholder' => __('Código de la ONAPRE'),
@@ -100,7 +109,7 @@
 									]) !!}
 								</div>
 							</div>
-							<div class="col-6">
+							<div class="col-6" id="helpName">
 								<div class="form-group is-required">
 									{!! Form::label('name', __('Nombre'), ['class' => 'control-label']) !!}
 									{!! Form::text('name', (isset($model)) ? $model->name : old('name'), [
@@ -112,7 +121,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3" id="helpStatus">
 								<div class="form-group">
 									<label for="" class="control-label">{{ __('Activo') }}</label>
 									<div class="col-12">

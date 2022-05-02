@@ -283,6 +283,18 @@ Vue.component('payroll-employment', () =>
 );
 
 /**
+ * Componente para mostrar la información detallada de datos laborales
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('payroll-employment-info', () =>
+    import(
+        /* webpackChunkName: "payroll-employment-info" */
+        './components/PayrollEmploymentInfoComponent.vue'
+    )
+);
+
+/**
  * Componente para la gestión de los parámetros de nómina
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
@@ -692,6 +704,17 @@ Vue.component('payroll-disabilities', () =>
 );
 
 /**
+ * Componente para listar, crear, actualizar y borrar datos niveles de escolaridad
+ * 
+ * @author José Briceño <josejorgebriceno9@gmail.com>
+ */
+Vue.component('payroll-schooling-levels', () =>
+	import(
+		/* webpackChunkName: "schooling-level" */
+		'./components/settings/PayrollSchoolingLevelComponent.vue')
+);
+
+/**
  * Componente para la gestión de calculos de salario
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
@@ -806,10 +829,13 @@ Vue.mixin({
 		 * Obtiene los datos de los trabajadores registrados
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
+		 * @author Ing. Roldan Vargas <rvargas at cenditel.gob.ve>
+		 * 
+		 * @param string filter establece una condición bajo la cual filtrar los resultados
 		 */
-		getPayrollStaffs() {
+		async getPayrollStaffs(type='') {
 			this.payroll_staffs = [];
-			axios.get(`${window.app_url}/payroll/get-staffs`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-staffs/${type}`).then(response => {
 				this.payroll_staffs = response.data;
 			});
 		},
@@ -967,6 +993,18 @@ Vue.mixin({
 			this.payroll_disabilities = [];
 			axios.get(`${window.app_url}/payroll/get-disabilities`).then(response => {
 				this.payroll_disabilities = response.data;
+			});
+		},
+
+		/**
+		 * Obtiene los datos de nivel de escolaridad
+		 *
+		 * @author José Briceño <josejorgebriceno9@gmail.com> 
+		 */
+		getPayrollSchoolingLevels() {
+			this.payroll_schooling_levels = [];
+			axios.get(`${window.app_url}/payroll/get-schooling-levels`).then(response => {
+				this.payroll_schooling_levels = response.data;
 			});
 		}
 	}

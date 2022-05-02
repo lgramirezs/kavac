@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -209,11 +209,11 @@ $(document).ready(function(){initNavTree('db/d24/modules_2Purchase_2Routes_2web_
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">     *</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">     * Gestiona los datos de los proveedores</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    Route::resource(<span class="stringliteral">&#39;suppliers&#39;</span>, <span class="stringliteral">&#39;PurchaseSupplierController&#39;</span>, [<span class="stringliteral">&#39;as&#39;</span> =&gt; <span class="stringliteral">&#39;purchase&#39;</span>, <span class="stringliteral">&#39;except&#39;</span> =&gt; [<span class="stringliteral">&#39;show&#39;</span>]]);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    Route::get(</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="stringliteral">&#39;suppliers/vue-list&#39;</span>,</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="stringliteral">&#39;PurchaseSupplierController@vueList&#39;</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    )-&gt;name(<span class="stringliteral">&#39;purchase.suppliers.vuelist&#39;</span>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    Route::get(</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="stringliteral">&#39;suppliers/vue-list&#39;</span>,</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="stringliteral">&#39;PurchaseSupplierController@vueList&#39;</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    )-&gt;name(<span class="stringliteral">&#39;purchase.suppliers.vuelist&#39;</span>);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    Route::resource(<span class="stringliteral">&#39;suppliers&#39;</span>, <span class="stringliteral">&#39;PurchaseSupplierController&#39;</span>, [<span class="stringliteral">&#39;as&#39;</span> =&gt; <span class="stringliteral">&#39;purchase&#39;</span>,]);</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    Route::get(</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="stringliteral">&#39;get-purchase-supplier-object/{id}&#39;</span>,</div>
@@ -276,7 +276,7 @@ $(document).ready(function(){initNavTree('db/d24/modules_2Purchase_2Routes_2web_
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    Route::resource(<span class="stringliteral">&#39;direct_hire&#39;</span>, <span class="stringliteral">&#39;PurchaseDirectHireController&#39;</span>, [</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="stringliteral">&#39;as&#39;</span>     =&gt; <span class="stringliteral">&#39;purchase&#39;</span>,</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    ]);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    Route::post(<span class="stringliteral">&#39;direct_hire/{id}&#39;</span>, <span class="stringliteral">&#39;PurchaseDirectHireController@updatePurchaseOrder&#39;</span>);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="comment">// Route::post(&#39;direct_hire/{id}&#39;, &#39;PurchaseDirectHireController@updatePurchaseOrder&#39;);</span></div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">/*</span></div>
@@ -324,7 +324,7 @@ $(document).ready(function(){initNavTree('db/d24/modules_2Purchase_2Routes_2web_
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_1a7f16d625b68127205b7b7b2277f8ef.html">Purchase</a></li><li class="navelem"><a class="el" href="../../dir_17b9ede0883688b9e38497f8b58a1acf.html">Routes</a></li><li class="navelem"><b>web.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:32 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

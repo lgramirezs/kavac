@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('da/d57/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/d2d/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController__inherit__graph.png" border="0" usemap="#MaritalStatusController_inherit__map" alt="Inheritance graph"/></div>
+<map name="MaritalStatusController_inherit__map" id="MaritalStatusController_inherit__map">
+<area shape="rect" title="Gestiona información de Estados Civiles." alt="" coords="5,131,179,252"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="49,5,135,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para MaritalStatusController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('da/d57/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dbe/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController__coll__graph.png" border="0" usemap="#MaritalStatusController_coll__map" alt="Collaboration graph"/></div>
+<map name="MaritalStatusController_coll__map" id="MaritalStatusController_coll__map">
+<area shape="rect" title="Gestiona información de Estados Civiles." alt="" coords="5,131,179,252"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="49,5,135,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -201,11 +209,11 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse JSON con información del proceso de eliminación del estado civil </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html#l00114">114</a> del archivo <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html">MaritalStatusController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        $maritalStatus-&gt;delete();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $maritalStatus, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html#l00115">115</a> del archivo <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html">MaritalStatusController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        $maritalStatus-&gt;delete();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $maritalStatus, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -268,23 +276,23 @@ Métodos públicos</h2></td></tr>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramtype">Request</td><td class="paramname">$request</td><td>Objeto con información de la petición </td></tr>
-    <tr><td class="paramtype">MaritalStatus</td><td class="paramname">$MaritalStatus</td><td>Objeto con información del estado civil a actualizar </td></tr>
+    <tr><td class="paramtype">MaritalStatus</td><td class="paramname">$MaritalStatus</td><td>Objeto con información del estado civil a actualizar</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>JsonResponse </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html#l00091">91</a> del archivo <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html">MaritalStatusController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>]</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        ]);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        $maritalStatus-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $maritalStatus-&gt;save();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html#l00092">92</a> del archivo <a class="el" href="../../d5/dc1/MaritalStatusController_8php_source.html">MaritalStatusController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>]</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        ]);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $maritalStatus-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $maritalStatus-&gt;save();</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -297,7 +305,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html">MaritalStatusController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

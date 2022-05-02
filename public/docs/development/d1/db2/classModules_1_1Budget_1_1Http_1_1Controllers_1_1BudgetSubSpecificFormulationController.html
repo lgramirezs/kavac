@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -112,6 +112,9 @@ $(document).ready(function(){initNavTree('d1/db2/classModules_1_1Budget_1_1Http_
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d0/de1/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController__coll__graph.png" border="0" usemap="#BudgetSubSpecificFormulationController_coll__map" alt="Collaboration graph"/></div>
+<map name="BudgetSubSpecificFormulationController_coll__map" id="BudgetSubSpecificFormulationController_coll__map">
+<area shape="rect" title="Controlador de formulaciones de presupuesto por sub específicas." alt="" coords="5,5,256,303"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -423,7 +426,7 @@ Métodos públicos</h2></td></tr>
 <p class="definition">Definición en la línea <a class="el" href="../../d1/d5f/BudgetSubSpecificFormulationController_8php_source.html#l00291">291</a> del archivo <a class="el" href="../../d1/d5f/BudgetSubSpecificFormulationController_8php_source.html">BudgetSubSpecificFormulationController.php</a>.</p>
 <div class="fragment"><div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    {</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        $formulation = BudgetSubSpecificFormulation::where(<span class="stringliteral">&#39;id&#39;</span>, $id)</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                       -&gt;with([<span class="stringliteral">&#39;currency&#39;</span>, <span class="stringliteral">&#39;account_opens&#39;</span>, <span class="stringliteral">&#39;specificAction&#39;</span> =&gt; <span class="keyword">function</span> ($specifiAction) {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                       -&gt;with([<span class="stringliteral">&#39;currency&#39;</span>, <span class="stringliteral">&#39;accountOpens&#39;</span>, <span class="stringliteral">&#39;specificAction&#39;</span> =&gt; <span class="keyword">function</span> ($specifiAction) {</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                           <span class="keywordflow">return</span> $specifiAction-&gt;with([<span class="stringliteral">&#39;specificable&#39;</span> =&gt; <span class="keyword">function</span> ($specificable) {</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                               <span class="keywordflow">return</span> $specificable-&gt;with(<span class="stringliteral">&#39;department&#39;</span>);</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                           }]);</div>
@@ -548,7 +551,7 @@ Métodos públicos</h2></td></tr>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        $pdf-&gt;setConfig(</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            [</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;                <span class="stringliteral">&#39;institution&#39;</span> =&gt; $formulation-&gt;institution,</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                <span class="stringliteral">&#39;urlVerify&#39;</span>   =&gt; <span class="stringliteral">&#39;www.google.com&#39;</span>,</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                <span class="stringliteral">&#39;urlVerify&#39;</span>   =&gt; url(<span class="stringliteral">&#39;&#39;</span>),</div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;                <span class="stringliteral">&#39;orientation&#39;</span> =&gt; <span class="charliteral">&#39;P&#39;</span>,</div>
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                <span class="stringliteral">&#39;filename&#39;</span>    =&gt; $filename</div>
 <div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            ]</div>
@@ -561,13 +564,17 @@ Métodos públicos</h2></td></tr>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keywordflow">return</span> response()-&gt;download($file, $filename, [], <span class="stringliteral">&#39;inline&#39;</span>);</div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">Hace referencia a <a class="el" href="../../d1/dad/app_2Repositories_2ReportRepository_8php_source.html#l00078">ReportRepository\setConfig()</a>.</p>
+<p class="reference">Hace referencia a <a class="el" href="../../d1/dad/app_2Repositories_2ReportRepository_8php_source.html#l00079">ReportRepository\setConfig()</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Gráfico de llamadas para esta función:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_abf6ae14f07d1a85e28ad655764106c7b_cgraph.png" border="0" usemap="#d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_abf6ae14f07d1a85e28ad655764106c7b_cgraph" alt=""/></div>
+<map name="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_abf6ae14f07d1a85e28ad655764106c7b_cgraph" id="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_abf6ae14f07d1a85e28ad655764106c7b_cgraph">
+<area shape="rect" title="Genera el reporte de presupuesto formulado." alt="" coords="5,13,132,39"/>
+<area shape="rect" href="../../db/d2b/classApp_1_1Repositories_1_1ReportRepository.html#a94271e36f2ecdb7425672d371a74e630" title="Método que permite establecer la configuración general de los reportes." alt="" coords="180,5,429,47"/>
+</map>
 </div>
 
 </div>
@@ -608,7 +615,7 @@ Métodos públicos</h2></td></tr>
 <div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        $pdf-&gt;setConfig(</div>
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;            [</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;                <span class="stringliteral">&#39;institution&#39;</span> =&gt; $formulation-&gt;institution,</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                <span class="stringliteral">&#39;urlVerify&#39;</span>   =&gt; <span class="stringliteral">&#39;www.google.com&#39;</span>,</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                <span class="stringliteral">&#39;urlVerify&#39;</span>   =&gt; url(<span class="stringliteral">&#39;&#39;</span>),</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                <span class="stringliteral">&#39;orientation&#39;</span> =&gt; <span class="charliteral">&#39;P&#39;</span>,</div>
 <div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                <span class="stringliteral">&#39;filename&#39;</span>    =&gt; $filename</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;            ]</div>
@@ -633,6 +640,10 @@ Métodos públicos</h2></td></tr>
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a37d6d0d5025ca9a1edd7903763f555c2_cgraph.png" border="0" usemap="#d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a37d6d0d5025ca9a1edd7903763f555c2_cgraph" alt=""/></div>
+<map name="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a37d6d0d5025ca9a1edd7903763f555c2_cgraph" id="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a37d6d0d5025ca9a1edd7903763f555c2_cgraph">
+<area shape="rect" title="Genera el reporte de presupuesto formulado." alt="" coords="5,20,160,47"/>
+<area shape="rect" href="../../dc/d5e/classModules_1_1DigitalSignature_1_1Repositories_1_1ReportRepositorySign.html#a94271e36f2ecdb7425672d371a74e630" title="Método que permite establecer la configuración general de los reportes." alt="" coords="208,5,432,61"/>
+</map>
 </div>
 
 </div>
@@ -771,6 +782,10 @@ Métodos públicos</h2></td></tr>
 </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a9ef485163104597c12185b53cdacf638_cgraph.png" border="0" usemap="#d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a9ef485163104597c12185b53cdacf638_cgraph" alt=""/></div>
+<map name="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a9ef485163104597c12185b53cdacf638_cgraph" id="d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController_a9ef485163104597c12185b53cdacf638_cgraph">
+<area shape="rect" title="Guarda información para una formulación de presupuesto." alt="" coords="5,20,60,47"/>
+<area shape="rect" href="../../d5/dd0/classModules_1_1Budget_1_1Models_1_1BudgetSubSpecificFormulation.html#a5b9bcd6cb08df23d70c8ea7080b6c2b5" title="Método que permite validar si una formulación ya existe con los mismos datos a registrar,..." alt="" coords="108,5,333,61"/>
+</map>
 </div>
 
 </div>
@@ -921,7 +936,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Budget</b></li><li class="navelem"><b>Http</b></li><li class="navelem"><b>Controllers</b></li><li class="navelem"><a class="el" href="../../d1/db2/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSubSpecificFormulationController.html">BudgetSubSpecificFormulationController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:38 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

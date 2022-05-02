@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -105,14 +105,25 @@ $(document).ready(function(){initNavTree('dc/d9b/classApp_1_1Models_1_1Estate.ht
 
 <p>Datos de Estados.  
  <a href="../../dc/d9b/classApp_1_1Models_1_1Estate.html#details">Más...</a></p>
-
-<p>Herencias Model y Auditable.</p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para Estate:</div>
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Diagrama de herencias de Estate</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../df/d47/classApp_1_1Models_1_1Estate__inherit__graph.png" border="0" usemap="#Estate_inherit__map" alt="Inheritance graph"/></div>
+<map name="Estate_inherit__map" id="Estate_inherit__map">
+<area shape="rect" title="Datos de Estados." alt="" coords="5,5,144,156"/>
+</map>
+</div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para Estate:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/dd0/classApp_1_1Models_1_1Estate__coll__graph.png" border="0" usemap="#Estate_coll__map" alt="Collaboration graph"/></div>
+<map name="Estate_coll__map" id="Estate_coll__map">
+<area shape="rect" title="Datos de Estados." alt="" coords="5,5,144,156"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -146,7 +157,7 @@ Atributos protegidos</h2></td></tr>
 <div class="textblock"><p>Datos de Estados. </p>
 <p>Gestiona el modelo de datos para los Estados </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00027">27</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00027">27</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="a64777d182dae7fff3b509c567572b8cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a64777d182dae7fff3b509c567572b8cb">&#9670;&nbsp;</a></span>cities()</h2>
@@ -168,7 +179,7 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>object Objeto con los registros relacionados al modelo City </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00098">98</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00098">98</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 <div class="fragment"><div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(City::class);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
@@ -195,7 +206,7 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>object Objeto con el registro relacionado al modelo <a class="el" href="../../d2/d87/classApp_1_1Models_1_1Country.html" title="Datos de Países.">Country</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00070">70</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00070">70</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 <div class="fragment"><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    {</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(Country::class);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
@@ -222,7 +233,7 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>object Objeto con los registros relacionados al modelo Minicipality </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00084">84</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00084">84</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 <div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Municipality::class);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
@@ -252,7 +263,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos para la gestión de fechas. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00038">38</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00038">38</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 
 </div>
 </div>
@@ -278,7 +289,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos que pueden ser asignados masivamente. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00045">45</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00045">45</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 
 </div>
 </div>
@@ -304,12 +315,12 @@ Atributos protegidos</h2></td></tr>
 
 <p>Oculta los campos de fechas de creación, actualización y eliminación. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d8/d38/Estate_8php_source.html#l00052">52</a> del archivo <a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html#l00052">52</a> del archivo <a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a>.</p>
 
 </div>
 </div>
 <hr/>La documentación para esta clase fue generada a partir del siguiente fichero:<ul>
-<li><a class="el" href="../../d8/d38/Estate_8php_source.html">Estate.php</a></li>
+<li><a class="el" href="../../db/d69/app_2Models_2Estate_8php_source.html">app/Models/Estate.php</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -317,7 +328,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../d4/de2/namespaceApp_1_1Models.html">Models</a></li><li class="navelem"><a class="el" href="../../dc/d9b/classApp_1_1Models_1_1Estate.html">Estate</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:37 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

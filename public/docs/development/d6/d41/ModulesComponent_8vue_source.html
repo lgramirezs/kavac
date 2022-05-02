@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('d6/d41/ModulesComponent_8vue_source.ht
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                        &lt;div class=&quot;col-8&quot;&gt;{{ details.description }}&lt;/div&gt;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                        &lt;div class=&quot;col-4&quot;&gt;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                            &lt;ul&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                &lt;li v-for=&quot;author in details.authors&quot;&gt;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                &lt;li v-for=&quot;(author, index) in details.authors&quot; :key=&quot;index&quot;&gt;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                                    &lt;a :href=&quot;&#39;mailto:&#39;+author.email[0]&quot;&gt;{{ author.name }}&lt;/a&gt;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                                &lt;/li&gt;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                            &lt;/ul&gt;</div>
@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('d6/d41/ModulesComponent_8vue_source.ht
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                        &lt;div class=&quot;col-12 mt-4&quot;&gt;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                            &lt;h6 class=&quot;md-title&quot;&gt;Requerimientos:&lt;/h6&gt;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                            &lt;ul v-if=&quot;details.requirements&quot;&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                &lt;li v-for=&quot;(version, require) in details.requirements&quot;&gt;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                &lt;li v-for=&quot;(version, require) in details.requirements&quot; :key=&quot;require&quot;&gt;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                                    &lt;i :class=&quot;checkRequirement(require)&quot;&gt;&lt;/i&gt;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                    {{ require }} v{{ version }}</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                                &lt;/li&gt;</div>
@@ -200,7 +200,7 @@ $(document).ready(function(){initNavTree('d6/d41/ModulesComponent_8vue_source.ht
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            &lt;/div&gt;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            &lt;hr&gt;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            &lt;div class=&quot;row&quot;&gt;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                &lt;div class=&quot;col-4 mb-4&quot; v-for=&quot;module in modules&quot;&gt;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                &lt;div class=&quot;col-4 mb-4&quot; v-for=&quot;(module, index) in modules&quot; :key=&quot;index&quot;&gt;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                    &lt;div class=&quot;list-group list-group-modules&quot;&gt;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                        &lt;a href=&quot;javascript:void(0);&quot; class=&quot;list-group-item&quot; data-toggle=&quot;tooltip&quot;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                           :data-original-title=&quot;&#39;Ver detalles del módulo de &#39; + module.name&quot;</div>
@@ -303,7 +303,7 @@ $(document).ready(function(){initNavTree('d6/d41/ModulesComponent_8vue_source.ht
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_0fc3f8f3ef96ce2d45d66d6e29832317.html">resources</a></li><li class="navelem"><a class="el" href="../../dir_a794a5ff81584a815c22a64994c08658.html">js</a></li><li class="navelem"><a class="el" href="../../dir_17c4e49a40fcffc13f27ec9e17c9f676.html">components</a></li><li class="navelem"><a class="el" href="../../dir_912a1a817e4bb21820b037cdb61e25c1.html">Settings</a></li><li class="navelem"><b>ModulesComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

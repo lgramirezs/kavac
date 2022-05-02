@@ -5,6 +5,9 @@ namespace App\Traits;
 use Illuminate\Support\Facades\Cache;
 
 /**
+ * @trait   Trait para la gestión de modelos
+ * @brief Trait para la gestión de modelos
+ * 
  * Trait para la gestión de modelos
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
@@ -16,6 +19,8 @@ trait ModelsTrait
 {
     /**
      * Método que ejecuta eventos del modelo
+     * 
+     * @method      boot
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
      *
@@ -78,7 +83,6 @@ trait ModelsTrait
             $filename = $result;
 
             if (is_dir($filename)) {
-                //$out = array_merge($out, 'App\Models\\' . $this->getModels($filename));
                 $out = array_merge($out, $this->getModels($filename));
             } else {
                 $out[] = 'App\Models\\' . substr($filename, 0, -4);
@@ -138,6 +142,8 @@ trait ModelsTrait
 
     /**
      * Establece datos en cache
+     * 
+     * @method setCacheEvents
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
      *

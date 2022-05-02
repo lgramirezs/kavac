@@ -10,9 +10,9 @@ use App\Roles\Models\Permission;
 
 /**
  * @class PurchaseRoleAndPermissionsTableSeeder
- * @brief Información por defecto para Roles y Permisos del módulo de compra
+ * @brief Información por defecto para Roles y Permisos del módulo de compras
  *
- * Gestiona la información por defecto a registrar inicialmente para los Roles y Permisos del módulo de compra
+ * Gestiona la información por defecto a registrar inicialmente para los Roles y Permisos del módulo de compras
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  * @license <a href='http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/'>
@@ -34,54 +34,54 @@ class PurchaseRoleAndPermissionsTableSeeder extends Seeder
 
         $purchaseRole = Role::updateOrCreate(
             ['slug' => 'purchase'],
-            ['name' => 'Compra', 'description' => 'Coordinador de compra']
+            ['name' => 'Compras', 'description' => 'Coordinador de compras']
         );
 
         $permissions = [
             [
-                'name' => 'Inicio del módulo de compra', 'slug' => 'purchase.home',
-                'description' => 'Acceso a descripción del módulo de compra',
-                'model' => '', 'model_prefix' => 'compra',
-                'slug_alt' => 'compra.inicio', 'short_description' => 'página de inicio'
+                'name' => 'Inicio del módulo de compras', 'slug' => 'purchase.home',
+                'description' => 'Acceso a descripción del módulo de compras',
+                'model' => '', 'model_prefix' => 'Compras',
+                'slug_alt' => 'compras.inicio', 'short_description' => 'página de inicio'
             ],
             [
-                'name' => 'Configuración del módulo de compra', 'slug' => 'purchase.setting.create',
-                'description' => 'Acceso a la configuración del módulo de compra',
-                'model' => '', 'model_prefix' => 'compra',
+                'name' => 'Configuración del módulo de compras', 'slug' => 'purchase.setting.create',
+                'description' => 'Acceso a la configuración del módulo de compras',
+                'model' => '', 'model_prefix' => 'Compras',
                 'slug_alt' => 'configuracion.crear', 'short_description' => 'agregar configuración'
             ],
             [
-                'name' => 'Editar configuración del módulo de compra',
+                'name' => 'Editar configuración del módulo de compras',
                 'slug' => 'purchase.setting.edit',
-                'description' => 'Acceso para editar la configuración del módulo de compra',
-                'model' => '', 'model_prefix' => 'compra',
+                'description' => 'Acceso para editar la configuración del módulo de compras',
+                'model' => '', 'model_prefix' => 'Compras',
                 'slug_alt' => 'configuracion.editar', 'short_description' => 'editar configuración'
             ],
             [
-                'name' => 'Ver configuración del módulo de compra',
+                'name' => 'Ver configuración del módulo de compras',
                 'slug' => 'purchase.setting.list',
-                'description' => 'Acceso para ver la configuración del módulo de compra',
-                'model' => '', 'model_prefix' => 'compra',
+                'description' => 'Acceso para ver la configuración del módulo de compras',
+                'model' => '', 'model_prefix' => 'Compras',
                 'slug_alt' => 'configuracion.ver', 'short_description' => 'ver configuración'
             ],
             [
-                'name' => 'Eliminar configuración del módulo de compra',
+                'name' => 'Eliminar configuración del módulo de compras',
                 'slug' => 'purchase.setting.delete',
-                'description' => 'Acceso para eliminar la configuración del módulo de compra',
-                'model' => '', 'model_prefix' => 'compra',
+                'description' => 'Acceso para eliminar la configuración del módulo de compras',
+                'model' => '', 'model_prefix' => 'Compras',
                 'slug_alt' => 'configuracion.eliminar', 'short_description' => 'eliminar configuración'
             ],
             [
                 'name' => 'Crear especialidad de proveedor', 'slug' => 'purchase.supplierspecialty.create',
                 'description' => 'Acceso para crear especialidad de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'Compras',
                 'slug_alt' => 'especialidad.proveedor.crear',
                 'short_description' => 'agregar especialidad de proveedor'
             ],
             [
                 'name' => 'Editar especialidad de proveedor', 'slug' => 'purchase.supplierspecialty.edit',
                 'description' => 'Acceso para editar especialidad de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'Compras',
                 'slug_alt' => 'especialidad.proveedor.editar',
                 'short_description' => 'editar especialidad de proveedor'
             ],
@@ -89,28 +89,28 @@ class PurchaseRoleAndPermissionsTableSeeder extends Seeder
                 'name' => 'Eliminar especialidad de proveedor',
                 'slug' => 'purchase.supplierspecialty.delete',
                 'description' => 'Acceso para eliminar especialidad de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'Compras',
                 'slug_alt' => 'especialidad.proveedor.eliminar',
                 'short_description' => 'eliminar especialidad de proveedor'
             ],
             [
                 'name' => 'Ver especialidades de proveedores', 'slug' => 'purchase.supplierspecialty.list',
                 'description' => 'Acceso para ver especialidades de proveedores',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierSpecialty', 'model_prefix' => 'Compras',
                 'slug_alt' => 'especialidad.proveedor.ver',
                 'short_description' => 'ver especialidad de proveedor'
             ],
             [
                 'name' => 'Crear tipo de proveedor', 'slug' => 'purchase.suppliertype.create',
                 'description' => 'Acceso para crear tipo de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'Compras',
                 'slug_alt' => 'tipo.proveedor.crear',
                 'short_description' => 'agregar tipo de proveedor'
             ],
             [
                 'name' => 'Editar tipo de proveedor', 'slug' => 'purchase.suppliertype.edit',
                 'description' => 'Acceso para editar tipo de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'Compras',
                 'slug_alt' => 'tipo.proveedor.editar',
                 'short_description' => 'editar tipo de proveedor'
             ],
@@ -118,28 +118,28 @@ class PurchaseRoleAndPermissionsTableSeeder extends Seeder
                 'name' => 'Eliminar tipo de proveedor',
                 'slug' => 'purchase.suppliertype.delete',
                 'description' => 'Acceso para eliminar tipo de proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'Compras',
                 'slug_alt' => 'tipo.proveedor.eliminar',
                 'short_description' => 'eliminar tipo de proveedor'
             ],
             [
                 'name' => 'Ver tipos de proveedores', 'slug' => 'purchase.suppliertype.list',
                 'description' => 'Acceso para ver tipos de proveedores',
-                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplierType', 'model_prefix' => 'Compras',
                 'slug_alt' => 'tipo.proveedor.ver',
                 'short_description' => 'ver tipo de proveedor'
             ],
             [
                 'name' => 'Crear proveedor', 'slug' => 'purchase.supplier.create',
                 'description' => 'Acceso para crear proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'Compras',
                 'slug_alt' => 'proveedor.crear',
                 'short_description' => 'agregar proveedor'
             ],
             [
                 'name' => 'Editar proveedor', 'slug' => 'purchase.supplier.edit',
                 'description' => 'Acceso para editar proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'Compras',
                 'slug_alt' => 'proveedor.editar',
                 'short_description' => 'editar proveedor'
             ],
@@ -147,14 +147,14 @@ class PurchaseRoleAndPermissionsTableSeeder extends Seeder
                 'name' => 'Eliminar proveedor',
                 'slug' => 'purchase.supplier.delete',
                 'description' => 'Acceso para eliminar proveedor',
-                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'Compras',
                 'slug_alt' => 'proveedor.eliminar',
                 'short_description' => 'eliminar proveedor'
             ],
             [
                 'name' => 'Ver tipos de proveedores', 'slug' => 'purchase.supplier.list',
                 'description' => 'Acceso para ver tipos de proveedores',
-                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'compra',
+                'model' => 'Modules\Budget\Models\PurchaseSupplier', 'model_prefix' => 'Compras',
                 'slug_alt' => 'proveedor.ver',
                 'short_description' => 'ver proveedor'
             ]

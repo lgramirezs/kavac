@@ -255,6 +255,8 @@
                     history_tax_id: '',
                     iva: false,
                 };
+                this.records = [];
+
                 this.editIndex = null;
             },
 

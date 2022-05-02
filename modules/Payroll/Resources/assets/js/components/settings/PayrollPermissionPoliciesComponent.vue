@@ -85,33 +85,42 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12"> <h6> Dias solicitados para el permiso </h6> </div>
+                            <div class="col-md-12"> <h6> Tiempo solicitado para el permiso </h6> </div>
                             <div class="col-md-6">
                                 <div class="form-group is-required">
-                                    <label for="day_min">Rango mínimo:</label>
-                                    <input type="text" data-toggle="tooltip" id="day_min"
-                                           placeholder="Número mínimo de días del permiso"
-                                           title="Indique el número mínimo de días permitidos para el permiso"
+                                    <label for="time_min">Rango mínimo:</label>
+                                    <input type="text" data-toggle="tooltip" id="time_min"
+                                           placeholder="Tiempo mínimo para el permiso"
+                                           title="Indique el tiempo mínimo permitido para el permiso"
+                                           :max="(record.time_max == '') ? '' : record.max"
                                            class="form-control input-sm"
                                            v-input-mask data-inputmask="
                                                 'alias': 'numeric',
                                                 'allowMinus': 'false',
                                                 'digits': 0"
-                                           v-model="record.day_min">
+                                           v-model="record.time_min">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group is-required">
-                                    <label for="day_max">Rango máximo:</label>
-                                    <input type="text" data-toggle="tooltip" id="day_max"
-                                           placeholder="Número máximo de días del permiso"
-                                           title="Indique el número máximo de días permitidos para el permiso"
+                                    <label for="time_max">Rango máximo:</label>
+                                    <input type="text" data-toggle="tooltip" id="time_max"
+                                           placeholder="Tiempo máximo permitido para el permiso"
+                                           title="Indique el tiempo máximo permitido para el permiso"
+                                           :min="record.time_min" :disabled="(record.time_min == '')"
                                            class="form-control input-sm"
                                            v-input-mask data-inputmask="
                                                 'alias': 'numeric',
                                                 'allowMinus': 'false',
                                                 'digits': 0"
-                                           v-model="record.day_max">
+                                           v-model="record.time_max">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group is-required">
+                                    <label for="time_unit">Unidad de tiempo</label>
+                                    <select2 :options="time_units"
+                                             v-model="record.time_unit"></select2>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +144,11 @@
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="day_range" slot-scope="props" class="text-center">
-                                <span>{{props.row.day_min + ' - ' + props.row.day_max}}</span>
+                                <div v-for="time_unit in time_units" :key="time_unit.id">
+                                    <span v-if="props.row.time_unit == time_unit.id">
+                                        {{ props.row.time_min + ' - ' + props.row.time_max + ' ' + time_unit.text }}
+                                    </span>
+                                </div>
                             </div>
                             <div slot="active" slot-scope="props" class="text-center">
                                 <span v-if="props.row.active">Si</span>
@@ -170,14 +183,23 @@
                     id:               '',
                     name:             '',
                     anticipation_day: '',
-                    day_min:          '',
-                    day_max:          '',
+                    time_min:          '',
+                    time_max:          '',
+                    time_unit:         '',
                     active:           false,
                     institution_id:   ''
                 },
                 errors:       [],
                 records:      [],
                 institutions: [],
+                time_units:   [
+                    {"id": "",       "text": "Seleccione..."},
+                    {"id": "hours",  "text": "hora(s)"},
+                    {"id": "days",   "text": "día(s)"},
+                    {"id": "weeks",  "text": "semana(s)"},
+                    {"id": "months", "text": "mese(s)"},
+
+                ],
                 columns:      ['name', 'anticipation_day', 'day_range', 'active', 'id'],
             }
         },
@@ -192,8 +214,9 @@
                     id:               '',
                     name:             '',
                     anticipation_day: '',
-                    day_min:          '',
-                    day_max:          '',
+                    time_min:          '',
+                    time_max:          '',
+                    time_unit:         '',
                     active:           false,
                     institution_id:   ''
                 };
@@ -245,7 +268,7 @@
             this.table_options.headings = {
                 'name':             'Nombre',
                 'anticipation_day': 'Dias de anticipación',
-                'day_range':        'Rango de días solicitados',
+                'day_range':        'Rango de tiempo solicitado',
                 'active':           'Activo',
                 'id':               'Acción'
             };

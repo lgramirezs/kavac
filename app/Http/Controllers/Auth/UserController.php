@@ -140,7 +140,7 @@ class UserController extends Controller
         $user->sendEmailVerificationNotification();
         $request->session()->flash('message', ['type' => 'store']);
 
-        return redirect()->route('access.settings.users');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -190,24 +190,19 @@ class UserController extends Controller
         /** @var User Objeto con información del usuario */
         $model = $user;
 
-        $persons = template_choices(Profile::class, ['first_name', ' ', 'last_name'], $filters = ['user_id' => null]);
-
-        foreach ($persons as $key => $person) {
-            if ($key && $key !== "0" && $profile = Profile::find($key)) {
-                if ($profile->institution) {
-                    $persons[$key] = $profile->institution->acronym . " - " . $persons[$key];
-                }
-            }
-        }
+        $persons = [];
         
         if ($user->profile !== null && !array_key_exists($user->profile->id, $persons)) {
             $profile = Profile::where('user_id', $user->id)->first();
             if ($profile) {
                 if ($profile->institution) {
                     $persons[$profile->id] = $profile->institution->acronym . " - " . $profile->first_name . " " . $profile->last_name;
+                } else {
+                    $persons[$profile->id] = $profile->first_name . " " . $profile->last_name;
                 }
             }
         }
+
         return view('auth.register', compact('header', 'model', 'persons'));
     }
 
@@ -225,34 +220,66 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if ($request->staff) {
-            /** @var Profile Objeto con información del perfil del usuario */
-            $profile = Profile::find($request->staff);
-            if ($profile && $profile->user_id === null) {
+        if (!$request->has('source') || $request->source !== 'profile') {
+            $this->validate($request, [
+                'first_name' => ['required_without:staff'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'username' => ['required', 'string', 'max:25', 'unique:users,username,' . $user->id],
+                'role' => ['required_without:permission', 'array'],
+                'permission' => ['required_without:role', 'array']
+            ], [
+                'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado'
+            ]);
+    
+            $user->name = $request->first_name;
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->save();
+
+            $profile = Profile::where('user_id', $user->id)->first();
+    
+            if (!$request->staff && !$profile) {
+                /** @var Profile Instancia al modelo de perfil de usuario */
+                $profile = new Profile();
+                $profile->first_name = $request->first_name;
+                $profile->user_id = $user->id;
+                $profile->save();
+            } else if(!$request->staff && $profile){
+                $profile->first_name = $request->first_name;
+                $profile->user_id = $user->id;
+                $profile->save();
+            } else {
+                /** @var Profile Objeto con información del perfil del usuario */
+                $profile = Profile::find($request->staff);
+                $profile->first_name = $request->first_name;
                 $profile->user_id = $user->id;
                 $profile->save();
             }
+    
+            if ($request->role) {
+                $user->detachAllRoles();
+                $user->syncRoles($request->role);
+            }
+            if ($request->permission) {
+                $user->detachAllPermissions();
+                $user->syncPermissions($request->permission);
+            }
         }
-        if ($request->role) {
-            $user->detachAllRoles();
-            $user->syncRoles($request->role);
-        }
-        if ($request->permission) {
-            $user->detachAllPermissions();
-            $user->syncPermissions($request->permission);
-        }
-        if ($request->password) {
+
+
+        if ($request->has('password') && $request->password !== null) {
             $this->validate($request, [
                 'password' => ['min:6', 'confirmed'],
                 'password_confirmation' => ['min:6', 'required_with:password'],
-		/*'complexity-level' => ['numeric', 'min:43', 'max:100']*/
+		        'complexity-level' => ['numeric', 'min:43', 'max:100']
             ], [
                 'confirmed' => __('La contraseña no coincide con la verificación'),
                 'required_with' => __('Debe confirmar la nueva contraseña'),
-               /* 'complexity-level' => __(
+                'complexity-level.numeric' => __('No es posible determinar la complejidad de la contraseña'),
+                'complexity-level.min' => __(
                     'Contraseña muy débil. Intente incorporar símbolos, letras y números, ' .
-                    'en cominación con mayúsculas y minúsculas.'
-	       ),*/
+                    'en combinación con mayúsculas y minúsculas.'
+	            ),
             ]);
 
             $user->password = bcrypt($request->input('password'));
@@ -262,7 +289,7 @@ class UserController extends Controller
 
         $request->session()->flash('message', ['type' => 'update']);
 
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 
     /**
@@ -582,9 +609,7 @@ class UserController extends Controller
      *
      * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @license    [description]
-     *
-     * @param      Request               $request    [description]
+     * @param      Request               $request    Objeto con información de la petición
      */
     public function setMyNotifications(Request $request)
     {
@@ -663,21 +688,20 @@ class UserController extends Controller
     {
         /** @var User Objeto con información de un usuario */
         $user = User::where('username', $request->username)->first();
-
+        
         /** Verifica si la contraseña es correcta, de lo contrario retorna falso */
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['result' => false], 200);
         }
 
-        // Agregar funcionalidad para determinar si el usuario esta autenticado (aplica para cuando expira la sesion)
         if (!auth()->check()) {
             /** @var object Objeto con información de las credenciales de acceso de un usuario */
-            $userCredentials = $request->only('email', 'password');
+            $userCredentials = $request->only('username', 'password');
             if (!Auth::attempt($userCredentials)) {
                 return response()->json(['result' => false], 200);
             }
         }
-
+        
         /** @var boolean actualiza el campo que determina si la pantalla de bloqueo esta o no activada */
         $user->lock_screen = false;
         $user->save();

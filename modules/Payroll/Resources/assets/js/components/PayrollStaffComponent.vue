@@ -195,13 +195,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4" id="helpStaffUniformSize">
-                    <div class="form-group is-required">
-                        <label>Talla de Uniforme</label>
-                        <input type="number" class="form-control input-sm" v-model="record.uniform_size"
-                               title="Indique la talla del uniforme" min="1"/>
-                    </div>
-                </div>
                 <div class="col-md-4" id="helpStaffMedicalHistory">
                     <div class="form-group">
                         <label>Historial Médico</label>
@@ -215,6 +208,32 @@
             </div>
 
             <hr>
+            <h6 class="card-title" id="helpStaffUniformSize">Talla de uniforme <i class="fa fa-plus-circle cursor-pointer"
+                @click="addUniformSize()"></i></h6>
+            <div class="row" v-for="(uniform, index) in record.uniform_sizes">
+                <div class="col-md-4">
+                    <div class="form-group is-required">
+                        <label for="uniform_name">Nombre:</label>
+                        <input type="text" id="uniform_name" class="form-control input-sm" data-toggle="tooltip"
+                            title="Requerimiento del solicitante" v-model="uniform.name">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group is-required">
+                        <label for="uniform_name">Talla:</label>
+                        <input type="text" id="uniform_name" class="form-control input-sm" data-toggle="tooltip"
+                            title="Requerimiento del solicitante" v-model="uniform.size">
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <button class="mt-4 btn btn-sm btn-danger btn-action" type="button" @click="removeRow(index, record.uniform_sizes)"
+                            title="Eliminar este dato" data-toggle="tooltip">
+                                <i class="fa fa-minus-circle"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <h6 class="card-title" id="helpStaffPhone">
                 Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
             </h6>
@@ -310,8 +329,8 @@
                     municipality_id: '',
                     parish_id: '',
                     address: '',
-                    uniform_size: '',
                     medical_history: '',
+                    uniform_sizes: [],
                     phones: [],
                 },
                 errors: [],
@@ -358,8 +377,8 @@
                     municipality_id: '',
                     parish_id: '',
                     address: '',
-                    uniform_size: '',
                     medical_history: '',
+                    uniform_sizes: [],
                     phones: [],
                 };
             },
@@ -367,7 +386,35 @@
             async getStaff() {
                 let vm = this;
                 await axios.get(`${window.app_url}/payroll/staffs/${vm.payroll_staff_id}`).then(response => {
-                    vm.record = response.data.record;
+                    let data = response.data.record;
+                    vm.record = {
+                        id: data.id,
+                        first_name: data.first_name,
+                        last_name: data.last_name,
+                        payroll_nationality_id: data.payroll_nationality_id,
+                        id_number: data.id_number,
+                        passport: data.passport ? data.passport : '',
+                        email: data.email ? data.email : '',
+                        birthdate: data.birthdate,
+                        payroll_gender_id: data.payroll_gender_id,
+                        has_disability: data.has_disability ? data.has_disability : false,
+                        payroll_disability_id: data.payroll_disability_id,
+                        payroll_blood_type_id: data.payroll_blood_type_id,
+                        social_security: data.social_security,
+                        has_driver_license: data.has_driver_license ? data.has_driver_license : false,
+                        payroll_license_degree_id: data.payroll_license_degree_id,
+                        emergency_contact: data.emergency_contact ? data.emergency_contact : '',
+                        emergency_phone: data.emergency_phone ? data.emergency_phone : '',
+                        country_id: data.country_id,
+                        estate_id: data.estate_id,
+                        municipality_id: data.municipality_id,
+                        parish_id: data.parish_id,
+                        address: data.address,
+                        medical_history: data.medical_history ? data.medical_history : '',
+                        uniform_sizes: data.payroll_staff_uniform_size ? data.payroll_staff_uniform_size : [],
+                        phones: data.phones ? data.phones : [],
+                    }
+                    vm.record.parish = data.parish;
                     vm.record.country_id = vm.record.parish.municipality.estate.country_id;
                 });
             },
@@ -425,6 +472,37 @@
                     }
                 }
             },
+            /**
+             * Agrega una nueva columna para las tallas de uniformes
+             *
+             * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             */
+            addUniformSize() {
+                const vm = this;
+                if (vm.record.uniform_sizes.length == 0) {
+                    vm.record.uniform_sizes.push({
+                        name: 'Camisa',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                    vm.record.uniform_sizes.push({
+                        name: 'Pantalón',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                    vm.record.uniform_sizes.push({
+                        name: 'Calzado',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                } else {
+                    vm.record.uniform_sizes.push({
+                        name: '',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                }
+            },
         },
         created() {
             this.getPayrollNationalities();
@@ -438,6 +516,7 @@
             this.record.has_disability = false;
             this.record.has_driver_license = false;
             this.record.phones = [];
+            this.record.uniform_sizes = [];
         },
         mounted() {
             const vm = this;
@@ -447,19 +526,19 @@
             vm.switchHandler('has_disability');
             vm.switchHandler('has_driver_license');
         },
-        watch: {
+        /*watch: {
             record: {
                 deep: true,
                 handler: function() {
                     const vm = this;
                     if (vm.record.has_disability) {
-                        $('#has_disability').bootstrapSwitch('state', true, true);
+                        $('#has_disability').bootstrapSwitch('state', true);
                     }
                     if (vm.record.has_driver_license) {
-                        $('#has_driver_license').bootstrapSwitch('state', true, true);
+                        $('#has_driver_license').bootstrapSwitch('state', true);
                     }
                 }
             }
-        }
+        }*/
     };
 </script>

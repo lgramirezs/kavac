@@ -2,7 +2,7 @@
 
 @section('content')
     {!! Form::open(['route' => 'password.request', 'method' => 'POST', 'class' => 'form']) !!}
-        {{ csrf_field() }}
+        <input type="hidden" name="token" value="{{ request()->token }}">
         <p class="login-img">
             @include('layouts.logo-images', ['logo_mini' => true])
         </p>
@@ -17,9 +17,10 @@
                 <span class="input-group-addon">
                     <i class="now-ui-icons ui-1_email-85"></i>
                 </span>
-                {!! Form::email('email', old('email'), [
-                    'class' => 'form-control', 'placeholder' => __('Correo'), 'required' => 'required',
-                    'id' => 'email', 'data-toggle' => 'tooltip', 'title' => __('Indique el correo electrónico')
+                {!! Form::email('email', request()->email ?? old('email'), [
+                    'class' => 'form-control', 'placeholder' => __('Correo'), 'required' => 'required', 
+                    'id' => 'email', 'data-toggle' => 'tooltip', 'title' => __('Indique el correo electrónico'),
+                    'readonly' => 'readonly'
                 ]) !!}
             </div>
             @if ($errors->has('email'))

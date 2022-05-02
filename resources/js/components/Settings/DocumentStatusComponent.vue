@@ -18,119 +18,121 @@
 							Estatus de Documento
 						</h6>
 					</div>
-					<div class="modal-body">
-						<form-errors :listErrors="errors"></form-errors>
-						<div class="row">
-							<div class="col-12 col-md-2">
-								<div class="form-group is-required">
-									<label>Color:</label>
-									<input type="color" placeholder="Color" data-toggle="tooltip"
-										   title="Seleccione un color para identificar el estatus de documento (requerido)"
-										   class="form-control input-sm" v-model="record.color">
-			                    </div>
+					<div v-show="record.id">
+						<div class="modal-body">
+							<form-errors :listErrors="errors"></form-errors>
+							<div class="row">
+								<div class="col-12 col-md-2">
+									<div class="form-group is-required">
+										<label>Color:</label>
+										<input type="color" placeholder="Color" data-toggle="tooltip"
+											title="Seleccione un color para identificar el estatus de documento (requerido)"
+											class="form-control input-sm" v-model="record.color">
+									</div>
+								</div>
+								<div class="col-12 col-md-4">
+									<div class="form-group is-required">
+										<label>Nombre:</label>
+										<input type="text" placeholder="Nombre" data-toggle="tooltip"
+											title="Indique el nombre del estatus de documento (requerido)"
+											class="form-control input-sm" v-model="record.name" v-is-text>
+										<input type="hidden" v-model="record.id">
+									</div>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="form-group is-required">
+										<label>Descripción:</label>
+										<input type="text" placeholder="Descripción" data-toggle="tooltip"
+											title="Indique una descripción breve sobre el estatus de documento (requerido)"
+											class="form-control input-sm" v-model="record.description" v-is-text>
+									</div>
+								</div>
 							</div>
-							<div class="col-12 col-md-4">
-								<div class="form-group is-required">
-									<label>Nombre:</label>
-									<input type="text" placeholder="Nombre" data-toggle="tooltip"
-										   title="Indique el nombre del estatus de documento (requerido)"
-										   class="form-control input-sm" v-model="record.name" v-is-text>
-									<input type="hidden" v-model="record.id">
-			                    </div>
-							</div>
-							<div class="col-12 col-md-6">
-								<div class="form-group is-required">
-									<label>Descripción:</label>
-									<input type="text" placeholder="Descripción" data-toggle="tooltip"
-										   title="Indique una descripción breve sobre el estatus de documento (requerido)"
-										   class="form-control input-sm" v-model="record.description" v-is-text>
-			                    </div>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group is-required">
+										<label>Acción a ejecutar:</label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-4 mb-2">
+												<label for="">
+													<div class="col-12 bootstrap-switch-mini">
+														<input type="radio" class="form-control bootstrap-switch"
+															name="action" data-toggle="tooltip" data-on-label="SI"
+															data-off-label="NO" title="Indique si aprueba procesos"
+															v-model.lazy="record.action" value="AP" data-record="action"
+															v-has-tooltip readonly>
+														Aprueba procesos
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4 mb-2">
+												<label for="">
+													<div class="col-12 bootstrap-switch-mini">
+														<input type="radio" class="form-control bootstrap-switch"
+															name="action" data-toggle="tooltip" data-on-label="SI"
+															data-off-label="NO" title="Indique si rechaza procesos"
+															v-model="record.action" value="RE" data-record="action" readonly>
+														Rechaza procesos
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4 mb-2">
+												<label for="">
+													<div class="col-12 bootstrap-switch-mini">
+														<input type="radio" class="form-control bootstrap-switch"
+															name="action" data-toggle="tooltip" data-on-label="SI"
+															data-off-label="NO" title="Indique si elimina procesos"
+															v-model="record.action" value="EL" data-record="action" readonly>
+														Elimina procesos
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4 mb-2">
+												<label for="">
+													<div class="col-12 bootstrap-switch-mini">
+														<input type="radio" class="form-control bootstrap-switch"
+															name="action" data-toggle="tooltip" data-on-label="SI"
+															data-off-label="NO" title="Indique si inicia procesos"
+															v-model="record.action" value="PR" data-record="action" readonly>
+														Inicia procesos
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4 mb-2">
+												<label for="">
+													<div class="col-12 bootstrap-switch-mini">
+														<input type="radio" class="form-control bootstrap-switch"
+															name="action" data-toggle="tooltip" data-on-label="SI"
+															data-off-label="NO" title="Indique si anula procesos"
+															v-model="record.action" value="AN" data-record="action" readonly>
+														Anula procesos
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group is-required">
-									<label>Acción a ejecutar:</label>
-			                    </div>
-			                    <div class="form-group">
-			                    	<div class="row">
-			                    		<div class="col-md-4 mb-2">
-				                    		<label for="">
-                                                <div class="col-12 bootstrap-switch-mini">
-    					                    		<input type="radio" class="form-control bootstrap-switch"
-    					                    			   name="action" data-toggle="tooltip" data-on-label="SI"
-                                                           data-off-label="NO" title="Indique si aprueba procesos"
-    													   v-model.lazy="record.action" value="AP" data-record="action"
-                                                           v-has-tooltip>
-				                    			    Aprueba procesos
-                                                </div>
-				                    		</label>
-				                    	</div>
-				                    	<div class="col-md-4 mb-2">
-				                    		<label for="">
-                                                <div class="col-12 bootstrap-switch-mini">
-    					                    		<input type="radio" class="form-control bootstrap-switch"
-    					                    			   name="action" data-toggle="tooltip" data-on-label="SI"
-                                                           data-off-label="NO" title="Indique si rechaza procesos"
-    													   v-model="record.action" value="RE" data-record="action">
-    				                    			Rechaza procesos
-                                                </div>
-				                    		</label>
-				                    	</div>
-				                    	<div class="col-md-4 mb-2">
-				                    		<label for="">
-                                                <div class="col-12 bootstrap-switch-mini">
-    					                    		<input type="radio" class="form-control bootstrap-switch"
-    					                    			   name="action" data-toggle="tooltip" data-on-label="SI"
-                                                           data-off-label="NO" title="Indique si elimina procesos"
-    													   v-model="record.action" value="EL" data-record="action">
-    				                    			Elimina procesos
-                                                </div>
-				                    		</label>
-				                    	</div>
-				                    	<div class="col-md-4 mb-2">
-				                    		<label for="">
-                                                <div class="col-12 bootstrap-switch-mini">
-    					                    		<input type="radio" class="form-control bootstrap-switch"
-    					                    			   name="action" data-toggle="tooltip" data-on-label="SI"
-                                                           data-off-label="NO" title="Indique si inicia procesos"
-    													   v-model="record.action" value="PR" data-record="action">
-    				                    			Inicia procesos
-                                                </div>
-				                    		</label>
-				                    	</div>
-				                    	<div class="col-md-4 mb-2">
-				                    		<label for="">
-                                                <div class="col-12 bootstrap-switch-mini">
-    					                    		<input type="radio" class="form-control bootstrap-switch"
-    					                    			   name="action" data-toggle="tooltip" data-on-label="SI"
-                                                           data-off-label="NO" title="Indique si anula procesos"
-    													   v-model="record.action" value="AN" data-record="action">
-    				                    			Anula procesos
-                                                </div>
-				                    		</label>
-				                    	</div>
-			                    	</div>
-			                    </div>
+						<div class="modal-footer">
+							<div class="form-group">
+								<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
+										@click="clearFilters" data-dismiss="modal">
+									Cerrar
+								</button>
+								<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
+										@click="reset()">
+									Cancelar
+								</button>
+								<button type="button" @click="createRecord('document-status')" 
+										class="btn btn-primary btn-sm btn-round btn-modal-save">
+									Guardar
+								</button>
 							</div>
 						</div>
-	                </div>
-	                <div class="modal-footer">
-	                	<div class="form-group">
-	                		<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
-									@click="clearFilters" data-dismiss="modal">
-								Cerrar
-							</button>
-							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()">
-								Cancelar
-							</button>
-							<button type="button" @click="createRecord('document-status')" 
-									class="btn btn-primary btn-sm btn-round btn-modal-save">
-								Guardar
-							</button>
-	                	</div>
-	                </div>
+					</div>
 	                <div class="modal-body modal-table">
 	                	<v-client-table :columns="columns" :data="records" :options="table_options">
 	                		<div slot="color" slot-scope="props" class="text-center">

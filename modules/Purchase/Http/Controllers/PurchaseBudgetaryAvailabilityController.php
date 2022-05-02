@@ -63,7 +63,7 @@ class PurchaseBudgetaryAvailabilityController extends Controller
             'purchase_supplier_id.integer'    => 'El campo proveedor debe ser numerico.',
             'currency_id.required'            => 'El campo de tipo de moneda es obligatorio.',
             'currency_id.integer'             => 'El campo de tipo de moneda debe ser numerico.',
-            'base_budget_id'                  => 'Debe seleccionar almenos un requerimiento.',
+            'base_budget_id'                  => 'Debe seleccionar al menos un requerimiento.',
             'description'                     => 'El campo descripción es un campo obligatorio.',
         ]);
 

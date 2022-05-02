@@ -28,7 +28,7 @@ class PayrollStaff extends Model implements Auditable
 
     protected $table = "payroll_staffs";
 
-    protected $with = ['payrollEmployment'];
+    protected $with = ['payrollEmployment', 'payrollStaffUniformSize'];
 
     /**
      * Lista de atributos para la gestión de fechas
@@ -282,5 +282,17 @@ class PayrollStaff extends Model implements Auditable
     {
         return (Module::has('Asset'))
                ? $this->hasMany(\Modules\Asset\Models\AssetAsignation::class) : [];
+    }
+
+    /**
+     * Método que obtiene las tallas de uniforme asociados al trabajador
+     *
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
+
+     * @return    \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payrollStaffUniformSize()
+    {
+        return $this->hasMany(PayrollStaffUniformSize::class);
     }
 }

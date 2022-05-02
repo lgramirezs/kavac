@@ -50,6 +50,13 @@ class City extends Model implements Auditable
      * @var    array $hidden
      */
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    
+        /**
+     * Arreglo con las relaciones a cargar por defecto
+     *
+     * @var    array
+     */
+    protected $with = ['estate'];
 
     /**
      * Método que obtiene el Estado de una Ciudad

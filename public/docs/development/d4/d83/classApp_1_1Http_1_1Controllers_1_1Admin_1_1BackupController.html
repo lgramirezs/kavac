@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('d4/d83/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d3/dd8/classApp_1_1Http_1_1Controllers_1_1Admin_1_1BackupController__inherit__graph.png" border="0" usemap="#BackupController_inherit__map" alt="Inheritance graph"/></div>
+<map name="BackupController_inherit__map" id="BackupController_inherit__map">
+<area shape="rect" title="Gestiona información de respaldo." alt="" coords="5,131,140,208"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="29,5,116,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para BackupController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('d4/d83/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d7f/classApp_1_1Http_1_1Controllers_1_1Admin_1_1BackupController__coll__graph.png" border="0" usemap="#BackupController_coll__map" alt="Collaboration graph"/></div>
+<map name="BackupController_coll__map" id="BackupController_coll__map">
+<area shape="rect" title="Gestiona información de respaldo." alt="" coords="5,131,140,208"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="29,5,116,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -131,7 +139,7 @@ Métodos públicos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section user"><dt>Licencia:</dt><dd><a href="http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/">LICENCIA DE SOFTWARE CENDITEL</a> </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/d5a/BackupController_8php_source.html#l00020">20</a> del archivo <a class="el" href="../../d0/d5a/BackupController_8php_source.html">BackupController.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d5a/BackupController_8php_source.html#l00021">21</a> del archivo <a class="el" href="../../d0/d5a/BackupController_8php_source.html">BackupController.php</a>.</p>
 </div><h2 class="groupheader">Documentación de las funciones miembro</h2>
 <a id="a77c70046576124d7b9e94ca1d4645ba8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77c70046576124d7b9e94ca1d4645ba8">&#9670;&nbsp;</a></span>create()</h2>
@@ -160,12 +168,12 @@ Métodos públicos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>RedirectResponse Redirecciona a la página anterior después de realizar el respaldo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/d5a/BackupController_8php_source.html#l00055">55</a> del archivo <a class="el" href="../../d0/d5a/BackupController_8php_source.html">BackupController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        $backup-&gt;create();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> redirect()-&gt;back();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d5a/BackupController_8php_source.html#l00056">56</a> del archivo <a class="el" href="../../d0/d5a/BackupController_8php_source.html">BackupController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        $backup-&gt;create();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">return</span> redirect()-&gt;back();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -178,7 +186,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../d5/d9b/namespaceApp_1_1Http_1_1Controllers_1_1Admin.html">Admin</a></li><li class="navelem"><a class="el" href="../../d4/d83/classApp_1_1Http_1_1Controllers_1_1Admin_1_1BackupController.html">BackupController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

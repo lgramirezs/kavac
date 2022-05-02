@@ -128,7 +128,7 @@ class FiscalYearController extends Controller
         $currentYear = date("Y");
         /** @var Institution Institución por defecto */
         $institution = Institution::with(['fiscalYears'])->where('default', true)->first();
-        /** @var FiscalYear Años fiscales abiertos */
+        /** @var FiscalYear|array Años fiscales abiertos */
         $fiscalYears = $institution->fiscalYears()
                                    ->select('year as id', 'year as text')
                                    ->where('closed', false)

@@ -134,10 +134,18 @@
 											'onclick' => ''
 										]) !!}
 									</div>
-									<div class="col-6 offset-1">
+									<div class="col-3 offset-1">
 										<div class="form-group is-required{{ $errors->has('name') ? ' has-error' : '' }}">
 											{!! Form::label('name', 'Nombre o Razón Social') !!}
 											{!! Form::text('name', null, [
+												'class' => 'form-control input-sm'
+											]) !!}
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="form-group {{ $errors->has('social_purpose') ? ' has-error' : '' }}">
+											{!! Form::label('social_purpose', 'Objeto Social de la organización') !!}
+											{!! Form::text('social_purpose', null, [
 												'class' => 'form-control input-sm'
 											]) !!}
 										</div>
@@ -155,8 +163,11 @@
 									<div class="col-3">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_object_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
-											{!! Form::select('purchase_supplier_object_id', $supplier_objects, null, [
-												'class' => 'form-control select2'
+											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
+													(isset($model_supplier_objects)) ? $model_supplier_objects : null, [
+												'class' => 'form-control',
+												'multiple' => 'multiple',
+												'name' => 'purchase_supplier_object_id[]'
 											]) !!}
 										</div>
 									</div>
@@ -229,25 +240,18 @@
 									</div>
 								</div>
 								<hr>
-								<h6 class="card-title">Datos de Contacto</h6>
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group is-required{{ $errors->has('contact_name') ? ' has-error' : '' }}">
-											{!! Form::label('contact_name', 'Nombre') !!}
-											{!! Form::text('contact_name', null, [
-												'class' => 'form-control input-sm'
-											]) !!}
-										</div>
-									</div>
-									<div class="col-6">
-										<div class="form-group is-required{{ $errors->has('contact_email') ? ' has-error' : '' }}">
-											{!! Form::label('contact_email', 'Correo electrónico') !!}
-											{!! Form::text('contact_email', null, [
-												'class' => 'form-control input-sm'
-											]) !!}
-										</div>
-									</div>
-								</div>
+								@php
+									$contacts = [];
+									if (isset($model) && $model->contacts) {
+										foreach ($model->contacts as $contact) {
+											array_push($contacts, [
+												'name' => $contact->name,
+												'email' => $contact->email
+											]);
+										}
+									}
+								@endphp
+								<contacts initial_data="{{ ($contacts) ? json_encode($contacts) : '' }}"></contacts>
 								<hr>
 								@php
 									$phones = [];
@@ -281,7 +285,7 @@
                                                     </div>
 												</label>
 												<label class="radio-inline mt-4 mr-4">
-													<span class="left">Inscrito y habilitado</span>
+													<span class="left">Inscrito y habilitado para contratar</span>
                                                     <div class="col-12 bootstrap-switch-mini mt-3 text-center">
     													{!! Form::radio('rnc_status', 'ISH', null, [
     														'class' => 'form-control bootstrap-switch',
@@ -289,7 +293,7 @@
     													]) !!}
                                                     </div>
 												</label>
-												<label class="radio-inline mt-4 mr-4">
+												{{-- <label class="radio-inline mt-4 mr-4">
 													<span class="left">Inscrito, habilitado y calificado</span>
                                                     <div class="col-12 bootstrap-switch-mini mt-3 text-center">
     													{!! Form::radio('rnc_status', 'IHC', null, [
@@ -297,7 +301,7 @@
                                                             'data-on-label' => 'SI', 'data-off-label' => 'NO'
     													]) !!}
                                                     </div>
-												</label>
+												</label> --}}
 											</div>
 										</div>
 									</div>
@@ -323,33 +327,45 @@
 									                <div class="feature-list-indicator bg-info"></div>
 									                <div class="feature-list-content p-0">
 									                    <div class="feature-list-content-wrapper">
-									                        <div class="feature-list-content-left">
-									                            <div class="feature-list-heading">
-									                                {{ $reqDoc->name }}
-									                                <div class="badge badge-danger ml-2"
-									                                	 title="El documento aún no ha sido cargado"
-									                                	 data-toggle="tooltip">
-									                                	por cargar
-									                                </div>
-									                            </div>
-									                            <div class="feature-list-subheading">
-									                            	<i>{{ $reqDoc->description ?? '' }}</i>
-									                            </div>
-									                        </div>
-									                        <div class="feature-list-content-right feature-list-content-actions">
+															<div class="feature-list-content-right feature-list-content-actions">
 									                        	<button class="btn btn-simple btn-success btn-events"
 									                        			title="Presione para cargar el documento"
 									                        			data-toggle="tooltip" type="button"
-									                        			onclick="$('#doc').click()">
+									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
 									                        		<i class="fa fa-cloud-upload fa-2x"></i>
 									                        	</button>
-									                        	<button class="btn btn-simple btn-primary btn-events"
-									                        			title="Presione para descargar el documento"
-									                        			data-toggle="tooltip" type="button">
-									                        		<i class="fa fa-cloud-download fa-2x"></i>
-									                        	</button>
-									                        	<input type="file" id="doc" name="doc" style="display:none"
-									                        		   accept=".doc, .pdf, .odt, .docx">
+																@if(isset($model) && isset($model->documents))
+																	<a class="btn btn-simple btn-primary btn-events"
+																		title="Presione para descargar el documento"
+																		data-toggle="tooltip"
+																		{{-- href="{{'/purchase/document/download/'}}" --}}
+																		{{-- download="{{'.geojson'}}" --}}
+																		>
+																		<i class="fa fa-cloud-download fa-2x"></i>
+																	</a>
+																@endif
+									                        	<input type="file" id="{{'doc'.$reqDoc->id}}" name="docs[]" style="display:none"
+									                        		   onchange="uploadFile(event)" accept=".doc, .pdf, .odt, .docx">
+																<input type="number" id="{{'reqDoc'.$reqDoc->id}}" name="reqDocs[]" style="display:none">
+									                        </div>
+									                        <div class="feature-list-content-left">
+									                            <div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
+									                                <div class="badge badge-danger ml-2"
+																		title="El documento aún no ha sido cargado"
+									                                	data-toggle="tooltip">
+									                                	por cargar
+									                                </div>
+									                            </div>
+																<div class="feature-list-subheading" id="{{'loaded_doc'.$reqDoc->id}}" style="display:none;">
+																	<span class="badge badge-success"
+																		title="El documento se ha cargado"
+									                                	data-toggle="tooltip">
+																		<strong>Documento cargado</strong>
+																	</span>
+																</div>
+									                            <div class="feature-list-subheading">
+									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
+									                            </div>
 									                        </div>
 									                    </div>
 									                </div>
@@ -374,8 +390,40 @@
 	@parent
 	{!! Html::script('js/ckeditor.js', [], Request::secure()) !!}
 	<script>
+		let idclicker = 0;
 		$(document).ready(function() {
 			$(".nav-link").tooltip();
 		});
+		function clickUploadDoc(id, ){
+			idclicker = id;
+			$('#doc'+id).click();
+		};
+
+		function uploadFile(e) {
+            const files = e.target.files;
+
+            Array.from(files).forEach(file => addFile(file, idclicker));
+        };
+        function addFile(file, inputID) {
+			
+			$('#reqDoc'+inputID).val(inputID);
+			$('#loaded_doc' + inputID).show("slow");
+			$('#toload_doc' + inputID).hide("slow");
+        };
+
+		function conditi(){
+			if (!file.type.match('application/pdf') || 
+				!file.type.match('application/msword') || 
+				!file.type.match('application/vnd.oasis.opendocument.text') || 
+				!file.type.match('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                this.showMessage(
+                    'custom', 'Error', 'danger', 'screen-error', 'Solo se permiten archivos pdf.'
+                );
+                return;
+            } else {
+                //this.files[inputID] = file;
+                $('#status_' + inputID).show("slow");
+            }
+		}
 	</script>
 @stop

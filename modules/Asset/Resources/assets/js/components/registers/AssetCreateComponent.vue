@@ -104,7 +104,7 @@
 				<div class="col-md-3" v-if="((record.asset_type_id == 1) || ((record.asset_type) && (record.asset_type.id == 1)))">
 					<div class="form-group">
 						<label>Proveedor</label>
-						<select2 :options="proveedores"
+						<select2 :options="supplier"
 								v-model="record.proveedor_id"></select2>
 					</div>
 				</div>
@@ -170,7 +170,7 @@
 				<div class="col-md-3" id="helpAssetValue">
 					<div class="form-group is-required">
 						<label>Valor</label>
-						<input type="number" min="0" step=".01"
+						<input type="decimal" min="0"
 								placeholder="Precio por unidad" data-toggle="tooltip"
 								title="Indique el precio del bien"
 								class="form-control input-sm" v-model="record.value">
@@ -242,7 +242,7 @@
 		        	<button type="button" @click="reset()"
 							class="btn btn-default btn-icon btn-round"
 							data-toggle="tooltip"
-							title ="Borrar datos del formulario">
+							title="Borrar datos del formulario">
 							<i class="fa fa-eraser"></i>
 					</button>
 
@@ -309,7 +309,7 @@
 				asset_specific_categories: [],
 
 				asset_acquisition_types: [],
-				proveedores: [],
+				supplier: [],
 				asset_conditions: [],
 				asset_status: [],
 				asset_use_functions: [],
@@ -380,6 +380,7 @@
 				vm.asset_conditions = [];
 				axios.get(`${window.app_url}/asset/get-conditions`).then(response => {
 					vm.asset_conditions = response.data;
+
 				});
 			},
 			/**
@@ -448,6 +449,23 @@
 	          		}
 				}
 			},
+            
+				/**
+			 * * realizado por Francisco Escala fjescala@gmail.com
+			 *
+			 */
+			async getSuppliers() {
+				const vm = this;
+				vm.supplier = [];
+
+			
+					await axios.get(`${window.app_url}/purchase/suppliers-list`).then(response => {
+						vm.supplier = response.data;
+				
+					});
+			
+		
+			},
 
 			/**
 			 * * Reescribe el método getMunicipalities para cambiar su comportamiento por defecto
@@ -510,6 +528,7 @@
 			vm.getAssetUseFunctions();
 			vm.getCountries();
 			vm.getCurrencies();
+			vm.getSuppliers();
 		},
 		mounted() {
 			const vm = this;

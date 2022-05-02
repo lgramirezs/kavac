@@ -10,6 +10,8 @@ use App\Models\Country;
 use App\Models\Estate;
 use App\Models\RequiredDocument;
 use App\Models\Phone;
+use App\Models\Contact;
+use App\Repositories\UploadDocRepository;
 use App\Rules\Rif as RifRule;
 use Modules\Purchase\Models\PurchaseSupplierBranch;
 use Modules\Purchase\Models\PurchaseSupplierObject;
@@ -36,11 +38,13 @@ class PurchaseSupplierController extends Controller
         $this->countries = template_choices(Country::class);
         $this->estates = template_choices(Estate::class);
         $this->cities = template_choices(City::class);
+        $this->supplier = template_choices(PurchaseSupplier::class);
+
         $this->supplier_types = template_choices(PurchaseSupplierType::class);
         $this->supplier_branches = template_choices(PurchaseSupplierBranch::class);
         $this->supplier_specialties = template_choices(PurchaseSupplierSpecialty::class);
 
-        $supplier_objects = ['' => 'Seleccione...', 'Bienes' => [], 'Obras' => [], 'Servicios' => []];
+        $supplier_objects = ['Bienes' => [], 'Obras' => [], 'Servicios' => []];
         $assets = $works = $services = [];
 
         foreach (PurchaseSupplierObject::all() as $so) {
@@ -71,6 +75,7 @@ class PurchaseSupplierController extends Controller
             'route' => 'purchase.suppliers.store',
             'method' => 'POST',
             'role' => 'form',
+            'enctype'=>'multipart/form-data'
         ];
 
         return view('purchase::suppliers.create-edit-form', [
@@ -86,8 +91,13 @@ class PurchaseSupplierController extends Controller
      * @param  Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(Request $request, UploadDocRepository $upDoc)
     {
+        // dd($request->all());
+        $requiredContacts = '';
+        if (array_key_exists("contact_names", $request->all())) {
+            $requiredContacts = 'required';
+        }
         $this->validate($request, [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
@@ -101,8 +111,8 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_name'                   => ['required'],
-            'contact_email'                  => ['required'],
+            'contact_names'                  => [$requiredContacts],
+            'contact_emails'                 => [$requiredContacts],
             'rnc_certificate_number'         => ['required_with:rnc_status'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
@@ -122,9 +132,11 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_name.required'                   => 'El campo nombre de contacto es obligatorio.',
-            'contact_email.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
+            'contact_names.required'                  => 'El campo nombre de contacto es obligatorio.',
+            'contact_emails.required'                 => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
+        
+        //$supplier = PurchaseSupplier::first();
         $supplier = PurchaseSupplier::create([
             'person_type'                    => $request->person_type,
             'company_type'                   => $request->company_type,
@@ -132,11 +144,9 @@ class PurchaseSupplierController extends Controller
             'code'                           => generate_code(PurchaseSupplier::class, 'code'),
             'name'                           => $request->name,
             'direction'                      => $request->direction,
-            'contact_name'                   => $request->contact_name,
-            'contact_email'                  => $request->contact_email,
             'website'                        => $request->website ?? null,
             'active'                         => $request->active ? true : false,
-            'purchase_supplier_object_id'    => $request->purchase_supplier_object_id,
+            // 'purchase_supplier_object_id'    => $request->purchase_supplier_object_id,
             'purchase_supplier_branch_id'    => $request->purchase_supplier_branch_id,
             'purchase_supplier_specialty_id' => $request->purchase_supplier_specialty_id,
             'purchase_supplier_type_id'      => $request->purchase_supplier_type_id,
@@ -144,8 +154,23 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => $request->estate_id,
             'city_id'                        => $request->city_id,
             'rnc_status'                     => $request->rnc_status ?? 'NOI',
-            'rnc_certificate_number'         => $request->rnc_certificate_number ?? null
+            'rnc_certificate_number'         => $request->rnc_certificate_number ?? null,
+            'social_purpose'                 => $request->social_purpose,
         ]);
+
+        /** sincroniza la relacion en la tabla pivote de purchase_object_supplier **/
+        $supplier->purchaseSupplierObjects()->sync($request->purchase_supplier_object_id);
+
+        //dd($request->all());
+        /** Registros asociados a contactos */
+        if ($request->contact_names && !empty($request->contact_names)) {
+            foreach ($request->contact_names as $key => $contact) {
+                $supplier->contacts()->save(new Contact([
+                    'name' => $request->contact_names[$key],
+                    'email' => $request->contact_emails[$key],
+                ]));
+            }
+        }
 
         /** Asociación de números telefónicos */
         if ($request->phone_type && !empty($request->phone_type)) {
@@ -160,6 +185,22 @@ class PurchaseSupplierController extends Controller
         }
 
         /** Registro y asociación de documentos */
+        $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
+        if ($request->file('docs')) {
+            foreach ($request->file('docs') as $file) {
+                
+                $extensionFile = $file->getClientOriginalExtension();
+
+                if (in_array($extensionFile, $documentFormat)) {
+                    $upDoc->uploadDoc(
+                        $file,
+                        'documents',
+                        PurchaseSupplier::class,
+                        $supplier->id
+                    );
+                }
+            }
+        }
 
         session()->flash('message', ['type' => 'store']);
 
@@ -174,26 +215,44 @@ class PurchaseSupplierController extends Controller
     {
         return response()->json(['records' => PurchaseSupplier::find($id)], 200);
     }
+  
+     /**
+     * Show the specified resource.
+     * @return Renderable
+     */
+    public function showall()
+    {
+  
+      return template_choices(PurchaseSupplier::class, 'name', '', true);
 
+  
+    }
     /**
      * Show the form for editing the specified resource.
      * @return Renderable
      */
     public function edit($id)
     {
-        $model = PurchaseSupplier::find($id);
+        $model = PurchaseSupplier::with('documents')->find($id);
+        //dd($model->documents);
+        $purchase_supplier_objects = [];
 
+        foreach ($model->purchaseSupplierObjects as $record) {
+            array_push($purchase_supplier_objects, $record->id);
+        }
         $header = [
             'route' => ['purchase.suppliers.update', $model->id],
             'method' => 'PUT',
             'role' => 'form',
+            'enctype'=>'multipart/form-data'
         ];
 
         return view('purchase::suppliers.create-edit-form', [
             'countries' => $this->countries, 'estates' => $this->estates, 'cities' => $this->cities,
             'supplier_types' => $this->supplier_types, 'supplier_objects' => $this->supplier_objects,
             'supplier_branches' => $this->supplier_branches, 'supplier_specialties' => $this->supplier_specialties,
-            'header' => $header, 'model' => $model, 'requiredDocuments' => $this->requiredDocuments
+            'header' => $header, 'requiredDocuments' => $this->requiredDocuments, 'model' => $model, 
+            'model_supplier_objects' => $purchase_supplier_objects
         ]);
     }
 
@@ -202,8 +261,9 @@ class PurchaseSupplierController extends Controller
      * @param  Request $request
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, UploadDocRepository $upDoc, $id)
     {
+        //dd($request->all());
         $this->validate($request, [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
@@ -217,9 +277,9 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_name'                   => ['required'],
-            'contact_email'                  => ['required'],
-            'rnc_certificate_number'         => ['required_with:rnc_status'],
+            'contact_names'                   => ['required'],
+            'contact_emails'                  => ['required'],
+            'rnc_certificate_number'         => ['required'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
@@ -238,8 +298,8 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_name.required'                   => 'El campo nombre de contacto es obligatorio.',
-            'contact_email.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
+            'contact_names.required'                   => 'El campo nombre de contacto es obligatorio.',
+            'contact_emails.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
         ]);
 
         $supplier = PurchaseSupplier::find($id);
@@ -250,11 +310,9 @@ class PurchaseSupplierController extends Controller
         $supplier->code                           = $supplier->code;
         $supplier->name                           = $request->name;
         $supplier->direction                      = $request->direction;
-        $supplier->contact_name                   = $request->contact_name;
-        $supplier->contact_email                  = $request->contact_email;
         $supplier->website                        = $request->website ?? null;
         $supplier->active                         = $request->active ? true : false;
-        $supplier->purchase_supplier_object_id    = $request->purchase_supplier_object_id;
+        //$supplier->purchase_supplier_object_id    = $request->purchase_supplier_object_id;
         $supplier->purchase_supplier_branch_id    = $request->purchase_supplier_branch_id;
         $supplier->purchase_supplier_specialty_id = $request->purchase_supplier_specialty_id;
         $supplier->purchase_supplier_type_id      = $request->purchase_supplier_type_id;
@@ -263,8 +321,30 @@ class PurchaseSupplierController extends Controller
         $supplier->city_id                        = $request->city_id;
         $supplier->rnc_status                     = $request->rnc_status ?? 'NOI';
         $supplier->rnc_certificate_number         = $request->rnc_certificate_number ?? null;
+        $supplier->social_purpose                 = $request->social_purpose;
 
         $supplier->save();
+
+        /** sincroniza la relacion en la tabla pivote de purchase_object_supplier **/
+        $supplier->purchaseSupplierObjects()->sync($request->purchase_supplier_object_id);
+
+        /** Se elimina la relacion de proveedor con los contactos anteriores **/
+        $supp_contacts = $supplier->contacts()->get();
+        if (count($supp_contacts) > 0) {
+            foreach ($supp_contacts as $value) {
+                $value->delete();
+            }
+        }
+
+        /** Registros asociados a contactos */
+        if ($request->contact_names && !empty($request->contact_names)) {
+            foreach ($request->contact_names as $key => $contact) {
+                $supplier->contacts()->save(new Contact([
+                    'name' => $request->contact_names[$key],
+                    'email' => $request->contact_emails[$key],
+                ]));
+            }
+        }
 
         /** Se elimina la relacion de proveedor con los telefonos anteriores **/
         $supp_ph = $supplier->phones()->get();
@@ -287,7 +367,36 @@ class PurchaseSupplierController extends Controller
             }
         }
 
+
+        /** Se elimina la relacion y los documentos previos **/
+        $supp_docs = $supplier->documents()->get();
+        if (count($supp_docs) > 0) {
+            foreach ($supp_docs as $value) {
+                $upDoc->deleteDoc(
+                    $value->file,
+                    'documents'
+                );
+                $value->delete();
+            }
+        }
+
         /** Registro y asociación de documentos */
+        $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
+        if ($request->file('docs')) {
+            foreach ($request->file('docs') as $file) {
+                
+                $extensionFile = $file->getClientOriginalExtension();
+
+                if (in_array($extensionFile, $documentFormat)) {
+                    $upDoc->uploadDoc(
+                        $file,
+                        'documents',
+                        PurchaseSupplier::class,
+                        $supplier->id
+                    );
+                }
+            }
+        }
 
         session()->flash('message', ['type' => 'store']);
 
@@ -313,10 +422,27 @@ class PurchaseSupplierController extends Controller
             ], 200);
         }
         if ($supplier) {
+            /** Se elimina la relacion de proveedor con los contactos anteriores **/
+            $supp_contacts = $supplier->contacts()->get();
+            if (count($supp_contacts) > 0) {
+                foreach ($supp_contacts as $value) {
+                    $value->delete();
+                }
+            }
+
             /** Se elimina la relacion de proveedor con los telefonos anteriores **/
             $supp_ph = $supplier->phones()->get();
             if (count($supp_ph) > 0) {
                 foreach ($supp_ph as $value) {
+                    $value->delete();
+                }
+            }
+
+            /** Se elimina la relacion y los documentos previos **/
+            $supp_docs = $supplier->documents()->get();
+            if (count($supp_docs) > 0) {
+                foreach ($supp_docs as $value) {
+                    $upDoc->deleteDoc($value->file, 'documents');
                     $value->delete();
                 }
             }

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('d6/d89/WarehouseMovement_8php_source.h
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;use OwenIt\Auditing\Contracts\Auditable;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;use OwenIt\Auditing\Auditable as AuditableTrait;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;use <a class="code" href="../../dc/d3b/classApp_1_1Models_1_1User.html">App\Models\User</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;use App\Traits\ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * @class WarehouseMovement</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * @brief Datos de los movimientos de almacén</span></div>
@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('d6/d89/WarehouseMovement_8php_source.h
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    use SoftDeletes;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    use AuditableTrait;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    use ModelsTrait;<span class="comment"></span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    /**</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">     * Lista de atributos para la gestión de fechas</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">     *</span></div>
@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('d6/d89/WarehouseMovement_8php_source.h
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_82d048051464370bc2cc1bb0848ae305.html">Warehouse</a></li><li class="navelem"><a class="el" href="../../dir_d5d6bc8db43f4ad245ccf60c4a793309.html">Models</a></li><li class="navelem"><b>WarehouseMovement.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:32 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

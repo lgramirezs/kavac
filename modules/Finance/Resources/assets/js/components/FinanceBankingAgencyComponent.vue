@@ -20,6 +20,16 @@
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-danger" v-if="errors.length > 0">
+									<div class="alert-icon">
+						<i class="now-ui-icons objects_support-17"></i>
+					</div>
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"
+							@click.prevent="errors = []">
+						<span aria-hidden="true">
+							<i class="now-ui-icons ui-1_simple-remove"></i>
+						</span>
+					</button>
 							<ul>
 								<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
 							</ul>
@@ -29,12 +39,16 @@
                                 <div class="form-group">
                                     <label>Sede principal</label>
                                     <div class="col-md-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                                   title="Indique si es la sede principal del banco"
-                                                   v-model="record.headquarters" value="true">
-                                        </div>
+                                    
+								   <div class="pretty p-switch p-fill p-bigger p-toggle">
+                                                                    <input type="checkbox" data-toggle="tooltip" title="Indique si el campo está activo" v-model="record.headquarters">
+                                                                    <div class="state p-off">
+                                                                        <label></label>
+                                                                    </div>
+                                                                    <div class="state p-on p-success">
+                                                                        <label></label>
+                                                                    </div>
+                                                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +177,13 @@
 	                </div>
 	                <div class="modal-body modal-table">
 	                	<v-client-table :columns="columns" :data="records" :options="table_options">
+							<div slot="direction" slot-scope="props" class="text-center">
+	                			<span class="text-center">
+	                				{{ props.row.direction.replace(/<\/?[^>]+(>|$)/g, "") }} 
+	                			</span>
+	                		</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
-	                			<button @click="initUpdate(props.row.id, $event)"
+	                			<button @click="customupdate(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-round"
 		                				title="Modificar registro" data-toggle="tooltip" type="button">
 		                			<i class="fa fa-edit"></i>
@@ -228,7 +247,8 @@
 			 *
 			 * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 			 */
-			reset() {
+		
+				reset() {
 				this.record = {
 					id: '',
 					name: '',
@@ -243,6 +263,89 @@
 					phones: [],
 				};
 			},
+			customupdate(id,event ){
+              	let vm = this;
+			vm.errors = [];
+
+			let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+				return rec.id === id;
+			})[0])) || vm.reset();
+     
+			vm.record = recordEdit;
+            	vm.record.country_id = vm.record.city.estate.country_id;		
+
+			/**
+			 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
+			 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
+			 */
+			$.each(vm.record, function(el, value) {
+				if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
+					/** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
+					$("input[name=" + el + "]").each(function() {
+						if ($(this).val() === value) {
+							$(this).bootstrapSwitch('state', value, true)
+						}
+
+					});
+				}
+				if (value === true || value === false) {
+					$("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
+				}
+			});
+
+			event.preventDefault();
+          
+			},
+
+           	/**
+			 * Reescribe el método getEstates para cambiar su comportamiento por defecto
+			 * Obtiene los Estados del Pais seleccionado
+			 *
+			 */
+			async getEstates() {
+				const vm = this;
+				vm.estates = [];
+      
+		
+				if (vm.record.country_id) {
+					await axios.get(`${window.app_url}/get-estates/${this.record.country_id}`).then(response => {
+						vm.estates = response.data;
+					});
+	
+						
+					if ((vm.record.city.estate.id ) && (vm.record.id)) {	          		
+						vm.record.estate_id = vm.record.city.estate.id;  
+						vm.record.city_id = vm.record.city_id;
+	          			vm.getCities();
+	          		}
+				}
+			},
+			/**
+			 * * Reescribe el método getCities para cambiar su comportamiento por defecto
+			 * Obtiene los ciudades del Estado seleccionado
+			 *
+			 */
+			async getCities() {
+				const vm = this;
+				vm.cities = [];
+
+				if (vm.record.estate_id) {
+					await axios.get(`${window.app_url}/get-cities/${this.record.estate_id}`).then(response => {
+							vm.cities = response.data;
+					});
+				}
+				   if(vm.record.id){
+					    	if (vm.record.city.id )  {	          		
+					  
+						vm.record.city_id = vm.record.city.id;
+	          			
+	          		}
+
+				   }
+				 
+			
+			},			
+
 		},
 		created() {
 			this.table_options.headings = {

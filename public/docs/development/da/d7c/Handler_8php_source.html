@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('da/d7c/Handler_8php_source.html','../.
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    ];</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">     * Reporta o registra una exepción</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">     * Reporta o registra una excepción</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">     *</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">     * @param  \Throwable  $exception</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">     * @return void</span></div>
@@ -161,13 +161,13 @@ $(document).ready(function(){initNavTree('da/d7c/Handler_8php_source.html','../.
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> render($request, Throwable $exception)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">if</span> ($exception instanceof TokenMismatchException) {<span class="comment"></span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">            /** Captura una exepción por inactividad */</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            session()-&gt;flash(<span class="stringliteral">&#39;message&#39;</span>, [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;deny&#39;</span>, <span class="stringliteral">&#39;msg&#39;</span> =&gt; <span class="stringliteral">&#39;Sessión expirada por inactividad.&#39;</span>]);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">            /** Captura una excepción por inactividad */</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            session()-&gt;flash(<span class="stringliteral">&#39;message&#39;</span>, [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;deny&#39;</span>, <span class="stringliteral">&#39;msg&#39;</span> =&gt; <span class="stringliteral">&#39;Sesión expirada por inactividad.&#39;</span>]);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">return</span> redirect()-&gt;route(<span class="stringliteral">&#39;index&#39;</span>);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">if</span> ($exception instanceof MethodNotAllowedHttpException &amp;&amp; $request-&gt;path() === <span class="stringliteral">&quot;logout&quot;</span>) {<span class="comment"></span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">            /** Captura una exepción cuando el método usado no esta permitido */</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">            /** Captura una excepción cuando el método usado no esta permitido */</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            session()-&gt;flash(<span class="stringliteral">&#39;message&#39;</span>, [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;deny&#39;</span>, <span class="stringliteral">&#39;msg&#39;</span> =&gt; <span class="stringliteral">&#39;Usted ha salido del sistema&#39;</span>]);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> redirect()-&gt;route(<span class="stringliteral">&#39;index&#39;</span>);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('da/d7c/Handler_8php_source.html','../.
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            ]);</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">if</span> ($exception instanceof Swift_TransportException || $exception-&gt;getCode() === 530) {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">if</span> ($exception instanceof \Swift_TransportException || $exception-&gt;getCode() === 530) {</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            $msg = <span class="stringliteral">&#39;Error del sistema. Si el problema persiste contacte al administrador&#39;</span>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keywordflow">if</span> ($request-&gt;ajax()) {</div>
@@ -240,13 +240,13 @@ $(document).ready(function(){initNavTree('da/d7c/Handler_8php_source.html','../.
 <div class="ttc" id="aclassApp_1_1Roles_1_1Exceptions_1_1LevelDeniedException_html"><div class="ttname"><a href="../../d0/da1/classApp_1_1Roles_1_1Exceptions_1_1LevelDeniedException.html">App\Roles\Exceptions\LevelDeniedException</a></div><div class="ttdoc">Excepciones para niveles de acceso denegados.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d12/LevelDeniedException_8php_source.html#l00013">LevelDeniedException.php:13</a></div></div>
 <div class="ttc" id="aclassApp_1_1Roles_1_1Exceptions_1_1RoleDeniedException_html"><div class="ttname"><a href="../../d4/d06/classApp_1_1Roles_1_1Exceptions_1_1RoleDeniedException.html">App\Roles\Exceptions\RoleDeniedException</a></div><div class="ttdoc">Excepciones para los roles de acceso denegados.</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/dbb/RoleDeniedException_8php_source.html#l00013">RoleDeniedException.php:13</a></div></div>
 <div class="ttc" id="anamespaceApp_1_1Exceptions_html"><div class="ttname"><a href="../../df/d90/namespaceApp_1_1Exceptions.html">App\Exceptions</a></div><div class="ttdoc">Gestiona las excepciones generadas por el sistema.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7c/Handler_8php_source.html#l00004">Handler.php:4</a></div></div>
-<div class="ttc" id="aclassApp_1_1Exceptions_1_1Handler_html_a6db0773a375cb4793ead3063ff096674"><div class="ttname"><a href="../../d4/d9d/classApp_1_1Exceptions_1_1Handler.html#a6db0773a375cb4793ead3063ff096674">App\Exceptions\Handler\report</a></div><div class="ttdeci">report(Throwable $exception)</div><div class="ttdoc">Reporta o registra una exepción.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7c/Handler_8php_source.html#l00048">Handler.php:48</a></div></div>
+<div class="ttc" id="aclassApp_1_1Exceptions_1_1Handler_html_a6db0773a375cb4793ead3063ff096674"><div class="ttname"><a href="../../d4/d9d/classApp_1_1Exceptions_1_1Handler.html#a6db0773a375cb4793ead3063ff096674">App\Exceptions\Handler\report</a></div><div class="ttdeci">report(Throwable $exception)</div><div class="ttdoc">Reporta o registra una excepción.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7c/Handler_8php_source.html#l00048">Handler.php:48</a></div></div>
 <div class="ttc" id="aclassApp_1_1Roles_1_1Exceptions_1_1PermissionDeniedException_html"><div class="ttname"><a href="../../dd/db1/classApp_1_1Roles_1_1Exceptions_1_1PermissionDeniedException.html">App\Roles\Exceptions\PermissionDeniedException</a></div><div class="ttdoc">Excepciones para los permisos de acceso denegados.</div><div class="ttdef"><b>Definition:</b> <a href="../../de/dc2/PermissionDeniedException_8php_source.html#l00013">PermissionDeniedException.php:13</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="../../dir_17ad28703916f734b4c8becb6f0b42a0.html">Exceptions</a></li><li class="navelem"><b>Handler.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

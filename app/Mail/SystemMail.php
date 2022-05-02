@@ -1,5 +1,5 @@
 <?php
-
+/** Gestión de correos del sistema */
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -7,6 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * @class SystemMail
+ * @brief Gestiona los correos de notificación de uso general del sistema
+ *
+ * Gestiona los correos de notificación de uso general del sistema
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ *
+ * @license
+ *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
+ */
 class SystemMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,7 +27,7 @@ class SystemMail extends Mailable
     public $fromEmail;
 
     /**
-     * Create a new message instance.
+     * Crea una nueva instancia del mensaje
      *
      * @return void
      */
@@ -28,7 +39,7 @@ class SystemMail extends Mailable
     }
 
     /**
-     * Build the message.
+     * Construye el mensaje
      *
      * @return $this
      */

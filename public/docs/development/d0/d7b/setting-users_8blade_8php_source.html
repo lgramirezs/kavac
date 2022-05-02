@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -120,62 +120,68 @@ $(document).ready(function(){initNavTree('d0/d7b/setting-users_8blade_8php_sourc
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;@section(<span class="stringliteral">&#39;content&#39;</span>)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;row&quot;</span>&gt;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;col-12&quot;</span>&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card&quot;</span>&gt;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card&quot;</span> <span class="keywordtype">id</span>=<span class="stringliteral">&quot;settings_users&quot;</span>&gt;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card-header&quot;</span>&gt;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                    &lt;h6 <span class="keyword">class</span>=<span class="stringliteral">&quot;card-title&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Usuarios&#39;</span>) }}&lt;/h6&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                    &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card-btns&quot;</span>&gt;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.previous&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; url()-&gt;previous()])</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.new&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.create&#39;</span>)])</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.minimize&#39;</span>)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                    &lt;/div&gt;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                &lt;/div&gt;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card-body&quot;</span>&gt;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                    &lt;table <span class="keyword">class</span>=<span class="stringliteral">&quot;table table-hover table-striped dt-responsive datatable&quot;</span>&gt;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                        &lt;thead&gt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                            &lt;tr <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-3&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Usuario&#39;</span>) }}&lt;/th&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-7&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Organización&#39;</span>) }}&lt;/th&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-2&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Acciones&#39;</span>) }}&lt;/th&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                            &lt;/tr&gt;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                        &lt;/thead&gt;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                        &lt;tbody&gt;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                            @<span class="keywordflow">foreach</span> (App\Models\User::all() as $user)</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                &lt;tr&gt;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                    &lt;td&gt;{{ $user-&gt;username }}&lt;/td&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                    &lt;td&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                        @php</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                                            $institution = ($user-&gt;profile &amp;&amp; $user-&gt;profile-&gt;institution)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                                                           ? $user-&gt;profile-&gt;institution-&gt;acronym</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                                                           : __(<span class="stringliteral">&#39;NO ASIGNADA&#39;</span>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                        <span class="keyword">@end</span>php</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                        {{ $institution }}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                    &lt;/td&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                    &lt;td <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                                        {!! Form::button(<span class="stringliteral">&#39;&lt;i class=&quot;fa fa-info-circle&quot;&gt;&lt;/i&gt;&#39;</span>, [</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                            <span class="stringliteral">&#39;class&#39;</span> =&gt; <span class="stringliteral">&#39;btn btn-info btn-xs btn-icon btn-action&#39;</span>,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                                            <span class="stringliteral">&#39;data-toggle&#39;</span> =&gt; <span class="stringliteral">&#39;tooltip&#39;</span>, <span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;button&#39;</span>,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                            <span class="stringliteral">&#39;onclick&#39;</span> =&gt; <span class="stringliteral">&#39;view_user_info(&#39;</span>.$user-&gt;id.<span class="charliteral">&#39;)&#39;</span>,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                            <span class="stringliteral">&#39;title&#39;</span> =&gt; __(<span class="stringliteral">&#39;Ver información del usuario&#39;</span>),</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                                        ]) !!}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                        @include(<span class="stringliteral">&#39;buttons.edit&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.edit&#39;</span>, $user-&gt;id)])</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                                        @include(<span class="stringliteral">&#39;buttons.delete&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.destroy&#39;</span>, $user-&gt;id)])</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                                    &lt;/td&gt;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                &lt;/tr&gt;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                            <span class="keyword">@end</span><span class="keywordflow">foreach</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        &lt;/tbody&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                    &lt;/table&gt;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                &lt;/div&gt;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            &lt;/div&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        &lt;/div&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    &lt;/div&gt;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;@stop</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                    &lt;h6 <span class="keyword">class</span>=<span class="stringliteral">&quot;card-title&quot;</span>&gt;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                        {{ __(<span class="stringliteral">&#39;Usuarios&#39;</span>) }}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.help&#39;</span>, [</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                            <span class="stringliteral">&#39;helpId&#39;</span> =&gt; <span class="stringliteral">&#39;SettingsUser&#39;</span>,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                            <span class="stringliteral">&#39;helpSteps&#39;</span> =&gt; get_json_resource(<span class="stringliteral">&#39;ui-guides/settings_user.json&#39;</span>)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                        ])</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                    &lt;/h6&gt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                    &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card-btns&quot;</span>&gt;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.previous&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; url()-&gt;previous()])</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.new&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.create&#39;</span>)])</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                        @include(<span class="stringliteral">&#39;buttons.minimize&#39;</span>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                    &lt;/div&gt;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                &lt;/div&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;card-body&quot;</span>&gt;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                    &lt;table <span class="keyword">class</span>=<span class="stringliteral">&quot;table table-hover table-striped dt-responsive datatable&quot;</span>&gt;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                        &lt;thead&gt;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                            &lt;tr <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-3&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Usuario&#39;</span>) }}&lt;/th&gt;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-7&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Organización&#39;</span>) }}&lt;/th&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                &lt;th <span class="keyword">class</span>=<span class="stringliteral">&quot;col-md-2&quot;</span>&gt;{{ __(<span class="stringliteral">&#39;Acciones&#39;</span>) }}&lt;/th&gt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                            &lt;/tr&gt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                        &lt;/thead&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                        &lt;tbody&gt;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                            @<span class="keywordflow">foreach</span> (App\Models\User::all() as $user)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                                &lt;tr&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                    &lt;td&gt;{{ $user-&gt;username }}&lt;/td&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                    &lt;td&gt;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                        @php</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                            $institution = ($user-&gt;profile &amp;&amp; $user-&gt;profile-&gt;institution)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                                                           ? $user-&gt;profile-&gt;institution-&gt;acronym</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                                           : __(<span class="stringliteral">&#39;NO ASIGNADA&#39;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                                        <span class="keyword">@end</span>php</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                        {{ $institution }}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                    &lt;/td&gt;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                                    &lt;td <span class="keyword">class</span>=<span class="stringliteral">&quot;text-center&quot;</span>&gt;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                        {!! Form::button(<span class="stringliteral">&#39;&lt;i class=&quot;fa fa-info-circle&quot;&gt;&lt;/i&gt;&#39;</span>, [</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                                            <span class="stringliteral">&#39;class&#39;</span> =&gt; <span class="stringliteral">&#39;btn btn-info btn-xs btn-icon btn-action&#39;</span>,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                                            <span class="stringliteral">&#39;data-toggle&#39;</span> =&gt; <span class="stringliteral">&#39;tooltip&#39;</span>, <span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;button&#39;</span>,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                            <span class="stringliteral">&#39;onclick&#39;</span> =&gt; <span class="stringliteral">&#39;view_user_info(&#39;</span>.$user-&gt;id.<span class="charliteral">&#39;)&#39;</span>,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                                            <span class="stringliteral">&#39;title&#39;</span> =&gt; __(<span class="stringliteral">&#39;Ver información del usuario&#39;</span>),</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                        ]) !!}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                                        @include(<span class="stringliteral">&#39;buttons.edit&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.edit&#39;</span>, $user-&gt;id)])</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                        @include(<span class="stringliteral">&#39;buttons.delete&#39;</span>, [<span class="stringliteral">&#39;route&#39;</span> =&gt; route(<span class="stringliteral">&#39;users.destroy&#39;</span>, $user-&gt;id)])</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                    &lt;/td&gt;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                                &lt;/tr&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keyword">@end</span><span class="keywordflow">foreach</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                        &lt;/tbody&gt;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    &lt;/table&gt;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                &lt;/div&gt;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            &lt;/div&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        &lt;/div&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    &lt;/div&gt;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;@stop</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_0fc3f8f3ef96ce2d45d66d6e29832317.html">resources</a></li><li class="navelem"><a class="el" href="../../dir_5794a73405254976eadeaaaebebc79b6.html">views</a></li><li class="navelem"><a class="el" href="../../dir_0c11f01699b8aab712100cb217d7eb01.html">admin</a></li><li class="navelem"><b>setting-users.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:00 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

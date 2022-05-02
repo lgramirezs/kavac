@@ -6,11 +6,11 @@
                 <div class="col-md-12">
                     <b>Información base del requerimiento</b>
                 </div>
-                <div class="col-3">
+                <div class="col-3" v-if="record.code">
                     <div class="form-group">
-                        <label class="control-label">Fecha de generación</label><br>
+                        <label class="control-label">Código del requerimiento</label><br>
                         <label class="control-label">
-                            <h5>{{ format_date((requirement_edit)?requirement_edit.created_at:date) }}</h5>
+                            <h5>{{ record.code }}</h5>
                         </label>
                     </div>
                 </div>
@@ -22,7 +22,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label">Fecha de generación</label><br>
+                        <input type="date" class="form-control" v-model="record.date">
+                    </div>
+                </div>
+                <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label" for="institutions">Institución</label><br>
                         <select2 :options="institutions" id="institutions" v-model="record.institution_id" v-has-tooltip @input="getDepartments()"></select2>
@@ -113,13 +119,6 @@
 <script>
 export default {
     props: {
-        date: {
-            type: String,
-            default: function() {
-                const dateJs = new Date();
-                return dateJs.getFullYear() + '-' + (dateJs.getMonth() + 1) + '-' + dateJs.getDate();
-            }
-        },
         institutions: {
             type: Array,
             default: function() {
@@ -154,6 +153,8 @@ export default {
     data() {
         return {
             record: {
+                code:'',
+                date:'',
                 institution_id: '',
                 contracting_department_id: '',
                 user_department_id: '',
@@ -196,8 +197,10 @@ export default {
         const vm = this;
         if (vm.requirement_edit) {
             // asignara la institucion por medio del usuario
-            vm.record.institution_id = vm.requirement_edit.institution_id;
+            vm.record.code = vm.requirement_edit.code;
+            vm.record.date = vm.requirement_edit.date;
             vm.record.description = vm.requirement_edit.description;
+            vm.record.institution_id = vm.requirement_edit.institution_id;
             vm.record.contracting_department_id = vm.requirement_edit.contracting_department_id;
             vm.record.user_department_id = vm.requirement_edit.user_department_id;
             vm.record.purchase_supplier_object_id = vm.requirement_edit.purchase_supplier_object_id;

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollStaff;
+use Modules\Payroll\Models\PayrollStaffUniformSize;
 use App\Models\Phone;
 use App\Models\CodeSetting;
 use App\Rules\AgeToWork;
@@ -60,8 +61,9 @@ class PayrollStaffController extends Controller
             'municipality_id' => ['required'],
             'parish_id' => ['required'],
             'address' => ['required', 'max:200'],
-            'uniform_size' => ['required', 'integer', 'min:1'],
             'medical_history' => ['nullable'],
+            'uniform_sizes.*.size' => ['sometimes', 'required'],
+            'uniform_sizes.*.name' => ['sometimes', 'required']
         ];
 
         /** Define los atributos para los campos personalizados*/
@@ -76,7 +78,9 @@ class PayrollStaffController extends Controller
             'estate_id' => 'estado',
             'municipality_id' => 'muncipio',
             'parish_id' => 'parroquia',
-            'uniform_size' => 'talla de uniforme',
+            'uniform_sizes' => 'talla de uniforme',
+            'uniform_sizes.*.size' => 'talla de uniforme',
+            'uniform_sizes.*.name' => 'nombre del uniforme',
             'medical_history' => 'historial médico'
         ];
     }
@@ -200,10 +204,19 @@ class PayrollStaffController extends Controller
             'emergency_phone' => $request->emergency_phone,
             'parish_id' => $request->parish_id,
             'address' => $request->address,
-            'uniform_size' => $request->uniform_size,
             'medical_history' => $request->medical_history,
         ]);
-        dd($payrollStaff);
+
+        if ($request->uniform_sizes && !empty($request->uniform_sizes)) {
+            foreach ($request->uniform_sizes as $size) {
+                $uniformSize = PayrollStaffUniformSize::create([
+                    'name'          => $size['name'],
+                    'size'          => $size['size'],
+                    'payroll_staff_id' => $payrollStaff->id
+                ]);
+            }
+        }
+
         if ($request->phones && !empty($request->phones)) {
             foreach ($request->phones as $phone) {
                 $payrollStaff->phones()->save(new Phone([
@@ -337,9 +350,21 @@ class PayrollStaffController extends Controller
         $payrollStaff->emergency_phone = $request->emergency_phone;
         $payrollStaff->parish_id = $request->parish_id;
         $payrollStaff->address = $request->address;
-        $payrollStaff->uniform_size = $request->uniform_size;
         $payrollStaff->medical_history = $request->medical_history;
         $payrollStaff->save();
+
+        foreach ($payrollStaff->payrollStaffUniformSize as $uniformSize) {
+            $uniformSize->delete();
+        }
+        if ($payrollStaff->payrollStaffUniformSize == true) {
+            foreach ($request->uniform_sizes as $size) {
+                $uniformSize = PayrollStaffUniformSize::create([
+                    'name'          => $size['name'],
+                    'size'          => $size['size'],
+                    'payroll_staff_id' => $payrollStaff->id
+                ]);
+            }
+        }
         foreach ($payrollStaff->phones as $phone) {
             $phone->delete();
         }
@@ -371,6 +396,8 @@ class PayrollStaffController extends Controller
     public function destroy($id)
     {
         $payrollStaff = PayrollStaff::find($id);
+        $payrollStaffUniformSize = PayrollStaffUniformSize::where('payroll_staff_id', $id);
+        $payrollStaffUniformSize->delete();
         $payrollStaff->delete();
         return response()->json(['record' => $payrollStaff, 'message' => 'Success'], 200);
     }
@@ -395,8 +422,25 @@ class PayrollStaffController extends Controller
      * @author  William Páez <wpaez@cenditel.gob.ve>
      * @return \Illuminate\Http\JsonResponse    Json con los datos de la información personal de los trabajadores
      */
-    public function getPayrollStaffs()
+    public function getPayrollStaffs($type = 'all')
     {
-        return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        if ($type === 'all') {
+            return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        } else if (is_numeric($type)) {
+            return response()->json(
+                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
+            );
+        }
+
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+
+        /** Filtra por el personal que aún no tiene registrado los datos laborales */
+        $staffs = PayrollStaff::doesnthave('payrollEmployment')->get();
+
+        foreach ($staffs as $staff) {
+            $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+        }
+
+        return response()->json($options);
     }
 }

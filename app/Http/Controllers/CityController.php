@@ -14,9 +14,8 @@ use App\Rules\UniqueCityName;
  * Clase que gestiona las Ciudades
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
- * @license <a href='http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/' target="_blank">
- *              LICENCIA DE SOFTWARE CENDITEL
- *          </a>
+ * @license
+ *      [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
 class CityController extends Controller
 {
@@ -38,6 +37,7 @@ class CityController extends Controller
      * Muestra un listado de Ciudades
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @return \Illuminate\Http\JsonResponse con los registros a mostrar
      */
     public function index()
@@ -49,7 +49,9 @@ class CityController extends Controller
      * Registra una nueva Ciudad
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param \Illuminate\Http\Request $request Datos de la petición
+     * 
      * @return \Illuminate\Http\JsonResponse con el resultado de la petición
      */
     public function store(Request $request)
@@ -77,8 +79,10 @@ class CityController extends Controller
      * Muestra los datos de una Ciudad
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param \Illuminate\Http\Request $request Datos de la petición
      * @param \App\Models\City $city Datos de la Ciudad
+     * 
      * @return \Illuminate\Http\JsonResponse con el resultado de la petición
      */
     public function update(Request $request, City $city)
@@ -99,12 +103,30 @@ class CityController extends Controller
      * Elimina una Ciudad específica
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param \App\Models\City $city Datos de la Ciudad
+     * 
      * @return \Illuminate\Http\JsonResponse con el resultado de la petición
      */
     public function destroy(City $city)
     {
         $city->delete();
         return response()->json(['record' => $city, 'message' => 'Success'], 200);
+    }
+
+    /**
+     * Consulta una Ciudad específica
+     *
+     * @author  Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+     * 
+     * @param \Illuminate\Http\Request $request Datos de la petición
+     * @param integer $id ID de la Ciudad
+     * 
+     * @return \Illuminate\Http\JsonResponse con el resultado de la petición
+     */
+    public function getCity(Request $request, $id)
+    {
+        $city = City::find($id);
+        return response()->json(['result' => $city], 200);
     }
 }

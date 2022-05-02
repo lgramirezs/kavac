@@ -40,6 +40,28 @@ class WarehouseRequestStaffController extends Controller
         $this->middleware('permission:warehouse.request.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:warehouse.request.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:warehouse.request.delete', ['only' => 'destroy']);
+
+
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'warehouse_products.*' => ['required'],
+            'department_id'        => ['required'],
+            'payroll_position_id'  => ['required'],
+            'payroll_staff_id'     => ['required'],
+            'motive'               => ['required']
+        ];
+
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+
+            'department_id.required'       => 'El campo departamento es obligatorio',
+            'payroll_position_id.required' => 'El campo cargo es obligatorio',
+            'payroll_staff_id.required'    => 'El campo solicitante es obligatorio',
+            'motive.required'              => 'El campo motivo de la solicitud es obligatorio'
+
+
+        ];
     }
 
     /**
@@ -63,13 +85,15 @@ class WarehouseRequestStaffController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'warehouse_products.*' => ['required'],
-            'department_id' => ['required'],
-            'payroll_staff_id' => ['required'],
-            'motive' => ['required']
+        $validateRules = $this->validateRules;
+        for ($i=0; $i < count($request->warehouse_products); $i++) { 
+            $validateRules = array_merge($validateRules, [
+                'warehouse_products.'. $i .'.requested' => ['required', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+            ]);
+        }
+       
 
-        ]);
+        $this->validate($request, $validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'warehouse_requests')->first();
         if (is_null($codeSetting)) {
@@ -165,13 +189,16 @@ class WarehouseRequestStaffController extends Controller
     public function update(Request $request, $id)
     {
         $warehouse_request = WarehouseRequest::find($id);
-        $this->validate($request, [
-            'warehouse_products.*' => ['required'],
-            'department_id' => ['required'],
-            'payroll_staff_id' => ['required'],
-            'motive' => ['required']
+        
+        $validateRules = $this->validateRules;
+        for ($i=0; $i < count($request->warehouse_products); $i++) { 
+            $validateRules = array_merge($validateRules, [
+                'warehouse_products.'. $i .'.requested' => ['required', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+            ]);
+        }
+       
 
-        ]);
+        $this->validate($request, $validateRules, $this->messages);
 
         DB::transaction(function () use ($request, $warehouse_request) {
             $warehouse_request->motive = $request->input('motive');

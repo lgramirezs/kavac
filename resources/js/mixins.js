@@ -112,6 +112,7 @@ Vue.mixin({
 				lock: true, //Indica si se bloquea o no la pantalla por inactividad
 				timer_timeout: 0
 			},
+			loadLockScreen: false,
             /**
 			 * Opciones generales a implementar en tablas
 			 * @type {JSON}
@@ -833,10 +834,14 @@ Vue.mixin({
 		 */
 		getEstates() {
 			const vm = this;
-			vm.estates = [];
+			vm.estates = [
+				{id: '', text: 'Seleccione...'}
+			];
 			if (vm.record.country_id) {
 				axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
-					vm.estates = response.data;
+					if (response.data) {
+						vm.estates = response.data;
+					}
 				});
 			}
 		},
@@ -1009,6 +1014,7 @@ Vue.mixin({
 		 * @param  {object|array} el    Elemento del cual se va a eliminar un elemento
 		 */
 		removeRow: function(index, el) {
+			$('.tooltip:last').remove();
 			el.splice(index, 1);
 		},
 		/**
@@ -1081,19 +1087,26 @@ Vue.mixin({
 			}
 			else {
 				if (vm.lockscreen.time === 0) {
+					if (vm.loadLockScreen) {
+						return;
+					}
 					/** @type {Object} Datos del usuario para el bloqueo de pantalla por inactividad */
-					let response = await axios.get('/get-lockscreen-data');
+					let response = await axios.get(`${window.app_url}/get-lockscreen-data`);
 					vm.lockscreen.lock = response.data.lock_screen;
 					vm.lockscreen.time = response.data.time_lock;
+					vm.loadLockScreen = true;
 				}
 
 				if (vm.lockscreen.time > 0) {
 					/** Bloquea la pantalla del sistema al no haber actividad por parte del usuario */
 					vm.lockscreen.timer_timeout = setTimeout(function() {
+						if (window.screen_locked) {
+							return;
+						}
 						$(document.body).addClass('modalBlur');
 						$(".modal-lockscreen").modal('show');
 						window.screen_locked = true;
-						axios.post('/set-lockscreen-data', {
+						axios.post(`${window.app_url}/set-lockscreen-data`, {
 							lock_screen: true
 						}).catch(error => {
 							console.warn(error);
@@ -1114,10 +1127,13 @@ Vue.mixin({
 							clearTimeout(vm.timer_timeout);
 							window.screen_locked = false;
 							vm.lockscreen.timer_timeout = setTimeout(function() {
+								if (window.screen_locked) {
+									return;
+								}
 								$(document.body).addClass('modalBlur');
 								$(".modal-lockscreen").modal('show');
 								window.screen_locked = true;
-								axios.post('/set-lockscreen-data', {
+								axios.post(`${window.app_url}/set-lockscreen-data`, {
 									lock_screen: true
 								}).catch(error => {
 									console.warn(error);
@@ -1125,9 +1141,6 @@ Vue.mixin({
 							}, vm.lockscreen.time * 60000);
 						}
 					}, true);
-					/*activityEvents.forEach(function(eventName) {
-						
-					});*/
 				}
 			}
 		},
@@ -1140,10 +1153,13 @@ Vue.mixin({
 			const vm = this;
 			
 			vm.lockscreen.timer_timeout = setTimeout(function() {
+				if (window.screen_locked) {
+					return;
+				}
 				$(document.body).addClass('modalBlur');
 				$(".modal-lockscreen").modal('show');
 				window.screen_locked = true;
-				axios.post('/set-lockscreen-data', {
+				axios.post(`${window.app_url}/set-lockscreen-data`, {
 					lock_screen: true
 				}).catch(error => {
 					console.warn(error);

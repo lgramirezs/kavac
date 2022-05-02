@@ -6,14 +6,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Cache Store
+    | Almacén de caché predeterminado
     |--------------------------------------------------------------------------
     |
-    | This option controls the default cache connection that gets used while
-    | using this caching library. This connection is used when another is
-    | not explicitly specified when executing a given caching function.
+    | Esta opción controla la conexión de caché predeterminada que se usa al 
+    | utilizar esta biblioteca de almacenamiento en caché. Esta conexión se 
+    | utiliza cuando no se especifica explícitamente otra al ejecutar una 
+    | determinada función de almacenamiento en caché.
     |
-    | Supported: "apc", "array", "database", "file",
+    | Soportado: "apc", "array", "database", "file", 
     |            "memcached", "redis", "dynamodb"
     |
     */
@@ -22,12 +23,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cache Stores
+    | Almacenes de caché
     |--------------------------------------------------------------------------
     |
-    | Here you may define all of the cache "stores" for your application as
-    | well as their drivers. You may even define multiple stores for the
-    | same cache driver to group types of items stored in your caches.
+    | Aquí puede definir todos los "almacenes" de caché para su aplicación, 
+    | así como sus controladores. Incluso puede definir varios almacenes para 
+    | el mismo controlador de caché para agrupar tipos de elementos almacenados 
+    | en sus cachés.
     |
     */
 
@@ -88,12 +90,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cache Key Prefix
+    | Prefijo de clave de caché
     |--------------------------------------------------------------------------
     |
-    | When utilizing a RAM based store such as APC or Memcached, there might
-    | be other applications utilizing the same cache. So, we'll specify a
-    | value to get prefixed to all our keys so we can avoid collisions.
+    | Al utilizar un almacen de datos basado en RAM como APC o Memcached, 
+    | puede haber otras aplicaciones que utilicen el mismo caché. Entonces, 
+    | especificaremos un valor para que se prefije a todas nuestras claves 
+    | para que podamos evitar colisiones.
     |
     */
 

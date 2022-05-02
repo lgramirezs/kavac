@@ -80,12 +80,8 @@
 					<div class="row form-group">
 						<div class="col-3 text-bold text-uppercase">{{ __('Acción Específica') }}:</div>
 						<div class="col-9">
-                            <div class="row">
-                                <div class="col-2">{{ $formulation->specificAction->code }} -</div>
-                                <div class="col-10 text-justify">
-                                    {!! $formulation->specificAction->description !!}
-                                </div>
-                            </div>
+							<div style="width:auto;display:inline-block;vertical-align:top">{{ $formulation->specificAction->code }} - </div>
+							<div class="text-justify" style="width:84%;display:inline-block;">{!! $formulation->specificAction->description !!}</div>
                         </div>
 					</div>
 					<div class="row form-group">

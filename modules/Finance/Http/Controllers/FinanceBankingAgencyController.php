@@ -5,8 +5,10 @@ namespace Modules\Finance\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Finance\Models\FinanceBankingAgency;
+use Models\Estate;
 use App\Models\Phone;
 
 /**
@@ -46,7 +48,12 @@ class FinanceBankingAgencyController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
-    {
+    { 
+        $record = FinanceBankingAgency::with([
+            'financeBank', 'city', 'phones'
+        ])->get(); 
+        Log::emergency($record);
+
         return response()->json(['records' => FinanceBankingAgency::with([
             'financeBank', 'city', 'phones'
         ])->get()], 200);
@@ -70,11 +77,18 @@ class FinanceBankingAgencyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required'],
+            'name' => ['required', 'unique:finance_banking_agencies,name'],
             'direction' => ['required'],
             'city_id' => ['required'],
             'finance_bank_id' => ['required']
-        ]);
+          ],[
+            'name.required' => 'El campo nombre de agencia es obligatorio.',
+            'name.unique' => 'El nombre de agencia  ya ha sido registrado.',
+            'direction.required' => 'El campo direccion es obligatorio.',
+            'city_id.required' => 'El campo ciudad es obligatorio.',
+            'finance_bank_id.required' => 'El campo banco es obligatorio.',
+           ]
+        );
 
         $bankingAgency = FinanceBankingAgency::create([
             'name' => $request->name,
@@ -86,7 +100,7 @@ class FinanceBankingAgencyController extends Controller
             'contact_email' => (!empty($request->contact_email))
                                ? $request->contact_email
                                : null,
-            'headquarters' => (!is_null($request->headquarters)),
+            'headquarters' => $request->headquarters,
             'city_id' => $request->city_id,
         ]);
 
@@ -138,7 +152,13 @@ class FinanceBankingAgencyController extends Controller
             'direction' => ['required'],
             'city_id' => ['required'],
             'finance_bank_id' => ['required']
-        ]);
+          ],[
+            'name.required' => 'El campo nombre de agencia es obligatorio.',         
+            'direction.required' => 'El campo direccion es obligatorio.',
+            'city_id.required' => 'El campo ciudad es obligatorio.',
+            'finance_bank_id.required' => 'El campo banco es obligatorio.',
+           ] 
+        );
 
         /** @var object Datos de la agencia bancaria */
         $financeBankingAgency = FinanceBankingAgency::find($id);
@@ -149,7 +169,7 @@ class FinanceBankingAgencyController extends Controller
         $financeBankingAgency->contact_email = (!empty($request->contact_email))
                                                ? $request->contact_email
                                                : null;
-        $financeBankingAgency->headquarters = (!is_null($request->headquarters));
+        $financeBankingAgency->headquarters = $request->headquarters;
         $financeBankingAgency->save();
 
         if ($request->phones && !empty($request->phones)) {

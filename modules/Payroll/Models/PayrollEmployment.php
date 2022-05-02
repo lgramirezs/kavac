@@ -2,11 +2,12 @@
 /** [descripción del namespace] */
 namespace Modules\Payroll\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
+use App\Models\Profile;
 use App\Traits\ModelsTrait;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
 /**
  * @class PayrollEmployment
@@ -144,5 +145,17 @@ class PayrollEmployment extends Model implements Auditable
     public function payrollPreviousJob()
     {
         return $this->hasMany(PayrollPreviousJob::class);
+    }
+
+    /**
+     * Método que obtiene los datos del perfil asociado al trabajador
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'employee_id');
     }
 }

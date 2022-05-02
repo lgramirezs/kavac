@@ -1,0 +1,34 @@
+[
+    {
+        "element": "#helpInstitution",
+        "intro": "Institución a la cual asignar el proyecto a registrar."
+    },
+    {
+        "element": "#helpDepartment",
+        "intro": "Dependencia o Departamento a cargo del proyecto."
+    },
+    {
+        "element": "#helpResponsible",
+        "intro": "Responsable de la ejecución del proyecto."
+    },
+    {
+        "element": "#helpPosition",
+        "intro": "Cargo del responsable de la ejecución del proyecto."
+    },
+    {
+        "element": "#helpCode",
+        "intro": "Código que identifica al proyecto"
+    },
+    {
+        "element": "#helpOnapreCode",
+        "intro": "Código asignado al proyecto por la Oficina Nacional de Presupuesto (ONAPRE)"
+    },
+    {
+        "element": "#helpName",
+        "intro": "Nombre del proyecto"
+    },
+    {
+        "element": "#helpStatus",
+        "intro": "Estatus del proyecto, Activo / Inactivo."
+    }
+]

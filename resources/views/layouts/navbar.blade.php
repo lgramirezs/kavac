@@ -1,8 +1,5 @@
 {{-- Barra de Navegación Superior --}}
 <nav class="navbar navbar-expand-lg bg-info fixed-top">
-	{{-- <div>
-		<img src="{{ App\Models\Institution::where('default', true)->first()->banner->url }}" alt="">
-	</div> --}}
 	<div class="container-left">
 		<a class="logo text-decoration-none" href="{{ route('index') }}">
             @include('layouts.logo-images', ['logo_nav' => true, 'logo_name' => true])
@@ -57,36 +54,13 @@
                                    list-notifications-url="{!! route('notifications.list') !!}"></notifications>
 				@endif
 
-                {{--
-				<li class="nav-item dropdown">
-					<a href="#" class="nav-link dropdown-toggle btn btn-sm btn-info" id="list_options_language"
-					   data-toggle="dropdown" aria-expanded="false" title="{{ __('Idioma') }}">
-					   	<i class="fa fa-flag-o" aria-hidden="true"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right"
-						 aria-labelledby="list_options_language">
-						<a class="dropdown-header">{{ __('IDIOMAS') }}</a>
-						<a class="dropdown-item" href="#" title="{{ __('Español') }}"
-						   data-toggle="tooltip">{{ __('Español') }}</a>
-						<a class="dropdown-item" href="#" title="{{ __('Inglés') }}"
-						   data-toggle="tooltip">{{ __('Inglés') }}</a>
-					</div>
-				</li>
-                 --}}
-				{{-- <li class="nav-item">
-					<a class="nav-link btn btn-sm btn-info" href="#"
-					   title="Configuración del Sistema, solo administradores"
-					   data-toggle="tooltip">
-						<i class="now-ui-icons ui-2_settings-90"></i>
-					</a>
-				</li> --}}
-				@if ($chat)
-					{{-- <li class="nav-item">
+                @if ($chat)
+					<li class="nav-item">
 						<a class="nav-link btn btn-sm btn-info" href="javascript:void(0)" title="{{ __('Chat') }}"
                            data-toggle="tooltip">
 							<i class="now-ui-icons ui-2_chat-round"></i>
 						</a>
-					</li> --}}
+					</li>
 				@endif
 				@if ($support)
 					<li class="nav-item">
@@ -132,10 +106,10 @@
 						   title="{{ __('Actualizar datos de perfil del usuario') }}"
 						   data-toggle="tooltip" data-placement="left">
 							<i class="ion-person"></i>{{ __('Mi Perfil') }}</a>
-						<a class="dropdown-item" href="{{ url('users') . "/" . Auth::user()->id }}/?tab=activity"
+						{{-- <a class="dropdown-item" href="{{ url('users') . "/" . Auth::user()->id }}/?tab=activity"
                            title="{{ __('Ver actividad en la aplicación') }}" data-toggle="tooltip"
                            data-placement="left">
-							<i class="ion-ios-star"></i>{{ __('Registro de Actividad') }}</a>
+							<i class="ion-ios-star"></i>{{ __('Registro de Actividad') }}</a> --}}
 						<lock-screen-option></lock-screen-option>
 						<a id="doc-user" class="dropdown-item" href="" target="_blank"
                            title="{{ __('Ayuda') }} / {{ __('Manual de usuario') }}" data-toggle="tooltip"

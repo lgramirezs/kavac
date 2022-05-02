@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -152,75 +152,71 @@ $(document).ready(function(){initNavTree('d4/d54/Reports_2SaleBillController_8ph
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        $is_admin = auth()-&gt;user()-&gt;isAdmin();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        $sale_bills = SaleBill::with(</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            [</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                <span class="stringliteral">&#39;saleClient&#39;</span>,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                <span class="stringliteral">&#39;saleWarehouse&#39;</span>,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="stringliteral">&#39;salePaymentMethod&#39;</span>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="stringliteral">&#39;saleDiscount&#39;</span>,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="stringliteral">&#39;saleBillInventoryProduct&#39;</span> =&gt; <span class="keyword">function</span> ($query) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                        $query-&gt;with([<span class="stringliteral">&#39;saleWarehouseInventoryProduct&#39;</span> =&gt; <span class="keyword">function</span> ($query){</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                            $query-&gt;with(<span class="stringliteral">&#39;saleSettingProduct&#39;</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                        }]);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            ]</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        )-&gt;find($id);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">// if (!$is_admin &amp;&amp; $user_profile &amp;&amp; $user_profile[&#39;institution&#39;]) {</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">//  // )-&gt;where(&#39;institution_id&#39;, $user_profile[&#39;institution&#39;][&#39;id&#39;])-&gt;find($id);</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">// } else {</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">//  $requirement = AccountingEntry::with(</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">//      &#39;accountingAccounts.account.accountConverters.budgetAccount&#39;,</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="comment">//      &#39;currency&#39;</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">//  )-&gt;find($id);</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">// }</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">if</span> (!auth()-&gt;user()-&gt;isAdmin()) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">if</span> ($requirement &amp;&amp; $requirement-&gt;queryAccess($user_profile[<span class="stringliteral">&#39;institution&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>])) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;errors.403&#39;</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">        /**</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">         * [$pdf base para generar el pdf]</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">         * @var [Modules\Accounting\Pdf\Pdf]</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">         */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        $pdf = <span class="keyword">new</span> ReportRepository();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">         *  Definicion de las caracteristicas generales de la página pdf</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">         */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        $institution = <span class="keyword">null</span>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">if</span> (!$is_admin &amp;&amp; $user_profile &amp;&amp; $user_profile[<span class="stringliteral">&#39;institution&#39;</span>]) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            $institution = Institution::find($user_profile[<span class="stringliteral">&#39;institution&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>]);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            $institution = <span class="stringliteral">&#39;&#39;</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">// $pdf-&gt;setConfig([&#39;institution&#39; =&gt; $institution, &#39;urlVerify&#39; =&gt; url(&#39;/purchase/purchase_requirement/pdf/&#39;.$id)]);</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        $pdf-&gt;setConfig([<span class="stringliteral">&#39;institution&#39;</span> =&gt; Institution::first()]);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        $pdf-&gt;setHeader(<span class="stringliteral">&#39;Factura&#39;</span>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        $pdf-&gt;setFooter();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        $pdf-&gt;setBody(<span class="stringliteral">&#39;sale::pdf.bills&#39;</span>, <span class="keyword">true</span>, [</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="stringliteral">&#39;pdf&#39;</span>         =&gt; $pdf,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="stringliteral">&#39;sale_bills&#39;</span> =&gt; $sale_bills</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        ]);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        $sale_bills = SaleBill::where(<span class="stringliteral">&#39;state&#39;</span>, <span class="stringliteral">&#39;Aprobado&#39;</span>)-&gt;with([<span class="stringliteral">&#39;SaleFormPayment&#39;</span>, <span class="stringliteral">&#39;saleBillInventoryProduct&#39;</span> =&gt; <span class="keyword">function</span> ($query) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                        $query-&gt;with([<span class="stringliteral">&#39;saleGoodsToBeTraded&#39;</span>, <span class="stringliteral">&#39;currency&#39;</span>, <span class="stringliteral">&#39;saleListSubservices&#39;</span>, <span class="stringliteral">&#39;measurementUnit&#39;</span>, <span class="stringliteral">&#39;historyTax&#39;</span>,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                            <span class="stringliteral">&#39;saleWarehouseInventoryProduct&#39;</span> =&gt; <span class="keyword">function</span> ($q) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                $q-&gt;with(<span class="stringliteral">&#39;saleSettingProduct&#39;</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                        }]);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                    }])-&gt;find($id);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// if (!$is_admin &amp;&amp; $user_profile &amp;&amp; $user_profile[&#39;institution&#39;]) {</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="comment">//  // )-&gt;where(&#39;institution_id&#39;, $user_profile[&#39;institution&#39;][&#39;id&#39;])-&gt;find($id);</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// } else {</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">//  $requirement = AccountingEntry::with(</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">//      &#39;accountingAccounts.account.accountConverters.budgetAccount&#39;,</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="comment">//      &#39;currency&#39;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">//  )-&gt;find($id);</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">// }</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">if</span> (!auth()-&gt;user()-&gt;isAdmin()) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> ($requirement &amp;&amp; $requirement-&gt;queryAccess($user_profile[<span class="stringliteral">&#39;institution&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>])) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;errors.403&#39;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">        /**</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">         * [$pdf base para generar el pdf]</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">         * @var [Modules\Accounting\Pdf\Pdf]</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">         */</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        $pdf = <span class="keyword">new</span> ReportRepository();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">         *  Definicion de las caracteristicas generales de la página pdf</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">         */</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        $institution = <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">         *  Definicion de las caracteristicas generales de la página pdf</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">         */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> (auth()-&gt;user()-&gt;isAdmin()) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            $institution = Institution::first();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            $institution = Institution::find($user_profile-&gt;institution-&gt;id);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        $pdf-&gt;setConfig([<span class="stringliteral">&#39;institution&#39;</span> =&gt; $institution, <span class="stringliteral">&#39;urlVerify&#39;</span> =&gt; url(<span class="stringliteral">&#39;/sale/reports/payment/pdf/&#39;</span>.$sale_bills-&gt;id)]);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        $pdf-&gt;setConfig([<span class="stringliteral">&#39;institution&#39;</span> =&gt; Institution::first()]);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        $pdf-&gt;setHeader(<span class="stringliteral">&#39;Factura&#39;</span>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        $pdf-&gt;setFooter(<span class="keyword">true</span>, $institution-&gt;rif.<span class="charliteral">&#39; &#39;</span>.$institution-&gt;legal_address);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        $pdf-&gt;setBody(<span class="stringliteral">&#39;sale::pdf.bills&#39;</span>, <span class="keyword">true</span>, [</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="stringliteral">&#39;pdf&#39;</span>         =&gt; $pdf,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="stringliteral">&#39;sale_bills&#39;</span> =&gt; $sale_bills</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        ]);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassApp_1_1Models_1_1Profile_html"><div class="ttname"><a href="../../d9/de5/classApp_1_1Models_1_1Profile.html">App\Models\Profile</a></div><div class="ttdoc">Datos de Perfiles de usuario.</div><div class="ttdef"><b>Definition:</b> <a href="../../d3/d1a/app_2Models_2Profile_8php_source.html#l00022">app/Models/Profile.php:22</a></div></div>
 <div class="ttc" id="aclassApp_1_1Models_1_1CodeSetting_html"><div class="ttname"><a href="../../d5/d95/classApp_1_1Models_1_1CodeSetting.html">App\Models\CodeSetting</a></div><div class="ttdoc">Datos para la configuración de códigos de registro.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d9e/Models_2CodeSetting_8php_source.html#l00033">Models/CodeSetting.php:33</a></div></div>
-<div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProduct_html"><div class="ttname"><a href="../../d7/d76/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProduct.html">Modules\Sale\Models\SaleWarehouseInventoryProduct</a></div><div class="ttdoc">Datos del inventario de los productos.</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d55/SaleWarehouseInventoryProduct_8php_source.html#l00021">SaleWarehouseInventoryProduct.php:21</a></div></div>
-<div class="ttc" id="aclassApp_1_1Repositories_1_1ReportRepository_html"><div class="ttname"><a href="../../db/d2b/classApp_1_1Repositories_1_1ReportRepository.html">App\Repositories\ReportRepository</a></div><div class="ttdoc">Gestiona los reportes de la aplicación.</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/dad/app_2Repositories_2ReportRepository_8php_source.html#l00022">app/Repositories/ReportRepository.php:22</a></div></div>
+<div class="ttc" id="aclassModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProduct_html"><div class="ttname"><a href="../../d7/d76/classModules_1_1Sale_1_1Models_1_1SaleWarehouseInventoryProduct.html">Modules\Sale\Models\SaleWarehouseInventoryProduct</a></div><div class="ttdoc">Datos del inventario de los productos.</div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d55/SaleWarehouseInventoryProduct_8php_source.html#l00020">SaleWarehouseInventoryProduct.php:20</a></div></div>
+<div class="ttc" id="aclassApp_1_1Repositories_1_1ReportRepository_html"><div class="ttname"><a href="../../db/d2b/classApp_1_1Repositories_1_1ReportRepository.html">App\Repositories\ReportRepository</a></div><div class="ttdoc">Gestiona los reportes de la aplicación.</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/dad/app_2Repositories_2ReportRepository_8php_source.html#l00023">app/Repositories/ReportRepository.php:23</a></div></div>
 <div class="ttc" id="aclassModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController_html"><div class="ttname"><a href="../../dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController.html">Modules\Sale\Http\Controllers\Reports\SaleBillController</a></div><div class="ttdoc">Controlador para la emision de una factura.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d54/Reports_2SaleBillController_8php_source.html#l00028">Reports/SaleBillController.php:28</a></div></div>
 <div class="ttc" id="aclassModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="../../dd/df3/classModules_1_1Sale_1_1Http_1_1Controllers_1_1Reports_1_1SaleBillController.html#a095c5d389db211932136b53f25f39685">Modules\Sale\Http\Controllers\Reports\SaleBillController\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdoc">Define la configuración de la clase.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d54/Reports_2SaleBillController_8php_source.html#l00035">Reports/SaleBillController.php:35</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_98ac1e57f40504a9487c57868589c7b0.html">Sale</a></li><li class="navelem"><a class="el" href="../../dir_d9aa5f798cb829249b1b1042f330acce.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_6dba70be2be75cdfe1458a0c597b7a33.html">Controllers</a></li><li class="navelem"><a class="el" href="../../dir_29a0131bc9728f8fff1a809453e05238.html">Reports</a></li><li class="navelem"><b>SaleBillController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:59 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:31 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

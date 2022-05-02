@@ -23,10 +23,13 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Formatos de Códigos') }}
-						@include('buttons.help', [
-							'helpId' => 'PayrollCodeSetting',
-							'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'payroll')
-						])
+						{{--
+							// Issue #96: Solicitaron que no se muestre el botón de ayuda en esta sección
+							@include('buttons.help', [
+								'helpId' => 'PayrollCodeSetting',
+								'helpSteps' => get_json_resource('ui-guides/settings/code_setting.json', 'payroll')
+							])
+						--}}
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
@@ -36,6 +39,7 @@
 				{!! Form::open(['id' => 'form-codes', 'route' => 'payroll.settings.store', 'method' => 'post']) !!}
 				{!! Form::token() !!}
 				<div class="card-body">
+					@include('layouts.help-text', ['codeSetting' => true])
 					@include('layouts.form-errors')
 					<div class="row">
 						<div class="col-12">
@@ -111,8 +115,6 @@
 							</div>
 						</div>
 					</div>
-
-					@include('layouts.help-text', ['codeSetting' => true])
 				</div>
 				<div class="card-footer text-right">
 					@include('layouts.form-buttons')
@@ -142,7 +144,7 @@
 				<div class="card-body">
 					@include('layouts.form-errors')
 					<div class="row">
-						<div class="col-md-4" id="work_age">
+						<div class="col-md-4" id="helpWorkAge">
 							<div class="form-group">
 								@if (Modules\Payroll\Models\Parameter::where([
 									'active' => true, 'required_by' => 'payroll',
@@ -160,7 +162,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-footer text-right">
+				<div class="card-footer text-right" id="helpParamButtons">
 					@include('layouts.form-buttons')
 				</div>
 				{!! Form::close() !!}
@@ -235,6 +237,9 @@
 
 						{{-- Discapacidades --}}
 						<payroll-disabilities></payroll-disabilities>
+
+						{{-- Niveles de escolaridad --}}
+						<payroll-schooling-levels></payroll-schooling-levels>
 					</div>
 				</div>
 			</div>

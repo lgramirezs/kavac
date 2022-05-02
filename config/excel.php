@@ -8,28 +8,28 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Chunk size
+        | Tamaño de porción
         |--------------------------------------------------------------------------
         |
-        | When using FromQuery, the query is automatically chunked.
-        | Here you can specify how big the chunk should be.
+        | Al usar FromQuery, la consulta se fragmenta automáticamente. 
+        | Aquí puede especificar qué tan grande debe ser el trozo.
         |
         */
         'chunk_size'             => 1000,
 
         /*
         |--------------------------------------------------------------------------
-        | Pre-calculate formulas during export
+        | Precalcular fórmulas durante la exportación
         |--------------------------------------------------------------------------
         */
         'pre_calculate_formulas' => false,
 
         /*
         |--------------------------------------------------------------------------
-        | CSV Settings
+        | Configuración de CSV
         |--------------------------------------------------------------------------
         |
-        | Configure e.g. delimiter, enclosure and line ending for CSV exports.
+        | Configurar, ej. delimiter, enclosure y line_ending para exportaciones CSV.
         |
         */
         'csv'                    => [
@@ -50,11 +50,11 @@ return [
 
             /*
             |--------------------------------------------------------------------------
-            | Heading Row Formatter
+            | Formateador de fila de encabezado
             |--------------------------------------------------------------------------
             |
-            | Configure the heading row formatter.
-            | Available options: none|slug|custom
+            | Configure el formateador de filas de títulos.
+            | Opciones Disponibles: none|slug|custom
             |
             */
             'formatter' => 'slug',
@@ -62,10 +62,10 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | CSV Settings
+        | Configuración de CSV
         |--------------------------------------------------------------------------
         |
-        | Configure e.g. delimiter, enclosure and line ending for CSV imports.
+        | Configurar, ej. delimiter, enclosure and line ending para importaciones CSV.
         |
         */
         'csv'         => [
@@ -79,12 +79,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Extension detector
+    | Detector de extensión
     |--------------------------------------------------------------------------
     |
-    | Configure here which writer type should be used when
-    | the package needs to guess the correct type
-    | based on the extension alone.
+    | Configure aquí qué tipo de escritor debe usarse cuando el paquete necesita 
+    | adivinar el tipo correcto basándose solo en la extensión.
     |
     */
     'extension_detector' => [
@@ -106,11 +105,11 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | PDF Extension
+        | Extensión PDF
         |--------------------------------------------------------------------------
         |
-        | Configure here which Pdf driver should be used by default.
-        | Available options: Excel::MPDF | Excel::TCPDF | Excel::DOMPDF
+        | Configure aquí qué controlador de PDF se debe utilizar de forma predeterminada.
+        | Opciones disponibles: Excel::MPDF | Excel::TCPDF | Excel::DOMPDF
         |
         */
         'pdf'      => Excel::DOMPDF,
@@ -120,13 +119,13 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Default Value Binder
+        | Binder de valores predeterminados
         |--------------------------------------------------------------------------
         |
-        | PhpSpreadsheet offers a way to hook into the process of a value being
-        | written to a cell. In there some assumptions are made on how the
-        | value should be formatted. If you want to change those defaults,
-        | you can implement your own default value binder.
+        | PhpSpreadsheet ofrece una forma de engancharse al proceso de escribir un 
+        | valor en una celda. Allí se hacen algunas suposiciones sobre cómo se debe 
+        | formatear el valor. Si desea cambiar esos valores predeterminados, puede 
+        | implementar su propio binder de valores predeterminados.
         |
         */
         'default' => Maatwebsite\Excel\DefaultValueBinder::class,
@@ -136,17 +135,17 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Transaction Handler
+        | Controlador de transacciones
         |--------------------------------------------------------------------------
         |
-        | By default the import is wrapped in a transaction. This is useful
-        | for when an import may fail and you want to retry it. With the
-        | transactions, the previous import gets rolled-back.
+        | De forma predeterminada, la importación está envuelta en una transacción. 
+        | Esto es útil cuando una importación puede fallar y desea volver a intentarlo. 
+        | Con las transacciones, la importación anterior se revierte.
         |
-        | You can disable the transaction handler by setting this to null.
-        | Or you can choose a custom made transaction handler here.
+        | Puede deshabilitar el controlador de transacciones configurando esto en nulo.
+        | O puede elegir un controlador de transacciones personalizado aquí.
         |
-        | Supported handlers: null|db
+        | Controladores admitidos: null|db
         |
         */
         'handler' => 'db',
@@ -156,27 +155,26 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Local Temporary Path
+        | Ruta temporal local
         |--------------------------------------------------------------------------
         |
-        | When exporting and importing files, we use a temporary file, before
-        | storing reading or downloading. Here you can customize that path.
+        | Al exportar e importar archivos, usamos un archivo temporal, antes de almacenar, 
+        | leer o descargar. Aquí puedes personalizar esa ruta.
         |
         */
         'local_path'  => sys_get_temp_dir(),
 
         /*
         |--------------------------------------------------------------------------
-        | Remote Temporary Disk
+        | Disco temporal remoto
         |--------------------------------------------------------------------------
         |
-        | When dealing with a multi server setup with queues in which you
-        | cannot rely on having a shared local temporary path, you might
-        | want to store the temporary file on a shared disk. During the
-        | queue executing, we'll retrieve the temporary file from that
-        | location instead. When left to null, it will always use
-        | the local path. This setting only has effect when using
-        | in conjunction with queued imports and exports.
+        | Cuando se trata de una configuración de varios servidores con colas en las 
+        | que no puede confiar en tener una ruta temporal local compartida, es posible 
+        | que desee almacenar el archivo temporal en un disco compartido. 
+        | Durante la ejecución de la cola, recuperaremos el archivo temporal de esa ubicación. 
+        | Cuando se deja en nulo, siempre usará la ruta local. Esta configuración solo 
+        | tiene efecto cuando se usa junto con importaciones y exportaciones en cola.
         |
         */
         'remote_disk' => null,

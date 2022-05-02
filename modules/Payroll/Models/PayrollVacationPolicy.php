@@ -39,8 +39,37 @@ class PayrollVacationPolicy extends Model implements Auditable
         'vacation_periods_accumulated_per_year', 'vacation_days', 'vacation_period_per_year',
         'additional_days_per_year', 'minimum_additional_days_per_year', 'maximum_additional_days_per_year',
         'payment_calculation', 'salary_type', 'vacation_advance', 'vacation_postpone', 'staff_antiquity',
-        'institution_id', 'payroll_payment_type_id'
+        'institution_id', 'payroll_payment_type_id', 'assign_to',
+        'on_scale',
+        'worker_arises',
+        'generate_worker_arises',
+        'min_days_advance',
+        'max_days_advance',
     ];
+
+    // "payroll_scales" => array:2 [
+    //     0 => array:3 [
+    //       "id" => null
+    //       "name" => "asf"
+    //       "value" => "1"
+    //     ]
+    //     1 => array:3 [
+    //       "id" => null
+    //       "name" => "vxzvx"
+    //       "value" => "1"
+    //     ]
+    // ]
+    // "assign_to" => array:1 [
+    //     0 => array:4 [
+    //       "id" => "all"
+    //       "name" => "Todos los trabajadores"
+    //       "model" => "Modules\Payroll\Models\PayrollStaff"
+    //       "type" => "list"
+    //     ]
+    // ]
+    // "assign_options" => array:1 [
+    //     "all" => []
+    // ]
 
     /**
      * Lista de atributos de relacion consultados automaticamente
@@ -70,5 +99,29 @@ class PayrollVacationPolicy extends Model implements Auditable
     public function payrollPaymentType()
     {
         return $this->belongsTo(PayrollPaymentType::class);
+    }
+
+    /**
+     * Obtiene información de las opciones asignadas asociadas a un género
+     *
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function payrollConceptAssignOptions()
+    {
+        return $this->morphMany(PayrollConceptAssignOption::class, 'applicable');
+    }
+
+    /**
+     * Obtiene información de las opciones asignadas asociadas a un género
+     *
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function assignToOptions()
+    {
+        return $this->morphMany(PayrollConceptAssignOption::class, 'applicable');
     }
 }

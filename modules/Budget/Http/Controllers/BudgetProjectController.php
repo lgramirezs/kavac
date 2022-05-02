@@ -31,6 +31,9 @@ class BudgetProjectController extends Controller
     /** @var array Arreglo con las reglas de validación sobre los datos de un formulario */
     public $validate_rules;
 
+    /** @var array Arreglo con los mensajes de error de cada campo de un formulario */
+    public $messages;
+
     /**
      * Define la configuración de la clase
      *
@@ -50,9 +53,19 @@ class BudgetProjectController extends Controller
             'department_id' => ['required'],
             'payroll_position_id' => ['required'],
             'payroll_staff_id' => ['required'],
-            'code' => ['required'],
-            'onapre_code' => ['required'],
+            'code' => ['required','unique:budget_projects'],
             'name' => ['required'],
+        ];
+
+        /** @var array Define los mensajes de error para el formulario */
+        $this->messages = [
+            'institution_id.required' => 'El campo institución es obligatorio. ',
+            'department_id.required' => 'El campo dependencia es obligatorio. ',
+            'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
+            'payroll_staff_id.required' => 'El campo responsable es obligatorio. ',
+            'code.required' => 'El campo código es obligatorio. ',
+            'code.unique' => 'El campo código ya ha sido registrado.',
+            'name.required' => 'El campo nombre es obligatorio. ',
         ];
     }
 
@@ -117,7 +130,7 @@ class BudgetProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->validate_rules);
+        $this->validate($request, $this->validate_rules, $this->messages);
 
         /**
          * Registra el nuevo proyecto
@@ -126,7 +139,7 @@ class BudgetProjectController extends Controller
             'name' => $request->name,
             'code' => $request->code,
             'onapre_code' => $request->onapre_code,
-            'active' => ($request->active!==null),
+            'active' => ($request->active !== null),
             'department_id' => $request->department_id,
             'payroll_position_id' => $request->payroll_position_id,
             'payroll_staff_id' => $request->payroll_staff_id
@@ -205,8 +218,24 @@ class BudgetProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validate_rules);
-
+        //$this->validate($request, $this->validate_rules, $this->messages);
+        $this->validate($request, [
+            'institution_id'       => ['required'],
+            'department_id'        => ['required'],
+            'payroll_position_id'  => ['required'],
+            'payroll_staff_id'     => ['required'],
+            'name'                 => ['required'],
+            'code'                 => ['required', 'unique:budget_projects,code,'. $id],
+        ], [
+            'institution_id.required'      => 'El campo institución es obligatorio. ',
+            'department_id.required'       => 'El campo dependencia es obligatorio. ',
+            'payroll_position_id.required' => 'El campo cargo de responsable es obligatorio. ',
+            'payroll_staff_id.required'    => 'El campo responsable es obligatorio. ',
+            'code.required'                => 'El campo código es obligatorio. ',
+            'code.unique'                => 'El campo código ya ha sido registrado en otro proyecto.',
+            'name.required'                => 'El campo nombre es obligatorio. ',
+        ]);
+        
         /** @var object Objeto con información del proyecto a modificar */
         $budgetProject = BudgetProject::find($id);
         $budgetProject->fill($request->all());
@@ -249,8 +278,8 @@ class BudgetProjectController extends Controller
     {
         /** @var object Objeto con información de los proyectos registrados */
         $budgetProjects = ($active !== null)
-                          ? BudgetProject::where('active', $active)->with('payrollStaff')->get()
-                          : BudgetProject::with('payrollStaff')->get();
+            ? BudgetProject::where('active', $active)->with('payrollStaff')->get()
+            : BudgetProject::with('payrollStaff')->get();
         return response()->json(['records' => $budgetProjects], 200);
     }
 
@@ -269,5 +298,19 @@ class BudgetProjectController extends Controller
             ($id) ? ['id' => $id] : [],
             true
         ));
+    }
+
+    /**
+     * Método que devuelve un proyecto registrado según el id que se le pase
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @param  integer $id Identificador del proyecto a buscar.
+     * @return JSON        JSON con los datos del  proyecto específico.
+     */
+    public function getDetailProject($id)
+    {
+        $project = BudgetProject::find($id);
+        $cargo = PayrollStaff::where( "id", $project->payroll_staff_id)->first();
+        return response()->json(['result' => true, 'project' => $project, 'cargo' =>  $cargo], 200);
     }
 }

@@ -46,7 +46,7 @@ class $CLASS$ extends Command
     }
 
     /**
-     * Ejecuta el la consola de comandos.
+     * Ejecuta la consola de comandos.
      *
      * @method handle
      *

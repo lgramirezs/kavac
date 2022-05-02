@@ -11,7 +11,9 @@ if (!function_exists('set_active_menu')) {
      * Define la opción activa del menú según la URL actual
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param array|string $compareUrls Nombre o lista de nombres de las URL a comparar
+     * 
      * @return string Si la URL a comparar es igual a la actual retorna active de lo contrario retorna vacio
      */
     function set_active_menu($compareUrls)
@@ -33,12 +35,14 @@ if (!function_exists('set_active_menu')) {
 
 if (!function_exists('display_submenu')) {
     /**
-     * Define si se expande o contrae las opciones de un submenÚ
+     * Define si se expande o contrae las opciones de un submenu
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  string|array $submenu Nombre del submenu a mostrar u ocultar
-     * @return string                Retorna una cadena vacia para contraer las opciones del submenú,
-     *                               de lo contrario retorna el css para mostrar el bloque de opciones
+     * 
+     * @return string  Retorna una cadena vacia para contraer las opciones del submenú, 
+     *                 de lo contrario retorna el css para mostrar el bloque de opciones
      */
     function display_submenu($submenu)
     {
@@ -58,19 +62,21 @@ if (!function_exists('generate_registration_code')) {
      * Genera códigos a implementar en los diferentes registros del sistema
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  string           $prefix      Prefijo que identifica el código
      * @param  integer          $code_length Longitud máxima permitida para el código a generar
      * @param  integer|string   $year        Sufijo que identifica el año del cual se va a generar el código
      * @param  string           $model       Namespace y nombre del modelo en donde se aplicará el nuevo código
      * @param  string           $field       Nombre del campo del código a generar
+     * 
      * @return string|array                  Retorna una cadena con el nuevo código
      */
     function generate_registration_code($prefix, $code_length, $year, $model, $field)
     {
         $newCode = 1;
 
-        $targetModel = $model::select($field)->where($field, 'like', "{$prefix}-%-{$year}")->withTrashed()
-            ->orderBy('created_at', 'desc')->first();
+        $targetModel = $model::select($field)->where($field, 'like', "{$prefix}-%-{$year}")
+                             ->withTrashed()->orderBy('created_at', 'desc')->first();
         
         $newCode += ($targetModel) ? (int)explode('-', $targetModel->$field)[1] : 0;
 
@@ -87,17 +93,18 @@ if (!function_exists('template_choices')) {
      * Construye un arreglo de elementos para usar en plantillas blade
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-     * @param  string|object    $model     Nombre de la clase del modelo al cual generar el listado de opciones
-     * @param  string|array     $fields    Campo(s) a utilizar para mostrar en el listado de opciones
-     * @param  array            $filters   Arreglo con los filtros a ser aplicados en la consulta
-     *                                     Ej. sin relación con otro modelo: ['active' => 'true']
-     *                                     Ej. con relación a otro modelo:
-     *                                     ['relationship' => 'metodoRelacion', 'where' => ['active' => true]]
-     * @param  boolean          $vuejs     Indica si las opciones a mostrar son para una plantilla
-     *                                     normal o para VueJS
-     * @param  integer          $except_id Identificador del registro a excluir. Opcional
+     * 
+     * @param  string|object    $model       Nombre de la clase del modelo al cual generar el listado de opciones
+     * @param  string|array     $fields      Campo(s) a utilizar para mostrar en el listado de opciones
+     * @param  array            $filters     Arreglo con los filtros a ser aplicados en la consulta
+     *                                       Ej. sin relación con otro modelo: ['active' => 'true']
+     *                                       Ej. con relación a otro modelo:
+     *                                       ['relationship' => 'metodoRelacion', 'where' => ['active' => true]]
+     * @param  boolean          $vuejs       Indica si las opciones a mostrar son para una plantilla normal o para VueJS
+     * @param  integer          $except_id   Identificador del registro a excluir. Opcional
      * @param string            $placeholder Texto del campo inicial de una lista
-     * @return array                       Arreglo con las opciones a mostrar
+     * 
+     * @return array    Arreglo con las opciones a mostrar
      */
     function template_choices($model, $fields = 'name', $filters = [], $vuejs = false, $except_id = null)
     {
@@ -144,10 +151,12 @@ if (!function_exists('template_choices')) {
 
 if (!function_exists('validate_rif')) {
     /**
-     * Verifica que el número de RIF sea correcto comproando el dígito verificador del mismo
+     * Verifica que el número de RIF sea correcto comparando el dígito verificador del mismo
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  string $rif Cadena con el número de RIF completo
+     * 
      * @return boolean     Devuelve verdadero si el número de RIF es correcto, de lo contrario devuelve falso
      */
     function validate_rif($rif)
@@ -166,7 +175,7 @@ if (!function_exists('validate_rif')) {
         /** @var string Caracter que representa el digito verificador del RIF */
         $digit = $output_array[3];
 
-        /** @var array Arreglo cada número que compone los datos del RIF  sin el tipo y el dígito verificador */
+        /** @var array Arreglo con cada número que compone los datos del RIF, sin el tipo y el dígito verificador */
         $validateNumber = str_split($number);
         $validateNumber[7] *= 2;
         $validateNumber[6] *= 3;
@@ -200,7 +209,7 @@ if (!function_exists('validate_rif')) {
 
         /** @var integer Sumatoria de los números del RIF y el dígito especial de validación */
         $sum = array_sum($validateNumber) + ($specialDigit * 4);
-        /** @var integer Residuo obtenido entre la sumatoria de los números del rif y el dígito espcial de validación */
+        /** @var integer Residuo obtenido entre la sumatoria de los números del rif y el dígito especial de validación */
         $residue = $sum % 11;
         /** @var integer Resta obtenida del residuo */
         $subtraction = 11 - $residue;
@@ -225,13 +234,14 @@ if (!function_exists('rif_exists')) {
      * Comprueba que un número de RIF exista
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  string $rif Cadena con el número de RIF completo
+     * 
      * @return boolean     Devuelve verdadero si el RIF existe, de lo contrario retorna falso
      */
     function rif_exists($rif)
     {
-        // Comprobar si existe conexión externa para verificar la existencia del RIF
-        // Conectar al organismo rector para verificar la existencia del RIF
+        // Comprueba si existe conexión externa
         $connectionExists = check_connection();
         $rifExists = false;
         // TODO: Agregar lógica que permita validar el número de rif ante la autoridad que los emite
@@ -244,9 +254,11 @@ if (!function_exists('validate_ci')) {
      * Verifica si un número de Cédula de Identidad es correcto
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  string  $ci       Número de Cédula de Identidad
      * @param  boolean $with_nac Indica si la verificación del número de cédula es con la nacionalidad
      * @param  integer $length   Establece la longitud máxima del número de Cédula de Identidad
+     * 
      * @return boolean           Devuelve verdadero si el número de cédula es correcto, de lo contrario devuelve falso
      */
     function validate_ci($ci, $with_nac = false, $length = 8)
@@ -270,16 +282,16 @@ if (!function_exists('validate_ci')) {
 if (!function_exists('ci_exists')) {
     /**
      * Comprueba la existencia de un número de cédula de identidad
+     * 
      * @param  string $ci  Número de cédula de identidad
      * @param  string $nac Indica la nacionalidad de la cédula a validar
+     * 
      * @return array       Devuelve un arreglo con los datos de comprobación de la cédula, si existe devuelve la
      *                     información de la persona
      */
     function ci_exists($ci, $nac = 'V')
     {
-        // Comprobar si existe conexión externa para verificar la existencia de la cédula
-        // de identidad
-        // Conectar al organismo rector para verificar la existencia de la cédula
+        // Comprueba si existe conexión externa
         $connectionExists = check_connection();
         $exists = false;
         $personData = [];
@@ -323,10 +335,12 @@ if (!function_exists('generate_code')) {
      * Genera una cadena aleatoria
      *
      * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * 
      * @param  object|string    $model  Clase del modelo a verificar
      * @param  string           $field  Nombre del campo a validar
      * @param  integer          $length Longitud máxima de la cadena a generar
-     * @return string                   Devuelve una cadena aleatoria
+     * 
+     * @return string           Devuelve una cadena aleatoria
      */
     function generate_code($model, $field, $length = 20)
     {
@@ -393,7 +407,7 @@ if (!function_exists('get_institution')) {
      *
      * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
-     * @param  int|null $id [identificador unico de la organización]
+     * @param  int|null $id [identificador único de la organización]
      *
      * @return \App\Models\Institution     Devuelve un objeto con información de la organización,
      *                                     si no se indica un ID devuelve el primer registro,
@@ -640,7 +654,7 @@ if (!function_exists('age')) {
      * Calcula la edad de una persona en años
      *
      * @author    William Páez <wpaez@cenditel.gob.ve>
-     * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     string    $birthdate    Fecha de nacimiento
      *
@@ -771,7 +785,7 @@ if (!function_exists('restore_record')) {
      *
      * @method    restore_record
      *
-     * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     string    $model     Nombre del modelo que contiene el registro a restaurar
      * @param     array     $filter    Arreglo con el filtro a aplicar para obtener el(los) registro(s) a restaurar
@@ -790,6 +804,16 @@ if (!function_exists('restore_record')) {
 }
 
 if (!function_exists('info_modules')) {
+    /**
+     * Obtiene información de los módulos de la aplicación
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  boolean $min Mínima versión a buscar. Opcional
+     * @param  string  $mod Nombre del módulo del cual se va a mostrar información. Opcional
+     *
+     * @return void         
+     */
     function info_modules($min = false, $mod = null)
     {
         /** @var Module Objeto con información de todos los módulos de la aplicación */

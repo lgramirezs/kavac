@@ -11,6 +11,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\Department;
 use Modules\Budget\Models\BudgetCentralizedAction;
+use Modules\Payroll\Models\PayrollStaff;
 use Module;
 
 /**
@@ -109,17 +110,28 @@ class BudgetCentralizedActionController extends Controller
         $rules = [
             'institution_id' => ['required'],
             'department_id' => ['required'],
-            'code' => ['required'],
+            'code' => ['required','unique:budget_centralized_actions'],
             'custom_date' => ['required', 'date'],
             'name' => ['required'],
+            'payroll_position_id' => ['required'],
+            'payroll_staff_id' => ['required'],
         ];
-
+        $messages = [
+            'institution_id.required'     => 'El campo institucion es obligatorio.',
+            'department_id.required'     => 'El campo departamento es obligatorio.',
+            'code.required'     => 'El campo código es obligatorio.',
+            'code.unique' => 'El campo código ya ha sido registrado.',
+            'custom_date.required'     => 'El campo fecha es obligatorio.',
+            'name.required'     => 'El campo nombre es obligatorio.',
+            'payroll_position_id.required'     => 'El campo cargo es obligatorio.',
+            'payroll_staff_id.required'     => 'El campo responsable es obligatorio.',
+        ];
         if (Module::has('Payroll') && Module::isEnabled('Payroll')) {
             $rules['payroll_position_id'] = 'required';
             $rules['payroll_staff_id'] = 'required';
         }
 
-        $this->validate($request, $rules);
+        $this->validate($request, $rules, $messages );
 
         /**
          * Registra el nuevo proyecto
@@ -163,6 +175,7 @@ class BudgetCentralizedActionController extends Controller
     {
         /** @var object Objeto con información de la acción centralizada a modificar */
         $budgetCentralizedAction = BudgetCentralizedAction::find($id);
+        $budgetCentralizedActionInstitucion = BudgetCentralizedAction::find($id)->department;
 
         /** @var array Arreglo de opciones a implementar en el formulario */
         $header = [
@@ -172,7 +185,7 @@ class BudgetCentralizedActionController extends Controller
         ];
         /** @var object Objeto con datos del modelo a modificar */
         $model = $budgetCentralizedAction;
-
+       $model["institution_id"]= $budgetCentralizedActionInstitucion["institution_id"];
         /** @var array Arreglo de opciones de instituciones a representar en la plantilla para su selección */
         $institutions = template_choices('App\Models\Institution', ['acronym'], ['active' => true]);
         /** @var array Arreglo de opciones de departamentos a representar en la plantilla para su selección */
@@ -291,4 +304,28 @@ class BudgetCentralizedActionController extends Controller
             true
         ));
     }
+
+      /**
+     * Obtiene las acciones específicas registradas
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @param  string  $type   Identifica si la acción a buscar es por proyecto o acción centralizada
+     * @param  integer $id     Identificador de la acción centralizada a buscar, este parámetro es opcional
+     * @param  string  $source Fuente de donde se realiza la consulta
+     * @return JSON        JSON con los datos de las acciones específicas
+     */
+    public function getDetailCentralizedActions($id = null)
+    { 
+
+                      
+        $budget = BudgetCentralizedAction::find($id);
+        $departments = Department::find($id);
+
+
+
+        $cargo = PayrollStaff::where( "id", $budget->payroll_staff_id)->first();
+     
+        return response()->json(['result' => true, 'budget' =>  $budget, 'cargo' =>  $cargo, 'departments' =>  $departments], 200); 
+    }
+
 }

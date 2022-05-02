@@ -95,10 +95,10 @@
                                             </div>
                                             <!-- ./nombre -->
             								<div class="row">
-            									<div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <!-- activa -->
-            										<div class="form-group">
-            											<label>¿Activa?</label>
+                                                    <div class="form-group">
+                                                        <label>¿Activa?</label>
                                                         <div class="col-12">
                                                             <p-check class="pretty p-switch p-fill p-bigger"
                                                                      color="success" off-color="text-gray" toggle
@@ -108,12 +108,28 @@
                                                                 <label slot="off-label"></label>
                                                             </p-check>
                                                         </div>
-            										</div>
+                                                    </div>
                                                     <!-- ./activa -->
-            									</div>
-                                                <div class="col-md-8">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <!-- porcentaje -->
+                                                    <div class="form-group">
+                                                        <label>Porcentaje:</label>
+                                                        <div class="col-12">
+                                                            <p-check class="pretty p-switch p-fill p-bigger"
+                                                                     color="success" off-color="text-gray" toggle
+                                                                     data-toggle="tooltip"
+                                                                     title="Indique si el valor se calculará en porcentaje"
+                                                                     v-model="record.percentage">
+                                                                <label slot="off-label"></label>
+                                                            </p-check>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ./porcentaje -->
+                                                </div>
+                                                <div v-show="record.percentage == false" class="col-md-8">
                                                     <!-- moneda -->
-                                                    <div class="form-group is-required">
+                                                    <div class="form-group">
                                                         <label>Moneda:</label>
                                                         <select2 :options="currencies"
                                                                  v-model="record.currency_id"></select2>
@@ -121,15 +137,6 @@
                                                     <!-- ./moneda -->
                                                 </div>
                                             </div>
-                                            <!-- tipo de personal -->
-                                            <div class="form-group is-required">
-                                                <label>Tipo de personal</label>
-                                                <v-multiselect :options="payroll_staff_types" track_by="text"
-                                                               :hide_selected="false"
-                                                               v-model="record.payroll_staff_types">
-                                                </v-multiselect>
-                                            </div>
-                                            <!-- ./tipo de personal -->
             							</div>
             							<div class="col-md-6">
                                             <!-- descripción -->
@@ -372,11 +379,6 @@
                                 <span v-html="props.row.description"></span>
                             </div>
 	                		<div slot="id" slot-scope="props" class="text-center">
-	                			<button @click="exportRecord(props.row.id, $event)"
-                                        class="btn btn-primary btn-xs btn-icon btn-action"
-                                        title="Descargar/Exportar tabulador" data-toggle="tooltip" type="button">
-	                                <i class="fa fa-download"></i>
-	                            </button>
 	                			<button @click="changePanel('Form'); initUpdate(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-action"
 		                				title="Modificar registro" data-toggle="tooltip" type="button">
@@ -404,11 +406,11 @@
 					id:                                 '',
                     name:                               '',
                     active:                             false,
+                    percentage:                         false,
                     description:                        '',
                     institution_id:                     '',
                     currency_id:                        '',
                     payroll_salary_tabulator_type:      '',
-                    payroll_staff_types:                [],
 
                     payroll_horizontal_salary_scale_id: '',
                     payroll_vertical_salary_scale_id:   '',
@@ -425,7 +427,6 @@
                 ],
                 institutions:                     [],
                 currencies:                       [],
-                payroll_staff_types:              [],
                 payroll_horizontal_salary_scales: [],
                 payroll_vertical_salary_scales:   [],
                 payroll_salary_scale_h:           [],
@@ -499,11 +500,11 @@
 					id:                                 '',
                     name:                               '',
                     active:                             false,
+                    percentage:                         false,
                     description:                        '',
                     institution_id:                     '',
                     currency_id:                        '',
                     payroll_salary_tabulator_type:      '',
-                    payroll_staff_types:                [],
                     payroll_horizontal_salary_scale_id: '',
                     payroll_vertical_salary_scale_id:   '',
                     payroll_salary_tabulator_scales:    []
@@ -519,25 +520,46 @@
              * Método que habilita o deshabilita el botón siguiente
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
              */
             isDisableNext() {
                 const vm = this;
-                if ((vm.record.name != '') && (vm.record.institution_id != '') &&
-                    (vm.record.currency_id != '') && (vm.record.payroll_staff_types != []) &&
-                    (vm.record.payroll_salary_tabulator_type != '')) {
-                    if (((vm.record.payroll_salary_tabulator_type == 'vertical') &&
-                        (vm.record.payroll_vertical_salary_scale_id != '')) ||
-                        ((vm.record.payroll_salary_tabulator_type == 'horizontal') &&
-                        (vm.record.payroll_horizontal_salary_scale_id != '')) ||
-                        ((vm.record.payroll_salary_tabulator_type == 'mixed') &&
-                        (vm.record.payroll_horizontal_salary_scale_id != '') &&
-                        (vm.record.payroll_vertical_salary_scale_id != ''))) {
-                        return false;
+                if (vm.record.percentage == false) {
+                    if ((vm.record.name != '') && (vm.record.institution_id != '') &&
+                        (vm.record.currency_id != '') &&
+                        (vm.record.payroll_salary_tabulator_type != '')) {
+                        if (((vm.record.payroll_salary_tabulator_type == 'vertical') &&
+                            (vm.record.payroll_vertical_salary_scale_id != '')) ||
+                            ((vm.record.payroll_salary_tabulator_type == 'horizontal') &&
+                            (vm.record.payroll_horizontal_salary_scale_id != '')) ||
+                            ((vm.record.payroll_salary_tabulator_type == 'mixed') &&
+                            (vm.record.payroll_horizontal_salary_scale_id != '') &&
+                            (vm.record.payroll_vertical_salary_scale_id != ''))) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } else {
                         return true;
                     }
                 } else {
-                    return true;
+                    if ((vm.record.name != '') && (vm.record.institution_id != '') &&
+                        (vm.record.percentage != false) &&
+                        (vm.record.payroll_salary_tabulator_type != '')) {
+                        if (((vm.record.payroll_salary_tabulator_type == 'vertical') &&
+                            (vm.record.payroll_vertical_salary_scale_id != '')) ||
+                            ((vm.record.payroll_salary_tabulator_type == 'horizontal') &&
+                            (vm.record.payroll_horizontal_salary_scale_id != '')) ||
+                            ((vm.record.payroll_salary_tabulator_type == 'mixed') &&
+                            (vm.record.payroll_horizontal_salary_scale_id != '') &&
+                            (vm.record.payroll_vertical_salary_scale_id != ''))) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
                 }
             },
             /**
@@ -590,18 +612,6 @@
                     })
                 }
             },
-            /**
-             * Método que exporta el tabulador seleccionado en formato ".xls"
-             *
-             * @author    Henry Paredes <hparedes@cenditel.gob.ve>
-             *
-             * @param     {integer}    index    Identificador del registro a ser exportado
-             * @param     {object}     event    Objeto que gestiona los eventos
-             */
-			exportRecord(id, event) {
-				window.open(`${window.app_url}/payroll/salary-tabulators/export/${id}`);
-				event.preventDefault();
-			},
             /**
              * Método que obtiene los escalafones salariales, para posteriormente,
              * cargarlos en el formulario según sea el tipo de tabulador

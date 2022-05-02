@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -280,7 +280,7 @@ $(document).ready(function(){initNavTree('d6/dde/Budget_2Resources_2views_2accou
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                });</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                <span class="keywordflow">if</span> ($(<span class="keyword">this</span>).val()) {</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    axios.get(<span class="stringliteral">&#39;/budget/set-children-account/&#39;</span> + $(<span class="keyword">this</span>).val()).then(response =&gt; {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    axios.get(window.app_url + <span class="stringliteral">&#39;/budget/set-children-account/&#39;</span> + $(<span class="keyword">this</span>).val()).then(response =&gt; {</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                        <span class="keywordflow">if</span> (response.data.result) {</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                            let new_account = response.data.new_account;<span class="comment"></span></div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">                            /** Genera las nuevas cuentas */</span></div>
@@ -309,7 +309,7 @@ $(document).ready(function(){initNavTree('d6/dde/Budget_2Resources_2views_2accou
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_d21920c495339c6310c2871432d45620.html">Budget</a></li><li class="navelem"><a class="el" href="../../dir_b169ee8e8763351a970f079d5e5edb3a.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_1fdcdb2e678e7187d7a87c0200d40abf.html">views</a></li><li class="navelem"><a class="el" href="../../dir_bce5588c82fdc7e1e3d9b153a6ae840a.html">accounts</a></li><li class="navelem"><b>create-edit-form.blade.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

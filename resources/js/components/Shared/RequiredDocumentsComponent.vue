@@ -1,11 +1,11 @@
 <template>
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
-           href="#" title="Registros de documentos a solicitar"
+           href="#" :title=" title ? title : 'Registros de documentos a solicitar'"
            data-toggle="tooltip" v-has-tooltip
            @click="addRecord('add_required_doc', '/required-documents/' + model + '/' + module, $event)">
             <i class="icofont icofont-copy-alt ico-3x"></i>
-            <span>Documentos Requeridos</span>
+            <span>{{ short_name_component ? short_name_component : 'Documentos Requeridos' }}</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="add_required_doc">
             <div class="modal-dialog vue-crud" role="document">
@@ -16,7 +16,7 @@
                         </button>
                         <h6>
                             <i class="icofont icofont-copy-alt inline-block"></i>
-                            Documentos Requeridos
+                            {{ name_component ? name_component : 'Documentos Requeridos' }}
                         </h6>
                     </div>
                     <div class="modal-body">
@@ -70,6 +70,9 @@
                     </div>
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
+                            <div slot="description" slot-scope="props">
+                                <p v-html="props.row.description"></p>
+                            </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
                                         class="btn btn-warning btn-xs btn-icon"
@@ -105,7 +108,7 @@
                 columns: ['name', 'description', 'id'],
             }
         },
-        props: ['module', 'model'],
+        props: ['module', 'model', 'title', 'name_component', 'short_name_component'],
         methods: {
             /**
              * Método que borra todos los datos del formulario

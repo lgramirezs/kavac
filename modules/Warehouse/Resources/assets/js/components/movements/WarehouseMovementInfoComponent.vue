@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<a class="btn btn-info btn-xs btn-icon btn-action" 
-		   href="#" title="Ver información del registro" data-toggle="tooltip" 
+		<a class="btn btn-info btn-xs btn-icon btn-action"
+		   href="#" title="Ver información del registro" data-toggle="tooltip"
 		   @click="addRecord('view_movement', route_list , $event)">
 			<i class="fa fa-info-circle"></i>
 		</a>
@@ -13,11 +13,11 @@
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
-							<i class="icofont icofont-read-book ico-2x"></i> 
+							<i class="icofont icofont-read-book ico-2x"></i>
 							Información del Movimiento Registrado
 						</h6>
 					</div>
-					
+
 					<div class="modal-body">
 
 						<div class="alert alert-danger" v-if="errors.length > 0">
@@ -31,7 +31,7 @@
 	                                <i class="ion-android-person"></i> Información General
 	                            </a>
 	                        </li>
-	                        
+
 	                        <li class="nav-item">
 	                            <a class="nav-link" data-toggle="tab" href="#equipment" role="tab" @click="loadProducts()">
 	                                <i class="ion-arrow-swap"></i> Insumos
@@ -41,7 +41,7 @@
 
 	                    <div class="tab-content">
 	                    	<div class="tab-pane active" id="general" role="tabpanel">
-	                    		<div class="row">        
+	                    		<div class="row">
 
 							        <div class="col-md-6">
 										<div class="form-group">
@@ -100,27 +100,35 @@
 									</div>
 							    </div>
 	                    	</div>
-	                    	
-	                    	<div class="tab-pane" id="equipment" role="tabpanel">            
+
+	                    	<div class="tab-pane" id="equipment" role="tabpanel">
 	                    		<div class="modal-table">
 									<v-client-table :columns="columns" :data="records" :options="table_options">
 										<div slot="code" slot-scope="props" class="text-center">
 											<span>
-												{{ props.row.warehouse_inventory_product.code }} 
+												{{ props.row.warehouse_inventory_product.code }}
 											</span>
 										</div>
 										<div slot="quantity" slot-scope="props">
 											<span>
-												{{ props.row.quantity }} 
+												{{ props.row.quantity }}
 												{{ (props.row.warehouse_inventory_product.warehouse_product.measurement_unit)
 													? props.row.warehouse_inventory_product.warehouse_product.measurement_unit.acronym
 													: ''
 												}}
 											</span>
 										</div>
+										<div slot="description" slot-scope="props">
+											<span>
+												{{ (props.row.warehouse_inventory_product.warehouse_product.description)?
+														prepareText(
+														props.row.warehouse_inventory_product.warehouse_product.description) : ''
+												}}<br>
+											</span>
+										</div>
 										<div slot="unit_value" slot-scope="props">
 											<span>
-												{{ props.row.warehouse_inventory_product.unit_value }} 
+												{{ props.row.warehouse_inventory_product.unit_value }}
 												{{ (props.row.warehouse_inventory_product.currency)
 													? props.row.warehouse_inventory_product.currency.symbol
 													: ''
@@ -134,8 +142,8 @@
 					</div>
 
 	                <div class="modal-footer">
-	                	
-	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close" 
+
+	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
 	                			data-dismiss="modal">
 	                		Cerrar
 	                	</button>
@@ -155,7 +163,7 @@
 				columns: [
 					'code',
 					'warehouse_inventory_product.warehouse_product.name',
-					'warehouse_inventory_product.warehouse_product.description',
+					'description',
 					'quantity',
 					'unit_value'
 				],
@@ -165,7 +173,7 @@
 			this.table_options.headings = {
 				'code': 'Código',
 				'warehouse_inventory_product.warehouse_product.name': 'Nombre',
-				'warehouse_inventory_product.warehouse_product.description': 'Descripción',
+				'description': 'Descripción',
 				'quantity': 'Cantidad agregada',
 				'unit_value': 'Valor por unidad'
 
@@ -173,14 +181,14 @@
 			this.table_options.sortable = [
 				'code',
 				'warehouse_inventory_product.name',
-				'warehouse_inventory_product.description',
+				'description',
 				'quantity',
 				'unit_value'
 			];
 			this.table_options.filterable = [
 				'code',
 				'warehouse_inventory_product.name',
-				'warehouse_inventory_product.description',
+				'description',
 				'quantity',
 				'unit_value'
 			];
@@ -190,11 +198,15 @@
 
 			/**
              * Método que borra todos los datos del formulario
-             * 
+             *
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
             },
+
+			prepareText(text) {
+				return text.replace('<p>', '').replace('</p>', '');
+			},
 
             initRecords(url, modal_id) {
 				this.errors = [];
@@ -202,7 +214,7 @@
 
 				const vm = this;
             	var fields = {};
-            	
+
             	document.getElementById("info_movement").click();
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
@@ -210,7 +222,11 @@
 
 						$(".modal-body #id").val( fields.id );
 		            	document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'';
-		            	document.getElementById('description').innerText = (fields.description)?fields.description:'';
+						if(fields.description){
+						document.getElementById('description').innerText =fields.description.replace('<p>', '').replace('</p>', '');
+					}else{
+						document.getElementById('description').innerText ="";
+					}
 		            	document.getElementById('observations').innerText = (fields.description)?fields.observations:'';
 		            	document.getElementById('warehouse_initial').innerText = (fields.warehouse_institution_warehouse_initial)?fields.warehouse_institution_warehouse_initial.warehouse.name:'';
 		            	document.getElementById('warehouse_end').innerText = (fields.warehouse_institution_warehouse_end)?fields.warehouse_institution_warehouse_end.warehouse.name:'';

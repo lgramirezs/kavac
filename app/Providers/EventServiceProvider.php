@@ -21,7 +21,7 @@ use App\Listeners\RecordFailedLoginAttempt;
 class EventServiceProvider extends ServiceProvider
 {
     /**
-     * The event listener mappings for the application.
+     * Las asignaciones de detectores de eventos para la aplicación..
      *
      * @var array
      */
@@ -38,7 +38,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any events for your application.
+     * Registre cualquier evento para su aplicación.
      *
      * @method  boot
      *

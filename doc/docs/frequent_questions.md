@@ -43,7 +43,11 @@
     Para completar el campo R.I.F en el fomarto correcto, se debe iniciar con una letra mayúscula seguida de elementos numéricos sin guiones.
 
     **Ejemplo:**
-    V111111111  
+    V111111111
 
+??? question "¿Por qué se muestra un error al ingresar a enlaces recibidos a través del correo electrónico?"
+    Los enlaces emitidos por el sistema ya sea por verificación de usuario, recuperación de contraseña entre otros, tienen una vigencia de 60 minutos. 
+
+    ![Screenshot](img/403.png#imagen)
     
 

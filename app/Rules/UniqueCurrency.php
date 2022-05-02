@@ -1,22 +1,33 @@
 <?php
-
+/** Reglas de validación personalizadas */
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use App\Models\Currency;
 
+/**
+ * @class UniqueCurrency
+ * @brief Reglas de validación para los registros de monedas
+ *
+ * Gestiona las reglas de validación para los registros de monedas
+ *
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ *
+ * @license
+ *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
+ */
 class UniqueCurrency implements Rule, DataAwareRule
 {
     /**
-     * All of the data under validation.
+     * Todos los datos en validación.
      *
      * @var array
      */
     protected $data = [];
 
     /**
-     * Set the data under validation.
+     * Establecer los datos bajo validación.
      *
      * @param  array  $data
      * @return $this
@@ -29,7 +40,7 @@ class UniqueCurrency implements Rule, DataAwareRule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Determinar si la regla de validación pasa.
      *
      * @param  string  $attribute
      * @param  mixed  $value
@@ -44,12 +55,12 @@ class UniqueCurrency implements Rule, DataAwareRule
     }
 
     /**
-     * Get the validation error message.
+     * Obtener el mensaje de error de validación.
      *
      * @return string
      */
     public function message()
     {
-        return 'Ya existe una Moneda con para el Pais seleccionado con el mismo nombre o símbolo.';
+        return 'Ya existe una moneda para el Pais seleccionado con el mismo nombre o símbolo.';
     }
 }

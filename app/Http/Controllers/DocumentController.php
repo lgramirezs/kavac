@@ -4,10 +4,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use App\Repositories\UploadDocRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use DB;
+use App\Repositories\UploadDocRepository;
 
 /**
  * @class DocumentController

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -111,6 +111,9 @@ $(document).ready(function(){initNavTree('de/db0/classModules_1_1Budget_1_1Model
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d6/d65/classModules_1_1Budget_1_1Models_1_1Department__inherit__graph.png" border="0" usemap="#Department_inherit__map" alt="Inheritance graph"/></div>
+<map name="Department_inherit__map" id="Department_inherit__map">
+<area shape="rect" title="Modelo que extiende las funcionalidades del modelo base Department." alt="" coords="5,5,220,97"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para Department:</div>
@@ -118,6 +121,9 @@ $(document).ready(function(){initNavTree('de/db0/classModules_1_1Budget_1_1Model
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../de/dfa/classModules_1_1Budget_1_1Models_1_1Department__coll__graph.png" border="0" usemap="#Department_coll__map" alt="Collaboration graph"/></div>
+<map name="Department_coll__map" id="Department_coll__map">
+<area shape="rect" title="Modelo que extiende las funcionalidades del modelo base Department." alt="" coords="5,5,220,97"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -241,10 +247,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\HasMany </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00090">90</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Department::class, <span class="stringliteral">&#39;parent_id&#39;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00092">92</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> $this-&gt;hasMany(Department::class, <span class="stringliteral">&#39;parent_id&#39;</span>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -276,10 +282,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00104">104</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(Institution::class);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00106">106</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(Institution::class);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -311,10 +317,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Database\Eloquent\Relations\BelongsTo </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00076">76</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(Department::class, <span class="stringliteral">&#39;parent_id&#39;</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00078">78</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">return</span> $this-&gt;belongsTo(Department::class, <span class="stringliteral">&#39;parent_id&#39;</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -341,7 +347,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Lista de atributos para la gestión de fechas. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00048">48</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00050">50</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
 
 </div>
 </div>
@@ -371,7 +377,7 @@ Atributos protegidos</h2></td></tr>
 </div><!-- fragment -->
 <p>Lista de atributos que pueden ser asignados masivamente. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00055">55</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00057">57</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
 
 </div>
 </div>
@@ -397,7 +403,7 @@ Atributos protegidos</h2></td></tr>
 
 <p>Oculta los campos de fechas de creación, actualización y eliminación. </p>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00065">65</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
+<p class="definition">Definición en la línea <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html#l00067">67</a> del archivo <a class="el" href="../../d6/d13/app_2Models_2Department_8php_source.html">app/Models/Department.php</a>.</p>
 
 </div>
 </div>
@@ -410,7 +416,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Budget</b></li><li class="navelem"><b>Models</b></li><li class="navelem"><a class="el" href="../../de/db0/classModules_1_1Budget_1_1Models_1_1Department.html">Department</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:02 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:38 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

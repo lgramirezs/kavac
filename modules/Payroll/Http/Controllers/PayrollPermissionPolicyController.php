@@ -30,10 +30,11 @@ class PayrollPermissionPolicyController extends Controller
 
        /** Define las reglas de validación para el formulario */
         $this->validateRules = [
-           'name'             => ['required', 'max:100', 'unique:payroll_permission_policies,name'],
+           'name'             => ['required', 'max:100'],
            'anticipation_day' => ['required'],
-           'day_min'          => ['required'],
-           'day_max'          => ['required'],
+           'time_min'         => ['required'],
+           'time_max'         => ['required'],
+           'time_unit'         => ['required'],
            'institution_id'   => ['required']
         ];
 
@@ -43,8 +44,9 @@ class PayrollPermissionPolicyController extends Controller
            'name.max'         => 'El campo nombre no debe contener más de 100 caracteres.',
            'name.unique'      => 'El campo nombre ya ha sido registrado.',
            'anticipation_day.required' => 'El campo días de anticipación es obligatorio.',
-           'day_min.required' => 'El campo rango mínimo es obligatorio.',
-           'day_max.required' => 'El campo rango máximo es obligatorio.',
+           'time_min.required'  => 'El campo rango mínimo es obligatorio.',
+           'time_max.required'  => 'El campo rango máximo es obligatorio.',
+           'time_unit.required' => 'El campo unidad de tiempo es obligatorio.',
            'institution_id.required' => 'El campo organización es obligatorio.',
         ];
     }
@@ -77,10 +79,13 @@ class PayrollPermissionPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $validateRules  = $this->validateRules;
+        $validateRules  = array_replace(
+            $validateRules,
+            ['name'           => ['required', 'max:100', 'unique:payroll_permission_policies,name']]
+        );
         $validateRules  = array_merge(
-            ['id' => [new PayrollPermissionPolicyDaysRange($request->input('day_min'), $request->input('day_max'))]],
+            ['id' => [new PayrollPermissionPolicyDaysRange($request->input('time_min'), $request->input('time_max'))]],
             $validateRules
         );
         $this->validate($request, $validateRules, $this->messages);
@@ -88,8 +93,9 @@ class PayrollPermissionPolicyController extends Controller
         $payrollPermissionPolicy = PayrollPermissionPolicy::create([
             'name'             => $request->name,
             'anticipation_day' => $request->anticipation_day,
-            'day_min'          => $request->input('day_min'),
-            'day_max'          => $request->input('day_max'),
+            'time_min'         => $request->input('time_min'),
+            'time_max'         => $request->input('time_max'),
+            'time_unit'        => $request->input('time_unit'),
             'active'           => $request->active,
             'institution_id'   => $request->institution_id
         ]);
@@ -126,19 +132,24 @@ class PayrollPermissionPolicyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $payrollPermissionPolicy = PayrollPermissionPolicy::find($id);
         $validateRules  = $this->validateRules;
+        $validateRules  = array_replace(
+            $validateRules,
+            ['name'           => ['required', 'max:100', 'unique:payroll_permission_policies,name,' . $payrollPermissionPolicy->id]]
+        );
         $validateRules  = array_merge(
-            ['id' => [new PayrollPermissionPolicyDaysRange($request->input('day_min'), $request->input('day_max'))]],
+            ['id' => [new PayrollPermissionPolicyDaysRange($request->input('time_min'), $request->input('time_max'))]],
             $validateRules
         );
 
         $this->validate($request, $validateRules, $this->messages);
 
-        $payrollPermissionPolicy = PayrollPermissionPolicy::find($id);
         $payrollPermissionPolicy->name             = $request->name;
         $payrollPermissionPolicy->anticipation_day = $request->anticipation_day;
-        $payrollPermissionPolicy->day_min          = $request->input('day_min');
-        $payrollPermissionPolicy->day_max          = $request->input('day_max');
+        $payrollPermissionPolicy->time_min         = $request->input('time_min');
+        $payrollPermissionPolicy->time_max         = $request->input('time_max');
+        $payrollPermissionPolicy->time_unit        = $request->input('time_unit');
         $payrollPermissionPolicy->active           = $request->active;
         $payrollPermissionPolicy->institution_id   = $request->institution_id;
         $payrollPermissionPolicy->save();
@@ -163,6 +174,18 @@ class PayrollPermissionPolicyController extends Controller
 
     public function getPermissionPolicies()
     {
-        return template_choices('Modules\Payroll\Models\PayrollPermissionPolicy', 'name', [], true, null);
+        $records = PayrollPermissionPolicy::where('active', true)->get();
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+        foreach ($records as $rec) {
+            array_push($options, [
+                'id'               => $rec->id,
+                'text'             => $rec->name,
+                'anticipation_day' => $rec->anticipation_day,
+                'time_min'         => $rec->time_min,
+                'time_max'         => $rec->time_max,
+                'time_unit'        => $rec->time_unit
+            ]);
+        };
+        return $options;
     }
 }

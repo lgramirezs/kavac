@@ -33,14 +33,7 @@ class ReportController extends Controller
      */
     public function create(Request $request, ReportRepository $reportRepository)
     {
-        /*$institution = Institution::find(1);
-        $pdf = new PDF(config('app.name'));
-        $pdf->setConfig(['institution' => $institution, 'urlVerify' => 'www.cenditel.gob.ve']);
-        $pdf->setHeader(__('Formulación de Presupuesto'), __('Mes de Septiembre'));
-        $pdf->setFooter();
-        $pdf->setBody('budget::reports.formulation', true, [
-            'formulation' => \Modules\Budget\Models\BudgetSubSpecificFormulation::find(1)
-        ]);*/
+        //
     }
 
     /**

@@ -8,6 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
+use Modules\Purchase\Models\PurchaseSupplierObject;
+
 /**
  * @class PurchaseSupplier
  * @brief Datos de los proveedores
@@ -33,14 +35,15 @@ class PurchaseSupplier extends Model implements Auditable
     protected $dates = ['deleted_at'];
 
     protected $with = [
-        'purchaseSupplierSpecialty', 'purchaseSupplierType', 'purchaseSupplierBranch', 'purchaseSupplierObject',
-        'phones', 'city'
+        'purchaseSupplierSpecialty', 'purchaseSupplierType', 'purchaseSupplierBranch', 'purchaseSupplierObjects',
+        'phones', 'city', 'contacts'
     ];
 
     protected $fillable = [
-        'rif', 'code', 'name', 'direction', 'person_type', 'company_type', 'contact_name', 'contact_email', 'website',
+        'rif', 'code', 'name', 'direction', 'person_type', 'company_type', 'website',
         'active', 'purchase_supplier_specialty_id', 'purchase_supplier_type_id', 'purchase_supplier_object_id',
-        'purchase_supplier_branch_id', 'country_id', 'estate_id', 'city_id', 'rnc_status', 'rnc_certificate_number'
+        'purchase_supplier_branch_id', 'country_id', 'estate_id', 'city_id', 'rnc_status', 'rnc_certificate_number', 
+        'social_purpose'
     ];
 
     /**
@@ -52,6 +55,27 @@ class PurchaseSupplier extends Model implements Auditable
     public function phones()
     {
         return $this->morphMany(\App\Models\Phone::class, 'phoneable');
+    }
+
+    /**
+     * PurchaseSupplier morphs many contact.
+     *
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function contacts()
+    {
+        return $this->morphMany(\App\Models\Contact::class, 'contactable');
+    }
+
+    /**
+     * Obtiene todos los documentos asociados al proveedor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function documents()
+    {
+        return $this->morphMany(\App\Models\Document::class, 'documentable');
     }
 
     /**
@@ -115,13 +139,13 @@ class PurchaseSupplier extends Model implements Auditable
     }
 
     /**
-     * PurchaseSupplier belongs to PurchaseSupplierObject.
+     * The purchaseSupplierObjects that belong to the PurchaseSupplier
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function purchaseSupplierObject()
+    public function purchaseSupplierObjects()
     {
-        return $this->belongsTo(PurchaseSupplierObject::class);
+        return $this->belongsToMany(PurchaseSupplierObject::class, 'purchase_object_supplier');
     }
 
     /**

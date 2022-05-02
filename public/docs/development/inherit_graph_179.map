@@ -1,0 +1,48 @@
+<map id="Representación gráfica de la clase" name="Representación gráfica de la clase">
+<area shape="rect" id="node1" href="$d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="5,1120,92,1147"/>
+<area shape="rect" id="node2" href="$d1/d0e/classApp_1_1Http_1_1Controllers_1_1Admin_1_1AppManagementController.html" title="Gestiona los procesos, registros, etc., de la aplicación, de uso exclusivo para el administrador." alt="" coords="147,5,344,32"/>
+<area shape="rect" id="node3" href="$d4/d83/classApp_1_1Http_1_1Controllers_1_1Admin_1_1BackupController.html" title="Gestiona información de respaldo." alt="" coords="178,56,313,83"/>
+<area shape="rect" id="node4" href="$d7/d9e/classApp_1_1Http_1_1Controllers_1_1Admin_1_1InstitutionController.html" title="Gestiona información de Organizaciones." alt="" coords="169,107,321,133"/>
+<area shape="rect" id="node5" href="$d1/d5f/classApp_1_1Http_1_1Controllers_1_1Admin_1_1LogController.html" title="Controlador de Eventos Log." alt="" coords="191,157,300,184"/>
+<area shape="rect" id="node6" href="$d2/dad/classApp_1_1Http_1_1Controllers_1_1Admin_1_1ModuleController.html" title="Controlador para la gestión de los módulos de la aplicación." alt="" coords="178,208,313,235"/>
+<area shape="rect" id="node7" href="$d0/d95/classApp_1_1Http_1_1Controllers_1_1Admin_1_1SettingController.html" title="Gestiona información de configuración general." alt="" coords="179,259,311,285"/>
+<area shape="rect" id="node8" href="$d5/d84/classApp_1_1Http_1_1Controllers_1_1Auth_1_1ForgotPasswordController.html" title="Gestiona el olvido de contraseña." alt="" coords="151,309,340,336"/>
+<area shape="rect" id="node9" href="$de/d5f/classApp_1_1Http_1_1Controllers_1_1Auth_1_1LoginController.html" title="Gestiona información de autenticación." alt="" coords="185,360,306,387"/>
+<area shape="rect" id="node10" href="$d5/d17/classApp_1_1Http_1_1Controllers_1_1Auth_1_1RegisterController.html" title="Gestiona información de registro de usuarios." alt="" coords="175,411,315,437"/>
+<area shape="rect" id="node11" href="$d9/d21/classApp_1_1Http_1_1Controllers_1_1Auth_1_1ResetPasswordController.html" title="Gestiona el reinicio de contraseñas." alt="" coords="153,461,338,488"/>
+<area shape="rect" id="node12" href="$d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html" title="Gestiona información de usuarios." alt="" coords="187,512,303,539"/>
+<area shape="rect" id="node13" href="$dc/d8c/classApp_1_1Http_1_1Controllers_1_1Auth_1_1VerificationController.html" title="Gestiona la verificación de usuarios." alt="" coords="165,563,326,589"/>
+<area shape="rect" id="node14" href="$d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html" title="Controlador de Ciudades." alt="" coords="189,613,301,640"/>
+<area shape="rect" id="node15" href="$dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html" title="Gestiona información de común de la aplicación." alt="" coords="173,664,318,691"/>
+<area shape="rect" id="node16" href="$dd/d0a/classApp_1_1Http_1_1Controllers_1_1CountryController.html" title="Gestiona información de Países." alt="" coords="177,715,314,741"/>
+<area shape="rect" id="node17" href="$d3/dac/classApp_1_1Http_1_1Controllers_1_1CurrencyController.html" title="Gestiona información de Monedas." alt="" coords="173,765,317,792"/>
+<area shape="rect" id="node18" href="$da/d3b/classApp_1_1Http_1_1Controllers_1_1DashboardController.html" title="Gestiona información del Panel de Control." alt="" coords="167,816,323,843"/>
+<area shape="rect" id="node19" href="$d3/d32/classApp_1_1Http_1_1Controllers_1_1DeductionController.html" title="Gestiona información de las deducciones y/o retenciones." alt="" coords="169,867,321,893"/>
+<area shape="rect" id="node20" href="$d9/dae/classApp_1_1Http_1_1Controllers_1_1DepartmentController.html" title="Gestiona información de Departamentos." alt="" coords="163,917,327,944"/>
+<area shape="rect" id="node21" href="$d5/db0/classApp_1_1Http_1_1Controllers_1_1Dev_1_1DevelopmentController.html" title="Controlador para utilidades de desarrollo." alt="" coords="158,968,333,995"/>
+<area shape="rect" id="node22" href="$dc/dc5/classApp_1_1Http_1_1Controllers_1_1DocumentController.html" title="Gestiona información de Documentos." alt="" coords="169,1019,322,1045"/>
+<area shape="rect" id="node23" href="$dd/d1e/classApp_1_1Http_1_1Controllers_1_1DocumentStatusController.html" title="Gestiona información de los estatus de documentos." alt="" coords="148,1069,343,1096"/>
+<area shape="rect" id="node24" href="$dd/d33/classApp_1_1Http_1_1Controllers_1_1EstateController.html" title="Gestiona información de Estados." alt="" coords="182,1120,309,1147"/>
+<area shape="rect" id="node25" href="$dc/d3c/classApp_1_1Http_1_1Controllers_1_1ExchangeRateController.html" title="Gestiona información de tipos de cambio de monedas." alt="" coords="156,1171,335,1197"/>
+<area shape="rect" id="node26" href="$da/db7/classApp_1_1Http_1_1Controllers_1_1FiscalYearController.html" title="Gestiona información del año fiscal." alt="" coords="171,1221,320,1248"/>
+<area shape="rect" id="node27" href="$d4/d5c/classApp_1_1Http_1_1Controllers_1_1ImageController.html" title="Gestiona información de Imágenes." alt="" coords="182,1272,309,1299"/>
+<area shape="rect" id="node28" href="$da/d3e/classApp_1_1Http_1_1Controllers_1_1InstitutionController.html" title="Gestiona información de Organizaciones." alt="" coords="169,1323,321,1349"/>
+<area shape="rect" id="node29" href="$db/dac/classApp_1_1Http_1_1Controllers_1_1InstitutionSectorController.html" title="Gestiona información de los sectores de Organizaciones." alt="" coords="149,1373,342,1400"/>
+<area shape="rect" id="node30" href="$d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html" title="Gestiona información de los tipos de Organizaciones." alt="" coords="154,1424,337,1451"/>
+<area shape="rect" id="node31" href="$da/d57/classApp_1_1Http_1_1Controllers_1_1MaritalStatusController.html" title="Gestiona información de Estados Civiles." alt="" coords="159,1475,332,1501"/>
+<area shape="rect" id="node32" href="$d3/d7b/classApp_1_1Http_1_1Controllers_1_1MeasurementUnitController.html" title="Gestiona información de las unidades de medida." alt="" coords="144,1525,347,1552"/>
+<area shape="rect" id="node33" href="$d5/d6f/classApp_1_1Http_1_1Controllers_1_1MunicipalityController.html" title="Gestiona información de Municipios." alt="" coords="162,1576,329,1603"/>
+<area shape="rect" id="node34" href="$dc/d5a/classApp_1_1Http_1_1Controllers_1_1NotificationSettingController.html" title="Gestiona información para la configuración de notificaciones del sistema." alt="" coords="141,1627,349,1653"/>
+<area shape="rect" id="node35" href="$da/d56/classApp_1_1Http_1_1Controllers_1_1ParameterController.html" title="Gestiona información para la configuración de parámetros del sistema." alt="" coords="168,1677,323,1704"/>
+<area shape="rect" id="node36" href="$dc/df9/classApp_1_1Http_1_1Controllers_1_1ParishController.html" title="Gestiona información de Parroquias." alt="" coords="182,1728,309,1755"/>
+<area shape="rect" id="node37" href="$de/d2c/classApp_1_1Http_1_1Controllers_1_1ProfessionController.html" title="Gestiona información de Profesiones." alt="" coords="168,1779,323,1805"/>
+<area shape="rect" id="node38" href="$d7/d25/classApp_1_1Http_1_1Controllers_1_1ProfileController.html" title="Gestiona información de Perfiles de usuario." alt="" coords="181,1829,309,1856"/>
+<area shape="rect" id="node39" href="$da/d07/classApp_1_1Http_1_1Controllers_1_1ReceiverController.html" title="Gestiona información de receptores." alt="" coords="174,1880,317,1907"/>
+<area shape="rect" id="node40" href="$d6/d1c/classApp_1_1Http_1_1Controllers_1_1ReportController.html" title="Gestiona información de reportes de la aplicación." alt="" coords="181,1931,310,1957"/>
+<area shape="rect" id="node41" href="$d4/da0/classApp_1_1Http_1_1Controllers_1_1RequiredDocumentController.html" title="Gestiona información de documentos requeridos." alt="" coords="140,1981,351,2008"/>
+<area shape="rect" id="node42" href="$d3/d5a/classApp_1_1Http_1_1Controllers_1_1Services_1_1LocatesController.html" title="Gestiona información de servicios de localización." alt="" coords="177,2032,313,2059"/>
+<area shape="rect" id="node43" href="$dc/dc4/classApp_1_1Http_1_1Controllers_1_1Services_1_1MessageController.html" title="Gestiona los mensajes del sistema." alt="" coords="173,2083,317,2109"/>
+<area shape="rect" id="node44" href="$d2/d85/classApp_1_1Http_1_1Controllers_1_1Services_1_1NotificationsController.html" title="Gestiona información de las notificaciones." alt="" coords="161,2133,330,2160"/>
+<area shape="rect" id="node45" href="$de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html" title="Gestiona información de Impuestos." alt="" coords="191,2184,299,2211"/>
+<area shape="rect" id="node46" href="$d3/d67/classApp_1_1Http_1_1Controllers_1_1TaxUnitController.html" title="Gestiona información de Unidades Tributarias (U.T.)" alt="" coords="178,2235,313,2261"/>
+</map>

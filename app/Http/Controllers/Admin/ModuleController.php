@@ -3,9 +3,9 @@
 /** Controladores de uso exclusivo para usuarios administradores */
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Module;
+use Nwidart\Modules\Facades\Module;
+use App\Http\Controllers\Controller;
 
 /**
  * @class ModuleController
@@ -83,7 +83,7 @@ class ModuleController extends Controller
      *
      * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @param      Request          $request    [description]
+     * @param      Request          $request    Objeto con datos de la petición
      *
      * @return     JsonResponse           Devuelve un JSON con los detalles del módulo
      */

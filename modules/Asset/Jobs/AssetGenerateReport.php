@@ -83,22 +83,68 @@ class AssetGenerateReport implements ShouldQueue
     public function handle()
     {
         if ($this->data->type_report == 'general') {
-            $assets = Asset::dateclasification(
-                $this->data->start_date,
-                $this->data->end_date,
-                $this->data->mes,
-                $this->data->year
-            )->get();
+            $assets = Asset::where('institution_id', $this->data->institution_id)->with('institution', 'assetCondition', 'assetStatus');
+
+            /* filtro por periodo de tiempo */
+            if ($this->data->start_date || $this->data->end_date) {
+                if ($this->data->start_date != '' && !is_null($this->data->start_date)) {
+                    if ($this->data->end_date != '' && !is_null($this->data->end_date)) {
+                        $assets = $assets->whereBetween("created_at", [$this->data->start_date,$this->data->end_date]);
+                    } else {
+                        $assets = $assets->whereBetween("created_at", [$this->data->start_date,now()]);
+                    }
+                }
+                if ($this->data->asset_status_id > 0) {
+                    $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
+                }
+            }
+            /* filtro por mes y año */
+            elseif ($this->data->year || $this->data->mes) {
+                if ($this->data->mes != '' && !is_null($this->data->mes)) {
+                    if ($this->data->year != '' && !is_null($this->data->year)) {
+                        $assets = $assets->whereMonth('created_at', $this->data->mes)
+                                     ->whereYear('created_at', $this->data->year);
+                    } else {
+                        $assets = $assets->whereMonth('created_at', $this->data->mes);
+                    }
+                }
+
+                if ($this->data->year != '' && !is_null($this->data->year) && $this->data->mes == '') {
+                    $assets = $assets->whereYear('created_at', $this->data->year);
+                } else {
+                    $assets = $assets;
+                }
+
+                if ($this->data->asset_status_id > 0) {
+                    $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
+                }
+            } else {
+                $assets = $assets;
+            }
+            $assets = $assets->get();
         } elseif ($this->data->type_report == 'clasification') {
             if ($this->data->type_search != '') {
-                $assets = Asset::dateclasification(
+                $assets = Asset::where('institution_id', $this->data->institution_id)->dateclasification(
                     $this->data->start_date,
                     $this->data->end_date,
-                    $this->data->mes_id,
+                    $this->data->mes,
                     $this->data->year_id
                 )->get();
+            } else if ($this->data->asset_type_id) {
+                $assets = Asset::where('institution_id', $this->data->institution_id)->CodeClasification(
+                    $this->data->asset_type_id,
+                    $this->data->asset_category_id,
+                    $this->data->asset_subcategory_id,
+                    $this->data->asset_specific_category_id
+                );
+
+                if ($this->data->asset_status_id > 0) {
+                    $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
+                }
+
+                $assets = $assets->get();
             } else {
-                $assets = Asset::all();
+                $assets = Asset::where('institution_id', $this->data->institution_id)->all();
             }
         }
 
@@ -116,7 +162,7 @@ class AssetGenerateReport implements ShouldQueue
                 'institution' => $institution,
                 'urlVerify'   => url(''),
                 'orientation' => 'L',
-                'filename'    => 'asset-report-' . Carbon::now() . '.pdf'
+                'filename'    => $this->data->code ? 'asset-report-' . $this->data->code . '.pdf' : 'asset-report-' . Carbon::now() . '.pdf'
             ]
         );
 

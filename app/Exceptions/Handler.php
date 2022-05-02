@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Reporta o registra una exepción
+     * Reporta o registra una excepción
      *
      * @param  \Throwable  $exception
      * @return void
@@ -60,13 +60,13 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof TokenMismatchException) {
-            /** Captura una exepción por inactividad */
-            session()->flash('message', ['type' => 'deny', 'msg' => 'Sessión expirada por inactividad.']);
+            /** Captura una excepción por inactividad */
+            session()->flash('message', ['type' => 'deny', 'msg' => 'Sesión expirada por inactividad.']);
             return redirect()->route('index');
         }
 
         if ($exception instanceof MethodNotAllowedHttpException && $request->path() === "logout") {
-            /** Captura una exepción cuando el método usado no esta permitido */
+            /** Captura una excepción cuando el método usado no esta permitido */
             session()->flash('message', ['type' => 'deny', 'msg' => 'Usted ha salido del sistema']);
             return redirect()->route('index');
         }
@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
             ]);
         }
 
-        if ($exception instanceof Swift_TransportException || $exception->getCode() === 530) {
+        if ($exception instanceof \Swift_TransportException || $exception->getCode() === 530) {
             $msg = 'Error del sistema. Si el problema persiste contacte al administrador';
 
             if ($request->ajax()) {

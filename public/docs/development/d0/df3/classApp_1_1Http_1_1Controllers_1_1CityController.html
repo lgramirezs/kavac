@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -110,6 +110,10 @@ $(document).ready(function(){initNavTree('d0/df3/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../da/d07/classApp_1_1Http_1_1Controllers_1_1CityController__inherit__graph.png" border="0" usemap="#CityController_inherit__map" alt="Inheritance graph"/></div>
+<map name="CityController_inherit__map" id="CityController_inherit__map">
+<area shape="rect" title="Controlador de Ciudades." alt="" coords="5,131,127,267"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="23,5,109,83"/>
+</map>
 </div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Diagrama de colaboración para CityController:</div>
@@ -117,6 +121,10 @@ $(document).ready(function(){initNavTree('d0/df3/classApp_1_1Http_1_1Controllers
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d3/dba/classApp_1_1Http_1_1Controllers_1_1CityController__coll__graph.png" border="0" usemap="#CityController_coll__map" alt="Collaboration graph"/></div>
+<map name="CityController_coll__map" id="CityController_coll__map">
+<area shape="rect" title="Controlador de Ciudades." alt="" coords="5,131,127,267"/>
+<area shape="rect" href="../../d8/d70/classApp_1_1Http_1_1Controllers_1_1Controller.html" title="Controlador principal del framework del cual extienden los demás controladores." alt="" coords="23,5,109,83"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -127,6 +135,9 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a852b4e964589d773d40bda3fef01ff2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a852b4e964589d773d40bda3fef01ff2a">destroy</a> (City $city)</td></tr>
 <tr class="memdesc:a852b4e964589d773d40bda3fef01ff2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina una Ciudad específica.  <a href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a852b4e964589d773d40bda3fef01ff2a">Más...</a><br /></td></tr>
 <tr class="separator:a852b4e964589d773d40bda3fef01ff2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0bf35f3ed8e20fa43628e9c0a6382b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a7f0bf35f3ed8e20fa43628e9c0a6382b">getCity</a> (Request $request, $id)</td></tr>
+<tr class="memdesc:a7f0bf35f3ed8e20fa43628e9c0a6382b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consulta una Ciudad específica.  <a href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a7f0bf35f3ed8e20fa43628e9c0a6382b">Más...</a><br /></td></tr>
+<tr class="separator:a7f0bf35f3ed8e20fa43628e9c0a6382b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a149eb92716c1084a935e04a8d95f7347"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a149eb92716c1084a935e04a8d95f7347">index</a> ()</td></tr>
 <tr class="memdesc:a149eb92716c1084a935e04a8d95f7347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra un listado de Ciudades.  <a href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a149eb92716c1084a935e04a8d95f7347">Más...</a><br /></td></tr>
 <tr class="separator:a149eb92716c1084a935e04a8d95f7347"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,7 +149,7 @@ Métodos públicos</h2></td></tr>
 <div class="textblock"><p>Controlador de Ciudades. </p>
 <p>Clase que gestiona las Ciudades</p>
 <dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
-<dl class="section user"><dt>Licencia: </dt><dd>LICENCIA DE SOFTWARE CENDITEL  </dd></dl>
+<dl class="section user"><dt>Licencia:</dt><dd><a href="http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/">LICENCIA DE SOFTWARE CENDITEL</a> </dd></dl>
 
 <p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00020">20</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
 </div><h2 class="groupheader">Documentación del constructor y destructor</h2>
@@ -190,20 +201,65 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Elimina una Ciudad específica. </p>
-<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
+<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">\App\Models\City</td><td class="paramname">$city</td><td>Datos de la Ciudad </td></tr>
+    <tr><td class="paramtype">\App\Models\City</td><td class="paramname">$city</td><td>Datos de la Ciudad</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse con el resultado de la petición </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00101">101</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        $city-&gt;delete();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $city, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00111">111</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        $city-&gt;delete();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $city, <span class="stringliteral">&#39;message&#39;</span> =&gt; <span class="stringliteral">&#39;Success&#39;</span>], 200);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7f0bf35f3ed8e20fa43628e9c0a6382b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f0bf35f3ed8e20fa43628e9c0a6382b">&#9670;&nbsp;</a></span>getCity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getCity </td>
+          <td>(</td>
+          <td class="paramtype">Request&#160;</td>
+          <td class="paramname"><em>$request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Consulta una Ciudad específica. </p>
+<dl class="section author"><dt>Autor</dt><dd>Angelo Osorio <a href="#" onclick="location.href='mai'+'lto:'+'ado'+'so'+'rio'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">adoso<span style="display: none;">.nosp@m.</span>rio@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a> | <a href="#" onclick="location.href='mai'+'lto:'+'dan'+'ie'+'lki'+'ng'+'.32'+'1@'+'gma'+'il'+'.co'+'m'; return false;">danie<span style="display: none;">.nosp@m.</span>lkin<span style="display: none;">.nosp@m.</span>g.321<span style="display: none;">.nosp@m.</span>@gma<span style="display: none;">.nosp@m.</span>il.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">\Illuminate\Http\Request</td><td class="paramname">$request</td><td>Datos de la petición </td></tr>
+    <tr><td class="paramtype">integer</td><td class="paramname">$id</td><td>ID de la Ciudad</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse con el resultado de la petición </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00127">127</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        $city = City::find($id);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;result&#39;</span> =&gt; $city], 200);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -223,13 +279,13 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Muestra un listado de Ciudades. </p>
-<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
+<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse con los registros a mostrar </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00042">42</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; City::with(<span class="stringliteral">&#39;estate&#39;</span>)-&gt;<span class="keyword">get</span>()], 200);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00043">43</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; City::with(<span class="stringliteral">&#39;estate&#39;</span>)-&gt;<span class="keyword">get</span>()], 200);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -260,29 +316,29 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Muestra los datos de una Ciudad. </p>
-<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a> </dd></dl>
+<dl class="section author"><dt>Autor</dt><dd>Ing. Roldan Vargas <a href="#" onclick="location.href='mai'+'lto:'+'rva'+'rg'+'as@'+'ce'+'ndi'+'te'+'l.g'+'ob'+'.ve'; return false;">rvarg<span style="display: none;">.nosp@m.</span>as@c<span style="display: none;">.nosp@m.</span>endit<span style="display: none;">.nosp@m.</span>el.g<span style="display: none;">.nosp@m.</span>ob.ve</a> | <a href="#" onclick="location.href='mai'+'lto:'+'rol'+'da'+'ndv'+'g@'+'gma'+'il'+'.co'+'m'; return false;">rolda<span style="display: none;">.nosp@m.</span>ndvg<span style="display: none;">.nosp@m.</span>@gmai<span style="display: none;">.nosp@m.</span>l.co<span style="display: none;">.nosp@m.</span>m</a></dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramtype">\Illuminate\Http\Request</td><td class="paramname">$request</td><td>Datos de la petición </td></tr>
-    <tr><td class="paramtype">\App\Models\City</td><td class="paramname">$city</td><td>Datos de la Ciudad </td></tr>
+    <tr><td class="paramtype">\App\Models\City</td><td class="paramname">$city</td><td>Datos de la Ciudad</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse con el resultado de la petición </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00080">80</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        $this-&gt;validate($request, [</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="stringliteral">&#39;estate_id&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        ]);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        $city-&gt;name = $request-&gt;name;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        $city-&gt;estate_id = $request-&gt;estate_id;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        $city-&gt;save();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d0/d71/CityController_8php_source.html#l00088">88</a> del archivo <a class="el" href="../../d0/d71/CityController_8php_source.html">CityController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        $this-&gt;validate($request, [</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="stringliteral">&#39;name&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;max:100&#39;</span>],</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <span class="stringliteral">&#39;estate_id&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        ]);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        $city-&gt;name = $request-&gt;name;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        $city-&gt;estate_id = $request-&gt;estate_id;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        $city-&gt;save();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;message&#39;</span> =&gt; __(<span class="stringliteral">&#39;Registro actualizado correctamente&#39;</span>)], 200);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -295,7 +351,7 @@ Métodos públicos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>App</b></li><li class="navelem"><a class="el" href="../../dc/de8/namespaceApp_1_1Http.html">Http</a></li><li class="navelem"><a class="el" href="../../d1/d2d/namespaceApp_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html">CityController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:01 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:36 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

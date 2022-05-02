@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -132,32 +132,33 @@ $(document).ready(function(){initNavTree('df/d51/2014__10__12__000000__create__u
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                      -&gt;comment(<span class="stringliteral">&#39;Clave pública para la verificación de firma de documentos&#39;</span>);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                $table-&gt;boolean(<span class="stringliteral">&#39;active&#39;</span>)-&gt;<span class="keywordflow">default</span>(<span class="keyword">true</span>)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                      -&gt;comment(<span class="stringliteral">&#39;Estatus actual del usuario. (False) inactivo, (True) activo&#39;</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                $table-&gt;unsignedBigInteger(<span class="stringliteral">&#39;employee_id&#39;</span>)-&gt;nullable()</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                      -&gt;comment(<span class="stringliteral">&#39;Identificador del empleado asociado al usuario&#39;</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                $table-&gt;rememberToken();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                $table-&gt;timestamps();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                $table-&gt;softDeletes()-&gt;comment(<span class="stringliteral">&#39;Fecha y hora en la que el registro fue eliminado&#39;</span>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            });</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">    /**</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">     * Reverse the migrations.</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">     *</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">     * @return void</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> down()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;users&#39;</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                $table-&gt;timestamp(<span class="stringliteral">&#39;email_verified_at&#39;</span>)-&gt;nullable()</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                      -&gt;comment(<span class="stringliteral">&#39;validación para determinar si la dirección de correo fue verificada&#39;</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                $table-&gt;datetime(<span class="stringliteral">&#39;blocked_at&#39;</span>)-&gt;nullable()-&gt;comment(<span class="stringliteral">&#39;fecha en la que fue bloqueado un usuario&#39;</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                $table-&gt;rememberToken();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                $table-&gt;timestamps();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                $table-&gt;softDeletes()-&gt;comment(<span class="stringliteral">&#39;Fecha y hora en la que el registro fue eliminado&#39;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            });</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">    /**</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">     * Reverse the migrations.</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">     * @return void</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> down()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        Schema::dropIfExists(<span class="stringliteral">&#39;users&#39;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_f32c53f2c0f0ccaeb11076e30674d5f4.html">database</a></li><li class="navelem"><a class="el" href="../../dir_60ac0e461401d42a1487e6744db0f9b7.html">migrations</a></li><li class="navelem"><b>2014_10_12_000000_create_users_table.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:56 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:28 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

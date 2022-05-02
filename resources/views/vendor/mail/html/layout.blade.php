@@ -49,6 +49,10 @@
           border-width: 0 2px 2px 0 !important;
           transform: rotate(45deg) !important;
         }
+        .copyleft {
+            display:inline-block;
+            transform: rotate(180deg);
+        }
     </style>
 
     <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">

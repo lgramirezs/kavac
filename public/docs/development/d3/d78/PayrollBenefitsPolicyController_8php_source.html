@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -281,8 +281,8 @@ $(document).ready(function(){initNavTree('d3/d78/PayrollBenefitsPolicyController
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="stringliteral">&#39;additional_maximum_days_per_year&#39;</span> =&gt; $request-&gt;input(<span class="stringliteral">&#39;additional_maximum_days_per_year&#39;</span>),</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="stringliteral">&#39;work_interruption_days&#39;</span>           =&gt; $request-&gt;input(<span class="stringliteral">&#39;work_interruption_days&#39;</span>),</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="stringliteral">&#39;month_worked_days&#39;</span>                =&gt; $request-&gt;input(<span class="stringliteral">&#39;month_worked_days&#39;</span>),</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="stringliteral">&#39;benfits_advance_payment&#39;</span>          =&gt; !empty($request-&gt;benfits_advance_payment)</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                                    ? $request-&gt;benfits_advance_payment</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="stringliteral">&#39;benefits_advance_payment&#39;</span>          =&gt; !empty($request-&gt;benefits_advance_payment)</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                                    ? $request-&gt;benefits_advance_payment</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                                                    : <span class="keyword">false</span>,</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            <span class="stringliteral">&#39;maximum_advance_percentage&#39;</span>       =&gt; $request-&gt;input(<span class="stringliteral">&#39;maximum_advance_percentage&#39;</span>),</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            <span class="stringliteral">&#39;number_advances_per_year&#39;</span>         =&gt; $request-&gt;input(<span class="stringliteral">&#39;number_advances_per_year&#39;</span>),</div>
@@ -376,8 +376,8 @@ $(document).ready(function(){initNavTree('d3/d78/PayrollBenefitsPolicyController
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            <span class="stringliteral">&#39;additional_maximum_days_per_year&#39;</span> =&gt; $request-&gt;input(<span class="stringliteral">&#39;additional_maximum_days_per_year&#39;</span>),</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            <span class="stringliteral">&#39;work_interruption_days&#39;</span>           =&gt; $request-&gt;input(<span class="stringliteral">&#39;work_interruption_days&#39;</span>),</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            <span class="stringliteral">&#39;month_worked_days&#39;</span>                =&gt; $request-&gt;input(<span class="stringliteral">&#39;month_worked_days&#39;</span>),</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="stringliteral">&#39;benfits_advance_payment&#39;</span>          =&gt; !empty($request-&gt;benfits_advance_payment)</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                                                    ? $request-&gt;benfits_advance_payment</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="stringliteral">&#39;benefits_advance_payment&#39;</span>          =&gt; !empty($request-&gt;benefits_advance_payment)</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                                                    ? $request-&gt;benefits_advance_payment</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                                                    : <span class="keyword">false</span>,</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            <span class="stringliteral">&#39;maximum_advance_percentage&#39;</span>       =&gt; $request-&gt;input(<span class="stringliteral">&#39;maximum_advance_percentage&#39;</span>),</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            <span class="stringliteral">&#39;number_advances_per_year&#39;</span>         =&gt; $request-&gt;input(<span class="stringliteral">&#39;number_advances_per_year&#39;</span>),</div>
@@ -451,7 +451,7 @@ $(document).ready(function(){initNavTree('d3/d78/PayrollBenefitsPolicyController
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_5d2bef04a6d76a5c763302bfa2fa021f.html">Payroll</a></li><li class="navelem"><a class="el" href="../../dir_95277cc2b4dadd03ec442f92cc3adc42.html">Http</a></li><li class="navelem"><a class="el" href="../../dir_6af35cabcf7901be383c325948ab2662.html">Controllers</a></li><li class="navelem"><b>PayrollBenefitsPolicyController.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:58 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:30 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

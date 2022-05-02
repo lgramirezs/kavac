@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('dc/dfc/2019__09__04__152740__create__p
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            Schema::create(<span class="stringliteral">&#39;parameters&#39;</span>, <span class="keyword">function</span> (Blueprint $table) {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                $table-&gt;bigIncrements(<span class="stringliteral">&#39;id&#39;</span>);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                $table-&gt;string(<span class="stringliteral">&#39;p_key&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Clave de referencia para el parámetro&#39;</span>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                $table-&gt;string(<span class="stringliteral">&#39;p_value&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Valor establecido para el parámetro&#39;</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                $table-&gt;longText(<span class="stringliteral">&#39;p_value&#39;</span>)-&gt;comment(<span class="stringliteral">&#39;Valor establecido para el parámetro&#39;</span>);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                $table-&gt;string(<span class="stringliteral">&#39;required_by&#39;</span>)-&gt;<span class="keywordflow">default</span>(<span class="stringliteral">&#39;core&#39;</span>)-&gt;comment(</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                    <span class="stringliteral">&#39;Indica quien requiere del parámetro (aplicación base o módulo). &#39;</span> .</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                    <span class="stringliteral">&#39;Por defecto se establece la aplicación base, para modulos se debe indicar el nombre del mismo&#39;</span></div>
@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('dc/dfc/2019__09__04__152740__create__p
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_f32c53f2c0f0ccaeb11076e30674d5f4.html">database</a></li><li class="navelem"><a class="el" href="../../dir_60ac0e461401d42a1487e6744db0f9b7.html">migrations</a></li><li class="navelem"><b>2019_09_04_152740_create_parameters_table.php</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:56 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:28 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -102,7 +102,7 @@ class PayrollProfessionalController extends Controller
             $this->validate(
                 $request,
                 [
-                    'professions' => ['required', 'array', 'min:1'],
+                    // 'professions' => ['required', 'array', 'min:1'],
                 ],
                 [],
                 [
@@ -120,7 +120,7 @@ class PayrollProfessionalController extends Controller
             $this->validate(
                 $request,
                 [
-                    'instruction_degree_name' => ['required', 'max:100'],
+                    // 'instruction_degree_name' => ['required', 'max:100'],
                 ],
                 [],
                 [
@@ -134,16 +134,16 @@ class PayrollProfessionalController extends Controller
                 $request,
                 [
                     'payroll_studies.' . $i . '.university_name' => ['required', 'max:200'],
-                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer', 'after_or_equal:1930'],
+                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'date'],
                     'payroll_studies.' . $i . '.payroll_study_type_id' => ['required'],
                     'payroll_studies.' . $i . '.profession_id' => ['required'],
                 ],
                 [],
                 [
-                    'payroll_studies.' . $i . '.university_name' => 'nombre de la universidad #' . ($i + 1),
-                    'payroll_studies.' . $i . '.graduation_year' => 'año de graduación #' . ($i + 1),
-                    'payroll_studies.' . $i . '.payroll_study_type_id' => 'tipo de estudio #' . ($i + 1),
-                    'payroll_studies.' . $i . '.profession_id' => 'profesión #' . ($i + 1),
+                    'payroll_studies.' . $i . '.university_name' => 'nombre de la universidad n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.graduation_year' => 'año de graduación n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.payroll_study_type_id' => 'tipo de estudio n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.profession_id' => 'profesión n°' . ($i + 1),
                 ]
             );
             $i++;
@@ -363,7 +363,7 @@ class PayrollProfessionalController extends Controller
             $this->validate(
                 $request,
                 [
-                    'professions' => ['required', 'array', 'min:1'],
+                    // 'professions' => ['required', 'array', 'min:1'],
                 ],
                 [],
                 [
@@ -382,7 +382,7 @@ class PayrollProfessionalController extends Controller
             $this->validate(
                 $request,
                 [
-                    'instruction_degree_name' => ['required', 'max:100'],
+                    // 'instruction_degree_name' => ['required', 'max:100'],
                 ],
                 [],
                 [
@@ -396,16 +396,16 @@ class PayrollProfessionalController extends Controller
                 $request,
                 [
                     'payroll_studies.' . $i . '.university_name' => ['required', 'max:200'],
-                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'digits:4', 'integer', 'after_or_equal:1930'],
+                    'payroll_studies.' . $i . '.graduation_year' => ['required', 'date'],
                     'payroll_studies.' . $i . '.payroll_study_type_id' => ['required'],
                     'payroll_studies.' . $i . '.profession_id' => ['required'],
                 ],
                 [],
                 [
-                    'payroll_studies.' . $i . '.university_name' => 'nombre de la universidad #' . ($i + 1),
-                    'payroll_studies.' . $i . '.graduation_year' => 'año de graduación #' . ($i + 1),
-                    'payroll_studies.' . $i . '.payroll_study_type_id' => 'tipo de estudio #' . ($i + 1),
-                    'payroll_studies.' . $i . '.profession_id' => 'profesión #' . ($i + 1),
+                    'payroll_studies.' . $i . '.university_name' => 'nombre de la universidad n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.graduation_year' => 'año de graduación n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.payroll_study_type_id' => 'tipo de estudio n°' . ($i + 1),
+                    'payroll_studies.' . $i . '.profession_id' => 'profesión n°' . ($i + 1),
                 ]
             );
             $i++;

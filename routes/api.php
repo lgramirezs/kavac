@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Rutas para APIs
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Aquí es donde puede registrar las rutas API para su aplicación. Estas
+| estas rutas son cargadas por el RouteServiceProvider dentro de un grupo que 
+| es asignado al grupo "api" middleware. ¡Disfruta construyendo tu API!
 |
 */
 

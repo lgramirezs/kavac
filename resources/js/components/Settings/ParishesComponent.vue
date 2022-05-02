@@ -1,8 +1,7 @@
 <template>
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mt-2 mb-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
-           href="javascript:void(0)" title="Registros de Parroquias de un Municipio"
-           data-toggle="tooltip" @click="addRecord('add_parish', 'parishes', $event)">
+           href="javascript:void(0)" title="Registros de Parroquias de un Municipio" data-toggle="tooltip" @click="addRecord('add_parish', 'parishes', $event)">
             <i class="icofont icofont-map-pins ico-3x"></i>
             <span>Parroquias</span>
         </a>
@@ -22,7 +21,7 @@
                         <form-errors :listErrors="errors"></form-errors>
                         <div class="row">
                             <div class="col-12 col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group">
                                     <label>País:</label>
                                     <select2 :options="countries" @input="getEstates"
                                              v-model="record.country_id"></select2>
@@ -30,18 +29,58 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group" v-if="editEstate=='false'">
+                                    <label>Estados:</label>
+                                    <select2 :options="estates" v-model="record.estate_id" @input="getMunicipalities">
+                                    </select2>
+                                </div>
+                                <div class="form-group" v-if="editEstate == 'true'">
                                     <label>Estado:</label>
+                                    <select id="estate" v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id" 
+                                            v-for="(ste, index) in estates" :key="index">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!--<div class="form-group is-required">
+                                    <label>Estado:</label>
+                                    <select v-model="record.estate_id">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
+                                            v-for="ste in estates">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
                                     <select2 :options="estates" @input="getMunicipalities"
                                              v-model="record.estate_id"></select2>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group" v-show="editMunicipalities=='false'">
                                     <label>Municipio:</label>
                                     <select2 :options="municipalities" v-model="record.municipality_id">
                                     </select2>
                                 </div>
+                                <div id="municipality" class="form-group" v-show="editMunicipalities == 'true'">
+                                    <label>Municipio:</label>
+                                    <select v-model="record.municipality_id">
+                                        <option :value="ste.id" :selected="ste.id == record.municipality_id"
+                                            v-for="(ste, index) in municipalities" :key="index">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!--<div class="form-group is-required">
+                                    <label>Municipio:</label>
+                                    <select v-model="record.municipality_id">
+                                        <option :value="ste.id" :selected="ste.id == record.municipality_id"
+                                            v-for="ste in municipalities">
+                                            {{ ste.text }}
+                                        </option>
+                                    </select>
+                                    <select2 :options="municipalities" v-model="record.municipality_id">
+                                    </select2>
+                                </div> -->
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group is-required">
@@ -132,7 +171,6 @@
                     name: '',
                     code: ''
                 },
-                recordEdit: {},
                 selectedEstateId: '',
                 selectedMunicipalityId: '',
                 errors: [],
@@ -141,23 +179,83 @@
                 estates: ['0'],
                 municipalities: ['0'],
                 columns: ['municipality.estate.name', 'municipality.name', 'name', 'code', 'id'],
+                editEstate: '',
+                editMunicipalities: '',
             }
         },
         watch: {
-            estates() {
+            /*estates() {
                 const vm = this;
                 if (vm.record.id && !vm.record.estate_id) {
-                    vm.record.estate_id = vm.recordEdit.municipality.estate.id;
+                    vm.record.estate_id = vm.selectedEstateId;
+                }
+            },*/
+            record: {
+                deep: true,
+                handler: function(newValue, oldValue) {
+                    const vm = this;
+                    if (vm.record.id) {
+                        vm.record.estate_id = vm.selectedEstateId;
+                        vm.record.municipality_id = vm.selectedMunicipalityId;
+                    }
                 }
             },
-            municipalities() {
+            selectedEstateId(newValue, oldValue) {
+                const vm = this;
+                if (newValue && newValue!==oldValue) {
+                    setTimeout(() => {
+                        vm.record.estate_id = vm.selectedEstateId.toString();
+                        $("#estate").val(vm.selectedEstateId.toString());
+                    }, 1000);
+                }
+            },
+            /*selectedEstateId(newValue, oldValue) {
+                console.log("selectedEstateId");
+                const vm = this;
+                if (newValue && newValue!==oldValue) {
+                    setTimeout(() => {
+                        vm.record.estate_id = vm.selectedEstateId.toString();
+                        $("#estate").val(vm.selectedEstateId.toString());
+                        console.log(vm.record.estate_id);
+                    }, 1000);
+                }
+            }*/
+            /*municipalities() {
                 const vm = this;
                 if (vm.record.id && !vm.record.municipality_id) {
-                    vm.record.municipality_id = vm.recordEdit.municipality.id;
+                    vm.record.municipality_id = vm.selectedMunicipalityId;
                 }
-            }
+            }*/
         },
         methods: {
+            /**
+             * Obtiene los Estados del Pais seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getEstate(country_id) {
+                const vm = this;
+                vm.estates = [];
+                if (country_id) {
+                    axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
+                        vm.estates = response.data;
+                    });
+                }
+            },
+            /**
+             * Obtiene los Municipios del Estado seleccionado
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getMunicipalitie(state_id) {
+                const vm = this;
+                vm.municipalities = [];
+                if (state_id) {
+                    axios.get(`/get-municipalities/${vm.record.estate_id}`).then(response => {
+                        vm.municipalities = response.data;
+                    });
+                }
+            },
             /**
              * Método que borra todos los datos del formulario
              *
@@ -175,6 +273,8 @@
                 };
                 vm.selectedEstateId = '';
                 vm.selectedMunicipalityId = '';
+                vm.editEstate = 'false';
+                vm.editMunicipalities = 'false';
             },
             /**
              * Método que carga el formulario con los datos a modificar
@@ -184,25 +284,28 @@
              * @param  {integer} index Identificador del registro a ser modificado
              * @param {object} event   Objeto que gestiona los eventos
              */
-            async initUpdate(id, event) {
+            initUpdate(id, event) {
                 let vm = this;
                 vm.errors = [];
-
+                vm.editEstate = 'true';
+                vm.editMunicipalities = 'true';
                 let recordEdit = JSON.parse(JSON.stringify(vm.$refs.tableResults.data.filter((rec) => {
                     return rec.id === id;
                 })[0])) || vm.reset();
-
-                vm.recordEdit = recordEdit;
                 vm.record = recordEdit;
                 vm.record.country_id = recordEdit.municipality.estate.country.id;
-                /*vm.record.estate_id = recordEdit.municipality.estate.id;
-                vm.record.municipality_id = recordEdit.municipality.id;*/
-                /*vm.selectedEstateId = recordEdit.municipality.estate.id;
-                vm.selectedMunicipalityId = recordEdit.municipality.id;*/
+                vm.getEstate(vm.record.country_id);
+                vm.record.estate_id = recordEdit.municipality.estate_id;
+                vm.getMunicipalitie(vm.record.estate_id);
+                vm.selectedEstateId = vm.record.estate_id;
+                vm.record.municipality_id = recordEdit.municipality.id;
+                vm.selectedMunicipalityId = vm.record.municipality_id;
                 event.preventDefault();
             }
         },
         created() {
+            this.editEstate = 'false';
+            this.editMunicipalities = 'false';
             this.table_options.headings = {
                 'municipality.estate.name': 'Estado',
                 'municipality.name': 'Municipio',
@@ -220,11 +323,19 @@
                 'id': 'col-md-2'
             };
         },
-        async mounted() {
+        mounted() {
             let vm = this;
-            await vm.$nextTick();
+            vm.editEstate = 'false';
+            vm.editMunicipalities = 'false';
+            //await vm.$nextTick();
             $("#add_parish").on('show.bs.modal', function() {
                 vm.getCountries();
+            });
+            $("#estate").on('change', function() {
+                vm.record.estate_id = $(this).val();
+            });
+            $("#municipality").on('change', function() {
+                vm.record.municipality_id = $(this).val();
             });
         }
     };

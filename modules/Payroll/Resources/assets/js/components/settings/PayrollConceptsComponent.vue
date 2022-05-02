@@ -51,18 +51,8 @@
                                 </div>
                                 <!-- ./nombre -->
                                 <div class="row">
-                                    <div class="col-md-8">
-                                        <!-- código -->
-                                        <div class="form-group is-required">
-                                            <label>Código:</label>
-                                            <input type="text" placeholder="Código" data-toggle="tooltip"
-                                                   title="Indique el código del concepto (requerido)"
-                                                   class="form-control input-sm" v-model="record.code">
-                                        </div>
-                                        <!-- ./código -->
-                                    </div>
                                     <!-- activa -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class=" form-group">
                                             <label>¿Activo?</label>
                                             <div class="col-12">
@@ -77,14 +67,22 @@
                                         </div>
                                     </div>
                                     <!-- ./activa -->
+                                    <!-- tipo de concepto -->
+                                    <div class="col-md-10">
+                                        <div class=" form-group is-required">
+                                            <label>Tipo de concepto</label>
+                                            <select2 :options="payroll_concept_types"
+                                                     v-model="record.payroll_concept_type_id"></select2>
+                                        </div>
+                                    </div>
+                                    <!-- ./tipo de concepto -->
                                 </div>
-                                <!-- tipo de concepto -->
-                                <div class=" form-group is-required">
-                                    <label>Tipo de concepto</label>
-                                    <select2 :options="payroll_concept_types"
-                                             v-model="record.payroll_concept_type_id"></select2>
+                                <!-- Moneda -->
+                                <div class="form-group is-required">
+                                    <label>Moneda:</label>
+                                    <select2 :options="currencies" v-model="record.currency_id" id="currency_id"></select2>
                                 </div>
-                                <!-- ./tipo de concepto -->
+                                <!-- ./Moneda -->
                             </div>
                             <!-- descripción -->
                             <div class="col-md-6">
@@ -101,73 +99,9 @@
                             <!-- ./descripción -->
                         </div>
                         <div class="row">
-                            <!-- ¿incide sobre? -->
-                            <div class="col-md-4">
-                                <div class=" form-group is-required">
-                                    <label>¿Incide sobre?</label>
-                                    <select2 :options="affects"
-                                             v-model="record.affect"></select2>
-                                </div>
-                            </div>
-                            <!-- ./¿incide sobre? -->
-                            <!-- tipo de incidencia -->
-                            <div class="col-md-8">
-                                <h6 class="text-center">Tipo de incidencia</h6>
-                                <div class="row" style="align-items: flex-end;">
-                                    <div class="col-xs-3">
-                                        <div class="form-group">
-                                            <label>Valor</label>
-                                            <div class="col-12">
-                                                <p-radio class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         v-model="record.incidence_type" value="value">
-                                                    <label slot="off-label"></label>
-                                                </p-radio>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <div class="form-group">
-                                            <label>Valor absoluto</label>
-                                            <div class="col-12">
-                                                <p-radio class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         v-model="record.incidence_type" value="absolute_value">
-                                                    <label slot="off-label"></label>
-                                                </p-radio>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <div class="form-group">
-                                            <label>Unidad tributaria</label>
-                                            <div class="col-12">
-                                                <p-radio class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         v-model="record.incidence_type" value="tax_unit">
-                                                    <label slot="off-label"></label>
-                                                </p-radio>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <div class="form-group">
-                                            <label>Porcentaje</label>
-                                            <div class="col-12">
-                                                <p-radio class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         v-model="record.incidence_type" value="percent">
-                                                    <label slot="off-label"></label>
-                                                </p-radio>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ./tipo de incidencia -->
                             <!-- cuenta contable -->
                             <div class="col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group">
                                     <label>Cuenta contable</label>
                                     <select2 :options="accounting_accounts"
                                              v-model="record.accounting_account_id"></select2>
@@ -176,7 +110,7 @@
                             <!-- ./cuenta contable -->
                             <!-- cuenta presupuestaria -->
                             <div class="col-md-4">
-                                <div class="form-group is-required">
+                                <div class="form-group">
                                     <label>Cuenta presupuestario</label>
                                     <select2 :options="budget_accounts"
                                              v-model="record.budget_account_id"></select2>
@@ -226,10 +160,8 @@
                             </div>
                             <!-- ./¿asignar a? -->
                         </div>
-                        <div class="row" style="align-items: flex-end;"
-                             v-if="record.assign_to">
-                             <div class="col-md-4"
-                                  v-for="field in record.assign_to" :key="field['id']">
+                        <div class="row" style="align-items: flex-end;" v-if="record.assign_to">
+                             <div class="col-md-4" v-for="field in record.assign_to" :key="field['id']">
                                 <div v-if="field['type'] && record.assign_options[field['id']]">
                                     <!-- registro de opciones a asignar -->
                                     <div class="form-group is-required"
@@ -247,7 +179,8 @@
                                     <div class="form-group"
                                         v-if="field['type'] == 'range'
                                             && assign_options[field['id']]">
-                                        <label>{{ field['name'] }}</label>
+                                        <label>{{ field['name'] == 'Todos los trabajadores con hijos' ?
+                                                    'Rango de edad de los hijos' : field['name'] }}</label>
                                         <div class="row" style="align-items: baseline;">
                                             <dir class="col-6">
                                                 <div class="form-group is-required">
@@ -284,7 +217,7 @@
                                               :class="['form-control input-sm BlockDeletion', isInvalid('formula')]"
                                               data-toggle="tooltip"
                                               title="Fórmula a aplicar para el concepto. Utilice la siguiente calculadora para establecer los parámetros de la fórmula"
-                                              rows="3" v-model="record.formula"
+                                              rows="3" v-model="formula"
                                               autocomplete="off"
                                               onkeypress="return (event.charCode >= 24 && event.charCode <= 27)">
                                     </textarea>
@@ -390,6 +323,7 @@
                                                    data-toggle="tooltip"
                                                    title="Indique el valor de comparación (requerido)"
                                                    class="form-control input-sm" v-model="value"
+                                                   :disabled="operator == ''" 
                                                    v-input-mask data-inputmask="
                                                        'alias': 'numeric',
                                                        'allowMinus': 'false'">
@@ -441,7 +375,7 @@
                                         <div class="col-sm-12 text-center">
                                             <div class="btn btn-info btn-sm btn-formula-clear" data-toggle="tooltip"
                                                  title="Reinicia el campo de la fórmula"
-                                                 @click="record.formula = ''">C</div>
+                                                 @click="record.formula = ''; formula = '';">C</div>
                                             <div class="btn btn-info btn-sm btn-formula" data-toggle="tooltip"
                                                  title="presione para agregar este dígito" data-value="0">0</div>
                                             <div class="btn btn-info btn-sm btn-formula" data-toggle="tooltip"
@@ -457,8 +391,8 @@
                                         <div class="col-sm-12 col-btn-block text-center">
                                             <div class="btn btn-info btn-sm" data-toggle="tooltip"
                                                  title="Variable a usar cuando se realice el cálculo"
-                                                 :disabled="(((operator == '') ||
-                                                 ((value == '') && (type != 'boolean'))) &&
+                                                 :disabled="((((operator == '') && (type != 'number') && (variable != 'vacation')) ||
+                                                 ((value == '') && (type == 'boolean'))) &&
                                                  ((variable == 'worker_record') || (variable == 'vacation')))"
                                                  @click="getCodeVariable()">
                                                 {{ updateNameVariable }}
@@ -491,9 +425,6 @@
                             <div slot="description" slot-scope="props">
                                 <span v-html="props.row.description"></span>
                             </div>
-                            <div slot="incidence_type" slot-scope="props">
-                                <span> {{ incidence_types[props.row.incidence_type] }} </span>
-                            </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
                                         class="btn btn-warning btn-xs btn-icon  btn-action"
@@ -522,11 +453,8 @@
                 record: {
                     id:                          '',
                     name:                        '',
-                    code:                        '',
                     description:                 '',
                     active:                      false,
-                    affect:                      '',
-                    incidence_type:              '',
                     formula:                     '',
                     payroll_concept_type_id:     '',
                     calculation_way:             '',
@@ -535,9 +463,11 @@
                     payroll_salary_tabulator_id: '',
                     accounting_account_id:       '',
                     budget_account_id:           '',
+                    currency_id:           '',
                     assign_options:              {}
 
                 },
+                formula:                   '',
                 variable:                  '',
                 variable_option:           '',
                 assign_options:            {},
@@ -546,7 +476,7 @@
                 value:                     '',
                 operator:                  '',
                 operators:                 [
-                    {"id": "",   "text": "Seleccione..."},
+                    {"id": "",   "text": "Ninguno"},
                     {"id": "==", "text": "Igualdad (==)"},
                     {"id": "!=", "text": "Desigualdad (!=)"},
                     {"id": ">",  "text": "Mayor estricto (>)"},
@@ -558,7 +488,7 @@
 
                 errors:                    [],
                 records:                   [],
-                columns:                   ['code', 'name', 'description', 'incidence_type', 'id'],
+                columns:                   ['name', 'description', 'id'],
 
                 variable_options:          [],
                 institutions:              [],
@@ -567,20 +497,21 @@
                 payroll_salary_tabulators: [],
                 budget_accounts:           [],
                 accounting_accounts:       [],
+                currencies:                [],
 
                 calculation_ways:          [
                     {"id": "",          "text": "Seleccione..."},
                     {"id": "formula",   "text": "Fórmula"},
                     {"id": "tabulator", "text": "De acuerdo a tabulador"}
                 ],
-                affects:                   [
+                /*affects:                   [
                     {"id": "",                     "text": "Seleccione..."},
                     {"id": "base_salary",          "text": "Salario base"},
                     {"id": "normal_salary",        "text": "Salario normal"},
                     {"id": "dialy_salary",         "text": "Salario diario"},
                     {"id": "comprehensive_salary", "text": "Salario integral"},
                     {"id": "none",                 "text": "Ninguno"}
-                ],
+                ],*/
                 incidence_types: {
                     'value':          'Valor',
                     'absolute_value': 'Valor absoluto',
@@ -592,19 +523,15 @@
         created() {
             const vm = this;
             vm.table_options.headings = {
-                'code':           'Código',
                 'name':           'Nombre',
                 'description':    'Descripción',
-                'incidence_type': 'Tipo de incidencia',
                 'id':              'Acción'
             };
             vm.table_options.sortable       = ['code', 'name', 'description', 'incidence_type'];
             vm.table_options.filterable     = ['code', 'name', 'description', 'incidence_type'];
             vm.table_options.columnsClasses = {
-                'code':           'col-xs-2',
-                'name':           'col-xs-2',
-                'description':    'col-xs-4',
-                'incidence_type': 'col-xs-2',
+                'name':           'col-xs-4',
+                'description':    'col-xs-6',
                 'id':             'col-xs-2'
             }
         },
@@ -619,6 +546,7 @@
                 vm.getOptions('payroll/get-associated-records');
                 vm.getPayrollConceptAssignTo();
                 vm.getPayrollSalaryTabulators();
+                vm.getCurrencies();
                 vm.assign_options_lists = [];
 
                 $('.BlockDeletion').on('keydown', function (e) {
@@ -635,25 +563,36 @@
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     let keys = vm.record.formula.indexOf('}');
-                    if (keys > 0) {
+                    let showKeys = vm.formula.indexOf('}');
+                    if (keys > 0 && showKeys > 0) {
                         let firstFormula = vm.record.formula.substr(0, keys);
+                        let showFirstFormula = vm.formula.substr(0, showKeys);
                         let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
-                        let lastElement = vm.record.formula.substr(keys-1, 1)
+                        let showLastFormula = vm.formula.substr(showKeys, vm.record.formula.length);
+                        let lastElement = vm.record.formula.substr(keys-1, 1);
+                        let showLastElement = vm.formula.substr(showKeys-1, 1);
                         let symbols = ['+', '-', '*', '/', '.'];
-                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) && symbols.includes(showLastElement) ) {
                             let lastFirstFormula = vm.record.formula.substr(0, keys-1)
+                            let showLastFirstFormula = vm.formula.substr(0, showKeys-1)
                             vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                            vm.formula = showLastFirstFormula + $(this).data('value').toString().substr(0, 1) + showLastFormula;
                         } else {
                             vm.record.formula = firstFormula + $(this).data('value').toString().substr(0, 1) + lastFormula;
+                            vm.formula = showFirstFormula + $(this).data('value').toString().substr(0, 1) + showLastFormula;
                         }
                     } else {
                         let lastElement = vm.record.formula.substr(vm.record.formula.length-1, 1)
+                        let showLastElement = vm.formula.substr(vm.record.formula.length-1, 1)
                         let symbols = ['+', '-', '*', '/', '.'];
-                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) ) {
+                        if (symbols.includes($(this).data('value').toString().substr(0, 1)) && symbols.includes(lastElement) && symbols.includes(showLastElement) ) {
                             let lastFirstFormula = vm.record.formula.substr(0, vm.record.formula.length-1)
+                            let showLastFirstFormula = vm.formula.substr(0, vm.formula.length-1)
                             vm.record.formula = lastFirstFormula + $(this).data('value').toString().substr(0, 1);
+                            vm.formula = showLastFirstFormula + $(this).data('value').toString().substr(0, 1);
                         } else {
                             vm.record.formula += $(this).data('value').toString().substr(0, 1);
+                            vm.formula += $(this).data('value').toString().substr(0, 1);
                         }
                     }
                 });
@@ -694,7 +633,7 @@
                     ];
                     $.each(vm.records, function() {
                         vm.variable_options.push({
-                            id: this.code,
+                            id: this.id,
                             text: this.name
                         });
                     });
@@ -802,15 +741,13 @@
             reset() {
                 const vm = this;
                 vm.variable = '';
+                vm.formula = '';
                 vm.errors = [];
                 vm.record = {
                     id:                          '',
                     name:                        '',
-                    code:                        '',
                     description:                 '',
                     active:                      false,
-                    affect:                      '',
-                    incidence_type:              '',
                     formula:                     '',
                     payroll_concept_type_id:     '',
                     calculation_way:             '',
@@ -909,25 +846,33 @@
              */
             getCodeVariable() {
                 const vm = this;
-                var response = '';
+                let response = '';
+                let showFormula = '';
                 if (((vm.variable != 'worker_record') && (vm.variable != 'vacation')) ||
                     ((vm.operator != '') && (vm.value != '')) ||
-                    ((vm.operator != '') && (vm.type == 'boolean'))) {
+                    ((vm.operator != '') && (vm.type == 'boolean')) ||
+                    ((vm.operator == '') && (vm.type == 'number'))) {
                     if (vm.variable_option != '') {
                         $.each(vm.variable_options, function(index, field) {
                             if (field['id'] == vm.variable_option) {
-                                if (typeof field['code'] !== 'undefined') {
-                                    response = field['code'];
-                                } else if (typeof field['id'] !== 'undefined') {
+                                if (vm.operator == '') {
+                                    response = field['id'];
+                                    showFormula = field['text'];
+                                } else {
                                     response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                 }
                             } else if (typeof field['children'] !== 'undefined') {
                                 $.each(field['children'], function(index, field) {
-                                    if (field['id'] == vm.variable_option) {
-                                        if (typeof field['code'] !== 'undefined') {
-                                            response = field['code'];
-                                        } else if (typeof field['id'] !== 'undefined') {
-                                            response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    if (typeof field['id'] !== 'undefined') {
+                                        if (field['id'] == vm.variable_option) {
+                                            if (vm.operator == '') {
+                                                response = field['id'];
+                                                showFormula = field['text'];
+                                            } else {
+                                                response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                                showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                            }
                                         }
                                     }
                                 });
@@ -948,14 +893,34 @@
                             vm.record.formula += response;
                         }
                     }
+
+                    if (showFormula != '') {
+                        if (vm.formula != '') {
+                            let keys = vm.formula.indexOf('}');
+                            if (keys > 0) {
+                                let firstFormula = vm.formula.substr(0, keys);
+                                let lastFormula = vm.formula.substr(keys, vm.formula.length);
+                                vm.formula = firstFormula + showFormula + lastFormula;
+                            } else {
+                                vm.formula += showFormula;
+                            }
+                        } else {
+                            vm.formula += showFormula;
+                        }
+                    }
                 }
             },
             getOptionType() {
                 const vm = this;
-                vm.type = '';
+                //vm.type = '';
                 if (vm.variable_option != '') {
                     $.each(vm.variable_options, function(index, field) {
                         if (field['id'] == vm.variable_option) {
+                            if (vm.type == field['type']) {
+                                axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                    vm.subOptions = response.data;
+                                });
+                            }
                             if (typeof field['type'] !== 'undefined') {
                                 vm.type = field['type'];
                                 return;
@@ -963,6 +928,11 @@
                         } else if (typeof field['children'] !== 'undefined') {
                             $.each(field['children'], function(index, field) {
                                 if (field['id'] == vm.variable_option) {
+                                    if (vm.type == field['type']) {
+                                        axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                                            vm.subOptions = response.data;
+                                        });
+                                    }
                                     if (typeof field['type'] !== 'undefined') {
                                         vm.type = field['type'];
                                         return;
@@ -971,6 +941,13 @@
                             });
                         }
                     });
+                }
+                if (vm.type == 'list') {
+                    axios.get(`${window.app_url}/payroll/get-parameter-options/${vm.variable_option}`).then(response => {
+                        vm.subOptions = response.data;
+                    });
+                } else if (vm.type == 'boolean') {
+                    vm.value = false;
                 }
             },
             /**

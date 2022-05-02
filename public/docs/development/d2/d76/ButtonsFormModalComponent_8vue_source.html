@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -101,13 +101,13 @@ $(document).ready(function(){initNavTree('d2/d76/ButtonsFormModalComponent_8vue_
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;template&gt;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    &lt;div&gt;</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-sm btn-round btn-modal-close&quot; @click=&quot;clearFilters&quot; data-dismiss=&quot;modal&quot;&gt;</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-sm btn-round btn-modal-close&quot; @click=&quot;clearFilters&quot; data-dismiss=&quot;modal&quot; title=&quot;Cerrar ventana modal&quot; data-toggle=&quot;tooltip&quot; v-has-tooltip&gt;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;            Cerrar</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;        &lt;/button&gt;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        &lt;button type=&quot;button&quot; @click=&quot;reset()&quot; class=&quot;btn btn-warning btn-sm btn-round btn-modal btn-modal-clear&quot;&gt;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        &lt;button type=&quot;button&quot; @click=&quot;reset()&quot; class=&quot;btn btn-warning btn-sm btn-round btn-modal btn-modal-clear&quot; title=&quot;Limpiar información del formulario&quot; data-toggle=&quot;tooltip&quot; v-has-tooltip&gt;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;            Cancelar</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        &lt;/button&gt;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        &lt;button type=&quot;button&quot; @click=&quot;saveEvent()&quot; class=&quot;btn btn-primary btn-sm btn-round btn-modal-save&quot;&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        &lt;button type=&quot;button&quot; @click=&quot;saveEvent()&quot; class=&quot;btn btn-primary btn-sm btn-round btn-modal-save&quot; title=&quot;Guardar información de registro&quot; data-toggle=&quot;tooltip&quot; v-has-tooltip&gt;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;            Guardar</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        &lt;/button&gt;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    &lt;/div&gt;</div>
@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('d2/d76/ButtonsFormModalComponent_8vue_
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            clearFilters: function() {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                $(&quot;.VueTables__search__input&quot;).val(&#39;&#39;);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                this.$parent.$children.forEach((child) =&gt; {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                    if (child.$el.className.startsWith(&#39;VueTables&#39;)) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                    if (typeof(child.$el.className) !== &quot;undefined&quot; &amp;&amp; child.$el.className.startsWith(&#39;VueTables&#39;)) {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                        child._data.query = &quot;&quot;;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                    }</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                });</div>
@@ -169,7 +169,7 @@ $(document).ready(function(){initNavTree('d2/d76/ButtonsFormModalComponent_8vue_
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_0fc3f8f3ef96ce2d45d66d6e29832317.html">resources</a></li><li class="navelem"><a class="el" href="../../dir_a794a5ff81584a815c22a64994c08658.html">js</a></li><li class="navelem"><a class="el" href="../../dir_17c4e49a40fcffc13f27ec9e17c9f676.html">components</a></li><li class="navelem"><a class="el" href="../../dir_c044ffda88db9a25e47dd5712d3e9287.html">Shared</a></li><li class="navelem"><b>ButtonsFormModalComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

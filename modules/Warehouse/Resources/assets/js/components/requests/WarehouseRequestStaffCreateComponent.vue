@@ -112,7 +112,7 @@
 				</div>
 				<div slot="requested" slot-scope="props" >
 					<div>
-						<input type="number" class="form-control table-form input-sm" data-toggle="tooltip" min=0 :max="props.row.exist" :id="'request_product_'+props.row.id" onfocus="this.select()" @input="selectElement(props.row.id)">
+						<input type="number" class="form-control table-form input-sm" data-toggle="tooltip" min=0 :max="props.row.exist" :id="'request_product_'+props.row.id" onfocus="this.select()" @input="selectElement(props.row.id); validateInput(props.row.exist, props.row.reserved, props.row.id)">
 					</div>
 				</div>
 
@@ -188,13 +188,10 @@
 			}
 		},
 		created() {
+
 			this.getPayrollStaffs();
 			this.getPayrollPositions();
-
 			this.initForm('/warehouse/requests/vue-list-products');
-			if(this.requestid){
-				this.loadRequest(this.requestid);
-			}
 
 		},
 		props: {
@@ -263,35 +260,40 @@
 	                checkbox.click();
 	            }
 			},
-			initForm(url) {
+
+			validateInput(exist,reserved,id) {
 				const vm = this;
-				if (vm.requestid) {
-					axios.get('/warehouse/requests/staff/info/'+vm.requestid).then(function (response) {
-						if (typeof(response.data.records) !== "undefined") {
-							var field = response.data.records;
-							vm.record.institution_id = field.department.institution_id;
-							vm.getDepartments();
-							vm.record.motive = field.motive;
-							vm.record.department_id = field.department_id;
-						}
-					});
+                vm.errors = [];
+
+				let value = document.getElementById("request_product_"+id).value;
+				
+				if ((exist-reserved <= value)) {
+					vm.errors.push('El valor es mayor a la existencia en almacén');
+
 				}
+				return;
+				
+
+			},
+			
+			async initForm(url) {
+				const vm = this;
 				/**
 				 *	Ajustar si esta activa unica institucion seleccionar la institucion x defecto
 				 */
 				vm.record.institution_id = '1';
 				vm.getDepartments();
 				vm.record.created_at = vm.format_date(new Date);
-				axios.get(url).then(function (response) {
+				await axios.get(url).then(function (response) {
 					if (typeof(response.data.records) !== "undefined")
 						vm.records = response.data.records;
 				});
 			},
-			loadRequest(id) {
+			async loadRequest(id) {
 				const vm = this;
 	            var fields = {};
 
-	            axios.get('/warehouse/requests/staff/info/' + id).then(response => {
+	            await axios.get('/warehouse/requests/staff/info/' + id).then(response => {
 	                if(typeof(response.data.records != "undefined")){
 	                	fields = response.data.records;
 	                	vm.record = {
@@ -299,25 +301,27 @@
 							motive: fields.motive,
 							institution_id: '1',
 							department_id: fields.department_id,
+							payroll_position_id: (fields.payroll_staff) ? fields.payroll_staff.payroll_employment.payroll_position_id : '',
 							payroll_staff_id: fields.payroll_staff_id,
 							created_at: vm.format_date(fields.created_at),
 						};
-						$.each(fields.request_product, function(index,campo){
-							var element = document.getElementById("request_product_"+campo.warehouse_inventary_product_id);
+						$.each(fields.warehouse_inventory_product_requests, function(index,campo){
+							var element = document.getElementById("request_product_"+campo.warehouse_inventory_product_id);
 							if(element){
 								element.value = campo.quantity;
-								vm.selected.push(campo.warehouse_inventary_product_id);
+								vm.selected.push(campo.warehouse_inventory_product_id);
 							}
 						});
 	                }
 	            });
 			},
+			
 			createRequest(url){
 				const vm = this;
 				vm.record.warehouse_products = [];
 				var complete = true;
                 if(!vm.selected.length > 0){
-                	bootbox.alert("Debe agregar almenos un elemento a la solicitud");
+                    bootbox.alert("Debe agregar al menos un elemento a la solicitud");
 					return false;
 				};
                 $.each(vm.selected,function(index,campo){
@@ -334,6 +338,11 @@
                 if (complete == true)
                 	vm.createRecord(url)
 			},
+		},
+		mounted() {
+			if(this.requestid){
+				this.loadRequest(this.requestid);
+			}
 		},
 	};
 </script>

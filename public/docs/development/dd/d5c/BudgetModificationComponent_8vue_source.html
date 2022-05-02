@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('dd/d5c/BudgetModificationComponent_8vu
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        &lt;div class=&quot;card-body&quot;&gt;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;            &lt;div class=&quot;alert alert-danger&quot; v-if=&quot;errors.length &gt; 0&quot;&gt;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                &lt;ul&gt;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                    &lt;li v-for=&quot;error in errors&quot;&gt;{{ error }}&lt;/li&gt;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                    &lt;li v-for=&quot;(error, index) in errors&quot; :key=&quot;index&quot;&gt;{{ error }}&lt;/li&gt;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                &lt;/ul&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;            &lt;/div&gt;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;            &lt;div class=&quot;row&quot;&gt;</div>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('dd/d5c/BudgetModificationComponent_8vu
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                &lt;/tr&gt;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                            &lt;/thead&gt;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            &lt;tbody&gt;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                &lt;tr v-for=&quot;(account, index) in modification_accounts&quot;&gt;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                &lt;tr v-for=&quot;(account, index) in modification_accounts&quot; :key=&quot;index&quot;&gt;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                                    &lt;td&gt;{{ account.from_spac_description }}&lt;/td&gt;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                    &lt;td&gt;{{ account.from_code }}&lt;/td&gt;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                    &lt;td&gt;{{ account.from_description }}&lt;/td&gt;</div>
@@ -217,7 +217,7 @@ $(document).ready(function(){initNavTree('dd/d5c/BudgetModificationComponent_8vu
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                                &lt;/tr&gt;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                            &lt;/thead&gt;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                            &lt;tbody&gt;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                                &lt;tr v-for=&quot;(account, index) in modification_accounts&quot;&gt;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                                &lt;tr v-for=&quot;(account, index) in modification_accounts&quot; :key=&quot;index&quot;&gt;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                                    &lt;td&gt;{{ account.from_spac_description }}&lt;/td&gt;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                                    &lt;td&gt;{{ account.from_code }}&lt;/td&gt;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                                    &lt;td&gt;{{ account.from_description }}&lt;/td&gt;</div>
@@ -258,7 +258,7 @@ $(document).ready(function(){initNavTree('dd/d5c/BudgetModificationComponent_8vu
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                            &lt;div class=&quot;modal-body&quot;&gt;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                                &lt;div class=&quot;alert alert-danger&quot; v-if=&quot;errors.length &gt; 0&quot;&gt;</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                                    &lt;ul&gt;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                        &lt;li v-for=&quot;error in errors&quot;&gt;{{ error }}&lt;/li&gt;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                        &lt;li v-for=&quot;(error, index) in errors&quot; :key=&quot;index&quot;&gt;{{ error }}&lt;/li&gt;</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                                    &lt;/ul&gt;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                                &lt;/div&gt;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                                &lt;div class=&quot;row&quot; v-if=&quot;(type_modification===&#39;TR&#39;)&quot;&gt;</div>
@@ -735,7 +735,7 @@ $(document).ready(function(){initNavTree('dd/d5c/BudgetModificationComponent_8vu
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="../../dir_d21920c495339c6310c2871432d45620.html">Budget</a></li><li class="navelem"><a class="el" href="../../dir_b169ee8e8763351a970f079d5e5edb3a.html">Resources</a></li><li class="navelem"><a class="el" href="../../dir_2796fd41eb452f1370ed3bfff0b99802.html">assets</a></li><li class="navelem"><a class="el" href="../../dir_8b9b9fc8cdcdef8ec23cafbde9a3dfec.html">js</a></li><li class="navelem"><a class="el" href="../../dir_7c6abcbefd2ce1453d9c928d40c2f01f.html">components</a></li><li class="navelem"><b>BudgetModificationComponent.vue</b></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:39:57 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:29 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

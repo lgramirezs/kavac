@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('dd/db9/classModules_1_1Payroll_1_1Http
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d5/d43/classModules_1_1Payroll_1_1Http_1_1Controllers_1_1PayrollVacationRequestController__coll__graph.png" border="0" usemap="#PayrollVacationRequestController_coll__map" alt="Collaboration graph"/></div>
+<map name="PayrollVacationRequestController_coll__map" id="PayrollVacationRequestController_coll__map">
+<area shape="rect" title="Controlador de solicitudes vacacionales." alt="" coords="5,5,247,185"/>
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -180,18 +183,18 @@ Atributos protegidos</h2></td></tr>
 <p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00047">47</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
 <div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {<span class="comment"></span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">        /** Establece permisos de acceso para cada método del controlador */</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">//$this-&gt;middleware(&#39;permission:payroll.vacation-requests.list&#39;,   [&#39;only&#39; =&gt; [&#39;index&#39;, &#39;vueList&#39;]]);</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="comment">//$this-&gt;middleware(&#39;permission:payroll.vacation-requests.create&#39;, [&#39;only&#39; =&gt; [&#39;create&#39;, &#39;store&#39;]]);</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">//$this-&gt;middleware(&#39;permission:payroll.vacation-requests.edit&#39;,   [&#39;only&#39; =&gt; [&#39;edit&#39;, &#39;update&#39;]]);</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="comment">//$this-&gt;middleware(&#39;permission:payroll.vacation-requests.delete&#39;, [&#39;only&#39; =&gt; &#39;destroy&#39;]);</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        $this-&gt;middleware(<span class="stringliteral">&#39;permission:payroll.vacation-requests.list&#39;</span>,   [<span class="stringliteral">&#39;only&#39;</span> =&gt; [<span class="stringliteral">&#39;index&#39;</span>, <span class="stringliteral">&#39;vueList&#39;</span>]]);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        $this-&gt;middleware(<span class="stringliteral">&#39;permission:payroll.vacation-requests.create&#39;</span>, [<span class="stringliteral">&#39;only&#39;</span> =&gt; [<span class="stringliteral">&#39;create&#39;</span>, <span class="stringliteral">&#39;store&#39;</span>]]);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        $this-&gt;middleware(<span class="stringliteral">&#39;permission:payroll.vacation-requests.edit&#39;</span>,   [<span class="stringliteral">&#39;only&#39;</span> =&gt; [<span class="stringliteral">&#39;edit&#39;</span>, <span class="stringliteral">&#39;update&#39;</span>]]);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        $this-&gt;middleware(<span class="stringliteral">&#39;permission:payroll.vacation-requests.delete&#39;</span>, [<span class="stringliteral">&#39;only&#39;</span> =&gt; <span class="stringliteral">&#39;destroy&#39;</span>]);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">        /** Define las reglas de validación para el formulario */</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        $this-&gt;validateRules = [</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="stringliteral">&#39;payroll_staff_id&#39;</span>     =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="stringliteral">&#39;vacation_period_year&#39;</span> =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="stringliteral">&#39;days_requested&#39;</span>       =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="stringliteral">&#39;start_date&#39;</span>           =&gt; [<span class="stringliteral">&#39;required&#39;</span>],</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="stringliteral">&#39;end_date&#39;</span>             =&gt; [<span class="stringliteral">&#39;required&#39;</span>]</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="stringliteral">&#39;start_date&#39;</span>           =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;before:end_date&#39;</span>],</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="stringliteral">&#39;end_date&#39;</span>             =&gt; [<span class="stringliteral">&#39;required&#39;</span>, <span class="stringliteral">&#39;after:start_date&#39;</span>]</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        ];</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">        /** Define los mensajes de validación para las reglas del formulario */</span></div>
@@ -200,9 +203,11 @@ Atributos protegidos</h2></td></tr>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="stringliteral">&#39;vacation_period_year.required&#39;</span> =&gt; <span class="stringliteral">&#39;El campo año del período vacacional es obligatorio.&#39;</span>,</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="stringliteral">&#39;days_requested.required&#39;</span>       =&gt; <span class="stringliteral">&#39;El campo días solicitados es obligatorio.&#39;</span>,</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="stringliteral">&#39;start_date.required&#39;</span>           =&gt; <span class="stringliteral">&#39;El campo fecha de inicio de las vacaciones es obligatorio.&#39;</span>,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="stringliteral">&#39;end_date.required&#39;</span>             =&gt; <span class="stringliteral">&#39;El campo fecha de culminación de las vacaciones es obligatorio.&#39;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        ];</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="stringliteral">&#39;start_date.before&#39;</span>           =&gt; <span class="stringliteral">&#39;El campo fecha de inicio debe ser menor a la fecha de culminación.&#39;</span>,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="stringliteral">&#39;end_date.required&#39;</span>             =&gt; <span class="stringliteral">&#39;El campo fecha de culminación de las vacaciones es obligatorio.&#39;</span>,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="stringliteral">&#39;end_date.after&#39;</span>             =&gt; <span class="stringliteral">&#39;El campo fecha de culminación debe ser mayor a la fecha de inicio.&#39;</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        ];</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -227,10 +232,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>Renderable </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00097">97</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;payroll::requests.vacations.create-edit&#39;</span>);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00099">99</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;payroll::requests.vacations.create-edit&#39;</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -261,12 +266,12 @@ Atributos protegidos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse Objeto con los registros a mostrar </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00335">335</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    {</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        $payrollVacationRequest = PayrollVacationRequest::where(<span class="stringliteral">&#39;payroll_staff_id&#39;</span>, $staff_id)</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            -&gt;whereIn(<span class="stringliteral">&#39;status&#39;</span>, [<span class="stringliteral">&#39;pending&#39;</span>, <span class="stringliteral">&#39;approved&#39;</span>])-&gt;get();</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $payrollVacationRequest], 200);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00337">337</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        $payrollVacationRequest = PayrollVacationRequest::where(<span class="stringliteral">&#39;payroll_staff_id&#39;</span>, $staff_id)</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            -&gt;whereIn(<span class="stringliteral">&#39;status&#39;</span>, [<span class="stringliteral">&#39;pending&#39;</span>, <span class="stringliteral">&#39;approved&#39;</span>])-&gt;get();</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $payrollVacationRequest], 200);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -290,10 +295,10 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>Renderable </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00083">83</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;payroll::requests.vacations.index&#39;</span>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00085">85</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> view(<span class="stringliteral">&#39;payroll::requests.vacations.index&#39;</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -324,11 +329,11 @@ Atributos protegidos</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>Renderable </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00173">173</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    {</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        $payrollVacationRequest = PayrollVacationRequest::find($id);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $payrollVacationRequest], 200);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00175">175</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    {</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        $payrollVacationRequest = PayrollVacationRequest::find($id);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;record&#39;</span> =&gt; $payrollVacationRequest], 200);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -352,24 +357,24 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse Objeto con los registros a mostrar </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00277">277</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    {</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        $user = Auth()-&gt;user();</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        $profileUser = $user-&gt;profile;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">if</span> ($profileUser) {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            $institution = Institution::find($profileUser-&gt;institution_id);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            $institution = Institution::where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;where(<span class="stringliteral">&#39;default&#39;</span>, <span class="keyword">true</span>)-&gt;first();</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="keywordflow">if</span> ($user-&gt;hasRole(<span class="stringliteral">&#39;admin&#39;</span>)) {</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;            $records = PayrollVacationRequest::where(<span class="stringliteral">&#39;institution_id&#39;</span>, $institution-&gt;id)</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                -&gt;where(<span class="stringliteral">&#39;status&#39;</span>, <span class="stringliteral">&#39;approved&#39;</span>)</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                -&gt;get();</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            $records = [];</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        }</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $records], 200);</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00279">279</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        $user = Auth()-&gt;user();</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        $profileUser = $user-&gt;profile;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordflow">if</span> ($profileUser) {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            $institution = Institution::find($profileUser-&gt;institution_id);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            $institution = Institution::where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;where(<span class="stringliteral">&#39;default&#39;</span>, <span class="keyword">true</span>)-&gt;first();</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keywordflow">if</span> ($user-&gt;hasRole(<span class="stringliteral">&#39;admin&#39;</span>)) {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            $records = PayrollVacationRequest::where(<span class="stringliteral">&#39;institution_id&#39;</span>, $institution-&gt;id)</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                -&gt;where(<span class="stringliteral">&#39;status&#39;</span>, <span class="stringliteral">&#39;approved&#39;</span>)</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                -&gt;get();</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            $records = [];</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $records], 200);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -393,24 +398,24 @@ Atributos protegidos</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Henry Paredes <a href="#" onclick="location.href='mai'+'lto:'+'hpa'+'re'+'des'+'@c'+'end'+'it'+'el.'+'go'+'b.v'+'e'; return false;">hpare<span style="display: none;">.nosp@m.</span>des@<span style="display: none;">.nosp@m.</span>cendi<span style="display: none;">.nosp@m.</span>tel.<span style="display: none;">.nosp@m.</span>gob.v<span style="display: none;">.nosp@m.</span>e</a></dd></dl>
 <dl class="section return"><dt>Devuelve</dt><dd>\Illuminate\Http\JsonResponse Objeto con los registros a mostrar </dd></dl>
 
-<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00305">305</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
-<div class="fragment"><div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    {</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        $user = Auth()-&gt;user();</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        $profileUser = $user-&gt;profile;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="keywordflow">if</span> ($profileUser) {</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            $institution = Institution::find($profileUser-&gt;institution_id);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            $institution = Institution::where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;where(<span class="stringliteral">&#39;default&#39;</span>, <span class="keyword">true</span>)-&gt;first();</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        }</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <span class="keywordflow">if</span> ($user-&gt;hasRole(<span class="stringliteral">&#39;admin&#39;</span>)) {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            $records = PayrollVacationRequest::where(<span class="stringliteral">&#39;institution_id&#39;</span>, $institution-&gt;id)</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                -&gt;where(<span class="stringliteral">&#39;status&#39;</span>, <span class="stringliteral">&#39;pending&#39;</span>)</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                -&gt;get();</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            $records = [];</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        }</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $records], 200);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    }</div>
+<p class="definition">Definición en la línea <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html#l00307">307</a> del archivo <a class="el" href="../../d5/d9a/PayrollVacationRequestController_8php_source.html">PayrollVacationRequestController.php</a>.</p>
+<div class="fragment"><div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        $user = Auth()-&gt;user();</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        $profileUser = $user-&gt;profile;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">if</span> ($profileUser) {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            $institution = Institution::find($profileUser-&gt;institution_id);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            $institution = Institution::where(<span class="stringliteral">&#39;active&#39;</span>, <span class="keyword">true</span>)-&gt;where(<span class="stringliteral">&#39;default&#39;</span>, <span class="keyword">true</span>)-&gt;first();</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        }</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordflow">if</span> ($user-&gt;hasRole(<span class="stringliteral">&#39;admin&#39;</span>)) {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            $records = PayrollVacationRequest::where(<span class="stringliteral">&#39;institution_id&#39;</span>, $institution-&gt;id)</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                -&gt;where(<span class="stringliteral">&#39;status&#39;</span>, <span class="stringliteral">&#39;pending&#39;</span>)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                -&gt;get();</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            $records = [];</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        }</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">return</span> response()-&gt;json([<span class="stringliteral">&#39;records&#39;</span> =&gt; $records], 200);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -476,7 +481,7 @@ Atributos protegidos</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Modules</b></li><li class="navelem"><b>Payroll</b></li><li class="navelem"><b>Http</b></li><li class="navelem"><a class="el" href="../../dc/d65/namespaceModules_1_1Payroll_1_1Http_1_1Controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="../../dd/db9/classModules_1_1Payroll_1_1Http_1_1Controllers_1_1PayrollVacationRequestController.html">PayrollVacationRequestController</a></li>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:03 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:40 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

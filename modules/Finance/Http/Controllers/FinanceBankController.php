@@ -64,12 +64,25 @@ class FinanceBankController extends Controller
      */
     public function store(Request $request)
     {
+        $this->messages = [
+    'code.required' => 'El campo codigo es obligatorio.',
+    'code.max' => 'El campo codigo tiene un longitud maxima de 4 .',
+    'code.unique' => 'El campo codigo ya existe.',
+    'name.required' => 'El nombre es obligatorio.',
+    'name.max' => 'El campo nombre tiene un longitud maxima de 100 .',
+    'name.unique' => 'El campo nombre ya existe.',
+    'short_name.required' => 'El Nombre Abreviado es obligatorio.',
+    'short_name.max' => 'El campo Nombre Abreviado tiene un longitud maxima de 50 .',
+    'short_name.unique' => 'El campo Nombre Abreviado ya existe.',
+
+];
+
         $this->validate($request, [
             'code' => ['required', 'max:4', 'unique:finance_banks,code'],
             'name' => ['required', 'max:100', 'unique:finance_banks,name'],
             'short_name' => ['required', 'max:50', 'unique:finance_banks,short_name']
-        ]);
-
+        ], $this->messages);
+   
         $financeBank = FinanceBank::create([
             'code' => $request->code,
             'name' => $request->name,
@@ -113,6 +126,8 @@ class FinanceBankController extends Controller
             'code' => ['required', 'max:4', 'unique:finance_banks,code,' . $financeBank->id],
             'name' => ['required', 'max:100', 'unique:finance_banks,name,' . $financeBank->id],
             'short_name' => ['required', 'max:50', 'unique:finance_banks,short_name,' . $financeBank->id]
+        ], [
+            'code.unique' => 'El campo código ya ha sido registrado.',
         ]);
 
         $financeBank->code = $request->code;

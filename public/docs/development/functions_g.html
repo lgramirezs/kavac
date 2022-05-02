@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo-doc.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">KAVAC
-   &#160;<span id="projectnumber">versión 1.0.0</span>
+   &#160;<span id="projectnumber">v1.0.0</span>
    </div>
    <div id="projectbrief">Sistema de Gestión Organizacional</div>
   </td>
@@ -108,7 +108,8 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="d4/d0b/classModules_1_1Finance_1_1Http_1_1Controllers_1_1FinanceBankingAgencyController.html#aa79c9d966b0b253ca13e59104b73dad4">FinanceBankingAgencyController</a>
 </li>
 <li>getAll()
-: <a class="el" href="de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html#aba0d5b303383fb5b1fabb5fd01cd3800">TaxController</a>
+: <a class="el" href="d5/d9d/classApp_1_1Http_1_1Controllers_1_1Auth_1_1UserController.html#aba0d5b303383fb5b1fabb5fd01cd3800">UserController</a>
+, <a class="el" href="de/d81/classApp_1_1Http_1_1Controllers_1_1TaxController.html#aba0d5b303383fb5b1fabb5fd01cd3800">TaxController</a>
 </li>
 <li>getAllRecordsAccountingVuejs()
 : <a class="el" href="d3/d55/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingAccountConverterController.html#ac1c77d2f3d7a0078adaf99dde22ee9ae">AccountingAccountConverterController</a>
@@ -141,6 +142,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getBenefitsRequests()
 : <a class="el" href="d0/db7/classModules_1_1Payroll_1_1Http_1_1Controllers_1_1PayrollBenefitsRequestController.html#aabf86bf3f7a171dc02589c91b837d0ce">PayrollBenefitsRequestController</a>
 </li>
+<li>getBillInventoryProducts()
+: <a class="el" href="d7/db7/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleBillController.html#ae9d1a9d7c451c17378b13cd5ecf9c16e">SaleBillController</a>
+</li>
 <li>getBillProduct()
 : <a class="el" href="d7/db7/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleBillController.html#af19a07690c9f95362d9f54c6ce967488">SaleBillController</a>
 </li>
@@ -153,6 +157,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 </li>
 <li>getCities()
 : <a class="el" href="d3/d5a/classApp_1_1Http_1_1Controllers_1_1Services_1_1LocatesController.html#a3f338d4b7eb09e8b46cea5e0cacb9bdc">LocatesController</a>
+</li>
+<li>getCity()
+: <a class="el" href="d0/df3/classApp_1_1Http_1_1Controllers_1_1CityController.html#a7f0bf35f3ed8e20fa43628e9c0a6382b">CityController</a>
 </li>
 <li>getCode()
 : <a class="el" href="d1/d18/classModules_1_1Asset_1_1Models_1_1Asset.html#ab5e24da53b4a0d0848b18c1e832f47ff">Asset</a>
@@ -191,6 +198,12 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getDetail()
 : <a class="el" href="d4/d82/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetAccountController.html#a1813380ba03d2b8979913804bc02ef60">BudgetAccountController</a>
 , <a class="el" href="d3/d8e/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetSpecificActionController.html#a1813380ba03d2b8979913804bc02ef60">BudgetSpecificActionController</a>
+</li>
+<li>getDetailCentralizedActions()
+: <a class="el" href="d8/d03/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetCentralizedActionController.html#ad5f8c237f9064a36ca404338a3ac3df1">BudgetCentralizedActionController</a>
+</li>
+<li>getDetailProject()
+: <a class="el" href="dc/d41/classModules_1_1Budget_1_1Http_1_1Controllers_1_1BudgetProjectController.html#a52a63821852f33dabb2dc1b8d5218ec2">BudgetProjectController</a>
 </li>
 <li>getDocExtension()
 : <a class="el" href="df/dad/classApp_1_1Repositories_1_1UploadDocRepository.html#ae85a9ebea033748dfc67011d6d65f2e6">UploadDocRepository</a>
@@ -252,6 +265,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 </li>
 <li>getInstitutionAttribute()
 : <a class="el" href="d7/d94/classModules_1_1Budget_1_1Models_1_1BudgetSpecificAction.html#ad346fb3f2f169d51d08ee16bdd66449e">BudgetSpecificAction</a>
+</li>
+<li>getInstitutionAvailables()
+: <a class="el" href="d4/d4d/classModules_1_1Accounting_1_1Http_1_1Controllers_1_1AccountingEntryController.html#a7fd78c611ef067163bf0b574e7755c5f">AccountingEntryController</a>
 </li>
 <li>getInstitutions()
 : <a class="el" href="d7/d9e/classApp_1_1Http_1_1Controllers_1_1Admin_1_1InstitutionController.html#ad0e76c5568b9902d456749362a17a357">InstitutionController</a>
@@ -446,8 +462,14 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getSaleTypeGoodsAttributes()
 : <a class="el" href="da/d90/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleTypeGoodController.html#a96d44e074a51f7a7eab6964a77a727e0">SaleTypeGoodController</a>
 </li>
+<li>getSector()
+: <a class="el" href="db/dac/classApp_1_1Http_1_1Controllers_1_1InstitutionSectorController.html#ac336249c04919fc984aa2df19bbafb07">InstitutionSectorController</a>
+</li>
 <li>getSelectData()
 : <a class="el" href="dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#a26a3ce682820952eca99ee59f089a617">CommonController</a>
+</li>
+<li>getSelectDataCustom()
+: <a class="el" href="dd/d8a/classApp_1_1Http_1_1Controllers_1_1CommonController.html#af72c7a542ded407a6054dfc81affe4bf">CommonController</a>
 </li>
 <li>getSessionData()
 : <a class="el" href="d4/d09/classApp_1_1Models_1_1Session.html#a39ec0ca4c437a05fff036cdcd7053177">Session</a>
@@ -476,6 +498,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getTaxes()
 : <a class="el" href="d5/d85/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleGoodsToBeTradedController.html#a9710b4ee4b39cf755a6153feea5c8999">SaleGoodsToBeTradedController</a>
 , <a class="el" href="d8/d9f/classModules_1_1Sale_1_1Http_1_1Controllers_1_1SaleWarehouseReceptionController.html#a9710b4ee4b39cf755a6153feea5c8999">SaleWarehouseReceptionController</a>
+</li>
+<li>getType()
+: <a class="el" href="d3/da7/classApp_1_1Http_1_1Controllers_1_1InstitutionTypeController.html#ab3d6ee03590bae8815531ed434bc128d">InstitutionTypeController</a>
 </li>
 <li>getTypeAttribute()
 : <a class="el" href="d7/d94/classModules_1_1Budget_1_1Models_1_1BudgetSpecificAction.html#a4ca2a0a8d981b775c10e1015f07ec7f0">BudgetSpecificAction</a>
@@ -511,7 +536,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generado el Miércoles, 8 de Diciembre de 2021 14:40:04 para KAVAC por
+    <li class="footer">Generado el Sábado, 9 de Abril de 2022 11:44:43 para KAVAC por
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

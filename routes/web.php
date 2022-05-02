@@ -1,13 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Rutas para Web
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Aquí es donde puede registrar las rutas web para su aplicación. Estas
+| rutas son cargadas por el RouteServiceProvider dentro de un grupo que
+| contiene el grupo "web" middleware. ¡Ahora crea algo grandioso!
 |
 */
 
@@ -177,9 +183,17 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Rutas para la gestión de tipos de instituciones */
     Route::resource('institution-types', 'InstitutionTypeController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-type/{id?}',
+        'InstitutionTypeController@getType'
+    )->name('get-type');
 
     /** Rutas para la gestión de sectores de instituciones */
     Route::resource('institution-sectors', 'InstitutionSectorController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-sector/{id?}',
+        'InstitutionSectorController@getSector'
+    )->name('get-sector');
 
     /** Rutas para la gestión de Países */
     Route::resource('countries', 'CountryController', ['except' => ['create', 'show', 'edit']]);
@@ -192,6 +206,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Rutas para la gestión de Ciudades de Estados */
     Route::resource('cities', 'CityController', ['except' => ['create', 'show', 'edit']]);
+    Route::get(
+        '/get-city/{id?}',
+        'CityController@getCity'
+    )->name('get-city');
 
     /** Rutas para la gestión de Parroquias de Municipios */
     Route::resource('parishes', 'ParishController', ['except' => ['create', 'show', 'edit']]);
@@ -221,6 +239,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         'get-select-data/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
         'CommonController@getSelectData'
     )->name('get-select-data');
+        /** Ruta para obtener datos de selecs dependientes dinámicamente sin que ordene por el nombre*/
+    Route::get(
+        'get-select-data-custom/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
+        'CommonController@getSelectDataCustom'
+    )->name('get-select-data-custom');
+/** Ruta para obtener datos de selecs dependientes dinámicamente sin que ordene por el nombre y discriminando que sean atributos activos*/
+Route::get(
+    'get-select-data-active/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
+    'CommonController@getSelectActive'
+)->name('get-select-data-active');
 
     /** Ruta para obtener datos de los departamentos */
     Route::get(
