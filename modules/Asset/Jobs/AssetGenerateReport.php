@@ -119,19 +119,24 @@ class AssetGenerateReport implements ShouldQueue
                     $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
                 }
             } else {
-                $assets = $assets;
+                if ($this->data->asset_status_id > 0) {
+                    $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
+                } else {
+                    $assets = $assets;
+                }
             }
             $assets = $assets->get();
         } elseif ($this->data->type_report == 'clasification') {
+            $assets = Asset::where('institution_id', $this->data->institution_id)->with('institution', 'assetCondition', 'assetStatus');
             if ($this->data->type_search != '') {
-                $assets = Asset::where('institution_id', $this->data->institution_id)->dateclasification(
+                $assets = $assets->dateclasification(
                     $this->data->start_date,
                     $this->data->end_date,
                     $this->data->mes,
                     $this->data->year_id
                 )->get();
-            } else if ($this->data->asset_type_id) {
-                $assets = Asset::where('institution_id', $this->data->institution_id)->CodeClasification(
+            } else if ($this->data->asset_type_id != '') {
+                $assets = $assets->where('institution_id', $this->data->institution_id)->CodeClasification(
                     $this->data->asset_type_id,
                     $this->data->asset_category_id,
                     $this->data->asset_subcategory_id,
@@ -141,11 +146,14 @@ class AssetGenerateReport implements ShouldQueue
                 if ($this->data->asset_status_id > 0) {
                     $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
                 }
-
-                $assets = $assets->get();
             } else {
-                $assets = Asset::where('institution_id', $this->data->institution_id)->all();
+                if ($this->data->asset_status_id > 0) {
+                    $assets = $assets->where('asset_status_id', $this->data->asset_status_id);
+                } else {
+                    $assets = $assets;
+                }
             }
+            $assets = $assets->get();
         }
 
         $multi_inst =  Parameter::where('p_key', 'multi_institution')
