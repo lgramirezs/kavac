@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Sale\Models\SaleClient;
 use Modules\Sale\Models\SaleClientsEmail;
-use App\Models\Phone;
+use Modules\Sale\Models\SaleClientsPhone;
 use App\Rules\Rif as RifRule;
 
 class SaleClientsController extends Controller
@@ -45,9 +45,9 @@ class SaleClientsController extends Controller
             'municipality_id'            => ['required'],
             'parish_id'                  => ['required', 'max:200'],
             'address_tax'                => ['required', 'max:200'],
-            'phones'                     => ['required'],
             'sale_clients_email'         => ['required'],
             'sale_clients_email.*.email' => ['email'],
+            'sale_clients_phone'         => ['required'],
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -69,9 +69,9 @@ class SaleClientsController extends Controller
             'id_number.required'                  => 'El número de identificación es obligatorio.',
             'id_number.unique'                    => 'El número de identificación ya ha sido registrado.',
             'id_number.digits_between'            => 'El número de identificación no posee el formato correcto.',
-            'phones.required'                     => 'El campo teléfono de contacto es obligatorio.',
             'sale_clients_email.required'         => 'El campo correo electrónico es obligatorio.',
             'sale_clients_email.*.email.email'    => 'El formato del correo electrónico es incorrecto.',
+            'sale_clients_phone.required'         => 'El campo teléfono es obligatorio.',
         ];
     }
 
@@ -81,7 +81,7 @@ class SaleClientsController extends Controller
      */
     public function index()
     {
-        return response()->json(['records' => SaleClient::with(['saleClientsEmail', 'phones'])->get()], 200);
+        return response()->json(['records' => SaleClient::with(['saleClientsEmail', 'saleClientsPhone'])->get()], 200);
     }
 
     /**
@@ -108,11 +108,6 @@ class SaleClientsController extends Controller
             ], $this->messages);
         }
 
-        $phones = [];
-        foreach ($request->phones as $phone) {
-          $phones[] = $phone;
-        }
-
         $client = new SaleClient;
         $client->type_person_juridica = $request->type_person_juridica;
         $client->rif = $request->rif;
@@ -127,13 +122,21 @@ class SaleClientsController extends Controller
         $client->name_client = $request->name_client;
         $client->id_type = $request->id_type;
         $client->id_number = $request->id_number;
-        $client->phones = json_encode($phones, JSON_FORCE_OBJECT);
         $client->save();
 
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
             foreach ($request->sale_clients_email as $email) {
                 $clientEmail = SaleClientsEmail::create([
                     'email'          => $email['email'],
+                    'sale_client_id' => $client->id
+                ]);
+            }
+        }
+
+        if ($request->sale_clients_phone && !empty($request->sale_clients_phone)) {
+            foreach ($request->sale_clients_phone as $phone) {
+                $clientPhone = SaleClientsPhone::create([
+                    'phone'          => $phone['phone'],
                     'sale_client_id' => $client->id
                 ]);
             }
@@ -168,8 +171,8 @@ class SaleClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /** @var object Datos de la entidad bancaria */
-        $client = SaleClient::with('saleClientsEmail')->find($id);
+        /** @var object Datos del cliente email y phone */
+        $client = SaleClient::with('saleClientsEmail', 'saleClientsPhone')->find($id);
 
         $this->validate($request, $this->validateRules, $this->messages);
 
@@ -188,11 +191,6 @@ class SaleClientsController extends Controller
             ], $this->messages);
         }
 
-        $phones = [];
-        foreach ($request->phones as $phone) {
-          $phones[] = $phone;
-        }
-
         $client->rif = $request->rif;
         $client->business_name = $request->business_name;
         $client->type_person_juridica = $request->type_person_juridica;
@@ -204,13 +202,12 @@ class SaleClientsController extends Controller
         $client->parish_id = $request->parish_id;
         $client->address_tax = $request->address_tax;
         $client->name_client = $request->name_client;
-        $client->emails = $request->emails;
-        $client->phones = json_encode($phones, JSON_FORCE_OBJECT);
         $client->id_type = $request->id_type;
         $client->id_number = $request->id_number;
         $client->save();
 
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
+            $client->saleClientsEmail()->delete();
             foreach ($request->sale_clients_email as $email) {
                 $client->saleClientsEmail()->updateOrCreate(
                     [
@@ -219,6 +216,18 @@ class SaleClientsController extends Controller
                     ],
                     [
                         'email'          => $email['email'],
+                        'sale_client_id' => $client->id
+                    ]
+                );
+            }
+        }
+
+        if ($request->sale_clients_phone && !empty($request->sale_clients_phone)) {
+            $client->saleClientsPhone()->delete();
+            foreach ($request->sale_clients_phone as $phone) {
+                $client->saleClientsPhone()->updateOrCreate(
+                    [
+                        'phone'          => $phone['phone'],
                         'sale_client_id' => $client->id
                     ]
                 );
@@ -287,7 +296,7 @@ class SaleClientsController extends Controller
      */
     public function getSaleClient($id)
     {
-        $saleClient = SaleClient::with(['phones', 'saleClientsEmail'])->find($id);
+        $saleClient = SaleClient::with(['saleClientsEmail', 'saleClientsPhone'])->find($id);
         return response()->json(['sale_client' => $saleClient], 200);
     }
 }

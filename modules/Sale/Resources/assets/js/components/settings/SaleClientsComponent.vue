@@ -155,7 +155,7 @@
                                         <h6 class="card-title">
                                                 Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
                                         </h6>
-                                        <div class="row phone-row" v-for="(value, index) in record.phones" :key="index">
+                                        <div class="row phone-row" v-for="(value, index) in record.sale_clients_phone" :key="index">
                                           <div class="col-4">
                                             <input type="text" class="form-control input-sm" placeholder="+00-000-0000000"
                                               v-model="value.phone" v-input-mask
@@ -164,7 +164,7 @@
                                           <div class="col-1">
                                             <div class="form-group">
                                               <button class="btn btn-sm btn-danger btn-action" type="button"
-                                                @click="removeRow(index, record.phones)"
+                                                @click="removeRow(index, record.sale_clients_phone)"
                                                 title="Eliminar este dato" data-toggle="tooltip">
                                                 <i class="fa fa-minus-circle"></i>
                                               </button>
@@ -193,7 +193,7 @@
                         </div>
                     </div>
                     <div class="modal-body modal-table">
-                        <v-client-table :columns="columns_clients" :data="quote_clients" :options="table_options_clients">
+                        <v-client-table :columns="columns_clients" :data="records" :options="table_options_clients">
                             <div slot="name_client" slot-scope="props" class="text-center">
                                 <span>
                                 {{ (props.row.name_client)? props.row.name_client : props.row.name }}
@@ -204,10 +204,10 @@
                                 {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
                                 </span>
                             </div>
-                            <div slot="phones" slot-scope="props">
-                                <div v-if="props.row.phones">
-                                    <ul v-for="(phone, index) in props.row.phones" :key="index">
-                                        <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                            <div slot="sale_clients_phone" slot-scope="props">
+                                <div v-if="props.row.sale_clients_phone">
+                                    <ul v-for="(client_phone, index) in props.row.sale_clients_phone" :key="index">
+                                        <li>{{ client_phone.phone }}</li>
                                     </ul>
                                 </div>
                                 <div v-else>
@@ -263,7 +263,7 @@
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phone: [],
+                    sale_clients_phone: [],
                     id_type: '',
                     id_number: '',
                 },
@@ -275,7 +275,7 @@
                 cities: [],
                 municipalities: [],
                 parishes: [],
-                columns_clients: ['type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email', 'id'],
+                columns_clients: ['type_person_juridica', 'rif', 'name_client', 'sale_clients_phone', 'sale_clients_email', 'id'],
                 types_person:  [
                     {'id':'', 'text':"Seleccione..."},
                     {'id':'Natural', 'text':'Natural'},
@@ -298,19 +298,8 @@
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phone: []
+                    sale_clients_phone: []
                 };
-            },
-            /**
-             * Agrega una nueva columna para el registro de correos electrónicos
-             *
-             * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
-             */ 
-            addEmail: function() {
-                const vm = this;
-                vm.record.emails.push({
-                    email: '',
-                });
             },
             /**
              * Agrega una nueva columna para el registro de telefonos
@@ -319,8 +308,10 @@
              */ 
             addPhone: function() {
                 const vm = this;
-                vm.record.phones.push({
+                vm.record.sale_clients_phone.push({
+                    id: '',
                     phone: '',
+                    sale_client_id: ''
                 });
             },
             /**
@@ -335,8 +326,6 @@
         },
         created() {
             this.getCountries();
-            this.record.phone = [];
-            this.record.emails = [];
 
             this.table_options_clients = {};
             this.table_options_clients.headings = {
@@ -344,7 +333,7 @@
                 'type_person_juridica': 'Tipo de Persona',
                 'rif': 'Identificación del Cliente',
                 'name_client': 'Nombre',
-                'phones': 'Telefonos',
+                'sale_clients_phone': 'Telefonos',
                 'sale_clients_email': 'Correo Electrónico'
             };
             this.table_options_clients.sortable = [

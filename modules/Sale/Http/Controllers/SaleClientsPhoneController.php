@@ -7,24 +7,22 @@ use Illuminate\Routing\Controller;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-use Modules\Sale\Models\SaleClientsEmail;
+use Modules\Sale\Models\SaleClientsPhone;
 
 /**
  * Eliminar
  */
-class SaleClientsEmailController extends Controller
+class SaleClientsPhoneController extends Controller
 {
     use ValidatesRequests;
 
     /**
      * Define la configuración de la clase
-     *
-     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
      */
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        // $this->middleware('permission:sale.setting.email');
+        // $this->middleware('permission:sale.setting.phone');
     }
 
     /**
@@ -38,7 +36,7 @@ class SaleClientsEmailController extends Controller
 
     public function client($id)
     {
-        return response()->json(['records' => SaleClientsEmail::where('sale_client_id', '=', $id)->get()], 200);
+        return response()->json(['records' => SaleClientsPhone::where('sale_client_id', '=', $id)->get()], 200);
     }
 
     /**
@@ -49,18 +47,17 @@ class SaleClientsEmailController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'email' => ['required', 'max:100'],
+            'phone' => ['required', 'max:100'],
             'sale_client_id' => ['required'],
         ]);
-
         $id = $request->input('sale_client_id');
 
-        $email = SaleClientsEmail::create([
-            'email' => $request->input('email'),
+        $phone = SaleClientsPhone::create([
+            'phone' => $request->input('phone'),
             'sale_client_id' => $request->input('sale_client_id'),
         ]);
 
-        return response()->json(['records' => SaleClientsEmail::where('sale_client_id', '=', $id)->get()], 200);
+        return response()->json(['records' => SaleClientsPhone::where('sale_client_id', '=', $id)->get()], 200);
     }
 
     /**
@@ -68,29 +65,29 @@ class SaleClientsEmailController extends Controller
      * @param  Request $request
      * @return JsonResponse
      */
-    public function update(Request $request, SaleClientsEmail $email)
+    public function update(Request $request, SaleClientsPhone $phone)
     {
         $this->validate($request, [
-            'email' => ['required', 'max:100'],
+            'phone' => ['required', 'max:100'],
             'sale_client_id' => ['required'],
         ]);
 
-        $email->email = $request->input('email');
-        $email->sale_client_id = $request->input('sale_client_id');
-        $email->save();
+        $phone->phone = $request->input('phone');
+        $phone->sale_client_id = $request->input('sale_client_id');
+        $phone->save();
 
-        $id = $email->sale_client_id;
+        $id = $phone->sale_client_id;
 
-        return response()->json(['records' => SaleClientsEmail::where('sale_client_id', '=', $id)->get()], 200);
+        return response()->json(['records' => SaleClientsPhone::where('sale_client_id', '=', $id)->get()], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      * @return JsonResponse
      */
-    public function destroy(SaleClientsEmail $email)
+    public function destroy(SaleClientsPhone $phone)
     {
-        $email->delete();
-        return response()->json(['record' => $email, 'message' => 'Success'], 200);
+        $phone->delete();
+        return response()->json(['record' => $phone, 'message' => 'Success'], 200);
     }
 }
