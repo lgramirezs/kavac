@@ -23,7 +23,12 @@ class AssetServiceController extends Controller
     public function getPayrollStaffs()
     {
         return (Module::has('Payroll')) ?
-            template_choices('Modules\Payroll\Models\PayrollStaff', ['id_number', '-', 'full_name'], '', true) : [];
+            template_choices(
+                'Modules\Payroll\Models\PayrollStaff',
+                ['id_number', '-', 'full_name'],
+                ['relationship' => 'PayrollEmployment', 'where' => ['active' => true]],
+                true
+            ) : [];
     }
     // public function getPayrollPositionTypes()
     // {
@@ -40,14 +45,10 @@ class AssetServiceController extends Controller
         $payroll_position_id_and_type_id = (Module::has('Payroll')) ?
             template_choices(
                 'Modules\Payroll\Models\PayrollEmployment',
-                ['payroll_position_id', '-', 'payroll_position_type_id'],
+                ['payroll_position_id', '-', 'payroll_position_type_id', '-', 'department_id'],
                 ['payroll_staff_id' => $id],
                 true
             ) : [];
-        // No se encontraron datos de cargo ni tipo de cargo para el trabajador con id => $id
-        if (count($payroll_position_id_and_type_id) == 1) {
-            return [$payroll_position_id_and_type_id[0], $payroll_position_id_and_type_id[0]];
-        }
 
         $payroll_position_name = (Module::has('Payroll')) ?
             template_choices(
@@ -61,11 +62,18 @@ class AssetServiceController extends Controller
             template_choices(
                 'Modules\Payroll\Models\PayrollPositionType',
                 'name',
+                ['id' => (int)$payroll_position_id_and_type_id[1]["text"][4]],
+                true
+            ) : [];
+
+        $department_name = (Module::has('Payroll')) ?
+            template_choices(
+                'Modules\Payroll\Models\Department',
+                'name',
                 ['id' => (int)$payroll_position_id_and_type_id[1]["text"][-1]],
                 true
             ) : [];
 
-
-        return [$payroll_position_name[1], $payroll_position_type_name[1]];
+        return [$payroll_position_name[1], $payroll_position_type_name[1], $department_name[1]];
     }
 }
