@@ -62,7 +62,8 @@ class PayrollStaffController extends Controller
             'parish_id' => ['required'],
             'address' => ['required', 'max:200'],
             'medical_history' => ['nullable'],
-            'uniform_sizes' => ['required']
+            'uniform_sizes.*.size' => ['sometimes', 'required'],
+            'uniform_sizes.*.name' => ['sometimes', 'required']
         ];
 
         /** Define los atributos para los campos personalizados*/
@@ -78,6 +79,8 @@ class PayrollStaffController extends Controller
             'municipality_id' => 'muncipio',
             'parish_id' => 'parroquia',
             'uniform_sizes' => 'talla de uniforme',
+            'uniform_sizes.*.size' => 'talla de uniforme',
+            'uniform_sizes.*.name' => 'nombre del uniforme',
             'medical_history' => 'historial médico'
         ];
     }

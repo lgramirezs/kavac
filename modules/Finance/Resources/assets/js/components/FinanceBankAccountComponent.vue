@@ -123,7 +123,7 @@
 	                			{{ format_bank_account(props.row.ccc_number) }}
 	                		</div>
 	                		<div slot="opened_at" slot-scope="props" class="text-center">
-	                			{{ format_date(props.row.opened_at) }}
+	                			{{ convert_date(props.row.opened_at) }}
 	                		</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
 	                			<button @click="initUpdate(props.row.id, $event)"
@@ -185,6 +185,17 @@
 					description: '',
 					opened_at: ''
 				};
+			},
+			/**
+			 * Método que cambia el formato de visualización de la fecha
+			 * en la tabla de registros.
+			 *
+			 * @method  convert_date
+			 * @author  Francisco Ruiz <javierrupe19@gmail.com> 
+			 */
+			convert_date(date){
+				
+				return new Date(date).toLocaleDateString('en-GB', {timeZone: 'UTC'});
 			},
 		},
 		created() {
