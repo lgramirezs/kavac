@@ -94,11 +94,7 @@ class PurchaseSupplierController extends Controller
     public function store(Request $request, UploadDocRepository $upDoc)
     {
         // dd($request->all());
-        $requiredContacts = '';
-        if (array_key_exists("contact_names", $request->all())) {
-            $requiredContacts = 'required';
-        }
-        $this->validate($request, [
+        $rules = [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
             'rif'                            => ['required', 'size:10', new RifRule],
@@ -111,15 +107,16 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_names'                  => [$requiredContacts],
-            'contact_emails'                 => [$requiredContacts],
             'rnc_certificate_number'         => ['required_with:rnc_status'],
+            'contact_names'                  => ['array'],
+            'contact_emails'                 => ['array'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
             'phone_extension'                => ['array'],
-        ],
-        [
+        ];
+
+        $messages = [
             'person_type.required'                    => 'El campo tipo de persona es obligatorio.',
             'company_type.required'                   => 'El campo tipo de empresa es obligatorio.',
             'rif.required'                            => 'El campo rif es obligatorio.',
@@ -132,9 +129,57 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_names.required'                  => 'El campo nombre de contacto es obligatorio.',
-            'contact_emails.required'                 => 'El campo correo electrónico de contacto es obligatorio.',
-        ]);
+            'empty_contact_info.required'             => 'Los campos de datos de contacto son obligatorios.',
+            'empty_phone_info.required'               => 'Los campos de nùmeros telefònicos son obligatorios.',
+        ]
+        
+        /**
+         * Se verifica que no tenga informaciòn en los campos de nùmeros telefònicos
+         */
+        if (array_key_exists("phone_type", $request->all())) {
+            foreach ($request->phone_type as $key => $value) {
+                if (!$value) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_area_code[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_number[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_extension[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+            }
+        }
+
+        /**
+         * Se verifica que no tenga informaciòn en los campos de contacto
+         */
+        if (array_key_exists("contact_names", $request->all())) {
+            foreach ($request->contact_names as $key => $value) {
+                if (!$value) {
+                    $rules['empty_contact_info'] = ['required'];
+                    $request->empty_contact_info = null;
+                    break;
+                }
+                if (!$request->contact_emails[$key]) {
+                    $rules['empty_contact_info'] = ['required'];
+                    $request->empty_contact_info = null;
+                    break;
+                }
+            }
+        }
+
+        $this->validate($request, $rules, $messages);
         
         //$supplier = PurchaseSupplier::first();
         $supplier = PurchaseSupplier::create([
