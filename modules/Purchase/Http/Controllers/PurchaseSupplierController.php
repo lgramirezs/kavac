@@ -131,7 +131,7 @@ class PurchaseSupplierController extends Controller
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
             'empty_contact_info.required'             => 'Los campos de datos de contacto son obligatorios.',
             'empty_phone_info.required'               => 'Los campos de nùmeros telefònicos son obligatorios.',
-        ]
+        ];
         
         /**
          * Se verifica que no tenga informaciòn en los campos de nùmeros telefònicos
