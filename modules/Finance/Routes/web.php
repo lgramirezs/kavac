@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,7 +35,9 @@ Route::group([
         Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance', 'except' => ['edit']]);
         Route::get('check-books', 'FinanceCheckBookController@edit')->name('finance.CheckBookEdit');
         Route::resource('payment_methods', 'FinancePaymentMethodsController', ['as' => 'finance']);
-        });
+    });
+
+    Route::resource('pay-orders', 'FinancePayOrderController', ['as' => 'finance']);
 
     Route::get('get-banks/', 'FinanceBankController@getBanks');
     Route::get('get-bank-info/{bank_id}', 'FinanceBankController@getBankInfo');

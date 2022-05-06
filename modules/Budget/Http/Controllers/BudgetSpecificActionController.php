@@ -330,6 +330,7 @@ class BudgetSpecificActionController extends Controller
     {
         /** @var array Arreglo con información de las acciones específicas */
         $data = [['id' => '', 'text' => 'Seleccione...']];
+        $specificActions = [];
         
         if ($type==="Project") {
             /** @var object Objeto con las acciones específicas asociadas a un proyecto */

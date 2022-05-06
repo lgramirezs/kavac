@@ -152,6 +152,33 @@ class FinanceRoleAndPermissionsTableSeeder extends Seeder
                 'model' => 'Modules\Finance\Models\FinanceCheckBook', 'model_prefix' => 'finanzas',
                 'slug_alt' => 'chequera.ver', 'short_description' => 'ver chequera'
             ],
+            [
+                'name' => 'Crear órden de pago', 'slug' => 'finance.payorder.create',
+                'description' => 'Acceso para crear órden de pago',
+                'model' => '', 'model_prefix' => 'finanzas',
+                'slug_alt' => 'orden_pago.crear', 'short_description' => 'agregar órden de pago'
+            ],
+            [
+                'name' => 'Editar órden de pago',
+                'slug' => 'finance.payorder.edit',
+                'description' => 'Acceso para editar órden de pago',
+                'model' => '', 'model_prefix' => 'finanzas',
+                'slug_alt' => 'orden_pago.editar', 'short_description' => 'editar órden de pago'
+            ],
+            [
+                'name' => 'Ver órden de pago',
+                'slug' => 'finance.payorder.list',
+                'description' => 'Acceso para ver órdenes de pago',
+                'model' => '', 'model_prefix' => 'finanzas',
+                'slug_alt' => 'orden_pago.ver', 'short_description' => 'ver órden de pago'
+            ],
+            [
+                'name' => 'Eliminar órden de pago',
+                'slug' => 'finance.payorder.delete',
+                'description' => 'Acceso para eliminar la órden de pago',
+                'model' => '', 'model_prefix' => 'finanzas',
+                'slug_alt' => 'orden_pago.eliminar', 'short_description' => 'eliminar órden de pago'
+            ],
         ];
 
         $financeRole->detachAllPermissions();
