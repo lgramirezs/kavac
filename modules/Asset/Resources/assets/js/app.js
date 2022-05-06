@@ -445,6 +445,7 @@ Vue.mixin({
 			axios.get(`${window.app_url}/asset/get-payroll-staffs-info/${id}`).then(response => {
                 this.payroll_positions = [response.data[0]];
                 this.payroll_position_types = [response.data[1]];
+                this.departments = [response.data[2]];
 			});
 		},
 	},

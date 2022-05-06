@@ -89,6 +89,7 @@ class FinanceCheckBookController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'code' => ['required'],
             'finance_bank_account_id' => ['required'],
@@ -106,7 +107,28 @@ class FinanceCheckBookController extends Controller
                 return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
 
             }
-     
+
+            //consulta que no exista el campo numero de cheque repetido en base de datos.
+            $checksnumber = FinanceCheckBook::where('number', $number)->first();
+            if($checksnumber){
+                 $error[0]= "El campo numero de cheque ya ha sido registrado";
+                return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+            }
+            //consulta que no exista el campo numero de cheque repetido en el formulario.
+            foreach ($request->numbers as $number2) {
+                if($number == $number2){
+                    $error[0]= "El campo numero de cheque esta repetido en el formulario";
+                    return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+                }
+            }
+        }
+
+        //consulta que no exista el campo codigo repetido en base de datos.
+        $checkscode = FinanceCheckBook::where('code', $request->code)->first();
+        if($checkscode){
+             $error[0]= "El campo código chequera ya ha sido registrado";
+            return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+
         }
 
         foreach ($request->numbers as $number) {
@@ -135,9 +157,13 @@ class FinanceCheckBookController extends Controller
      * Show the form for editing the specified resource.
      * @return Renderable
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('finance::edit');
+        //return view('finance::edit');
+
+        $checksUsed = FinanceCheckBook::find($id);
+        //return $payment;
+        return view('finance::edit', compact("checksUsed"));
     }
 
     /**
@@ -167,5 +193,22 @@ class FinanceCheckBookController extends Controller
             $check->delete();
         }
         return response()->json(['message' => 'Success'], 200);
+    }
+
+    /**
+     * Obtiene los datos de las cuenta bancarias
+     * @author Miguel Narvaez <mnarvaezcenditel.gob.ve | <miguelnarvaez31@gmail.com>
+     *
+     * @return \Illuminate\Http\JsonResponse Devuelve un JSON con listado de las cuentas bancarias
+     */
+    public function getBanksAccounts()
+    {
+        foreach (FinanceBankAccount::all() as $accounts) {
+            $this->data[] = [
+                'id' => $accounts->id,
+                'text' => $accounts->ccc_number
+            ];
+        }
+        return response()->json($this->data);
     }
 }
