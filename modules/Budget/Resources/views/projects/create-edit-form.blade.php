@@ -46,7 +46,7 @@
 										[
 											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'institution_id',
-											'onchange' => 'updateSelectActive($(this), $("#department_id"), "Department" )',
+											'onchange' => 'updateSelectActive($(this), $("#department_id"), "Department",undefined, undefined,[$("#payroll_position_id"), $("#payroll_staff_id")] )',
 											'title' => __('Seleccione una institución')
 										]
 									) !!}
@@ -58,7 +58,8 @@
 									{!! Form::select('department_id', $departments, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'department_id',
-										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff")',
+											'disabled' => ( true),
+										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff",[$("#payroll_position_id")])',
 										'title' => __('Seleccione un departamento o dependencia'),
 									]) !!}
 								</div>
@@ -70,6 +71,7 @@
 										{!! Form::select('payroll_staff_id', $staffs, null, [
 											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'payroll_staff_id',
+											'disabled' => ( true),
 											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll", "")',
 											'title' => __('Seleccione una persona responsable del proyecto')
 										]) !!}
@@ -83,6 +85,7 @@
 										{!! Form::select('payroll_position_id', $positions, null, [
 											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'payroll_position_id',
+											'disabled' => ( true),
 											'title' => __('Seleccione el cargo de la persona responsable del proyecto')
 										]) !!}
 									</div>
