@@ -7,8 +7,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Modules\Payroll\Models\PayrollVacationPolicy;
 use Modules\Payroll\Models\PayrollConceptAssignOption;
+use Modules\Payroll\Models\PayrollVacationPolicy;
+use Modules\Payroll\Models\PayrollScale;
 use Modules\Payroll\Models\Institution;
 
 /**
@@ -178,7 +179,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $validateRules  = $this->validateRules;
         if ($request->input('vacation_type') == 'collective_vacations') {
             $validateRules  = array_merge(
@@ -253,7 +254,27 @@ class PayrollVacationPolicyController extends Controller
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
             'max_days_advance'                      => $request->input('max_days_advance'),
+
+            // Agrupar por
+            'group_by'               => $request->input('group_by'),
+            'type'                   => $request->input('type'),
         ]);
+
+        /**
+         * Relaciona con escalas
+         */
+        foreach ($request->payroll_scales as $payrollScale) {
+            /**
+             * Objeto asociado al modelo PayrollScale
+             * @var Object $scale
+             */
+            $scale = PayrollScale::create([
+                'name'                    => $payrollScale['name'],
+                'value'                   => json_encode($payrollScale['value']),
+                'relationable_type'       => PayrollVacationPolicy::class,
+                'relationable_id'         => $payrollVacationPolicy->id,
+            ]);
+        }
 
         foreach ($request->assign_to as $assign_to) {
             if ($assign_to['type'] == 'range') {

@@ -34,7 +34,7 @@ class PayrollScale extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['name', 'value', 'payroll_salary_scale_id'];
+    protected $fillable = ['name', 'value', 'payroll_salary_scale_id', 'relationable_type', 'relationable_id'];
 
     /**
      * Método que obtiene el eslacafón salarial al que pertenece la escala
@@ -46,5 +46,17 @@ class PayrollScale extends Model implements Auditable
     public function payrollSalaryScale()
     {
         return $this->belongsTo(PayrollSalaryScale::class);
+    }
+
+    /**
+     * File morphs to models in relationable_type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function relationable_id()
+    {
+        // morphTo($name = relationable_id, $type = relationable_type, $id = relationable_id)
+        // requires relationable_type and relationable_id fields on $this->table
+        return $this->morphTo();
     }
 }

@@ -15,6 +15,8 @@ use App\Traits\ModelsTrait;
  * Gestiona el modelo de datos de las políticas vacacionales
  *
  * @author     Henry Paredes <hparedes@cenditel.gob.ve>
+ * @author     Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+ * 
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
@@ -45,31 +47,10 @@ class PayrollVacationPolicy extends Model implements Auditable
         'generate_worker_arises',
         'min_days_advance',
         'max_days_advance',
-    ];
 
-    // "payroll_scales" => array:2 [
-    //     0 => array:3 [
-    //       "id" => null
-    //       "name" => "asf"
-    //       "value" => "1"
-    //     ]
-    //     1 => array:3 [
-    //       "id" => null
-    //       "name" => "vxzvx"
-    //       "value" => "1"
-    //     ]
-    // ]
-    // "assign_to" => array:1 [
-    //     0 => array:4 [
-    //       "id" => "all"
-    //       "name" => "Todos los trabajadores"
-    //       "model" => "Modules\Payroll\Models\PayrollStaff"
-    //       "type" => "list"
-    //     ]
-    // ]
-    // "assign_options" => array:1 [
-    //     "all" => []
-    // ]
+        // Usados por la funcionalidad de Agrupar por:
+        'group_by', 'type'
+    ];
 
     /**
      * Lista de atributos de relacion consultados automaticamente
@@ -123,5 +104,17 @@ class PayrollVacationPolicy extends Model implements Auditable
     public function assignToOptions()
     {
         return $this->morphMany(PayrollConceptAssignOption::class, 'applicable');
+    }
+
+    /**
+     * Obtiene información de las opciones asignadas asociadas a una escalafon salarial
+     *
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function relationGroupBy()
+    {
+        return $this->morphMany(PayrollScale::class, 'relationable');
     }
 }
