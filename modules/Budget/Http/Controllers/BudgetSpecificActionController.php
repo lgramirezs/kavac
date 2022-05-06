@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Modules\Budget\Models\BudgetProject;
 use Illuminate\Contracts\Support\Renderable;
-
 use Modules\Budget\Models\BudgetAccountOpen;
 use Modules\Budget\Models\BudgetSpecificAction;
 use Modules\Budget\Models\BudgetCentralizedAction;
@@ -215,8 +214,27 @@ class BudgetSpecificActionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validate_rules, $this->validate_messages);
+        $this->validate($request, [
+    'from_date' => ['required', 'date'],
+    'to_date' => ['required', 'date'],
+    'code' => ['required'],
+    'name' => ['required'],
+    'description' => ['required'],
 
+]
+, [
+            'from_date.required' => 'El campo fecha de inicio es obligatorio.',
+            'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
+            'to_date.required' => 'El campo fecha final es obligatorio.',
+            'to_date.date' => 'El campo fecha final no tiene un formato válido.',
+            'code.required' => 'El campo código es obligatorio.',
+
+
+ 
+        ]);
+     
+
+       
         if ($request->project_centralized_action === "project") {
             /** @var object Objeto que contiene información de un proyecto */
             $pry_acc = BudgetProject::find($request->project_id);
@@ -226,14 +244,38 @@ class BudgetSpecificActionController extends Controller
             $pry_acc = BudgetCentralizedAction::find($request->centralized_action_id);
             $specificable_type = BudgetCentralizedAction::class;
         }
+       
 
+           $budgetSpecific = BudgetSpecificAction::where('code',$request->code)->first();
+         
         /** @var object Objeto con información de la acción específica a modificar */
         $budgetSpecificAction = BudgetSpecificAction::find($id);
-        $budgetSpecificAction->fill($request->all());
-        $budgetSpecificAction->specificable_type = $specificable_type;
-        $budgetSpecificAction->specificable_id = $pry_acc->id;
-        $budgetSpecificAction->save();
+      if($budgetSpecific){
+            if ( $budgetSpecific->id == $id) {
+    $budgetSpecificAction->fill($request->all());
+    $budgetSpecificAction->specificable_type = $specificable_type;
+    $budgetSpecificAction->specificable_id = $pry_acc->id;
+    $budgetSpecificAction->save();
 
+               }else{ 
+                   $this->validate($request, ['code' => ['unique:budget_specific_actions'],]
+    , [ 'code.unique' => 'El campo código ya ha sido registrado.',
+    ]);
+
+
+               }
+
+
+      }else{
+           $budgetSpecificAction->fill($request->all());
+                  $budgetSpecificAction->specificable_type = $specificable_type;
+                 $budgetSpecificAction->specificable_id = $pry_acc->id;
+                $budgetSpecificAction->save();
+
+
+      }
+
+              
         $request->session()->flash('message', ['type' => 'update']);
         return redirect()->route('budget.settings.index');
     }
