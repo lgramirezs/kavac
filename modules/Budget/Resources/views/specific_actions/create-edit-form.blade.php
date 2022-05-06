@@ -165,13 +165,7 @@
 					$("#project_id").closest('.form-group').removeClass('is-required');
 				}
 			});
-			// if ($('.sel_project_centralized_action').is(':checked')){ 
-            //            alert('checked'); 
-			// 		   		$('#project_id').attr('disabled', false);
-            //                   } 
-            //              else { 
-            //                  alert('not checked');
-            //                  }
+
 			if ($('.sel_project_centralized_action').is(':checked')){
  
                     if($('#project_id').val() !== ''){
@@ -185,15 +179,7 @@
 
                   }
 
-
-			$('#project_id').blur(function()
-                                                        { 
-                               if(  !this.value ) {
-								   alert('checked');
-
-                                $(this).parents('p').addClass('warning');
-                                 }
-                          });				  
+				  
 			$("#from_date").on('change', function() {
 				$("#to_date").attr("min", $(this).val());
 			});

@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Modules\Budget\Models\BudgetProject;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Log;
 use Modules\Budget\Models\BudgetAccountOpen;
 use Modules\Budget\Models\BudgetSpecificAction;
 use Modules\Budget\Models\BudgetCentralizedAction;
@@ -233,7 +232,7 @@ class BudgetSpecificActionController extends Controller
 
  
         ]);
-        Log::emergency($request);
+     
 
        
         if ($request->project_centralized_action === "project") {
