@@ -234,7 +234,7 @@ export default {
             vm.record.products = vm.record_products;
             vm.loading = true;
             
-            var url = vm.setUrl('/purchase/requirements');
+            var url = vm.setUrl('/purchase/requirements/');
 
             if (vm.requirement_edit) {
                 vm.record.toDelete = vm.toDelete;
