@@ -84,6 +84,11 @@ class BudgetSubSpecificFormulationController extends Controller
             'specific_action_id' => ['required'],
             'currency_id' => ['required'],
             'formulated_accounts.*' => ['required']
+        ], [
+            'institution_id.required' => 'El campo institución es obligatorio.',
+            'specific_action_id.required' => 'El campo acción específica es obligatorio.',
+            'currency_id.required' => 'El campo moneda es obligatorio.',
+            'formulated_accounts.required' => 'El campo cuenta formulada es obligatorio.',
         ]);
 
         $year = $request->fiscal_year ?? date("Y");
