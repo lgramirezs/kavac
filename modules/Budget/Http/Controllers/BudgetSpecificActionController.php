@@ -413,15 +413,19 @@ class BudgetSpecificActionController extends Controller
                                            ->get()
                     : $budgetSpecificAction->get();
 
+        $withoutFormulations = false;
+        $hasFormulations = false;
+
         /** Agrega las acciones específicas para cada grupo */
         foreach ($sp_accs as $sp_acc) {
             $filter = (!is_null($formulated) && $formulated) ? BudgetSubSpecificFormulation::where(
                 [
-                    'budget_specific_action_id' => $sp_acc->specificable_id,
+                    'year' => $formulated_year,
+                    'budget_specific_action_id' => $sp_acc->id,
                     'assigned' => true
                 ]
             )->first() : '';
-
+            
             if (str_contains($sp_acc->specificable_type, 'BudgetProject') && !is_null($filter)) {
                 array_push($dataProjects['children'], [
                     'id' => $sp_acc->id,
@@ -432,11 +436,12 @@ class BudgetSpecificActionController extends Controller
                     'id' => $sp_acc->id,
                     'text' => "{$sp_acc->specificable->code} - {$sp_acc->code} | {$sp_acc->name}"
                 ]);
-            } elseif (!is_null($formulated) && $formulated && is_null($filter)) {
-                array_push($data, ['text' => 'Sin formulaciones registradas', 'children' => []]);
+            } elseif (!is_null($formulated) && $formulated && is_null($filter) && !$withoutFormulations) {
+                $withoutFormulations = true;
+                array_push($data, ['id' => '', 'text' => 'Sin formulaciones registradas', 'children' => []]);
             }
         }
-
+        
         /** Si el grupo Proyectos contiene registros los agrega a la lista */
         if (count($dataProjects['children']) > 0) {
             array_push($data, $dataProjects);
@@ -446,6 +451,11 @@ class BudgetSpecificActionController extends Controller
             array_push($data, $dataCentralizedActions);
         }
 
+        /** Si existen proyectos o acciones centralizadas y el arreglo tiene el texto 'sin formulaciones' se elimina del arreglo */
+        if (($key = array_search('Sin formulaciones registradas', array_column($data, 'text'))) !== false) {
+            array_splice($data, $key, 1);
+        }
+        
         return response()->json($data);
     }
 

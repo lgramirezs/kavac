@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -233,7 +235,7 @@ Route::group(
          */
         Route::resource('compromises', 'BudgetCompromiseController', ['as' => 'budget']);
         Route::get(
-            'compromises/vue-list',
+            'compromises/list/all',
             'BudgetCompromiseController@vueList'
         )->name('budget.compromises.vuelist');
         Route::get(
