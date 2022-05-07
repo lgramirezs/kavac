@@ -331,8 +331,8 @@
             this.table_options_clients.headings = {
                 'id': 'Acción',
                 'type_person_juridica': 'Tipo de Persona',
-                'rif': 'Identificación del Cliente',
-                'name_client': 'Nombre',
+                'rif': 'Rif/n° de identificación',
+                'name_client': 'Nombre y apellido/razón social',
                 'sale_clients_phone': 'Telefonos',
                 'sale_clients_email': 'Correo Electrónico'
             };
