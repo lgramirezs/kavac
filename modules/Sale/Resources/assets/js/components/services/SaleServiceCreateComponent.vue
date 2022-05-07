@@ -14,7 +14,7 @@
                     </span>
                 </button>
                 <ul>
-                    <li v-for="error in errors">{{ error }}</li>
+                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                 </ul>
             </div>
         </div>
@@ -33,20 +33,20 @@
             <div class="col-md-3" id="helpClientMail">
                 <div v-show="record.sale_client_id != 0" class="form-group">
                     <label for="sale_clients_email">Correo:</label>
-                    <p v-for="email in sale_client.sale_clients_email">
+                    <p v-for="(email, index) in sale_client.sale_clients_email" :key="index">
                         <input type="text" class="form-control input-sm" :disabled="true" 
                             data-toggle="tooltip" title="Dirección" 
-                            id="email" v-model="email.email"></input>
+                            id="email" v-model="email.email" />
                     </p>
                 </div>
             </div>
             <div class="col-md-3" id="helpClientPhone">
                 <div v-show="record.sale_client_id != 0" class="form-group">
                     <label for="phones">Número telefónico:</label>
-                    <p v-for="phone in sale_client.phones">
+                    <p v-for="(value, index) in sale_client.phones" :key="index">
                         <input type="text" class="form-control input-sm" :disabled="true"
                             data-toggle="tooltip" title="Dirección fiscal" 
-                            id="phone" v-model="phone.extension + '-' + phone.area_code + phone.number"></input>
+                            id="phone" v-model="value.phone" />
                     </p>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <label for="applicant_organization">Organización:</label>
                     <input type="text" class="form-control input-sm" 
                         data-toggle="tooltip" title="Dirección" 
-                        v-model="record.organization" id="applicant_organization"></input>
+                        v-model="record.organization" id="applicant_organization" />
                 </div>
             </div>
             <div class="col-md-3" id="HelpDescription">
@@ -88,11 +88,11 @@
             <div v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" class="col-md-3">
                 <div class="form-group" id="HelpServiceDescription">
                     <label for="applicant_name">Descripción:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="service_description" v-model="good_to_be_traded.description"></input>
+                            id="service_description" v-model="good_to_be_traded.description" />
                     </p>
                 </div>
             </div>
@@ -107,11 +107,11 @@
             <div class="col-md-3" v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" id="HelpServiceDepartment">
                 <div class="form-group">
                     <label for="applicant_name">Unidad o departamento:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="service_department" v-model="good_to_be_traded.department"></input>
+                            id="service_department" v-model="good_to_be_traded.department" />
                     </p>
                     <br>
                 </div>
@@ -119,44 +119,44 @@
             <div class="col-md-3" v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" id="HelpServiceStaffName">
                 <div id="saleServiceName" class="form-group">
                     <label for="applicant_name">Nombre:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="staff_name" v-model="good_to_be_traded.staff_name"></input>
+                            id="staff_name" v-model="good_to_be_traded.staff_name" />
                     </p>
                 </div>
             </div>
             <div class="col-md-3" v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" id=HelpServiceStaffLastName>
                 <div id="saleServiceLastname" class="form-group">
                     <label for="applicant_name">Apellido:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="staff_last_name" v-model="good_to_be_traded.staff_last_name"></input>
+                            id="staff_last_name" v-model="good_to_be_traded.staff_last_name" />
                     </p>
                 </div>
             </div>
             <div class="col-md-3" v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" id="HelpServiceStaffPhone">
                 <div id="saleServicePhone" class="form-group">
                     <label for="applicant_name">Teléfono:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="staff_phone" v-model="good_to_be_traded.staff_phone"></input>
+                            id="staff_phone" v-model="good_to_be_traded.staff_phone" />
                     </p>
                 </div>
             </div>
             <div class="col-md-3" v-if="record.sale_goods_to_be_traded && record.sale_goods_to_be_traded.length > 0" id="HelpServiceStaffMail">
                 <div id="saleServiceEmail" class="form-group">
                     <label for="applicant_name">Correo electrónico:</label>
-                    <p v-for="good_to_be_traded in sale_goods_to_be_traded">
+                    <p v-for="(good_to_be_traded, index) in sale_goods_to_be_traded" :key="index">
                         <input type="text" class="form-control input-sm"
                             data-toggle="tooltip" title="Nombre o razón social" 
                             :disabled="true"
-                            id="staff_email" v-model="good_to_be_traded.staff_email"></input>
+                            id="staff_email" v-model="good_to_be_traded.staff_email" />
                     </p>
                 </div>
             </div>
@@ -164,7 +164,7 @@
             <div class="col-md-12" id="HelpServiceRequirement">
                 <h6 class="card-title">Requerimiento del solicitante <i class="fa fa-plus-circle cursor-pointer"
                     @click="addRequirement()"></i></h6>
-                <div class="row" v-for="(service_requirement, index) in record.requirements">
+                <div class="row" v-for="(service_requirement, index) in record.requirements" :key="index">
                     <div class="col-md-4">
                         <div class="form-group is-required">
                             <label for="service_requirement">Requerimiento del solicitante:</label>
@@ -261,15 +261,18 @@ export default {
     methods: {
         /**
          * Método que carga la información del formulario al editar
-         *
-         *
          */
         async loadForm(id){
             const vm = this;
 
             await axios.get('/sale/services/info/'+id).then(response => {
                 if(typeof(response.data.record != "undefined")){
-                    vm.record = response.data.record;
+                    let data = response.data.record;
+                    vm.record.id = data.id;
+                    vm.record.organization = data.organization;
+                    vm.record.description = data.description;
+                    vm.record.resume = data.resume;
+                    vm.record.sale_client_id = data.sale_client_id;
 
                     vm.sale_goods_to_be_traded = [];
                     vm.record.requirements = [];
@@ -356,7 +359,7 @@ export default {
             if (vm.record.sale_client_id > 0) {
                 axios.get('/sale/get-sale-client/' + vm.record.sale_client_id).then(response => {
                     vm.sale_client.name = response.data.sale_client.name;
-                    vm.sale_client.phones = response.data.sale_client.phones;
+                    vm.sale_client.phones = response.data.sale_client.sale_clients_phone;
                     vm.sale_client.sale_clients_email = response.data.sale_client.sale_clients_email;
                 });
             }
