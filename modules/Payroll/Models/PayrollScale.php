@@ -53,9 +53,9 @@ class PayrollScale extends Model implements Auditable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function relationable_id()
+    public function relationable()
     {
-        // morphTo($name = relationable_id, $type = relationable_type, $id = relationable_id)
+        // morphTo($name = relationable, $type = relationable_type, $id = relationable_id)
         // requires relationable_type and relationable_id fields on $this->table
         return $this->morphTo();
     }

@@ -485,7 +485,7 @@
                                             </div>
                                             <div class="col-4 offset-1 pad-top-10 with-border with-radius table-responsive">
                                                 <h6 class="text-center">Nueva escala</h6>
-                                                <div class="row" style="align-items: flex-end;" v-if="type != 'boolean'
+                                                <div class="row" style="align-items: flex-end;" v-if="type != '' && type != 'boolean'
                                                         && type != 'list'">
                                                     <strong class="col-md-12">
                                                         Expresado en
@@ -1003,6 +1003,10 @@ export default {
                             assign_options: field['assign_options'],
                             min_days_advance: field['min_days_advance'],
                             max_days_advance: field['max_days_advance'],
+                            payroll_scales: field['payroll_scales'],
+                            on_scale: field['on_scale'],
+                            group_by: field['group_by'],
+                            type: field['type'],
                         });
                     });
                     vm.records = records;
