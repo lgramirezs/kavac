@@ -90,7 +90,6 @@ class PayrollSalaryScaleController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $this->validate($request, $this->validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'payroll_salary_scales')->first();

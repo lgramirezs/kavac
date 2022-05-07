@@ -113,7 +113,7 @@ class PayrollVacationPolicy extends Model implements Auditable
      *
      * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function relationGroupBy()
+    public function payrollScales()
     {
         return $this->morphMany(PayrollScale::class, 'relationable');
     }
