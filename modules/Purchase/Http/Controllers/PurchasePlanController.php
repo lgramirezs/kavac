@@ -15,7 +15,7 @@ use Modules\Purchase\Models\PurchaseType;
 use Modules\Purchase\Models\Document;
 
 use Modules\Purchase\Models\User;
-
+use Module;
 use Response;
 
 class PurchasePlanController extends Controller
@@ -39,8 +39,13 @@ class PurchasePlanController extends Controller
 	public function create()
 	{
 		$purchase_process = template_choices('Modules\Purchase\Models\PurchaseProcess', 'name', [], true);
-
-		$users = [];
+		$users = (Module::has('Payroll')) ?
+			template_choices(
+				'Modules\Payroll\Models\PayrollStaff',
+				['id_number', '-', 'full_name'],
+				['relationship' => 'PayrollEmployment', 'where' => ['active' => true]],
+				true
+			) : [];
 
 		$purchase_types = [];
 
@@ -55,13 +60,6 @@ class PurchasePlanController extends Controller
 				'id'                    =>  $record->id,
 				'text'                  =>  $record->name,
 				'purchase_processes_id' =>  $record->purchase_processes_id,
-			]);
-		}
-
-		foreach (User::where('level','>=', 2)->orderBy('level')->get() as $record) {
-			array_push($users, [
-				'id'                    =>  $record->id,
-				'text'                  =>  $record->name,
 			]);
 		}
 
@@ -100,7 +98,7 @@ class PurchasePlanController extends Controller
 		]);
 
 		PurchasePlan::create($request->all());
-		return response()->json(['message'=>'success'], 200);
+		return response()->json(['message' => 'success'], 200);
 	}
 
 	/**
@@ -140,7 +138,7 @@ class PurchasePlanController extends Controller
 			]);
 		}
 
-		foreach (User::where('level','>=', 2)->orderBy('level')->get() as $record) {
+		foreach (User::where('level', '>=', 2)->orderBy('level')->get() as $record) {
 			array_push($users, [
 				'id'                    =>  $record->id,
 				'text'                  =>  $record->name,
@@ -168,7 +166,7 @@ class PurchasePlanController extends Controller
 		$record->purchase_processes_id = $request->purchase_processes_id;
 		$record->purchase_type_id      = $request->purchase_type_id;
 		$record->save();
-		return response()->json(['message'=>'success'], 200);
+		return response()->json(['message' => 'success'], 200);
 	}
 
 	/**
@@ -178,7 +176,7 @@ class PurchasePlanController extends Controller
 	public function destroy($id)
 	{
 		PurchasePlan::find($id)->delete();
-		return response()->json(['message'=>'Success'], 200);
+		return response()->json(['message' => 'Success'], 200);
 	}
 
 	public function uploadFile(Request $request)
@@ -219,14 +217,15 @@ class PurchasePlanController extends Controller
 		$purchase_plan->save();
 	}
 
-	public function getDownload($code){
+	public function getDownload($code)
+	{
 		// dd(storage_path('documents'));
-		$doc = Document::where('code',$code)->first();
+		$doc = Document::where('code', $code)->first();
 
 		$filename = $doc->file;
 
 		$path = explode('storage', storage_path())[0];
 
-		return response()->download($path.'/'.$doc->url, $doc->file);
+		return response()->download($path . '/' . $doc->url, $doc->file);
 	}
 }
