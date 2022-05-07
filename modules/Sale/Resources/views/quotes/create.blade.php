@@ -24,7 +24,7 @@
             <div class="card-header">
                 <h6 class="card-title text-uppercase">Nueva Cotización
                     @include('buttons.help', [
-                        'helpId' => 'SaleQuoteForm',
+                        'helpId' => 'SaleQuoteViewClients',
                         'helpSteps' => get_json_resource('ui-guides/quotes/sale_quote_form.json', 'sale')
                     ])
                 </h6>
