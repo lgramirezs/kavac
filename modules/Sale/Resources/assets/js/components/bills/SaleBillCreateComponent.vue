@@ -79,13 +79,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpTypePerson">
                     <div class="form-group is-required">
                         <label for="type_person">Tipo de persona:</label>
                         <select2 :options="types_person" id='type_person' v-model="record.type_person"></select2>
                     </div>
                 </div>
-                <div v-if="record.type_person" class="col-md-3">
+                <div v-if="record.type_person" class="col-md-3" id="HelpName">
                     <div class="form-group is-required">
                         <label v-show="record.type_person == ''" for="name">Nombre de la Empresa:</label>
                         <label v-show="record.type_person == 'Jurídica'" for="name">Nombre de la Empresa:</label>
@@ -95,21 +95,21 @@
                         <input type="hidden" name="id" id="id" v-model="record.id">
                     </div>
                 </div>
-                <div v-if="record.type_person == 'Jurídica'" class="col-md-3">
+                <div v-if="record.type_person == 'Jurídica'" class="col-md-3" id="HelpIdentification">
                     <div class="form-group is-required">
                         <label for="rif">RIF</label>
                         <input type="text" id="rif" class="form-control input-sm" data-toggle="tooltip"
                             title="Indique la identificación del cliente" v-model="record.rif">
                     </div>
                 </div>
-                <div v-if="record.type_person == 'Natural'" class="col-md-3">
+                <div v-if="record.type_person == 'Natural'" class="col-md-3" id="HelpIdentification">
                     <div class="form-group is-required">
                         <label for="id_number">Identificación</label>
                         <input type="text" id="id_number" class="form-control input-sm" data-toggle="tooltip"
                             title="Indique la identificación del cliente" v-model="record.id_number">
                     </div>
                 </div>
-                <div v-if="record.type_person" class="col-md-3">
+                <div v-if="record.type_person" class="col-md-3" id="HelpPhone">
                     <div class="form-group is-required">
                         <label>Teléfono de contacto</label>
                         <input type="text" class="form-control input-sm" placeholder="+00-000-0000000"
@@ -117,7 +117,7 @@
                                data-inputmask="'mask': '+99-999-9999999'"/>
                     </div>
                 </div>
-                <div v-if="record.type_person" class="col-md-3">
+                <div v-if="record.type_person" class="col-md-3" id="HelpMail">
                     <div class="form-group is-required">
                         <label for="email">Correo Electrónico:</label>
                         <input type="text" id="email" class="form-control input-sm" data-toggle="tooltip" required
@@ -130,7 +130,7 @@
                 <div class="col-md-12">
                     <b>Descripción de productos</b>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpProductType">
                     <div class="form-group is-required">
                         <label for="product_type">Tipo de Producto:</label>
                         <select2 :options="type_products" id='product_type' v-model="product_type"></select2>
@@ -154,32 +154,32 @@
                         <select2 :options="quote_subservices_list" id="sale_list_subservices_id" v-model="bill_product.sale_list_subservices_id"></select2>
                     </div>
                 </div>
-                <div class="col-md-3" id="SaleHelpProductMeasurementUnit">
+                <div class="col-md-3" id="HelpMeasurementUnit">
                     <div class="form-group is-required">
                         <label>Unidad de medida</label>
                         <select2 :options="quote_measurement_units" id='measurement_unit_id'
                          v-model="bill_product.measurement_unit_id"></select2>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpUnitPrice">
                     <div class="form-group is-required">
                         <label>Precio unitario:</label>
                         <input type="text" placeholder="Precio unitario" id="value" title="Precio unitario" v-model="bill_product.value" class="form-control input-sm" required @change="updateTotalProduct()">
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpQuantity">
                     <div class="form-group is-required">
                         <label>Cantidad de productos:</label>
                         <input type="text" placeholder="Cantidad de productos" id='quantity' title="Cantidad de productos" v-model="bill_product.quantity" class="form-control input-sm" required @input="updateTotalProduct()">
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpTotalPrice">
                     <div class="form-group is-required">
                         <label>Precio total:</label>
                         <input type="text" disabled placeholder="Total" id="total" title="Cantidad total" v-model="bill_product.value * bill_product.quantity"class="form-control input-sm" required>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="HelpCurrency">
                     <div class="form-group is-required">
                         <label>Moneda:</label>
                         <select2 :options="currencies" v-model="bill_product.currency_id" id="currency_id"></select2>
@@ -198,48 +198,50 @@
                 </div>
             </div>
             <br>
-            <v-client-table :columns="columns" :data="record.sale_bill_products" :options="table_options">
-                <div slot="sale_warehouse_inventory_product_id" slot-scope="props" class="text-center">
-                    <span>
-                        {{ (props.row.sale_warehouse_inventory_product_id)? props.row.inventory_product_name : props.row.sale_goods_to_be_traded_name }}
-                    </span>
-                </div>
-                <div slot="sale_list_subservices_id" slot-scope="props" class="text-center">
-                    <span>
-                        {{ (props.row.sale_list_subservices_id)? props.row.sale_list_subservices_name : 'N/A' }}
-                    </span>
-                </div>
-                <div slot="measurement_unit" slot-scope="props" class="text-center">
-                    <span>
-                        {{ (props.row.measurement_unit_id)? props.row.measurement_unit_name : 'N/A' }}
-                    </span>
-                </div>
-                <div slot="currency" slot-scope="props" class="text-center">
-                    <span>
-                        {{ (props.row.currency_id)? props.row.currency_name : 'N/A' }}
-                    </span>
-                </div>
-                <div slot="product_tax_value" slot-scope="props" class="text-center">
-                    <span>
-                        {{ (props.row.history_tax_id)? props.row.history_tax_value : 'N/A' }}
-                    </span>
-                </div>
-                <div slot="id" slot-scope="props" class="text-center">
-                    <div class="d-inline-flex">
-                        <button @click="editProduct(props.index, $event)" 
-                            class="btn btn-warning btn-xs btn-icon btn-action" 
-                            title="Modificar registro" data-toggle="tooltip" type="button">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button @click="removeProduct(props.index, $event)" 
-                            class="btn btn-danger btn-xs btn-icon btn-action" 
-                            title="Eliminar registro" data-toggle="tooltip" 
-                            type="button">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
+            <div id="HelpProductsTable">
+                <v-client-table :columns="columns" :data="record.sale_bill_products" :options="table_options">
+                    <div slot="sale_warehouse_inventory_product_id" slot-scope="props" class="text-center">
+                        <span>
+                            {{ (props.row.sale_warehouse_inventory_product_id)? props.row.inventory_product_name : props.row.sale_goods_to_be_traded_name }}
+                        </span>
                     </div>
-                </div>
-            </v-client-table>
+                    <div slot="sale_list_subservices_id" slot-scope="props" class="text-center">
+                        <span>
+                            {{ (props.row.sale_list_subservices_id)? props.row.sale_list_subservices_name : 'N/A' }}
+                        </span>
+                    </div>
+                    <div slot="measurement_unit" slot-scope="props" class="text-center">
+                        <span>
+                            {{ (props.row.measurement_unit_id)? props.row.measurement_unit_name : 'N/A' }}
+                        </span>
+                    </div>
+                    <div slot="currency" slot-scope="props" class="text-center">
+                        <span>
+                            {{ (props.row.currency_id)? props.row.currency_name : 'N/A' }}
+                        </span>
+                    </div>
+                    <div slot="product_tax_value" slot-scope="props" class="text-center">
+                        <span>
+                            {{ (props.row.history_tax_id)? props.row.history_tax_value : 'N/A' }}
+                        </span>
+                    </div>
+                    <div slot="id" slot-scope="props" class="text-center">
+                        <div class="d-inline-flex">
+                            <button @click="editProduct(props.index, $event)" 
+                                class="btn btn-warning btn-xs btn-icon btn-action" 
+                                title="Modificar registro" data-toggle="tooltip" type="button">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button @click="removeProduct(props.index, $event)" 
+                                class="btn btn-danger btn-xs btn-icon btn-action" 
+                                title="Eliminar registro" data-toggle="tooltip" 
+                                type="button">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                    </div>
+                </v-client-table>
+            </div>
             <div class="row">
                 <div class="col-md-12 text-right">
                     <div class="d-inline-flex align-items-center">
@@ -271,7 +273,7 @@
                 <div class="col-md-12">
                     <b>Complementarios</b>
                 </div>
-                <div class="col-md-3" id="SaleHelpPaymentMethod">
+                <div class="col-md-3" id="HelpPaymentForm">
                     <div class="form-group is-required">
                         <label>Forma de cobro:</label>
                         <select2 :options="bill_payments" v-model="record.sale_form_payment_id" id="sale_form_payment_id"></select2>
@@ -281,7 +283,7 @@
         </div>
         <div class="card-footer text-right">
             <div class="row">
-                <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
+                <div class="col-md-3 offset-md-9" id="HelpButtons">
     	        <button type="button" @click="reset()"
                     class="btn btn-default btn-icon btn-round btn-modal-clear"
       	            title ="Borrar datos del formulario">
