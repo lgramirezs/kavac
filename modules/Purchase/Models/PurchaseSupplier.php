@@ -75,7 +75,7 @@ class PurchaseSupplier extends Model implements Auditable
      */
     public function documents()
     {
-        return $this->morphMany(\App\Models\Document::class, 'documentable');
+        return $this->morphMany(Document::class, 'documentable');
     }
 
     /**

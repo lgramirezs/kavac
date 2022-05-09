@@ -72,7 +72,7 @@ class PurchaseCompromise extends Model implements Auditable
 
     /**
      * BudgetCompromise has many BudgetStages.
-     * @author Ing. Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function budgetStages()

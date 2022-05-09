@@ -15,4 +15,14 @@ class Document extends BaseDocument
     {
         return $this->hasMany(PurchasePlans::class);
     }
+
+    /**
+     * Get the purchaseDocumentRequiredDocument associated with the Document
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function purchaseDocumentRequiredDocument()
+    {
+        return $this->hasOne(PurchaseDocumentRequiredDocument::class);
+    }
 }

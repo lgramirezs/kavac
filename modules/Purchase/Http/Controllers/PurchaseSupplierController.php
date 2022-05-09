@@ -13,6 +13,7 @@ use App\Models\Phone;
 use App\Models\Contact;
 use App\Repositories\UploadDocRepository;
 use App\Rules\Rif as RifRule;
+use Modules\Purchase\Models\PurchaseDocumentRequiredDocument;
 use Modules\Purchase\Models\PurchaseSupplierBranch;
 use Modules\Purchase\Models\PurchaseSupplierObject;
 use Modules\Purchase\Models\PurchaseSupplierSpecialty;
@@ -232,17 +233,28 @@ class PurchaseSupplierController extends Controller
         /** Registro y asociación de documentos */
         $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
         if ($request->file('docs')) {
-            foreach ($request->file('docs') as $file) {
-                
+            foreach ($request->file('docs') as $key => $file) {
                 $extensionFile = $file->getClientOriginalExtension();
 
                 if (in_array($extensionFile, $documentFormat)) {
+                    /**
+                     * Se guarda el archivo y se almacena
+                     */
                     $upDoc->uploadDoc(
                         $file,
                         'documents',
                         PurchaseSupplier::class,
                         $supplier->id
                     );
+                    /**
+                     * Se almacena la relacion entre documentos y documentos requeridos en tabla pivote
+                     */
+                    if ($upDoc->getDocStored()) {
+                        PurchaseDocumentRequiredDocument::create([
+                            'document_id' => $upDoc->getDocStored()->id,
+                            'required_document_id' => $request->reqDocs[$key],
+                        ]);
+                    }
                 }
             }
         }
@@ -278,8 +290,21 @@ class PurchaseSupplierController extends Controller
      */
     public function edit($id)
     {
-        $model = PurchaseSupplier::with('documents')->find($id);
-        //dd($model->documents);
+        $model = PurchaseSupplier::with('documents.purchaseDocumentRequiredDocument')->find($id);
+        // dd($model);
+
+        /**
+         * Variable para almacenar los identificadores de documentos existentes
+         * para habilitar su descarga
+        */
+        $docs_to_download = [];
+
+        foreach($model->documents as $doc){
+            if($doc->purchaseDocumentRequiredDocument){
+                $docs_to_download["req_doc_".$doc->purchaseDocumentRequiredDocument->required_document_id] = $doc;
+            }
+        }
+
         $purchase_supplier_objects = [];
 
         foreach ($model->purchaseSupplierObjects as $record) {
@@ -297,7 +322,7 @@ class PurchaseSupplierController extends Controller
             'supplier_types' => $this->supplier_types, 'supplier_objects' => $this->supplier_objects,
             'supplier_branches' => $this->supplier_branches, 'supplier_specialties' => $this->supplier_specialties,
             'header' => $header, 'requiredDocuments' => $this->requiredDocuments, 'model' => $model, 
-            'model_supplier_objects' => $purchase_supplier_objects
+            'model_supplier_objects' => $purchase_supplier_objects, 'docs_to_download' => $docs_to_download
         ]);
     }
 
@@ -308,8 +333,8 @@ class PurchaseSupplierController extends Controller
      */
     public function update(Request $request, UploadDocRepository $upDoc, $id)
     {
-        //dd($request->all());
-        $this->validate($request, [
+        // dd($request->all());
+        $rules = [
             'person_type'                    => ['required'],
             'company_type'                   => ['required'],
             'rif'                            => ['required', 'size:10', new RifRule],
@@ -322,15 +347,16 @@ class PurchaseSupplierController extends Controller
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
             'direction'                      => ['required'],
-            'contact_names'                   => ['required'],
-            'contact_emails'                  => ['required'],
-            'rnc_certificate_number'         => ['required'],
+            'rnc_certificate_number'         => ['required_with:rnc_status'],
+            'contact_names'                  => ['array'],
+            'contact_emails'                 => ['array'],
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
             'phone_extension'                => ['array'],
-        ],
-        [
+        ];
+
+        $messages = [
             'person_type.required'                    => 'El campo tipo de persona es obligatorio.',
             'company_type.required'                   => 'El campo tipo de empresa es obligatorio.',
             'rif.required'                            => 'El campo rif es obligatorio.',
@@ -343,9 +369,57 @@ class PurchaseSupplierController extends Controller
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
             'direction.required'                      => 'El campo dirección fiscal es obligatorio.',
-            'contact_names.required'                   => 'El campo nombre de contacto es obligatorio.',
-            'contact_emails.required'                  => 'El campo correo electrónico de contacto es obligatorio.',
-        ]);
+            'empty_contact_info.required'             => 'Los campos de datos de contacto son obligatorios.',
+            'empty_phone_info.required'               => 'Los campos de nùmeros telefònicos son obligatorios.',
+        ];
+        
+        /**
+         * Se verifica que no tenga informaciòn en los campos de nùmeros telefònicos
+         */
+        if (array_key_exists("phone_type", $request->all())) {
+            foreach ($request->phone_type as $key => $value) {
+                if (!$value) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_area_code[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_number[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+                if (!$request->phone_extension[$key]) {
+                    $rules['empty_phone_info'] = ['required'];
+                    $request->empty_phone_info = null;
+                    break;
+                }
+            }
+        }
+
+        /**
+         * Se verifica que no tenga informaciòn en los campos de contacto
+         */
+        if (array_key_exists("contact_names", $request->all())) {
+            foreach ($request->contact_names as $key => $value) {
+                if (!$value) {
+                    $rules['empty_contact_info'] = ['required'];
+                    $request->empty_contact_info = null;
+                    break;
+                }
+                if (!$request->contact_emails[$key]) {
+                    $rules['empty_contact_info'] = ['required'];
+                    $request->empty_contact_info = null;
+                    break;
+                }
+            }
+        }
+
+        $this->validate($request, $rules, $messages);
 
         $supplier = PurchaseSupplier::find($id);
 
@@ -414,31 +488,49 @@ class PurchaseSupplierController extends Controller
 
 
         /** Se elimina la relacion y los documentos previos **/
-        $supp_docs = $supplier->documents()->get();
+        $supp_docs = $supplier->documents()->with('purchaseDocumentRequiredDocument')->get();
         if (count($supp_docs) > 0) {
-            foreach ($supp_docs as $value) {
-                $upDoc->deleteDoc(
-                    $value->file,
-                    'documents'
-                );
-                $value->delete();
+            foreach ($supp_docs as $doc) {
+                if (in_array($doc->purchaseDocumentRequiredDocument->required_document_id, $request->reqDocs)) {
+                    $upDoc->deleteDoc(
+                        $doc->file,
+                        'documents'
+                    );
+                    $purDocReqDoc = PurchaseDocumentRequiredDocument::where('document_id', $doc->id)->first();
+                    if ($purDocReqDoc) {
+                        $purDocReqDoc->delete();
+                    }
+                    $doc->delete();
+                }
             }
         }
 
         /** Registro y asociación de documentos */
         $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
         if ($request->file('docs')) {
-            foreach ($request->file('docs') as $file) {
+            foreach ($request->file('docs') as $key => $file) {
                 
                 $extensionFile = $file->getClientOriginalExtension();
 
                 if (in_array($extensionFile, $documentFormat)) {
+                    /**
+                     * Se guarda el archivo y se almacena
+                     */
                     $upDoc->uploadDoc(
                         $file,
                         'documents',
                         PurchaseSupplier::class,
                         $supplier->id
                     );
+                    /**
+                     * Se almacena la relacion entre documentos y documentos requeridos en tabla pivote
+                     */
+                    if ($upDoc->getDocStored()) {
+                        PurchaseDocumentRequiredDocument::create([
+                            'document_id' => $upDoc->getDocStored()->id,
+                            'required_document_id' => $request->reqDocs[$key],
+                        ]);
+                    }
                 }
             }
         }
