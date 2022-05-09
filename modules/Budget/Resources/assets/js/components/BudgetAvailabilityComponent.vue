@@ -77,46 +77,54 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="col-6">
-					<br>
-					<div class="form-group">
-						<label>Proyecto</label>
-						<div class="col-12">
-							<div class="col-4">
-								<input id="sel_project"
-									type="checkbox" class="form-check-input" 
-									v-model="project" value="true"
-								/>
-								<br>
-							</div>
+				<div class="col-6 mt-4">
+					<label for="">
+						<div class="col-12 bootstrap-switch-mini">
+							<input
+								type="radio"
+								name="project_centralized_action"
+								value="project"
+								id="sel_project"
+								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+								data-on-label="SI"
+								data-off-label="NO"
+							/>
+							Proyecto
 						</div>
-					</div>
-					<div class="form-group">
-                        <select2 :options="budgetProjectsArray" id="project_id" 
-								  v-model="project_id">
-                        </select2>
+					</label>
+					<div class="mt-4">
+						<select2
+							:options="budgetProjectsArray"
+							v-model="project_id"
+							id="project_id"
+							@input="getSpecificActions('Project')"
+							disabled
+						></select2>
 					</div>
 				</div>
-
-				<div class="col-6">
-					<br>
-					<div class="form-group">
-						<label>Acción Centralizada</label>
-						<div class="col-12">
-							<div class="col-4">
-								<input id="sel_centralized_action"
-									type="checkbox" class="form-check-input" 
-									v-model="centralized_action" value="true"
-								/>
-								<br>
-							</div>
+				<div class="col-6 mt-4">
+					<label for="">
+						<div class="col-12 bootstrap-switch-mini">
+							<input
+								type="radio"
+								name="project_centralized_action"
+								value="project"
+								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+								id="sel_centralized_action"
+								data-on-label="SI"
+								data-off-label="NO"
+							/>
+							Acción Centralizada
 						</div>
-					</div>
-					<div class="form-group">
-                        <select2 :options="budgetCentralizedActionsArray" id="centralized_action_id" 
-								  v-model="centralized_action_id">
-                        </select2>
+					</label>
+					<div class="mt-4">
+						<select2
+							:options="budgetCentralizedActionsArray"
+							v-model="centralized_action_id"
+							@input="getSpecificActions('CentralizedAction')"
+							id="centralized_action_id"
+							disabled
+						></select2>
 					</div>
 				</div>
 			</div>
@@ -186,6 +194,30 @@
 		},
 		mounted() {
 			const vm = this;
+
+			$('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
+				$('#project_id').attr('disabled', e.target.id !== 'sel_project');
+				$('#centralized_action_id').attr(
+					'disabled',
+					e.target.id !== 'sel_centralized_action'
+				);
+
+				if (e.target.id === 'sel_project') {
+					$('#centralized_action_id')
+						.closest('.form-group')
+						.removeClass('is-required');
+					$('#project_id')
+						.closest('.form-group')
+						.addClass('is-required');
+				} else if (e.target.id === 'sel_centralized_action') {
+					$('#centralized_action_id')
+						.closest('.form-group')
+						.addClass('is-required');
+					$('#project_id')
+						.closest('.form-group')
+						.removeClass('is-required');
+				}
+			});
 		},
 		methods: {
 			generateReport: function() {
@@ -221,28 +253,5 @@
 					
 			},
 		},
-		watch: {
-			'project': function(newVal, oldVal) {
-				if (newVal === true) {
-					$("#sel_centralized_action").prop("disabled", true);
-					$("#centralized_action_id").prop("disabled", true);
-					this.centralized_action_id = '';
-				} else {
-					$("#sel_centralized_action").prop("disabled", false);
-					$("#centralized_action_id").prop("disabled", false);
-				}
-			},
-			'centralized_action' : function(newVal, oldVal) {
-				if (newVal === true) {
-					$("#sel_project").prop("disabled", true);
-					$("#project_id").prop("disabled", true);
-					this.project_id = '';
-				} else {
-					$("#sel_project").prop("disabled", false);
-					$("#project_id").prop("disabled", false);
-				}
-			}
-		}
-
 	};
 </script>
