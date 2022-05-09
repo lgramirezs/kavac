@@ -240,9 +240,9 @@ class BudgetReportsController extends Controller
         $pdf = new ReportRepository();
 
         if($request->project_type === 'project') {
-            $project = BudgetProject::find($request->project_id);
+            $project = BudgetProject::with('specificActions')->find($request->project_id);
         }else {
-            $project = BudgetCentralizedAction::find($request->project_id);
+            $project = BudgetCentralizedAction::fwith('specificActions')->find($request->project_id);
         }
 
         $records = $this->getBudgetAccountsOpen($data['accountsWithMovements']);
@@ -260,7 +260,7 @@ class BudgetReportsController extends Controller
             $data['initialDate'] = $data['finalDate'];
             $data['finalDate'] = $temp;
         }
-        // ddd($records);
+        // dd($records);
         $pdf->setConfig(['institution' => $institution]);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();

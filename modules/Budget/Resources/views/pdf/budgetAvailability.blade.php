@@ -8,13 +8,15 @@
 <table cellspacing="0" cellpadding="1" border="1">
     {{-- Header de la tabla --}}
     <tr>
-        <th style="font-size: 9rem;" width="25%" align="center">ACCION/PROYECTO</th>
-        <th style="font-size: 9rem;" width="25%" align="center">CODIGO</th>
-        <th style="font-size: 9rem;" width="25%" align="center">DENOMINACION</th>
-        <th style="font-size: 9rem;" width="25%" align="center">DISPONIBILIDAD PRESUPUESTARIA AL DIA: {{$report_date}}</th>
+        <th style="font-size: 9rem;" width="20%" align="center">ACCION/PROYECTO</th>
+        <th style="font-size: 9rem;" width="20%" align="center">ACCION ESPECIFICA</th>
+        <th style="font-size: 9rem;" width="20%" align="center">CODIGO</th>
+        <th style="font-size: 9rem;" width="20%" align="center">DENOMINACION</th>
+        <th style="font-size: 9rem;" width="20%" align="center">DISPONIBILIDAD PRESUPUESTARIA AL DIA: {{$report_date}}</th>
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="0">
+    {{-- {{ dd($project) }} --}}
     @foreach($records as $record)
     @php
     $isRoot = substr_count($record['budgetAccount']['code'], '0111111') == 8;
@@ -22,10 +24,12 @@
 
     @endphp
     <tr>  
-        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">999</td>  
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project['code'] }}</td>
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project->specificActions->code}}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $record['budgetAccount']['code'] }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">{{ $record['budgetAccount']['denomination'] }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999;" align="center">{{ $record['amount_available'].' '.$currencySymbol }}</td>
     </tr>
     @endforeach
+    
 </table>
