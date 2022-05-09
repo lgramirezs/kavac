@@ -491,17 +491,18 @@ class PurchaseSupplierController extends Controller
         $supp_docs = $supplier->documents()->with('purchaseDocumentRequiredDocument')->get();
         if (count($supp_docs) > 0) {
             foreach ($supp_docs as $doc) {
-                if (in_array($doc->purchaseDocumentRequiredDocument->required_document_id, $request->reqDocs)) {
-                    $upDoc->deleteDoc(
-                        $doc->file,
-                        'documents'
-                    );
+                $upDoc->deleteDoc(
+                    $doc->file,
+                    'documents'
+                );
+                if (isset($doc->purchaseDocumentRequiredDocument) 
+                    && in_array($doc->purchaseDocumentRequiredDocument->required_document_id, $request->reqDocs)) {
                     $purDocReqDoc = PurchaseDocumentRequiredDocument::where('document_id', $doc->id)->first();
                     if ($purDocReqDoc) {
                         $purDocReqDoc->delete();
                     }
-                    $doc->delete();
                 }
+                $doc->delete();
             }
         }
 
