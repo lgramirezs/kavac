@@ -22,10 +22,9 @@
 
     @endphp
     <tr>  
-           <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">999</td>  
-                <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $record['budgetAccount']['code'] }}</td>
-                      <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">{{ $record['budgetAccount']['denomination'] }}</td>
-
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">999</td>  
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $record['budgetAccount']['code'] }}</td>
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">{{ $record['budgetAccount']['denomination'] }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999;" align="center">{{ $record['amount_available'].' '.$currencySymbol }}</td>
     </tr>
     @endforeach

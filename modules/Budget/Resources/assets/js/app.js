@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+
 /**
  * Componente para mostrar listado del clasificador de cuentas presupuestarias
  *
@@ -201,7 +203,7 @@ Vue.mixin({
 				`${window.app_url}/budget/detail-accounts/${id}`
 			);
 			return response.data;
-		}
+		},
 	},
 	mounted() {
 		// Agregar instrucciones para determinar el año de ejecución
