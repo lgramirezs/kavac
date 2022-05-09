@@ -544,7 +544,7 @@ class PurchaseSupplierController extends Controller
      * Remove the specified resource from storage.
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(UploadDocRepository $upDoc, $id)
     {
         /**
          * Objeto con la información asociada al modelo PurchaseSupplier
@@ -578,9 +578,13 @@ class PurchaseSupplierController extends Controller
             /** Se elimina la relacion y los documentos previos **/
             $supp_docs = $supplier->documents()->get();
             if (count($supp_docs) > 0) {
-                foreach ($supp_docs as $value) {
-                    $upDoc->deleteDoc($value->file, 'documents');
-                    $value->delete();
+                foreach ($supp_docs as $doc) {
+                    $upDoc->deleteDoc($doc->file, 'documents');
+                    $purDocReqDoc = PurchaseDocumentRequiredDocument::where('document_id', $doc->id)->first();
+                    if ($purDocReqDoc) {
+                        $purDocReqDoc->delete();
+                    }
+                    $doc->delete();
                 }
             }
             $supplier->delete();
