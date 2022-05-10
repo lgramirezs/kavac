@@ -157,13 +157,13 @@ class FinanceCheckBookController extends Controller
      * Show the form for editing the specified resource.
      * @return Renderable
      */
-    public function edit($id)
+    public function edit()
     {
         //return view('finance::edit');
 
-        $checksUsed = FinanceCheckBook::find($id);
+    //    $checksUsed = FinanceCheckBook::find($id);
         //return $payment;
-        return view('finance::edit', compact("checksUsed"));
+    //    return view('finance::edit', compact("checksUsed"));
     }
 
     /**
