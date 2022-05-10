@@ -242,7 +242,7 @@ class BudgetReportsController extends Controller
         if($request->project_type === 'project') {
             $project = BudgetProject::with('specificActions')->find($request->project_id);
         }else {
-            $project = BudgetCentralizedAction::fwith('specificActions')->find($request->project_id);
+            $project = BudgetCentralizedAction::with('specificActions')->find($request->project_id);
         }
 
         $records = $this->getBudgetAccountsOpen($data['accountsWithMovements']);
