@@ -7,11 +7,16 @@
 
     @role('admin')
         @include('dashboard.users-connected')
-        <audit-records id="helpAudit" help-file="{{ json_encode(get_json_resource('ui-guides/audit_list.json')) }}"
-                       :modules='{!! json_encode(info_modules(true)) !!}'></audit-records>
-        <restore-records id="helpRestore" help-file="{{ json_encode(get_json_resource('ui-guides/restore_list.json')) }}"
-                         :modules='{!! json_encode(info_modules(true)) !!}'
-                         route_previous="{{ url()->previous() }}"></restore-records>
+        <audit-records
+            id="helpAudit"
+            help-file="{{ json_encode(get_json_resource('ui-guides/audit_list.json')) }}"
+            :modules='{!! json_encode(info_modules(true)) !!}'>
+        </audit-records>
+        <restore-records
+            id="helpRestore" help-file="{{ json_encode(get_json_resource('ui-guides/restore_list.json')) }}"
+            :modules='{!! json_encode(info_modules(true)) !!}'
+            route_previous="{{ url()->previous() }}">
+        </restore-records>
     @endrole
     @yield('dashboard')
 

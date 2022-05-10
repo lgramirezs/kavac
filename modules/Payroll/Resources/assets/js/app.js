@@ -829,10 +829,13 @@ Vue.mixin({
 		 * Obtiene los datos de los trabajadores registrados
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
+		 * @author Ing. Roldan Vargas <rvargas at cenditel.gob.ve>
+		 * 
+		 * @param string filter establece una condición bajo la cual filtrar los resultados
 		 */
-		getPayrollStaffs() {
+		async getPayrollStaffs(type='') {
 			this.payroll_staffs = [];
-			axios.get(`${window.app_url}/payroll/get-staffs`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-staffs/${type}`).then(response => {
 				this.payroll_staffs = response.data;
 			});
 		},

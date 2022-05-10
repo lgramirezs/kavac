@@ -24,5 +24,15 @@ class SaleClientsPhone extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['id', 'phone'];
+    protected $fillable = ['id', 'phone', 'sale_client_id'];
+
+    /**
+     * Método que obtiene los clientes registrados en el sistema
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
+     * SaleClient
+     */
+    public function saleClient()
+    {
+        return $this->belongsTo(SaleClient::class);
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,9 +32,12 @@ Route::group([
         /** Rutas para la gestión de cuentas bancarias */
         Route::resource('bank-accounts', 'FinanceBankAccountController', ['as' => 'finance']);
         /** Rutas para la gestión de chequeras */
-        Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance']);
+        Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance', 'except' => ['edit']]);
+        Route::get('check-books', 'FinanceCheckBookController@edit')->name('finance.CheckBookEdit');
         Route::resource('payment_methods', 'FinancePaymentMethodsController', ['as' => 'finance']);
-        });
+    });
+
+    Route::resource('pay-orders', 'FinancePayOrderController', ['as' => 'finance']);
 
     Route::get('get-banks/', 'FinanceBankController@getBanks');
     Route::get('get-bank-info/{bank_id}', 'FinanceBankController@getBankInfo');

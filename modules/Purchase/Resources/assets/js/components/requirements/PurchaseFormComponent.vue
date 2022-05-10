@@ -233,13 +233,16 @@ export default {
             const vm = this;
             vm.record.products = vm.record_products;
             vm.loading = true;
+            
+            var url = vm.setUrl('/purchase/requirements/');
+
             if (vm.requirement_edit) {
                 vm.record.toDelete = vm.toDelete;
-                axios.put('/purchase/requirements/' + vm.requirement_edit.id, vm.record).then(response => {
+                axios.put(url + vm.requirement_edit.id, vm.record).then(response => {
                     vm.loading = false;
                     vm.showMessage('update');
                     setTimeout(function() {
-                        location.href = '/purchase/requirements';
+                        location.href = url;
                     }, 2000);
                 }).catch(error => {
                     vm.errors = [];
@@ -254,11 +257,11 @@ export default {
                     vm.loading = false;
                 });
             } else {
-                axios.post('/purchase/requirements', vm.record).then(response => {
+                axios.post(url, vm.record).then(response => {
                     vm.loading = false;
                     vm.showMessage('store');
                     setTimeout(function() {
-                        location.href = '/purchase/requirements';
+                        location.href = url;
                     }, 2000);
                 }).catch(error => {
                     vm.errors = [];

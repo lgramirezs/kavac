@@ -14,7 +14,7 @@
     					</span>
     				</button>
     				<ul>
-    					<li v-for="error in errors">{{ error }}</li>
+    					<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
     				</ul>
     			</div>
     		</div>
@@ -57,33 +57,33 @@
     				<div class="form-group is-required">
     					<label>Cantidad:</label>
     					<input type="number" min="1" placeholder="Cantidad del Producto" data-toggle="tooltip" 								   
-    						   class="form-control input-sm"
-    						   v-model="sale_warehouse_inventory_product.quantity">
+    						class="form-control input-sm"
+    						v-model="sale_warehouse_inventory_product.quantity">
                     </div>
     			</div>
     			<div class="col-md-3" id="saleHelpProductValue">
     				<div class="form-group is-required">
     					<label>Valor:</label>
                             <input class="form-control input-sm" type="text" data-toggle="tooltip"
-                                       title="Valor por unidad del producto" tabindex="10"
-                                       v-model="sale_warehouse_inventory_product.unit_value" required
-                                       v-input-mask data-inputmask="
-                                       'alias': 'numeric',
-                                       'allowMinus': 'false'"/>
+                                title="Valor por unidad del producto" tabindex="10"
+                                v-model="sale_warehouse_inventory_product.unit_value" required
+                                v-input-mask data-inputmask="
+                                    'alias': 'numeric',
+                                    'allowMinus': 'false'"/>
                     </div>
     			</div>
     			<div class="col-md-3" id="SaleHelpProductCurrency">
     				<div class="form-group is-required">
     					<label>Moneda</label>
     					<select2 :options="currencies"
-    							 v-model="sale_warehouse_inventory_product.currency_id"></select2>
+    						v-model="sale_warehouse_inventory_product.currency_id"></select2>
     				</div>
     			</div>
                 <div class="col-md-3" id="SaleHelpProductMeasurementUnit">
                     <div class="form-group is-required">
                         <label>Unidad de medida</label>
                         <select2 :options="measurement_units"
-                                 v-model="sale_warehouse_inventory_product.measurement_unit_id"></select2>
+                            v-model="sale_warehouse_inventory_product.measurement_unit_id"></select2>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                     <div v-show="this.record.iva || this.record.history_tax_id" class="form-group">
                         <label>IVA:</label>
                             <select2 :options="taxes"
-                                    v-model="sale_warehouse_inventory_product.history_tax_id"></select2>
+                                v-model="sale_warehouse_inventory_product.history_tax_id"></select2>
                     </div>
                 </div>
 
@@ -127,8 +127,8 @@
     		<div class="row">
     			<div class="col-md-12">
     				<button type="button" @click="addProduct($event)" class="btn btn-sm btn-primary btn-custom float-right" 
-    						title="Agregar registro a la lista"
-    						data-toggle="tooltip">
+    					title="Agregar registro a la lista"
+    					data-toggle="tooltip">
     					<i class="fa fa-plus-circle"></i>
     					Agregar
     				</button>
@@ -145,15 +145,15 @@
     			<div slot="id" slot-scope="props" class="text-center">
     				<div class="d-inline-flex">
     					<button @click="editProduct(props.index, $event)" 
-                				class="btn btn-warning btn-xs btn-icon btn-action" 
-                				title="Modificar registro" data-toggle="tooltip" type="button">
+                			class="btn btn-warning btn-xs btn-icon btn-action" 
+                			title="Modificar registro" data-toggle="tooltip" type="button">
                 			<i class="fa fa-edit"></i>
                 		</button>
                     	
                 		<button @click="removeProduct(props.index, $event)" 
-    							class="btn btn-danger btn-xs btn-icon btn-action" 
-    							title="Eliminar registro" data-toggle="tooltip" 
-    							type="button">
+    						class="btn btn-danger btn-xs btn-icon btn-action" 
+    						title="Eliminar registro" data-toggle="tooltip" 
+    						type="button">
     						<i class="fa fa-trash-o"></i>
     					</button>
     				</div>
@@ -165,21 +165,21 @@
     		<div class="row">
     			<div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
     	        	<button type="button" @click="reset()"
-    						class="btn btn-default btn-icon btn-round"
-    						title ="Borrar datos del formulario">
-    						<i class="fa fa-eraser"></i>
+    					class="btn btn-default btn-icon btn-round"
+    					title ="Borrar datos del formulario">
+    					<i class="fa fa-eraser"></i>
     				</button>
 
-    	        	<button type="button"
-    	        			class="btn btn-warning btn-icon btn-round btn-modal-close"
-    	        			data-dismiss="modal"
-    	        			title="Cancelar y regresar">
-    	        			<i class="fa fa-ban"></i>
+          			<button type="button" @click="redirect_back(route_list)"
+    	    			class="btn btn-warning btn-icon btn-round btn-modal-close"
+    	        		data-dismiss="modal"
+    	        		title="Cancelar y regresar">
+    	        		<i class="fa fa-ban"></i>
     	        	</button>
 
-    	        	<button type="button"  @click="createReception('sale/receptions')"
-    	        			class="btn btn-success btn-icon btn-round btn-modal-save"
-    	        			title="Guardar registro">
+    	        	<button type="button" @click="createReception('sale/receptions')"
+    	        		class="btn btn-success btn-icon btn-round btn-modal-save"
+    	        		title="Guardar registro">
     	        		<i class="fa fa-save"></i>
     	            </button>
     	        </div>
@@ -255,6 +255,8 @@
                     history_tax_id: '',
                     iva: false,
                 };
+                this.records = [];
+
                 this.editIndex = null;
             },
 

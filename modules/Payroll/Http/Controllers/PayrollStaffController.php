@@ -49,7 +49,7 @@ class PayrollStaffController extends Controller
             'payroll_nationality_id' => ['required'],
             'id_number' => [],
             'passport' => [],
-            'email' => [],
+            'email' => ['required', 'unique:payroll_staffs,email'],
             'birthdate' => [],
             'payroll_gender_id' => ['required'],
             'emergency_contact' => ['nullable'],
@@ -62,7 +62,8 @@ class PayrollStaffController extends Controller
             'parish_id' => ['required'],
             'address' => ['required', 'max:200'],
             'medical_history' => ['nullable'],
-            'uniform_sizes' => ['required']
+            'uniform_sizes.*.size' => ['sometimes', 'required'],
+            'uniform_sizes.*.name' => ['sometimes', 'required']
         ];
 
         /** Define los atributos para los campos personalizados*/
@@ -78,6 +79,8 @@ class PayrollStaffController extends Controller
             'municipality_id' => 'muncipio',
             'parish_id' => 'parroquia',
             'uniform_sizes' => 'talla de uniforme',
+            'uniform_sizes.*.size' => 'talla de uniforme',
+            'uniform_sizes.*.name' => 'nombre del uniforme',
             'medical_history' => 'historial médico'
         ];
     }
@@ -118,7 +121,6 @@ class PayrollStaffController extends Controller
         ])->first();
         $this->rules['id_number'] = ['required', 'regex:/^([\d]{7}|[\d]{8})$/u', 'unique:payroll_staffs,id_number'];
         $this->rules['passport'] = ['nullable', 'max:20', 'unique:payroll_staffs,passport'];
-        $this->rules['email'] = ['nullable', 'email', 'unique:payroll_staffs,email'];
         $this->rules['birthdate'] = ['required', 'date', new AgeToWork(($parameter) ? $parameter->p_value : 0)];
         $this->validate($request, $this->rules, [], $this->attributes);
         if ($request->has_disability) {
@@ -281,7 +283,6 @@ class PayrollStaffController extends Controller
             'required', 'regex:/^([\d]{7}|[\d]{8})$/u', 'unique:payroll_staffs,id_number,' . $payrollStaff->id
         ];
         $this->rules['passport'] = ['nullable', 'max:20', 'unique:payroll_staffs,passport,' . $payrollStaff->id];
-        $this->rules['email'] = ['nullable', 'email', 'unique:payroll_staffs,email,' . $payrollStaff->id];
         $this->rules['birthdate'] = ['required', 'date', new AgeToWork(($parameter) ? $parameter->p_value : 0)];
         $this->validate($request, $this->rules, [], $this->attributes);
         if ($request->has_disability) {
@@ -419,8 +420,25 @@ class PayrollStaffController extends Controller
      * @author  William Páez <wpaez@cenditel.gob.ve>
      * @return \Illuminate\Http\JsonResponse    Json con los datos de la información personal de los trabajadores
      */
-    public function getPayrollStaffs()
+    public function getPayrollStaffs($type = 'all')
     {
-        return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        if ($type === 'all') {
+            return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        } else if (is_numeric($type)) {
+            return response()->json(
+                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
+            );
+        }
+
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+
+        /** Filtra por el personal que aún no tiene registrado los datos laborales */
+        $staffs = PayrollStaff::doesnthave('payrollEmployment')->get();
+
+        foreach ($staffs as $staff) {
+            $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+        }
+
+        return response()->json($options);
     }
 }

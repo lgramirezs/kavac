@@ -59,6 +59,6 @@ class UniqueParishName implements Rule, DataAwareRule
      */
     public function message()
     {
-        return 'Él nombre de la parroquia ya existe para el Pais, Estado y Municipio seleccionado.';
+        return 'Él nombre de la Parroquia ya existe para el Pais, Estado y Municipio seleccionado.';
     }
 }

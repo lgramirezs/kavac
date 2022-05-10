@@ -534,17 +534,27 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Código ONAPRE</span>
                         <br>
-                        <span id="modal-onapre_code"></span>
+			           <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-onapre_code">
+                      
+						
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">R.I.F.</span>
                         <br>
-                        <span id="modal-rif"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-rif">
+                 
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Nombre</span>
                         <br>
-                        <span id="modal-name"></span>
+					 	<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-name">
+                       
 					</div>
 				</div>
                 <hr>
@@ -552,17 +562,25 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Acrónimo (Nombre corto)</span>
                         <br>
-                        <span id="modal-acronym"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-acronym">
+                  
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Razón Social</span>
                         <br>
-                        <span id="modal-business_name"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-business_name">           
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">País</span>
                         <br>
-                        <span id="modal-country_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-country_id">  
+                        
 					</div>
 				</div>
                 <hr>
@@ -570,17 +588,26 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Estado</span>
                         <br>
-                        <span id="modal-estate_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-estate_id"> 
+
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Municipio</span>
                         <br>
-                        <span id="modal-municipality_id"></span>
+					 <input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-municipality_id"> 
+                  
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Ciudad</span>
                         <br>
-                        <span id="modal-city_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-city_id">
+
 					</div>
 				</div>
                 <hr>
@@ -588,12 +615,18 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Código Postal</span>
                         <br>
-                        <span id="modal-postal_code"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-postal_code">
+                       
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Fecha de inicio de operaciones</span>
                         <br>
-                        <span id="modal-start_operations_date"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-start_operations_date">
+
 					</div>
 					<div class="col-4">
 					</div>
@@ -603,17 +636,26 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Adscrito a</span>
                         <br>
-                        <span id="modal-organism_adscript_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-organism_adscript_id">
+                   
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Sector</span>
                         <br>
-                        <span id="modal-institution_sector_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-institution_sector_id">
+                     
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Tipo</span>
                         <br>
-                        <span id="modal-institution_type_id"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-institution_type_id">
+                        
 					</div>
 				</div>
                 <hr>
@@ -621,7 +663,10 @@
 					<div class="col-12">
                         <span class="font-weight-bold">Dirección Fiscal</span>
                         <br>
-                        <span id="modal-legal_address"></span>
+					
+										<textarea id="modal-legal_address" rows="4" cols="40" disabled >
+                                          </textarea>
+                      
 					</div>
 				</div>
                 <hr>
@@ -629,17 +674,26 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Activa</span>
                         <br>
-                        <span class="text-bold text-{{ (isset($institution) && $institution->active)?'success':'danger' }}" id="modal-active"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-active">
+
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Organización por defecto</span>
                         <br>
-                        <span id="modal-default"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-default">
+                      
 					</div>
 					<div class="col-4">
                         <span class="font-weight-bold">Agente de Retención</span>
                         <br>
-                        <span id="modal-retention_agent"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-retention_agent">
+                     
 					</div>
 				</div>
                 <hr>
@@ -647,7 +701,10 @@
 					<div class="col-4">
                         <span class="font-weight-bold">Sitio web</span>
                         <br>
-                        <span id="modal-web"></span>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-web">
+                        
 					</div>
 					<div class="col-4">
 					</div>
@@ -660,12 +717,18 @@
 					<div class="col-6">
                         <span class="font-weight-bold">Base Legal</span>
                         <br>
-                        <span id="modal-legal_base"></span>
+							<textarea id="modal-legal_base" rows="4" cols="40" disabled >
+                                          </textarea>
+						
+                       
 					</div>
 					<div class="col-6">
                         <span class="font-weight-bold">Forma Jurídica</span>
                         <br>
-                        <span id="modal-legal_form"></span>
+						<textarea id="modal-legal_form" rows="4" cols="40" disabled >
+                                          </textarea>
+
+                        
 					</div>
 				</div>
                 <hr>
@@ -673,12 +736,18 @@
 					<div class="col-6">
                         <span class="font-weight-bold">Actividad Principal</span>
                         <br>
-                        <span id="modal-main_activity"></span>
+						<textarea id="modal-main_activity" rows="4" cols="40" disabled >
+                                          </textarea>
+					
+                        
 					</div>
 					<div class="col-6">
                         <span class="font-weight-bold">Misión</span>
                         <br>
-                        <span id="modal-mission"></span>
+						<textarea id="modal-mission" rows="4" cols="40" disabled >
+                                          </textarea>
+					
+
 					</div>
 				</div>
                 <hr>
@@ -686,12 +755,17 @@
 					<div class="col-6">
                         <span class="font-weight-bold">Visión</span>
                         <br>
-                        <span id="modal-vision"></span>
+						<textarea id="modal-vision" rows="4" cols="40" disabled >
+                                          </textarea>
+	
+                       
 					</div>
 					<div class="col-6">
                         <span class="font-weight-bold">Composición de Patrimonio</span>
-                        <br>
-                        <span id="modal-composition_assets"></span>
+                        <br>				
+											<textarea id="modal-composition_assets" rows="4" cols="40" disabled >
+                                          </textarea>
+         
 					</div>
 				</div>
             </div>
@@ -879,47 +953,56 @@
 					}
 					$("#detailsInstitutionModalLabel").html(institution.name);
 					if (institution.onapre_code){
-						$("#modal-onapre_code").html(institution.onapre_code);
+						$("#modal-onapre_code").val(institution.onapre_code);
+						
 					}
-					$("#modal-name").html(institution.name);
-					$("#modal-rif").html(institution.rif);
-					$("#modal-acronym").html(institution.acronym);
-					$("#modal-business_name").html(institution.business_name);
-					$("#modal-country_id").html(institution.municipality.estate.country.name);
-					$("#modal-estate_id").html(institution.municipality.estate.name);
-					$("#modal-municipality_id").html(institution.municipality.name);
+					$("#modal-name").val(institution.name);
+							$("#modal-rif").val(institution.rif);
+					
+					$("#modal-acronym").val(institution.acronym);
+					$("#modal-business_name").val(institution.business_name);
+					$("#modal-country_id").val(institution.municipality.estate.country.name);
+					$("#modal-estate_id").val(institution.municipality.estate.name);
+					$("#modal-municipality_id").val(institution.municipality.name);
 					getCurrentData(institution.city_id, "get-city", "#modal-city_id");
-					$("#modal-postal_code").html(institution.postal_code);
-					$("#modal-start_operations_date").html(institution.start_operations_date);
+					$("#modal-postal_code").val(institution.postal_code);
+					$("#modal-start_operations_date").val(institution.start_operations_date);
 					if (institution.organism_adscript_id){
-						$("#modal-organism_adscript_id").html(institution.organism_adscript_id);
+						$("#modal-organism_adscript_id").val(institution.organism_adscript_id);
 					}
 					getCurrentData(institution.institution_sector_id, "get-sector", "#modal-institution_sector_id");
 					getCurrentData(institution.institution_type_id, "get-type", "#modal-institution_type_id");
-					$("#modal-legal_address").html(institution.legal_address);
+					var legal = institution.legal_address;
+					$("#modal-legal_address").val($(legal).text());
 					if (institution.web){
-						$("#modal-web").html(institution.web);
+						$("#modal-web").val(institution.web);
 					}
-					$('#modal-active').html(activeInst);
-					$('#modal-default').html(defaultInst);
-					$('#modal-retention_agent').html(retAgentInst);
+					$('#modal-active').val(activeInst);
+					$('#modal-default').val(defaultInst);
+					$('#modal-retention_agent').val(retAgentInst);
 					if (institution.legal_base){
-						$("#modal-legal_base").html(institution.legal_base);
+						var legal_base_modal = institution.legal_base;
+						$("#modal-legal_base").val($(legal_base_modal).text());
 					}
 					if (institution.legal_form){
-						$("#modal-legal_form").html(institution.legal_form);
+						var legal_form_modal = institution.legal_form;
+						$("#modal-legal_form").val($(legal_form_modal).text());
 					}
 					if (institution.main_activity){
-						$("#modal-main_activity").html(institution.main_activity);
+						var legal_main_activity_modal = institution.main_activity;
+						$("#modal-main_activity").val($(legal_main_activity_modal).text());
 					}
 					if (institution.mission){
-						$("#modal-mission").html(institution.mission);
+						var legal_mission_modal = institution.mission;
+						$("#modal-mission").val($(legal_mission_modal).text());
 					}
 					if (institution.vision){
-						$("#modal-vision").html(institution.vision);
+						var legal_vision_modal = institution.vision;
+						$("#modal-vision").val($(legal_vision_modal).text());
 					}
 					if (institution.composition_assets){
-						$("#modal-composition_assets").html(institution.composition_assets);
+						var composition_assets_modal = institution.composition_assets;
+						$("#modal-composition_assets").val($(composition_assets_modal).text());
 					}
 
 					// Abre la modal
@@ -940,7 +1023,7 @@
 		 */
 		function getCurrentData(id, url, target) {
 			axios.get(`${url}/${id}`).then(response => {
-				$(target).html(response.data.result.name);
+				$(target).val(response.data.result.name);
 			});
 		}
 	</script>

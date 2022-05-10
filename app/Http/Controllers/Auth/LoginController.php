@@ -58,7 +58,7 @@ class LoginController extends Controller
      *
      * @var    integer
      */
-    protected $decayMinutes = 300;
+    protected $decayMinutes = 2;
 
     /**
      * Crea una nueva instancia del controlador.

@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-md-4" id="helpStaffEmail">
-                    <div class="form-group">
+                    <div class="form-group is-required">
                         <label>Correo Electrónico</label>
                         <input type="email" class="form-control input-sm" v-model="record.email"/>
                     </div>
@@ -479,11 +479,29 @@
              */
             addUniformSize() {
                 const vm = this;
-                vm.record.uniform_sizes.push({
-                    name: '',
-                    size: '',
-                    payroll_staff_id: '',
-                });
+                if (vm.record.uniform_sizes.length == 0) {
+                    vm.record.uniform_sizes.push({
+                        name: 'Camisa',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                    vm.record.uniform_sizes.push({
+                        name: 'Pantalón',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                    vm.record.uniform_sizes.push({
+                        name: 'Calzado',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                } else {
+                    vm.record.uniform_sizes.push({
+                        name: '',
+                        size: '',
+                        payroll_staff_id: '',
+                    });
+                }
             },
         },
         created() {

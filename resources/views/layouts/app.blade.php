@@ -329,6 +329,85 @@
                         target_element.attr('disabled', true);
                     }
                 }
+                                 /**
+                 * Actualiza información de un select a partir de otro ademas de que trae datos con atributo activo 
+                 *
+                 * @param  {object}  parent_element Objeto con los datos del elemento que genera la acción
+                 * @param  {object}  target_element Objeto que se cargara con la información
+                 * @param  {string}  target_model   Modelo en el cual se va a realizar la consulta
+                 * @param  {string}  module_name    Nombre del módulo que ejecuta la acción
+                 * @param  {string}  relation    Nombre de relacion particular que nesecite traer en la consulta
+                 * @param  {array}   disables    array de campos relacionados al objetivo que deben limpiar y desabilitarse en caso de cambio del campo objetivo
+                 */
+                function updateSelectActive(parent_element, target_element, target_model,module_name,relation,disables ) {
+                    var module_name = (typeof(module_name) !== "undefined")?'/' + module_name:'';
+                    var passthru =relation;  
+                    var relation = (typeof(relation) !== "undefined")?'/' + relation:'';
+                    var parent_id = parent_element.val();
+                    var parent_name = parent_element.attr('id');
+                    console.log(disables);
+                    target_element.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
+                   if(typeof(disables) !== "undefined"){
+                    $.each(disables, function(index, disable) { 
+                                  console.log(disable);
+                                   disable.attr('disabled', true);
+                                   disable.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
+
+                
+
+                                });
+                        } 
+                    if (parent_id) {
+                        axios.get(
+                            `/get-select-data-active/${parent_name}/${parent_id}/${target_model}${module_name}${relation}`
+                        ).then(response => {
+                            if (response.data.result) {
+                                target_element.attr('disabled', false);
+                                $.each(response.data.records, function(index, record) { 
+                                 
+
+                                    if( (typeof(passthru) !== "undefined")){
+                              
+                                
+                                        if(passthru == "payrollStaff"){
+                                                   target_element . append(
+                                            `<option value="${record.payroll_staff.id}">${record.payroll_staff.first_name}</option>`
+                                             );
+
+                                        }else{
+                                        target_element . append(
+                                            `<option value="${record[relation].id}">${record[relation].first_name} ${record[relation].last_name}</option>`
+                                             );
+
+                                        }
+
+                                    }else{
+                                        target_element . append(
+                                              `<option value="${record['id']}">${record['name']}</option>`
+                                                );
+
+                                    }                    
+
+                                });
+                            }
+                        }).catch(error => {
+                            logs('app', 244, error, 'updateSelect');
+                        })
+                    }
+                    else {
+                        target_element.attr('disabled', true);
+                        if(typeof(disables) !== "undefined"){
+                             $.each(disables, function(index, disable) { 
+                                  console.log(disable);
+                                  disable.attr('disabled', true);
+                                   disable.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
+
+                
+
+                                });
+                        } 
+                    }
+                }
                 /**
                  * Permite restaurar registros eliminados del sistema
                  *

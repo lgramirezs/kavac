@@ -66,10 +66,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4" id="helpCodeCommitments">
+                            <div class="col-md-4" id="helpCodeCompromises">
                                 <div class="form-group">
-                                    {!! Form::label('commitments_code', __('Código de Compromiso'), []) !!}
-                                    {!! Form::text('commitments_code', ($cCode) ? $cCode->format_code : old('commitments_code'), [
+                                    {!! Form::label('compromises_code', __('Código de Compromiso'), []) !!}
+                                    {!! Form::text('compromises_code', ($cCode) ? $cCode->format_code : old('compromises_code'), [
                                         'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
                                         'title' => __('Formato para el código del compromiso'),
                                         'placeholder' => 'Ej. XXX-00000000-YYYY',

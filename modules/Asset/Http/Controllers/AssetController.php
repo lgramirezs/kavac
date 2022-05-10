@@ -435,7 +435,7 @@ class AssetController extends Controller
             $request->asset_subcategory,
             $request->asset_specific_category
         )->with('institution', 'assetCondition', 'assetStatus')
-         ->where('institution_id', $request->institution_id);
+         ->where('institution_id', $request->institution);
         if ($request->asset_status > 0) {
             $assets = $assets->where('asset_status_id', $request->asset_status);
         }
@@ -457,14 +457,40 @@ class AssetController extends Controller
      * Filtra por su fecha de registro los bienes registradas
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
     public function searchGeneral(Request $request, $perPage = 10, $page = 1)
     {
-        if ($request->start_date && $request->end_date && $request->mes_id && $request->year) {
-            $assets = Asset::where('institution_id', $request->institution)->DateClasification($request->start_date, $request->end_date, $request->mes_id, $request->year)
-                ->with('institution', 'assetCondition', 'assetStatus');
+        $assets = Asset::where('institution_id', $request->institution)->with('institution', 'assetCondition', 'assetStatus');
+        if ($request->start_date || $request->end_date) {
+            if ($request->start_date != '' && !is_null($request->start_date)) {
+                if ($request->end_date != '' && !is_null($request->end_date)) {
+                    $assets = $assets->whereBetween("created_at", [$request->start_date,$request->end_date]);
+                } else {
+                    $assets = $assets->whereBetween("created_at", [$request->start_date,now()]);
+                }
+            }
+            if ($request->asset_status > 0) {
+                $assets = $assets->where('asset_status_id', $request->asset_status);
+            }
+        } elseif ($request->year || $request->mes_id) {
+            if ($request->mes_id != '' && !is_null($request->mes_id)) {
+                if ($request->year != '' && !is_null($request->year)) {
+                    $assets = $assets->whereMonth('created_at', $request->mes_id)
+                                 ->whereYear('created_at', $request->year);
+                } else {
+                    $assets = $assets->whereMonth('created_at', $request->mes_id);
+                }
+            }
+
+            if ($request->year != '' && !is_null($request->year) && $request->mes_id == '') {
+                $assets = $assets->whereYear('created_at', $request->year);
+            } else {
+                $assets = $assets;
+            }
+
             if ($request->asset_status > 0) {
                 $assets = $assets->where('asset_status_id', $request->asset_status);
             }

@@ -22,6 +22,12 @@
   <div class="col-12">
     <div class="card" id="cardSaleOrderForm">
 	  <div class="card-header">
+	  	<h6 class="card-title text-uppercase">Registrar Pedido
+            @include('buttons.help', [
+                'helpId' => 'SaleOrderViewClients',
+                'helpSteps' => get_json_resource('ui-guides/order/sale_order_form.json', 'sale')
+            ])
+        </h6>
 		<div class="card-btns">
 		  @include('buttons.previous', ['route' => url()->previous()])
 		  @include('buttons.minimize')

@@ -155,48 +155,21 @@
                                         <h6 class="card-title">
                                                 Números Telefónicos <i class="fa fa-plus-circle cursor-pointer" @click="addPhone"></i>
                                         </h6>
-                                        <div class="row phone-row" v-for="(phone, index) in record.phones" :key="index">
-                                            <div class="col-3">
-                                                <div class="form-group is-required">
-                                                    <select data-toggle="tooltip" v-model="phone.type" class="select2"
-                                                        title="Seleccione el tipo de número telefónico" :data-phone-index="index">
-                                                        <option value="">Seleccione...</option>
-                                                        <option value="M">Móvil</option>
-                                                        <option value="T">Teléfono</option>
-                                                        <option value="F">Fax</option>
-                                                    </select>
-                                                </div>
+                                        <div class="row phone-row" v-for="(value, index) in record.sale_clients_phone" :key="index">
+                                          <div class="col-4">
+                                            <input type="text" class="form-control input-sm" placeholder="+00-000-0000000"
+                                              v-model="value.phone" v-input-mask
+                                              data-inputmask="'mask': '+99-999-9999999'"/>
+                                          </div>
+                                          <div class="col-1">
+                                            <div class="form-group">
+                                              <button class="btn btn-sm btn-danger btn-action" type="button"
+                                                @click="removeRow(index, record.sale_clients_phone)"
+                                                title="Eliminar este dato" data-toggle="tooltip">
+                                                <i class="fa fa-minus-circle"></i>
+                                              </button>
                                             </div>
-                                            <div class="col-2">
-                                                <div class="form-group is-required">
-                                                    <input type="text" placeholder="Cod. Area" data-toggle="tooltip"
-                                                        title="Indique el código de área" v-model="phone.area_code"
-                                                        class="form-control input-sm" v-is-digits>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group is-required">
-                                                    <input type="text" placeholder="Número" data-toggle="tooltip"
-                                                        title="Indique el número telefónico"
-                                                        v-model="phone.number" class="form-control input-sm" v-is-digits>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <input type="text" placeholder="Extensión" data-toggle="tooltip"
-                                                        title="Indique la extención telefónica (opcional)"
-                                                        v-model="phone.extension" class="form-control input-sm" v-is-digits>
-                                                </div>
-                                            </div>
-                                            <div class="col-1">
-                                                <div class="form-group">
-                                                    <button class="btn btn-sm btn-danger btn-action" type="button"
-                                                        @click="removeRow(index, record.phones)"
-                                                        title="Eliminar este dato" data-toggle="tooltip">
-                                                        <i class="fa fa-minus-circle"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                          </div>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +193,37 @@
                         </div>
                     </div>
                     <div class="modal-body modal-table">
-                        <v-client-table :columns="columns" :data="records" :options="table_options">
+                        <v-client-table :columns="columns_clients" :data="records" :options="table_options_clients">
+                            <div slot="name_client" slot-scope="props" class="text-center">
+                                <span>
+                                {{ (props.row.name_client)? props.row.name_client : props.row.name }}
+                                </span>
+                            </div>
+                            <div slot="rif" slot-scope="props" class="text-center">
+                                <span>
+                                {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
+                                </span>
+                            </div>
+                            <div slot="sale_clients_phone" slot-scope="props">
+                                <div v-if="props.row.sale_clients_phone">
+                                    <ul v-for="(client_phone, index) in props.row.sale_clients_phone" :key="index">
+                                        <li>{{ client_phone.phone }}</li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    <span>N/A</span>
+                                </div>
+                            </div>
+                            <div slot="sale_clients_email" slot-scope="props">
+                                <div v-if="props.row.sale_clients_email">
+                                    <ul v-for="(client_email, index) in props.row.sale_clients_email" :key="index">
+                                        <li>{{ client_email.email }}</li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    <span>N/A</span>
+                                </div>
+                            </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
                                     class="btn btn-warning btn-xs btn-icon btn-action"
@@ -253,24 +256,26 @@
                     representative_name: '',
                     name: '',
                     country_id: '',
+                    quote_clients: [],
                     estate_id: '',
                     municipality_id: '',
                     parish_id: '',
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phones: [],
+                    sale_clients_phone: [],
                     id_type: '',
                     id_number: '',
                 },
                 errors: [],
+                quote_clients: [],
                 records: [],
                 countries: [],
                 estates: [],
                 cities: [],
                 municipalities: [],
                 parishes: [],
-                columns: ['type_person_juridica', 'rif', 'name_client', 'id'],
+                columns_clients: ['type_person_juridica', 'rif', 'name_client', 'sale_clients_phone', 'sale_clients_email', 'id'],
                 types_person:  [
                     {'id':'', 'text':"Seleccione..."},
                     {'id':'Natural', 'text':'Natural'},
@@ -293,18 +298,20 @@
                     address_tax: '',
                     name_client: '',
                     sale_clients_email: [],
-                    phones: []
+                    sale_clients_phone: []
                 };
             },
             /**
-             * Agrega una nueva columna para el registro de correos electrónicos
+             * Agrega una nueva columna para el registro de telefonos
              *
-             * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             * @author Jose Puentes <jpuentes@cenditel.gob.ve>
              */ 
-            addEmail: function() {
+            addPhone: function() {
                 const vm = this;
-                vm.record.emails.push({
-                    email: '',
+                vm.record.sale_clients_phone.push({
+                    id: '',
+                    phone: '',
+                    sale_client_id: ''
                 });
             },
             /**
@@ -319,23 +326,30 @@
         },
         created() {
             this.getCountries();
-            this.record.phones = [];
-            this.record.emails = [];
 
-            this.table_options.headings = {
+            this.table_options_clients = {};
+            this.table_options_clients.headings = {
+                'id': 'Acción',
                 'type_person_juridica': 'Tipo de Persona',
-                'rif': 'Rif',
-                'name_client': 'Nombre o razón social',
-                'id': 'Acción'
+                'rif': 'Rif/n° de identificación',
+                'name_client': 'Nombre y apellido/razón social',
+                'sale_clients_phone': 'Telefonos',
+                'sale_clients_email': 'Correo Electrónico'
             };
-            this.table_options.sortable = ['rif'];
-            this.table_options.filterable = ['rif'];
-            this.table_options.columnsClasses = {
-                'type_person_juridica': 'col-xs-3',
-                'rif': 'col-xs-3',
-                'name_client': 'col-xs-4',
-                'id': 'col-xs-2'
-            };
-        }
+            this.table_options_clients.sortable = [
+                'type_person_juridica',
+            ];
+            this.table_options_clients.filterable = [
+                'type_person_juridica',
+                'rif',
+                'id_number',
+                'name',
+                'name_client',
+            ];
+        },
+        mounted() {
+            const vm = this;
+            vm.getQuoteClients();
+        },
     };
 </script>
