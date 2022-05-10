@@ -76,19 +76,31 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Referencia:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_reference_column"
+                                    >
+                                    </select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Fecha:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_date_column"
+                                    >
+                                    </select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Monto débito:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_debit_amount_column"
+                                    >
+                                    </select2>
                                 </div>
                             </div>
                         </div>
@@ -96,13 +108,21 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Monto cŕedito:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_credit_amount_column"
+                                    >
+                                    </select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Descripción:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_description_column"
+                                    >
+                                    </select2>
                                 </div>
                             </div>
                         </div>
@@ -155,6 +175,10 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
+                            <button type="button" @click="createRecord()"
+                                class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                Guardar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -168,11 +192,29 @@
         data() {
             return {
                 record: {
-                    finance_bank_id: '',
+                    bank_id: '',
+                    position_reference_column: '',
+                    position_date_column: '',
+                    position_debit_amount_column: '',
+                    position_credit_amount_column: '',
+                    position_description_column: '',
                 },
                 errors: [],
                 records: [],
                 banks: [],
+                lines: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": 1, "text": "1" },
+                    { "id": 2, "text": "2" },
+                    { "id": 3, "text": "3" },
+                    { "id": 4, "text": "4" },
+                    { "id": 5, "text": "5" },
+                    { "id": 6, "text": "6" },
+                    { "id": 7, "text": "7" },
+                    { "id": 8, "text": "8" },
+                    { "id": 9, "text": "9" },
+                    { "id": 10, "text": "10" },
+                ],
             }
         },
         methods: {
@@ -185,6 +227,16 @@
                 this.record = {
                 };
             },
+
+            createRecord () {
+                // console.log("Entró aquí!");
+                console.log(this.record.bank_id);
+                console.log(this.record.position_reference_column);
+                console.log(this.record.position_date_column);
+                console.log(this.record.position_debit_amount_column);
+                console.log(this.record.position_credit_amount_column);
+                console.log(this.record.position_description_column);
+            }
         },
         created() {
             this.getBanks();
