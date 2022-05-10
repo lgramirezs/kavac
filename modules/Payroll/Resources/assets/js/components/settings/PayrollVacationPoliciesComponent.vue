@@ -485,7 +485,7 @@
                                             </div>
                                             <div class="col-4 offset-1 pad-top-10 with-border with-radius table-responsive">
                                                 <h6 class="text-center">Nueva escala</h6>
-                                                <div class="row" style="align-items: flex-end;" v-if="type != 'boolean'
+                                                <div class="row" style="align-items: flex-end;" v-if="type != '' && type != 'boolean'
                                                         && type != 'list'">
                                                     <strong class="col-md-12">
                                                         Expresado en
@@ -690,6 +690,7 @@ export default {
                 staff_antiquity: false,
                 on_scale: false,
                 group_by: '',
+                type:'',
                 payroll_scales: [],
                 assign_to: '',
                 assign_options: {},
@@ -698,6 +699,7 @@ export default {
                 min_days_advance: '',
                 max_days_advance: '',
             },
+            type:'',
             scale: {
                 id: '',
                 name: '',
@@ -737,34 +739,34 @@ export default {
         }
     },
     computed: {
-        /**
-         * Método que obtiene el nombre de la agrupación de los tabuladores
-         *
-         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
-         * @return    {string}
-         */
-        getGroupBy: function() {
-            const vm = this;
-            let response = '';
-            $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
-                if (typeof(field['children']) != 'undefined') {
-                    $.each(field['children'], function(index, field) {
-                        if (vm.record.group_by == field['id']) {
-                            response = field['text'];
-                            if (field['type'] == 'list') {
-                                vm.options = [];
-                                axios.get(
-                                    `${window.app_url}/payroll/get-parameter-options/${field['id']}`
-                                ).then(response => {
-                                    vm.options = response.data;
-                                });
-                            }
+    /**
+    * Método que obtiene el nombre de la agrupación de los tabuladores
+    *
+    * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+    * @return    {string}
+    */
+    getGroupBy: function() {
+        const vm = this;
+        let response = '';
+        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+            if (typeof(field['children']) != 'undefined') {
+                $.each(field['children'], function(index, field) {
+                    if (vm.record.group_by == field['id']) {
+                        response = field['text'];
+                        if (field['type'] == 'list') {
+                            vm.options = [];
+                            axios.get(
+                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                            ).then(response => {
+                                vm.options = response.data;
+                            });
                         }
-                    });
-                }
-            });
-            return response;
-        },
+                    }
+                });
+            }
+        });
+        return response;
+    }
     },
     created() {
         const vm = this;
@@ -826,6 +828,7 @@ export default {
                 staff_antiquity: false,
                 on_scale: false,
                 group_by: '',
+                type: '',
                 payroll_scales: [],
                 assign_to: '',
                 assign_options: {},
@@ -849,8 +852,8 @@ export default {
         resetScales() {
             const vm = this;
             vm.scale = {
-                id: '',
-                name: '',
+                id:    '',
+                name:  '',
                 value: ''
             };
             vm.editIndex = null;
@@ -861,6 +864,7 @@ export default {
             } else {
                 vm.resetScale = true;
             }
+            vm.record.type = vm.type;
         },
         /**
          * Método que habilita o deshabilita el botón siguiente
@@ -999,6 +1003,10 @@ export default {
                             assign_options: field['assign_options'],
                             min_days_advance: field['min_days_advance'],
                             max_days_advance: field['max_days_advance'],
+                            payroll_scales: field['payroll_scales'],
+                            on_scale: field['on_scale'],
+                            group_by: field['group_by'],
+                            type: field['type'],
                         });
                     });
                     vm.records = records;
@@ -1110,27 +1118,71 @@ export default {
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
          */
-        getOptions() {
-            const vm = this;
-            $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
-                if (typeof(field['children']) != 'undefined') {
-                    $.each(field['children'], function(index, field) {
-                        if (vm.record.group_by == field['id']) {
-                            vm.type = field['type'];
-                            if (field['type'] == 'list') {
-                                vm.options = [];
-                                axios.get(
-                                    `${window.app_url}/payroll/get-parameter-options/${field['id']}`
-                                ).then(response => {
-                                    vm.options = response.data;
-                                });
-                            }
+            getOptions() {
+                const vm = this;
+                if (vm.record.id == '') {
+                    $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                        if (typeof(field['children']) != 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (vm.record.group_by == field['id']) {
+                                    vm.type = field['type'];
+                                    vm.record.type = vm.type;
+                                    if (field['type'] == 'list') {
+                                        vm.options = [];
+                                        axios.get(
+                                            `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                        ).then(response => {
+                                            vm.options = response.data;
+                                        });
+                                    }
+                                }
+                            });
                         }
                     });
+                    vm.resetScales();
+                } else {
+                    if (vm.resetGroup == true) {
+                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                            if (typeof(field['children']) != 'undefined') {
+                                $.each(field['children'], function(index, field) {
+                                    if (vm.record.group_by == field['id']) {
+                                        vm.type = field['type'];
+                                        vm.record.type = vm.type;
+                                        if (field['type'] == 'list') {
+                                            vm.options = [];
+                                            axios.get(
+                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                            ).then(response => {
+                                                vm.options = response.data;
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        vm.resetScales();
+                    } else {
+                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                            if (typeof(field['children']) != 'undefined') {
+                                $.each(field['children'], function(index, field) {
+                                    if (vm.record.group_by == field['id']) {
+                                        vm.type = vm.record.type;
+                                        if (field['type'] == 'list') {
+                                            vm.options = [];
+                                            axios.get(
+                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                            ).then(response => {
+                                                vm.options = response.data;
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        vm.resetGroup = true;
+                    }
                 }
-            });
-            vm.resetScales();
-        },
+            },
         /**
          * Método que obtiene el valor de la escala según el identificador único
          *

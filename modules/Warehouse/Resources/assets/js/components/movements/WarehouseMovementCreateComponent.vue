@@ -282,7 +282,7 @@
 	            } else if (!checkbox.checked)
 	                checkbox.click();
 			},
-			getWarehouseProducts() {
+			async getWarehouseProducts() {
 				const vm = this;
 				var warehouse = vm.record.initial_warehouse_id;
 				var institution = vm.record.initial_institution_id;
@@ -290,7 +290,7 @@
 				var url = "/warehouse/movements/vue-list-products/";
 				vm.records = [];
 				if(( warehouse != '') && (institution != '')){
-					axios.get(url + warehouse + '/' + institution).then(response => {
+					await axios.get(url + warehouse + '/' + institution).then(response => {
 						if(typeof(response.data.records) != "undefined"){
 							vm.records = response.data.records;
 						}
@@ -318,16 +318,18 @@
 					});
 				}
 			},
-			getWarehouseFinish(id) {
+			async getWarehouseFinish(id) {
 				const vm = this;
+				let warehouse_id = vm.record.end_warehouse_id;
 				var url = '/warehouse/get-warehouses/';
 				vm.warehouse_finish = [];
 				if (id != '') {
-					axios.get(url + id).then(response => {
+					await axios.get(url + id).then(response => {
 						if(typeof(response.data) != "undefined")
 							vm.end_warehouses = response.data;
 					});
 				}
+				vm.record.end_warehouse_id = (warehouse_id != '') ? warehouse_id : vm.record.end_warehouse_id;
 			},
 
 			createMovement(url){
@@ -351,11 +353,11 @@
                 vm.createRecord(url);
 			},
 
-			loadMovement(id){
+			async loadMovement(id){
 				const vm = this;
 	            var fields = {};
 
-	            axios.get('/warehouse/movements/info/'+id).then(response => {
+	            await axios.get('/warehouse/movements/info/'+id).then(response => {
 	                if(typeof(response.data.records != "undefined")){
 	                    fields = response.data.records;
 	                    vm.record = {
@@ -375,20 +377,21 @@
 	                        	fields.warehouse_institution_warehouse_initial.institution.acronym:'' );
 	                    $(".card-body #warehouse_start").val((fields.warehouse_institution_warehouse_initial)?
 	                        	fields.warehouse_institution_warehouse_initial.warehouse.name:'' );
-
-	                    vm.getWarehouseProducts();
-	                    $.each(fields.warehouse_inventory_product_movements, function(index,campo){
-	                        var element = document.getElementById("movement_product_"+campo.warehouse_inventory_product_id);
-	                        if(element){
-	                            element.value = campo.quantity;
-	                        }
-	                        vm.selected.push(campo.warehouse_inventory_product_id);
-	                    });
 	                }
 	            });
+	            vm.getWarehouseProducts();
+	            setTimeout(function() {
+	            	$.each(fields.warehouse_inventory_product_movements, function(index,campo){
+	                  var element = document.getElementById("movement_product_"+campo.warehouse_inventory_product_id);
+	                  if(element){
+	                      element.value = campo.quantity;
+	                      vm.selected.push(campo.warehouse_inventory_product_id);
+	                  }
+	              });
+            	}, 2000);
 	        },
 		},
-		created() {
+		mounted() {
 			this.getInstitutions();
 			if(this.movementid){
 				this.loadMovement(this.movementid);

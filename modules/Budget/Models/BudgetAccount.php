@@ -2,13 +2,14 @@
 
 namespace Modules\Budget\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
-use Module;
 use App\Traits\ModelsTrait;
+use Nwidart\Modules\Facades\Module;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use Modules\Accounting\Models\AccountingAccountConverter;
 /**
  * @class BudgetAccount
  * @brief Datos de cuentas del Clasificador Presupuestario
@@ -106,7 +107,7 @@ class BudgetAccount extends Model implements Auditable
     public function accountConverters()
     {
         return (Module::has('Accounting') && Module::isEnabled('Accounting'))
-               ? $this->hasOne(\Modules\Accounting\Models\AccountingAccountConverter::class)
+               ? $this->hasOne(AccountingAccountConverter::class)
                : [];
     }
 

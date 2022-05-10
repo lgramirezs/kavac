@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
-
+use Modules\Budget\Models\BudgetCompromise;
 use Modules\Budget\Models\BudgetProject;
 use Modules\Budget\Models\BudgetSubSpecificFormulation;
 use Modules\Budget\Models\BudgetModification;
@@ -142,8 +142,8 @@ class BudgetSettingController extends Controller
                         /** @var string Define el tipo de registro como créditos adicionales */
                         $type = 'budget.aditional-credits';
                     }
-                } elseif ($table === "commitments") {
-                    $model .= "Commitment";
+                } elseif ($table === "compromises") {
+                    $model .= BudgetCompromise::class;
                 }
 
                 CodeSetting::updateOrCreate([

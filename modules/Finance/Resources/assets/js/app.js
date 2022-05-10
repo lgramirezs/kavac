@@ -5,8 +5,18 @@
  */
 Vue.component('finance-banks', () => import(
     /* webpackChunkName: "finance-banks" */
-    './components/FinanceBankComponent.vue')
-);
+    './components/FinanceBankComponent.vue'
+));
+
+/**
+ * Componente para la gestión de archivos de conciliación bancaria.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-reconciliation-files', () => import(
+    /* webpackChunkName: "finance-bank-reconciliation-files" */
+    './components/FinanceBankReconciliationFilesComponent.vue'
+));
 
 /**
  * Componente para la gestión de agencias bancarias
@@ -15,8 +25,8 @@ Vue.component('finance-banks', () => import(
  */
 Vue.component('finance-payment-methods', () => import(
     /* webpackChunkName: "finance-banking-agencies" */
-    './components/FinancePaymentMethodsComponent.vue')
-);
+    './components/FinancePaymentMethodsComponent.vue'
+));
 
 /**
  * Componente para la gestión de agencias bancarias
@@ -25,8 +35,8 @@ Vue.component('finance-payment-methods', () => import(
  */
 Vue.component('finance-banking-agencies', () => import(
     /* webpackChunkName: "finance-banking-agencies" */
-    './components/FinanceBankingAgencyComponent.vue')
-);
+    './components/FinanceBankingAgencyComponent.vue'
+));
 
 /**
  * Componente para la gestión de tipos de cuenta bancaria
@@ -35,8 +45,8 @@ Vue.component('finance-banking-agencies', () => import(
  */
 Vue.component('finance-account-types', () => import(
     /* webpackChunkName: "finance-account-types" */
-    './components/FinanceAccountTypeComponent.vue')
-);
+    './components/FinanceAccountTypeComponent.vue'
+));
 
 /**
  * Componente para la gestión de cuentas bancarias
@@ -45,8 +55,8 @@ Vue.component('finance-account-types', () => import(
  */
 Vue.component('finance-bank-accounts', () => import(
     /* webpackChunkName: "finance-bank-accounts" */
-    './components/FinanceBankAccountComponent.vue')
-);
+    './components/FinanceBankAccountComponent.vue'
+));
 
 /**
  * Componente para la gestión de chequeras
@@ -55,8 +65,8 @@ Vue.component('finance-bank-accounts', () => import(
  */
 Vue.component('finance-checkbooks', () => import(
     /* webpackChunkName: "finance-checkbooks" */
-    './components/FinanceCheckBookComponent.vue')
-);
+    './components/FinanceCheckBookComponent.vue'
+));
 
 /**
  * Componente para gestionar y configurar el diseño del voucher para la impresión de cheques
@@ -65,8 +75,28 @@ Vue.component('finance-checkbooks', () => import(
  */
 Vue.component('finance-voucher-design', () => import(
     /* webpackChunkName: "finance-voucher-design" */
-    './components/FinanceVoucherDesignComponent.vue')
-);
+    './components/FinanceVoucherDesignComponent.vue'
+));
+
+/**
+ * Componente para listar registros de órdenes de pago
+ * 
+ * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ */
+/*Vue.component('finance-pay-order-list', () => import(*/
+	/* webpackChunkName: "finance-pay-order-list" */
+	/*'./components/FinancePayOrderListComponent.vue'
+));*/
+
+/**
+ * Componente para gestionar registros de órdenes de pago
+ * 
+ * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ */
+ /*Vue.component('finance-pay-order', () => import(*/
+	/* webpackChunkName: "finance-pay-order" */
+	/*'./components/FinancePayOrderComponent.vue'
+));*/
 
 /**
  * Opciones de configuración global del módulo de finanzas

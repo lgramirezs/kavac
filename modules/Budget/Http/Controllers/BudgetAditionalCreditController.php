@@ -124,6 +124,7 @@ class BudgetAditionalCreditController extends Controller
 
         /** @var object Obtiene el registro del documento con estatus aprovado */
         $documentStatus = DocumentStatus::getStatus('AP');
+        $year = $request->fiscal_year ?? date("Y");
 
         /** @var string Contiene el código generado para el registro a crear */
         $code = generate_registration_code(
