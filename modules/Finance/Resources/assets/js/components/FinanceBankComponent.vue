@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group is-required">
-                                    <label>Código</label>
+                                    <label>Código:</label>
                                     <input type="text" placeholder="0000" maxlength="4" data-toggle="tooltip"
                                         title="Indique el código de la entidad bancaria (requerido)"
                                         class="form-control input-sm" v-model="record.code" autofocus>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Nombre Abreviado</label>
+                                    <label>Nombre abreviado:</label>
                                     <input type="text" placeholder="Nombre corto" data-toggle="tooltip"
                                         title="Indique el nombre abreviado de la entidad bancaria (requerido)"
                                         class="form-control input-sm" v-model="record.short_name">
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Sitio Web:</label>
+                                    <label>Sitio web:</label>
                                     <input type="url" placeholder="Sitio Web" data-toggle="tooltip"
                                         title="Indique el sitio web de la entidad bancaria"
                                         class="form-control input-sm" v-model="record.website">
