@@ -9,6 +9,16 @@ Vue.component('finance-banks', () => import(
 ));
 
 /**
+ * Componente para la gestión de archivos de conciliación bancaria.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-reconciliation-files', () => import(
+    /* webpackChunkName: "finance-bank-reconciliation-files" */
+    './components/FinanceBankReconciliationFilesComponent.vue'
+));
+
+/**
  * Componente para la gestión de agencias bancarias
  *
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>

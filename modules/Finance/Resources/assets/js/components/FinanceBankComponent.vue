@@ -21,14 +21,14 @@
                     <div class="modal-body">
                         <div class="alert alert-danger" v-if="errors.length > 0">
                             <div class="alert-icon">
-                        <i class="now-ui-icons objects_support-17"></i>
-                    </div>
-                    <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                                <i class="now-ui-icons objects_support-17"></i>
+                            </div>
+                            <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">
                                     <i class="now-ui-icons ui-1_simple-remove"></i>
                                 </span>
-                                </button>
+                            </button>
                             <ul>
                                 <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                             </ul>
@@ -85,15 +85,15 @@
                     <div class="modal-footer">
                         <div class="form-group">
                             <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-                                    @click="clearFilters" data-dismiss="modal">
+                                @click="clearFilters" data-dismiss="modal">
                                 Cerrar
                             </button>
                             <button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear"
-                                    @click="reset()">
+                                @click="reset()">
                                 Cancelar
                             </button>
                             <button type="button" @click="createRecord('finance/banks')"
-                                    class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
                         </div>
@@ -110,14 +110,14 @@
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
-                                        class="btn btn-warning btn-xs btn-icon btn-round"
-                                        title="Modificar registro" data-toggle="tooltip" type="button">
+                                    class="btn btn-warning btn-xs btn-icon btn-round"
+                                    title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, '/finance/banks')"
-                                        class="btn btn-danger btn-xs btn-icon btn-round"
-                                        title="Eliminar registro" data-toggle="tooltip"
-                                        type="button">
+                                    class="btn btn-danger btn-xs btn-icon btn-round"
+                                    title="Eliminar registro" data-toggle="tooltip"
+                                    type="button">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
@@ -180,7 +180,6 @@
             };
             this.table_options.sortable = ['code', 'short_name', 'name'];
             this.table_options.filterable = ['code', 'short_name', 'name'];
-
         },
     };
 </script>
