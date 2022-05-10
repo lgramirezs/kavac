@@ -116,6 +116,8 @@ class FinanceCheckBookController extends Controller
             }
             //consulta que no exista el campo numero de cheque repetido en el formulario.
             foreach ($request->numbers as $number2) {
+                dd($request->numbers);
+                dd($number2);
                 if($number == $number2){
                     $error[0]= "El campo numero de cheque esta repetido en el formulario";
                     return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
@@ -157,13 +159,22 @@ class FinanceCheckBookController extends Controller
      * Show the form for editing the specified resource.
      * @return Renderable
      */
-    public function edit()
+    public function edit($id)
     {
         //return view('finance::edit');
 
-    //    $checksUsed = FinanceCheckBook::find($id);
-        //return $payment;
-    //    return view('finance::edit', compact("checksUsed"));
+        dd($id);
+        $record = FinanceCheckBook::find($id);
+        //return view('finance::create', compact("checksUsed"));
+
+        //return response()->json(['records' => $record], 200);
+
+
+
+      return view('finance::create', ['orderid' => $id, 'record' => $record]);
+
+
+
     }
 
     /**
