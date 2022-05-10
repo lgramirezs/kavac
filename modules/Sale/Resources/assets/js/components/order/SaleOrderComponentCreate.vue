@@ -14,20 +14,78 @@
             </span>
           </button>
           <ul>
-            <li v-for="error in errors">{{ error }}</li>
+						<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
           </ul>
         </div>
       </div>
-      <h4 class="card-title">Registrar Pedido</h4>
-      <h6 class="card-title">Datos del solicitante:</h6>
+      <h6 class="card-title">Datos del solicitante:
+        <a class="btn btn-info btn-xs btn-icon btn-action display-inline" 
+          href="#" title="Ver información del registro" data-toggle="tooltip" 
+          @click.prevent="showModal('view_sale_clients')">
+          <i class="icofont icofont-business-man ico-2x"></i>
+        </a>
+      </h6>
+      <div class="client-list">
+        <div class="modal fade text-left" tabindex="-1" role="dialog" id="view_sale_clients" ref="clients-modal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h6><i class="icofont icofont-business-man ico-2x"></i> Clientes</h6>
+              </div>
+              <div class="modal-body modal-table">
+                <v-client-table :columns="columns_clients" :data="quote_clients" :options="table_options_clients">
+                  <div slot="id" slot-scope="props" class="text-center">
+                    <span>
+                      <i class="fa fa-plus-circle cursor-pointer" @click="addClient(props.index, props.row)"></i>
+                    </span>
+                  </div>
+                  <div slot="name_client" slot-scope="props" class="text-center">
+                    <span>
+                      {{ (props.row.name_client)? props.row.name_client : props.row.name }}
+                    </span>
+                  </div>
+                  <div slot="rif" slot-scope="props" class="text-center">
+                    <span>
+                      {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
+                    </span>
+                  </div>
+                  <div slot="phones" slot-scope="props">
+                    <div v-if="props.row.phones">
+                      <ul v-for="(phone, index) in props.row.phones" :key="index">
+                        <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                      </ul>
+                    </div>
+                    <div v-else>
+                      <span>N/A</span>
+                    </div>
+                  </div>
+                  <div slot="sale_clients_email" slot-scope="props">
+                    <div v-if="props.row.sale_clients_email">
+                      <ul v-for="(client_email, index) in props.row.sale_clients_email" :key="index">
+                        <li>{{ client_email.email }}</li>
+                      </ul>
+                    </div>
+                    <div v-else>
+                      <span>N/A</span>
+                    </div>
+                  </div>
+                </v-client-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" id="HelpTypePerson">
           <div class="form-group is-required">
             <label for="type_person">Tipo de persona:</label>
             <select2 :options="types_person" id='type_person' v-model="record.type_person"></select2>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" id="HelpName">
           <div class="form-group is-required">
             <label v-show="record.type_person == ''" for="name">Nombre de la Empresa:</label>
             <label v-show="record.type_person == 'Jurídica'" for="name">Nombre de la Empresa:</label>
@@ -37,7 +95,7 @@
             <input type="hidden" name="id" id="id" v-model="record.id">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" id="HelpIdentification">
           <div class="form-group is-required">
             <label v-show="record.type_person == ''" for="id_number">RIF</label>
             <label v-show="record.type_person == 'Jurídica'" for="id_number">RIF</label>
@@ -48,24 +106,24 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="HelpMail">
           <div class="form-group is-required">
             <label for="email">Correo electrónico del solicitante:</label>
             <input type="text" id="email" class="form-control input-sm" data-toggle="tooltip" required
               title="Correo electrónico del solicitante" v-model="record.email">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="HelpPhone">
           <div class="form-group is-required">
             <label for="phone">Número de teléfono:</label>
             <input type="text" id="phone" class="form-control input-sm" data-toggle="tooltip" required
-              title="Número de teléfono" v-model="record.phone" placeholder="00-000-0000000">
+              title="Número de teléfono" v-model="record.phone" placeholder="+00-000-0000000" v-input-mask data-inputmask="'mask': '+99-999-9999999'">
           </div>
         </div>
       </div>
       <h6 class="card-title">Datos del pedido:</h6>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="HelpProductType">
           <div class="form-group is-required">
             <label>Producto:</label>
             <select2 :options="quote_inventory_products_list" id="sale_warehouse_inventory_product_id" v-model="record.sale_warehouse_inventory_product_id" @input="updateProduct"></select2>
@@ -73,20 +131,20 @@
         </div>
         <div class="col-md-6">
         </div>
-        <div class="col-md-2" id="SaleHelpProductMeasurementUnit">
+        <div class="col-md-2" id="HelpMeasurementUnit">
           <div class="form-group is-required">
             <label>Unidad de medida</label>
             <select2 :options="quote_measurement_units" id='measurement_unit_id'
              v-model="record.measurement_unit_id"></select2>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" id="HelpUnitPrice">
           <div class="form-group is-required">
             <label>Precio unitario:</label>
             <input type="text" placeholder="Precio unitario" id="value" title="Precio unitario" v-model="record.value" class="form-control input-sm" required @change="updateTotalProduct()">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" id="HelpQuantity">
           <div class="form-group is-required">
             <label>Cantidad de productos:</label>
             <input type="text" placeholder="Cantidad de productos" id='quantity' title="Cantidad de productos" v-model="record.quantity" class="form-control input-sm" required @input="updateTotalProduct()">
@@ -95,7 +153,7 @@
             <input type="hidden" name="quantity_max_value" id="quantity_max_value" v-model="record.quantity_max_value">
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" id="HelpTotalPrice">
           <div class="form-group">
             <label>Precio total:</label>
             <input type="text" disabled placeholder="Total" id="total" title="Cantidad total" v-model="record.total" class="form-control input-sm" required>
@@ -103,7 +161,7 @@
             <input type="hidden" name="history_tax_value" id="history_tax_value" v-model="record.history_tax_value">
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" id="HelpCurrency">
           <div class="form-group is-required">
             <label>Moneda:</label>
             <select2 :options="currencies" v-model="record.currency_id" id="currency_id"></select2>
@@ -126,28 +184,30 @@
           </div>
         </div>
       </div>
-      <v-client-table :columns="columns" :data="record.list_products" :options="table_options">
-        <div slot="sale_warehouse_inventory_product_id" slot-scope="props" class="text-center">
-          <span>
-            {{ (props.row.sale_warehouse_inventory_product_id)? props.row.inventory_product.name : props.row.sale_type_good.name }}
-          </span>
-        </div>
-        <div slot="id" slot-scope="props" class="text-center">
-          <div class="d-inline-flex">
-            <button @click="editProduct(props.index, $event)" 
-              class="btn btn-warning btn-xs btn-icon btn-action" 
-              title="Modificar Producto" data-toggle="tooltip" type="button">
-              <i class="fa fa-edit"></i>
-            </button>
-            <button @click="removeProduct(props.index, $event)" 
-              class="btn btn-danger btn-xs btn-icon btn-action" 
-              title="Eliminar producto" data-toggle="tooltip" 
-              type="button">
-              <i class="fa fa-trash-o"></i>
-            </button>
+      <div id="HelpProductsTable">
+        <v-client-table :columns="columns" :data="record.list_products" :options="table_options">
+          <div slot="sale_warehouse_inventory_product_id" slot-scope="props" class="text-center">
+            <span>
+              {{ (props.row.sale_warehouse_inventory_product_id)? props.row.inventory_product.name : props.row.sale_type_good.name }}
+            </span>
           </div>
-        </div>
-      </v-client-table>
+          <div slot="id" slot-scope="props" class="text-center">
+            <div class="d-inline-flex">
+              <button @click="editProduct(props.index, $event)" 
+                class="btn btn-warning btn-xs btn-icon btn-action" 
+                title="Modificar Producto" data-toggle="tooltip" type="button">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button @click="removeProduct(props.index, $event)" 
+                class="btn btn-danger btn-xs btn-icon btn-action" 
+                title="Eliminar producto" data-toggle="tooltip" 
+                type="button">
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </div>
+          </div>
+        </v-client-table>
+      </div>
       <div class="row">
         <div class="col-md-12 text-right">
           <div class="d-inline-flex align-items-center">
@@ -177,23 +237,23 @@
     </div>
     <div class="card-footer text-right">
       <div class="row">
-        <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
-    	  <button type="button" @click="reset()"
-            class="btn btn-default btn-icon btn-round"
+        <div class="col-md-3 offset-md-9" id="HelpButtons">
+    	    <button type="button" @click="reset()"
+            class="btn btn-default btn-icon btn-round btn-modal-clear"
       	    title ="Borrar datos del formulario">
-    	    <i class="fa fa-eraser"></i>
+    	      <i class="fa fa-eraser"></i>
           </button>
-          <button type="button"
-    	    class="btn btn-warning btn-icon btn-round btn-modal-close"
-    	    data-dismiss="modal"
-    	    title="Cancelar y regresar">
-    	    <i class="fa fa-ban"></i>
-    	  </button>
+          <button type="button" @click="redirect_back(route_list)"
+    	      class="btn btn-warning btn-icon btn-round btn-modal-close"
+    	      data-dismiss="modal"
+    	      title="Cancelar y regresar">
+    	      <i class="fa fa-ban"></i>
+    	    </button>
           <button type="button" @click="createQuote('sale/order')"
-    	    class="btn btn-success btn-icon btn-round btn-modal-save"
-    	    title="Guardar registro">
-    	    <i class="fa fa-save"></i>
-    	  </button>
+    	      class="btn btn-success btn-icon btn-round btn-modal-save"
+    	      title="Guardar registro">
+    	      <i class="fa fa-save"></i>
+    	    </button>
         </div>
       </div>
     </div>
@@ -254,6 +314,7 @@
           'currency.name',
           'id',
         ],
+        columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email'],
         types_person:  [
           {'id' : '', 'text' : "Seleccione..."},
           {'id' : 'Natural', 'text' : 'Natural'},
@@ -268,6 +329,18 @@
       }
     },
     methods: {
+      /**
+       * Agrega la informacion del cliente desde el modal de clientes
+       */
+      addClient(index, client) {
+        this.record.type_person = client.type_person_juridica;
+        this.record.name = client.name_client? client.name_client : client.name;
+        this.record.id_number = client.rif? client.rif : client.id_number;
+        this.record.id_number = this.record.id_number.replace(/\D/g, "");
+        this.record.phone = client.phones && client.phones.length? parseInt(client.phones[0].area_code) + '-' + client.phones[0].number : '';
+        this.record.email = client.sale_clients_email && client.sale_clients_email.length? client.sale_clients_email[0].email : '';
+        $("#view_sale_clients").modal('hide');
+      },
       /**
        * Limpia el formulario por completo
        */
@@ -367,15 +440,13 @@
        */
       updateProduct() {
         const vm = this;
-        var entity_load = 'service';
-        var id = 0;
 
-          entity_load = 'product';
-          vm.record.sale_type_good_id = '';
-          id = vm.record.sale_warehouse_inventory_product_id;
+        let entity_load = 'Producto';
+        vm.record.sale_type_good_id = '';
+        let id = vm.record.sale_warehouse_inventory_product_id;
     
         if (id) {
-          axios.get('/sale/get-quote-price-' + entity_load + '/' + id).then(function (response) {
+          axios.get('/sale/get-bill-product' + '/' + entity_load + '/' + id).then(function (response) {
             let product = response.data.record;
             if (product) {
               let product_value = product.unit_value? product.unit_value : vm.record.value;
@@ -481,7 +552,8 @@
         product.history_tax_id = vm.record.history_tax_id;
         product.history_tax_value = vm.record.history_tax_value;
         product.product_tax_value = (product.total_without_tax * product.history_tax_value);
-        product.total = product.total_without_tax + product.product_tax_value;
+        product.product_tax_value = product.product_tax_value.toFixed(2);
+        product.total = product.total_without_tax + (product.total_without_tax * product.history_tax_value);
         let product_index = parseInt(vm.record.product_position_value);
         let previos_total = 0;
         let previos_total_without_tax = 0;
@@ -511,6 +583,15 @@
         } 
         else{
           vm.createRecord(url);
+        }
+      },
+      /**
+       * Muestra el modal de clientes en el formulario
+       *
+       */
+      showModal(modal_id = '') {
+        if ($("#" + modal_id).length) {
+          $("#" + modal_id).modal('show');
         }
       },
       /**
@@ -627,6 +708,25 @@
         'currency_id': 'col-xs-1',
         'id': 'col-xs-2'
       };
+      this.table_options_clients = {};
+      this.table_options_clients.headings = {
+        'id': 'Acción',
+        'type_person_juridica': 'Tipo de Persona',
+        'rif': 'Identificación del Cliente',
+        'name_client': 'Nombre',
+        'phones': 'Telefonos',
+        'sale_clients_email': 'Correo Electrónico'
+      };
+      this.table_options_clients.sortable = [
+        'type_person_juridica',
+      ];
+      this.table_options_clients.filterable = [
+        'type_person_juridica',
+        'rif',
+        'id_number',
+        'name',
+        'name_client',
+      ];
     },
     mounted() {
       const vm = this;
@@ -640,6 +740,7 @@
       vm.getQuoteMeasurementUnits();
       vm.getQuotePayments();
       vm.getQuoteInventoryProducts();
+      vm.getQuoteClients();
       vm.extractQuote();
     },
   };

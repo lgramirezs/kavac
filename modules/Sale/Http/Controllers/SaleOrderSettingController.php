@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Sale\Models\SaleOrder;
 use Modules\Sale\Models\SaleSettingProduct;
+use Modules\Sale\Models\SaleWarehouseInventoryProduct;
 
 /**
  * @class SaleOrderSettingController
@@ -126,20 +127,14 @@ class SaleOrderSettingController extends Controller
      */
     public function store(Request $request)
     {
+      $this->saleOrderValidate($request);
+
       $products = [];
       if (count($request->list_products)) {
         foreach ($request->list_products as $product) {
           $products[] = $product;
         }
       }
-
-      $this->validate($request, [
-        'name' => ['required', 'max:100'],
-        'id_number' => ['required', 'max:100'],
-        'email' => ['required', 'max:200'],
-        'phone' => ['required', 'regex:/^\d{2}-\d{3}-\d{7}$/u'],
-        'type_person' => ['required'],
-      ]);
 
       $order = SaleOrder::create([
         'name'        => $request->name,
@@ -152,6 +147,33 @@ class SaleOrderSettingController extends Controller
       ]);
 
       return response()->json(['record' => $order, 'message' => 'Success', 'redirect' => route('sale.order.index')], 200);
+    }
+
+    /**
+     * Realiza la validación de un pedido
+     *
+     * @method    saleOrderValidate
+     * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+     * @param     object    Request    $request
+     */
+    public function saleOrderValidate(Request $request)
+    {
+        $attributes = [
+          'type_person' => 'Tipo de persona',
+          'name' => 'Nombre',
+          'id_number' => 'Identificación',
+          'phone' => 'Teléfono de contacto',
+          'email' => 'Correo Electrónico',
+
+        ];
+
+        $validation = [];
+        $validation['type_person'] = ['required'];
+        $validation['name'] = ['required', 'max:100'];
+        $validation['id_number'] = ['required', 'digits_between:1,10'];
+        $validation['phone'] = ['required'];
+        $validation['email'] = ['required', 'email'];
+        $this->validate($request, $validation, [], $attributes);
     }
 
     /**
@@ -182,6 +204,7 @@ class SaleOrderSettingController extends Controller
           'total' => $row['total'],
           'measurement_unit_id' => $row['measurement_unit_id'],
           'measurement_unit' => $row['measurement_unit'],
+          'history_tax_id' => $row['history_tax_id'],
           'total_without_tax' => $row['total_without_tax'],
           'currency_id' => $row['currency']['name']
         ];
@@ -204,6 +227,7 @@ class SaleOrderSettingController extends Controller
     {
         $order = SaleOrder::find($id);
 
+        $this->saleOrderValidate($request);
         $products = [];
         if ($request->list_products && !empty($request->list_products)) {
           foreach ($request->list_products as $product) {
@@ -211,13 +235,6 @@ class SaleOrderSettingController extends Controller
           }
         }
 
-        $this->validate($request, [
-            'name' => ['required', 'max:100'],
-            'id_number' => ['required', 'max:100'],
-            'email' => ['required', 'max:200'],
-            'phone' => ['required', 'regex:/^\d{2}-\d{3}-\d{7}$/u'],
-            'type_person' => ['required']
-        ]);
         $order->name  = $request->name;
         $order->id_number = $request->id_number;
         $order->email  = $request->email;
@@ -278,6 +295,15 @@ class SaleOrderSettingController extends Controller
         $sale_order->status = 'aprobado';
         $sale_order->save();
 
+        $products = json_decode($sale_order->products, true);
+        foreach ($products as $id => $row) {
+          $inventory_product = SaleWarehouseInventoryProduct::find($row['inventory_product']['id']);
+          $exist = $inventory_product->exist;
+          $exist -= $row['quantity'];
+          $inventory_product->exist = $exist;
+          $inventory_product->save();
+        }
+
         $request->session()->flash('message', ['type' => 'update']);
         return response()->json(['result' => true, 'redirect' => route('sale.order.index')], 200);
     }
@@ -297,6 +323,7 @@ class SaleOrderSettingController extends Controller
           'id' => $id,
           'name' => $row['inventory_product']['name'],
           'quantity' => $row['quantity'],
+          'history_tax_id' => $row['history_tax_id'],
           'price_product' => $row["total_without_tax"],
           'iva' => $row["product_tax_value"],
           'total' => $row['total'],

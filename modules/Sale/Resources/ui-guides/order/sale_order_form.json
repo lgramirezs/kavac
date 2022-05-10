@@ -1,7 +1,7 @@
 [
     {
-        "element" : "#SaleBillForm",
-        "intro" : "Formulario de ingresos de nuevas facturas",
+        "element" : "#cardSaleOrderForm",
+        "intro" : "Formulario de pedidos",
         "position" : "top"
     },
     {
@@ -31,7 +31,7 @@
     },
     {
         "element" : "#HelpProductType",
-        "intro" : "Parámetro que establece el tipo de producto",
+        "intro" : "Parámetro que establece el producto a seleccionar",
         "position" : "top"
     },
     {
@@ -62,11 +62,6 @@
     {
         "element" : "#HelpProductsTable",
         "intro" : "Tabla donde se muestran los productos o servicios agregados",
-        "position" : "top"
-    },
-    {
-        "element" : "#HelpPaymentForm",
-        "intro" : "Parámetro donde se establece la forma de cobro",
         "position" : "top"
     },
     {
