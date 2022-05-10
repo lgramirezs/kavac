@@ -96,7 +96,7 @@ class FinanceCheckBookController extends Controller
             'numbers' => ['required', 'array', 'min:1']
         ], [
             'code.required' => ('El campo serial / código es obligatorio.'),
-            'finance_bank_account_id.required' => ('El campo Banco es obligatorio.'),
+            'finance_bank_account_id.required' => ('El campo banco es obligatorio.'),
             'numbers.required' => ('El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +'),
             'numbers.min' => ('Debe ingresar al menos 1 numero de cheque.'),
         ]);
