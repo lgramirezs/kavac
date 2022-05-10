@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Sede principal</label>
+                                    <label>Sede principal:</label>
                                     <div class="col-md-12">
                                         <div class="pretty p-switch p-fill p-bigger p-toggle">
                                             <input type="checkbox" data-toggle="tooltip"
@@ -57,7 +57,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>País</label>
+                                    <label>País:</label>
                                     <select2 :options="countries" @input="getEstates"
                                         v-model="record.country_id">
                                     </select2>
@@ -66,23 +66,23 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Estado</label>
+                                    <label>Estado:</label>
                                     <select2 :options="estates" @input="getCities" v-model="record.estate_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Ciudad</label>
+                                    <label>Ciudad:</label>
                                     <select2 :options="cities" v-model="record.city_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Banco</label>
+                                    <label>Banco:</label>
                                     <select2 :options="banks" v-model="record.finance_bank_id"></select2>
                                 </div>
                                 <div class="form-group">
-                                    <label>Persona de contacto</label>
+                                    <label>Persona de contacto:</label>
                                     <input type="text" placeholder="Nombre contacto" data-toggle="tooltip"
                                         title="Indique el nombre de la persona de contacto"
                                         class="form-control input-sm" v-model="record.contact_person">
@@ -90,13 +90,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Nombre de Agencia</label>
+                                    <label>Nombre de agencia:</label>
                                     <input type="text" placeholder="Nombre agencia" data-toggle="tooltip"
                                         title="Indique el nombre de la agencia bancaria (requerido)"
                                         class="form-control input-sm" v-model="record.name">
                                 </div>
                                 <div class="form-group">
-                                    <label>Correo de contacto</label>
+                                    <label>Correo de contacto:</label>
                                     <input type="text" placeholder="Nombre contacto" data-toggle="tooltip"
                                         title="Indique el correo de la persona de contacto"
                                         class="form-control input-sm" v-model="record.contact_email">
@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Dirección</label>
+                                    <label>Dirección:</label>
                                     <ckeditor :editor="ckeditor.editor" id="direction" data-toggle="tooltip"
                                         title="Indique la dirección de la agencia bancaria"
                                         :config="ckeditor.editorConfig" class="form-control" name="direction"
