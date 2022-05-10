@@ -44,7 +44,7 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Banco:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="banks" v-model="record.bank_id"></select2>
                                 </div>
                             </div>
                         </div>
@@ -56,16 +56,32 @@
                             <div class="col-md-4">
                                 <label>Leer línea de inicio:</label>
                                 <br>
-                                <input type="checkbox" name="checkbox"
-                                    class="bootstrap-switch" data-on-label="SI"
-                                    data-off-label="NO" checked>
+                                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                                    <input type="checkbox" data-toggle="tooltip"
+                                        title="Indique si el campo está activo"
+                                        v-model="record.read_start_line">
+                                    <div class="state p-off">
+                                        <label></label>
+                                    </div>
+                                    <div class="state p-on p-success">
+                                        <label></label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <label>Leer línea final:</label>
                                 <br>
-                                <input type="checkbox" name="checkbox"
-                                    class="bootstrap-switch" data-on-label="SI"
-                                    data-off-label="NO" checked>
+                                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                                    <input type="checkbox" data-toggle="tooltip"
+                                        title="Indique si el campo está activo"
+                                        v-model="record.read_end_line">
+                                    <div class="state p-off">
+                                        <label></label>
+                                    </div>
+                                    <div class="state p-on p-success">
+                                        <label></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -193,6 +209,8 @@
             return {
                 record: {
                     bank_id: '',
+                    read_start_line: false,
+                    read_end_line: false,
                     position_reference_column: '',
                     position_date_column: '',
                     position_debit_amount_column: '',
@@ -225,12 +243,22 @@
              */
             reset() {
                 this.record = {
+                    bank_id: '',
+                    read_start_line: false,
+                    read_end_line: false,
+                    position_reference_column: '',
+                    position_date_column: '',
+                    position_debit_amount_column: '',
+                    position_credit_amount_column: '',
+                    position_description_column: '',
                 };
             },
 
             createRecord () {
                 // console.log("Entró aquí!");
                 console.log(this.record.bank_id);
+                console.log(this.record.read_start_line);
+                console.log(this.record.read_end_line);
                 console.log(this.record.position_reference_column);
                 console.log(this.record.position_date_column);
                 console.log(this.record.position_debit_amount_column);
@@ -240,6 +268,9 @@
         },
         created() {
             this.getBanks();
+        },
+        mounted() {
+            const vm = this;
         },
     };
 </script>
