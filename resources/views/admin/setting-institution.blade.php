@@ -188,7 +188,7 @@
 									{!! Form::label('estate_id', __('Estado'), []) !!}
 									{!! Form::select('estate_id', (isset($estates))?$estates:[], (isset($model_institution)) ? $model_institution->city->estate->id : old('estate_id'), [
 										'class' => 'form-control select2', 'id' => 'estate_id',
-										'onchange' => 'updateSelect($(this), $("#municipality_id"), "Municipality"), updateSelect($(this), $("#city_id"), "City")',
+										'onchange' => 'updateSelect($(this), $("#municipality_id"), "Municipality"),updateSelect($(this), $("#city_id"), "City")',
 										//'disabled' => (!isset($model_institution))
 									]) !!}
 								</div>
@@ -199,7 +199,7 @@
 									{!! Form::select(
 										'municipality_id', (isset($municipalities))?$municipalities:[], (isset($model_institution)) ? $model_institution->municipality_id : old('municipality_id'), [
 											'class' => 'form-control select2', 'id' => 'municipality_id',
-											'onchange' => 'updateSelect($(this), $("#parish_id"), "Parish")',
+										
 										]
 									) !!}
 								</div>
@@ -270,8 +270,9 @@
 						</div>
                         <div class="row">
                             <div class="col-md-8">
-                                <div class="form-group is-required">
+                                <div class="form-group is-required"   >
                                     {!! Form::label('legal_address', __('Dirección Fiscal'), []) !!}
+									<div id="legal_address_editor">
                                     <ckeditor :editor="ckeditor.editor" id="legal_address" data-toggle="tooltip"
                                               title="{!! __('Indique la dirección fiscal de la organización (requerido)') !!}"
                                               :config="ckeditor.editorConfig" class="form-control" name="legal_address"
@@ -281,6 +282,7 @@
                                                 ? $model_institution->legal_address
                                                 : old('legal_address')
                                               !!}"></ckeditor>
+											  </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -795,7 +797,7 @@
 			            ],
 			            language: '{{ app()->getLocale() }}',
 			        }).then(editor => {
-			            window.editor = editor;
+			            window.editor = editor;				
 			        }).catch(error => {
 			            logs('setting-institution', 489, error);
 			        });
@@ -839,10 +841,15 @@
 		 * @param  {integer} id Identificador de la Organización a cargar
 		 */
 		var loadInstitution = function(id) {
+	
+
+	$('#country_id').attr("onChange","return('cambio');");
+	$('#estate_id').attr("onChange","return('cambio');");
 			axios.get(`get-institution/details/${id}`).then(response => {
 				if (response.data.result) {
 					var institution = response.data.institution;
-					console.log(institution)
+					$model_institution = response.data.institution;
+					
                     var activeSwitchRemoveClass = (institution.active) ? 'off' : 'on';
                     var activeSwitchAddClass = (institution.active) ? 'on' : 'off';
                     var defaultSwitchRemoveClass = (institution.default) ? 'off' : 'on';
@@ -873,21 +880,35 @@
 					$("input[name=name]").val(institution.name);
 					$("#acronym").val(institution.acronym);
 					$("#business_name").val(institution.business_name);
-					$("#country_id").val(institution.municipality.estate.country.id);
-					$("#country_id").trigger('change');
-					$("#estate_id").val(institution.municipality.estate.id);
-					$("#estate_id").trigger('change');
-					$("#municipality_id").val(institution.municipality.id);
-					$("#municipality_id").trigger('change');
+				
+					if ($('#country_id').find("option[value='" + institution.municipality.estate.country.id + "']").length) {
+                             $('#country_id').val(institution.municipality.estate.country.id).trigger('change');
+                                               } 
+						if ($('#city_id').find("option[value='" + institution.city_id + "']").length) {
+						
+                             $('#city_id').val(institution.city_id).trigger('change');
+                                               } 						   
+
+				
+					    getselect($("#country_id"),institution.municipality.estate.country.id,institution.municipality.estate.id,$("#estate_id"), "Estate"); 
+			
+
+				
+				    getselect($("#estate_id"),institution.municipality.estate.id,institution.municipality.id,$("#municipality_id"), "Municipality");                  
+
+
 					$("#city_id").val(institution.city_id);
-					$("#city_id").trigger('change');
+		
 					$("#postal_code").val(institution.postal_code);
 					$("#start_operations_date").val(institution.start_operations_date);
 					$("#institution_sector_id").val(institution.institution_sector_id);
 					$("#institution_sector_id").trigger('change');
 					$("#institution_type_id").val(institution.institution_type_id);
 					$("#institution_type_id").trigger('change');
+					
 					$("#legal_address").val(institution.legal_address);
+
+					
 					$("#web").val(institution.web);
 					$("#social_networks").val(institution.social_networks);
 					$("#social_networks").trigger('change');
@@ -914,10 +935,17 @@
 
 				    // Enfoca el input de onapre
 				    $("#onapre_code").focus();
+						if ($('#estate_id').find("option[value='" + institution.municipality.estate.id + "']").length) {
+	
+                             $('#estate_id').val(institution.municipality.estate.id).trigger('change');
+                                               } 
 				}
 			}).catch(error => {
+							console.log(error);
 				logs('setting-institution', 594, error, 'loadInstitution');
 			});
+			$('#country_id').attr('onChange','updateSelect($(this),$("#estate_id"),"Estate")');
+			$('#estate_id').attr('onChange','updateSelect($(this), $("#municipality_id"), "Municipality"),updateSelect($(this), $("#city_id"), "City")');
 		}
 		@if (old('country_id')!=='')
 			$("#country_id").click();
@@ -1011,6 +1039,47 @@
 			}).catch(error => {
 				logs('setting-institution', 594, error, 'loadInstitution');
 			});
+		}
+		function getselect(parent_element,id,target_element_id,target_element, target_model, module_name){
+	
+			var module_name = (typeof(module_name) !== "undefined")?'/' + module_name:'';
+			   var parent_id = id;
+                    var parent_name = parent_element.attr('id');
+			
+					target_element.empty();
+
+						
+				
+                            //  $('#'+parent_name).val(id).trigger('change');
+                                    
+                                   axios.get(
+                            `/get-select-data/${parent_name}/${parent_id}/${target_model}${module_name}`
+                        ).then(response => {
+                            if (response.data.result) {
+                                target_element.attr('disabled', false);
+                                $.each(response.data.records, function(index, record) {     
+									
+									 if(record['id'] == target_element_id ){ 
+										   target_element . append(
+											    `<option value="${record['id']}" selected >${record['name']}</option>`  
+										   );
+
+                                            
+										}else{
+											 target_element . append( 
+												  `<option value="${record['id']}" >${record['name']}</option>`);
+                                            
+										} 
+                                    target_element.append(
+										
+                                       
+                                    );
+                                });
+                            }
+                        }).catch(error => {
+                           
+                        })
+
 		}
 		/**
 		 * Busca el nombre del dato requerido y lo agrega a la modal después de realizada la consulta
