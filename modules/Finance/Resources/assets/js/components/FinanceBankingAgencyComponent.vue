@@ -219,56 +219,6 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				record: {
-					id: '',
-					name: '',
-					direction: '',
-					headquarters: false,
-					contact_person: '',
-					contact_email: '',
-					finance_bank_id: '',
-					country_id: '',
-					estate_id: '',
-					city_id: '',
-					phones: [],
-				},
-				errors: [],
-				records: [],
-				banks: [],
-				countries: [],
-				estates: ['0'],
-				cities: ['0'],
-				columns: ['finance_bank.name', 'city.name', 'name', 'direction', 'headquarters', 'phones', 'id'],
-			}
-		},
-		methods: {
-			/**
-			 * Método que borra todos los datos del formulario
-			 *
-			 * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-			 */
-		
-				reset() {
-				this.record = {
-					id: '',
-					name: '',
-					direction: '',
-					headquarters: false,
-					contact_person: '',
-					contact_email: '',
-					finance_bank_id: '',
-					country_id: '',
-					estate_id: '',
-					city_id: '',
-					phones: [],
-				};
-			},
-			customupdate(id, event){
-              	let vm = this;
-			vm.errors = [];
     export default {
         data() {
             return {
