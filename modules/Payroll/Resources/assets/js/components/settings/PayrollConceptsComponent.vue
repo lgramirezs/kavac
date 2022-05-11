@@ -125,29 +125,8 @@
                                 </div>
                             </div>
                             <!-- ./Organización -->
-                            <!-- forma de cálculo -->
-                            <div class="col-md-4">
-                                <div class=" form-group is-required">
-                                    <label>Forma de cálculo:</label>
-                                    <select2 :options="calculation_ways"
-                                             @input="record.payroll_salary_tabulator_id = ''"
-                                             v-model="record.calculation_way"></select2>
-                                </div>
-                            </div>
-                            <!-- ./forma de cálculo -->
-                            <!-- tabla salarial -->
-                            <div class="col-md-4"
-                                 v-if="record.calculation_way == 'tabulator'">
-                                <div class="form-group is-required">
-                                    <label>Tabulador:</label>
-                                    <select2 :options="payroll_salary_tabulators"
-                                             v-model="record.payroll_salary_tabulator_id"></select2>
-
-                                </div>
-                            </div>
-                            <!-- ./tabla salarial -->
                             <!-- ¿asignar a? -->
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <div class=" form-group is-required">
                                     <label>¿Asignar a?</label>
                                     <v-multiselect :options="assign_to" track_by="name"
@@ -208,8 +187,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" v-show="record.calculation_way == 'formula'">
-                            <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
                                 <!-- fórmula -->
                                 <div class="form-group is-required">
                                     <label>Fórmula</label>
@@ -268,6 +247,20 @@
                                     </div>
                                     <div class="col-xs-3 col-md-3">
                                         <div class="form-group">
+                                            <label for="benefit">¿Prestaciones sociales?</label>
+                                            <div class="col-12">
+                                                <p-radio class="pretty p-switch p-fill p-bigger"
+                                                         color="success" off-color="text-gray" toggle
+                                                         data-toggle="tooltip"
+                                                         title="Indique si desea utilizar una variable asociada a la configuración de las prestaciones sociales"
+                                                         v-model="variable" value="benefit">
+                                                    <label slot="off-label"></label>
+                                                </p-radio>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3">
+                                        <div class="form-group">
                                             <label for="concept">¿Concepto?</label>
                                             <div class="col-12">
                                                 <p-radio class="pretty p-switch p-fill p-bigger"
@@ -275,6 +268,20 @@
                                                          data-toggle="tooltip"
                                                          title="Indique si desea utilizar un concepto previamente registrado"
                                                          v-model="variable" value="concept">
+                                                    <label slot="off-label"></label>
+                                                </p-radio>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3">
+                                        <div class="form-group">
+                                            <label for="tabulator">¿Tabulador?</label>
+                                            <div class="col-12">
+                                                <p-radio class="pretty p-switch p-fill p-bigger"
+                                                         color="success" off-color="text-gray" toggle
+                                                         data-toggle="tooltip"
+                                                         title="Indique si desea utilizar una variable asociada a la configuración de vacaciones"
+                                                         v-model="variable" value="tabulator">
                                                     <label slot="off-label"></label>
                                                 </p-radio>
                                             </div>
@@ -293,7 +300,7 @@
                                     </div>
                                     <div class="col-md-6"
                                          v-if="(variable_option &&
-                                         ((variable == 'worker_record') || (variable == 'vacation')))">
+                                         ((variable == 'worker_record') || (variable == 'vacation') || (variable == 'benefit')))">
                                         <div class="form-group">
                                             <label for="register">Operador</label>
                                             <select2 :options="operators"
@@ -302,11 +309,12 @@
                                     </div>
                                     <div class="col-md-6"
                                          v-if="(variable_option &&
-                                         ((variable == 'worker_record') || (variable == 'vacation')))">
+                                         ((variable == 'worker_record') || (variable == 'vacation') || (variable == 'benefit')))">
                                         <div class="form-group">
                                             <label for="value">Valor</label>
                                             <select2 v-if="type == 'list'"
                                                      :options="subOptions"
+                                                     :disabled="operator == ''"
                                                      v-model="value"></select2>
                                             <div class="col-12"
                                                  v-else-if="type == 'boolean'">
@@ -314,6 +322,7 @@
                                                          color="success" off-color="text-gray" toggle
                                                          data-toggle="tooltip"
                                                          title="Indique el valor de comparación (requerido)"
+                                                         :disabled="operator == ''" 
                                                          v-model="value">
                                                     <label slot="off-label"></label>
                                                 </p-check>
@@ -331,7 +340,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <!-- calculadora -->
                                 <div class="form-group">
                                     <div class="row">
@@ -392,7 +401,7 @@
                                             <div class="btn btn-info btn-sm" data-toggle="tooltip"
                                                  title="Variable a usar cuando se realice el cálculo"
                                                  :disabled="((((operator == '') && (type != 'number') && (variable != 'vacation')) ||
-                                                 ((value == '') && (type == 'boolean'))) &&
+                                                 (((value == '') || (value == false)) && (type != 'boolean'))) &&
                                                  ((variable == 'worker_record') || (variable == 'vacation')))"
                                                  @click="getCodeVariable()">
                                                 {{ updateNameVariable }}
@@ -457,10 +466,8 @@
                     active:                      false,
                     formula:                     '',
                     payroll_concept_type_id:     '',
-                    calculation_way:             '',
                     institution_id:              '',
                     assign_to:                   '',
-                    payroll_salary_tabulator_id: '',
                     accounting_account_id:       '',
                     budget_account_id:           '',
                     currency_id:           '',
@@ -499,11 +506,6 @@
                 accounting_accounts:       [],
                 currencies:                [],
 
-                calculation_ways:          [
-                    {"id": "",          "text": "Seleccione..."},
-                    {"id": "formula",   "text": "Fórmula"},
-                    {"id": "tabulator", "text": "De acuerdo a tabulador"}
-                ],
                 /*affects:                   [
                     {"id": "",                     "text": "Seleccione..."},
                     {"id": "base_salary",          "text": "Salario base"},
@@ -600,19 +602,6 @@
         },
         watch: {
             /**
-             * Método que supervisa los cambios en el objeto record y actualiza el tabulador seleccionado
-             *
-             * @author    Henry Paredes <hparedes@cenditel.gob.ve> | <henryp2804@gmail.com>
-             */
-            record: {
-                deep: true,
-                handler: function() {
-                    if (this.record.payroll_salary_tabulator && this.record.payroll_salary_tabulator_id == "") {
-                        this.record.payroll_salary_tabulator_id = this.record.payroll_salary_tabulator.id;
-                    }
-                }
-            },
-            /**
              * Método que supervisa los cambios en el campo variable y actualiza el listado de opciones
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve> | <henryp2804@gmail.com>
@@ -627,6 +616,10 @@
                     vm.getOptions('payroll/get-associated-records');
                 } else if (vm.variable == 'vacation') {
                     vm.getOptions('payroll/get-vacation-associated-records');
+                } else if (vm.variable == 'benefit') {
+                    vm.getOptions('payroll/get-benefit-associated-records');
+                } else if (vm.variable == 'tabulator') {
+                    vm.getOptions('payroll/get-salary-tabulators');
                 } else if (vm.variable == 'concept') {
                     vm.variable_options = [
                         {id: '', text: 'Seleccione...'}
@@ -750,10 +743,8 @@
                     active:                      false,
                     formula:                     '',
                     payroll_concept_type_id:     '',
-                    calculation_way:             '',
                     institution_id:              '',
                     assign_to:                   '',
-                    payroll_salary_tabulator_id: '',
                     accounting_account_id:       '',
                     budget_account_id:           '',
                     assign_options:              {}
@@ -848,65 +839,65 @@
                 const vm = this;
                 let response = '';
                 let showFormula = '';
-                if (((vm.variable != 'worker_record') && (vm.variable != 'vacation')) ||
-                    ((vm.operator != '') && (vm.value != '')) ||
-                    ((vm.operator != '') && (vm.type == 'boolean')) ||
-                    ((vm.operator == '') && (vm.type == 'number'))) {
-                    if (vm.variable_option != '') {
-                        $.each(vm.variable_options, function(index, field) {
-                            if (field['id'] == vm.variable_option) {
-                                if (vm.operator == '') {
-                                    response = field['id'];
+                if (vm.variable_option != '') {
+                    $.each(vm.variable_options, function(index, field) {
+                        if (field['id'] == vm.variable_option) {
+                            if (vm.operator == '') {
+                                if ((vm.value == '') && (vm.variable != 'vacation') && (vm.variable != 'benefit')) {
+                                    response = vm.variable + '(' + field['id'] + ')';
                                     showFormula = field['text'];
                                 } else {
-                                    response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                    showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                    response = field['id'];
+                                    showFormula = field['text'];
                                 }
-                            } else if (typeof field['children'] !== 'undefined') {
-                                $.each(field['children'], function(index, field) {
-                                    if (typeof field['id'] !== 'undefined') {
-                                        if (field['id'] == vm.variable_option) {
-                                            if (vm.operator == '') {
-                                                response = field['id'];
-                                                showFormula = field['text'];
-                                            } else {
-                                                response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                                showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
-                                            }
+                            } else {
+                                response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                            }
+                        } else if (typeof field['children'] !== 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (typeof field['id'] !== 'undefined') {
+                                    if (field['id'] == vm.variable_option) {
+                                        if (vm.operator == '') {
+                                            response = field['id'];
+                                            showFormula = field['text'];
+                                        } else {
+                                            response = 'if(' + field['id'] + ' ' + vm.operator + ' ' + vm.value + '){}';
+                                            showFormula = 'Si(' + field['text'] + ' ' + vm.operator + ' ' + vm.value + '){}';
                                         }
                                     }
-                                });
-                            }
-                        });
-                    }
-                    if (response != '') {
-                        if (vm.record.formula != '') {
-                            let keys = vm.record.formula.indexOf('}');
-                            if (keys > 0) {
-                                let firstFormula = vm.record.formula.substr(0, keys);
-                                let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
-                                vm.record.formula = firstFormula + response + lastFormula;
-                            } else {
-                                vm.record.formula += response;
-                            }
+                                }
+                            });
+                        }
+                    });
+                }
+                if (response != '') {
+                    if (vm.record.formula != '') {
+                        let keys = vm.record.formula.indexOf('}');
+                        if (keys > 0) {
+                            let firstFormula = vm.record.formula.substr(0, keys);
+                            let lastFormula = vm.record.formula.substr(keys, vm.record.formula.length);
+                            vm.record.formula = firstFormula + response + lastFormula;
                         } else {
                             vm.record.formula += response;
                         }
+                    } else {
+                        vm.record.formula += response;
                     }
+                }
 
-                    if (showFormula != '') {
-                        if (vm.formula != '') {
-                            let keys = vm.formula.indexOf('}');
-                            if (keys > 0) {
-                                let firstFormula = vm.formula.substr(0, keys);
-                                let lastFormula = vm.formula.substr(keys, vm.formula.length);
-                                vm.formula = firstFormula + showFormula + lastFormula;
-                            } else {
-                                vm.formula += showFormula;
-                            }
+                if (showFormula != '') {
+                    if (vm.formula != '') {
+                        let keys = vm.formula.indexOf('}');
+                        if (keys > 0) {
+                            let firstFormula = vm.formula.substr(0, keys);
+                            let lastFormula = vm.formula.substr(keys, vm.formula.length);
+                            vm.formula = firstFormula + showFormula + lastFormula;
                         } else {
                             vm.formula += showFormula;
                         }
+                    } else {
+                        vm.formula += showFormula;
                     }
                 }
             },
@@ -969,6 +960,20 @@
                 } else {
                     return '';
                 }
+            },
+
+            initUpdate(id, event) {
+                let vm = this;
+                vm.errors = [];
+
+                let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                    return rec.id === id;
+                })[0])) || vm.reset();
+
+                vm.record = recordEdit;
+                vm.formula = recordEdit.translate_formula ?? recordEdit.formula;
+
+                event.preventDefault();
             },
         }
     };
