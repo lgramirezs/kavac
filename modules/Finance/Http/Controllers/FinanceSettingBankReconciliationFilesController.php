@@ -5,8 +5,8 @@ namespace Modules\Finance\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 
 /**
@@ -24,6 +24,8 @@ use DB;
  */
 class FinanceSettingBankReconciliationFilesController extends Controller
 {
+
+    use ValidatesRequests;
 
     /**
      * Display a listing of the resource.
@@ -46,6 +48,30 @@ class FinanceSettingBankReconciliationFilesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'bank_id' => ['required'],
+            'position_reference_column' => ['required'],
+            'position_date_column' => ['required'],
+            'position_debit_amount_column' => ['required'],
+            'position_credit_amount_column' => ['required'],
+            'position_description_column' => ['required'],
+            'separated_by' => ['required'],
+            'date_format' => ['required'],
+            'thousands_separator' => ['required'],
+            'decimal_separator' => ['required'],
+        ], [
+            'bank_id.required' => 'El campo banco es obligatorio.',
+            'position_reference_column.required' => 'El campo referencia es obligatorio.',
+            'position_date_column.required' => 'El campo fecha es obligatorio.',
+            'position_debit_amount_column.required' => 'El campo monto débito es obligatorio.',
+            'position_credit_amount_column.required' => 'El campo monto crédito es obligatorio.',
+            'position_description_column.required' => 'El campo descripción es obligatorio.',
+            'separated_by.required' => 'El campo columnas separadas por es obligatorio.',
+            'date_format.required' => 'El campo formato de fecha es obligatorio.',
+            'thousands_separator.required' => 'El campo separador de miles es obligatorio.',
+            'decimal_separator.required' => 'El campo separador de decimales es obligatorio.',
+        ]);
+
         $data = DB::transaction(function () use ($request) {
             $data = FinanceSettingBankReconciliationFiles::create([
                 'bank_id' => $request->bank_id,
