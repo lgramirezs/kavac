@@ -53,7 +53,7 @@
                     ]) !!}"
                 data-toggle="tooltip" data-placement="right"
                 title="Gestión de los movimientos de artículos entre almacenes">
-                <a  href="/warehouse/movements">
+                <a  href="{{ route('warehouse.movement.index') }}">
                     Movimientos de almacén
                 </a>
             </li>

@@ -7,8 +7,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Modules\Payroll\Models\PayrollVacationPolicy;
 use Modules\Payroll\Models\PayrollConceptAssignOption;
+use Modules\Payroll\Models\PayrollVacationPolicy;
+use Modules\Payroll\Models\PayrollScale;
 use Modules\Payroll\Models\Institution;
 
 /**
@@ -64,7 +65,7 @@ class PayrollVacationPolicyController extends Controller
             'name.required'                                  => 'El campo nombre es obligatorio.',
             'start_date.required'                            => 'El campo desde (fecha de aplicación) es obligatorio.',
             'institution_id.required'                        => 'El campo organización es obligatorio.',
-            'vacation_periods.required'                      => 'El campo período(s) vacacional es obligatorio.',
+            'vacation_periods.required'                      => 'Los campos de salidas individuales son obligatorio.',
             'vacation_type.required'                         => 'El campo tipo de vacaciones es obligatorio.',
             'vacation_periods_accumulated_per_year.required' => 'El campo períodos vacacionales acumulados por año ' .
                 'es obligatorio.',
@@ -107,7 +108,7 @@ class PayrollVacationPolicyController extends Controller
          * Objeto asociado al modelo PayrollConcept
          * @var Object $PayrollVacationPolicy
          */
-        $PayrollVacationPolicies = PayrollVacationPolicy::with('payrollConceptAssignOptions')->where('institution_id', $institution->id)->get();
+        $PayrollVacationPolicies = PayrollVacationPolicy::with('payrollConceptAssignOptions', 'payrollScales')->where('institution_id', $institution->id)->get();
         foreach ($PayrollVacationPolicies as $payrollVacationPolicy) {
             $assign_to = json_decode($payrollVacationPolicy->assign_to);
             $assign_options = [];
@@ -161,7 +162,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function show($id)
     {
-        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions')->find($id);
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions', 'payrollScales')->find($id);
         return response()->json(['record' => $payrollVacationPolicy], 200);
     }
 
@@ -253,33 +254,54 @@ class PayrollVacationPolicyController extends Controller
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
             'max_days_advance'                      => $request->input('max_days_advance'),
+
+            // Agrupar por
+            'group_by'               => $request->input('group_by'),
+            'type'                   => $request->input('type'),
         ]);
 
-        foreach ($request->assign_to as $assign_to) {
-            if ($assign_to['type'] == 'range') {
-                PayrollConceptAssignOption::create([
-                    'key'                => $assign_to['id'],
-                    'value'              => json_encode($request->assign_options[$assign_to['id']]),
-                    'applicable_type' => PayrollVacationPolicy::class,
-                    'applicable_id' => $payrollVacationPolicy->id,
+        /**
+         * Relaciona con PayrollScales
+         */
+        if ($request->payroll_scales) {
+            foreach ($request->payroll_scales as $payrollScale) {
+                $payrollVacationPolicy->PayrollScales()->create([
+                    'name'                    => $payrollScale['name'],
+                    'value'                   => json_encode($payrollScale['value'])
                 ]);
-            } elseif ($assign_to['type'] == 'list') {
-                foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
-                    /**
-                     * Objeto asociado al modelo PayrollConceptAssignOption
-                     * @var Object $payrollConceptAssignOption
-                     */
-                    $payrollConceptAssignOption = PayrollConceptAssignOption::create([
+            }
+        }
+
+            /**
+             * Se relaciona con PayrollConceptAssignOption
+             */
+        if ($request->assign_to) {
+            foreach ($request->assign_to as $assign_to) {
+                if ($assign_to['type'] == 'range') {
+                    PayrollConceptAssignOption::create([
                         'key'                => $assign_to['id'],
+                        'value'              => json_encode($request->assign_options[$assign_to['id']]),
                         'applicable_type' => PayrollVacationPolicy::class,
                         'applicable_id' => $payrollVacationPolicy->id,
                     ]);
-                    /** Se guarda la información en el campo morphs */
-                    $option = $assign_to['model']::find($assign_option['id']);
-                    $option->payrollConceptAssignOptions()->save($payrollConceptAssignOption);
+                } elseif ($assign_to['type'] == 'list') {
+                    foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
+                        /**
+                         * Objeto asociado al modelo PayrollConceptAssignOption
+                         * @var Object $payrollConceptAssignOption
+                         */
+                        $payrollConceptAssignOption = PayrollConceptAssignOption::create([
+                            'key'                => $assign_to['id'],
+                            'applicable_type' => PayrollVacationPolicy::class,
+                            'applicable_id' => $payrollVacationPolicy->id,
+                        ]);
+                        /** Se guarda la información en el campo morphs */
+                        $option = $assign_to['model']::find($assign_option['id']);
+                        $option->payrollConceptAssignOptions()->save($payrollConceptAssignOption);
+                    }
                 }
-            }
-        };
+            };
+        }
 
         return response()->json(['record' => $payrollVacationPolicy, 'message' => 'Success'], 200);
     }
@@ -301,7 +323,7 @@ class PayrollVacationPolicyController extends Controller
          *
          * @var Object $payrollVacationPolicy
          */
-        $payrollVacationPolicy = PayrollVacationPolicy::find($id);
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions','payrollScales')->find($id);
 
         $validateRules  = $this->validateRules;
         if ($request->input('vacation_type') == 'collective_vacations') {
@@ -374,6 +396,59 @@ class PayrollVacationPolicyController extends Controller
             'max_days_advance'                      => $request->input('max_days_advance'),
         ]);
 
+        /** Se eliminan lo registros anteriores de payrollScales */
+        foreach ($payrollVacationPolicy->payrollScales as $payrollScale) {
+            $payrollScale->delete();
+        }
+        /**
+         * Relaciona con escalas
+         */
+        if ($request->payroll_scales) {
+            foreach ($request->payroll_scales as $payrollScale) {
+                $payrollVacationPolicy->PayrollScales()->create([
+                    'name'                    => $payrollScale['name'],
+                    'value'                   => json_encode($payrollScale['value'])
+                ]);
+            }
+        }
+
+        /**
+         * Se elimina los registros previos de payrollConceptAssignOptions
+         */
+        foreach ($payrollVacationPolicy->payrollConceptAssignOptions as $payrollConceptAssignOption) {
+            $payrollConceptAssignOption->delete();
+        }
+        /**
+         * Se relaciona con las opciones
+         */
+        if ($request->assign_to) {
+            foreach ($request->assign_to as $assign_to) {
+                if ($assign_to['type'] == 'range') {
+                    PayrollConceptAssignOption::create([
+                        'key'                => $assign_to['id'],
+                        'value'              => json_encode($request->assign_options[$assign_to['id']]),
+                        'applicable_type' => PayrollVacationPolicy::class,
+                        'applicable_id' => $payrollVacationPolicy->id,
+                    ]);
+                } elseif ($assign_to['type'] == 'list') {
+                    foreach ($request->assign_options[$assign_to['id']] as $assign_option) {
+                        /**
+                         * Objeto asociado al modelo PayrollConceptAssignOption
+                         * @var Object $payrollConceptAssignOption
+                         */
+                        $payrollConceptAssignOption = PayrollConceptAssignOption::create([
+                            'key'                => $assign_to['id'],
+                            'applicable_type'    => PayrollVacationPolicy::class,
+                            'applicable_id'      => $payrollVacationPolicy->id,
+                        ]);
+                        /** Se guarda la información en el campo morphs */
+                        $option = $assign_to['model']::find($assign_option['id']);
+                        $option->payrollConceptAssignOptions()->save($payrollConceptAssignOption);
+                    }
+                }
+            };
+        }
+
         return response()->json(['message' => 'Success'], 200);
     }
 
@@ -395,7 +470,17 @@ class PayrollVacationPolicyController extends Controller
          *
          * @var Object $payrollVacationPolicy
          */
-        $payrollVacationPolicy = PayrollVacationPolicy::find($id);
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions','payrollScales')->find($id);
+        /** Se eliminan lo registros anteriores */
+        foreach ($payrollVacationPolicy->payrollScales as $payroll_scale) {
+            $payroll_scale->delete();
+        }
+        /**
+         * Se elimina los registros previos de payrollConceptAssignOptions
+         */
+        foreach ($payrollVacationPolicy->payrollConceptAssignOptions as $payrollConceptAssignOption) {
+            $payrollConceptAssignOption->delete();
+        }
         $payrollVacationPolicy->delete();
         return response()->json(['record' => $payrollVacationPolicy, 'message' => 'Success'], 200);
     }

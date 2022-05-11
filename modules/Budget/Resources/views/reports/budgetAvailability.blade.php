@@ -30,7 +30,8 @@ Reportes de Disponibilidad Presupuestaria
                 </div>
             </div>
             <div class="card-body">
-                <budget-availability url="{{ route('budget.report.budgetAvailabilityPdf') }}" budget-items="{{ $budgetItems }}" />
+                <budget-availability url="{{ route('budget.report.budgetAvailabilityPdf') }}" budget-items="{{ $budgetItems }}" 
+                                    budget-projects="{{ $budgetProjects }}" budget-centralized-actions="{{ $budgetCentralizedActions }}" />
             </div>
         </div>
     </div>

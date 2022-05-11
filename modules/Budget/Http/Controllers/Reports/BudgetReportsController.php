@@ -7,7 +7,6 @@ namespace Modules\Budget\Http\Controllers\Reports;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Carbon\Carbon;
 use Modules\Budget\Models\BudgetProject;
 use Modules\Budget\Models\BudgetCentralizedAction;
 use Modules\Budget\Models\BudgetAccountOpen;
@@ -16,7 +15,6 @@ use Modules\Budget\Models\BudgetSubSpecificFormulation;
 use Modules\Budget\Models\Institution;
 use App\Models\FiscalYear;
 use Modules\Budget\Models\Currency;
-
 use App\Repositories\ReportRepository;
 
 /**
@@ -60,6 +58,19 @@ class BudgetReportsController extends Controller
 
         $budgetItems = $this->getBudgetAccounts();
 
+        $budgetProjects = template_choices(
+            'Modules\Budget\Models\BudgetProject',
+            ['code', '-', 'name'],
+            ['active' => true],
+            true
+        );
+        $budgetCentralizedActions = template_choices(
+            'Modules\Budget\Models\BudgetCentralizedAction',
+            ['code', '-', 'name'],
+            ['active' => true],
+            true
+        );
+
         /* $budgetItems = array_map(function ($budgetItem) {
             return array(
                 'text' => $budgetItem->denomination,
@@ -94,7 +105,11 @@ class BudgetReportsController extends Controller
 
         array_push($data, $temp);
 
-        return view('budget::reports.budgetAvailability', ['budgetItems' => json_encode($data)]);
+        return view('budget::reports.budgetAvailability', [
+            'budgetItems' => json_encode($data),
+            'budgetProjects' => json_encode($budgetProjects),
+            'budgetCentralizedActions' => json_encode($budgetCentralizedActions)
+        ]);
     }
 
     /**
@@ -217,10 +232,18 @@ class BudgetReportsController extends Controller
             'finalDate' => 'required',
             'initialCode' => 'required',
             'finalCode' => 'required',
-            'accountsWithMovements' => 'required'
+            'accountsWithMovements' => 'required',
+            'project_id' => 'required',
+            'project_type' => 'required'
         ]);
 
         $pdf = new ReportRepository();
+
+        if($request->project_type === 'project') {
+            $project = BudgetProject::with('specificActions')->find($request->project_id);
+        }else {
+            $project = BudgetCentralizedAction::with('specificActions')->find($request->project_id);
+        }
 
         $records = $this->getBudgetAccountsOpen($data['accountsWithMovements']);
 
@@ -237,7 +260,7 @@ class BudgetReportsController extends Controller
             $data['initialDate'] = $data['finalDate'];
             $data['finalDate'] = $temp;
         }
-        // ddd($records);
+        // dd($records);
         $pdf->setConfig(['institution' => $institution]);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
@@ -250,6 +273,7 @@ class BudgetReportsController extends Controller
             "report_date" => $now = \Carbon\Carbon::today()->format('Y-m-d'),
             'initialDate' => $data['initialDate'],
             'finalDate' => $data['finalDate'],
+            'project' => $project,
         ]);
     }
 

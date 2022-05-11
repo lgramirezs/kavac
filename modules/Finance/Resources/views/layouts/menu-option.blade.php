@@ -8,10 +8,11 @@
             <a href="{{ route('finance.setting.index') }}">Configuración</a>
         </li>
         <li>
+            {{-- <a href="{{ route('finance.pay-orders.index') }}">Órdenes de Pago</a>  --}}
             <a href="#">Órdenes de Pago</a>
         </li>
         <li>
-            <a href="#">Emisión de Cheques</a>
+            <a href="#">Emisiones de Pago</a>
         </li>
         <li>
             <a href="#">Banco</a>

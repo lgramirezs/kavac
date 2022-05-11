@@ -65,24 +65,49 @@ class SaleWarehouseController extends Controller
     }
 
     /**
+     * Realiza la validación de un almacen
+     */
+    public function saleWarehouseValidate(Request $request)
+    {
+        $attributes = [
+          'name' => 'Institución que gestiona el Almacén',
+          'institution_id' => 'Nombre de Almacén',
+          'country_id' => 'Ciudad',
+          'estate_id' => 'Estado',
+          'municipality_id' => 'Municipio',
+          'parish_id' => 'País',
+
+        ];
+
+        $validation = [];
+                   //'name' => ['required', 'unique:sale_warehouses,name', 'regex:/([A-Za-z\s])\w+/u','max:200'],
+        $validation['name'] = ['required', 'regex:/([A-Za-z\s])\w+/u','max:200'];
+        $validation['institution_id'] = ['required'];
+        $validation['country_id'] = ['required'];
+        $validation['estate_id'] = ['required'];
+        $validation['municipality_id'] = ['required'];
+        $validation['parish_id'] = ['required'];
+        $this->validate($request, $validation, [], $attributes);
+    }
+
+    /**
      * Store a newly created resource in storage.
      * @param  Request $request
      * @return JsonResponse
      */
     public function store(Request $request)
     {
+        $this->saleWarehouseValidate($request);
+
         $this->validate($request, [
-            'name' => ['required', 'unique:sale_warehouses,name', 'regex:/([A-Za-z\s])\w+/u','max:200'],
-            'address' => ['required', 'max:900'],
-            'country_id' => ['required'],
-            'estate_id' => ['required'],
-            'municipality_id' => ['required'],
-            'parish_id' => ['required'],
+            'name' => ['required', 'unique:sale_warehouses,name', 'regex:/([A-Za-z\s])\w+/u','max:200']
         ]);
+
         //Define almacén principal
+        /*
         if ($request->input('main') == true) {
             $main = SaleWarehouse::where('main', '=', true)->update(['main' => false]);
-        }
+        }*/
         //Guarda datos de almacen.
         $institution_id = empty($request->institution_id)?$institution->id:$request->institution_id;
 
@@ -94,7 +119,8 @@ class SaleWarehouseController extends Controller
             'estate_id' => $request->estate_id,
             'parish_id' => $request->parish_id,
             'municipality_id' => $request->municipality_id,
-            'active' => !empty($request->input('active')) ? $request->input('active') : false
+            'active' => !empty($request->input('active')) ? $request->input('active') : false,
+            'main' => !empty($request->input('main')) ? $request->input('main') : false
         ]);
 
 
@@ -105,7 +131,7 @@ class SaleWarehouseController extends Controller
         $sale_warehouse_institution = SaleWarehouseInstitutionWarehouse::create([
             'institution_id' => $institution_id,
             'sale_warehouse_id'   => $SaleWarehouse->id,
-            'main'           => !empty($request->main)?$request->input('main'):false,
+            'main' => !empty($request->main) ? $request->input('main') : false,
         ]);
 
         return response()->json(['record' => $SaleWarehouse, 'message' => 'Success'], 200);
@@ -138,13 +164,9 @@ class SaleWarehouseController extends Controller
     {
         $saleWarehouse = SaleWarehouse::find($id);
 
+        $this->saleWarehouseValidate($request);
         $this->validate($request, [
-            'name' => ['required', 'unique:sale_warehouses,name,' . $saleWarehouse->id, 'regex:/([A-Za-z\s])\w+/u','max:200'],
-            'address' => ['required', 'max:900'],
-            'country_id' => ['required'],
-            'estate_id' => ['required'],
-            'municipality_id' => ['required'],
-            'parish_id' => ['required'],
+            'name' => ['required', 'unique:sale_warehouses,name,' . $saleWarehouse->id, 'regex:/([A-Za-z\s])\w+/u','max:200']
         ]);
 
         $saleWarehouse->name = $request->name;

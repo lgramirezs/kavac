@@ -37,13 +37,31 @@ class SaleDiscountController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'max:100', 'unique:sale_discounts,name', 'regex:/([A-Za-z\s])\w+/u'],
-            'description' => ['required', 'max:200'],
-            'percent' => ['required', 'max:3']
-        ]);
+        $this->saleDiscountValidate($request);
+
         $SaleDiscount = SaleDiscount::create(['name' => $request->name,'description' => $request->description, 'percent' => $request->percent]);
         return response()->json(['record' => $SaleDiscount, 'message' => 'Success'], 200);
+    }
+
+   /**
+    * Validacion de los datos
+    *
+    * @method    saleDiscountValidate
+    * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+    * @param     object    Request    $request
+    */
+    public function saleDiscountValidate(Request $request)
+    {
+      $attributes = [
+        'name' => 'Nombre del descuento',
+        'description' => 'Descripción del descuento',
+        'percent' => 'Porcentaje del descuento'
+      ];
+      $validation = [];
+      $validation['name'] = ['required', 'max:100', 'unique:sale_discounts,name', 'regex:/([A-Za-z\s])\w+/u'];
+      $validation['description'] = ['required', 'max:200'];
+      $validation['percent'] = ['required', 'max:3'];
+      $this->validate($request, $validation, [], $attributes);
     }
 
     /**
@@ -72,11 +90,9 @@ class SaleDiscountController extends Controller
     public function update(Request $request, $id)
     {
         $SaleDiscount = SaleDiscount::find($id);
-        $this->validate($request, [
-            'name' => ['required', 'max:100', 'unique:sale_discounts,name', 'regex:/([A-Za-z\s])\w+/u'],
-            'description' => ['required', 'max:200'],
-            'percent' => ['required', 'max:3']
-        ]);
+
+        $this->saleDiscountValidate($request);
+
         $SaleDiscount->name  = $request->name;
         $SaleDiscount->description = $request->description;
         $SaleDiscount->percent  = $request->percent;
