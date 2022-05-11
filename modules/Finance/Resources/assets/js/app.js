@@ -133,6 +133,7 @@ Vue.mixin({
 		 */
 		getAgencies() {
 			const vm = this;
+			vm.agencies = [];
 			bank_id = this.record.finance_bank_id;
 			if (bank_id) {
 				axios.get('/finance/get-agencies/' + bank_id).then(response => {
