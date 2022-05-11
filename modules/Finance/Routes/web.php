@@ -34,15 +34,10 @@ Route::group([
         /** Rutas para la gestión de chequeras */
         Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance', 'except' => ['edit']]);
         Route::get('check-books/edit/{id}', 'FinanceCheckBookController@edit')->name('finance.edit');
-
-
-
-
-
-
-
-
+        /** Rutas para la gestión de los métodos de pago */
         Route::resource('payment_methods', 'FinancePaymentMethodsController', ['as' => 'finance']);
+        /** Rutas para la gestión de la configuración de archivos de conciliación bancaria */
+        Route::resource('setting-bank-reconciliation-files', 'FinanceSettingBankReconciliationFilesController', ['as' => 'finance']);
     });
 
     Route::resource('pay-orders', 'FinancePayOrderController', ['as' => 'finance']);
