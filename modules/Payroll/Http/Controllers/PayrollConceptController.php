@@ -58,7 +58,6 @@ class PayrollConceptController extends Controller
             'name'                    => ['required', 'unique:payroll_concepts,name'],
             'payroll_concept_type_id' => ['required'],
             'institution_id'          => ['required'],
-            'calculation_way'         => ['required'],
             'assign_to'               => ['required'],
             'currency_id'             => ['required']
         ];
@@ -67,7 +66,6 @@ class PayrollConceptController extends Controller
         $this->messages = [
             'payroll_concept_type_id.required'     => 'El campo tipo de concepto es obligatorio.',
             'institution_id.required'              => 'El campo institución es obligatorio.',
-            'calculation_way.required'             => 'El campo forma de cálculo es obligatorio.',
             'assign_to.required'                   => 'El campo "¿asignar a?" es obligatorio.',
             'payroll_salary_tabulator_id.required' => 'El campo tabulador salarial es obligatorio.',
             'formula.required'                     => 'El campo fórmula es obligatorio.',
@@ -291,7 +289,6 @@ class PayrollConceptController extends Controller
         /**
          * FALTA:
          * 1-. validar assign_options dependiendo de assign_to
-         * 2-. Validar formula y/o tabla salarial dependiendo de forma de cálculo
          * Revisar regla de validación
          */
         $this->validate($request, $this->validateRules, $this->messages);
@@ -306,15 +303,9 @@ class PayrollConceptController extends Controller
             'active'                      => !empty($request->active)
                                                  ? $request->active
                                                  : false,
-            'calculation_way'             => $request->calculation_way,
-            'formula'                     => ($request->calculation_way == 'formula')
-                                                 ? $request->formula
-                                                 : '',
+            'formula'                     => $request->formula,
             'institution_id'              => $request->institution_id,
             'payroll_concept_type_id'     => $request->payroll_concept_type_id,
-            'payroll_salary_tabulator_id' => ($request->calculation_way == 'tabulator')
-                                                 ? $request->payroll_salary_tabulator_id
-                                                 : null,
             'accounting_account_id'       => $request->accounting_account_id,
             'budget_account_id'           => $request->budget_account_id,
             'assign_to'                   => json_encode($request->assign_to),
@@ -377,15 +368,9 @@ class PayrollConceptController extends Controller
         $payrollConcept->active                      = !empty($request->active)
                                                            ? $request->active
                                                            : $payrollConcept->active;
-        $payrollConcept->calculation_way             = $request->calculation_way;
-        $payrollConcept->formula                     = ($request->calculation_way == 'formula')
-                                                           ? $request->formula
-                                                           : '';
+        $payrollConcept->formula                     = $request->formula;
         $payrollConcept->institution_id              = $request->institution_id;
         $payrollConcept->payroll_concept_type_id     = $request->payroll_concept_type_id;
-        $payrollConcept->payroll_salary_tabulator_id = ($request->calculation_way == 'tabulator')
-                                                           ? $request->payroll_salary_tabulator_id
-                                                           : null;
         $payrollConcept->accounting_account_id       = $request->accounting_account_id;
         $payrollConcept->budget_account_id           = $request->budget_account_id;
         $payrollConcept->assign_to                   = json_encode($request->assign_to);
