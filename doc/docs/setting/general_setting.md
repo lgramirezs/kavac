@@ -57,16 +57,16 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/common_1.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Estatus Documentos</div>
 
-***Registro de estatus de documento***
+***Registro de estatus de documentos***
 
 -   Complete el formulario **Estatus de Documento** (ver Figura).   Seleccione un color dando clic sobre el recuadro del campo **Color**, asigne un nombre y descripción para el proceso en que se encuentra el documento a través de los campos **Nombre** y **Descripción** respectivamente, seleccione una acción que ejecuta a través del botón de selección ![Screenshot](../img/select.png). 
 -   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
 -   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
 -   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
 
-![Screenshot](../img/figure_43.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estatus De Documento</div>
+![Screenshot](../img/figure_43.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estatus de Documento</div>
 
-***Gestión de registros***
+***Gestión de registros de estatus de documentos***
 
 -   Para editar un registro de **estatus de documento** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Estatus De Documento** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **estatus de documento** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -88,7 +88,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_45.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estados Civiles</div>
 
-***Gestión de registros***
+***Gestión de registros de estados civiles***
 
 -   Para editar un registro de **estados civiles** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Estados Civiles** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **estados civiles** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -110,7 +110,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_47.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estados Civiles</div>
 
-***Gestión de registros***
+***Gestión de registros de profesiones***
 
 -   Para editar un registro de **profesiones** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Profesiones** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **profesiones** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -133,7 +133,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_49.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Tipo de Organización</div>
 
-***Gestión de registros***
+***Gestión de registros de tipos de organizaciones***
 
 -   Para editar un registro de **tipo de organización** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Tipo de Organización** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **tipo de organización** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -156,7 +156,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_51.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Sector Económico</div>
 
-***Gestión de registros***
+***Gestión de registros de sectores económicos***
 
 -   Para editar un registro de **sector económico** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Sector Económico** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **sector económico** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -178,7 +178,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_53.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Países</div>
 
-***Gestión de registros***
+***Gestión de registros de países***
 
 -   Para editar un registro de **país** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **País** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **país** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -200,7 +200,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_55.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Estados</div>
 
-***Gestión de registros***
+***Gestión de registros de estados***
 
 -   Para editar un registro de **estado** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Estados** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **estado** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -223,7 +223,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_57.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Municipios</div>
 
-***Gestión de registros***
+***Gestión de registros de municipios***
 
 -   Para editar un registro de **municipio** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Municipios** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **municipio** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -245,7 +245,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_59.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Parroquias</div>
 
-***Gestión de registros***
+***Gestión de registros de parroquias***
 
 -   Para editar un registro de **parroquia** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Parroquias** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **parroquia** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -267,7 +267,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_61.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Ciudades</div>
 
-***Gestión de registros***
+***Gestión de registros de ciudades***
 
 -   Para editar un registro de **ciudad** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Ciudades** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **ciudad** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -290,7 +290,7 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 ![Screenshot](../img/figure_63.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Monedas</div>
 
-***Gestión de registros***
+***Gestión de registros de monedas***
 
 -   Para editar un registro de **moneda** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Monedas** y presione el botón **Guardar** para almacenar los cambios efectuados.
 -   Para eliminar un registro de **moneda** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
@@ -300,32 +300,152 @@ Para establecer registros comunes se deben seguir los siguientes pasos:
 
 **Tipos de cambio**
 
+-   Ingresar a la opción **Tipos de Cambio** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_12.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Tipos de Cambio</div>
 
+***Registro de tipo de cambio***
+
+-   Complete el formulario **Tipos de Cambio** (ver Figura). Seleccione la moneda de origen y la moneda de cambio a través de los campos **De** y **A** respectivamente, especifique las fechas de vigencia del tipo de cambio a través de los campos **Fecha de inicio** y **Fecha fin**(no obligatorio), asigne el monto del tipo de cambio e indique si el tipo de cambio se encuentra activo haciendo uso del botón de selección ![Screenshot](../img/select.png).
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_65.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Tipo de Cambio</div>
+
+***Gestión de registros de tipos de cambio***
+
+-   Para editar un registro de **tipo de cambio** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Tipos de Cambio** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **tipo de cambio** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_66.png)<div style="text-align: center;font-weight: bold">Figura: Registros Tipo de Cambio</div>
 
 **Impuestos**
 
+-   Ingresar a la opción **Impuestos** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_13.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Impuestos</div>
 
+***Registro de impuestos***
+
+-   Complete el formulario **Impuestos** (ver Figura). Asigne un nombre, descripción, fecha de entrada en vigencia y valor porcentual del impuesto a registrar.
+-   Indique si el impuesto afecta cuenta de iva y se encuentra activo a través del botón de selección ![Screenshot](../img/select.png) de los campos **Afecta cuenta de IVA** y **Activo**. 
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_67.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Impuestos</div>
+
+***Gestión de registros de impuestos***
+
+-   Para editar un registro de **impuestos** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Impuestos** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **impuesto** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_68.png)<div style="text-align: center;font-weight: bold">Figura: Registros Impuestos</div>
 
 **Unidades tributarias**
 
+-   Ingresar a la opción **Unidades Tributarias** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_14.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Unidades Tributarias</div>
+
+***Registro de unidades tributarias***
+
+-   Complete el formulario **Unidades Tributarias** (ver Figura). Indique la fecha de vigencia a través de los campos **Fecha de inicio** y **Fecha fin**, Asigne un valor de la unidad tributaria e indique a través del botón de selección si se encuentra activa. 
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_69.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Unidades Tributarias</div>
+
+***Gestión de registros de unidades tributarias***
+
+-   Para editar un registro de **impuestos** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Impuestos** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **impuesto** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_70.png)<div style="text-align: center;font-weight: bold">Figura: Registros Unidades Tributarias</div>
 
 
 **Deducciones**
 
+-   Ingresar a la opción **Deducciones** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_15.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Deducciones</div>
+
+***Registro de deducciones***
+
+-   Complete el formulario **Deducciones** (ver Figura). Asigne un nombre para el tipo de deducción, seleccione una cuenta contable(no obligatorio), agregue una descripción, establezca una formula asociada al tipo de deducción haciendo uso de la calculadora e indique si el tipo de deducción se encuentra activa a través del botón de selección ![Screenshot](../img/select.png) del campo **Activa**.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+!!! note "Nota"
+    A través de esta funcionalidad se registran beneficios fiscales o deducciones enmarcados en la normativa jurídica del país en cuestión y los reglamentos de la organización.  Esta funcionalidad esta vinculada directamante con el módulo de finanzas.
+
+    **Uso de la calculadora**:
+
+    -   Presione el botón **C** para reiniciar valores de la formula.
+    -   Presione el botón **DEDUCIBLE** para agregar la base deducible a la formula. 
+
+![Screenshot](../img/figure_71.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Deducciones</div>
+
+***Gestión de registros de deducciones***
+
+-   Para editar un registro de **deducción** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Deducciones** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **deducción** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_72.png)<div style="text-align: center;font-weight: bold">Figura: Registros Deducción</div>
 
 
 **Unidades de medida**
 
+-   Ingresar a la opción **unidades de medida** dando clic sobre el recuadro.
+
 ![Screenshot](../img/common_16.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Unidades de Medida</div>
+
+***Registro de unidades de medida***
+
+-   Complete el formulario **Unidades de Medida** (ver Figura). Asigne un acrónimo(abreviatura), nombre y descripción de la unidad de medida a registrar.   
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_73.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Unidades de Medida</div>
+
+***Gestión de registros de unidades de medida***
+
+-   Para editar un registro de **unidad de medida** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **Unidades de Medida** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **unidad de medida** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_74.png)<div style="text-align: center;font-weight: bold">Figura: Registros Unidades de Medida</div>
 
 
 **Unidades/Dependencias**
 
+-   Ingresar a la opción **Unidades/Dependencias** dando clic sobre el recuadro. 
+
 ![Screenshot](../img/common_17.png)<div style="text-align: center;font-weight: bold">Figura: Registros Comunes Unidades de Medida</div>
+
+***Registro de unidad/dependencia***
+
+-   Complete el formulario **Unidades/Dependencias** (ver Figura). Seleccione una organización a la cual se encuentra asociado el departamento(unidad/dependencia), en caso de que dependa o se encuentre asociado a otro departamento seleccione este departamento a través del campo **Depende de**, asigne una abreviatura a través del campo **Siglas** y defina un nombre para el departamento a registrar. 
+-   Indique la opción ![Screenshot](../img/select.png) del botón de selección de los siguientes campos:
+    -   **Solicita almacén**: requiere registro de almacén. 
+    -   **Activo**: registro de departamento como activo.
+    -   **Administrativo**: departamento del área administrativa de la organización.
+-   Presione el botón ![Screenshot](../img/save_3.png) **Guardar** para registrar los cambios efectuados.
+-   Presione el botón ![Screenshot](../img/cancel_1.png) **Cancelar** para limpiar datos del formulario.
+-   Presione el botón ![Screenshot](../img/close.png) **Cerrar** para cerrar el formulario.
+
+![Screenshot](../img/figure_75.png)<div style="text-align: center;font-weight: bold">Figura: Formulario Unidad/Dependencia</div>
+
+***Gestión de registros de unidades/dependencias***
+
+-   Para editar un registro de **país** presione el botón **Editar** ![Screenshot](../img/edit.png) del registro seleccionado de la tabla **Registros**.  A continuación complete el formulario **País** y presione el botón **Guardar** para almacenar los cambios efectuados.
+-   Para eliminar un registro de **país** presione el botón **Eliminar** ![Screenshot](../img/delete.png) del registro seleccionado de la tabla **Registros**. 
+
+![Screenshot](../img/figure_76.png)<div style="text-align: center;font-weight: bold">Figura: Registros Unidad/Dependencia</div>
+
 
 ## Configurar organización 
 

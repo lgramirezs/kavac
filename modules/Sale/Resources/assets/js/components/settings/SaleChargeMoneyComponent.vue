@@ -16,11 +16,23 @@
             <h6><i class="icofont icofont-pay-man ico-3x"></i>Métodos de cobro</h6>
           </div>
           <div class="modal-body">
-            <div class="alert alert-danger" v-if="errors.length > 0">
-              <ul>
-                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-              </ul>
-            </div>
+						<div class="alert alert-danger" v-if="errors.length > 0">
+							<div class="container">
+								<div class="alert-icon">
+									<i class="now-ui-icons objects_support-17"></i>
+								</div>
+								<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"
+									@click.prevent="errors = []">
+									<span aria-hidden="true">
+										<i class="now-ui-icons ui-1_simple-remove"></i>
+									</span>
+								</button>
+								<ul>
+									<li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+								</ul>
+							</div>
+						</div>
             <h6 class="card-title">Datos del Método de cobro:</h6>
             <div class="row">
               <div class="col-md-6">

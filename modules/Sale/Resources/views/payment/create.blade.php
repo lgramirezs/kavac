@@ -34,8 +34,8 @@
                 </div>
             </div>
             <payment-registered-create
-                :paymentid ="{!! (isset($payment)) ? $payment->id : 'null' !!}"
-                route_list="{{ url('sale/payment') }}">
+                route_list='{{ url('/sale/payment')}}'
+                :paymentid ="{!! (isset($payment)) ? $payment->id : 'null' !!}">
             </payment-registered-create>
         </div>
     </div>

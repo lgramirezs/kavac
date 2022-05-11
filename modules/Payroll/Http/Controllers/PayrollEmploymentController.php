@@ -48,6 +48,7 @@ class PayrollEmploymentController extends Controller
             'years_apn' => ['max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
+            'institution_email' => ['required', 'unique:payroll_employments,institution_email'],
             'function_description' => ['nullable'],
             'payroll_position_type_id' => ['required'],
             'payroll_position_id' => ['required'],
@@ -73,7 +74,7 @@ class PayrollEmploymentController extends Controller
             'department_id' => 'departamento',
             'payroll_contract_type_id' => 'tipo de contracto',
             'payroll_staff_id' => 'trabajador',
-            'institution_email' => 'El correo institucional ingresado',
+            'institution_email' => 'correo institucional',
             'previous_jobs.*.start_date' => 'fecha de inicio',
             'previous_jobs.*.end_date' => 'fecha de cese'
         ];
@@ -124,7 +125,6 @@ class PayrollEmploymentController extends Controller
         $request->institution_id ? $institution = Institution::whereId($request->institution_id)->first() : $this->rules['institution_id'] = ['required'];
 
         $this->rules['payroll_staff_id'] = ['required', 'unique:payroll_employments,payroll_staff_id'];
-        $this->rules['institution_email'] = ['email', 'nullable', 'unique:payroll_employments,institution_email'];
         if ($request->start_date) {
             $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
         }
@@ -200,7 +200,7 @@ class PayrollEmploymentController extends Controller
      */
     public function show($id)
     {
-        
+
         $payrollEmployment = PayrollEmployment::where('id', $id)->with(['payrollPreviousJob',
             'payrollStaff'=> function ($query) {
                 $query->with('payrollNationality','payrollGender','payrollLicenseDegree','payrollBloodType','payrollDisability',);
@@ -208,8 +208,8 @@ class PayrollEmploymentController extends Controller
             'payrollPosition', 'payrollStaffType', 'department', 'payrollContractType'
         ])->first();
         return response()->json(['record' => $payrollEmployment, 'age' => age($payrollEmployment->payrollStaff->birthdate)], 200);
-        
-       
+
+
     }
 
     /**
@@ -248,9 +248,7 @@ class PayrollEmploymentController extends Controller
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
         ];
-        $this->rules['institution_email'] = [
-            'email', 'nullable', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id
-        ];
+        
         if ($request->start_date) {
             $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
         }

@@ -86,7 +86,7 @@ class FinanceBankingAgencyController extends Controller
           ],[
             'name.required' => 'El campo nombre de agencia es obligatorio.',
             'name.unique' => 'El nombre de agencia  ya ha sido registrado.',
-            'direction.required' => 'El campo direccion es obligatorio.',
+            'direction.required' => 'El campo dirección es obligatorio.',
             'city_id.required' => 'El campo ciudad es obligatorio.',
             'finance_bank_id.required' => 'El campo banco es obligatorio.',
            ]
@@ -156,7 +156,7 @@ class FinanceBankingAgencyController extends Controller
             'finance_bank_id' => ['required']
           ],[
             'name.required' => 'El campo nombre de agencia es obligatorio.',         
-            'direction.required' => 'El campo direccion es obligatorio.',
+            'direction.required' => 'El campo dirección es obligatorio.',
             'city_id.required' => 'El campo ciudad es obligatorio.',
             'finance_bank_id.required' => 'El campo banco es obligatorio.',
            ] 

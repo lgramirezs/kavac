@@ -334,12 +334,16 @@
 									                        			onclick="clickUploadDoc({{$reqDoc->id}})">
 									                        		<i class="fa fa-cloud-upload fa-2x"></i>
 									                        	</button>
-																@if(isset($model) && isset($model->documents))
+																{{-- {{ dd($model->documents->purchaseDocumentRequiredDocument) }} --}}
+
+																@if(isset($model)
+																	&& isset($model->documents)
+																	&& isset($docs_to_download['req_doc_'.$reqDoc->id]))
 																	<a class="btn btn-simple btn-primary btn-events"
 																		title="Presione para descargar el documento"
 																		data-toggle="tooltip"
-																		{{-- href="{{'/purchase/document/download/'}}" --}}
-																		{{-- download="{{'.geojson'}}" --}}
+																		target="_blank"
+																		href="{{'/purchase/document/download/'.$docs_to_download['req_doc_'.$reqDoc->id]->file}}"
 																		>
 																		<i class="fa fa-cloud-download fa-2x"></i>
 																	</a>
@@ -349,20 +353,30 @@
 																<input type="number" id="{{'reqDoc'.$reqDoc->id}}" name="reqDocs[]" style="display:none">
 									                        </div>
 									                        <div class="feature-list-content-left">
-									                            <div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
-									                                <div class="badge badge-danger ml-2"
-																		title="El documento aún no ha sido cargado"
-									                                	data-toggle="tooltip">
-									                                	por cargar
-									                                </div>
-									                            </div>
-																<div class="feature-list-subheading" id="{{'loaded_doc'.$reqDoc->id}}" style="display:none;">
-																	<span class="badge badge-success"
-																		title="El documento se ha cargado"
-									                                	data-toggle="tooltip">
-																		<strong>Documento cargado</strong>
-																	</span>
-																</div>
+																@if(isset($docs_to_download['req_doc_'.$reqDoc->id]))
+																	<div class="feature-list-subheading">
+																		<span class="badge badge-success"
+																			title="El documento se ha cargado"
+																			data-toggle="tooltip">
+																			<strong>Documento cargado</strong>
+																		</span>
+																	</div>
+																@else
+																	<div class="feature-list-heading" id="{{'toload_doc'.$reqDoc->id}}">
+																		<div class="badge badge-danger ml-2"
+																			title="El documento aún no ha sido cargado"
+																			data-toggle="tooltip">
+																			por cargar
+																		</div>
+																	</div>
+																	<div class="feature-list-subheading" id="{{'loaded_doc'.$reqDoc->id}}" style="display:none;">
+																		<span class="badge badge-success"
+																			title="El documento se ha cargado"
+																			data-toggle="tooltip">
+																			<strong>Documento cargado</strong>
+																		</span>
+																	</div>
+																@endif
 									                            <div class="feature-list-subheading">
 									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
 									                            </div>

@@ -87,7 +87,7 @@ class FinanceBankController extends Controller
             'name' => ['required', 'max:100', 'unique:finance_banks,name'],
             'short_name' => ['required', 'max:50', 'unique:finance_banks,short_name']
         ], $this->messages);
-   
+
         $financeBank = FinanceBank::create([
             'code' => $request->code,
             'name' => $request->name,

@@ -34,6 +34,7 @@
                 </div>
             </div>
             <sale-service-create
+                route_list='{{ url('/sale/services')}}'
                 :serviceid ="{!! (isset($services)) ? $services->id : 'null' !!}">
             </sale-service-create>
         </div>

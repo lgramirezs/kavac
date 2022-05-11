@@ -96,6 +96,6 @@ class BudgetCentralizedAction extends Model implements Auditable
      */
     public function specificActions()
     {
-        return $this->morphMany(BudgetSpecificAction::class, 'specificable');
+        return $this->morpOne(BudgetSpecificAction::class, 'specificable');
     }
 }

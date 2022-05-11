@@ -1,6 +1,24 @@
 <template>
 	<div class="form-horizontal">
 		<div class="card-body">
+			<!-- mensajes de error -->
+			<div class="alert alert-danger" v-if="errors.length > 0">
+				<div class="container">
+					<div class="alert-icon">
+						<i class="now-ui-icons objects_support-17"></i>
+					</div>
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click.prevent="errors = []">
+						<span aria-hidden="true">
+							<i class="now-ui-icons ui-1_simple-remove"></i>
+						</span>
+					</button>
+					<ul>
+						<li v-for="error in errors" :key="error">{{ error }}</li>
+					</ul>
+				</div>
+			</div>
+			<!-- mensajes de error -->
 			<div class="row">
 				<div class="col-4" id="budgetAvailabilityInitDate">
 					<label><strong>Desde:</strong></label>
@@ -8,7 +26,7 @@
 						<label class="control-label"
 							>Partida Presupuestaria</label
 						>
-						<select2
+						<select2 
 							v-model="initialCode"
 							:options="budgetItemsArray"
 						></select2>
@@ -47,7 +65,7 @@
 						<label class="text-center">
 							<strong>Quitar cuentas sin movimientos</strong>
 						</label>
-						<div class="col-12 bootstrap-switch-mini mt-4">
+						<div class="col-12 mt-4">
 							<div class="form-check">
 								<input
 									v-model="accountsWithMovements"
@@ -57,6 +75,56 @@
 								/>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="col-6 mt-4">
+					<label for="">
+						<div class="col-12 bootstrap-switch-mini">
+							<input
+								type="radio"
+								name="project_centralized_action"
+								value="project"
+								id="sel_project"
+								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+								data-on-label="SI"
+								data-off-label="NO"
+							/>
+							Proyecto
+						</div>
+					</label>
+					<div class="mt-4">
+						<select2
+							:options="budgetProjectsArray"
+							v-model="project_id"
+							id="project_id"
+							@input="getSpecificActions('Project')"
+							disabled
+						></select2>
+					</div>
+				</div>
+				<div class="col-6 mt-4">
+					<label for="">
+						<div class="col-12 bootstrap-switch-mini">
+							<input
+								type="radio"
+								name="project_centralized_action"
+								value="project"
+								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+								id="sel_centralized_action"
+								data-on-label="SI"
+								data-off-label="NO"
+							/>
+							Acción Centralizada
+						</div>
+					</label>
+					<div class="mt-4">
+						<select2
+							:options="budgetCentralizedActionsArray"
+							v-model="centralized_action_id"
+							@input="getSpecificActions('CentralizedAction')"
+							id="centralized_action_id"
+							disabled
+						></select2>
 					</div>
 				</div>
 			</div>
@@ -76,39 +144,114 @@
 	</div>
 </template>
 <script>
-export default {
-	props: {
-		budgetItems: {
-			type: String,
-			default: '[]'
+	export default {
+		props: {
+			budgetItems: {
+				type: String,
+				default: '[]'
+			},
+			budgetProjects: {
+				type: String,
+				default: '[]'
+			},
+			budgetCentralizedActions: {
+				type: String,
+				default: '[]'
+			},
+			url: {
+				type: String,
+				required: true
+			}
 		},
-		url: {
-			type: String,
-			required: true
-		}
-	},
-	data() {
-		return {
-			initialDate: '',
-			finalDate: '',
+		data() {
+			return {
 
-			initialCode: 0,
-			finalCode: 0,
+				initialDate: '',
+				finalDate: '',
 
-			accountsWithMovements: false,
+				initialCode: 0,
+				finalCode: 0,
 
-			budgetItemsArray: JSON.parse(this.budgetItems)
-		};
-	},
-	created() {
-		console.log('BudgetAvailabiltyComponent');
-	},
-	methods: {
-		generateReport: function() {
-			window.open(
-				`${this.url}?initialDate=${this.initialDate}&finalDate=${this.finalDate}&initialCode=${this.initialCode}&finalCode=${this.finalCode}&accountsWithMovements=${this.accountsWithMovements}`
-			);
-		}
-	}
-};
+				accountsWithMovements: false,
+
+				project: '',
+				centralized_action: '',
+
+				project_id: '',
+				centralized_action_id: '',
+
+				budgetItemsArray: JSON.parse(this.budgetItems),
+				budgetProjectsArray: JSON.parse(this.budgetProjects),
+				budgetCentralizedActionsArray: JSON.parse(this.budgetCentralizedActions),
+
+				errors: []
+			};
+		},
+		created() {
+			this.project = false;
+			this.centralized_action = false;
+			console.log(this.project);
+		},
+		mounted() {
+			const vm = this;
+
+			$('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
+				$('#project_id').attr('disabled', e.target.id !== 'sel_project');
+				$('#centralized_action_id').attr(
+					'disabled',
+					e.target.id !== 'sel_centralized_action'
+				);
+
+				if (e.target.id === 'sel_project') {
+					$('#centralized_action_id')
+						.closest('.form-group')
+						.removeClass('is-required');
+					$('#project_id')
+						.closest('.form-group')
+						.addClass('is-required');
+				} else if (e.target.id === 'sel_centralized_action') {
+					$('#centralized_action_id')
+						.closest('.form-group')
+						.addClass('is-required');
+					$('#project_id')
+						.closest('.form-group')
+						.removeClass('is-required');
+				}
+			});
+		},
+		methods: {
+			generateReport: function() {
+				this.errors = [];
+				if(!this.initialDate) {
+					this.errors.push('El campo desde es obligatorio');
+				}
+				if(!this.finalDate) {
+					this.errors.push('El campo hasta es obligatorio');
+				}
+				if(!this.initialCode) {
+					this.errors.push('El campo Desde: Partida Presupuestario es obligatorio');
+				}
+				if(!this.finalCode) {
+					this.errors.push('El campo Hasta: Partida Presupuestario es obligatorio');
+				}
+				if(!this.project_id && !this.centralized_action_id) {
+					this.errors.push('El campo Proyecto o Acción Centralizada es obligatorio');
+				}
+				
+
+				if (this.errors.length === 0)
+				{
+					window.open(
+					`${this.url}?initialDate=${this.initialDate}
+					&finalDate=${this.finalDate}
+					&initialCode=${this.initialCode}
+					&finalCode=${this.finalCode}
+					&accountsWithMovements=${this.accountsWithMovements}
+					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
+					&project_type=${this.project_id ? 'project' : 'centralized_action'}`);
+				}
+					
+			},
+		},
+	};
 </script>

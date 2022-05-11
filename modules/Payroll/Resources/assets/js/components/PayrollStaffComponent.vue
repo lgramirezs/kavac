@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-md-4" id="helpStaffEmail">
-                    <div class="form-group">
+                    <div class="form-group is-required">
                         <label>Correo Electrónico</label>
                         <input type="email" class="form-control input-sm" v-model="record.email"/>
                     </div>

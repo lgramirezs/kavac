@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Sale\Models\SaleClient;
 use Modules\Sale\Models\SaleClientsEmail;
-use App\Models\Phone;
+use Modules\Sale\Models\SaleClientsPhone;
 use App\Rules\Rif as RifRule;
 
 class SaleClientsController extends Controller
@@ -45,19 +45,16 @@ class SaleClientsController extends Controller
             'municipality_id'            => ['required'],
             'parish_id'                  => ['required', 'max:200'],
             'address_tax'                => ['required', 'max:200'],
-            'phones'                     => ['required'],
-            'phones.*.area_code'         => ['max:3'],
-            'phones.*.number'            => ['max:8'],
-            'phones.*.extension'         => ['max:2'],
             'sale_clients_email'         => ['required'],
             'sale_clients_email.*.email' => ['email'],
+            'sale_clients_phone'         => ['required'],
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
+            'rif.size'                            => 'El campo rif debe contener 10 caracteres.',
             'rif.required'                        => 'El campo rif es obligatorio.',
             'rif.unique'                          => 'El campo rif ya ha sido registrado.',
-            'rif.max'                             => 'El campo rif debe contener un máximo de 17 caracteres.',
             'business_name.required'              => 'El campo razón social es obligatorio.',
             'type_person_juridica.required'       => 'El campo tipo de persona es obligatorio.',
             'representative_name.required'        => 'El campo nombres y apellidos del representante legal es obligatorio.',
@@ -71,12 +68,10 @@ class SaleClientsController extends Controller
             'id_type.required'                    => 'El campo tipo de identificación es obligatorio.',
             'id_number.required'                  => 'El número de identificación es obligatorio.',
             'id_number.unique'                    => 'El número de identificación ya ha sido registrado.',
-            'phones.required'                     => 'El campo números telefónicos es obligatorio.',
-            'phones.*.area_code.max'              => 'El campo código de área debe contener un máximo de 3 caracteres.',
-            'phones.*.number.max'                 => 'El campo número debe contener un máximo de 8 caracteres.',
-            'phones.*.extension.max'              => 'El campo extensión debe contener un máximo de 2 caracteres.',
+            'id_number.digits_between'            => 'El número de identificación no posee el formato correcto.',
             'sale_clients_email.required'         => 'El campo correo electrónico es obligatorio.',
             'sale_clients_email.*.email.email'    => 'El formato del correo electrónico es incorrecto.',
+            'sale_clients_phone.required'         => 'El campo teléfono es obligatorio.',
         ];
     }
 
@@ -86,7 +81,7 @@ class SaleClientsController extends Controller
      */
     public function index()
     {
-        return response()->json(['records' => SaleClient::with(['saleClientsEmail', 'phones'])->get()], 200);
+        return response()->json(['records' => SaleClient::with(['saleClientsEmail', 'saleClientsPhone'])->get()], 200);
     }
 
     /**
@@ -101,12 +96,12 @@ class SaleClientsController extends Controller
         if($request->type_person_juridica == 'Natural'){
             $this->validate($request, [
                 'id_type' => ['required'],
-                'id_number' => ['required', 'unique:sale_clients,id_number'],
+                'id_number' => ['required', 'unique:sale_clients,id_number', 'digits_between:1,10'],
                 'name' => ['required'],
             ], $this->messages);
         } else {
             $this->validate($request, [
-                'rif' => ['required', 'max:17', 'unique:sale_clients,rif'],
+                'rif' => ['required', 'size:11', 'unique:sale_clients,rif', new RifRule],
                 'business_name' => ['required'],
                 'representative_name' => ['required'],
                 'name_client' => ['required'],
@@ -129,21 +124,19 @@ class SaleClientsController extends Controller
         $client->id_number = $request->id_number;
         $client->save();
 
-        if ($request->phones && !empty($request->phones)) {
-            foreach ($request->phones as $phone) {
-                $client->phones()->save(new Phone([
-                    'type' => $phone['type'],
-                    'area_code' => $phone['area_code'],
-                    'number' => $phone['number'],
-                    'extension' => $phone['extension']
-                ]));
-            }
-        }
-
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
             foreach ($request->sale_clients_email as $email) {
                 $clientEmail = SaleClientsEmail::create([
                     'email'          => $email['email'],
+                    'sale_client_id' => $client->id
+                ]);
+            }
+        }
+
+        if ($request->sale_clients_phone && !empty($request->sale_clients_phone)) {
+            foreach ($request->sale_clients_phone as $phone) {
+                $clientPhone = SaleClientsPhone::create([
+                    'phone'          => $phone['phone'],
                     'sale_client_id' => $client->id
                 ]);
             }
@@ -178,36 +171,25 @@ class SaleClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /** @var object Datos de la entidad bancaria */
-        $client = SaleClient::with('saleClientsEmail')->find($id);
+        /** @var object Datos del cliente email y phone */
+        $client = SaleClient::with('saleClientsEmail', 'saleClientsPhone')->find($id);
 
         $this->validate($request, $this->validateRules, $this->messages);
 
         if($request->type_person_juridica == 'Natural'){
             $this->validate($request, [
                 'id_type' => ['required'],
-                'id_number' => ['required', 'unique:sale_clients,id_number,' . $client->id],
+                'id_number' => ['required', 'unique:sale_clients,id_number,' . $client->id, 'digits_between:1,10'],
                 'name' => ['required'],
             ], $this->messages);
         } else {
             $this->validate($request, [
-                'rif' => ['required', 'max:17', 'unique:sale_clients,rif,' . $client->id],
+                'rif' => ['required', 'size:10', 'unique:sale_clients,rif,' . $client->id, new RifRule],
                 'business_name' => ['required'],
                 'representative_name' => ['required'],
                 'name_client' => ['required'],
             ], $this->messages);
         }
-
-        // $i = 0;
-        // foreach ($request->phones as $phone) {
-        //     $this->validate($request, [
-        //         'phones.'.$i.'.type' => ['required'],
-        //         'phones.'.$i.'.area_code' => ['required', 'digits:3'],
-        //         'phones.'.$i.'.number' => ['required', 'digits:7'],
-        //         'phones.'.$i.'.extension' => ['nullable', 'digits_between:3,6'],
-        //     ]);
-        //     $i++;
-        // }
 
         $client->rif = $request->rif;
         $client->business_name = $request->business_name;
@@ -220,32 +202,12 @@ class SaleClientsController extends Controller
         $client->parish_id = $request->parish_id;
         $client->address_tax = $request->address_tax;
         $client->name_client = $request->name_client;
-        $client->emails = $request->emails;
-        $client->phones = $request->phones;
         $client->id_type = $request->id_type;
         $client->id_number = $request->id_number;
         $client->save();
 
-        // foreach ($client->phones as $phone) {
-        //     $phone->delete();
-        // }
-
-        if ($request->phones && !empty($request->phones)) {
-            foreach ($request->phones as $phone) {
-                $client->phones()->updateOrCreate(
-                    [
-                        'type' => $phone['type'], 'area_code' => $phone['area_code'],
-                        'number' => $phone['number'], 'extension' => $phone['extension']
-                    ],
-                    [
-                        'type' => $phone['type'], 'area_code' => $phone['area_code'],
-                        'number' => $phone['number'], 'extension' => $phone['extension']
-                    ]
-                );
-            }
-        }
-
         if ($request->sale_clients_email && !empty($request->sale_clients_email)) {
+            $client->saleClientsEmail()->delete();
             foreach ($request->sale_clients_email as $email) {
                 $client->saleClientsEmail()->updateOrCreate(
                     [
@@ -254,6 +216,18 @@ class SaleClientsController extends Controller
                     ],
                     [
                         'email'          => $email['email'],
+                        'sale_client_id' => $client->id
+                    ]
+                );
+            }
+        }
+
+        if ($request->sale_clients_phone && !empty($request->sale_clients_phone)) {
+            $client->saleClientsPhone()->delete();
+            foreach ($request->sale_clients_phone as $phone) {
+                $client->saleClientsPhone()->updateOrCreate(
+                    [
+                        'phone'          => $phone['phone'],
                         'sale_client_id' => $client->id
                     ]
                 );
@@ -322,7 +296,7 @@ class SaleClientsController extends Controller
      */
     public function getSaleClient($id)
     {
-        $saleClient = SaleClient::with(['phones', 'saleClientsEmail'])->find($id);
+        $saleClient = SaleClient::with(['saleClientsEmail', 'saleClientsPhone'])->find($id);
         return response()->json(['sale_client' => $saleClient], 200);
     }
 }
