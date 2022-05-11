@@ -168,13 +168,13 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Separador de miles:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="thousands_decimal_separated_list" v-model="record.thousands_separator"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Separador de decimales:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="thousands_decimal_separated_list" v-model="record.decimal_separator"></select2>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +218,8 @@
                     position_description_column: '',
                     separated_by: '',
                     date_format: '',
+                    thousands_separator: '',
+                    decimal_separator: '',
                 },
                 errors: [],
                 records: [],
@@ -240,6 +242,11 @@
                     { "id": 1, "text": "Tabulador" },
                     { "id": 2, "text": "Punto y Coma" },
                     { "id": 3, "text": "Coma" },
+                ],
+                thousands_decimal_separated_list: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": 1, "text": "Punto" },
+                    { "id": 2, "text": "Coma" },
                 ],
                 date_formats : [
                     { "id": "", "text": "Seleccione..." },
@@ -266,6 +273,8 @@
                     position_description_column: '',
                     separated_by: '',
                     date_format: '',
+                    thousands_separator: '',
+                    decimal_separator: '',
                 };
             },
 
@@ -279,6 +288,10 @@
                 console.log(this.record.position_debit_amount_column);
                 console.log(this.record.position_credit_amount_column);
                 console.log(this.record.position_description_column);
+                console.log(this.record.separated_by);
+                console.log(this.record.date_format);
+                console.log(this.record.thousands_separator);
+                console.log(this.record.decimal_separator);
             }
         },
         created() {
