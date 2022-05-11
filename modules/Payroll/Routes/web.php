@@ -442,6 +442,9 @@ Route::group([
     /** Ruta que obtiene un arreglo con los registros asociados a las vacaciones registrados */
     Route::get('get-vacation-associated-records', 'PayrollParameterController@getVacationAssociatedRecords');
 
+    /** Ruta que obtiene un arreglo con los registros asociados a las prestaciones sociales registrados */
+    Route::get('get-benefit-associated-records', 'PayrollParameterController@getBenefitAssociatedRecords');
+
     /** Rutas para gestionar los ajustes en las tablas salariales */
     Route::resource(
         'salary-adjustments',

@@ -191,7 +191,7 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click="createRecord()"
+                            <button type="button" @click="createRecord('finance/setting-bank-reconciliation-files')"
                                 class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
@@ -239,19 +239,19 @@
                 ],
                 separated_list : [
                     { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "Tabulador" },
-                    { "id": 2, "text": "Punto y Coma" },
-                    { "id": 3, "text": "Coma" },
+                    { "id": "Tabulador", "text": "Tabulador" },
+                    { "id": "Punto y Coma", "text": "Punto y Coma" },
+                    { "id": "Coma", "text": "Coma" },
                 ],
                 thousands_decimal_separated_list: [
                     { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "Punto" },
-                    { "id": 2, "text": "Coma" },
+                    { "id": "Punto", "text": "Punto" },
+                    { "id": "Coma", "text": "Coma" },
                 ],
                 date_formats : [
                     { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "DD-MM-YYYY" },
-                    { "id": 2, "text": "YYYY-MM-DD" },
+                    { "id": "DD-MM-YYYY", "text": "DD-MM-YYYY" },
+                    { "id": "YYYY-MM-DD", "text": "YYYY-MM-DD" },
                 ],
             }
         },
@@ -278,7 +278,7 @@
                 };
             },
 
-            createRecord () {
+            createRecordConsole () {
                 // console.log("Entró aquí!");
                 console.log(this.record.bank_id);
                 console.log(this.record.read_start_line);
