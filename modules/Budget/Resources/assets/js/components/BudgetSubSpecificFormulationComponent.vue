@@ -1157,6 +1157,19 @@ export default {
 			}
 		}
 	},
+
+	created(){
+		window.addEventListener('updateProjectId', (event) => {
+			this.record.project_id = event.value;
+		});
+
+		window.addEventListener('updateCentralizedActionId', (event) => {
+			this.record.centralized_action_id = event.value;
+		});
+
+	},
+
+
 	async mounted() {
 		const vm = this;
 		vm.loading = true;
@@ -1187,6 +1200,7 @@ export default {
 			);
 
 			if (e.target.id === 'sel_project') {
+				window.dispatchEvent(new CustomEvent('updateCentralizedActionId', { value: '' }));
 				$('#centralized_action_id')
 					.closest('.form-group')
 					.removeClass('is-required');
@@ -1194,6 +1208,7 @@ export default {
 					.closest('.form-group')
 					.addClass('is-required');
 			} else if (e.target.id === 'sel_centralized_action') {
+				window.dispatchEvent(new CustomEvent('updateProjectId', { value: '' }));
 				$('#centralized_action_id')
 					.closest('.form-group')
 					.addClass('is-required');
