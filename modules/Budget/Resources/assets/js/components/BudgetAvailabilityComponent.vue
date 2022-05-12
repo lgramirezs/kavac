@@ -119,6 +119,7 @@
 					</label>
 					<div class="mt-4">
 						<select2
+							name="centralized_action"
 							:options="budgetCentralizedActionsArray"
 							v-model="centralized_action_id"
 							@input="getSpecificActions('CentralizedAction')"
@@ -205,25 +206,36 @@
 		created() {
 			this.project = false;
 			this.centralized_action = false;
+
+			window.addEventListener('updateProjectId', (event) => {
+				this.project_id = event.value;
+			});
+
+			window.addEventListener('updateCentralizedActionId', (event) => {
+				this.centralized_action_id = event.value;
+			});
+			
 		},
 		mounted() {
 			const vm = this;
 
 			$('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
+				
 				$('#project_id').attr('disabled', e.target.id !== 'sel_project');
-				$('#centralized_action_id').attr(
-					'disabled',
-					e.target.id !== 'sel_centralized_action'
+				$('#centralized_action_id').attr('disabled', e.target.id !== 'sel_centralized_action'
 				);
-
 				if (e.target.id === 'sel_project') {
+					window.dispatchEvent(new CustomEvent("updateCentralizedActionId", {value: '' }));
+					$('#centralized_action_id').
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.removeClass('is-required');
+					$('#centralized_action_id').val('');
 					$('#project_id')
 						.closest('.form-group')
 						.addClass('is-required');
 				} else if (e.target.id === 'sel_centralized_action') {
+					window.dispatchEvent(new CustomEvent("updateProjectId", {value: '' }));
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.addClass('is-required');
