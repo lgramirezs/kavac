@@ -21,11 +21,13 @@
     			</button>
     		</div>
             <div slot="professions" slot-scope="props" class="text-center">
-                <div v-if="props.row.professions != 0">
-                    <span v-for="profession in props.row.professions" :key="profession.id">
-                        <div>
-                            {{ profession.name }}
-                        </div>
+                <div v-if="props.row.payroll_studies != 0">
+                    <span v-for="profession in professions" :key="profession.id">
+                        <span v-for="study in props.row.payroll_studies" :key="study.id">
+                            <div>
+                                {{ study.profession_id == profession.id ? profession.text : '' }}
+                            </div>
+                        </span>
                     </span>
                 </div>
                 <div v-else>
