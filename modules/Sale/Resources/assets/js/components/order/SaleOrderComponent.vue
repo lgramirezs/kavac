@@ -43,7 +43,7 @@
                 <div class="form-group is-required">
                   <label for="phone">Número de teléfono:</label>
                   <input type="text" id="phone" class="form-control input-sm" data-toggle="tooltip"
-                    title="Número de teléfono" v-model="record.phone" placeholder="00-000-0000000">
+                    title="Número de teléfono" v-model="record.phone" placeholder="+00-000-0000000">
                 </div>
               </div>
             </div>

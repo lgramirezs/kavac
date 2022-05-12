@@ -14,7 +14,7 @@ class SaleClient extends Model implements Auditable
     use AuditableTrait;
     use ModelsTrait;
     
-    protected $with = ['parish', 'saleClientsEmail'];
+    protected $with = ['parish', 'saleClientsEmail', 'saleClientsPhone'];
     /**
      * Lista de atributos para la gestión de fechas
      * @var array $dates
@@ -26,26 +26,8 @@ class SaleClient extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'rif', 'business_name', 'representative_name', 'type_person_juridica', 'name', 'country_id', 'estate_id', 'municipality_id', 'parish_id', 'address_tax', 'name_client', 'emails', 'id_number', 'id_type'
+        'rif', 'business_name', 'representative_name', 'type_person_juridica', 'name', 'country_id', 'estate_id', 'municipality_id', 'parish_id', 'address_tax', 'name_client', 'id_number', 'id_type'
     ];
-
-    /**
-     * Lista de atributos que deben ser asignados a tipos nativos.
-     * @var array
-     */
-    protected $casts = [
-        'phones' => 'json'
-    ];
-
-    /**
-     * Obtiene todos los número telefónicos asociados al cliente
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function phones()
-    {
-        return $this->morphMany(\App\Models\Phone::class, 'phoneable');
-    }
 
     /**
      * Método que obtiene la lista de facturas del módulo de comercialización
@@ -72,6 +54,19 @@ class SaleClient extends Model implements Auditable
     }
 
     /**
+     * Método que obtiene los telefonos del cliente
+     *
+     * @author jose puentes <jpuentes@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany Objeto con el registro relacionado al modelo
+     * saleClientsPhone
+     */
+    public function saleClientsPhone()
+    {
+        return $this->hasMany(SaleClientsPhone::class);
+    }
+
+
+    /**
      * Método que obtiene la solicitud asociado a una parroquia
      *
      * @author
@@ -87,7 +82,7 @@ class SaleClient extends Model implements Auditable
      *
      * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
      * @return \Illuminate\Database\Eloquent\Relations\hasMany Objeto con el registro relacionado al modelo
-     * saleClientsEmail
+     * saleService
      */
     public function saleService()
     {

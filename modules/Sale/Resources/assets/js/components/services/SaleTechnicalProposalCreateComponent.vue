@@ -430,12 +430,12 @@
         <div class="row">
             <div class="col-md-3 offset-md-9" id="HelpButtons">
                 <button type="button" @click="reset()"
-                        class="btn btn-default btn-icon btn-round"
+                        class="btn btn-default btn-icon btn-round btn-modal-clear"
                         title ="Borrar datos del formulario">
                         <i class="fa fa-eraser"></i>
                 </button>
 
-                <button type="button"
+                <button type="button" @click="redirect_back(route_list)"
                         class="btn btn-warning btn-icon btn-round btn-modal-close"
                         data-dismiss="modal"
                         title="Cancelar y regresar">
@@ -1095,7 +1095,15 @@ export default {
                     scrollTop: $("#SaleTechnicalProposalForm").offset()
                 }, 1000);
                 vm.errors.push('El porcentaje de actividades no debe ser mayor a 100.');
-            } else {
+            }
+            if (percentage < 100){
+                vm.errors = [];
+                $('html,body').animate({
+                    scrollTop: $("#SaleTechnicalProposalForm").offset()
+                }, 1000);
+                vm.errors.push('El porcentaje de actividades no debe ser menor a 100.');
+            }
+            else {
                 vm.loading = true;
                 var fields = {};
                 url = vm.setUrl(url);

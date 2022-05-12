@@ -91,7 +91,7 @@ class BudgetCompromiseController extends Controller
                 $spac = BudgetSpecificAction::find($account['specific_action_id']);
                 $formulation = $spac->subSpecificFormulations()->where('year', $compromisedYear)->first();
                 $tax = (isset($account['account_tax_id']) || isset($account['tax_id']))
-                       ? Tax::find($account['account_tax_id'] ?? $account['account_tax_id']) 
+                       ? Tax::find($account['account_tax_id'] ?? $account['tax_id'])
                        : new Tax();
                 $taxHistory = ($tax)?$tax->histories()->orderBy('operation_date', 'desc')->first():new Tax();
                 $taxAmount = ($account['amount'] * (($taxHistory)?$taxHistory->percentage:0)) / 100;

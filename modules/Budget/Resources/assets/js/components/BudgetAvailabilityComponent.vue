@@ -119,12 +119,25 @@
 					</label>
 					<div class="mt-4">
 						<select2
+							name="centralized_action"
 							:options="budgetCentralizedActionsArray"
 							v-model="centralized_action_id"
 							@input="getSpecificActions('CentralizedAction')"
 							id="centralized_action_id"
 							disabled
 						></select2>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="mt-4">
+						<div class="form-group is-required">
+							<label for="specific_action_id" class="control-label">Acción Específica</label>
+							<select2 :options="specific_actions"
+								v-model="specific_action_id"
+								id="specific_action_id"
+								disabled
+							></select2>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -180,36 +193,49 @@
 				project_id: '',
 				centralized_action_id: '',
 
+				specific_action_id: '',
+
 				budgetItemsArray: JSON.parse(this.budgetItems),
 				budgetProjectsArray: JSON.parse(this.budgetProjects),
 				budgetCentralizedActionsArray: JSON.parse(this.budgetCentralizedActions),
 
-				errors: []
+				errors: [],
+				specific_actions: []
 			};
 		},
 		created() {
 			this.project = false;
 			this.centralized_action = false;
-			console.log(this.project);
+
+			window.addEventListener('updateProjectId', (event) => {
+				this.project_id = event.value;
+			});
+
+			window.addEventListener('updateCentralizedActionId', (event) => {
+				this.centralized_action_id = event.value;
+			});
+			
 		},
 		mounted() {
 			const vm = this;
 
 			$('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
+				
 				$('#project_id').attr('disabled', e.target.id !== 'sel_project');
-				$('#centralized_action_id').attr(
-					'disabled',
-					e.target.id !== 'sel_centralized_action'
+				$('#centralized_action_id').attr('disabled', e.target.id !== 'sel_centralized_action'
 				);
-
 				if (e.target.id === 'sel_project') {
+					window.dispatchEvent(new CustomEvent("updateCentralizedActionId", {value: '' }));
+					$('#centralized_action_id').
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.removeClass('is-required');
+					$('#centralized_action_id').val('');
 					$('#project_id')
 						.closest('.form-group')
 						.addClass('is-required');
 				} else if (e.target.id === 'sel_centralized_action') {
+					window.dispatchEvent(new CustomEvent("updateProjectId", {value: '' }));
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.addClass('is-required');
@@ -220,6 +246,33 @@
 			});
 		},
 		methods: {
+			getSpecificActions(type) {
+				let id = type === 'Project'
+						? this.project_id
+						: this.centralized_action_id;
+
+				this.specific_actions = [];
+
+				if (id) {
+					axios.get(
+						`${window.app_url}/budget/get-specific-actions/${type}/${id}/report`
+					).then(response => {
+						this.specific_actions = response.data;
+					})
+					.catch(error => {
+						vm.logs(
+							'BudgetSubSpecificFormulationComponent.vue',
+							551,
+							error,
+							'getSpecificActions'
+						);
+					});
+				}
+
+				var len = this.specific_actions.length;
+				$('#specific_action_id').attr('disabled', len == 0);
+			},
+
 			generateReport: function() {
 				this.errors = [];
 				if(!this.initialDate) {
@@ -237,6 +290,9 @@
 				if(!this.project_id && !this.centralized_action_id) {
 					this.errors.push('El campo Proyecto o Acción Centralizada es obligatorio');
 				}
+				if(!this.specific_action_id) {
+					this.errors.push('El campo Acción Específica es obligatorio');
+				}
 				
 
 				if (this.errors.length === 0)
@@ -248,10 +304,19 @@
 					&finalCode=${this.finalCode}
 					&accountsWithMovements=${this.accountsWithMovements}
 					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
-					&project_type=${this.project_id ? 'project' : 'centralized_action'}`);
+					&project_type=${this.project_id ? 'project' : 'centralized_action'}
+					&specific_action_id=${this.specific_action_id}`);
 				}
 					
 			},
 		},
+		watch: {
+			specific_actions: function() {
+				$('#specific_action_id').attr(
+					'disabled',
+					this.specific_actions.length <= 1
+				);
+			},
+		}
 	};
 </script>

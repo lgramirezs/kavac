@@ -124,17 +124,17 @@
     <div class="card-footer text-right">
         <div class="row">
             <div class="col-md-3 offset-md-9" id="saleHelpParamButtons">
-                <button type="button" @click="reset()"
-                    class="btn btn-default btn-icon btn-round"
-                    title ="Borrar datos del formulario">
-                    <i class="fa fa-eraser"></i>
+    	        <button type="button" @click="reset()"
+                    class="btn btn-default btn-icon btn-round btn-modal-clear"
+      	            title ="Borrar datos del formulario">
+    	                <i class="fa fa-eraser"></i>
                 </button>
                 <button type="button" @click="redirect_back(route_list)"
-                    class="btn btn-warning btn-icon btn-round btn-modal-close"
-                    data-dismiss="modal"
-                    title="Cancelar y regresar">
-                    <i class="fa fa-ban"></i>
-                </button>
+    	            class="btn btn-warning btn-icon btn-round btn-modal-close"
+    	            data-dismiss="modal"
+    	            title="Cancelar y regresar">
+    	                <i class="fa fa-ban"></i>
+    	        </button>
                 <button type="button"  @click="createRecord('sale/payment/store')"
                         class="btn btn-success btn-icon btn-round btn-modal-save"
                         title="Guardar registro">

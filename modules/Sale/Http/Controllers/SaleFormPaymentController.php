@@ -71,10 +71,7 @@ class SaleFormPaymentController extends Controller
       }
     }
 
-    $this->validate($request, [
-      'name_form_payment' => ['required', 'max:100'],
-      'description_form_payment' => ['required', 'max:100']
-    ]);
+    $this->saleFormPaymentValidate($request);
 
     $form_payment = SaleFormPayment::create([
       'name_form_payment' => $request->name_form_payment,
@@ -83,6 +80,25 @@ class SaleFormPaymentController extends Controller
     ]);
 
     return response()->json(['record' => $form_payment, 'message' => 'Success'], 200);
+  }
+
+  /**
+    * Validacion de los datos
+    *
+    * @method    saleFormPaymentValidate
+    * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+    * @param     object    Request    $request
+    */
+  public function saleFormPaymentValidate(Request $request)
+  {
+    $attributes = [
+      'name_form_payment' => 'Nombre de la forma de cobro',
+      'description_form_payment' => 'Descripción de la forma de cobro'
+    ];
+    $validation = [];
+    $validation['name_form_payment'] = ['required', 'max:100'];
+    $validation['description_form_payment'] = ['required', 'max:100'];
+    $this->validate($request, $validation, [], $attributes);
   }
 
   /**
@@ -115,10 +131,7 @@ class SaleFormPaymentController extends Controller
     /** @var object Datos de la forma de cobro */
     $form_payment = SaleFormPayment::find($id);
 
-    $this->validate($request, [
-      'name_form_payment' => ['required', 'max:100'],
-      'description_form_payment' => ['required', 'max:100']
-    ]);
+    $this->saleFormPaymentValidate($request);
 
     $attributes = [];
     if ($request->list_attributes && !empty($request->list_attributes)) {

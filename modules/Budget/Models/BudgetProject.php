@@ -83,6 +83,6 @@ class BudgetProject extends Model implements Auditable
      */
     public function specificActions()
     {
-        return $this->morphOne(BudgetSpecificAction::class, 'specificable');
+        return $this->morphMany(BudgetSpecificAction::class, 'specificable');
     }
 }

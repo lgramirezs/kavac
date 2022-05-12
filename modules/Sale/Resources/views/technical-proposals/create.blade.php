@@ -35,6 +35,7 @@
                 </div>
             </div>
             <sale-technical-proposal-create
+                route_list='{{ url('/sale/services')}}'
                 :serviceid ="{!! (isset($saleTechnicalProposal)) ? $saleTechnicalProposal->id : 'null' !!}">
             </sale-technical-proposal-create>
         </div>

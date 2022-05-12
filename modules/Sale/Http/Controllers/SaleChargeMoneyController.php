@@ -69,10 +69,7 @@ class SaleChargeMoneyController extends Controller
       }
     }
 
-    $this->validate($request, [
-      'name_charge_money' => ['required', 'max:100'],
-      'description_charge_money' => ['required', 'max:100']
-    ]);
+    $this->saleChargeMoneyValidate($request);
 
     $charge_money = SaleChargeMoney::create([
       'name_charge_money' => $request->name_charge_money,
@@ -81,6 +78,25 @@ class SaleChargeMoneyController extends Controller
     ]);
 
     return response()->json(['record' => $charge_money, 'message' => 'Success'], 200);
+  }
+
+  /**
+    * Validacion de los datos
+    *
+    * @method    saleChargeMoneyValidate
+    * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+    * @param     object    Request    $request
+    */
+  public function saleChargeMoneyValidate(Request $request)
+  {
+    $attributes = [
+      'name_charge_money' => 'Nombre del método de cobro',
+      'description_charge_money' => 'Descripción del método de cobro'
+    ];
+    $validation = [];
+    $validation['name_charge_money'] = ['required', 'max:100'];
+    $validation['description_charge_money'] = ['required', 'max:100'];
+    $this->validate($request, $validation, [], $attributes);
   }
 
   /**
@@ -111,10 +127,7 @@ class SaleChargeMoneyController extends Controller
     /** @var object Datos del metodo de cobro */
     $charge_money = SaleChargeMoney::find($id);
 
-    $this->validate($request, [
-      'name_charge_money' => ['required', 'max:100'],
-      'description_charge_money' => ['required', 'max:100']
-    ]);
+    $this->saleChargeMoneyValidate($request);
 
     $attributes = [];
     if ($request->list_attributes && !empty($request->list_attributes)) {

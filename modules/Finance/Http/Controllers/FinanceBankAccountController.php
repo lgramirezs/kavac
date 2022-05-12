@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Finance\Models\FinanceBank;
 use Modules\Finance\Models\FinanceBankAccount;
+use Illuminate\Validation\Rule;
 
 /**
  * @class FinanceBankAccountController
@@ -24,6 +25,22 @@ class FinanceBankAccountController extends Controller
 {
     use ValidatesRequests;
 
+     /**
+     * Método constructor de la clase
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     */
+    public function __construct()
+    {
+
+        $this->customAttributes = [
+            'ccc_number' => 'código cuenta cliente ',
+            'description' => 'descripción',
+            'opened_at' => 'fecha de apertura',
+            'finance_banking_agency_id' => 'agencia',
+            'finance_account_type_id' => 'tipo de cuenta',
+        ];
+    }
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Http\JsonResponse
@@ -54,18 +71,14 @@ class FinanceBankAccountController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'ccc_number' => ['required', 'max:20', 'unique:finance_bank_accounts,ccc_number'],
+            'ccc_number' => ['required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number'],
             'description' => ['required'],
             'opened_at' => ['required', 'date'],
             'finance_banking_agency_id' => ['required'],
             'finance_account_type_id' => ['required']
         ],[
-            'ccc_number.required' => 'El campo código cuenta cliente es obligatorio.',
-            'description.required' => 'El campo descripción es obligatorio.',
-            'opened_at.required' => 'El campo fecha de apertura es obligatorio.',
-            'finance_banking_agency_id.required' => 'El campo agencia es obligatorio.',
-            'finance_account_type_id.required' => 'El campo tipo de cuenta es obligatorio.',
-        ]);
+            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
+        ], $this->customAttributes);
 
         $ccc_number = $request->bank_code . $request->ccc_number;
         $ccc_numbers = FinanceBankAccount::where('ccc_number', $ccc_number)->first();
@@ -115,14 +128,23 @@ class FinanceBankAccountController extends Controller
 
         $this->validate($request, [
             'ccc_number' => [
-                'required', 'max:20', 'unique:finance_bank_accounts,ccc_number,' . substr($bankAccount->ccc_number, 4)
+                'required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number,'. $bankAccount->id
             ],
             'description' => ['required'],
             'opened_at' => ['required', 'date'],
             'finance_banking_agency_id' => ['required'],
             'finance_account_type_id' => ['required']
-        ]);
+        ], [
+            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
+        ], $this->customAttributes);
 
+        $ccc_number = $request->bank_code . $request->ccc_number;
+        $ccc_numbers = FinanceBankAccount::where(['id' => $id, 'ccc_number' => $ccc_number])->first();
+            if(!$ccc_numbers){
+                $error[0]= "El campo código cuenta cliente ya existe.";
+                return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+            }
+        
         $bankAccount->ccc_number = $request->bank_code . $request->ccc_number;
         $bankAccount->description = $request->description;
         $bankAccount->opened_at = $request->opened_at;

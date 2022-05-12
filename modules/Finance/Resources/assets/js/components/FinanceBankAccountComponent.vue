@@ -24,7 +24,8 @@
 						<i class="now-ui-icons objects_support-17"></i>
 					</div>
 					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"
+									@click.prevent="errors = []">
 		                    		<span aria-hidden="true">
 	                   				<i class="now-ui-icons ui-1_simple-remove"></i>
 	                        			</span>
@@ -34,7 +35,7 @@
 							</ul>
 						</div>
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group is-required">
 									<label>Fecha de apertura</label>
 									<input type="date" v-model="record.opened_at" class="form-control input-sm"
@@ -56,7 +57,7 @@
 								<div class="form-group is-required">
 									<label>Agencia:</label>
 									<select2 :options="agencies"
-											 v-model="record.finance_banking_agency_id"></select2>
+											 v-model="record.finance_banking_agency_id"></select2>	  
 			                    </div>
 							</div>
 						</div>
@@ -105,7 +106,7 @@
 								Cerrar
 							</button>
 							<button type="button" class="btn btn-warning btn-sm btn-round btn-modal btn-modal-clear" 
-									@click="reset()">
+									@click="reset">
 								Cancelar
 							</button>
 							<button type="button" @click="createRecord('finance/bank-accounts')" 
@@ -126,13 +127,13 @@
 	                			{{ convert_date(props.row.opened_at) }}
 	                		</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
-	                			<button @click="initUpdate(props.row.id, $event)"
-		                				class="btn btn-warning btn-xs btn-icon btn-round"
+	                			<button @click="customUpdate(props.row.id, $event)"
+		                				class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
 		                				title="Modificar registro" data-toggle="tooltip" type="button">
 		                			<i class="fa fa-edit"></i>
 		                		</button>
 		                		<button @click="deleteRecord(props.row.id, '/finance/bank-accounts')"
-										class="btn btn-danger btn-xs btn-icon btn-round"
+										class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
 										title="Eliminar registro" data-toggle="tooltip"
 										type="button">
 									<i class="fa fa-trash-o"></i>
@@ -166,6 +167,7 @@
 				agencies: [],
 				account_types: [],
 				columns: ['finance_banking_agency', 'ccc_number', 'opened_at', 'id'],
+			
 			}
 		},
 		methods: {
@@ -183,7 +185,8 @@
 					ccc_number: '',
 					bank_code: '',
 					description: '',
-					opened_at: ''
+					opened_at: '',
+					
 				};
 			},
 			/**
@@ -196,6 +199,44 @@
 			convert_date(date){
 				
 				return new Date(date).toLocaleDateString('en-GB', {timeZone: 'UTC'});
+			},
+
+			customUpdate(id, event){
+              	let vm = this;
+				vm.errors = [];
+
+				let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+					return rec.id === id;
+				})[0])) || vm.reset();
+     
+				vm.record = recordEdit;
+            	vm.record.finance_bank_id = vm.record.finance_banking_agency.finance_bank_id;
+				vm.record.ccc_number = recordEdit.ccc_number.substr(4);
+				vm.record.opened_at = moment(vm.record.opened_at).add(1, 'days').format('YYYY-MM-DD');
+				vm.record.finance_banking_agency_id = vm.record.finance_banking_agency.id; 
+				// console.log('la fecha es esta: ', vm.record.opened_at, 'y la agencia', vm.record.finance_banking_agency_id);
+				// console.log(vm.record.finance_banking_agency.id)
+			/**
+			 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
+			 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
+			 */
+				$.each(vm.record, function(el, value) {
+					if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
+						/** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
+						$("input[name=" + el + "]").each(function() {
+							if ($(this).val() === value) {
+								$(this).bootstrapSwitch('state', value, true)
+							}
+
+						});
+					}
+					if (value === true || value === false) {
+						$("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
+					}
+				});
+
+				event.preventDefault();
+          
 			},
 		},
 		created() {
@@ -218,5 +259,5 @@
 		},
         mounted() {
         }
-	};
+    };
 </script>

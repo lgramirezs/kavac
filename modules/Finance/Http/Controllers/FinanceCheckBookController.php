@@ -96,7 +96,7 @@ class FinanceCheckBookController extends Controller
             'numbers' => ['required', 'array', 'min:1']
         ], [
             'code.required' => ('El campo serial / código es obligatorio.'),
-            'finance_bank_account_id.required' => ('El campo Banco es obligatorio.'),
+            'finance_bank_account_id.required' => ('El campo banco es obligatorio.'),
             'numbers.required' => ('El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +'),
             'numbers.min' => ('Debe ingresar al menos 1 numero de cheque.'),
         ]);
@@ -116,6 +116,8 @@ class FinanceCheckBookController extends Controller
             }
             //consulta que no exista el campo numero de cheque repetido en el formulario.
             foreach ($request->numbers as $number2) {
+                dd($request->numbers);
+                dd($number2);
                 if($number == $number2){
                     $error[0]= "El campo numero de cheque esta repetido en el formulario";
                     return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
@@ -161,9 +163,18 @@ class FinanceCheckBookController extends Controller
     {
         //return view('finance::edit');
 
-        $checksUsed = FinanceCheckBook::find($id);
-        //return $payment;
-        return view('finance::edit', compact("checksUsed"));
+        dd($id);
+        $record = FinanceCheckBook::find($id);
+        //return view('finance::create', compact("checksUsed"));
+
+        //return response()->json(['records' => $record], 200);
+
+
+
+      return view('finance::create', ['orderid' => $id, 'record' => $record]);
+
+
+
     }
 
     /**

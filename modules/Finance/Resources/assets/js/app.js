@@ -11,6 +11,16 @@ Vue.component('finance-banks', () => import(
 ));
 
 /**
+ * Componente para la gestión de archivos de conciliación bancaria.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-reconciliation-files', () => import(
+    /* webpackChunkName: "finance-bank-reconciliation-files" */
+    './components/FinanceBankReconciliationFilesComponent.vue'
+));
+
+/**
  * Componente para la gestión de agencias bancarias
  *
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
@@ -144,7 +154,8 @@ Vue.mixin({
 		 */
 		async getAgencies() {
 			const vm = this;
-			const bank_id = this.record.finance_bank_id || '';
+			vm.agencies = [];
+			bank_id = this.record.finance_bank_id;
 
 			if (bank_id) {
 				await axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {

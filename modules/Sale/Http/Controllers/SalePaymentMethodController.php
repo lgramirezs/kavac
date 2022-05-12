@@ -57,14 +57,32 @@ class SalePaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'max:100'],
-            'description' => ['required', 'max:200']
-        ]);
+
+        $this->salePaymentMethodeValidate($request);
+        
         $salePaymentMethod = SalePaymentMethod::create([
             'name' => $request->name,'description' => $request->description
         ]);
         return response()->json(['record' => $salePaymentMethod, 'message' => 'Success'], 200);
+    }
+
+    /**
+     * Validacion de los datos
+     *
+     * @method    salePaymentMethodeValidate
+     * @author Ing. Jose Puentes <jpuentes@cenditel.gob.ve>
+     * @param     object    Request    $request
+     */
+    public function salePaymentMethodeValidate(Request $request)
+    {
+      $attributes = [
+        'name' => 'Nombre',
+        'description' => 'Descripción'
+      ];
+      $validation = [];
+      $validation['name'] = ['required', 'max:100'];
+      $validation['description'] = ['required', 'max:200'];
+      $this->validate($request, $validation, [], $attributes);
     }
 
     /**
@@ -96,10 +114,9 @@ class SalePaymentMethodController extends Controller
     public function update(Request $request, $id)
     {
         $salePaymentMethod = SalePaymentMethod::find($id);
-        $this->validate($request, [
-            'name' => ['required', 'max:100'],
-            'description' => ['nullable', 'max:200']
-        ]);
+
+        $this->salePaymentMethodeValidate($request);
+
         $salePaymentMethod->name  = $request->name;
         $salePaymentMethod->description = $request->description;
         $salePaymentMethod->save();
