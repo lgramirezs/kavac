@@ -127,6 +127,18 @@
 						></select2>
 					</div>
 				</div>
+				<div class="col-12">
+					<div class="mt-4">
+						<div class="form-group is-required">
+							<label for="specific_action_id" class="control-label">Acción Específica</label>
+							<select2 :options="specific_actions"
+								v-model="specific_action_id"
+								id="specific_action_id"
+								disabled
+							></select2>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="card-footer text-right">
@@ -180,17 +192,19 @@
 				project_id: '',
 				centralized_action_id: '',
 
+				specific_action_id: '',
+
 				budgetItemsArray: JSON.parse(this.budgetItems),
 				budgetProjectsArray: JSON.parse(this.budgetProjects),
 				budgetCentralizedActionsArray: JSON.parse(this.budgetCentralizedActions),
 
-				errors: []
+				errors: [],
+				specific_actions: []
 			};
 		},
 		created() {
 			this.project = false;
 			this.centralized_action = false;
-			console.log(this.project);
 		},
 		mounted() {
 			const vm = this;
@@ -220,6 +234,33 @@
 			});
 		},
 		methods: {
+			getSpecificActions(type) {
+				let id = type === 'Project'
+						? this.project_id
+						: this.centralized_action_id;
+
+				this.specific_actions = [];
+
+				if (id) {
+					axios.get(
+						`${window.app_url}/budget/get-specific-actions/${type}/${id}/report`
+					).then(response => {
+						this.specific_actions = response.data;
+					})
+					.catch(error => {
+						vm.logs(
+							'BudgetSubSpecificFormulationComponent.vue',
+							551,
+							error,
+							'getSpecificActions'
+						);
+					});
+				}
+
+				var len = this.specific_actions.length;
+				$('#specific_action_id').attr('disabled', len == 0);
+			},
+
 			generateReport: function() {
 				this.errors = [];
 				if(!this.initialDate) {
@@ -237,6 +278,9 @@
 				if(!this.project_id && !this.centralized_action_id) {
 					this.errors.push('El campo Proyecto o Acción Centralizada es obligatorio');
 				}
+				if(!this.specific_action_id) {
+					this.errors.push('El campo Acción Específica es obligatorio');
+				}
 				
 
 				if (this.errors.length === 0)
@@ -248,10 +292,19 @@
 					&finalCode=${this.finalCode}
 					&accountsWithMovements=${this.accountsWithMovements}
 					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
-					&project_type=${this.project_id ? 'project' : 'centralized_action'}`);
+					&project_type=${this.project_id ? 'project' : 'centralized_action'}
+					&specific_action_id=${this.specific_action_id}`);
 				}
 					
 			},
 		},
+		watch: {
+			specific_actions: function() {
+				$('#specific_action_id').attr(
+					'disabled',
+					this.specific_actions.length <= 1
+				);
+			},
+		}
 	};
 </script>

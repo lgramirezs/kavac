@@ -61,12 +61,12 @@ class BudgetSpecificActionController extends Controller
             ['code', '-', 'name'],
             ['active' => true]
         );
-        
+
         /** @var array Define las reglas de validación para el formulario */
         $this->validate_rules = [
             'from_date' => ['required', 'date'],
             'to_date' => ['required', 'date'],
-            'code' => ['required','unique:budget_specific_actions'],
+            'code' => ['required', 'unique:budget_specific_actions'],
             'name' => ['required'],
             'description' => ['required'],
             'project_centralized_action' => ['required'],
@@ -214,27 +214,30 @@ class BudgetSpecificActionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-    'from_date' => ['required', 'date'],
-    'to_date' => ['required', 'date'],
-    'code' => ['required'],
-    'name' => ['required'],
-    'description' => ['required'],
+        $this->validate(
+            $request,
+            [
+                'from_date' => ['required', 'date'],
+                'to_date' => ['required', 'date'],
+                'code' => ['required'],
+                'name' => ['required'],
+                'description' => ['required'],
 
-]
-, [
-            'from_date.required' => 'El campo fecha de inicio es obligatorio.',
-            'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
-            'to_date.required' => 'El campo fecha final es obligatorio.',
-            'to_date.date' => 'El campo fecha final no tiene un formato válido.',
-            'code.required' => 'El campo código es obligatorio.',
+            ],
+            [
+                'from_date.required' => 'El campo fecha de inicio es obligatorio.',
+                'from_date.date' => 'El campo fecha de inicio no tiene un formato válido.',
+                'to_date.required' => 'El campo fecha final es obligatorio.',
+                'to_date.date' => 'El campo fecha final no tiene un formato válido.',
+                'code.required' => 'El campo código es obligatorio.',
 
 
- 
-        ]);
-     
 
-       
+            ]
+        );
+
+
+
         if ($request->project_centralized_action === "project") {
             /** @var object Objeto que contiene información de un proyecto */
             $pry_acc = BudgetProject::find($request->project_id);
@@ -244,38 +247,35 @@ class BudgetSpecificActionController extends Controller
             $pry_acc = BudgetCentralizedAction::find($request->centralized_action_id);
             $specificable_type = BudgetCentralizedAction::class;
         }
-       
 
-           $budgetSpecific = BudgetSpecificAction::where('code',$request->code)->first();
-         
+
+        $budgetSpecific = BudgetSpecificAction::where('code', $request->code)->first();
+
         /** @var object Objeto con información de la acción específica a modificar */
         $budgetSpecificAction = BudgetSpecificAction::find($id);
-      if($budgetSpecific){
-            if ( $budgetSpecific->id == $id) {
-    $budgetSpecificAction->fill($request->all());
-    $budgetSpecificAction->specificable_type = $specificable_type;
-    $budgetSpecificAction->specificable_id = $pry_acc->id;
-    $budgetSpecificAction->save();
-
-               }else{ 
-                   $this->validate($request, ['code' => ['unique:budget_specific_actions'],]
-    , [ 'code.unique' => 'El campo código ya ha sido registrado.',
-    ]);
-
-
-               }
-
-
-      }else{
-           $budgetSpecificAction->fill($request->all());
-                  $budgetSpecificAction->specificable_type = $specificable_type;
-                 $budgetSpecificAction->specificable_id = $pry_acc->id;
+        if ($budgetSpecific) {
+            if ($budgetSpecific->id == $id) {
+                $budgetSpecificAction->fill($request->all());
+                $budgetSpecificAction->specificable_type = $specificable_type;
+                $budgetSpecificAction->specificable_id = $pry_acc->id;
                 $budgetSpecificAction->save();
+            } else {
+                $this->validate(
+                    $request,
+                    ['code' => ['unique:budget_specific_actions'],],
+                    [
+                        'code.unique' => 'El campo código ya ha sido registrado.',
+                    ]
+                );
+            }
+        } else {
+            $budgetSpecificAction->fill($request->all());
+            $budgetSpecificAction->specificable_type = $specificable_type;
+            $budgetSpecificAction->specificable_id = $pry_acc->id;
+            $budgetSpecificAction->save();
+        }
 
 
-      }
-
-              
         $request->session()->flash('message', ['type' => 'update']);
         return redirect()->route('budget.settings.index');
     }
@@ -311,8 +311,8 @@ class BudgetSpecificActionController extends Controller
     {
         /** @var object Objeto con información de las acciones específicas registradas */
         $specificActions = ($active !== null)
-                           ? BudgetSpecificAction::where('active', $active)->with('specificable')->get()
-                           : BudgetSpecificAction::with('specificable')->get();
+            ? BudgetSpecificAction::where('active', $active)->with('specificable')->get()
+            : BudgetSpecificAction::with('specificable')->get();
 
         return response()->json(['records' => $specificActions], 200);
     }
@@ -331,8 +331,8 @@ class BudgetSpecificActionController extends Controller
         /** @var array Arreglo con información de las acciones específicas */
         $data = [['id' => '', 'text' => 'Seleccione...']];
         $specificActions = [];
-        
-        if ($type==="Project") {
+
+        if ($type === "Project") {
             /** @var object Objeto con las acciones específicas asociadas a un proyecto */
             $specificActions = BudgetProject::find($id)->specificActions()->get();
         } elseif ($type == "CentralizedAction") {
@@ -347,11 +347,20 @@ class BudgetSpecificActionController extends Controller
                 'assigned' => true
             ])->orderBy('year', 'desc')->first();
 
-            if (!$existsFormulation) {
-                array_push($data, [
-                    'id' => $specificAction->id,
-                    'text' => $specificAction->code . " - " . $specificAction->name
-                ]);
+            if ($source === 'report') {
+                if ($existsFormulation) {
+                    array_push($data, [
+                        'id' => $specificAction->id,
+                        'text' => $specificAction->code . " - " . $specificAction->name
+                    ]);
+                }
+            } else {
+                if (!$existsFormulation) {
+                    array_push($data, [
+                        'id' => $specificAction->id,
+                        'text' => $specificAction->code . " - " . $specificAction->name
+                    ]);
+                }
             }
         }
 
@@ -391,12 +400,12 @@ class BudgetSpecificActionController extends Controller
 
         /** @var Object Objeto con información de las acciones específicas a consultar */
         $budgetSpecificAction = (is_null($institutionId))
-                                ? BudgetSpecificAction::with('specificable')
-                                : BudgetSpecificAction::with(['specificable' => function ($q) use ($institutionId) {
-                                    $q->whereHas('department', function ($qq) use ($institutionId) {
-                                        $qq->where('institution_id', $institutionId);
-                                    });
-                                }]);
+            ? BudgetSpecificAction::with('specificable')
+            : BudgetSpecificAction::with(['specificable' => function ($q) use ($institutionId) {
+                $q->whereHas('department', function ($qq) use ($institutionId) {
+                    $qq->where('institution_id', $institutionId);
+                });
+            }]);
 
         if (!is_null($selDate)) {
             $budgetSpecificAction = $budgetSpecificAction->where(
@@ -408,10 +417,10 @@ class BudgetSpecificActionController extends Controller
 
         /** @var object Objeto que contiene información de las acciones específicas */
         $sp_accs = ($formulated_year)
-                    ? $budgetSpecificAction->whereYear('from_date', $formulated_year)
-                                           ->orWhereYear('to_date', $formulated_year)
-                                           ->get()
-                    : $budgetSpecificAction->get();
+            ? $budgetSpecificAction->whereYear('from_date', $formulated_year)
+            ->orWhereYear('to_date', $formulated_year)
+            ->get()
+            : $budgetSpecificAction->get();
 
         $withoutFormulations = false;
         $hasFormulations = false;
@@ -425,7 +434,7 @@ class BudgetSpecificActionController extends Controller
                     'assigned' => true
                 ]
             )->first() : '';
-            
+
             if (str_contains($sp_acc->specificable_type, 'BudgetProject') && !is_null($filter)) {
                 array_push($dataProjects['children'], [
                     'id' => $sp_acc->id,
@@ -441,7 +450,7 @@ class BudgetSpecificActionController extends Controller
                 array_push($data, ['id' => '', 'text' => 'Sin formulaciones registradas', 'children' => []]);
             }
         }
-        
+
         /** Si el grupo Proyectos contiene registros los agrega a la lista */
         if (count($dataProjects['children']) > 0) {
             array_push($data, $dataProjects);
@@ -455,7 +464,7 @@ class BudgetSpecificActionController extends Controller
         if (($key = array_search('Sin formulaciones registradas', array_column($data, 'text'))) !== false) {
             array_splice($data, $key, 1);
         }
-        
+
         return response()->json($data);
     }
 
@@ -504,14 +513,14 @@ class BudgetSpecificActionController extends Controller
             $records[] = [
                 'id' => $openAccount->id,
                 'text' => $openAccount->budgetAccount->code . ' - ' .
-                          $openAccount->budgetAccount->denomination . ' (' .
-                          $openAccount->subSpecificFormulation->currency->symbol . " " .
-                          number_format(
-                              $openAccount->total_year_amount,
-                              $openAccount->subSpecificFormulation->currency->decimal_places,
-                              ",",
-                              "."
-                          ) . ')'
+                    $openAccount->budgetAccount->denomination . ' (' .
+                    $openAccount->subSpecificFormulation->currency->symbol . " " .
+                    number_format(
+                        $openAccount->total_year_amount,
+                        $openAccount->subSpecificFormulation->currency->decimal_places,
+                        ",",
+                        "."
+                    ) . ')'
             ];
         }
 

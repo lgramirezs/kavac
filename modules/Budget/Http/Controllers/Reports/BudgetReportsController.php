@@ -16,6 +16,7 @@ use Modules\Budget\Models\Institution;
 use App\Models\FiscalYear;
 use Modules\Budget\Models\Currency;
 use App\Repositories\ReportRepository;
+use Modules\Budget\Models\BudgetSpecificAction;
 
 /**
  * @class BudgetAccountOpenController
@@ -58,25 +59,33 @@ class BudgetReportsController extends Controller
 
         $budgetItems = $this->getBudgetAccounts();
 
-        $budgetProjects = template_choices(
-            'Modules\Budget\Models\BudgetProject',
-            ['code', '-', 'name'],
-            ['active' => true],
-            true
-        );
-        $budgetCentralizedActions = template_choices(
-            'Modules\Budget\Models\BudgetCentralizedAction',
-            ['code', '-', 'name'],
-            ['active' => true],
-            true
-        );
-
-        /* $budgetItems = array_map(function ($budgetItem) {
+        $budgetProjects = BudgetProject::with(['specificActions'])->whereHas('specificActions', function ($query) {
+            $query->whereHas('subSpecificFormulations', function ($query) {
+                $query->where('assigned', true);
+            });
+        })->get()->all();
+        $budgetProjects = array_map(function ($budgeProject) {
             return array(
-                'text' => $budgetItem->denomination,
-                'id' => (int)str_replace('.', '', $budgetItem->getCodeAttribute())
+                'id' => $budgeProject->id,
+                'text' => $budgeProject->code . ' - ' . $budgeProject->name,
             );
-        }, $budgetItems); */
+        }, $budgetProjects);
+        array_unshift($budgetProjects, ['id' => "", 'text' => "Seleccione..."]);
+
+
+
+        $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions'])->whereHas('specificActions', function ($query) {
+            $query->whereHas('subSpecificFormulations', function ($query) {
+                $query->where('assigned', true);
+            });
+        })->get()->all();
+        $budgetCentralizedActions = array_map(function ($budgetCentralizedAction) {
+            return array(
+                'id' => $budgetCentralizedAction->id,
+                'text' => $budgetCentralizedAction->code . ' - ' . $budgetCentralizedAction->name,
+            );
+        }, $budgetCentralizedActions);
+        array_unshift($budgetCentralizedActions, ['id' => "", 'text' => "Seleccione..."]);
 
         $data = array();
         $temp = array('text' => '', 'children' => []);
@@ -149,9 +158,15 @@ class BudgetReportsController extends Controller
      * 
      * @return    Array Arreglo ordenado de cuentas presupuestarias formuladas
      */
-    public function getBudgetAccountsOpen(bool $accountsWithMovements)
+    public function getBudgetAccountsOpen(bool $accountsWithMovements, int $specific_action_id)
     {
-        $budgetItems = BudgetAccountOpen::all()->all();
+        $subSpecificFormulation = BudgetSpecificAction::with(['subSpecificFormulations' => function ($query) {
+            $query->with('accountOpens')->whereHas('accountOpens');
+        }])->where('id', $specific_action_id)->first();
+        // dd($subSpecificFormulation);
+        $budgetItems = $subSpecificFormulation->subSpecificFormulations[0]->accountOpens->all();
+        // dd($budgetItems);
+        
 
         usort($budgetItems, function ($budgetItemOne, $budgetItemTwo) {
 
@@ -200,6 +215,7 @@ class BudgetReportsController extends Controller
      */
     public function filterBudgetAccounts(array $budgetAccountsOpen, int $initialCode, int $finalCode, string $initialDate, string $finalDate)
     {
+        
 
         $filteredArray = array();
 
@@ -234,20 +250,22 @@ class BudgetReportsController extends Controller
             'finalCode' => 'required',
             'accountsWithMovements' => 'required',
             'project_id' => 'required',
-            'project_type' => 'required'
+            'project_type' => 'required',
+            'specific_action_id' => 'required'
         ]);
 
         $pdf = new ReportRepository();
 
-        if($request->project_type === 'project') {
-            $project = BudgetProject::with('specificActions')->find($request->project_id);
-        }else {
-            $project = BudgetCentralizedAction::with('specificActions')->find($request->project_id);
+        if ($request->project_type === 'project') {
+            $project = BudgetProject::with('specificActions')->find($data["project_id"]);
+        } else {
+            $project = BudgetCentralizedAction::with('specificActions')->find($data["project_id"]);
         }
 
-        $records = $this->getBudgetAccountsOpen($data['accountsWithMovements']);
+        $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $data['specific_action_id']);
 
         $records = $this->filterBudgetAccounts($records, $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+
 
         $institution = Institution::find(1);
 
@@ -260,7 +278,6 @@ class BudgetReportsController extends Controller
             $data['initialDate'] = $data['finalDate'];
             $data['finalDate'] = $temp;
         }
-        // dd($records);
         $pdf->setConfig(['institution' => $institution]);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
@@ -270,7 +287,7 @@ class BudgetReportsController extends Controller
             'institution' => $institution,
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
-            "report_date" => $now = \Carbon\Carbon::today()->format('Y-m-d'),
+            "report_date" => $now = \Carbon\Carbon::today()->format('d-m-Y'),
             'initialDate' => $data['initialDate'],
             'finalDate' => $data['finalDate'],
             'project' => $project,
@@ -492,5 +509,61 @@ class BudgetReportsController extends Controller
 
             return response()->json($response, $code ?? 200);
         }
+    }
+
+    public function getBudgetProjects(bool $list = null)
+    {
+        $budgetProjects = BudgetProject::with(['specificActions' => function ($query) {
+            $query->with(['subSpecificFormulations' => function ($query) {
+                $query->where('assigned', true);
+            }])->whereHas('subSpecificFormulations');
+        }])->whereHas('specificActions', function ($query) {
+            $query->whereHas('subSpecificFormulations', function ($query) {
+                $query->where('assigned', true);
+            });
+        })->get()->all();
+
+        if ($list) {
+            $budgetProjects = array_map(function ($budgeProject) {
+                return array(
+                    'id' => $budgeProject->id,
+                    'text' => $budgeProject->code . ' - ' . $budgeProject->name,
+                );
+            }, $budgetProjects);
+
+            array_unshift($budgetProjects, ['id' => "", 'text' => "Seleccione..."]);
+            return $budgetProjects;
+        }
+
+        return $budgetProjects;
+    }
+
+    public function getBudgetCentralizedActions(bool $list = null)
+    {
+        $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
+            $query->with(['subSpecificFormulations' => function ($query) {
+                $query->where('assigned', true);
+            }])->whereHas('subSpecificFormulations');
+        }])->whereHas('specificActions', function ($query) {
+            $query->whereHas('subSpecificFormulations', function ($query) {
+                $query->where('assigned', true);
+            });
+        })->get()->all();
+
+        if ($list) {
+
+            $budgetCentralizedActions = array_map(function ($budgetCentralizedAction) {
+                return array(
+                    'id' => $budgetCentralizedAction->id,
+                    'text' => $budgetCentralizedAction->code . ' - ' . $budgetCentralizedAction->name,
+                );
+            }, $budgetCentralizedActions);
+
+            array_unshift($budgetCentralizedActions, ['id' => "", 'text' => "Seleccione..."]);
+
+            return $budgetCentralizedActions;
+        }
+
+        return $budgetCentralizedActions;
     }
 }
