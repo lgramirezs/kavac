@@ -132,9 +132,9 @@ class BudgetCompromiseController extends Controller
      * Show the form for editing the specified resource.
      * @return Renderable
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('budget::edit');
+        return view('budget::compromises.create-edit-form', compact('id'));
     }
 
     /**

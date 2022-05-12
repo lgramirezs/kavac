@@ -54,7 +54,7 @@ class BudgetSettingController extends Controller
         /** @var object Contiene información sobre la configuración de código para la formulación */
         $fCode = $codeSettings->where('table', 'budget_formulations')->first();
         /** @var object Contiene información sobre la configuración de código para los compromisos */
-        $cCode = $codeSettings->where('table', 'budget_commitments')->first();
+        $cCode = $codeSettings->where('table', 'budget_compromises')->first();
         /** @var object Contiene información sobre la configuración de código para los créditos adicionales */
         $crCode = $codeSettings->where('table', 'budget_modifications')
                                ->where('type', 'budget.aditional-credits')->first();
@@ -103,7 +103,7 @@ class BudgetSettingController extends Controller
         /** Reglas de validación para la configuración de códigos */
         $request->validate([
             'formulations_code' => [new CodeSettingRule],
-            'commitments_code' => [new CodeSettingRule],
+            'compromises_code' => [new CodeSettingRule],
             'caused_code' => [new CodeSettingRule],
             'payed_code' => [new CodeSettingRule],
             'transfers_code' => [new CodeSettingRule],
