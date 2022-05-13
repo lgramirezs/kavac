@@ -32,13 +32,13 @@ Route::group([
         Route::get('settings', [FinanceController::class, 'setting'])->name('finance.setting.index');
         Route::post('settings', [FinanceController::class, 'store'])->name('finance.setting.store');
         /** Rutas para la gestión de entidades bancarias */
-        Route::resource('banks', FinanceBankController::class, ['as' => 'finance']);
+        Route::resource('banks', 'FinanceBankController', ['as' => 'finance']);
         /** Rutas para la gestión de agencias bancarias */
-        Route::resource('banking-agencies', FinanceBankingAgencyController::class, ['as' => 'finance']);
+        Route::resource('banking-agencies', 'FinanceBankingAgencyController', ['as' => 'finance']);
         /** Rutas para la gestión de tipos de cuentas bancarias */
-        Route::resource('account-types', FinanceAccountTypeController::class, ['as' => 'finance']);
+        Route::resource('account-types', 'FinanceAccountTypeController', ['as' => 'finance']);
         /** Rutas para la gestión de cuentas bancarias */
-        Route::resource('bank-accounts', FinanceBankAccountController::class, ['as' => 'finance']);
+        Route::resource('bank-accounts', 'FinanceBankAccountController', ['as' => 'finance']);
         /** Rutas para la gestión de chequeras */
         Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance', 'except' => ['edit']]);
         Route::get('check-books/edit/{id}', 'FinanceCheckBookController@edit')->name('finance.edit');
