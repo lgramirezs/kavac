@@ -49,7 +49,9 @@ class PayrollVacationPolicy extends Model implements Auditable
         'max_days_advance',
 
         // Usados por la funcionalidad de Agrupar por:
-        'group_by', 'type'
+        'group_by', 'type',
+
+        'days_on_scale', 'days_group_by', 'days_type',
     ];
 
     /**
@@ -107,13 +109,25 @@ class PayrollVacationPolicy extends Model implements Auditable
     }
 
     /**
-     * Obtiene información de las opciones asignadas asociadas a una escalafon salarial
+     * Obtiene información de las opciones asignadas asociadas a Los días de bonificación se establecen de acuerdo a un escalafón
      *
      * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
      *
      * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function payrollScales()
+    {
+        return $this->morphMany(PayrollScale::class, 'relationable');
+    }
+
+    /**
+     * Obtiene información de las opciones asignadas asociadas a Los días de disfrute se establecen de acuerdo a un escalafón
+     *
+     * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function PayrollDaysScales()
     {
         return $this->morphMany(PayrollScale::class, 'relationable');
     }
