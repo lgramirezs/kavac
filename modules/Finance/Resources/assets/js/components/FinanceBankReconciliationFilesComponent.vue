@@ -277,22 +277,6 @@
                     decimal_separator: '',
                 };
             },
-
-            createRecordConsole () {
-                // console.log("Entró aquí!");
-                console.log(this.record.bank_id);
-                console.log(this.record.read_start_line);
-                console.log(this.record.read_end_line);
-                console.log(this.record.position_reference_column);
-                console.log(this.record.position_date_column);
-                console.log(this.record.position_debit_amount_column);
-                console.log(this.record.position_credit_amount_column);
-                console.log(this.record.position_description_column);
-                console.log(this.record.separated_by);
-                console.log(this.record.date_format);
-                console.log(this.record.thousands_separator);
-                console.log(this.record.decimal_separator);
-            }
         },
         created() {
             this.getBanks();
