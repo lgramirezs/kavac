@@ -127,7 +127,7 @@ class PayrollVacationPolicy extends Model implements Auditable
      *
      * @return    \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function PayrollDaysScales()
+    public function payrollDaysScales()
     {
         return $this->morphMany(PayrollScale::class, 'relationable');
     }

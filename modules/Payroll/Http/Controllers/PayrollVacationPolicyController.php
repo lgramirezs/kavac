@@ -108,7 +108,13 @@ class PayrollVacationPolicyController extends Controller
          * Objeto asociado al modelo PayrollConcept
          * @var Object $PayrollVacationPolicy
          */
-        $PayrollVacationPolicies = PayrollVacationPolicy::with('payrollConceptAssignOptions', 'payrollScales', 'payrollDaysScales')->where('institution_id', $institution->id)->get();
+        $PayrollVacationPolicies = PayrollVacationPolicy::with('payrollConceptAssignOptions')
+            ->with('payrollScales', function($query){
+                $query->where('relationship_type', 'payrollScales');
+            })
+            ->with('payrollDaysScales', function($query){
+                $query->where('relationship_type', 'payrollDaysScales');
+            })->where('institution_id', $institution->id)->get();
         foreach ($PayrollVacationPolicies as $payrollVacationPolicy) {
             $assign_to = json_decode($payrollVacationPolicy->assign_to);
             $assign_options = [];
@@ -264,22 +270,24 @@ class PayrollVacationPolicyController extends Controller
         ]);
 
         /**
-         * Relaciona con PayrollScales
+         * Relaciona con payrollScales
          */
         if ($request->payroll_scales) {
             foreach ($request->payroll_scales as $payrollScale) {
-                $payrollVacationPolicy->PayrollScales()->create([
+                $payrollVacationPolicy->payrollScales()->create([
                     'name'                    => $payrollScale['name'],
-                    'value'                   => json_encode($payrollScale['value'])
+                    'value'                   => json_encode($payrollScale['value']),
+                    'relationship_type'       => 'payrollScales',
                 ]);
             }
         }
 
         if ($request->payroll_days_scales) {
             foreach ($request->payroll_days_scales as $payrollScale) {
-                $payrollVacationPolicy->PayrollDaysScales()->create([
+                $payrollVacationPolicy->payrollDaysScales()->create([
                     'name'                    => $payrollScale['name'],
-                    'value'                   => json_encode($payrollScale['value'])
+                    'value'                   => json_encode($payrollScale['value']),
+                    'relationship_type'       => 'payrollDaysScales',
                 ]);
             }
         }
@@ -425,17 +433,19 @@ class PayrollVacationPolicyController extends Controller
          */
         if ($request->payroll_scales) {
             foreach ($request->payroll_scales as $payrollScale) {
-                $payrollVacationPolicy->PayrollScales()->create([
+                $payrollVacationPolicy->payrollScales()->create([
                     'name'                    => $payrollScale['name'],
-                    'value'                   => json_encode($payrollScale['value'])
+                    'value'                   => json_encode($payrollScale['value']),
+                    'relationship_type'       => 'payrollScales',
                 ]);
             }
         }
         if ($request->payroll_days_scales) {
             foreach ($request->payroll_days_scales as $payrollScale) {
-                $payrollVacationPolicy->PayrollScales()->create([
+                $payrollVacationPolicy->payrollDaysScales()->create([
                     'name'                    => $payrollScale['name'],
-                    'value'                   => json_encode($payrollScale['value'])
+                    'value'                   => json_encode($payrollScale['value']),
+                    'relationship_type'       => 'payrollDaysScales',
                 ]);
             }
         }

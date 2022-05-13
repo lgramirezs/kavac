@@ -1107,9 +1107,6 @@ export default {
             } else if (vm.panel == 'vacationPaymentForm') {
                 if ((vm.record.payroll_payment_type_id != '') &&
                     (vm.record.payment_calculation != '')) {
-                    if ((vm.record.payment_calculation == 'general_days' && vm.record.vacation_days == '')) {
-                        return true;
-                    }
                     return false;
                 } else {
                     return true;
