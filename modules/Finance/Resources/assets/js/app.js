@@ -155,17 +155,17 @@ Vue.mixin({
 		async getAgencies() {
 			const vm = this;
 			vm.agencies = [];
-			bank_id = this.record.finance_bank_id;
+			const bank_id = this.record.finance_bank_id || '';
 
 			if (bank_id) {
-				await axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
+				 axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
 					vm.agencies = response.data;
 				}).catch(error => {
 					vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getAgencies');
 				});
 
 				if ($("#bank_code").length) {
-					await axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
+					 axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
 						if (response.data.result) {
 							vm.record.bank_code = response.data.bank.code;
 						}

@@ -18,7 +18,7 @@
                 <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label" for="responsable">Responsable</label><br>
-                        <select2 :options="users" id="responsable" v-model="record.user_id"></select2>
+                        <select2 :options="users" id="responsable" v-model="record.payroll_staff_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
@@ -92,7 +92,7 @@ export default {
                 init_date: '',
                 purchase_type_id: '',
                 purchase_processes_id: '',
-                user_id: '',
+                payroll_staff_id: '',
             },
             disabledInputProcess: false,
 
@@ -112,7 +112,7 @@ export default {
                 init_date: '',
                 purchase_type_id: '',
                 purchase_processes_id: '',
-                user_id: '',
+                payroll_staff_id: '',
             };
             vm.$refs.purchaseShowError.reset();
         },
@@ -146,7 +146,7 @@ export default {
 
             formData.append("purchase_type_id", vm.record.purchase_type_id);
             formData.append("purchase_processes_id", vm.record.purchase_processes_id);
-            formData.append("user_id", vm.record.user_id);
+            formData.append("payroll_staff_id", vm.record.payroll_staff_id);
             formData.append("init_date", vm.record.init_date);
             formData.append("end_date", vm.record.end_date);
 
