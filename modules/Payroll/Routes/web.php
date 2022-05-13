@@ -119,6 +119,16 @@ Route::group([
         'get-staffs/{type?}', 'PayrollStaffController@getPayrollStaffs'
     )->name('payroll.get-payroll-staffs');
 
+    /** Ruta que obtiene un arreglo con los registros del personal registrados */
+    Route::get(
+        'get-socioeconomic/{type?}', 'PayrollStaffController@getPayrollSocioeconomic'
+    )->name('payroll.get-payroll-socioeconomic');
+
+    /** Ruta que obtiene un arreglo con los registros del personal registrados */
+    Route::get(
+        'get-professional/{type?}', 'PayrollStaffController@getPayrollProfessional'
+    )->name('payroll.get-payroll-professional');
+
     /** Rutas para gestionar los grados de instrucción */
     Route::resource(
         'instruction-degrees',
