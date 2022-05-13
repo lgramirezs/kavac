@@ -162,7 +162,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function show($id)
     {
-        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions', 'payrollScales')->find($id);
+        $payrollVacationPolicy = PayrollVacationPolicy::with('payrollConceptAssignOptions', 'payrollScales', 'payrollDaysScales')->find($id);
         return response()->json(['record' => $payrollVacationPolicy], 200);
     }
 
@@ -330,6 +330,7 @@ class PayrollVacationPolicyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         /**
          * Objeto asociado al modelo PayrollVacationPolicy
          *
@@ -342,7 +343,6 @@ class PayrollVacationPolicyController extends Controller
             $validateRules  = array_merge(
                 $validateRules,
                 [
-                    'vacation_periods_accumulated_per_year' => ['required'],
                     'vacation_periods'                      => ['required'],
                     // 'salary_type'                           => ['required'],
                     'payroll_payment_type_id'               => ['required']

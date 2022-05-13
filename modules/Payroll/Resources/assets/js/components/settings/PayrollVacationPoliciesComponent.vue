@@ -546,7 +546,7 @@
                                         </div>
                                         <!-- ./día general -->
                                         <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-6" v-if="record.payment_calculation == 'general_days' && 
+                                        <div class="col-md-6" v-show="record.payment_calculation == 'general_days' && 
                                                                     record.vacation_type == 'collective_vacations'">
                                             <div class="form-group is-required">
                                                 <label>Días a otorgar para el pago de vacaciones:</label>
@@ -810,7 +810,7 @@
                                 </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
-                                <button @click="initUpdate(props.row.id, $event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
+                                <button @click="initUpdate(props.row, $event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, 'payroll/vacation-policies')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
@@ -1670,7 +1670,22 @@ export default {
                     vm.record.generate_worker_arises = response.data.result;
                 });
             }
-        }
+        },
+        		/**
+		 * Método que carga el formulario con los datos a modificar
+		 *
+		 * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+		 *
+		 * @param  {integer} index Identificador del registro a ser modificado
+		 * @param {object} event   Objeto que gestiona los eventos
+		 */
+		initUpdate(data, event) {
+			let vm = this;
+			vm.errors = [];
+
+			vm.record = data;
+			console.log(vm.record)
+		},
     },
 };
 </script>
