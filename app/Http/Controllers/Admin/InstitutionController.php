@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Rules\Rif as RifRule;
 use Illuminate\Validation\Rule;
 
+
 /**
  * @class InstitutionController
  * @brief Gestiona información de Organizaciones
@@ -151,6 +152,8 @@ class InstitutionController extends Controller
             'logo_id' => $logo,
             'banner_id' => $banner,
         ];
+     
+
 
         if (is_null($setting->multi_institution) || !$setting->multi_institution) {
             // Crea o actualiza información de una organización si la aplicación esta configurada 
@@ -159,6 +162,23 @@ class InstitutionController extends Controller
             $data['default'] = true;
             Institution::updateOrCreate(['rif' => $request->rif], $data);
         } else {
+
+    
+
+            if($request->default!==null){
+                      $Institutions = Institution::first();
+
+                      if ($Institutions) {
+                          Institution::where('default', TRUE)      
+                            ->update(['default' => False]);
+
+                      }
+                      
+
+            }
+           
+
+            
             if (!empty($request->institution_id)) {
                 // Si existe el identificador de la organización, se actualizan sus datos
 
