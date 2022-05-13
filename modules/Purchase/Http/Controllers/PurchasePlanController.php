@@ -16,7 +16,6 @@ use Modules\Purchase\Models\Document;
 
 use Modules\Purchase\Models\User;
 use Module;
-use Response;
 
 class PurchasePlanController extends Controller
 {
@@ -83,7 +82,10 @@ class PurchasePlanController extends Controller
 			'user_id'               => 'required|int',
 			'init_date'             => 'required|date',
 			'end_date'              => 'required|date',
+			'file'					=> 'required|mimes:pdf'
 		], [
+			'file.required'					 => 'El archivo de plan de compra es obligatorio',
+			'file.mimes'                   	 => 'El archivo de plan de compra debe ser de tipo pdf.',
 			'purchase_type_id.required'      => 'El campo tipo de compra es obligatorio.',
 			'purchase_type_id.int'           => 'El campo tipo de compra no tiene el formato adecuado.',
 			'purchase_processes_id.required' => 'El campo proceso de compra es obligatorio.',
@@ -97,7 +99,23 @@ class PurchasePlanController extends Controller
 			'end_date.date'                  => 'El campo fecha de culminación no tiene el formato adecuado.',
 		]);
 
-		PurchasePlan::create($request->all());
+		$purchase_plan = PurchasePlan::create([
+			'purchase_type_id'      => $request->purchase_type_id,
+			'purchase_processes_id' => $request->purchase_processes_id,
+			'user_id'               => $request->user_id,
+			'init_date'             => $request->init_date,
+			'end_date'              => $request->end_date,
+		]);
+
+		$document = new UploadDocRepository();
+		$document->uploadDoc(
+			$request['file'],
+			'documents',
+			PurchasePlan::class,
+			$purchase_plan->id,
+			null
+		);
+
 		return response()->json(['message' => 'success'], 200);
 	}
 
