@@ -39,32 +39,37 @@
 						<div class="row">
 							<div class="col-3">
 							
-								<div class="form-group is-required" id="institution_id">
+								<div class="form-group is-required" >
 									{!! Form::label('institution_id', __('Institución'), ['class' => 'control-label']) !!}
 									{!! Form::select('institution_id', $institutions, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
 										'id' => 'institution_id',
+										'onchange' => 'updateSelectActive($(this), $("#department_id"), "Department",undefined, undefined,[$("#payroll_position_id"), $("#payroll_staff_id")] )',
 										'title' => __('Seleccione una institución')
 									]) !!}
 								</div>
 							</div>
 							<div class="col-3">
-								<div class="form-group is-required" id="department_id">
+								<div class="form-group is-required" >
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
 									{!! Form::select('department_id', $departments, null, [
 										'class' => 'select2', 'data-toggle' => 'tooltip',
-										'title' => __('Seleccione un departamento o dependencia')
+											'id' => 'department_id',
+											'disabled' => ( true),
+										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff",[$("#payroll_position_id")])',
+										'title' => __('Seleccione un departamento o dependencia'),
 									]) !!}
 								</div>
 							</div>
 							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
 						     	<div class="col-3">
-									<div class="form-group is-required" id="payroll_staff_id">
+									<div class="form-group is-required" >
 										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
 										{!! Form::select('payroll_staff_id', $staffs, null, [
-											'class' => 'select2', 'data-toggle' => 'tooltip',										
+											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'payroll_staff_id',
-											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll")',
+											'disabled' => ( true),
+											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll", "")',
 											'title' => __('Seleccione una persona responsable del proyecto')
 										]) !!}
 								
@@ -79,6 +84,7 @@
 										{!! Form::select('payroll_position_id', $positions, null, [
 											'class' => 'select2', 'data-toggle' => 'tooltip',
 											'id' => 'payroll_position_id',
+											'disabled' => ( true),
 											'title' => __('Seleccione el cargo de la persona responsable del proyecto')
 										]) !!}
 									</div>

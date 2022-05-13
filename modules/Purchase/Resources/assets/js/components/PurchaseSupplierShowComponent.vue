@@ -16,50 +16,122 @@
                         </h6>
                     </div>
                     <!-- Fromulario -->
-                    <div class="modal-body">
+                    <div class="modal-body" v-if="records">
                         <hr>
                         <h6>Datos Básicos</h6>
+                        <div class="row">
+                            <div class="col-3 ">
+                                <strong>Tipo de Persona:</strong> {{ records.person_type==='N' ? 'Natural' : 'Jurídica' }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Tipo de Empresa:</strong> {{ records.company_type==='PU' ? 'Pública' : 'Privada' }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Activo:</strong> {{ records.active ? 'Si' : 'No' }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>R.I.F.:</strong> {{ records.rif  }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Nombre o Razón Social:</strong> {{ records.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Objeto Social de la organización:</strong> {{ records.social_purpose }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Denominación Comercial:</strong> {{ records.purchase_supplier_type.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Objeto Principal:</strong> {{ records.model_supplier_objects }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Rama:</strong> {{ records.purchase_supplier_branch.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Especialidad:</strong> {{ records.purchase_supplier_specialty.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Sitio Web:</strong> {{ records.website }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Pais:</strong> {{ records.city.estate.country.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Estado:</strong> {{ records.city.estate.name }}
+                            </div>
+                            <div class="col-3 ">
+                                <strong>Ciudad:</strong> {{ records.city.name }}
+                            </div>
+                            <div class="col-6 ">
+                                <strong>Dirección Fiscal:</strong> {{ records.active }}
+                            </div>
+                            <div class="col-6 ">
+                                <strong>Información de contactos:</strong> 
+                                <br> 
+                                <ul>
+                                    <li v-for="contact in records.contacts" :key="'contact_'+contact.id">
+                                        {{ contact.name }} - {{ contact.email }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6"><strong>Números de contactos:</strong>
+                                <br> 
+                                <ul>
+                                    <li v-for="phone in records.phones" :key="'phone_'+phone.id">
+                                        {{ phone.type==='M'?'Móvil':phone.type==='T'?'Teléfono':'Fax' }}:
+                                        +{{phone.extension}}-{{ phone.area_code }}-{{phone.number}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <br>
                         <hr>
                         <h6>Datos del RNC</h6>
+                        <div class="row">
+                            <div class="col-3">
+                                <strong>Inscrito y no habilitado:</strong> <br> {{ records.rnc_status==='INH'?'Si':'NO' }}
+                            </div>
+                            <div class="col-3">
+                                <strong>Inscrito y habilitado para contratar:</strong> <br> {{ records.rnc_status==='ISH'?'Si':'NO' }}
+                            </div>
+                            <div class="col-3">
+                                <strong>Número de Certificado:</strong> <br> {{ records.rnc_certificate_number }}
+                            </div>
+                        </div>
                         <br>
                         <hr>
                         <h6>Documentos</h6>
-                        <br>
-                        <!--                         <div class="row" v-if="records.user">
-                            <div class="col-3"><strong>Fecha de inicio:</strong> {{ format_date(records.init_date) }}</div>
-                            <div class="col-3"><strong>Fecha de culminación:</strong> {{ format_date(records.end_date) }}</div>
-                            <div class="col-3"><strong>Tipo de compra:</strong> {{ purchase_type }}</div>
-                            <div class="col-3"><strong>Proceso de compra:</strong> {{ purchase_process }}</div>
-                            <div class="col-3"><strong>Responsable:</strong> {{ records.user.name }} </div>
-                        </div>
-                        <hr>
-                        <h6 class="text-center text-info">DOCUMENTO DE PLAN DE COMPRAS</h6>
-
                         <div class="row">
-                            <div class="col-md-12" v-if="records.document">
-                                <div id="documents">
-                                    <div class="card-body">
-                                        <ul class="feature-list list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <div class="feature-list-indicator bg-info"></div>
-                                                <div class="feature-list-content p-0">
-                                                    <div class="feature-list-content-wrapper">
-                                                        <a :href="'/purchase/purchase_plans/download/'+records.document.code">
-                                                            {{ records.document.file }}
-                                                        </a>
-                                                        <div class="feature-list-content-left">
-                                                            <div class="feature-list-subheading">
-                                                            </div>
-                                                        </div>
+                            <div class="col-12">
+                                <ul class="feature-list list-group list-group-flush">
+                                    <li class="list-group-item" v-for="doc in records.documents" :key="'doc_'+doc.id">
+                                        <div class="feature-list-indicator bg-info"></div>
+                                        <div class="feature-list-content p-0">
+                                            <div class="feature-list-content-wrapper">
+                                                <a class="btn btn-simple btn-primary btn-events"
+                                                    title="Presione para descargar el documento"
+                                                    data-toggle="tooltip"
+                                                    target="_blank"
+                                                    :href="'/purchase/document/download/'+doc.file"
+                                                    :download="records.rif + ' - ' + doc.purchase_document_required_document.required_document.name+'.pdf'"
+                                                    >
+                                                    <i class="fa fa-cloud-download fa-2x"></i>
+                                                </a>
+                                                <div class="feature-list-content-left ml-4">
+                                                    <div class="feature-list-subheading">
+                                                        <i class="font-weight-bold">
+                                                            {{ doc.purchase_document_required_document.required_document.name }}
+                                                        </i>
+                                                        <p v-html="doc.purchase_document_required_document.required_document.description"></p>
                                                     </div>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
-                        </div> -->
+                        </div>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -71,7 +143,7 @@ export default {
     props: ['id'],
     data() {
         return {
-            records: [],
+            records: null,
             files: {},
         }
     },
@@ -79,9 +151,7 @@ export default {
         // 
     },
     mounted() {
-        // if (this.records.purchase_process) {
-        //     this.record = this.records.purchase_process;
-        // }
+        // 
     },
     methods: {
 
@@ -93,54 +163,9 @@ export default {
         reset() {
             // 
         },
-
-        // uploadFile(input_id){
-        //     let vm = this;
-        //     if (document.querySelector(`#${input_id}`)) {
-        //         vm.loading = false;
-        //         vm.files[input_id] = document.querySelector(`#${input_id}`).files[0];
-
-        //         /** Se obtiene y da formato para enviar el archivo a la ruta */
-        //         var formData = new FormData();
-        //         var inputFile = document.querySelector('#'+input_id);
-        //         formData.append("file", inputFile.files[0]);
-        //         formData.append("purchase_plan_id", vm.id);
-
-        //         axios.post('/purchase/purchase_plan_upload_file', formData, {
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         }).then(response => {
-        //             vm.showMessage('update');
-        //             vm.loading = false;
-        //             $('#status_'+input_id).show("slow");
-
-        //         }).catch(error => {
-        //             if (typeof(error.response) !== "undefined") {
-        //                 if (error.response.status == 422 || error.response.status == 500) {
-        //                     for (const i in error.response.data.errors){
-        //                         vm.showMessage(
-        //                             'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-        //                         );
-        //                     }
-        //                 }
-        //             }
-        //             vm.loading = false;
-        //         });
-        //     }
-        // },
     },
     computed: {
-        // purchase_type: function(){
-        //     if (this.records.purchase_type) {
-        //         return this.records.purchase_type.name;
-        //     }
-        // },
-        // purchase_process: function(){
-        //     if (this.records.purchase_process) {
-        //         return this.records.purchase_process.name;
-        //     }
-        // },
+        // 
     }
 };
 </script>
