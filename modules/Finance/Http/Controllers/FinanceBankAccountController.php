@@ -125,7 +125,7 @@ class FinanceBankAccountController extends Controller
     {
         /** @var object Datos de la cuenta bancaria */
         $bankAccount = FinanceBankAccount::find($id);
-
+        
         $this->validate($request, [
             'ccc_number' => [
                 'required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number,'. $bankAccount->id
