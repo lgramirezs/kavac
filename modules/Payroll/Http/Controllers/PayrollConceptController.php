@@ -150,6 +150,7 @@ class PayrollConceptController extends Controller
                 'id'    => 'staff',
                 'name'  => 'Trabajadores',
                 'model' => 'Modules\Payroll\Models\PayrollStaff',
+                'field' => ['first_name', ' ','last_name'],
                 'type'  => 'list'
             ],
             [
@@ -479,7 +480,8 @@ class PayrollConceptController extends Controller
         foreach ($this->assignTo as $field) {
             if ($field['type'] == 'list') {
                 if ($field['id'] == $id) {
-                    return template_choices($field['model'], ['first_name', ' ','last_name'], '', true);
+
+                    return template_choices($field['model'], $field['field'] ?? 'name', '', true);
                 }
             }
         }
