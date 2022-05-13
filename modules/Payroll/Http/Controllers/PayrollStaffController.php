@@ -441,4 +441,56 @@ class PayrollStaffController extends Controller
 
         return response()->json($options);
     }
+
+    /**
+     * Obtiene la información personal de los trabajadores
+     *
+     * @author  Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+     * @return \Illuminate\Http\JsonResponse    Json con los datos de la información personal de los trabajadores
+     */
+    public function getPayrollSocioeconomic($type = 'all')
+    {
+        if ($type === 'all') {
+            return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        } else if (is_numeric($type)) {
+            return response()->json(
+                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
+            );
+        }
+
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+
+        /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+        $staffs = PayrollStaff::doesnthave('payrollSocioeconomic')->get();
+        foreach ($staffs as $staff) {
+            $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+        }
+        return response()->json($options);
+    }
+
+    /**
+     * Obtiene la información personal de los trabajadores
+     *
+     * @author  Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+     * @return \Illuminate\Http\JsonResponse    Json con los datos de la información personal de los trabajadores
+     */
+    public function getPayrollProfessional($type = 'all')
+    {
+        if ($type === 'all') {
+            return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
+        } else if (is_numeric($type)) {
+            return response()->json(
+                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
+            );
+        }
+
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+
+        /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+        $staffs = PayrollStaff::doesnthave('payrollProfessional')->get();
+        foreach ($staffs as $staff) {
+            $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+        }
+        return response()->json($options);
+    }
 }

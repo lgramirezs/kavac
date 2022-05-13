@@ -1,0 +1,134 @@
+<?php
+
+namespace Modules\Finance\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Routing\Controller;
+use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use DB;
+
+/**
+ * @class FinanceSettingBankReconciliationFilesController
+ * 
+ * @brief Configuraciones de los archivos de conciliación bancaria
+ *
+ * Clase que gestiona las configuraciones de archivos de conciliación bancarias.
+ *
+ * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ *
+ * @license <a href='http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/'>
+ *              LICENCIA DE SOFTWARE CENDITEL
+ *          </a>
+ */
+class FinanceSettingBankReconciliationFilesController extends Controller
+{
+
+    use ValidatesRequests;
+
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+        return response()->json(['records' => FinanceSettingBankReconciliationFiles::orderBy('bank_id')->get()], 200);
+    }
+
+    /**
+     * Almacena un registro recién creado en la base de datos.
+     *
+     * @method store
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'bank_id' => ['required'],
+            'position_reference_column' => ['required'],
+            'position_date_column' => ['required'],
+            'position_debit_amount_column' => ['required'],
+            'position_credit_amount_column' => ['required'],
+            'position_description_column' => ['required'],
+            'separated_by' => ['required'],
+            'date_format' => ['required'],
+            'thousands_separator' => ['required'],
+            'decimal_separator' => ['required'],
+        ], [
+            'bank_id.required' => 'El campo banco es obligatorio.',
+            'position_reference_column.required' => 'El campo referencia es obligatorio.',
+            'position_date_column.required' => 'El campo fecha es obligatorio.',
+            'position_debit_amount_column.required' => 'El campo monto débito es obligatorio.',
+            'position_credit_amount_column.required' => 'El campo monto crédito es obligatorio.',
+            'position_description_column.required' => 'El campo descripción es obligatorio.',
+            'separated_by.required' => 'El campo columnas separadas por es obligatorio.',
+            'date_format.required' => 'El campo formato de fecha es obligatorio.',
+            'thousands_separator.required' => 'El campo separador de miles es obligatorio.',
+            'decimal_separator.required' => 'El campo separador de decimales es obligatorio.',
+        ]);
+
+        $data = DB::transaction(function () use ($request) {
+            $data = FinanceSettingBankReconciliationFiles::create([
+                'bank_id' => $request->bank_id,
+                'read_start_line' => $request->read_start_line,
+                'read_end_line' => $request->read_end_line,
+                'position_reference_column' => $request->position_reference_column,
+                'position_date_column' => $request->position_date_column,
+                'position_debit_amount_column' => $request->position_debit_amount_column,
+                'position_credit_amount_column' => $request->position_credit_amount_column,
+                'position_description_column' => $request->position_description_column,
+                'separated_by' => $request->separated_by,
+                'date_format' => $request->date_format,
+                'thousands_separator' => $request->thousands_separator,
+                'decimal_separator' => $request->decimal_separator,
+            ]);
+            return $data;
+        });
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
+    }
+
+    /**
+     * Show the specified resource.
+     * @return Renderable
+     */
+    public function show()
+    {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $data = FinanceSettingBankReconciliationFiles::find($id);
+        $data->bank_id = $request->bank_id;
+        $data->read_start_line = $request->read_start_line;
+        $data->read_end_line = $request->read_end_line;
+        $data->position_reference_column = $request->position_reference_column;
+        $data->position_date_column = $request->position_date_column;
+        $data->position_debit_amount_column = $request->position_debit_amount_column;
+        $data->position_credit_amount_column = $request->position_credit_amount_column;
+        $data->position_description_column = $request->position_description_column;
+        $data->separated_by = $request->separated_by;
+        $data->date_format = $request->date_format;
+        $data->thousands_separator = $request->thousands_separator;
+        $data->decimal_separator = $request->decimal_separator;
+        $data->save();
+        return response()->json(['message' => 'Registro actualizado correctamente'], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+    }
+}

@@ -786,11 +786,11 @@ export default {
 		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 		 * @param  {integer} id Identificador del proyecto a buscar, este parámetro es opcional
 		 */
-		getProjects(id) {
+		async getProjects(id) {
 			const vm = this;
 			var project_id = typeof id !== 'undefined' ? '/' + id : '';
 			const url = vm.setUrl(`budget/get-projects${project_id}`);
-			axios.get(url).then(response => {
+			await axios.get(url).then(response => {
 				vm.projects = response.data;
 			}).catch(error => {
 				console.error(error);
@@ -802,11 +802,11 @@ export default {
 		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 		 * @param  {integer} id Identificador de la acción centralizada a buscar, este parámetro es opcional
 		 */
-		getCentralizedActions(id) {
+		async getCentralizedActions(id) {
 			const vm = this;
 			var centralized_action_id = typeof id !== 'undefined' ? '/' + id : '';
 			const url = vm.setUrl(`budget/get-centralized-actions${centralized_action_id}`);
-			axios.get(url).then(response => {
+			await axios.get(url).then(response => {
 				vm.centralized_actions = response.data;
 			});
 		},
@@ -816,7 +816,8 @@ export default {
 		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 		 * @param {string} type Tipo de registro
 		 */
-		getSpecificActions(type) {
+		async getSpecificActions(type) {
+			const vm = this;
 			let id =
 				type === 'Project'
 					? this.record.project_id
@@ -825,7 +826,7 @@ export default {
 			this.specific_actions = [];
 
 			if (id) {
-				axios.get(
+				await axios.get(
 					`${window.app_url}/budget/get-specific-actions/${type}/${id}/formulation`
 				).then(response => {
 					this.specific_actions = response.data;
@@ -838,6 +839,9 @@ export default {
 						'getSpecificActions'
 					);
 				});
+				if (vm.record.id) {
+					vm.record.specific_action_id = vm.record.specific_action.id;
+				}
 			}
 
 			var len = this.specific_actions.length;
@@ -955,11 +959,8 @@ export default {
 				vm.record.fiscal_year = vm.record.year = formulation.year;
 				vm.record.project_id = pry_acc_type === 'Proyecto' ? pry_acc_id : '';
 				vm.record.centralized_action_id = !(pry_acc_type === 'Proyecto')? pry_acc_id: '';
+				vm.record.specific_action = formulation.specific_action;
 				await vm.getSpecificActions();
-
-				setTimeout(() => {
-					vm.record.specific_action_id = formulation.budget_specific_action_id;
-				}, 500);
 				
 				/** Carga los datos de las partidas presupuestarias formuladas */
 				setTimeout(() => {
@@ -1156,6 +1157,19 @@ export default {
 			}
 		}
 	},
+
+	created(){
+		window.addEventListener('updateProjectId', (event) => {
+			this.record.project_id = event.value;
+		});
+
+		window.addEventListener('updateCentralizedActionId', (event) => {
+			this.record.centralized_action_id = event.value;
+		});
+
+	},
+
+
 	async mounted() {
 		const vm = this;
 		vm.loading = true;
@@ -1186,6 +1200,7 @@ export default {
 			);
 
 			if (e.target.id === 'sel_project') {
+				window.dispatchEvent(new CustomEvent('updateCentralizedActionId', { value: '' }));
 				$('#centralized_action_id')
 					.closest('.form-group')
 					.removeClass('is-required');
@@ -1193,6 +1208,7 @@ export default {
 					.closest('.form-group')
 					.addClass('is-required');
 			} else if (e.target.id === 'sel_centralized_action') {
+				window.dispatchEvent(new CustomEvent('updateProjectId', { value: '' }));
 				$('#centralized_action_id')
 					.closest('.form-group')
 					.addClass('is-required');

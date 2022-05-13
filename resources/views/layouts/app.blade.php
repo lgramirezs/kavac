@@ -266,7 +266,7 @@
                  * @param  {string}  target_model   Modelo en el cual se va a realizar la consulta
                  * @param  {string}  module_name    Nombre del módulo que ejecuta la acción
                  */
-                function updateSelect(parent_element, target_element, target_model, module_name) {
+                function updateSelect(parent_element, target_element, target_model, module_name) {             
                     var module_name = (typeof(module_name) !== "undefined")?'/' + module_name:'';
                     var parent_id = parent_element.val();
                     var parent_name = parent_element.attr('id');
@@ -345,11 +345,11 @@
                     var relation = (typeof(relation) !== "undefined")?'/' + relation:'';
                     var parent_id = parent_element.val();
                     var parent_name = parent_element.attr('id');
-                    console.log(disables);
+                  
                     target_element.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
                    if(typeof(disables) !== "undefined"){
                     $.each(disables, function(index, disable) { 
-                                  console.log(disable);
+                              
                                    disable.attr('disabled', true);
                                    disable.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
 
@@ -398,7 +398,7 @@
                         target_element.attr('disabled', true);
                         if(typeof(disables) !== "undefined"){
                              $.each(disables, function(index, disable) { 
-                                  console.log(disable);
+    
                                   disable.attr('disabled', true);
                                    disable.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
 

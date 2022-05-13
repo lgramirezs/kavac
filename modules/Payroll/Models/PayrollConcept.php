@@ -37,10 +37,12 @@ class PayrollConcept extends Model implements Auditable
      */
     protected $fillable = [
         'code', 'name', 'description', 'active', 'incidence_type', 'affect',
-        'calculation_way', 'formula', 'institution_id', 'payroll_concept_type_id',
+        'formula', 'institution_id', 'payroll_concept_type_id',
         'payroll_salary_tabulator_id', 'accounting_account_id', 'budget_account_id',
         'assign_to'
     ];
+
+    protected $appends = ['translate_formula'];
 
     /**
      * Método que obtiene la información de la institución asociada al concepto
@@ -144,4 +146,10 @@ class PayrollConcept extends Model implements Auditable
     // {
     //     return $this->hasMany(PayrollSettlementType::class);
     // }
+
+    public function getTranslateFormulaAttribute()
+    {
+        $formula = $this->formula;
+        return str_replace('if', 'Si', $formula);
+    }
 }

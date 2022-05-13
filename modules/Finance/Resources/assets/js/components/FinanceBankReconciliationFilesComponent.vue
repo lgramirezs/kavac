@@ -3,7 +3,7 @@
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
             href="#" title="Registros de archivos de conciliación bancaria"
             data-toggle="tooltip"
-            @click="addRecord('add_bank_reconciliation_file', '/finance/banks', $event)"
+            @click="addRecord('add_bank_reconciliation_file', '/finance/setting-bank-reconciliation-files', $event)"
         >
             <i class="icofont icofont-files ico-3x"></i>
             <span>Archivos de conciliación</span>
@@ -150,13 +150,13 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Columnas separadas por:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="separated_list" v-model="record.separated_by"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
-                                    <label>Descripción:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <label>Formato de fecha:</label>
+                                    <select2 :options="date_formats" v-model="record.date_format"></select2>
                                 </div>
                             </div>
                         </div>
@@ -168,13 +168,13 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Separador de miles:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="thousands_decimal_separated_list" v-model="record.thousands_separator"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Separador de decimales:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="thousands_decimal_separated_list" v-model="record.decimal_separator"></select2>
                                 </div>
                             </div>
                         </div>
@@ -191,11 +191,76 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click="createRecord()"
+                            <button type="button" @click="createRecord('finance/setting-bank-reconciliation-files')"
                                 class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
                         </div>
+                    </div>
+                    <div class="modal-body modal-table">
+                        <v-client-table :columns="columns" :data="records" :options="table_options">
+                            <a slot="bank_id" slot-scope="props" target="_blank"
+                                v-if="props.row.bank_id">
+                                {{ props.row.bank_id }}
+                            </a>
+                            <a slot="read_start_line" slot-scope="props" target="_blank"
+                                v-if="props.row.read_start_line">
+                                {{ props.row.read_start_line }}
+                            </a>
+                            <a slot="read_end_line" slot-scope="props" target="_blank"
+                                v-if="props.row.read_end_line">
+                                {{ props.row.read_end_line }}
+                            </a>
+                            <a slot="position_reference_column" slot-scope="props" target="_blank"
+                                v-if="props.row.position_reference_column">
+                                {{ props.row.position_reference_column }}
+                            </a>
+                            <a slot="position_date_column" slot-scope="props" target="_blank"
+                                v-if="props.row.position_date_column">
+                                {{ props.row.position_date_column }}
+                            </a>
+                            <a slot="position_debit_amount_column" slot-scope="props" target="_blank"
+                                v-if="props.row.position_debit_amount_column">
+                                {{ props.row.position_debit_amount_column }}
+                            </a>
+                            <a slot="position_credit_amount_column" slot-scope="props" target="_blank"
+                                v-if="props.row.position_credit_amount_column">
+                                {{ props.row.position_credit_amount_column }}
+                            </a>
+                            <a slot="position_description_column" slot-scope="props" target="_blank"
+                                v-if="props.row.position_description_column">
+                                {{ props.row.position_description_column }}
+                            </a>
+                            <a slot="separated_by" slot-scope="props" target="_blank"
+                                v-if="props.row.separated_by">
+                                {{ props.row.separated_by }}
+                            </a>
+                            <a slot="date_format" slot-scope="props" target="_blank"
+                                v-if="props.row.date_format">
+                                {{ props.row.date_format }}
+                            </a>
+                            <a slot="thousands_separator" slot-scope="props" target="_blank"
+                                v-if="props.row.thousands_separator">
+                                {{ props.row.thousands_separator }}
+                            </a>
+                            <a slot="decimal_separator" slot-scope="props" target="_blank"
+                                v-if="props.row.decimal_separator">
+                                {{ props.row.decimal_separator }}
+                            </a>
+                            <div slot="id" slot-scope="props" class="text-center">
+                                <button @click="initUpdate(props.row.id, $event)"
+                                    class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
+                                    title="Modificar registro" data-toggle="tooltip" type="button">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button @click="deleteRecord(props.row.id, '/finance/banks')"
+                                    class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
+                                    title="Eliminar registro" data-toggle="tooltip"
+                                    type="button">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+                        </v-client-table>
                     </div>
                 </div>
             </div>
@@ -216,9 +281,28 @@
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    separated_by: '',
+                    date_format: '',
+                    thousands_separator: '',
+                    decimal_separator: '',
                 },
                 errors: [],
                 records: [],
+                columns: [
+                    'bank_id',
+                    'read_start_line',
+                    'read_end_line',
+                    'position_reference_column',
+                    'position_date_column',
+                    'position_debit_amount_column',
+                    'position_credit_amount_column',
+                    'position_description_column',
+                    'separated_by',
+                    'date_format',
+                    'thousands_separator',
+                    'decimal_separator',
+                    'id'
+                ],
                 banks: [],
                 lines: [
                     { "id": "", "text": "Seleccione..." },
@@ -232,6 +316,22 @@
                     { "id": 8, "text": "8" },
                     { "id": 9, "text": "9" },
                     { "id": 10, "text": "10" },
+                ],
+                separated_list : [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": "Tabulador", "text": "Tabulador" },
+                    { "id": "Punto y Coma", "text": "Punto y Coma" },
+                    { "id": "Coma", "text": "Coma" },
+                ],
+                thousands_decimal_separated_list: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": "Punto", "text": "Punto" },
+                    { "id": "Coma", "text": "Coma" },
+                ],
+                date_formats : [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": "DD-MM-YYYY", "text": "DD-MM-YYYY" },
+                    { "id": "YYYY-MM-DD", "text": "YYYY-MM-DD" },
                 ],
             }
         },
@@ -251,23 +351,58 @@
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    separated_by: '',
+                    date_format: '',
+                    thousands_separator: '',
+                    decimal_separator: '',
                 };
             },
-
-            createRecord () {
-                // console.log("Entró aquí!");
-                console.log(this.record.bank_id);
-                console.log(this.record.read_start_line);
-                console.log(this.record.read_end_line);
-                console.log(this.record.position_reference_column);
-                console.log(this.record.position_date_column);
-                console.log(this.record.position_debit_amount_column);
-                console.log(this.record.position_credit_amount_column);
-                console.log(this.record.position_description_column);
-            }
         },
         created() {
             this.getBanks();
+            this.table_options.headings = {
+                'bank_id': 'Banco',
+                'read_start_line': 'Leer línea de inicio',
+                'read_end_line': 'Leer línea final',
+                'position_reference_column': 'Referencia',
+                'position_date_column': 'Fecha',
+                'position_debit_amount_column': 'Monto débito',
+                'position_credit_amount_column': 'Monto crédito',
+                'position_description_column': 'Descripción',
+                'separated_by': 'Columnas separadas por',
+                'date_format': 'Formato de fecha',
+                'thousands_separator': 'Separador de miles',
+                'decimal_separator': 'Separador de decimales',
+                'id': 'Acción'
+            };
+            this.table_options.sortable = [
+                'bank_id',
+                'read_start_line',
+                'read_end_line',
+                'position_reference_column',
+                'position_date_column',
+                'position_debit_amount_column',
+                'position_credit_amount_column',
+                'position_description_column',
+                'separated_by',
+                'date_format',
+                'thousands_separator',
+                'decimal_separator'
+            ];
+            this.table_options.filterable = [
+                'bank_id',
+                'read_end_line',
+                'read_end_line',
+                'position_reference_column',
+                'position_date_column',
+                'position_debit_amount_column',
+                'position_credit_amount_column',
+                'position_description_column',
+                'separated_by',
+                'date_format',
+                'thousands_separator',
+                'decimal_separator'
+            ];
         },
         mounted() {
             const vm = this;

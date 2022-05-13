@@ -190,7 +190,7 @@
                                     <td>{{ tax_account.spac_description }}</td>
                                     <td>{{ tax_account.code }}</td>
                                     <td>{{ tax_account.description }}</td>
-                                    <td class="text-right">{{ tax_account.amount }}</td>
+                                    <td class="text-right">{{ formatToCurrency(tax_account.amount, '') }}</td>
                                     <td class="text-center">
                                         <input type="hidden" name="account_id[]" readonly
                                                :value="tax_account.specific_action_id + '|' + tax_account.account_id">
@@ -262,12 +262,7 @@
                                     <div class="col-md-3 mt-4">
                                         <div class="form-group">
                                             <label>Impuesto:</label>
-                                            <select class="select2" v-model="account_tax_id">
-                                                <option value="">Seleccione</option>
-                                                <option :value="tax.id" v-for="tax in taxes" :key="tax.id">
-                                                    {{ tax.name }} {{ tax.histories[0].percentaje }}%
-                                                </option>
-                                            </select>
+                                            <select2 :options="taxes" v-model="account_tax_id"/>
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +319,8 @@
                 /**
                  * Campos temporales para agregar las cuentas presupuestarias a comprometer
                  */
-                taxes: [],
+                taxes: [{'id': '', 'text': 'Seleccione...'}],
+                taxesData: [],
                 specific_actions: [],
                 specific_action_id: '',
                 accounts: [],
@@ -441,6 +437,29 @@
                     'account_id': vm.account_id,
                     'tax_id': vm.account_tax_id
                 });
+
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData){
+                        if (vm.account_tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
+                    }
+
+                    vm.record.tax_accounts.push({
+                        'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        'code': account.code,
+                        'description': tax_description,
+                        'amount': vm.account_amount * tax_percentage / 100,
+                        'specific_action_id': vm.specific_action_id,
+                        'account_id': vm.account_id,
+                        'tax_id': vm.account_tax_id
+                    });
+                }
+
 
                 bootbox.confirm({
                     title: "Agregar cuenta",
@@ -595,7 +614,28 @@
                 let totalItems = vm.record.documentToCompromise.budget_compromise_details.length;
                 let currentItem = vm.record.accounts.length;
                 return `Item ${currentItem} / ${totalItems}`;
-            }
+            },
+            /**
+             * Listado de impuestos
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getTaxes() {
+                const vm = this;
+                axios.get(`${window.app_url}/get-taxes`).then(response => {
+                    if (response.data.records.length > 0) {
+                        vm.taxesData = response.data.records;
+                        for (let tax of vm.taxesData) {
+                            vm.taxes.push({
+                                'id' : tax.id,
+                                'text' : tax.name + ' ' + tax.histories[0].percentage + '%',
+                            });
+                        }
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            },
         },
         created() {
 
@@ -604,6 +644,7 @@
             let vm = this;
             vm.reset();
             vm.getInstitutions();
+            vm.taxesData = [];
             vm.getTaxes();
 
             $("#add_source").on('shown.bs.modal', function() {
