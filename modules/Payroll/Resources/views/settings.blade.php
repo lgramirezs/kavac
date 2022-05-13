@@ -188,58 +188,58 @@
 				<div class="card-body">
 					<div class="row">
 						{{-- Tipos de personal --}}
-						{{-- <payroll-staff-types></payroll-staff-types> --}}
+						<payroll-staff-types></payroll-staff-types>
 
 						{{-- Tipos de cargos --}}
-						{{-- <payroll-position-types></payroll-position-types> --}}
+						<payroll-position-types></payroll-position-types>
 
 						{{-- Cargos --}}
-						{{-- <payroll-positions></payroll-positions> --}}
+						<payroll-positions></payroll-positions>
 
 						{{-- Clasificaciones del personal --}}
-						{{-- <payroll-staff-classifications></payroll-staff-classifications> --}}
+						<payroll-staff-classifications></payroll-staff-classifications>
 
 						{{-- Grados de instrucción --}}
-						{{-- <payroll-instruction-degrees></payroll-instruction-degrees> --}}
+						<payroll-instruction-degrees></payroll-instruction-degrees>
 
 						{{-- Tipos de estudio --}}
-						{{-- <payroll-study-types></payroll-study-types> --}}
+						<payroll-study-types></payroll-study-types>
 
 						{{-- Nacionalidades --}}
-						{{-- <payroll-nationalities></payroll-nationalities> --}}
+						<payroll-nationalities></payroll-nationalities>
 
 						{{-- Niveles de idioma --}}
-						{{-- <payroll-language-levels></payroll-language-levels> --}}
+						<payroll-language-levels></payroll-language-levels>
 
 						{{-- Idiomas --}}
-						{{-- <payroll-languages></payroll-languages> --}}
+						<payroll-languages></payroll-languages>
 
 						{{-- Géneros --}}
-						{{-- <payroll-genders></payroll-genders> --}}
+						<payroll-genders></payroll-genders>
 
 						{{-- Tipos de inactividad --}}
-						{{-- <payroll-inactivity-types></payroll-inactivity-types> --}}
+						<payroll-inactivity-types></payroll-inactivity-types>
 
 						{{-- Tipos de contrato --}}
-						{{-- <payroll-contract-types></payroll-contract-types> --}}
+						<payroll-contract-types></payroll-contract-types>
 
 						{{-- Tipos de sector --}}
-						{{-- <payroll-sector-types></payroll-sector-types> --}}
+						<payroll-sector-types></payroll-sector-types>
 
 						{{-- Grados de licencia de conducir --}}
-						{{-- <payroll-license-degrees></payroll-license-degrees> --}}
+						<payroll-license-degrees></payroll-license-degrees>
 
 						{{-- Tipos de sangre --}}
-						{{-- <payroll-blood-types></payroll-blood-types> --}}
+						<payroll-blood-types></payroll-blood-types>
 
 						{{-- Parentescos --}}
-						{{-- <payroll-relationships></payroll-relationships> --}}
+						<payroll-relationships></payroll-relationships>
 
 						{{-- Discapacidades --}}
-						{{-- <payroll-disabilities></payroll-disabilities> --}}
+						<payroll-disabilities></payroll-disabilities>
 
 						{{-- Niveles de escolaridad --}}
-						{{-- <payroll-schooling-levels></payroll-schooling-levels> --}}
+						<payroll-schooling-levels></payroll-schooling-levels>
 					</div>
 				</div>
 			</div>
@@ -264,24 +264,24 @@
 				<div class="card-body">
 					<div class="row">
 						{{-- Parámetros de nómina --}}
-						{{-- <payroll-parameters></payroll-parameters> --}}
+						<payroll-parameters></payroll-parameters>
 
 						{{-- Escalafones salariales --}}
-						{{-- <payroll-salary-scales></payroll-salary-scales> --}}
+						<payroll-salary-scales></payroll-salary-scales>
 
 						{{-- Tabuladores de nómina --}}
-						{{-- <payroll-salary-tabulators></payroll-salary-tabulators> --}}
+						<payroll-salary-tabulators></payroll-salary-tabulators>
 
 						{{-- Tipos de conceptos --}}
-						{{-- <payroll-concept-types></payroll-concept-types> --}}
+						<payroll-concept-types></payroll-concept-types>
 
 						{{-- Conceptos --}}
-						{{-- <payroll-concepts></payroll-concepts> --}}
+						<payroll-concepts></payroll-concepts>
 
 						{{-- Tipos de pago --}}
-						{{-- <payroll-payment-types
+						<payroll-payment-types
 							start_operations_date="{!! (isset($institution)) ? $institution->start_operations_date : '' !!}">
-						</payroll-payment-types> --}}
+						</payroll-payment-types>
 
 						{{-- Políticas vacacionales --}}
 						<payroll-vacation-policies
@@ -289,15 +289,15 @@
 						</payroll-vacation-policies>
 
 						{{-- Políticas de prestaciones sociales --}}
-						{{-- <payroll-benefits-policies
+						<payroll-benefits-policies
 							start_operations_date="{!! (isset($institution)) ? $institution->start_operations_date : '' !!}">
-						</payroll-benefits-policies> --}}
+						</payroll-benefits-policies>
 
 						{{-- Políticas de Permisos --}}
-						{{-- <payroll-permission-policies></payroll-permission-policies> --}}
+						<payroll-permission-policies></payroll-permission-policies>
 
 						{{-- Tipos de liquidación --}}
-						{{-- <payroll-settlement-types></payroll-settlement-types> --}}
+						<payroll-settlement-types></payroll-settlement-types>
 
 					</div>
 				</div>
