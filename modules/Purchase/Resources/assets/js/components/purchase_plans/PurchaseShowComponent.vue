@@ -20,12 +20,12 @@
                         <hr>
                         <h6>INFORMACIÓN DEL PLAN DE COMPRA</h6>
                         <br>
-                        <div class="row" v-if="records.user">
+                        <div class="row" v-if="records">
                             <div class="col-3"><strong>Fecha de inicio:</strong> {{ format_date(records.init_date) }}</div>
                             <div class="col-3"><strong>Fecha de culminación:</strong> {{ format_date(records.end_date) }}</div>
                             <div class="col-3"><strong>Tipo de compra:</strong> {{ purchase_type }}</div>
                             <div class="col-3"><strong>Proceso de compra:</strong> {{ purchase_process }}</div>
-                            <div class="col-3"><strong>Responsable:</strong> {{ records.user.name }} </div>
+                            <div class="col-3"><strong>Responsable:</strong> {{ payroll_staff }} </div>
                         </div>
                         <hr>
                         <h6 class="text-center text-info">DOCUMENTO DE PLAN DE COMPRAS</h6>
@@ -75,6 +75,7 @@ export default {
         if (this.records.purchase_process) {
             this.record = this.records.purchase_process;
         }
+        console.log('here', this.records.purchase_process);
     },
     methods: {
 
@@ -132,6 +133,11 @@ export default {
         purchase_process: function() {
             if (this.records.purchase_process) {
                 return this.records.purchase_process.name;
+            }
+        },
+        payroll_staff: function() {
+            if (this.records.payroll_staff) {
+                return this.records.payroll_staff.first_name + ' ' + this.records.payroll_staff.last_name;
             }
         },
     }

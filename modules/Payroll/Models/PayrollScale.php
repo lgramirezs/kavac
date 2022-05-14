@@ -34,7 +34,7 @@ class PayrollScale extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['name', 'value', 'payroll_salary_scale_id', 'relationable_type', 'relationable_id'];
+    protected $fillable = ['name', 'value', 'payroll_salary_scale_id', 'relationable_type', 'relationable_id', 'relationship_type'];
 
     /**
      * Método que obtiene el eslacafón salarial al que pertenece la escala

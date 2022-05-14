@@ -23,7 +23,7 @@
                 <div class="col-md-4" id="helpSocioeconomicStaff">
                     <div class="form-group is-required">
                         <label>Trabajador:</label>
-                        <select2 :options="payroll_staffs"
+                        <select2 :options="payroll_socioeconomic"
                                  v-model="record.payroll_staff_id"></select2>
                         <input type="hidden" v-model="record.id">
                     </div>
@@ -198,7 +198,8 @@
                     payroll_childrens: [],
                 },
                 errors: [],
-                payroll_staffs: [],
+                //payroll_staffs: [],
+                payroll_socioeconomic: [],
                 marital_status: [],
                 payroll_schooling_levels: [],
                 payroll_disabilities: []
@@ -249,7 +250,8 @@
         },
 
         created() {
-            this.getPayrollStaffs();
+            //this.getPayrollStaffs((this.payroll_employment_id)?this.payroll_employment_id:'filter');
+            this.getPayrollSocioeconomic((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             this.getMaritalStatus();
             this.getPayrollSchoolingLevels();
             this.getPayrollDisabilities();

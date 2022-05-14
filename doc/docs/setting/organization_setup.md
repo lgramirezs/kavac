@@ -23,9 +23,7 @@ Para iniciar el registro de una organización se deben seguir los siguientes pas
 -   Para establecer un logotipo y banner institucional haga clic sobre los recuadros correspondientes que tienen por titulo **IMAGEN** (ver Figura).
 -   Seleccione un archivo desde su directorio local (ver Figura ).  
 
-![Screenshot](../img/logo_banner.png)<div style="text-align: center;font-weight: bold">Figura : Seleccionar Logotipo y Banner Institucional desde Directorio Local</div>
-
-Los logotipos y banners son añadidos en algunas secciones del sistema e incluidos en los formatos de archivos PDF emitidos desde la aplicación.   
+![Screenshot](../img/logo_banner.png)<div style="text-align: center;font-weight: bold">Figura : Seleccionar Logotipo y Banner Institucional desde Directorio Local</div> 
 
 ![Screenshot](../img/figure_14.png)<div style="text-align: center;font-weight: bold">Figura : Logotipo y Banner Institucional</div>
 
@@ -116,9 +114,11 @@ Desde este apartado se pueden llevar a cabo las siguientes acciones:
 ### Registrar organización
 
 -   Presione el botón **Crear registro** ![Screenshot](../img/create.png) ubicado en la parte superior derecha del apartado **Organizaciones Registradas** (ver Figura )
--   A continuación complete el formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
 
 ![Screenshot](../img/organizations_1.png)<div style="text-align: center;font-weight: bold">Figura : Registrar Organización / Multi-Gestión Activa</div>
+
+-   A continuación complete el formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
+-   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
 
 ### Consular registros
 
@@ -133,7 +133,9 @@ Desde este apartado se pueden llevar a cabo las siguientes acciones:
 ### Editar registros
 
 -   Presione el botón **Editar registro** ![Screenshot](../img/edit.png)  ubicado en la columna titulada **Acción** del registro de organización que se desee seleccionar para actualizar datos. 
+
+![Screenshot](../img/organizations_3.png)<div style="text-align: center;font-weight: bold">Figura : Editar Registros de Organizaciones/ Multi-Gestión Activa</div>
+
 -   Actualice los datos del formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
 -   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
 
-![Screenshot](../img/organizations_3.png)<div style="text-align: center;font-weight: bold">Figura : Editar Registros de Organizaciones/ Multi-Gestión Activa</div>

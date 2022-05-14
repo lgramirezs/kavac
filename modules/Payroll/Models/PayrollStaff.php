@@ -28,7 +28,7 @@ class PayrollStaff extends Model implements Auditable
 
     protected $table = "payroll_staffs";
 
-    protected $with = ['payrollEmployment', 'payrollStaffUniformSize'];
+    protected $with = ['payrollEmployment', 'payrollStaffUniformSize', 'payrollSocioeconomic', 'payrollProfessional'];
 
     /**
      * Lista de atributos para la gestión de fechas

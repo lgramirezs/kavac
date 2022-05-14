@@ -33,7 +33,7 @@ class FinanceSettingBankReconciliationFilesController extends Controller
      */
     public function index()
     {
-        return 'Hola!';
+        return response()->json(['records' => FinanceSettingBankReconciliationFiles::orderBy('bank_id')->get()], 200);
     }
 
     /**
@@ -89,7 +89,6 @@ class FinanceSettingBankReconciliationFilesController extends Controller
             ]);
             return $data;
         });
-        // return $this->success($data);
         return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 
@@ -108,6 +107,21 @@ class FinanceSettingBankReconciliationFilesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = FinanceSettingBankReconciliationFiles::find($id);
+        $data->bank_id = $request->bank_id;
+        $data->read_start_line = $request->read_start_line;
+        $data->read_end_line = $request->read_end_line;
+        $data->position_reference_column = $request->position_reference_column;
+        $data->position_date_column = $request->position_date_column;
+        $data->position_debit_amount_column = $request->position_debit_amount_column;
+        $data->position_credit_amount_column = $request->position_credit_amount_column;
+        $data->position_description_column = $request->position_description_column;
+        $data->separated_by = $request->separated_by;
+        $data->date_format = $request->date_format;
+        $data->thousands_separator = $request->thousands_separator;
+        $data->decimal_separator = $request->decimal_separator;
+        $data->save();
+        return response()->json(['message' => 'Registro actualizado correctamente'], 200);
     }
 
     /**
