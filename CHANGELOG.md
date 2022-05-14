@@ -6,7 +6,19 @@ Este sistema integra y automatiza los procesos administrativos, con elementos de
 
 **Kavac** , es un sistema intuitivo, que brinda **elementos gráficos, analíticos que garantiza el manejo eficiente de los recursos de la organización**, además de establecer canales de información en tiempo real acerca de la situación actual de cada uno de los departamentos, suministrando información útil y oportuna para la toma de decisiones, para el logro de los objetivos.
 
-A continuación se describe la liberación de las versiones:
+A continuación se describe la liberación de las versiones
+
+## V1.0.1 (14-05-2022)
+
+Ajustes y correcciones en:
+
+* Aplicación base.
+* Módulos:
+  * Presupuesto
+  * Oficina de Atención al Ciudadano (OAC)
+  * Talento Humano
+  * Compras
+  * Comercialización
 
 ## V1.0.0 (09-04-2022)
 
