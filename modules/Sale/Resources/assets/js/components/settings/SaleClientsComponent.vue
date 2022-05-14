@@ -17,7 +17,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" role="alert" v-if="errors.length > 0">
-                            <strong>¡Cuidado! Debe verificar los siguientes errores antes de continuar:</strong>
+                            <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"
                                     @click.prevent="errors = {}">
                                 <span aria-hidden="true">&times;</span>
@@ -327,7 +327,20 @@
         created() {
             this.getCountries();
 
-            this.table_options_clients = {};
+            this.table_options_clients = {
+                texts: {
+                    count:" ",
+                    filter:"Buscar:",
+                    filterBy:"Buscar por {column}",
+                    filterPlaceholder:"Buscar...",
+                    first:"PRIMERO",
+                    last:"ÚLTIMO",
+                    limit:"Registros",
+                    loading:"Cargando...",
+                    loadingError:"Oops! No se pudo cargar la información",
+                    noResults:"No existen registros",
+                },
+            };
             this.table_options_clients.headings = {
                 'id': 'Acción',
                 'type_person_juridica': 'Tipo de Persona',
