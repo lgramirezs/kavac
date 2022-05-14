@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <budget-compromise-list route_list="{{ url('budget/compromises/vue-list') }}"
+                    <budget-compromise-list route_list="{{ url('budget/compromises/list/all') }}"
                                             route_delete="{{ url('budget/compromises') }}"
                                             route_edit="{{ url('budget/compromises/{id}/edit') }}"/>
                 </div>

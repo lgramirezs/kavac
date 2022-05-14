@@ -333,4 +333,15 @@ class PurchaseRequirementController extends Controller
 		}
 		return $records;
 	}
+
+	/**
+	 * Devuelve un listado con los registros de requerimientos
+	 * @return JsonResponse
+	 */
+	public function getRequirements()
+	{
+		return response()->json([
+			'records' => template_choices('App\Models\Currency', 'code', [], true)
+		], 200);
+	}
 }

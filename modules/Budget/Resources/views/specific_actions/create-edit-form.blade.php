@@ -49,8 +49,9 @@
 								</div>
 								<div class="form-group">
 									{!! Form::select('project_id', $projects, (isset($model) && strpos($model->specificable_type, 'Project'))?$model->specificable_id:old('project_id'), [
-										'class' => 'select2', 'data-toggle' => 'tooltip', 'id' => 'project_id',
-										'title' => __('Seleccione un proyecto'),
+										'class' => 'select2', 'data-toggle' => 'tooltip',
+										 'id' => 'project_id',
+										'title' => __('Seleccione un proyecto'),										
 										'disabled' => (!$errors->has('project_id'))?'disabled':false
 									]) !!}
 								</div>
@@ -150,6 +151,7 @@
 	@parent
 	<script>
 		$(document).ready(function() {
+
 			$('.sel_project_centralized_action').on('switchChange.bootstrapSwitch', function(e) {
 				$('#project_id').attr('disabled', (e.target.id!=="sel_project"));
 				$('#centralized_action_id').attr('disabled', (e.target.id!=="sel_centralized_action"));
@@ -163,6 +165,21 @@
 					$("#project_id").closest('.form-group').removeClass('is-required');
 				}
 			});
+
+			if ($('.sel_project_centralized_action').is(':checked')){
+ 
+                    if($('#project_id').val() !== ''){
+                   
+                   $('#project_id').attr('disabled', false);
+                                                      }
+				   if($('#centralized_action_id').val() !== ''){
+                   
+                   $('#centralized_action_id').attr('disabled', false);
+                                                      }									  
+
+                  }
+
+				  
 			$("#from_date").on('change', function() {
 				$("#to_date").attr("min", $(this).val());
 			});

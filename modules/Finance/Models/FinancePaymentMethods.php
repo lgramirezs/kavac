@@ -43,4 +43,14 @@ class FinancePaymentMethods extends Model implements Auditable
     {
         return $this->hasMany(FinanceBankAccount::class);
     }
+
+    /**
+     * Get all of the financePayOrders for the FinancePaymentMethods
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function financePayOrders()
+    {
+        return $this->hasMany(FinancePayOrder::class, 'finance_payment_method_id');
+    }
 }

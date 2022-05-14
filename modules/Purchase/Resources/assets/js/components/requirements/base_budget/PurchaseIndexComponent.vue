@@ -1,9 +1,9 @@
 <template>
     <section>
         <v-client-table :columns="columns" :data="records" :options="table_options">
-            <div slot="created_at" slot-scope="props" class="text-center">
+            <div slot="date" slot-scope="props" class="text-center">
                 <div align="center">
-                    {{ format_date(props.row.created_at) }}
+                    {{ (props.row.date) ? format_date(props.row.date) : format_date(props.row.created_at) }}
                 </div>
             </div>
             <div slot="currency.name" slot-scope="props">
@@ -55,7 +55,7 @@ export default {
         return {
             records: [],
             columns: [
-                'created_at',
+                'date',
                 'currency.name',
                 'status',
                 'id'
@@ -64,13 +64,13 @@ export default {
     },
     created() {
         this.table_options.headings = {
-            'created_at': 'Fecha',
+            'date': 'Fecha',
             'currency.name': 'Tipo de moneda',
             'status': 'Estatus',
             'id': 'ACCIÓN'
         };
         this.table_options.columnsClasses = {
-            'created_at': 'col-xs-2',
+            'date': 'col-xs-2',
             'currency.name': 'col-xs-6 text-center',
             'status': 'col-xs-2 text-center',
             'id': 'col-xs-2'

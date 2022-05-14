@@ -27,14 +27,7 @@
 					<div class="form-group is-required">
 						<label>Organización:</label>
 						<select2 :options="institutions"
-								 v-model="record.institution_id" @input="getDepartments()"></select2>
-                    </div>
-
-				</div>
-				<div class="col-md-4" id="helpDepartment">
-					<div class="form-group is-required">
-						<label>Departamento:</label>
-						<select2 :options="departments" v-model="record.department_id"></select2>
+								 v-model="record.institution_id"></select2>
                     </div>
 
 				</div>
@@ -43,6 +36,13 @@
 						<label>Trabajador:</label>
 						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
                     </div>
+				</div>
+				<div class="col-md-4" id="helpDepartment">
+					<div class="form-group is-required">
+						<label>Departamento:</label>
+						<select2 :options="departments" v-model="record.department_id"></select2>
+                    </div>
+
 				</div>
 				<div class="col-md-4" id="helpPositionType">
 					<div class="form-group">

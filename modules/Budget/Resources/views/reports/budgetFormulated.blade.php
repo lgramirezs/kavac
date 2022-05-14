@@ -22,7 +22,7 @@ Reportes de Proyectos
         <div class="card" id="budgetAvailability">
             <div class="card-header">
                 <h6 class="card-title">
-                    Reportes de Proyectos
+                    Reportes de Formulaciones
                 </h6>
                 <div class="card-btns">
                     @include('buttons.previous', ['route' => url()->previous()])

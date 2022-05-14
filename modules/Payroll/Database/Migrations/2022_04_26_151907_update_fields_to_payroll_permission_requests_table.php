@@ -33,7 +33,7 @@ class UpdateFieldsToPayrollPermissionRequestsTable extends Migration
             }
             if (Schema::hasColumn('payroll_permission_requests', 'day_permission')) {
                 $table->dropColumn('day_permission');
-                $table->string('time_permission')->comment('Tiempo establecido para el permiso solicitado');
+                $table->string('time_permission')->nullable()->comment('Tiempo establecido para el permiso solicitado');
             }
         });
     }
@@ -54,7 +54,7 @@ class UpdateFieldsToPayrollPermissionRequestsTable extends Migration
             }
             if (!Schema::hasColumn('payroll_permission_requests', 'day_permission')) {
                 $table->dropColumn('time_permission');
-                $table->integer('day_permission');
+                $table->integer('day_permission')->nullable();
             }
         });
     }

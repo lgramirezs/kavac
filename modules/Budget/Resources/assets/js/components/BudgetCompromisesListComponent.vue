@@ -1,5 +1,14 @@
 <template>
     <v-client-table :columns="columns" :data="records" :options="table_options">
+        <div slot="description" slot-scope="props" class="text-justify">
+            <div v-html="props.row.description"></div>
+        </div>
+        <div slot="compromised_at" slot-scope="props" class="text-center">
+            {{ format_date(props.row.compromised_at) }}
+        </div>
+        <div slot="code" slot-scope="props" class="text-center">
+            {{ props.row.code }}
+        </div>
         <div slot="id" slot-scope="props" class="text-center">
             <button @click="editForm(props.row.id)"
                     class="btn btn-warning btn-xs btn-icon btn-action"

@@ -58,6 +58,7 @@ class RecordFailedLoginAttempt
             ]);
         } else {
             $list = json_decode($blackListIp->p_value);
+            $list = (is_array($list))?:[$list];
             if (!in_array($myIp, $list)) {
                 $blackListIp->p_value = json_encode(array_push($list, $myIp));
                 $blackListIp->save();

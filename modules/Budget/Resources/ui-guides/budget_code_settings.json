@@ -8,7 +8,7 @@
         "intro": "configuración del código a usar en los registros de formulaciones presupuestarias"
     },
     {
-        "element": "#helpCodeCommitments",
+        "element": "#helpCodeCompromises",
         "intro": "Configuración del código a usar en los registros de compromisos presupuestarios"
     },
     {

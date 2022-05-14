@@ -26,7 +26,7 @@
 						@include('buttons.help')
 					</h6>
 					<div class="card-btns">
-						@include('buttons.previous', ['route' => url()->previous()])
+						@include('buttons.previous', ['route' => route('budget.subspecific-formulations.index')])
 						@include('buttons.print', ['route' => route('print.formulated', ['id' => $formulation->id])])
 						@if ($enable)
 							@include('buttons.sign', ['route' => route('print.formulatedsign', ['id' => $formulation->id])])
