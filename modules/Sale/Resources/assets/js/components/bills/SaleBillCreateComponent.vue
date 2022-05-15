@@ -53,10 +53,10 @@
                                                 {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
                                             </span>
                                         </div>
-                                        <div slot="phones" slot-scope="props">
-                                            <div v-if="props.row.phones">
-                                                <ul v-for="phone in props.row.phones">
-                                                    <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                                        <div slot="sale_clients_phone" slot-scope="props">
+                                            <div v-if="props.row.sale_clients_phone">
+                                                <ul v-for="(client_phone, index) in props.row.sale_clients_phone" :key="index">
+                                                    <li>{{ client_phone.phone }}</li>
                                                 </ul>
                                             </div>
                                             <div v-else>
@@ -65,7 +65,7 @@
                                         </div>
                                         <div slot="sale_clients_email" slot-scope="props">
                                             <div v-if="props.row.sale_clients_email">
-                                                <ul v-for="client_email in props.row.sale_clients_email">
+                                                <ul v-for="(client_email, index) in props.row.sale_clients_email" :key="index">
                                                     <li>{{ client_email.email }}</li>
                                                 </ul>
                                             </div>
@@ -359,7 +359,7 @@
                     'currency',
                     'id',
                 ],
-                columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email'],
+                columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'sale_clients_phone', 'sale_clients_email'],
                 types_person:  [
                     {'id' : '', 'text' : "Seleccione..."},
                     {'id' : 'Natural', 'text' : 'Natural'},
@@ -424,7 +424,7 @@
                 this.record.name = client.name_client ? client.name_client : client.name;
                 this.record.id_number = client.id_type + '-' + client.id_number;
                 this.record.rif = client.rif;
-                this.record.phone = client.phones && client.phones.length ? client.phones[0].extension + client.phones[0].area_code + '-' + client.phones[0].number : '';
+                this.record.phone = client.sale_clients_phone && client.sale_clients_phone.length? client.sale_clients_phone[0].phone : '';
                 this.record.email = client.sale_clients_email && client.sale_clients_email.length? client.sale_clients_email[0].email : '';
                 $("#view_sale_bill_clients").modal('hide');
             },
@@ -924,7 +924,7 @@
                 'type_person_juridica': 'Tipo de Persona',
                 'rif': 'Identificación del Cliente',
                 'name_client': 'Nombre',
-                'phones': 'Telefonos',
+                'sale_clients_phone': 'Telefonos',
                 'sale_clients_email': 'Correo Electrónico'
             };
             this.table_options_clients.sortable = [

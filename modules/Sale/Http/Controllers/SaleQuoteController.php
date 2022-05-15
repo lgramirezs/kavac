@@ -14,7 +14,6 @@ use Modules\Sale\Models\SaleTypeGood;
 use App\Models\HistoryTax;
 use Modules\Sale\Models\SaleClient;
 use Modules\Sale\Models\SaleClientsEmail;
-use App\Models\Phone;
 use App\Rules\Rif as RifRule;
 
 /**
@@ -529,7 +528,7 @@ class SaleQuoteController extends Controller
      */
     public function getSaleClients()
     {
-        $saleClients = SaleClient::with(['phones', 'saleClientsEmail'])->get();
+        $saleClients = SaleClient::with(['saleClientsPhone', 'saleClientsEmail'])->get();
         $clients = [];
         foreach($saleClients as $client) {
           $clients[] = $client;
