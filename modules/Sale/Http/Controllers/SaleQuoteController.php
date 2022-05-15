@@ -429,12 +429,15 @@ class SaleQuoteController extends Controller
         $inventoryProduct = SaleWarehouseInventoryProduct::with(['SaleSettingProduct'])->get();
         $options = [['id' => '', 'text' => 'Seleccione...']];
         foreach ($inventoryProduct as $product) {
+          if (!empty($product->SaleSettingProduct)) {
           array_push($options, ['id' => $product->id, 'text' => $product->SaleSettingProduct->name ]);
-          //puede pasar que haya un producto en inventario con el mismo nombre y cantidades, unidades de medida, etc.
-          //pero no esta estipulado en el caso de uso para diferenciarlos
-          //descomentar y comentar el anterior para agregar el codigo del producto
-          //array_push($options, ['id' => $product->id, 'text' => $product->SaleSettingProduct->name . '(' . $product->code . ')' ]);
+            //puede pasar que haya un producto en inventario con el mismo nombre y cantidades, unidades de medida, etc.
+            //pero no esta estipulado en el caso de uso para diferenciarlos
+            //descomentar y comentar el anterior para agregar el codigo del producto
+            //array_push($options, ['id' => $product->id, 'text' => $product->SaleSettingProduct->name . '(' . $product->code . ')' ]);
+          }
         }
+
         return $options;
     }
 
