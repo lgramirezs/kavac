@@ -108,20 +108,17 @@ class FinanceCheckBookController extends Controller
 
             }
 
-            //consulta que no exista el campo numero de cheque repetido en base de datos.
-            $checksnumber = FinanceCheckBook::where('number', $number)->first();
+            //consulta que no exista el campo numero de cheque repetido con el codigo en la base de datos.
+            $checksnumber = FinanceCheckBook::where('number', $number)->where('code', $request->code)->first();
             if($checksnumber){
-                 $error[0]= "El campo numero de cheque ya ha sido registrado";
+                 $error[0]= "El campo Serial / Código o el Cheque # ya ha sido registrado en el sistema";
                 return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
             }
-            //consulta que no exista el campo numero de cheque repetido en el formulario.
-            foreach ($request->numbers as $number2) {
-                dd($request->numbers);
-                dd($number2);
-                if($number == $number2){
-                    $error[0]= "El campo numero de cheque esta repetido en el formulario";
-                    return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
-                }
+
+            //consulta que no exista el campo numero de cheque esta repetido en el formulario
+            if(count($request->numbers) > count(array_unique($request->numbers))){
+              $error[0]= "El campo numero de cheque esta repetido en el formulario";
+              return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
             }
         }
 
@@ -163,7 +160,7 @@ class FinanceCheckBookController extends Controller
     {
         //return view('finance::edit');
 
-        dd($id);
+        //dd($id);
         $record = FinanceCheckBook::find($id);
         //return view('finance::create', compact("checksUsed"));
 
