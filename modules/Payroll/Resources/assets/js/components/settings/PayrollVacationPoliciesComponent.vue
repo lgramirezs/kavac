@@ -113,9 +113,111 @@
                                         </div>
                                         <!-- ./tipo de vacaciones -->
                                     </div>
-                                    <div class="row" v-if="record.vacation_type == 'collective_vacations'">
-                                        <!-- adelanto de vacaciones -->
+                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations'">
+                                        Salidas colectivas <i class="fa fa-plus-circle cursor-pointer" title="Nueva fecha de salida" data-toggle="tooltip" @click="addVacationPeriod()"></i>
+                                    </h6>
+                                    <div class="row" v-for="(vacation_period, index) in record.vacation_periods" :key="index">
+                                        <!-- fecha de inicio del período de vacaciones colectivas -->
+                                        <div class="col-md-5">
+                                            <div class="form-group is-required">
+                                                <label>Fecha de inicio:</label>
+                                                <input type="date" id="start_date_vacation" placeholder="Fecha de inicio" data-toggle="tooltip" title="Indique la fecha del inicio del salidas individuales" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date" class="form-control input-sm" v-model="vacation_period.start_date">
+                                            </div>
+                                        </div>
+                                        <!-- ./fecha de inicio del período de vacaciones colectivas -->
+                                        <!-- fecha de finalización del período de vacaciones colectivas -->
+                                        <div class="col-md-5">
+                                            <div class="form-group is-required">
+                                                <label>Fecha de Finalización:</label>
+                                                <input type="date" id="end_date_vacation" placeholder="Fecha de Finalización" data-toggle="tooltip" title="Indique la fecha de Finalización del salidas individuales" :min="vacation_period.start_date" :max="record.end_date" :disabled="(vacation_period.start_date == '')" class="form-control input-sm" v-model="vacation_period.end_date">
+                                            </div>
+                                        </div>
+                                        <!-- ./fecha de finalización del período de vacaciones colectivas -->
+                                        <div class="col-1" style="align-self: flex-end;">
+                                            <div class="form-group">
+                                                <button class="btn btn-sm btn-danger btn-action" type="button" @click="removeRow(index, record.vacation_periods)" title="Eliminar registro" data-toggle="tooltip">
+                                                    <i class="fa fa-minus-circle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tipo de vacaciones individuales -->
+                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period'">
+                                        <!-- Días a otorgar para el disfrute de vacaciones -->
                                         <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label> Días a otorgar para el disfrute de vacaciones:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el disfrute de vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.days_for_vacations">
+                                            </div>
+                                        </div>
+                                        <!-- ./Días a otorgar para el disfrute de vacaciones -->
+
+                                        <!-- Períodos vacacionales permitidos por año -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label> Períodos vacacionales permitidos por año:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.vacation_period_per_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./Períodos vacacionales permitidos por año -->
+
+                                        <!-- Días de disfrute adicionales a otorgar por año de servicio -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label>Días de disfrute adicionales a otorgar por año de servicio:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días adicionales a otorgar por año de servicio para el disfrute de vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.additional_days_per_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./Días de disfrute adicionales a otorgar por año de servicio -->
+
+                                        <!-- Días de disfrute de vacaciones mínimos por año -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label>Días de disfrute de vacaciones mínimo por año:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad mínima de días para el disfrute de vacaciones por año" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.minimum_additional_days_per_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./Días de disfrute de vacaciones mínimos por año -->
+
+                                        <!-- Días de disfrute de vacaciones máximos por años de servicio -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label>Días de disfrute de vacaciones máximo por año de servicio:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días de disfrute de vacaciones máximos por años de servicio" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.maximum_additional_days_per_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./Días de disfrute de vacaciones máximos por años de servicio -->
+
+                                        <!-- Períodos vacacionales acumulados permitidos por año -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label> Períodos vacacionales acumulados permitidos por año:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales acumulados permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.vacation_periods_accumulated_per_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./Períodos vacacionales acumulados permitidos por año -->
+
+                                        <!-- Permitir adelanto de disfrute de vacaciones -->
+                                           <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>¿Permitir adelanto de disfrute de vacaciones?</label>
                                                 <div class="col-12">
@@ -125,8 +227,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- ./adelanto de vacaciones -->
-                                        <!-- posterga de vacaciones -->
+                                        <!-- ./Permitir adelanto de disfrute de vacaciones -->
+
+                                        <!-- Permitir postergar el disfrute de vacaciones -->
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>¿Permitir postergar el disfrute de vacaciones?</label>
@@ -137,19 +240,185 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- ./posterga de vacaciones -->
-                                        <!-- períodos vacacionales -->
+                                        <!-- ./Permitir postergar el disfrute de vacaciones -->
+
+                                        <!-- ./Días a otorgar para el disfrute de vacaciones -->
+                                        <!-- Los días de disfrute se establecen de acuerdo a un escalafón -->
                                         <div class="col-md-6">
-                                            <div class="form-group is-required">
-                                                <label> Períodos vacacionales acumulados permitidos por año:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales acumulados permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.vacation_periods_accumulated_per_year">
+                                            <div class="form-group">
+                                                <label>¿Los días de disfrute se establecen de acuerdo a un escalafón?</label>
+                                                <div class="col-12">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Los días de disfrute se establecen de acuerdo a un escalafón" v-model="record.days_on_scale">
+                                                        <label slot="off-label"></label>
+                                                    </p-check>
+                                                </div>
                                             </div>
                                         </div>
-                                        <!-- ./períodos vacacionales -->
+                                        <!-- ./Los días de disfrute se establecen de acuerdo a un escalafón -->
+                                        <div class="col-12 row" v-if="record.days_on_scale">
+                                            <!-- agrupar por -->
+                                            <div class="col-6">
+                                                <div class="form-group is-required">
+                                                    <label for="days_group_by">Agrupar por:</label>
+                                                    <select2 :options="payroll_salary_tabulators_groups" @input="getDaysOptions()" v-model="record.days_group_by"></select2>
+                                                </div>
+                                            </div>
+                                            <!-- ./agrupar por -->
+                                        </div>
+                                        <div class="col-12 row" v-if="record.days_on_scale && record.days_group_by">
+                                            <div class="col-7 pad-top-10 with-border with-radius table-responsive" style="place-self: baseline;">
+                                                <h6 class="text-center">Escalas o niveles del escalafón</h6>
+                                                <div class="row" v-if="record.payroll_days_scales.length == 0">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-info" role="alert">
+                                                            <div class="container">
+                                                                <div class="alert-icon">
+                                                                    <i class="now-ui-icons travel_info"></i>
+                                                                </div>
+                                                                <strong>No se encontraron registros</strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div v-else>
+                                                    <table class="table table-hover table-striped table-responsive  table-scale">
+                                                        <thead>
+                                                            <th :colspan="1 + record.payroll_days_scales.length">
+                                                                <strong>{{ record.name }}</strong>
+                                                            </th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="selected-row text-center">
+                                                                <th>{{ getGroupBy }}</th>
+                                                                <th v-for="(field,index) in record.payroll_days_scales" :key="index">
+                                                                    <span v-if="type == 'list'
+                                                                             && options.length > 0">
+                                                                        {{ getValueScale(field.value) }}
+                                                                    </span>
+                                                                    <span v-else-if="type == 'range'">
+                                                                        {{ field.value['from'] + ' - ' + field.value['to'] }}
+                                                                    </span>
+                                                                    <span v-else-if="type == 'boolean'">
+                                                                        {{ field.value?'SI':'NO' }}
+                                                                    </span>
+                                                                    <span v-else>
+                                                                        {{ field.value }}
+                                                                    </span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr class="selected-row text-center">
+                                                                <th>Nombre</th>
+                                                                <td v-for="(field,index) in record.payroll_days_scales" :key="index">
+                                                                    {{ field.name}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="config-row text-center">
+                                                                <th>Acción:</th>
+                                                                <td v-for="(field,index) in record.payroll_days_scales" :key="index">
+                                                                    <div class="d-inline-flex">
+                                                                        <button @click="editDaysScale(index,$event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </button>
+                                                                        <button @click="removeDaysScale(index,$event)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 offset-1 pad-top-10 with-border with-radius table-responsive">
+                                                <h6 class="text-center">Nueva escala</h6>
+                                                <div class="row" style="align-items: flex-end;" v-if="days_type != '' && days_type != 'boolean'
+                                                        && days_type != 'list'">
+                                                    <strong class="col-md-12">
+                                                        Expresado en
+                                                    </strong>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Valor puntual</label>
+                                                            <div class="col-12">
+                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado puntualmente" @change="resetDaysScales()" v-model="days_type" value="value">
+                                                                    <label slot="off-label"></label>
+                                                                </p-radio>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Rango</label>
+                                                            <div class="col-12">
+                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado en rangos" @change="resetDysScales()" v-model="days_type" value="range">
+                                                                    <label slot="off-label"></label>
+                                                                </p-radio>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group is-required">
+                                                            <label>Nombre</label>
+                                                            <input type="text" placeholder="Nombre" data-toggle="tooltip" title="Indique un nombre para identificar la agrupación" class="form-control input-sm" v-model="days_scale.name">
+                                                            <input type="hidden" v-model="days_scale.id">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" v-if="days_type == 'list'">
+                                                        <div class="form-group">
+                                                            <label>Valor:</label>
+                                                            <select2 :options="options" v-model="days_scale.value"></select2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="days_type == 'value'">
+                                                        <div class="form-group is-required">
+                                                            <label>Valor</label>
+                                                            <input type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" v-model="days_scale.value" min="0" onfocus="this.select()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="days_type == 'range'">
+                                                        <div class="form-group is-required">
+                                                            <label>Desde</label>
+                                                            <input id="days-scale-value-from" days_type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" min="0" step=".01" onfocus="this.select()">
+                                                        </div>
+                                                        <div class="form-group is-required">
+                                                            <label>Hasta</label>
+                                                            <input id="days-scale-value-to" days_type="number" placeholder="Valor" class="form-control input-sm" data-toggle="tooltip" title="Indique la cantidad (requerido)" min="0" step=".01" onfocus="this.select()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12" v-if="days_type == 'boolean'">
+                                                        <div class="form-group">
+                                                            <label>Valor</label>
+                                                            <div class="col-12">
+                                                                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                                                                    <input type="checkbox" data-toggle="tooltip" title="Indique si el campo está activo" v-model="days_scale.value">
+                                                                    <div class="state p-off">
+                                                                        <label></label>
+                                                                    </div>
+                                                                    <div class="state p-on p-success">
+                                                                        <label></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="button" @click="addDaysScale($event)" class="btn btn-sm btn-primary btn-custom float-right" title="Agregar escala" data-toggle="tooltip">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <!-- ./Tipo de vacaciones individuales -->
+
                                     <div class="row">
                                         <!-- ¿asignar a? -->
                                         <div class="col-md-12">
@@ -196,115 +465,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <h6 class="card-title" v-if="record.vacation_type == 'collective_vacations'">
-                                        Salidas individuales <i class="fa fa-plus-circle cursor-pointer" title="Nuevo salidas individuales" data-toggle="tooltip" @click="addVacationPeriod()"></i>
-                                    </h6>
-                                    <div class="row" v-for="(vacation_period, index) in record.vacation_periods" :key="index">
-                                        <!-- fecha de inicio del período de vacaciones colectivas -->
-                                        <div class="col-md-5">
-                                            <div class="form-group is-required">
-                                                <label>Fecha de inicio:</label>
-                                                <input type="date" id="start_date_vacation" placeholder="Fecha de inicio" data-toggle="tooltip" title="Indique la fecha del inicio del salidas individuales" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date" class="form-control input-sm" v-model="vacation_period.start_date">
-                                            </div>
-                                        </div>
-                                        <!-- ./fecha de inicio del período de vacaciones colectivas -->
-                                        <!-- fecha de finalización del período de vacaciones colectivas -->
-                                        <div class="col-md-5">
-                                            <div class="form-group is-required">
-                                                <label>Fecha de Finalización:</label>
-                                                <input type="date" id="end_date_vacation" placeholder="Fecha de Finalización" data-toggle="tooltip" title="Indique la fecha de Finalización del salidas individuales" :min="vacation_period.start_date" :max="record.end_date" :disabled="(vacation_period.start_date == '')" class="form-control input-sm" v-model="vacation_period.end_date">
-                                            </div>
-                                        </div>
-                                        <!-- ./fecha de finalización del período de vacaciones colectivas -->
-                                        <div class="col-1" style="align-self: flex-end;">
-                                            <div class="form-group">
-                                                <button class="btn btn-sm btn-danger btn-action" type="button" @click="removeRow(index, record.vacation_periods)" title="Eliminar registro" data-toggle="tooltip">
-                                                    <i class="fa fa-minus-circle"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="align-items: baseline;" v-if="record.vacation_type == 'vacation_period'">
-                                        <!-- períodos vacacionales -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label> Períodos vacacionales permitidos por año:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.vacation_period_per_year">
-                                            </div>
-                                        </div>
-                                        <!-- ./períodos vacacionales -->
-                                        <!-- días adicionales a otorgar por años de servicio para el disfrute de vacaciones -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label>Días de disfrute adicionales a otorgar por año de servicio:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días adicionales a otorgar por año de servicio para el disfrute de vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.additional_days_per_year">
-                                            </div>
-                                        </div>
-                                        <!-- ./días adicionales a otorgar por años de servicio para el disfrute de vacaciones -->
-                                        <!-- días de disfrute de vacaciones mínimos por año -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label>Días de disfrute de vacaciones mínimo por año:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad mínima de días para el disfrute de vacaciones por año" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.minimum_additional_days_per_year">
-                                            </div>
-                                        </div>
-                                        <!-- ./días de disfrute de vacaciones mínimos por año -->
-                                        <!-- días de disfrute de vacaciones máximo por años de servicio -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label>Días de disfrute de vacaciones máximo por año de servicio:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad máxima de días para el disfrute de vacaciones por año de servicio" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.maximum_additional_days_per_year">
-                                            </div>
-                                        </div>
-                                        <!-- ./días de disfrute de vacaciones máximos por año de servicio -->
-                                        <!-- períodos vacacionales -->
-                                        <div class="col-md-3">
-                                            <div class="form-group is-required">
-                                                <label> Períodos vacacionales acumulados permitidos por año:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales acumulados permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.vacation_periods_accumulated_per_year">
-                                            </div>
-                                        </div>
-                                        <!-- ./períodos vacacionales -->
-                                        <!-- adelanto de vacaciones -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>¿Permitir adelanto de disfrute de vacaciones?</label>
-                                                <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si se habilita el adelanto de disfrute de vacaciones" v-model="record.vacation_advance">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ./adelanto de vacaciones -->
-                                        <!-- posterga de vacaciones -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>¿Permitir postergar el disfrute de vacaciones?</label>
-                                                <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si se habilita el adelanto de disfrute de vacaciones" v-model="record.vacation_postpone">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ./posterga de vacaciones -->
                                     </div>
                                 </div>
                                 <div id="w-vacationPaymentForm" :class="panel=='vacationPaymentForm' ? 'tab-pane p-3 active' : 'tab-pane p-3'">
@@ -386,7 +546,7 @@
                                         </div>
                                         <!-- ./día general -->
                                         <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-6" v-if="record.payment_calculation == 'general_days' && 
+                                        <div class="col-md-6" v-show="record.payment_calculation == 'general_days' && 
                                                                     record.vacation_type == 'collective_vacations'">
                                             <div class="form-group is-required">
                                                 <label>Días a otorgar para el pago de vacaciones:</label>
@@ -400,16 +560,17 @@
                                     </div>
                                     <div class="container">
                                         <div class="row" v-if="record.worker_arises">
-                                            <!-- Monto pago de vacaciones automáticamente -->
+                                            <!-- Monto de pago de vacaciones automáticamente -->
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="group_by">Monto pago de vacaciones: </label>
+                                                    <label for="group_by">Monto de pago de vacaciones: </label>
                                                     <label>{{ record.generate_worker_arises }}</label>
                                                 </div>
                                             </div>
-                                            <!-- ./Monto pago de vacaciones automáticamente -->
+                                            <!-- ./Monto de pago de vacaciones automáticamente -->
                                         </div>
-                                        <div class="row" v-if="record.on_scale">
+                                        <!-- ./Los días de disfrute se establecen de acuerdo a un escalafón -->
+                                        <div class="col-12 row" v-if="record.on_scale">
                                             <!-- agrupar por -->
                                             <div class="col-6">
                                                 <div class="form-group is-required">
@@ -419,7 +580,7 @@
                                             </div>
                                             <!-- ./agrupar por -->
                                         </div>
-                                        <div class="row" v-if="record.on_scale && record.group_by">
+                                        <div class="col-12 row" v-if="record.on_scale && record.group_by">
                                             <div class="col-7 pad-top-10 with-border with-radius table-responsive" style="place-self: baseline;">
                                                 <h6 class="text-center">Escalas o niveles del escalafón</h6>
                                                 <div class="row" v-if="record.payroll_scales.length == 0">
@@ -649,7 +810,7 @@
                                 </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
-                                <button @click="initUpdate(props.row.id, $event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
+                                <button @click="initUpdate(props.row, $event)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, 'payroll/vacation-policies')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
@@ -673,6 +834,7 @@ export default {
                 start_date: '',
                 end_date: '',
                 vacation_type: '',
+                days_for_vacations: '',
                 vacation_periods_accumulated_per_year: '',
                 vacation_days: '',
                 vacation_period_per_year: '',
@@ -698,14 +860,26 @@ export default {
                 generate_worker_arises: 0,
                 min_days_advance: '',
                 max_days_advance: '',
+
+                days_on_scale: false,
+                days_group_by: '',
+                payroll_days_scales: [],
+                days_type: '',
             },
             type:'',
+            days_type:'',
             scale: {
                 id: '',
                 name: '',
                 value: ''
             },
+            days_scale: {
+                id: '',
+                name: '',
+                value: ''
+            },
             resetScale: true,
+            editIndex: null,
             options: [],
             assign_to: [],
             assign_options: {},
@@ -836,9 +1010,15 @@ export default {
                 generate_worker_arises: 0,
                 min_days_advance: '',
                 max_days_advance: '',
+
+                days_on_scale: false,
+                days_group_by: '',
+                payroll_days_scales: [],
+                days_type: '',
             };
 
             vm.resetScales();
+            vm.resetDaysScales();
 
             vm.panel = 'vacationPolicyForm';
             document.getElementById("vacationPolicyForm").click();
@@ -867,6 +1047,29 @@ export default {
             vm.record.type = vm.type;
         },
         /**
+         * Método que borra los campos del formulario de la escala
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         */
+        resetDaysScales() {
+            const vm = this;
+            vm.days_scale = {
+                id:    '',
+                name:  '',
+                value: ''
+            };
+            vm.editDaysIndex = null;
+            $("#days-scale-value-from").val('');
+            $("#days-scale-value-to").val('');
+            if (vm.resetDaysScale) {
+                vm.record.payroll_days_scales = [];
+            } else {
+                vm.resetDaysScale = true;
+            }
+            vm.record.days_type = vm.days_type;
+        },
+        /**
          * Método que habilita o deshabilita el botón siguiente
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
@@ -878,8 +1081,7 @@ export default {
                     if ((vm.record.name != '') &&
                         (vm.record.start_date != '') &&
                         (vm.record.institution_id != '') &&
-                        (vm.record.vacation_periods != []) &&
-                        (vm.record.vacation_periods_accumulated_per_year != '')) {
+                        (vm.record.vacation_periods.length > 0)) {
                         return false;
                     } else {
                         return true;
@@ -889,11 +1091,11 @@ export default {
                     if ((vm.record.name != '') &&
                         (vm.record.start_date != '') &&
                         (vm.record.institution_id != '') &&
-                        (vm.record.vacation_days != '') &&
-                        (vm.record.vacation_period_per_year != '') &&
                         (vm.record.additional_days_per_year != '') &&
+                        (vm.record.days_for_vacations != '') &&
                         (vm.record.minimum_additional_days_per_year != '') &&
                         (vm.record.maximum_additional_days_per_year != '') &&
+                        (vm.record.vacation_period_per_year != '') &&
                         (vm.record.vacation_periods_accumulated_per_year != '')) {
                         return false;
                     } else {
@@ -905,9 +1107,6 @@ export default {
             } else if (vm.panel == 'vacationPaymentForm') {
                 if ((vm.record.payroll_payment_type_id != '') &&
                     (vm.record.payment_calculation != '')) {
-                    if ((vm.record.payment_calculation == 'general_days' && vm.record.vacation_days == '')) {
-                        return true;
-                    }
                     return false;
                 } else {
                     return true;
@@ -1007,6 +1206,11 @@ export default {
                             on_scale: field['on_scale'],
                             group_by: field['group_by'],
                             type: field['type'],
+
+                            days_on_scale: field['days_on_scale'],
+                            days_group_by: field['days_group_by'],
+                            days_type: field['days_type'],
+                            payroll_days_scales: field['payroll_days_scales'],
                         });
                     });
                     vm.records = records;
@@ -1118,9 +1322,30 @@ export default {
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
          */
-            getOptions() {
-                const vm = this;
-                if (vm.record.id == '') {
+        getOptions() {
+            const vm = this;
+            if (vm.record.id == '') {
+                $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                    if (typeof(field['children']) != 'undefined') {
+                        $.each(field['children'], function(index, field) {
+                            if (vm.record.group_by == field['id']) {
+                                vm.type = field['type'];
+                                vm.record.type = vm.type;
+                                if (field['type'] == 'list') {
+                                    vm.options = [];
+                                    axios.get(
+                                        `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                    ).then(response => {
+                                        vm.options = response.data;
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+                vm.resetScales();
+            } else {
+                if (vm.resetGroup == true) {
                     $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
                         if (typeof(field['children']) != 'undefined') {
                             $.each(field['children'], function(index, field) {
@@ -1141,48 +1366,97 @@ export default {
                     });
                     vm.resetScales();
                 } else {
-                    if (vm.resetGroup == true) {
-                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
-                            if (typeof(field['children']) != 'undefined') {
-                                $.each(field['children'], function(index, field) {
-                                    if (vm.record.group_by == field['id']) {
-                                        vm.type = field['type'];
-                                        vm.record.type = vm.type;
-                                        if (field['type'] == 'list') {
-                                            vm.options = [];
-                                            axios.get(
-                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
-                                            ).then(response => {
-                                                vm.options = response.data;
-                                            });
-                                        }
+                    $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                        if (typeof(field['children']) != 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (vm.record.group_by == field['id']) {
+                                    vm.type = vm.record.type;
+                                    if (field['type'] == 'list') {
+                                        vm.options = [];
+                                        axios.get(
+                                            `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                        ).then(response => {
+                                            vm.options = response.data;
+                                        });
                                     }
-                                });
-                            }
-                        });
-                        vm.resetScales();
-                    } else {
-                        $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
-                            if (typeof(field['children']) != 'undefined') {
-                                $.each(field['children'], function(index, field) {
-                                    if (vm.record.group_by == field['id']) {
-                                        vm.type = vm.record.type;
-                                        if (field['type'] == 'list') {
-                                            vm.options = [];
-                                            axios.get(
-                                                `${window.app_url}/payroll/get-parameter-options/${field['id']}`
-                                            ).then(response => {
-                                                vm.options = response.data;
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                        vm.resetGroup = true;
-                    }
+                                }
+                            });
+                        }
+                    });
+                    vm.resetGroup = true;
                 }
-            },
+            }
+        },
+        /**
+         * Método que obtiene los parámetros de opciones
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         */
+        getDaysOptions() {
+            const vm = this;
+            if (vm.record.id == '') {
+                $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                    if (typeof(field['children']) != 'undefined') {
+                        $.each(field['children'], function(index, field) {
+                            if (vm.record.days_group_by == field['id']) {
+                                vm.days_type = field['type'];
+                                vm.record.days_type = vm.days_type;
+                                if (field['type'] == 'list') {
+                                    vm.options = [];
+                                    axios.get(
+                                        `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                    ).then(response => {
+                                        vm.options = response.data;
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+                vm.resetScales();
+            } else {
+                if (vm.resetGroup == true) {
+                    $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                        if (typeof(field['children']) != 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (vm.record.days_group_by == field['id']) {
+                                    vm.days_type = field['type'];
+                                    vm.record.days_type = vm.days_type;
+                                    if (field['type'] == 'list') {
+                                        vm.options = [];
+                                        axios.get(
+                                            `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                        ).then(response => {
+                                            vm.options = response.data;
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    vm.resetScales();
+                } else {
+                    $.each(vm.payroll_salary_tabulators_groups, function(index, field) {
+                        if (typeof(field['children']) != 'undefined') {
+                            $.each(field['children'], function(index, field) {
+                                if (vm.record.days_group_by == field['id']) {
+                                    vm.days_type = vm.record.days_type;
+                                    if (field['type'] == 'list') {
+                                        vm.options = [];
+                                        axios.get(
+                                            `${window.app_url}/payroll/get-parameter-options/${field['id']}`
+                                        ).then(response => {
+                                            vm.options = response.data;
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    vm.resetGroup = true;
+                }
+            }
+        },
         /**
          * Método que obtiene el valor de la escala según el identificador único
          *
@@ -1248,6 +1522,51 @@ export default {
             event.preventDefault();
         },
         /**
+         * Método que agrega una nueva escala
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {object}    event    Objeto que gestiona los eventos
+         */
+        addDaysScale(event) {
+            const vm = this;
+            var field = {};
+            if ((vm.days_scale.name == '') ||
+                ((vm.days_scale.value == '') && (vm.days_type != 'boolean') && (vm.days_type != 'range'))) {
+                return false;
+            }
+
+            for (var index in vm.days_scale) {
+                if (index == 'value') {
+                    if (vm.days_type == 'range') {
+                        var fromValue = $("#days-scale-value-from").val();
+                        var toValue = $("#days-scale-value-to").val();
+                        if ((fromValue == '') ||
+                            (toValue == '')) {
+                            return false;
+                        }
+                        field[index] = {
+                            from: fromValue,
+                            to: toValue
+                        };
+                    } else {
+                        field[index] = vm.days_scale[index];
+                    }
+
+                } else {
+                    field[index] = vm.days_scale[index];
+                }
+            }
+            if (vm.editDaysIndex == null)
+                vm.record.payroll_days_scales.push(field);
+            else {
+                vm.record.payroll_days_scales[vm.editDaysIndex] = field;
+            }
+            vm.resetDaysScale = false;
+            vm.resetDaysScales();
+            event.preventDefault();
+        },
+        /**
          * Método que carga el formulario de la escala con los datos a modificar
          *
          * @author    Henry Paredes <hparedes@cenditel.gob.ve>
@@ -1275,6 +1594,34 @@ export default {
             }
             event.preventDefault();
         },
+                /**
+         * Método que carga el formulario de la escala con los datos a modificar
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {integer}    index    Identificador del registro a ser modificado
+         * @param     {object}     event    Objeto que gestiona los eventos
+         */
+        editDaysScale(index, event) {
+            const vm = this;
+            vm.editDaysIndex = index;
+            if (vm.days_type == 'range') {
+                vm.days_scale = {
+                    id: vm.record.payroll_days_scales[index].id,
+                    name: vm.record.payroll_days_scales[index].name,
+                    value: ''
+                };
+                $("#days-scale-value-from").val(vm.record.payroll_days_scales[index].value.from);
+                $("#days-scale-value-to").val(vm.record.payroll_days_scales[index].value.to);
+            } else {
+                vm.days_scale = {
+                    id: vm.record.payroll_days_scales[index].id,
+                    name: vm.record.payroll_days_scales[index].name,
+                    value: JSON.parse(vm.record.payroll_days_scales[index].value)
+                };
+            }
+            event.preventDefault();
+        },
         /**
          * Método que elimina el elemento seleccionado
          *
@@ -1287,6 +1634,20 @@ export default {
             const vm = this;
             vm.record.payroll_scales.splice(index, 1);
             vm.editIndex = null;
+            event.preventDefault();
+        },
+        /**
+         * Método que elimina el elemento seleccionado
+         *
+         * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+         *
+         * @param     {integer}    index    Identificador del registro a eliminar
+         * @param     {object}     event    Objeto que gestiona los eventos
+         */
+        removeDaysScale(index, event) {
+            const vm = this;
+            vm.record.payroll_days_scales.splice(index, 1);
+            vm.editDaysIndex = null;
             event.preventDefault();
         },
 
@@ -1303,11 +1664,25 @@ export default {
                         ],
                     }
                 ).then(response => {
-                    console.log(response.data.result)
                     vm.record.generate_worker_arises = response.data.result;
                 });
             }
-        }
+        },
+        		/**
+		 * Método que carga el formulario con los datos a modificar
+		 *
+		 * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+		 *
+		 * @param  {integer} index Identificador del registro a ser modificado
+		 * @param {object} event   Objeto que gestiona los eventos
+		 */
+		initUpdate(data, event) {
+			let vm = this;
+			vm.errors = [];
+
+			vm.record = data;
+			console.log(vm.record)
+		},
     },
 };
 </script>

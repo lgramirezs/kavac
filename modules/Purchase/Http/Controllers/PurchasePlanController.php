@@ -14,9 +14,7 @@ use Modules\Purchase\Models\PurchasePlan;
 use Modules\Purchase\Models\PurchaseType;
 use Modules\Purchase\Models\Document;
 
-use Modules\Purchase\Models\User;
 use Module;
-use Response;
 
 class PurchasePlanController extends Controller
 {
@@ -39,6 +37,7 @@ class PurchasePlanController extends Controller
 	public function create()
 	{
 		$purchase_process = template_choices('Modules\Purchase\Models\PurchaseProcess', 'name', [], true);
+
 		$users = (Module::has('Payroll')) ?
 			template_choices(
 				'Modules\Payroll\Models\PayrollStaff',
@@ -80,16 +79,19 @@ class PurchasePlanController extends Controller
 		$this->validate($request, [
 			'purchase_type_id'      => 'required|int',
 			'purchase_processes_id' => 'required|int',
-			'user_id'               => 'required|int',
+			'payroll_staff_id'               => 'required|int',
 			'init_date'             => 'required|date',
 			'end_date'              => 'required|date',
+			'file'					=> 'required|mimes:pdf'
 		], [
+			'file.required'					 => 'El archivo de plan de compra es obligatorio',
+			'file.mimes'                   	 => 'El archivo de plan de compra debe ser de tipo pdf.',
 			'purchase_type_id.required'      => 'El campo tipo de compra es obligatorio.',
 			'purchase_type_id.int'           => 'El campo tipo de compra no tiene el formato adecuado.',
 			'purchase_processes_id.required' => 'El campo proceso de compra es obligatorio.',
 			'purchase_processes_id.int'      => 'El campo proceso de compra no tiene el formato adecuado.',
-			'user_id.required'				 => 'El campo responsable es obligatorio.',
-			'user_id.int'				     => 'El campo responsable no tiene el formato adecuado.',
+			'payroll_staff_id.required'				 => 'El campo responsable es obligatorio.',
+			'payroll_staff_id.int'				     => 'El campo responsable no tiene el formato adecuado.',
 
 			'init_date.required'             => 'El campo fecha inical es obligatorio.',
 			'init_date.date'                 => 'El campo fecha inicial no tiene el formato adecuado.',
@@ -97,7 +99,23 @@ class PurchasePlanController extends Controller
 			'end_date.date'                  => 'El campo fecha de culminación no tiene el formato adecuado.',
 		]);
 
-		PurchasePlan::create($request->all());
+		$purchase_plan = PurchasePlan::create([
+			'purchase_type_id'      => $request->purchase_type_id,
+			'purchase_processes_id' => $request->purchase_processes_id,
+			'payroll_staff_id'      => $request->payroll_staff_id,
+			'init_date'             => $request->init_date,
+			'end_date'              => $request->end_date,
+		]);
+
+		$document = new UploadDocRepository();
+		$document->uploadDoc(
+			$request['file'],
+			'documents',
+			PurchasePlan::class,
+			$purchase_plan->id,
+			null
+		);
+
 		return response()->json(['message' => 'success'], 200);
 	}
 
@@ -107,7 +125,7 @@ class PurchasePlanController extends Controller
 	 */
 	public function show($id)
 	{
-		return response()->json(['records' => PurchasePlan::with('purchaseType', 'purchaseProcess', 'document', 'user')->find($id)], 200);
+		return response()->json(['records' => PurchasePlan::with('purchaseType', 'purchaseProcess', 'document', 'PayrollStaff')->find($id)], 200);
 	}
 
 	/**
@@ -138,12 +156,13 @@ class PurchasePlanController extends Controller
 			]);
 		}
 
-		foreach (User::where('level', '>=', 2)->orderBy('level')->get() as $record) {
-			array_push($users, [
-				'id'                    =>  $record->id,
-				'text'                  =>  $record->name,
-			]);
-		}
+		$users = (Module::has('Payroll')) ?
+			template_choices(
+				'Modules\Payroll\Models\PayrollStaff',
+				['id_number', '-', 'full_name'],
+				['relationship' => 'PayrollEmployment', 'where' => ['active' => true]],
+				true
+			) : [];
 
 		return view('purchase::purchase_plans.form', [
 			'purchase_process' => json_encode($purchase_process),

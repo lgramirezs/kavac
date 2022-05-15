@@ -398,14 +398,7 @@ class BudgetSpecificActionController extends Controller
         /** @var array Arreglo que contiene las acciones específicas */
         $data = [['id' => '', 'text' => 'Seleccione...']];
 
-        /** @var Object Objeto con información de las acciones específicas a consultar */
-        $budgetSpecificAction = (is_null($institutionId))
-            ? BudgetSpecificAction::with('specificable')
-            : BudgetSpecificAction::with(['specificable' => function ($q) use ($institutionId) {
-                $q->whereHas('department', function ($qq) use ($institutionId) {
-                    $qq->where('institution_id', $institutionId);
-                });
-            }]);
+        $budgetSpecificAction = BudgetSpecificAction::has('specificable');
 
         if (!is_null($selDate)) {
             $budgetSpecificAction = $budgetSpecificAction->where(
@@ -416,11 +409,21 @@ class BudgetSpecificActionController extends Controller
         }
 
         /** @var object Objeto que contiene información de las acciones específicas */
-        $sp_accs = ($formulated_year)
+        $budgetSpecificAction = ($formulated_year)
             ? $budgetSpecificAction->whereYear('from_date', $formulated_year)
             ->orWhereYear('to_date', $formulated_year)
-            ->get()
-            : $budgetSpecificAction->get();
+            : $budgetSpecificAction;
+
+        /** @var Object Objeto con información de las acciones específicas a consultar */
+        $budgetSpecificAction = (is_null($institutionId))
+            ? $budgetSpecificAction
+            : $budgetSpecificAction->whereHas('specificable', function ($q) use ($institutionId) {
+                $q->whereHas('department', function ($qq) use ($institutionId) {
+                    $qq->where('institution_id', $institutionId);
+                });
+            });
+
+        $sp_accs = $budgetSpecificAction->get();
 
         $withoutFormulations = false;
         $hasFormulations = false;

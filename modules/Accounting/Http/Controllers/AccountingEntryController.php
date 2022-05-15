@@ -463,7 +463,6 @@ class AccountingEntryController extends Controller
 
 		if ($request->typeSearch == 'reference') {
 			$allRecords = [];
-				// dd("s");
 
 			$search = (!$request->search)?$request->reference:$request->search;
 			/**

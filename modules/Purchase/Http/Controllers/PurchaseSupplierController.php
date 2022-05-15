@@ -270,7 +270,7 @@ class PurchaseSupplierController extends Controller
      */
     public function show($id)
     {
-        return response()->json(['records' => PurchaseSupplier::find($id)], 200);
+        return response()->json(['records' => PurchaseSupplier::with('documents.purchaseDocumentRequiredDocument.requiredDocument')->find($id)], 200);
     }
   
      /**
