@@ -344,6 +344,7 @@
 																		data-toggle="tooltip"
 																		target="_blank"
 																		href="{{'/purchase/document/download/'.$docs_to_download['req_doc_'.$reqDoc->id]->file}}"
+																		download="{{$model->rif . ' - ' . $reqDoc->name.'.pdf'}}"
 																		>
 																		<i class="fa fa-cloud-download fa-2x"></i>
 																	</a>
@@ -378,7 +379,8 @@
 																	</div>
 																@endif
 									                            <div class="feature-list-subheading">
-									                            	<i>{!! $reqDoc->description ?? '' !!}</i>
+									                            	<i class="font-weight-bold">{!! $reqDoc->name ?? '' !!}</i>
+																	{!! $reqDoc->description ?? '' !!}
 									                            </div>
 									                        </div>
 									                    </div>

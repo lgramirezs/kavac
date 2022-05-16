@@ -60,6 +60,12 @@ class PayrollParameterController extends Controller
     protected $associatedVacation;
 
     /**
+     * Arreglo con los registros asociados a la configuración de prestaciones sociales
+     * @var Array $associatedBenefit
+     */
+    protected $associatedBenefit;
+
+    /**
      * Define la configuración de la clase
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
@@ -276,6 +282,34 @@ class PayrollParameterController extends Controller
                 'name'     => 'Días a otogar para el pago de vacaciones',
                 'model'    => 'Modules\Payroll\Models\PayrollVacationRequests',
                 'required' => ['days_requested'],
+            ]
+        ];
+
+        /** Define los campos de la configuración de prestaciones sociales a emplear en el formulario */
+        $this->associatedBenefit = [
+            [
+                'id'       => 'BENEFIT_DAYS',
+                'name'     => 'Días a cancelar por garantías de prestaciones sociales',
+                'model'    => 'Modules\Payroll\Models\PayrollBenefitsPolicy',
+                'required' => ['benefit_days'],
+            ],
+            [
+                'id'       => 'ADDITIONAL_DAYS_PER_YEAR',
+                'name'     => 'Días de disfrute adicionales por año de servicio',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['additional_days_per_year'],
+            ],
+            [
+                'id'       => 'WORK_INTERRUPTION_DAYS',
+                'name'     => 'Días a cancelar por interrupción de relación laboral',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['work_interruption_days'],
+            ],
+            [
+                'id'       => 'MONTH_WORKED_DAYS',
+                'name'     => 'Días a cancelar por mes trabajado',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['month_worked_days'],
             ]
         ];
     }
@@ -612,7 +646,7 @@ class PayrollParameterController extends Controller
             $payrollParameters = [];
             foreach ($request->payroll_concepts as $payroll_concept) {
                 $payrollConcept = PayrollConcept::find($payroll_concept['id']);
-                if ($payrollConcept && $payrollConcept->calculation_way == 'formula') {
+                if ($payrollConcept) {
                     $exploded = multiexplode(
                         [
                             'if', '(', ')', '{', '}', ' ',
@@ -769,6 +803,29 @@ class PayrollParameterController extends Controller
         $list = [['id' => '', 'text' => 'Seleccione...']];
 
         foreach ($this->associatedVacation as $record) {
+            array_push($list, [
+                'id'   => $record['id'],
+                'text' => $record['name'],
+                'type' => 'number'
+            ]);
+        }
+        return $list;
+    }
+
+    /**
+     * Obtiene los registros asociados a los campos de la configuración de prestaciones sociales
+     *
+     * @method    getBenefitAssociatedRecords
+     *
+     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     *
+     * @return    Array    Listado de los registros a mostrar
+     */
+    public function getBenefitAssociatedRecords()
+    {
+        $list = [['id' => '', 'text' => 'Seleccione...']];
+
+        foreach ($this->associatedBenefit as $record) {
             array_push($list, [
                 'id'   => $record['id'],
                 'text' => $record['name'],

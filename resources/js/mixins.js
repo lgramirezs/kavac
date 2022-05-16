@@ -649,7 +649,7 @@ Vue.mixin({
 			 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
 			 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
 			 */
-			$.each(vm.record, function(el, value) {
+			$.each(vm.record, function(el, value) { console.log('here', el, value);
 				if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
 					/** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
 					$("input[name=" + el + "]").each(function() {
@@ -1080,7 +1080,7 @@ Vue.mixin({
 		 */
 		async lockScreen() {
 			let vm = this;
-			if (window.screen_locked) {
+			/*if (window.screen_locked) {
 				$(document.body).addClass('modalBlur');
 				$(".modal-lockscreen").modal('show');
 				return false;
@@ -1090,7 +1090,7 @@ Vue.mixin({
 					if (vm.loadLockScreen) {
 						return;
 					}
-					/** @type {Object} Datos del usuario para el bloqueo de pantalla por inactividad */
+					// @type {Object} Datos del usuario para el bloqueo de pantalla por inactividad
 					let response = await axios.get(`${window.app_url}/get-lockscreen-data`);
 					vm.lockscreen.lock = response.data.lock_screen;
 					vm.lockscreen.time = response.data.time_lock;
@@ -1098,7 +1098,7 @@ Vue.mixin({
 				}
 
 				if (vm.lockscreen.time > 0) {
-					/** Bloquea la pantalla del sistema al no haber actividad por parte del usuario */
+					// Bloquea la pantalla del sistema al no haber actividad por parte del usuario
 					vm.lockscreen.timer_timeout = setTimeout(function() {
 						if (window.screen_locked) {
 							return;
@@ -1114,13 +1114,14 @@ Vue.mixin({
 					}, vm.lockscreen.time * 60000);
 
 
-					/** @type {Array} Eventos que determinan actividad del usuario en la aplicación */
+					// @type {Array} Eventos que determinan actividad del usuario en la aplicación
 					var activityEvents = [
 						'mousedown', 'mousemove', 'keydown',
 						'scroll'
 					];
 
-					/** Reinicia el contador para bloquear la pantalla si el usuario ha estado activo en la aplicación */
+					// Reinicia el contador para bloquear la pantalla si el usuario ha estado activo en la 
+					// aplicación
 					document.addEventListener(activityEvents, function() {
 						console.log($(".modal-lockscreen").is(':visible'))
 						if (!$(".modal-lockscreen").is(':visible')) {
@@ -1142,7 +1143,7 @@ Vue.mixin({
 						}
 					}, true);
 				}
-			}
+			}*/
 		},
 		/**
 		 * Bloquea la pantalla a solicitud del usuario

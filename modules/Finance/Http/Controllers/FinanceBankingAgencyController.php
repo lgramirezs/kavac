@@ -52,11 +52,13 @@ class FinanceBankingAgencyController extends Controller
         $record = FinanceBankingAgency::with([
             'financeBank', 'city', 'phones'
         ])->get(); 
-        Log::emergency($record);
+        //Log::emergency($record);
 
-        return response()->json(['records' => FinanceBankingAgency::with([
-            'financeBank', 'city', 'phones'
-        ])->get()], 200);
+        // return response()->json(['records' => 
+        // FinanceBankingAgency::with([
+        //     'financeBank', 'city', 'phones'
+        // ])->get()], 200);
+        return response()->json(['records' => $record], 200);
     }
 
     /**

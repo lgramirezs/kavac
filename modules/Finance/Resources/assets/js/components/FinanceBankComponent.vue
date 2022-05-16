@@ -24,7 +24,8 @@
                                 <i class="now-ui-icons objects_support-17"></i>
                             </div>
                             <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+									@click.prevent="errors = []">
                                 <span aria-hidden="true">
                                     <i class="now-ui-icons ui-1_simple-remove"></i>
                                 </span>
@@ -110,12 +111,12 @@
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
-                                    class="btn btn-warning btn-xs btn-icon btn-round"
+                                    class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 <button @click="deleteRecord(props.row.id, '/finance/banks')"
-                                    class="btn btn-danger btn-xs btn-icon btn-round"
+                                    class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
                                     <i class="fa fa-trash-o"></i>
@@ -165,7 +166,7 @@
                 this.$refs.banklogo.url = `${window.app_url}/images/no-image2.png`;
             },
             setRecordImage(imageId) {
-                console.log(imageId)
+                //console.log(imageId)
                 this.record.logo_id = imageId;
             }
         },

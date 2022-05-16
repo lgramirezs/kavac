@@ -346,11 +346,11 @@ class AssetController extends Controller
             } elseif ($operation == 'requests') {
                 if (Auth()->user()->isAdmin()) {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('asset_status_id', 10);
+                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->where('institution_id', $institution_id)
-                        ->where('asset_status_id', 10);
+                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
                 }
             }
         } else {

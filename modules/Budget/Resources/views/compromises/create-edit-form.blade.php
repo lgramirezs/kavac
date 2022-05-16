@@ -30,7 +30,8 @@
                         @include('buttons.minimize')
                     </div>
                 </div>
-                <budget-compromise route_list="{{ url('budget/compromises') }}"></budget-compromise>
+                <budget-compromise route_list="{{ url('budget/compromises') }}" 
+                                   route_edit="{{ url('budget/compromises/{id}/edit') }}"></budget-compromise>
             </div>
         </div>
     </div>

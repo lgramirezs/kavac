@@ -841,6 +841,35 @@ Vue.mixin({
 		},
 
 		/**
+		 * Obtiene los datos de los trabajadores registrados
+		 *
+		 * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+		 * @author Ing. Roldan Vargas <rvargas at cenditel.gob.ve>
+		 * 
+		 * @param string filter establece una condición bajo la cual filtrar los resultados
+		 */
+		async getPayrollSocioeconomic(type='') {
+			this.payroll_socioeconomic = [];
+			await axios.get(`${window.app_url}/payroll/get-socioeconomic/${type}`).then(response => {
+				this.payroll_socioeconomic = response.data;
+			});
+		},
+
+		/**
+		 * Obtiene los datos de los trabajadores registrados
+		 *
+		 * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+		 * @author Ing. Roldan Vargas <rvargas at cenditel.gob.ve>
+		 * 
+		 * @param string filter establece una condición bajo la cual filtrar los resultados
+		 */
+		async getPayrollProfession(type='') {
+			this.payroll_professional = [];
+			await axios.get(`${window.app_url}/payroll/get-professional/${type}`).then(response => {
+				this.payroll_professional = response.data;
+			});
+		},
+		/**
 		 * Obtiene los datos de los tipos de estudio registrados
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>

@@ -16,7 +16,6 @@
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="0">
-    {{-- {{ dd($project) }} --}}
     @foreach($records as $record)
     @php
     $isRoot = substr_count($record['budgetAccount']['code'], '0111111') == 8;
@@ -24,8 +23,8 @@
 
     @endphp
     <tr>  
-        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project['code'] }}</td>
-        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project->specificActions->code}}</td>
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project->code }}</td>
+        <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $project->specificActions[0]->code }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">{{ $record['budgetAccount']['code'] }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">{{ $record['budgetAccount']['denomination'] }}</td>
         <td style="font-size: 9rem; border-bottom: 1px solid #999;" align="center">{{ $record['amount_available'].' '.$currencySymbol }}</td>

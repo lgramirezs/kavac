@@ -188,7 +188,10 @@ class SalePaymentController extends Controller
                 'SalePayment' => $SalePayment
             ]);
         }
-        return response()->json(['record' => $SalePayment, 'message' => 'Success'], 200);
+        return response()->json(['record' => $SalePayment, 'message' => 'Success', 'redirect' => route('sale.payment.index')], 200);
+
+        //return response()->json(['result' => true, 'redirect' => route('sale.bills.index')], 200);
+
     }
 
     /**
@@ -456,7 +459,7 @@ class SalePaymentController extends Controller
     {
         $payment = SaleRegisterPayment::find($id);
         $payment->delete();
-        return response()->json(['record' => $payment, 'message' => 'Success'], 200);
+        return response()->json(['record' => $payment, 'message' => 'Success', 'redirect' => route('sale.payment.index')], 200);
     }
    
     /**
@@ -594,9 +597,9 @@ class SalePaymentController extends Controller
         if (!$payment->payment_refuse and !$payment->payment_approve) {
             $payment->payment_approve = true;
             $payment->save();
-        return response()->json(['record' => $payment, 'message' => 'Success'], 200);
+        return response()->json(['record' => $payment, 'message' => 'Success', 'redirect' => route('sale.payment.index')], 200);
         }
-        return response()->json(['message' => 'error al guardar'], 404);
+        return response()->json(['message' => 'error al guardar', 'redirect' => route('sale.payment.index')], 404);
 
     }
     /**
@@ -611,9 +614,9 @@ class SalePaymentController extends Controller
         if (!$payment->payment_approve and !$payment->payment_refuse) {
             $payment->payment_refuse = true;
             $payment->save();
-        return response()->json(['record' => $payment, 'message' => 'Success'], 200);
+        return response()->json(['record' => $payment, 'message' => 'Success', 'redirect' => route('sale.payment.index')], 200);
         }
-        return response()->json(['message' => 'error al guardar'], 404);
+        return response()->json(['message' => 'error al guardar', 'redirect' => route('sale.payment.index')], 404);
     }
 
     /**

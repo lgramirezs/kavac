@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
+use Modules\Payroll\Models\PayrollStaff;
 
 class PurchasePlan extends Model implements Auditable
 {
@@ -24,7 +25,7 @@ class PurchasePlan extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['init_date', 'end_date', 'purchase_processes_id', 'purchase_type_id', 'user_id', 'active'];
+    protected $fillable = ['init_date', 'end_date', 'purchase_processes_id', 'purchase_type_id', 'payroll_staff_id', 'active'];
 
     /**
      * PurchasePlan belongs to PurchaseProcess.
@@ -53,11 +54,23 @@ class PurchasePlan extends Model implements Auditable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    // public function user()
+    // {
+    //     // belongsTo(RelatedModel, foreignKey = purchaseType_id, keyOnRelatedModel = id)
+    //     return $this->belongsTo(User::class);
+    // }
+
+    /**
+     * PurchasePlan belongs to PayrollStaff.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function PayrollStaff()
     {
         // belongsTo(RelatedModel, foreignKey = purchaseType_id, keyOnRelatedModel = id)
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(PayrollStaff::class);
     }
+
 
     /**
      * PurchasePlan has one document.

@@ -125,7 +125,7 @@
 					</select2>
 				</div>
 			</div>
-			<v-client-table id="helpTable"
+			<v-client-table v-if="record.institution_id"  id="helpTable"
 				@row-click="toggleActive" :columns="columns" :data="records" :options="table_options" ref="tableMax">
 				<div slot="h__check" class="text-center">
 					<label class="form-checkbox">
@@ -318,7 +318,9 @@
 			// vm.getPayrollPositions();
 		},
 		mounted() {
+			
 			this.loadAssets(`${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`);
+			
 			if((this.asignationid)&&(!this.assetid)) {
 				this.loadForm(this.asignationid);
             }

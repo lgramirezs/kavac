@@ -23,7 +23,7 @@
                 <div class="col-md-4" id="helpProfessionalStaff">
                     <div class="form-group is-required">
                         <label>Trabajador:</label>
-                        <select2 :options="payroll_staffs"
+                        <select2 :options="payroll_professional"
                             v-model="record.payroll_staff_id">
                         </select2>
                         <input type="hidden" v-model="record.id">
@@ -283,7 +283,8 @@
                     payroll_studies:[],
                 },
                 errors: [],
-                payroll_staffs: [],
+                //payroll_staffs: [],
+                payroll_professional: [],
                 payroll_instruction_degrees: [],
                 professions: [],
                 json_professions: [],
@@ -536,7 +537,8 @@
             this.record.professions = [];
             this.record.payroll_cou_ack_files = [];
             this.record.payroll_studies = [];
-            this.getPayrollStaffs();
+            //this.getPayrollStaffs();
+            this.getPayrollProfession((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             this.getPayrollInstructionDegrees();
             this.getProfessions();
             this.getPayrollStudyTypes();
