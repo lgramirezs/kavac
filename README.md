@@ -240,7 +240,17 @@ MAIL_ENCRYPTION | Define el protocolo de cifrado usado por el gestor de correo e
 
 ## Compilar archivos js y css de cada modulo de la aplicación:
 
+Para el correcto funcionamiento de la aplicación, es necesario compilar los archivos javascript y hojas de estilo, tanto para la aplicación base como para cada uno de los módulos disponibles, para lo cual se debe ejecutar el comando a continuación:
+
     $ php artisan module:compile -s -i -p
+
+donde:
+
+***-s*** le indica al script que compile los archivos del sistema base
+***-i*** indica que previo a la compilación se requiere instalar los distintos paquetes requeridos por el sistema base y los módulos. Esta opción no es obligatoria, si se omite realiza la compilación sin requerir de instalación previa de dependencias de paquetes
+***-p*** establece la compilación de archivos para producción, si se omite realiza una compilación para entornos de desarrollo.
+
+Para mayor información de las opciones disponibles del comando se puede agregar a la instrucción la opción ***-h*** la cual muestra la ayuda del comando.
 
 ## Base de datos
 
