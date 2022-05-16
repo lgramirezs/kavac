@@ -9,6 +9,7 @@ use Modules\Finance\Http\Controllers\FinanceAccountTypeController;
 use Modules\Finance\Http\Controllers\FinanceBankAccountController;
 use Modules\Finance\Http\Controllers\FinanceBankingAgencyController;
 use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
+use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,27 +33,27 @@ Route::group([
         Route::get('settings', [FinanceController::class, 'setting'])->name('finance.setting.index');
         Route::post('settings', [FinanceController::class, 'store'])->name('finance.setting.store');
         /** Rutas para la gestión de entidades bancarias */
-        Route::resource('banks', 'FinanceBankController', ['as' => 'finance']);
+        Route::resource('banks', FinanceBankController::class, ['as' => 'finance']);
         /** Rutas para la gestión de agencias bancarias */
-        Route::resource('banking-agencies', 'FinanceBankingAgencyController', ['as' => 'finance']);
+        Route::resource('banking-agencies', FinanceBankingAgencyController::class, ['as' => 'finance']);
         /** Rutas para la gestión de tipos de cuentas bancarias */
-        Route::resource('account-types', 'FinanceAccountTypeController', ['as' => 'finance']);
+        Route::resource('account-types', FinanceAccountTypeController::class, ['as' => 'finance']);
         /** Rutas para la gestión de cuentas bancarias */
-        Route::resource('bank-accounts', 'FinanceBankAccountController', ['as' => 'finance']);
+        Route::resource('bank-accounts', FinanceBankAccountController::class, ['as' => 'finance']);
         /** Rutas para la gestión de chequeras */
-        Route::resource('check-books', 'FinanceCheckBookController', ['as' => 'finance', 'except' => ['edit']]);
+        Route::resource('check-books', FinanceCheckBookController::class, ['as' => 'finance', 'except' => ['edit']]);
         Route::get('check-books/edit/{id}', 'FinanceCheckBookController@edit')->name('finance.edit');
         /** Rutas para la gestión de los métodos de pago */
-        Route::resource('payment_methods', 'FinancePaymentMethodsController', ['as' => 'finance']);
+        Route::resource('payment_methods', FinancePaymentMethodsController::class, ['as' => 'finance']);
         /** Rutas para la gestión de la configuración de archivos de conciliación bancaria */
-        Route::resource('setting-bank-reconciliation-files', 'FinanceSettingBankReconciliationFilesController', ['as' => 'finance']);
+        Route::resource('setting-bank-reconciliation-files', FinanceSettingBankReconciliationFilesController::class, ['as' => 'finance']);
     });
 
-    /*Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
+    Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
     Route::post(
         'pay-orders/documents/get-sources', 
         [FinancePayOrderController::class, 'getSourceDocuments']
-    );*/
+    );
 
     Route::get('get-banks/', [FinanceBankController::class, 'getBanks']);
     Route::get('get-bank-info/{bank_id}', [FinanceBankController::class, 'getBankInfo']);
