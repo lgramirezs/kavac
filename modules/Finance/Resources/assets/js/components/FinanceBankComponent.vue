@@ -166,7 +166,7 @@
                 this.$refs.banklogo.url = `${window.app_url}/images/no-image2.png`;
             },
             setRecordImage(imageId) {
-                console.log(imageId)
+                //console.log(imageId)
                 this.record.logo_id = imageId;
             }
         },
