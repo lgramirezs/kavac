@@ -8,6 +8,7 @@ use Modules\Finance\Http\Controllers\FinanceCheckBookController;
 use Modules\Finance\Http\Controllers\FinanceAccountTypeController;
 use Modules\Finance\Http\Controllers\FinanceBankAccountController;
 use Modules\Finance\Http\Controllers\FinanceBankingAgencyController;
+use Modules\Finance\Http\Controllers\FinancePaymentExecuteController;
 use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
 use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
 
@@ -54,6 +55,7 @@ Route::group([
         'pay-orders/documents/get-sources', 
         [FinancePayOrderController::class, 'getSourceDocuments']
     );
+    Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
 
     Route::get('get-banks/', [FinanceBankController::class, 'getBanks']);
     Route::get('get-bank-info/{bank_id}', [FinanceBankController::class, 'getBankInfo']);

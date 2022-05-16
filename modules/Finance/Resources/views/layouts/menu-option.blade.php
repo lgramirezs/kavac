@@ -11,7 +11,7 @@
             <a href="{{ route('finance.pay-orders.index') }}">Órdenes de Pago</a>
         </li>
         <li>
-            <a href="#">Emisiones de Pago</a>
+            <a href="{{ route('finance.payment-execute.index') }}">Emisiones de Pago</a>
         </li>
         <li>
             <a href="#">Banco</a>
