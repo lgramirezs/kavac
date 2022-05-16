@@ -85,20 +85,20 @@ Vue.component('finance-voucher-design', () => import(
  * 
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-//Vue.component('finance-pay-order-list', () => import(
+Vue.component('finance-pay-order-list', () => import(
 	/* webpackChunkName: "finance-pay-order-list" */
-	/*'./components/FinancePayOrderListComponent.vue'
-));*/
+	'./components/FinancePayOrderListComponent.vue'
+));
 
 /**
  * Componente para gestionar registros de órdenes de pago
  * 
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
- //Vue.component('finance-pay-order', () => import(
+ Vue.component('finance-pay-order', () => import(
 	/* webpackChunkName: "finance-pay-order" */
-	/*'./components/FinancePayOrderComponent.vue'
-));*/
+	'./components/FinancePayOrderComponent.vue'
+));
 
 /**
  * Opciones de configuración global del módulo de finanzas

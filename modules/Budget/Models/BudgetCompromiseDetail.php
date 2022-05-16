@@ -49,4 +49,24 @@ class BudgetCompromiseDetail extends Model implements Auditable
     {
         return $this->belongsTo(BudgetCompromise::class);
     }
+
+    /**
+     * Get the budgetAccount that owns the BudgetCompromiseDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function budgetAccount()
+    {
+        return $this->belongsTo(BudgetAccount::class);
+    }
+
+    /**
+     * Get the budgetSubSpecificFormulation that owns the BudgetCompromiseDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function budgetSubSpecificFormulation()
+    {
+        return $this->belongsTo(BudgetSubSpecificFormulation::class);
+    }
 }
