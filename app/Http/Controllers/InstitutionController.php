@@ -59,12 +59,12 @@ class InstitutionController extends Controller
 
         if ($institution) {
             /** @var FiscalYear Año de ejercicio fiscal activo */
-            $fiscalYear = $institution->fiscalYears()->where('active', true)->first();
+            $fiscalYear = $institution->fiscalYears()->where(['year' => $year, 'active' => true])->first();
             if (!$fiscalYear) {
                 $fiscalYear = $institution->fiscalYears()->updateOrCreate(
                     ['year' => $year],
                     [
-                        'active' => true,
+                        'active' => true, 
                         'observations' => 'Ejercicio económico de ' . $institution->acronym
                     ]
                 );
