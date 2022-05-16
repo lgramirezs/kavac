@@ -136,7 +136,8 @@ class AssetDisincorporationController extends Controller
         /** Se guardan los docmentos, según sea el tipo (imágenes y/o documentos)*/
         $documentFormat = ['doc', 'docx', 'pdf', 'odt'];
         $imageFormat    = ['jpeg', 'jpg', 'png'];
-        if ($request->files) {
+        
+        if ($request->has('files')) {
             foreach ($request->file('files') as $file) {
                 $extensionFile = $file->getClientOriginalExtension();
 
