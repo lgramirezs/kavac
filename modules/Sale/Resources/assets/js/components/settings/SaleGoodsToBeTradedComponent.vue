@@ -205,7 +205,7 @@
                                         <span>N/A</span>
                                 </div>
                             </div>
-                            <div slot="payroll_staff" slot-scope="props">
+                            <div slot="payroll_staff" slot-scope="props" v-if="props.row.payroll_staff">
                                 {{ props.row.payroll_staff.first_name + ' ' + props.row.payroll_staff.last_name
                                     + ' - ' + props.row.payroll_staff.id_number }}
                             </div>

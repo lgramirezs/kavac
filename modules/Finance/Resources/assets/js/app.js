@@ -100,6 +100,16 @@ Vue.component('finance-pay-order-list', () => import(
 	'./components/FinancePayOrderComponent.vue'
 ));
 
+Vue.component('finance-payment-execute-list', () => import(
+	/* webpackChunkName: "finance-payment-execute-list" */
+	'./components/FinancePaymentExecuteListComponent.vue'
+));
+
+Vue.component('finance-payment-execute', () => import(
+	/* webpackChunkName: "finance-payment-execute" */
+	'./components/FinancePaymentExecuteComponent.vue'
+));
+
 /**
  * Opciones de configuración global del módulo de finanzas
  *

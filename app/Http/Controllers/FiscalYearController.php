@@ -131,7 +131,7 @@ class FiscalYearController extends Controller
         /** @var FiscalYear|array Años fiscales abiertos */
         $fiscalYears = $institution->fiscalYears()
                                    ->select('year as id', 'year as text')
-                                   ->where('closed', false)
+                                   ->where(['active' => true, 'closed' => false])
                                    ->get()
                                    ->toArray();
 

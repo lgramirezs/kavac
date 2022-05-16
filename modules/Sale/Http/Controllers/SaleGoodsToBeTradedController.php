@@ -283,6 +283,7 @@ class SaleGoodsToBeTradedController extends Controller
         array_push($records, ['id' => '', 'text' => 'Seleccione...']);
 
         foreach ($goods as $good) {
+          if (!empty($good->payrollStaff)) {
             $phone = '';
             foreach($good->payrollStaff->phones as $phone){
                 $phone = $phone->extension.'-'.$phone->area_code.$phone->number;
@@ -302,6 +303,7 @@ class SaleGoodsToBeTradedController extends Controller
                 'currency_id'          => $good->currency_id,
                 'text'                 => $good->name,
             ]);
+          }
         }
         return response()->json(['records' => $records], 200);
     }

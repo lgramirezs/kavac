@@ -52,10 +52,10 @@
                       {{ (props.row.rif)? props.row.rif : props.row.id_type + props.row.id_number }}
                     </span>
                   </div>
-                  <div slot="phones" slot-scope="props">
-                    <div v-if="props.row.phones">
-                      <ul v-for="(phone, index) in props.row.phones" :key="index">
-                        <li>{{ phone.type }}: ({{ phone.area_code }}) {{ phone.number }} ext: {{ phone.extension }}</li>
+                  <div slot="sale_clients_phone" slot-scope="props">
+                    <div v-if="props.row.sale_clients_phone">
+                      <ul v-for="(client_phone, index) in props.row.sale_clients_phone" :key="index">
+                        <li>{{ client_phone.phone }}</li>
                       </ul>
                     </div>
                     <div v-else>
@@ -314,7 +314,7 @@
           'currency.name',
           'id',
         ],
-        columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'phones', 'sale_clients_email'],
+        columns_clients: ['id', 'type_person_juridica', 'rif', 'name_client', 'sale_clients_phone', 'sale_clients_email'],
         types_person:  [
           {'id' : '', 'text' : "Seleccione..."},
           {'id' : 'Natural', 'text' : 'Natural'},
@@ -337,7 +337,7 @@
         this.record.name = client.name_client? client.name_client : client.name;
         this.record.id_number = client.rif? client.rif : client.id_number;
         this.record.id_number = this.record.id_number.replace(/\D/g, "");
-        this.record.phone = client.phones && client.phones.length? parseInt(client.phones[0].area_code) + '-' + client.phones[0].number : '';
+        this.record.phone = client.sale_clients_phone && client.sale_clients_phone.length? client.sale_clients_phone[0].phone : '';
         this.record.email = client.sale_clients_email && client.sale_clients_email.length? client.sale_clients_email[0].email : '';
         $("#view_sale_clients").modal('hide');
       },
@@ -605,7 +605,7 @@
           //extract client data
           vm.record.type_person = vm.order.type_person;
           vm.record.name = vm.order.name;
-          vm.record.phone = vm.order.phone;
+          vm.record.sale_clients_phone = vm.order.sale_clients_phone;
           vm.record.id_number = vm.order.id_number;
           vm.record.quote_total_without_tax = vm.order.total_without_tax;
           vm.record.quote_total = vm.order.total;
@@ -714,7 +714,7 @@
         'type_person_juridica': 'Tipo de Persona',
         'rif': 'Identificación del Cliente',
         'name_client': 'Nombre',
-        'phones': 'Telefonos',
+        'sale_clients_phone': 'Telefonos',
         'sale_clients_email': 'Correo Electrónico'
       };
       this.table_options_clients.sortable = [

@@ -42,8 +42,8 @@
             </div>
             <div class="col-md-3" id="helpClientPhone">
                 <div v-show="record.sale_client_id != 0" class="form-group">
-                    <label for="phones">Número telefónico:</label>
-                    <p v-for="(value, index) in sale_client.phones" :key="index">
+                    <label for="sale_clients_phone">Número telefónico:</label>
+                    <p v-for="(value, index) in sale_client.sale_clients_phone" :key="index">
                         <input type="text" class="form-control input-sm" :disabled="true"
                             data-toggle="tooltip" title="Dirección fiscal" 
                             id="phone" v-model="value.phone" />
@@ -229,7 +229,7 @@ export default {
             errors: [],
             sale_client: {
                 name : '',
-                phones : '',
+                sale_clients_phone : '',
                 sale_clients_email : '',
             },
             sale_clients_rif: [],
@@ -359,7 +359,7 @@ export default {
             if (vm.record.sale_client_id > 0) {
                 axios.get('/sale/get-sale-client/' + vm.record.sale_client_id).then(response => {
                     vm.sale_client.name = response.data.sale_client.name;
-                    vm.sale_client.phones = response.data.sale_client.sale_clients_phone;
+                    vm.sale_client.sale_clients_phone = response.data.sale_client.sale_clients_phone;
                     vm.sale_client.sale_clients_email = response.data.sale_client.sale_clients_email;
                 });
             }

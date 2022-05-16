@@ -101,9 +101,14 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * Actualiza un registro específico de la base de datos.
+     *
+     * @method update
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -125,10 +130,20 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @return \Illuminate\Http\JsonResponse
+     * Elimina un registro específico de la base de datos.
+     *
+     * @method destroy
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        /** @var object Datos de la entidad bancaria */
+        $data = FinanceSettingBankReconciliationFiles::find($id);
+        $data->delete();
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 }

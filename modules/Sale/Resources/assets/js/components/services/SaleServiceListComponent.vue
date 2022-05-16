@@ -11,7 +11,7 @@
                     {{ (props.row.created_at) ? props.row.created_at : '' }}
                 </span>
             </div>
-            <div slot="sale_client" slot-scope="props">
+            <div slot="sale_client" slot-scope="props" v-if="props.row.sale_client">
                 <span>
                     {{ (props.row.sale_client.name) ? props.row.sale_client.name : '' }}
                 </span>

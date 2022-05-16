@@ -223,12 +223,15 @@ class SaleServiceController extends Controller
         foreach ($saleService->SaleServiceRequirement as $requirement) {
             $requirement->delete();
         }
+
         if ($saleService->SaleServiceRequirement == true) {
-            foreach ($request->sale_service_requirement as $requirement) {
-                $serviceRequirement = SaleServiceRequirement::create([
-                    'name'          => $requirement['name'],
-                    'sale_service_id' => $saleService->id
-                ]);
+            if ($request->requirements && !empty($request->requirements)) {
+                foreach ($request->requirements as $requirement) {
+                    $serviceRequirement = SaleServiceRequirement::create([
+                        'name'          => $requirement['name'],
+                        'sale_service_id' => $saleService->id
+                    ]);
+                }
             }
         }
 
