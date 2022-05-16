@@ -287,7 +287,7 @@ class AccountingEntryController extends Controller
 		$reference    = $entry->reference;
 		$concept      = $entry->concept;
 		$observations = $entry->observations;
-		$category     = $entry->accounting_entry_categories_id;
+		$category     = $entry->accounting_entry_category_id;
 		$institution  = $entry->institution_id;
 		$currency     = $entry->currency_id;
 
@@ -503,11 +503,11 @@ class AccountingEntryController extends Controller
 					$allRecords = ($request->category == 0) ?
 									$query->where('institution_id', $institution_id) :
 									$query->where('institution_id', $institution_id)
-									->where('accounting_entry_categories_id', $request->category);
+									->where('accounting_entry_category_id', $request->category);
 				} else {
 					$allRecords = ($request->category == 0) ?
 									$query :
-									$query->where('accounting_entry_categories_id', $request->category);
+									$query->where('accounting_entry_category_id', $request->category);
 				}
 			} else {
 				if ($institution_id) {
@@ -519,11 +519,11 @@ class AccountingEntryController extends Controller
 									$query->where('institution_id', $institution_id) :
 
 									$query->where('institution_id', $institution_id)
-											->where('accounting_entry_categories_id', $request->category);
+											->where('accounting_entry_category_id', $request->category);
 				} else {
 					$allRecords = ($request->category == 0) ?
 									$query :
-									$query->where('accounting_entry_categories_id', $request->category);
+									$query->where('accounting_entry_category_id', $request->category);
 				}
 			}
 		}

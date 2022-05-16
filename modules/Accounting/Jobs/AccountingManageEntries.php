@@ -61,7 +61,6 @@ class AccountingManageEntries implements ShouldQueue
      */
     public function handle()
     {
-        // dd($this->data);
         $created_at = now();
         $newEntries = AccountingEntry::where('reference', $this->data['reference'])->first();
 
@@ -71,9 +70,7 @@ class AccountingManageEntries implements ShouldQueue
         if ($newEntries) {
             $newEntries->concept                        = $this->data['concept'];
             $newEntries->observations                   = $this->data['observations'];
-            $newEntries->accounting_entry_categories_id = ($this->data['category']!='') ?
-                $this->data['category'] : 
-                null;
+            $newEntries->accounting_entry_category_id = $this->data['category'];
             $newEntries->institution_id                 = $this->institution_id;
             $newEntries->currency_id                    = $this->data['currency_id'];
             $newEntries->tot_debit                      = $this->data['totDebit'];
@@ -89,7 +86,7 @@ class AccountingManageEntries implements ShouldQueue
                         $this->generateCodeAvailable(),
                     'concept'                        => $this->data['concept'],
                     'observations'                   => $this->data['observations'],
-                    'accounting_entry_categories_id' => ($this->data['category']!='')? $this->data['category']: null,
+                    'accounting_entry_category_id'   => $this->data['category'],
                     'institution_id'                 => $this->institution_id,
                     'currency_id'                    => $this->data['currency_id'],
                     'tot_debit'                      => $this->data['totDebit'],

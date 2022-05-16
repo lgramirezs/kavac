@@ -174,7 +174,10 @@ class Institution extends Model implements Auditable
     {
         /** @var User Objeto con información del usuario autenticado */
         $user = auth()->user();
-        if (method_exists($user, 'profile') && !is_null($user->profile) && property_exists($user->profile, 'institution')) {
+        if (
+            $user !== null && method_exists($user, 'profile') && !is_null($user->profile) && 
+            property_exists($user->profile, 'institution')
+        ) {
             return parent::newQuery($excludeDeleted)->where('id', $user->profile->institution->id);
         }
 

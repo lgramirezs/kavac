@@ -52,7 +52,6 @@ class SaleClientsController extends Controller
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'rif.size'                            => 'El campo rif debe contener 10 caracteres.',
             'rif.required'                        => 'El campo rif es obligatorio.',
             'rif.unique'                          => 'El campo rif ya ha sido registrado.',
             'business_name.required'              => 'El campo razón social es obligatorio.',
@@ -101,7 +100,7 @@ class SaleClientsController extends Controller
             ], $this->messages);
         } else {
             $this->validate($request, [
-                'rif' => ['required', 'size:11', 'unique:sale_clients,rif', new RifRule],
+                'rif' => ['required', 'size:10', 'unique:sale_clients,rif', new RifRule],
                 'business_name' => ['required'],
                 'representative_name' => ['required'],
                 'name_client' => ['required'],

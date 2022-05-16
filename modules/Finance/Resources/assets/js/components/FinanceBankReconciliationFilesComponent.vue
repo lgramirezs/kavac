@@ -253,7 +253,7 @@
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button @click="deleteRecord(props.row.id, '/finance/banks')"
+                                <button @click="deleteRecord(props.row.id, '/finance/setting-bank-reconciliation-files')"
                                     class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
