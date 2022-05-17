@@ -144,7 +144,7 @@ class AssetReportController extends Controller
      */
     public function show($code_report)
     {
-        $report = AssetReport::where('code', $code_report)->with('document')->first();
+        $report = AssetReport::whereNotNull('code')->where('code', $code_report)->with('document')->first();
 
         $file = storage_path() . '/reports/asset-report-' .  $report->code . '.pdf';
 
