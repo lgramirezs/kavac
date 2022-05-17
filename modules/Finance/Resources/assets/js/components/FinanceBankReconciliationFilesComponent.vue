@@ -93,6 +93,7 @@
                                 <div class="form-group is-required">
                                     <label>Referencia:</label>
                                     <select2
+                                        @input="disabledInput()"
                                         :options="lines"
                                         v-model="record.position_reference_column"
                                     >
@@ -316,16 +317,16 @@
                 banks: [],
                 lines: [
                     { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "1" },
-                    { "id": 2, "text": "2" },
-                    { "id": 3, "text": "3" },
-                    { "id": 4, "text": "4" },
-                    { "id": 5, "text": "5" },
-                    { "id": 6, "text": "6" },
-                    { "id": 7, "text": "7" },
-                    { "id": 8, "text": "8" },
-                    { "id": 9, "text": "9" },
-                    { "id": 10, "text": "10" },
+                    { "id": 1, "text": "1" , "disabled": null },
+                    { "id": 2, "text": "2", "disabled": null },
+                    { "id": 3, "text": "3", "disabled": null },
+                    { "id": 4, "text": "4", "disabled": null },
+                    { "id": 5, "text": "5", "disabled": null },
+                    { "id": 6, "text": "6", "disabled": null },
+                    { "id": 7, "text": "7", "disabled": null },
+                    { "id": 8, "text": "8", "disabled": null },
+                    { "id": 9, "text": "9", "disabled": null },
+                    { "id": 10, "text": "10", "disabled": null },
                 ],
                 separated_list : [
                     { "id": "", "text": "Seleccione..." },
@@ -367,6 +368,22 @@
                     decimal_separator: '',
                 };
             },
+            /**
+             * Método que deshabilita elementos del array lines cuando ya han sido.
+             * seleccionados.
+             */
+            disabledInput() {
+                const vm = this;
+                vm.lines.forEach(myFunction);
+                function myFunction(item, index) {
+                    if (item.id == vm.record.position_reference_column) {
+                        vm.lines[index].disabled=true;
+                    }
+                    else {
+                        vm.lines[index].disabled=false;
+                    }
+                }
+            }
         },
         created() {
             this.getBanks();
