@@ -130,7 +130,7 @@ class AssetReportController extends Controller
                     ? 'asset::pdf.asset_general'
                     : 'asset::pdf.asset_detallado';
             AssetGenerateReport::dispatch($report, $body);
-            $url = '/asset/reports/show/' . $report->code;
+            $url = route('asset.report.show', ['code_report' => $report->code]);
             return response()->json(['result' => true, 'redirect' => $url], 200);
         }
     }
@@ -144,7 +144,7 @@ class AssetReportController extends Controller
      */
     public function show($code_report)
     {
-        $report = AssetReport::where('code', $code_report)->with('document')->first();
+        $report = AssetReport::whereNotNull('code')->where('code', $code_report)->with('document')->first();
 
         $file = storage_path() . '/reports/asset-report-' .  $report->code . '.pdf';
 

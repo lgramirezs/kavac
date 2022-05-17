@@ -18,6 +18,43 @@ use Modules\Budget\Models\BudgetStage;
 class BudgetCompromiseController extends Controller
 {
     use ValidatesRequests;
+
+    /**
+     * Arreglo con las reglas de validación sobre los datos de un formulario
+     * @var Array $validateRules
+     */
+    protected $validateRules;
+
+    /**
+     * Arreglo con los mensajes para las reglas de validación
+     * @var Array $messages
+     */
+    protected $messages;
+
+    /**
+     * Define la configuración de la clase
+     *
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+     */
+    public function __construct()
+    {
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'institution_id' => ['required'],
+            'compromised_at' => ['required', 'date'],
+            'source_document' => ['required', 'unique:budget_compromises,document_number'],
+            'description' => ['required']
+        ];
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+            'institution_id.required' => 'El campo institución es obligatorio.',
+            'compromised_at.required' => 'El campo fecha es obligatorio.',
+            'source_document.required' => 'El campo documento origen es obligatorio.',
+            'source_document.unique' => 'El campo documento origen ya ha sido registrado.',
+            'description.required' => 'El campo descripción es obligatorio.',
+        ];
+    }
     
     /**
      * Display a listing of the resource.
@@ -44,11 +81,7 @@ class BudgetCompromiseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'compromised_at' => ['required', 'date'],
-            'description' => ['required'],
-            ''
-        ]);
+        $this->validate($request, $this->validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where("model", BudgetCompromise::class)->first();
 
