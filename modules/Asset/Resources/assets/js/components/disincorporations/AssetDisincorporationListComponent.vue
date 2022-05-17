@@ -12,7 +12,7 @@
 		</div>
 		<div slot="created" slot-scope="props" class="text-center">
 			<span>
-				{{ (props.row.date)?props.row.date:props.row.created_at }}
+				{{ (props.row.date)?format_date(props.row.date):format_date(props.row.created_at) }}
 			</span>
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">

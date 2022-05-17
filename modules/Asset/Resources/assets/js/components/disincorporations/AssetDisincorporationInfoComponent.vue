@@ -137,23 +137,20 @@
 			 */
             initRecords(url,modal_id){
             	this.errors = [];
-				//this.reset();
+				this.reset();
 			
 				const vm = this;
             	var fields = {};
 
-				let hola = $("#" + modal_id);
-				console.log('aqui', hola)
-
             	document.getElementById("info_general").click();
 				url = vm.setUrl(url);
-				console.log('url', url)
+				
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
 						fields = response.data.records;
 
 						$(".modal-body #id").val( fields.id );
-		            	document.getElementById('date').innerText = (fields.date)?fields.date:fields.created_at;
+		            	document.getElementById('date').innerText = (fields.date)?vm.format_date(fields.date):vm.format_date(fields.created_at);
 		            	document.getElementById('motive').innerText = (fields.asset_disincorporation_motive)?fields.asset_disincorporation_motive.name:'N/A';
 		            	document.getElementById('observation').innerHTML = (fields.observation)?fields.observation:'N/A';
 					}
