@@ -201,16 +201,26 @@
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <a slot="bank_id" slot-scope="props" target="_blank"
                                 v-if="props.row.bank_id">
-                                {{ props.row.bank_id }}
+                                <span v-for="bank in banks" :key="bank.id">
+                                    <span v-if="props.row.bank_id==bank.id">
+                                        {{ bank.text }}
+                                    </span>
+                                </span>
                             </a>
                             <a slot="read_start_line" slot-scope="props" target="_blank"
                                 v-if="props.row.read_start_line">
-                                {{ props.row.read_start_line }}
+                                Sí
                             </a>
+                            <span v-else>
+                                No
+                            </span>
                             <a slot="read_end_line" slot-scope="props" target="_blank"
                                 v-if="props.row.read_end_line">
-                                {{ props.row.read_end_line }}
+                                Sí
                             </a>
+                            <span v-else>
+                                No
+                            </span>
                             <a slot="position_reference_column" slot-scope="props" target="_blank"
                                 v-if="props.row.position_reference_column">
                                 {{ props.row.position_reference_column }}
