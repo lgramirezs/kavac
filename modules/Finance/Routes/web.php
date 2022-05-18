@@ -11,6 +11,7 @@ use Modules\Finance\Http\Controllers\FinanceBankingAgencyController;
 use Modules\Finance\Http\Controllers\FinancePaymentExecuteController;
 use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
 use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
+use Modules\Finance\Http\Controllers\FinanceConciliationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,12 +51,18 @@ Route::group([
         Route::resource('setting-bank-reconciliation-files', FinanceSettingBankReconciliationFilesController::class, ['as' => 'finance']);
     });
 
+    /** Ruta para la gestión de Finanzas > Banco > Ordenes de pago */
     Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
     Route::post(
         'pay-orders/documents/get-sources', 
         [FinancePayOrderController::class, 'getSourceDocuments']
     );
+
+    /** Ruta para la gestión de Finanzas > Banco > Emisiones de pago */
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
+
+    /** Ruta para la gestión de Finanzas > Banco > Conciliación */
+    Route::resource('conciliation', FinanceConciliationController::class, ['as' => 'finance']);
 
     Route::get('get-banks/', [FinanceBankController::class, 'getBanks']);
     Route::get('get-bank-info/{bank_id}', [FinanceBankController::class, 'getBankInfo']);

@@ -28,8 +28,14 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     use ValidatesRequests;
 
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\JsonResponse
+     * Obtiene un listado de los registros almacenados.
+     *
+     * @method index
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
