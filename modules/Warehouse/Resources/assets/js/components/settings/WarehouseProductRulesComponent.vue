@@ -289,10 +289,8 @@
 	    			},
 	    			callback: function (result) {
 						if (result) {
-							console.log("llamado");
 	    					confirmated = true;
 							axios.delete(url + '/' + records[index].id).then(response => {
-								console.log(response.data);
 								if (typeof(response.data.error) !== "undefined") {
 									/** Muestra un mensaje de error si sucede algún evento en la eliminación */
 	    							vm.showMessage('custom', 'Alerta!', 'warning', 'screen-error', response.data.message);
