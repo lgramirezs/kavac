@@ -258,8 +258,10 @@
 					};
 				else
 					vm.record = vm.records[index-1].warehouse_inventory_rule;
-				vm.institution_id = vm.records[index-1].warehouse_institution_warehouse.institution_id;
-				vm.warehouse_id = vm.records[index-1].warehouse_institution_warehouse.warehouse_id;
+				if(vm.records[index-1].warehouse_institution_warehouse) {
+					vm.institution_id = vm.records[index-1].warehouse_institution_warehouse.institution_id;
+					vm.warehouse_id = vm.records[index-1].warehouse_institution_warehouse.warehouse_id;
+				}
 				event.preventDefault();
 			},
 			/**
