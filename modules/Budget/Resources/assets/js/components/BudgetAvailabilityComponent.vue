@@ -21,20 +21,18 @@
 			<!-- mensajes de error -->
 			<div class="row">
 				<div class="col-6 mt-4">
-					<label for="">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								type="radio"
-								name="project_centralized_action"
-								value="project"
-								id="sel_project"
-								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-								data-on-label="SI"
-								data-off-label="NO"
-							/>
-							Proyecto
-						</div>
-					</label>
+					<div class="col-12 bootstrap-switch-mini">
+						<input
+							type="radio"
+							name="project_centralized_action"
+							value="project"
+							id="sel_project"
+							class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+							data-on-label="SI"
+							data-off-label="NO"
+						/>
+						Proyecto
+					</div>
 					<div class="mt-4">
 						<select2
 							:options="budgetProjectsArray"
@@ -46,20 +44,18 @@
 					</div>
 				</div>
 				<div class="col-6 mt-4">
-					<label for="">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								type="radio"
-								name="project_centralized_action"
-								value="project"
-								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-								id="sel_centralized_action"
-								data-on-label="SI"
-								data-off-label="NO"
-							/>
-							Acción Centralizada
-						</div>
-					</label>
+					<div class="col-12 bootstrap-switch-mini">
+						<input
+							type="radio"
+							name="project_centralized_action"
+							value="project"
+							class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+							id="sel_centralized_action"
+							data-on-label="SI"
+							data-off-label="NO"
+						/>
+						Acción Centralizada
+					</div>
 					<div class="mt-4">
 						<select2
 							name="centralized_action"
@@ -71,17 +67,22 @@
 						></select2>
 					</div>
 				</div>
-				<div class="col-12">
-					<!-- <div class="mt-4">
-						<div class="form-group is-required">
-							<label for="specific_action_id" class="control-label">Acción Específica</label>
-							<select2 :options="specific_actions"
-								v-model="specific_action_id"
-								id="specific_action_id"
-								disabled
-							></select2>
-						</div>
-					</div> -->
+				<div class="col-12 mt-4">
+					<div class="col-12 bootstrap-switch-mini">
+						<input
+							type="checkbox"
+							name="all_specific_actions"
+							value="true"
+							class="form-control bootstrap-switch bootstrap-switch"
+							id="all_specific_actions"
+							data-on-label="SI"
+							data-off-label="NO"
+							v-model="all_specific_actions"
+						/>
+						Seleccionar todas las acciones especificas de este Proyecto / Acción Centralizada
+					</div>
+				</div>
+				<div class="col-12" id="all_specific_actions" v-if="!all_specific_actions">
 					<div class="mt-4">
 						<label for="specific_action_id" class="control-label">Acción Específica</label>
 						<div class="form-group is-required" style="margin-top: -1.5rem;">
@@ -93,6 +94,7 @@
 					<br>
 					<hr>
 				</div>
+				<div class="col-12" v-if="all_specific_actions"><br></div>
 				<div class="col-4" id="budgetAvailabilityInitDate">
 					<label><strong>Desde:</strong></label>
 					<div class="form-group is-required mt-2">
@@ -205,6 +207,7 @@
 
 				// specific_action_id: '',
 				specific_actions_ids: [],
+				all_specific_actions: false,
 
 				budgetItemsArray: JSON.parse(this.budgetItems),
 				budgetProjectsArray: JSON.parse(this.budgetProjects),
@@ -215,19 +218,23 @@
 			};
 		},
 		created() {
+			
 			this.project = false;
 			this.centralized_action = false;
+			this.all_specific_actions = false;
+
+			const vm = this;
 
 			window.addEventListener('updateProjectId', (event) => {
-				this.project_id = event.value;
-				this.specific_actions_ids = [];
+				vm.project_id = event.value;
+				vm.specific_actions_ids = [];
+
 			});
 
 			window.addEventListener('updateCentralizedActionId', (event) => {
-				this.centralized_action_id = event.value;
-				this.specific_actions_ids = [];
+				vm.centralized_action_id = event.value;
+				vm.specific_actions_ids = [];
 			});
-			
 		},
 		mounted() {
 			const vm = this;
@@ -239,6 +246,7 @@
 				);
 				if (e.target.id === 'sel_project') {
 					window.dispatchEvent(new CustomEvent("updateCentralizedActionId", {value: '' }));
+					$('#all_specific_actions').bootstrapSwitch('state', false);
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.removeClass('is-required');
@@ -248,6 +256,7 @@
 						.addClass('is-required');
 				} else if (e.target.id === 'sel_centralized_action') {
 					window.dispatchEvent(new CustomEvent("updateProjectId", {value: '' }));
+					$('#all_specific_actions').bootstrapSwitch('state', false);
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.addClass('is-required');
@@ -256,8 +265,22 @@
 						.removeClass('is-required');
 				}
 			});
+			
+			$('#all_specific_actions').on('switchChange.bootstrapSwitch', function(event, state) {
+				vm.all_specific_actions = state;
+				if(vm.all_specific_actions) {
+					for (let index = 1; index < vm.specific_actions.length; index++) {
+						vm.specific_actions_ids.push(vm.specific_actions[index].id);
+					}
+				}else{
+					vm.specific_actions_ids = [];
+				}
+			});
 		},
 		methods: {
+			reset() {
+				this.specific_actions_ids = '';
+			},
 			getSpecificActions(type) {
 				let id = type === 'Project'
 						? this.project_id
@@ -286,7 +309,6 @@
 			},
 
 			generateReport: function() {
-				// let params = new FormData();
 				this.errors = [];
 				if(!this.initialDate) {
 					this.errors.push('El campo desde es obligatorio');
@@ -306,7 +328,10 @@
 				if(!this.specific_actions_ids) {
 					this.errors.push('El campo Acción Específica es obligatorio');
 				}else{
-					this.specific_actions_ids = this.specific_actions_ids.map(function(object) { return object.id});
+
+					if(!this.all_specific_actions) {
+						this.specific_actions_ids = this.specific_actions_ids.map(function(object) { return object.id});
+					}
 				}
 				
 				if (this.errors.length === 0)
@@ -320,6 +345,7 @@
 					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
 					&project_type=${this.project_id ? 'project' : 'centralized_action'}
 					&specific_actions_ids=${this.specific_actions_ids}`);
+					this.reset();
 				}
 					
 			},
@@ -330,6 +356,7 @@
 					'disabled',
 					this.specific_actions.length <= 1
 				);
+				$('#all_specific_actions').bootstrapSwitch('state', false);
 			},
 		}
 	};
