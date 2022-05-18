@@ -12,6 +12,7 @@ use Modules\Finance\Http\Controllers\FinancePaymentExecuteController;
 use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
 use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
 use Modules\Finance\Http\Controllers\FinanceConciliationController;
+use Modules\Finance\Http\Controllers\FinanceMovementsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,9 @@ Route::group([
 
     /** Ruta para la gestión de Finanzas > Banco > Emisiones de pago */
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
+
+    /** Ruta para la gestión de Finanzas > Banco > Movimientos */
+    Route::resource('movements', FinanceMovementsController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Conciliación */
     Route::resource('conciliation', FinanceConciliationController::class, ['as' => 'finance']);
