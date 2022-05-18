@@ -277,8 +277,8 @@
 	    		const vm = this;
 
 	    		bootbox.confirm({
-	    			title: "Eliminar registro?",
-	    			message: "Esta seguro de eliminar este registro?",
+	    			title: "¿Eliminar registro?",
+	    			message: "¿Esta seguro de eliminar esta regla?",
 	    			buttons: {
 	    				cancel: {
 	    					label: '<i class="fa fa-times"></i> Cancelar'
@@ -289,8 +289,10 @@
 	    			},
 	    			callback: function (result) {
 						if (result) {
+							console.log("llamado");
 	    					confirmated = true;
 							axios.delete(url + '/' + records[index].id).then(response => {
+								console.log(response.data);
 								if (typeof(response.data.error) !== "undefined") {
 									/** Muestra un mensaje de error si sucede algún evento en la eliminación */
 	    							vm.showMessage('custom', 'Alerta!', 'warning', 'screen-error', response.data.message);
@@ -311,7 +313,6 @@
 			editField(field) {
 				if(field) {
 					var editfield = field.replace('<p>','');
-					console.log(editfield)
 					return editfield.replace('</p>','');
 				}
 			},
