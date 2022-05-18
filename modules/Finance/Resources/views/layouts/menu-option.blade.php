@@ -20,7 +20,7 @@
                     <a href="#">Movimientos</a>
                 </li>
                 <li>
-                    <a href="#">Conciliación</a>
+                    <a href="{{ route('finance.conciliation.index') }}">Conciliación</a>
                 </li>
             </ul>
         </li>
