@@ -20,63 +20,6 @@
 			</div>
 			<!-- mensajes de error -->
 			<div class="row">
-				<div class="col-4" id="budgetAvailabilityInitDate">
-					<label><strong>Desde:</strong></label>
-					<div class="form-group is-required mt-2">
-						<label class="control-label"
-							>Partida Presupuestaria</label
-						>
-						<select2 
-							v-model="initialCode"
-							:options="budgetItemsArray"
-						></select2>
-					</div>
-					<div class="form-group is-required mt-3">
-						<label class="control-label">Desde</label>
-						<input
-							class="form-control input-sm"
-							type="date"
-							v-model="initialDate"
-						/>
-					</div>
-				</div>
-				<div class="col-4" id="budgetAvailabilityEndDate">
-					<label><strong>Hasta:</strong></label>
-					<div class="form-group is-required mt-2">
-						<label class="control-label"
-							>Partida Presupuestaria</label
-						>
-						<select2
-							v-model="finalCode"
-							:options="budgetItemsArray"
-						></select2>
-					</div>
-					<div class="form-group is-required mt-3">
-						<label class="control-label">Hasta</label
-						><input
-							class="form-control input-sm"
-							type="date"
-							v-model="finalDate"
-						/>
-					</div>
-				</div>
-				<div class="col-4" id="budgetAvailabilityWithoutMovements">
-					<div class="form-group">
-						<label class="text-center">
-							<strong>Quitar cuentas sin movimientos</strong>
-						</label>
-						<div class="col-12 mt-4">
-							<div class="form-check">
-								<input
-									v-model="accountsWithMovements"
-									type="checkbox"
-									class="form-check-input"
-									id="checkbox"
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="col-6 mt-4">
 					<label for="">
 						<div class="col-12 bootstrap-switch-mini">
@@ -129,7 +72,7 @@
 					</div>
 				</div>
 				<div class="col-12">
-					<div class="mt-4">
+					<!-- <div class="mt-4">
 						<div class="form-group is-required">
 							<label for="specific_action_id" class="control-label">Acción Específica</label>
 							<select2 :options="specific_actions"
@@ -137,6 +80,73 @@
 								id="specific_action_id"
 								disabled
 							></select2>
+						</div>
+					</div> -->
+					<div class="mt-4">
+						<label for="specific_action_id" class="control-label">Acción Específica</label>
+						<div class="form-group is-required" style="margin-top: -1.5rem;">
+							<v-multiselect :options="specific_actions" track_by="text"
+								:hide_selected="false" :selected="specific_actions_ids" v-model="specific_actions_ids">
+							</v-multiselect>
+						</div>
+                	</div>
+					<br>
+					<hr>
+				</div>
+				<div class="col-4" id="budgetAvailabilityInitDate">
+					<label><strong>Desde:</strong></label>
+					<div class="form-group is-required mt-2">
+						<label class="control-label"
+							>Partida Presupuestaria</label
+						>
+						<select2 
+							v-model="initialCode"
+							:options="budgetItemsArray"
+						></select2>
+					</div>
+					<div class="form-group is-required mt-3">
+						<label class="control-label">Desde:</label>
+						<input
+							class="form-control input-sm"
+							type="date"
+							v-model="initialDate"
+						/>
+					</div>
+				</div>
+					<div class="col-4" id="budgetAvailabilityEndDate">
+						<label><strong>Hasta:</strong></label>
+						<div class="form-group is-required mt-2">
+							<label class="control-label"
+								>Partida Presupuestaria</label
+							>
+							<select2
+								v-model="finalCode"
+								:options="budgetItemsArray"
+							></select2>
+						</div>
+						<div class="form-group is-required mt-3">
+							<label class="control-label">Hasta:</label
+							><input
+							class="form-control input-sm"
+							type="date"
+							v-model="finalDate"
+						/>
+					</div>
+				</div>
+				<div class="col-4" id="budgetAvailabilityWithoutMovements">
+					<div class="form-group">
+						<label class="text-center">
+							<strong>Quitar cuentas sin movimientos</strong>
+						</label>
+						<div class="col-12 mt-4">
+							<div class="form-check">
+								<input
+									v-model="accountsWithMovements"
+									type="checkbox"
+									class="form-check-input"
+									id="checkbox"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -193,7 +203,8 @@
 				project_id: '',
 				centralized_action_id: '',
 
-				specific_action_id: '',
+				// specific_action_id: '',
+				specific_actions_ids: [],
 
 				budgetItemsArray: JSON.parse(this.budgetItems),
 				budgetProjectsArray: JSON.parse(this.budgetProjects),
@@ -209,10 +220,12 @@
 
 			window.addEventListener('updateProjectId', (event) => {
 				this.project_id = event.value;
+				this.specific_actions_ids = [];
 			});
 
 			window.addEventListener('updateCentralizedActionId', (event) => {
 				this.centralized_action_id = event.value;
+				this.specific_actions_ids = [];
 			});
 			
 		},
@@ -226,7 +239,6 @@
 				);
 				if (e.target.id === 'sel_project') {
 					window.dispatchEvent(new CustomEvent("updateCentralizedActionId", {value: '' }));
-					$('#centralized_action_id').
 					$('#centralized_action_id')
 						.closest('.form-group')
 						.removeClass('is-required');
@@ -274,6 +286,7 @@
 			},
 
 			generateReport: function() {
+				// let params = new FormData();
 				this.errors = [];
 				if(!this.initialDate) {
 					this.errors.push('El campo desde es obligatorio');
@@ -290,11 +303,12 @@
 				if(!this.project_id && !this.centralized_action_id) {
 					this.errors.push('El campo Proyecto o Acción Centralizada es obligatorio');
 				}
-				if(!this.specific_action_id) {
+				if(!this.specific_actions_ids) {
 					this.errors.push('El campo Acción Específica es obligatorio');
+				}else{
+					this.specific_actions_ids = this.specific_actions_ids.map(function(object) { return object.id});
 				}
 				
-
 				if (this.errors.length === 0)
 				{
 					window.open(
@@ -305,7 +319,7 @@
 					&accountsWithMovements=${this.accountsWithMovements}
 					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
 					&project_type=${this.project_id ? 'project' : 'centralized_action'}
-					&specific_action_id=${this.specific_action_id}`);
+					&specific_actions_ids=${this.specific_actions_ids}`);
 				}
 					
 			},
