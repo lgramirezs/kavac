@@ -36,7 +36,7 @@
 								</ul>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" v-if="this.record.warehouse_inventory_product_id == ''">
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Organización que gestiona el almacén:</label>
@@ -56,8 +56,27 @@
 			                    </div>
 							</div>
 						</div>
+						<div class="row" v-if="this.record.warehouse_inventory_product_id != ''">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Organización que gestiona el almacén:</label>
+									<select2 :options="institutions"
+											 v-model="institution_id"
+											 @input="getWarehouses()">
+									</select2>
+			                    </div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Almacén:</label>
+									<select2 :options="warehouses"
+											 v-model="warehouse_id">
+									</select2>
+			                    </div>
+							</div>
+						</div>
 						<hr>
-						<div class="row" v-show="this.record.warehouse_inventory_product_id != ''">
+						<div class="row" v-if="this.record.warehouse_inventory_product_id != ''">
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Minimo:</label>
@@ -239,6 +258,8 @@
 					};
 				else
 					vm.record = vm.records[index-1].warehouse_inventory_rule;
+				vm.institution_id = vm.records[index-1].warehouse_institution_warehouse.institution_id;
+				vm.warehouse_id = vm.records[index-1].warehouse_institution_warehouse.warehouse_id;
 				event.preventDefault();
 			},
 			/**
