@@ -118,7 +118,7 @@
 							<div slot="description" slot-scope="props">
 								<span>
 									{{ (props.row.warehouse_product)?
-											props.row.warehouse_product.name+': '+props.row.warehouse_product.description:'N/A'
+											props.row.warehouse_product.name+': '+ editField(props.row.warehouse_product.description):'N/A'
 									}}
 								</span>
 							</div>
@@ -302,6 +302,18 @@
 	    				}
 	    			}
 	    		});
+			},
+			/**
+	         * Método edita el campo descripción
+	         *
+	         * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+	         */
+			editField(field) {
+				if(field) {
+					var editfield = field.replace('<p>','');
+					console.log(editfield)
+					return editfield.replace('</p>','');
+				}
 			},
 		},
 		created() {
