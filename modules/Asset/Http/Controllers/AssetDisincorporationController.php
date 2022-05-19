@@ -125,7 +125,7 @@ class AssetDisincorporationController extends Controller
         $assets = explode(",", $request->assets);
         foreach ($assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = 7;
+            $asset->asset_status_id = null;
             $asset->save();
             $asset_disincorporation = AssetDisincorporationAsset::create([
                 'asset_id' => $asset->id,
@@ -205,7 +205,7 @@ class AssetDisincorporationController extends Controller
             'asset_disincorporation_motive_id' => ['required'],
             'observation' => ['required']
 
-        ]);
+        ],$this->messages);
 
         $disincorporation->date = $request->date;
         $disincorporation->asset_disincorporation_motive_id = $request->asset_disincorporation_motive_id;
@@ -217,7 +217,7 @@ class AssetDisincorporationController extends Controller
 
         foreach ($request->assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = 7;
+            $asset->asset_status_id = null;
             $asset->save();
             $asset_disincorporation = AssetDisincorporationAsset::updateOrCreate([
                     'asset_id' => $asset->id,
@@ -231,7 +231,7 @@ class AssetDisincorporationController extends Controller
 
         foreach ($assets_disincorporation as $asset_disincorporation) {
             $asset = Asset::find($asset_disincorporation->asset_id);
-            $asset->asset_status_id = 10;
+            $asset->asset_status_id = null;
             $asset->save();
 
             $asset_disincorporation->delete();
