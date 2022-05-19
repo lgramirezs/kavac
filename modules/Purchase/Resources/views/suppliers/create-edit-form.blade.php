@@ -166,7 +166,7 @@
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
 											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
 													(isset($model_supplier_objects)) ? $model_supplier_objects : null, [
-												'class' => 'form-control',
+												'class' => 'form-control multiple',
 												'multiple' => 'multiple',
 												'name' => 'purchase_supplier_object_id[]'
 											]) !!}
@@ -442,6 +442,9 @@
 	    		$(":radio").prop('checked', false).change();
 	    		$(":checkbox").prop('checked', false).change();
 			});
+			$(".multiple").select2({
+          placeholder: "Seleccione..."
+      });
 		});
 		function clickUploadDoc(id, ){
 			idclicker = id;
