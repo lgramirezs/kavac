@@ -235,8 +235,6 @@
 				vm.centralized_action_id = event.value;
 				vm.specific_actions_ids = [];
 			});
-
-			// $('#date').attr('max', '2017-04-30');
 		},
 		mounted() {
 			const vm = this;
@@ -282,6 +280,7 @@
 		methods: {
 			reset() {
 				this.specific_actions_ids = '';
+				$('#all_specific_actions').bootstrapSwitch('state', false);
 			},
 			getSpecificActions(type) {
 				let id = type === 'Project'
@@ -337,7 +336,7 @@
 				}
 				
 				if (this.errors.length === 0)
-				{
+				{	
 					window.open(
 					`${this.url}?initialDate=${this.initialDate}
 					&finalDate=${this.finalDate}
