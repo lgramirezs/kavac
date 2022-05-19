@@ -18,6 +18,11 @@
 </table>
 <table cellspacing="0" cellpadding="1" border="0">
     @foreach ($records as $record_)
+        @if (count($record_[0]) < 0)
+            @php
+                break;
+            @endphp
+        @endif
         @foreach ($record_[0] as $record)
             @php
                 $isRoot = substr_count($record['budgetAccount']['code'], '0111111') == 8;

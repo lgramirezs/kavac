@@ -71,8 +71,6 @@ class BudgetReportsController extends Controller
         }, $budgetProjects);
         array_unshift($budgetProjects, ['id' => "", 'text' => "Seleccione..."]);
 
-
-
         $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions'])->whereHas('specificActions', function ($query) {
             $query->whereHas('subSpecificFormulations', function ($query) {
                 $query->where('assigned', true);
@@ -236,11 +234,17 @@ class BudgetReportsController extends Controller
 
             $code = str_replace('.', '', $budgetItem->budgetAccount->getCodeAttribute());
 
-            if ($code >= $initialCode && $code <= $finalCode && strtotime($specificAction->from_date) >= strtotime($initialDate) && strtotime($specificAction->to_date) <= strtotime($finalDate)) {
-                $filteredArray[] = $budgetItem;
+            if ($code >= $initialCode && $code <= $finalCode) {
+                // dd(strtotime($specificAction->from_date) >= strtotime($initialDate), ($specificAction->from_date->isoformat('Y-d-M')), ($initialDate));
+                // dd($specificAction->from_date->toDateString() > $initialDate, $specificAction->from_date->toDateString(), $initialDate);
+                // dd($specificAction->to_date->toDateString() < $finalDate, $specificAction->to_date->toDateString(), $finalDate);
+                if (($initialDate <= $specificAction->from_date->toDateString()) && ($specificAction->to_date->toDateString() <= $finalDate)) {
+                    // dd('over here');
+                    array_push($filteredArray, $budgetItem);
+                } 
             }
         }
-
+        // dd($filteredArray);
         return $filteredArray;
     }
 
@@ -286,9 +290,11 @@ class BudgetReportsController extends Controller
 
         $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $project);
 
-        foreach ($records as $record) {
-            $record[0] = $this->filterBudgetAccounts($record[0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+        for ($i = 0; $i < count($records); $i++) {
+            $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
         }
+
+        // dd($records[0]);
 
         $institution = Institution::find(1);
 

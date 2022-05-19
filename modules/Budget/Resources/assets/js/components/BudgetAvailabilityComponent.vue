@@ -109,8 +109,8 @@
 					<div class="form-group is-required mt-3">
 						<label class="control-label">Desde:</label>
 						<input
-							class="form-control input-sm"
 							type="date"
+							class="form-control input-sm"
 							v-model="initialDate"
 						/>
 					</div>
@@ -127,12 +127,12 @@
 							></select2>
 						</div>
 						<div class="form-group is-required mt-3">
-							<label class="control-label">Hasta:</label
-							><input
-							class="form-control input-sm"
-							type="date"
-							v-model="finalDate"
-						/>
+							<label class="control-label">Hasta:</label>
+							<input
+								type="date"
+								class="form-control input-sm no-restrict"
+								v-model="finalDate"
+							/>
 					</div>
 				</div>
 				<div class="col-4" id="budgetAvailabilityWithoutMovements">
@@ -235,6 +235,8 @@
 				vm.centralized_action_id = event.value;
 				vm.specific_actions_ids = [];
 			});
+
+			// $('#date').attr('max', '2017-04-30');
 		},
 		mounted() {
 			const vm = this;
