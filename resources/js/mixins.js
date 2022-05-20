@@ -663,7 +663,7 @@ Vue.mixin({
 					$("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
 				}
 			});
-
+	
 			event.preventDefault();
 		},
 		/**

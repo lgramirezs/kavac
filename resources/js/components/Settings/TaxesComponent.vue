@@ -144,7 +144,9 @@
 					affect_tax: false,
 					active: false,
 					operation_date: '',
-					percentage: ''
+					percentage: '',
+			
+				
 				},
 				errors: [],
 				records: [],
@@ -168,9 +170,44 @@
 					affect_tax: false,
 					active: false,
 					operation_date: '',
-					percentage: ''
+					percentage: 0,
 				};
 			},
+
+			initUpdate(id, event) {
+								console.log("hello");
+			let vm = this;
+			vm.errors = [];
+
+			let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+				return rec.id === id;
+			})[0])) || vm.reset();
+
+			vm.record = recordEdit;
+		
+            vm.record.operation_date = recordEdit.histories[0].operation_date;
+			  vm.record.percentage  = recordEdit.histories[0].percentage ;
+			/**
+			 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
+			 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
+			 */
+			$.each(vm.record, function(el, value) { console.log('here', el, value);
+				if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
+					/** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
+					$("input[name=" + el + "]").each(function() {
+						if ($(this).val() === value) {
+							$(this).bootstrapSwitch('state', value, true)
+						}
+
+					});
+				}
+				if (value === true || value === false) {
+					$("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
+				}
+			});
+			console.log(vm.record);
+			event.preventDefault();
+		   },
 		},
 		created() {
 			this.table_options.headings = {

@@ -20,6 +20,8 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function () {
         Route::resource('settings', 'SettingController', [
             'except' => ['create', 'edit', 'show', 'update', 'destroy']
         ]);
+        Route::get('settings/edit/{id}', 'SettingController@edit')->name('admin.settings.edit');
+
         /** Rutas para la gestión de módulos de la aplicación */
         Route::group(['prefix' => 'modules'], function () {
             Route::get('list', 'ModuleController@index')->name('module.list');
