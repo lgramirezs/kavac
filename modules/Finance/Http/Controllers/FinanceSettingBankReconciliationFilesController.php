@@ -37,7 +37,10 @@ class FinanceSettingBankReconciliationFilesController extends Controller
         /**
          * Establece permisos de acceso para cada método del controlador
          */
-        $this->middleware('permission:finance.settingbankreconciliationfiless.index', ['only' => 'index']);
+        $this->middleware('permission:finance.settingbankreconciliationfiles.index', ['only' => 'index']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.store', ['only' => 'store']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.update', ['only' => 'update']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.destroy', ['only' => 'destroy']);
     }
 
     /**

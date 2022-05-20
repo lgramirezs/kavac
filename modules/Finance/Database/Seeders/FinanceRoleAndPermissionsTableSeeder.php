@@ -240,7 +240,34 @@ class FinanceRoleAndPermissionsTableSeeder extends Seeder
                 'model'             => 'Modules\Finance\Models\FinanceSettingBankReconciliationFiles',
                 'model_prefix'      => 'finanzas',
                 'slug_alt'          => 'config_archivos_conciliacion_bancaria.listado',
-                'short_description' => 'Listado de configuraciones de archivos de conciliación bancaria'
+                'short_description' => 'Acceder al listado de configuraciones de archivos de conciliación bancaria'
+            ],
+            [
+                'name'              => 'Registrar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'finance.settingbankreconciliationfiles.store',
+                'description'       => 'Acceso para registrar un configuració de archivo de conciliación bancaria',
+                'model'             => 'Modules\Finance\Models\FinanceSettingBankReconciliationFiles',
+                'model_prefix'      => 'finanzas',
+                'slug_alt'          => 'config_archivos_conciliacion_bancaria.crear',
+                'short_description' => 'Registrar una configuración de archivo de conciliación bancaria'
+            ],
+            [
+                'name'              => 'Actualizar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'finance.settingbankreconciliationfiles.update',
+                'description'       => 'Acceso para actualizar un configuración de archivo de conciliación bancaria',
+                'model'             => 'Modules\Finance\Models\FinanceSettingBankReconciliationFiles',
+                'model_prefix'      => 'finanzas',
+                'slug_alt'          => 'config_archivos_conciliacion_bancaria.actualizar',
+                'short_description' => 'Actualizar una configuración de archivo de conciliación bancaria'
+            ],
+            [
+                'name'              => 'Eliminar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'finance.settingbankreconciliationfiles.destroy',
+                'description'       => 'Acceso para eliminar un configuración de archivo de conciliación bancaria',
+                'model'             => 'Modules\Finance\Models\FinanceSettingBankReconciliationFiles',
+                'model_prefix'      => 'finanzas',
+                'slug_alt'          => 'config_archivos_conciliacion_bancaria.eliminar',
+                'short_description' => 'Eliminar una configuración de archivo de conciliación bancaria'
             ],
         ];
 
