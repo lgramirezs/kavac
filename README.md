@@ -37,6 +37,7 @@ Se requiere de un Sistema Operativo de 64 bits y la instalación de algunos paqu
     php-pgsql
     php-cli
     php-curl
+    curl
     composer
     zip
     unzip
@@ -101,7 +102,7 @@ Los comandos anteriores nos instalaran NodeJS y también npm, por lo cual compro
 
     $ npm -v
 
-Ahora se deben instalar las dependencias de php de la aplicación, por lo cual los siguientes comando se deben ejecutar dentro del directorio base de la aplicación:
+Ahora se deben instalar las dependencias de php de la aplicación, por lo cual los siguientes comandos se deben ejecutar dentro del directorio base de la aplicación:
 
     $ composer install
 
