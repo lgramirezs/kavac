@@ -275,6 +275,8 @@ Route::group(
             Route::get('/formulations', 'Reports\BudgetReportsController@getFormulations')->name('budget.formulations');
             Route::get('/formulated-report', 'Reports\BudgetReportsController@getFormulatedReportData')->name('budget.report.formulated.data');
             Route::get('/formulated-report-pdf', 'Reports\BudgetReportsController@getFormulatedReportPdf')->name('budget.report.formulated.pdf');
+
+            Route::get('/consolidated-pdf', 'Reports\BudgetReportsController@consolidatedReportPdf')->name('budget.report.consolidatedReport.pdf');
         });
     }
 );
