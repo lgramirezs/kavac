@@ -84,6 +84,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group is-required">
+                                    <label>Saldo según banco:</label>
+                                    <select2
+                                        :options="balance_according_bank_list"
+                                        v-model="record.balance_according_bank"
+                                    >
+                                    </select2>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         <h6 class="card-title">
                             Posición de las columnas:
@@ -138,6 +150,16 @@
                                     <select2
                                         :options="lines"
                                         v-model="record.position_description_column"
+                                    >
+                                    </select2>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group is-required">
+                                    <label>Saldo según banco:</label>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_balance_according_bank"
                                     >
                                     </select2>
                                 </div>
@@ -287,11 +309,13 @@
                     bank_id: '',
                     read_start_line: false,
                     read_end_line: false,
+                    balance_according_bank: '',
                     position_reference_column: '',
                     position_date_column: '',
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    position_balance_according_bank: '',
                     separated_by: '',
                     date_format: '',
                     thousands_separator: '',
@@ -301,20 +325,20 @@
                 records: [],
                 columns: [
                     'bank_id',
-                    'read_start_line',
-                    'read_end_line',
                     'position_reference_column',
                     'position_date_column',
                     'position_debit_amount_column',
                     'position_credit_amount_column',
                     'position_description_column',
-                    'separated_by',
-                    'date_format',
-                    'thousands_separator',
-                    'decimal_separator',
+                    'position_balance_according_bank',
                     'id'
                 ],
                 banks: [],
+                balance_according_bank_list: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": 1, "text": "Inicio"},
+                    { "id": 2, "text": "Final"},
+                ],
                 lines: [
                     { "id": "", "text": "Seleccione..." },
                     { "id": 1, "text": "1" , "disabled": null },
@@ -357,11 +381,13 @@
                     bank_id: '',
                     read_start_line: false,
                     read_end_line: false,
+                    balance_according_bank: '',
                     position_reference_column: '',
                     position_date_column: '',
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    position_balance_according_bank: '',
                     separated_by: '',
                     date_format: '',
                     thousands_separator: '',
@@ -389,45 +415,22 @@
             this.getBanks();
             this.table_options.headings = {
                 'bank_id': 'Banco',
-                'read_start_line': 'Leer línea de inicio',
-                'read_end_line': 'Leer línea final',
                 'position_reference_column': 'Referencia',
                 'position_date_column': 'Fecha',
                 'position_debit_amount_column': 'Monto débito',
                 'position_credit_amount_column': 'Monto crédito',
                 'position_description_column': 'Descripción',
-                'separated_by': 'Columnas separadas por',
-                'date_format': 'Formato de fecha',
-                'thousands_separator': 'Separador de miles',
-                'decimal_separator': 'Separador de decimales',
+                'position_balance_according_bank': 'Saldo según banco',
                 'id': 'Acción'
             };
             this.table_options.sortable = [
                 'bank_id',
-                'read_start_line',
-                'read_end_line',
                 'position_reference_column',
                 'position_date_column',
                 'position_debit_amount_column',
                 'position_credit_amount_column',
                 'position_description_column',
-                'separated_by',
-                'date_format',
-                'thousands_separator',
-                'decimal_separator'
-            ];
-            this.table_options.filterable = [
-                'bank_id',
-                'read_end_line',
-                'read_end_line',
-                'position_reference_column',
-                'position_date_column',
-                'position_debit_amount_column',
-                'position_credit_amount_column',
-                'position_description_column',
-                'separated_by',
-                'date_format',
-                'thousands_separator',
+                'position_balance_according_bank',
                 'decimal_separator'
             ];
         },
