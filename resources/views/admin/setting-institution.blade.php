@@ -285,12 +285,15 @@
 											  </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
+                
+
+								@if(isset($model_institution->default)) 
+								<div class="col-md-2">
+								    <div class="form-group">
                                     {!! Form::label('active', __('Activa'), []) !!}
                                     <div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('active', true, null, [
+                                            {!! Form::checkbox('active', true, ( $model_institution->active == TRUE ? TRUE: FALSE), [
                                                 'id' => 'active', 'class' => 'form-control bootstrap-switch',
                                                 'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                             ]) !!}
@@ -301,15 +304,53 @@
                                     {!! Form::label('default', __('Organización por defecto'), []) !!}
                                     <div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('default', true, (isset($model_institution) && $model_institution->default)?null:true, [
+                                            {!! Form::checkbox('default', true, ( $model_institution->default == TRUE ? TRUE: FALSE), [
                                                 'id' => 'default', 'class' => 'form-control bootstrap-switch',
                                                 'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                             ]) !!}
                                         </div>
                                     </div>
                                 </div>
+								</div>
+								<div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('retention_agent', true,( $model_institution->retention_agent == TRUE ? TRUE: FALSE), [
+                                                'id' => 'retention_agent', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
+								@else
+								<div class="col-md-2"> 
+								<div class="form-group">
+                                    {!! Form::label('active', __('Activa'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('active', true, null, [
+                                                'id' => 'active', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+								    <div class="form-group">
+                                    {!! Form::label('default', __('Organización por defecto'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('default', true, false, [
+                                                'id' => 'default', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+								</div>
+								<div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
                                     <div class="col-12">
@@ -322,6 +363,9 @@
                                     </div>
                                 </div>
                             </div>
+								@endif
+                            
+
                         </div>
 						<div class="row">
 							<div class="col-md-4">
@@ -491,8 +535,8 @@
 												<i class="fa fa-eye"></i>
 											</a>
 											<a class="btn btn-warning btn-xs btn-icon btn-action" data-toggle="tooltip"
-												href="javascript:void(0)" title="Modificar registro" v-has-tooltip
-												onclick="loadInstitution('{{ $institution->id }}')">
+												 title="Modificar registro" v-has-tooltip  href='{{route("admin.settings.edit",$institution->id)}}'
+												>
 												<i class="fa fa-edit"></i>
 											</a>
 										</td>

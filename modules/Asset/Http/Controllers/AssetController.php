@@ -337,11 +337,11 @@ class AssetController extends Controller
             } elseif ($operation == 'disincorporations') {
                 if (Auth()->user()->isAdmin()) {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('asset_status_id', 10);
+                        ->where('asset_status_id','!=', null);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->where('institution_id', $institution_id)
-                        ->where('asset_status_id', 10);
+                        ->where('asset_status_id','!=', null);
                 }
             } elseif ($operation == 'requests') {
                 if (Auth()->user()->isAdmin()) {

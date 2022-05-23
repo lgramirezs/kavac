@@ -268,11 +268,11 @@
                         document.getElementById('asset_codigo').innerText = fields.inventory_serial;
 
                         document.getElementById('asset_acquisition_type').innerText = (fields.asset_acquisition_type)?fields.asset_acquisition_type.name:'';
-                        document.getElementById('asset_acquisition_date').innerText = (fields.acquisition_date)?fields.acquisition_date:'';
+                        document.getElementById('asset_acquisition_date').innerText = (fields.acquisition_date)?vm.format_date(fields.acquisition_date):'';
                         document.getElementById('asset_ubication').innerText = (fields.ubication)?fields.ubication:'N/A';
                         document.getElementById('asset_proveedor').innerText = (fields.proveedor)?fields.proveedor:'N/A';
                         document.getElementById('asset_condition').innerText = (fields.asset_condition)?fields.asset_condition.name:'';
-                        document.getElementById('asset_status').innerText = (fields.asset_status)?fields.asset_status.name:'';
+                        document.getElementById('asset_status').innerText = (fields.asset_status)?fields.asset_status.name:'Desincorporado';
 
                         document.getElementById('asset_use_function').innerText = (fields.asset_use_function)?fields.asset_use_function.name:'N/A';
                         document.getElementById('asset_serial').innerText = (fields.serial)?fields.serial:'';

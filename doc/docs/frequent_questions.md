@@ -49,5 +49,17 @@
     Los enlaces emitidos por el sistema ya sea por verificación de usuario, recuperación de contraseña entre otros, tienen una vigencia de 60 minutos. 
 
     ![Screenshot](img/403.png#imagen)
+
+??? question "¿Comó asociar una organización a una cuenta en usuario?"
+    Para asociar una organización a una cuenta de usuario, es necesario contar con un registro de empleado asociado a esta cuenta de usuario.  El registro de empleado, que se ha completado a través del expediente del módulo de talento humano provee información sobre la organización a la que se encuentra afiliado dicho empleado. 
+
+    Para añadir un empleado a la cuenta de usuario debe seguir los siguientes pasos:
+
+    -   Ingresar a través del panel lateral a **Configuración** > **Acceso** > **Usuarios**.
+    -   Presione el botón **Editar registro** ![Screenshot](img/edit.png) ubicado en la columna titulada **Acción** de un registro de usuario que se desea actualizar.
+    -   Seleccione un empleado a través del campo correspondiente.
+    -   Presione el botón **Guardar**  ![Screenshot](img/save_1.png) para registrar los cambios efectuados.   
+
+    A continuación el sistema asocia la organización a la cual se encuentra afiliado el empleado a la cuenta de usuario en gestión.
     
 

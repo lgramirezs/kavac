@@ -12,7 +12,7 @@ use DB;
 /**
  * @class FinanceSettingBankReconciliationFilesController
  * 
- * @brief Configuraciones de los archivos de conciliación bancaria
+ * @brief Configuraciones de los archivos de conciliación bancaria.
  *
  * Clase que gestiona las configuraciones de archivos de conciliación bancarias.
  *
@@ -26,6 +26,22 @@ class FinanceSettingBankReconciliationFilesController extends Controller
 {
 
     use ValidatesRequests;
+
+    /**
+     * Define la configuración inicial de la clase.
+     *
+     * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /**
+         * Establece permisos de acceso para cada método del controlador
+         */
+        $this->middleware('permission:finance.settingbankreconciliationfiles.index', ['only' => 'index']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.store', ['only' => 'store']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.update', ['only' => 'update']);
+        $this->middleware('permission:finance.settingbankreconciliationfiless.destroy', ['only' => 'destroy']);
+    }
 
     /**
      * Obtiene un listado de los registros almacenados.

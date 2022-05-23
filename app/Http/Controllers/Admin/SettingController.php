@@ -3,22 +3,22 @@
 /** Controladores de uso exclusivo para usuarios administradores */
 namespace App\Http\Controllers\Admin;
 
-use App\Models\City;
-use App\Models\User;
-use App\Models\Estate;
-use App\Models\Parish;
-use App\Models\Country;
-use App\Models\Parameter;
-use App\Roles\Models\Role;
-use App\Models\Institution;
-use App\Models\Municipality;
-use Illuminate\Http\Request;
-use App\Models\InstitutionType;
-use App\Models\InstitutionSector;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Artisan;
-use App\Repositories\ParameterRepository;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Estate;
+use App\Models\Institution;
+use App\Models\InstitutionSector;
+use App\Models\InstitutionType;
+use App\Models\Municipality;
+use App\Models\Parameter;
+use App\Models\Parish;
+use App\Models\User;
 use App\Notifications\System as AppNotification;
+use App\Repositories\ParameterRepository;
+use App\Roles\Models\Role;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * @class SettingController
@@ -46,7 +46,7 @@ class SettingController extends Controller
     {
         /** @var Parameter Objeto con información de los parámetros activos pertenecientes a la aplicación base */
         $parameters = Parameter::where([
-            'active' => true, 'required_by' => 'core', 'p_value' => 'true'
+            'active' => true, 'required_by' => 'core', 'p_value' => 'true',
         ])->get();
 
         /** @var Parameter Parámetro asociado a la gestión de soporte técnico */
@@ -87,13 +87,13 @@ class SettingController extends Controller
         if (is_null($paramMultiInstitution)) {
             $model_institution = Institution::where([
                 'active' => true,
-                'default' => true
+                'default' => true,
             ])->first();
         }
         /** @var array Arreglo con atributos del formulario para la configuración de organismos */
         $header_institution = [
             'route' => 'institutions.store', 'method' => 'POST', 'role' => 'form', 'class' => 'form',
-            'enctype' => 'multipart/form-data'
+            'enctype' => 'multipart/form-data',
         ];
 
         /** @var array Arreglo con información de los organismos de adscripción */
@@ -123,7 +123,7 @@ class SettingController extends Controller
         $types = template_choices(InstitutionType::class);
         /** @var array Arreglo con los nombres de las redes sociales más comúnes */
         $social_networks = [
-            'facebook', 'twitter', 'linkedin', 'instagram', 'youtube', 'telegram'
+            'facebook', 'twitter', 'linkedin', 'instagram', 'youtube', 'telegram',
         ];
 
         return view('admin.settings', compact(
@@ -148,6 +148,120 @@ class SettingController extends Controller
             'organism_adscripts',
             'social_networks'
         ));
+    }
+
+    /**
+     * Muestra el formulacio con información del documento a actualizar
+     *
+     * @method    edit
+     *
+     * @author
+     *
+     * @param     Institution $model_institution    Objeto con información del documento a actualizar
+     */
+    public function edit(Institution $id)
+    {
+ 
+        /** @var Parameter Objeto con información de los parámetros activos pertenecientes a la aplicación base */
+        $parameters = Parameter::where([
+            'active' => true, 'required_by' => 'core', 'p_value' => 'true',
+        ])->get();
+
+/** @var Parameter Parámetro asociado a la gestión de soporte técnico */
+        $paramSupport = $parameters->filter(function ($param) {
+            return $param->p_key === 'support';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de chat */
+        $paramChat = $parameters->filter(function ($param) {
+            return $param->p_key === 'chat';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de notificaciones */
+        $paramNotify = $parameters->filter(function ($param) {
+            return $param->p_key === 'notify';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de banner en reportes */
+        $paramReportBanner = $parameters->filter(function ($param) {
+            return $param->p_key === 'report_banner';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de multiples organismos */
+        $paramMultiInstitution = $parameters->filter(function ($param) {
+            return $param->p_key === 'multi_institution';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de firma electrónica */
+        $paramDigitalSign = $parameters->filter(function ($param) {
+            return $param->p_key === 'digital_sign';
+        })->first();
+/** @var Parameter Parámetro asociado a la gestión de mantenimiento de la aplicación */
+        $paramOnline = $parameters->filter(function ($param) {
+            return $param->p_key === 'online';
+        })->first();
+
+/** @var array Arreglo con atributos del formulario para la configuración de parámetros */
+        $header_parameters = [
+            'route' => 'settings.store', 'method' => 'POST', 'role' => 'form', 'class' => 'form',
+        ];
+/** @var Institution|null Objeto con información del organismo. Por defecto el valos es nulo */
+        $model_institution = $id;
+
+/** @var array Arreglo con atributos del formulario para la configuración de organismos */
+        $header_institution = [
+            'route' => 'institutions.store', 'method' => 'POST', 'role' => 'form', 'class' => 'form',
+            'enctype' => 'multipart/form-data',
+        ];
+
+/** @var array Arreglo con información de los organismos de adscripción */
+        $organism_adscripts = (!is_null($model_institution)) ? template_choices(
+            Institution::class,
+            'name',
+            [],
+            false,
+            $model_institution->id
+        ) : ['' => 'Seleccione...'];
+
+/** @var Institution Objeto con información de los organismos registrados */
+        $institutions = Institution::all();
+/** @var Country Objeto con información de los Países registrados */
+        $countries = template_choices(Country::class);
+/** @var Estate Objeto con información de los Estados registrados */
+        $estates = template_choices(Estate::class);
+/** @var Municipality Objeto con información de los Municipios registrados */
+        $municipalities = template_choices(Municipality::class);
+/** @var Parish Objeto con información de las Parroquias registradas */
+        $parishes = template_choices(Parish::class);
+/** @var City Objeto con información de las Ciudades registradas */
+        $cities = template_choices(City::class);
+/** @var InstitutionSector Objeto con información de los sectores de organismos */
+        $sectors = template_choices(InstitutionSector::class);
+/** @var InstitutionType Objeto con información de los tipos de organismos */
+        $types = template_choices(InstitutionType::class);
+/** @var array Arreglo con los nombres de las redes sociales más comúnes */
+        $social_networks = [
+            'facebook', 'twitter', 'linkedin', 'instagram', 'youtube', 'telegram',
+        ];
+
+        return view('admin.settings', compact(
+            'header_parameters',
+            'paramSupport',
+            'paramChat',
+            'paramNotify',
+            'paramReportBanner',
+            'paramMultiInstitution',
+            'paramDigitalSign',
+            'paramOnline',
+            'model_institution',
+            'header_institution',
+            'institutions',
+            'countries',
+            'estates',
+            'municipalities',
+            'parishes',
+            'cities',
+            'sectors',
+            'types',
+            'organism_adscripts',
+            'social_networks'
+        ));
+
     }
 
     /**
@@ -180,7 +294,7 @@ class SettingController extends Controller
                     $msgType = [
                         'type' => 'other',
                         'text' => 'El sistema esta actualmente en línea, ' .
-                        'todos los usuarios pueden acceder a la aplicación'
+                        'todos los usuarios pueden acceder a la aplicación',
                     ];
                     /** @var string Título del mensaje */
                     $title = config('app.name') . ' - ' . __('En línea');
@@ -198,7 +312,7 @@ class SettingController extends Controller
                     $msgType = [
                         'type' => 'other',
                         'text' => 'El sistema esta actualmente en mantenimiento, ' .
-                        'solo puede acceder a la aplicación desde el enlace proporcionado'
+                        'solo puede acceder a la aplicación desde el enlace proporcionado',
                     ];
                     /** @var Role Objeto con información del rol administrador */
                     $roleAdmin = Role::where('slug', 'admin')->first();

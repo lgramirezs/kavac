@@ -17,29 +17,29 @@
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="0">
-    @foreach ($records as $record_)
-        @if (count($record_[0]) < 0)
+    {{-- {{ dd($records) }} --}}
+    @foreach ($records as $budgetAccounts)
+        @if (count($budgetAccounts[0]) < 0)
             @php
                 break;
             @endphp
         @endif
-        @foreach ($record_[0] as $record)
+        @foreach ($budgetAccounts[0] as $budgetAccount)
             @php
-                $isRoot = substr_count($record['budgetAccount']['code'], '0111111') == 8;
+                $isRoot = substr_count($budgetAccount['budgetAccount']['code'], '0111111') == 8;
                 $styles = $isRoot ? 'font-weight: bold;' : '';
-                
             @endphp
             <tr>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ $project_code }}</td>
+                    {{ $budgetAccounts["project_code"] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ $record_[2] }}</td>
+                    {{ $budgetAccounts["specific_action_code"] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ $record['budgetAccount']['code'] }}</td>
+                    {{ $budgetAccount['budgetAccount']['code'] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">
-                    {{ $record['budgetAccount']['denomination'] }}</td>
+                    {{ $budgetAccount['budgetAccount']['denomination'] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999;" align="center">
-                    {{ $record['amount_available'] . ' ' . $currencySymbol }}</td>
+                    {{ $budgetAccount['amount_available'] . ' ' . $currencySymbol }}</td>
             </tr>
         @endforeach
     @endforeach
