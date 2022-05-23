@@ -25,13 +25,19 @@
                         {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['serial'] }}
+                        {{ $assetInventoryAsset['asset']['serial'] ?
+                            $assetInventoryAsset['asset']['serial'] :
+                            '' }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['marca'] }}
+                        {{ $assetInventoryAsset['asset']['marca'] ?
+                            $assetInventoryAsset['asset']['marca'] :
+                            '' }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['model'] }}
+                        {{ $assetInventoryAsset['asset']['model'] ?
+                            $assetInventoryAsset['asset']['model'] :
+                            '' }}
                     </td>
                 </tr>
             @endforeach
@@ -72,7 +78,7 @@
                                 {{ $assetInventoryAsset['asset']['institution']['name'] }}
                             </td>
                             <td width="20%" style="font-size: 8rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation'] ? $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation']['payrollStaff']['first_name'] . ' ' .  $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation']['payrollStaff']['last_name'] : 'N/A'}}
+                                {{ $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation'] ? $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation']['payrollStaff']['first_name'] . ' ' .  $assetInventoryAsset['asset']['assetAsignationAsset']['assetAsignation']['payrollStaff']['last_name'] : ''}}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
@@ -81,13 +87,19 @@
                                 {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['serial'] }}
+                                {{ $assetInventoryAsset['asset']['serial'] ?
+                                    $assetInventoryAsset['asset']['serial'] :
+                                    '' }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['marca'] }}
+                                {{ $assetInventoryAsset['asset']['marca'] ?
+                                    $assetInventoryAsset['asset']['marca'] :
+                                    '' }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['model'] }}
+                                {{ $assetInventoryAsset['asset']['model'] ?
+                                    $assetInventoryAsset['asset']['model'] :
+                                    '' }}
                             </td>
                         </tr>
                     @endif
@@ -141,13 +153,19 @@
                                 {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['serial'] }}
+                                {{ $assetInventoryAsset['asset']['serial'] ?
+                                    $assetInventoryAsset['asset']['serial'] :
+                                    '' }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['marca'] }}
+                                {{ $assetInventoryAsset['asset']['marca'] ?
+                                    $assetInventoryAsset['asset']['marca'] :
+                                    '' }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['model'] }}
+                                {{ $assetInventoryAsset['asset']['model'] ?
+                                    $assetInventoryAsset['asset']['model'] :
+                                    '' }}
                             </td>
                             <td width="20%" style="font-size: 8rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['assetDisincorporationAsset'] && $assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation'] ? $assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] : $assetInventoryAsset['asset']['assetStatus']['name'] }}
