@@ -188,6 +188,10 @@ Route::group([
      *
      * Gestiona los datos de ordenes de compras
      */
+    Route::get(
+        'direct_hire/vue-list',
+        'PurchaseDirectHireController@vueList'
+    );
     Route::resource('direct_hire', 'PurchaseDirectHireController', [
         'as'     => 'purchase',
     ]);
