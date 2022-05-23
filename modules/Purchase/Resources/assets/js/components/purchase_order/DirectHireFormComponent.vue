@@ -1,6 +1,6 @@
 <template>
     <section>
-        <purchase-show-errors ref="PurchaseOrderFormComponent" />
+        <purchase-show-errors ref="purchaseShowError" />
         <div class="row">
             <div class="col-3">
                 <div class="form-group">
@@ -378,6 +378,7 @@ export default {
     },
     data() {
         return {
+            errors:[],
             records: [],
             record: {
                 institution_id: '',
@@ -445,8 +446,8 @@ export default {
             convertion_list: [],
             load_data_edit: false,
             files: {
-                'Presupuesto_base_estimado': null,
-                'Disponibilidad_presupuestaria': null,
+                'presupuesto_base_estimado': null,
+                'disponibilidad_presupuestaria': null,
             },
         }
     },
@@ -535,7 +536,7 @@ export default {
             this.sub_total = 0;
             this.tax_value = 0;
             this.total = 0;
-            this.$refs.PurchaseOrderFormComponent.reset();
+            this.$refs.purchaseShowError.reset();
         },
 
         uploadFile(inputID, e) {
@@ -682,12 +683,27 @@ export default {
             /** Se obtiene y da formato para enviar el archivo a la ruta */
             let vm = this;
             var formData = new FormData();
-            // var inputFile = document.querySelector('#'+id);
-            // formData.append("file", inputFile.files[0]);
+
+            var inputFile = document.querySelector('#presupuesto_base_estimado');
+            formData.append("presupuesto_base_estimado", inputFile.files[0]);
+
+            inputFile = document.querySelector('#disponibilidad_presupuestaria');
+            formData.append("disponibilidad_presupuestaria", inputFile.files[0]);
+
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);
-            formData.append("subtotal", this.sub_total);
-            formData.append("requirement_list", JSON.stringify(this.requirement_list));
+            // formData.append("subtotal", this.sub_total);
+            // formData.append("requirement_list", JSON.stringify(this.requirement_list));
+
+            formData.append("institution_id", this.record.institution_id);
+            formData.append("contracting_department_id", this.record.contracting_department_id);
+            formData.append("user_department_id", this.record.user_department_id);
+            formData.append("fiscal_year_id", this.fiscalYear.id);
+            formData.append("purchase_supplier_id", this.record.purchase_supplier_id);
+            formData.append("purchase_supplier_object_id", this.record.purchase_supplier_object_id);
+            formData.append("funding_source", this.record.funding_source);
+            formData.append("description", this.record.description);
+
             vm.loading = true;
 
             if (!this.record_edit) {
@@ -697,18 +713,21 @@ export default {
                     }
                 }).then(response => {
                     vm.showMessage('store');
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                     location.href = this.route_list;
                 }).catch(error => {
+                    vm.errors = [];
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 422 || error.response.status == 500) {
-                            for (const i in error.response.data.errors) {
-                                vm.showMessage(
-                                    'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-                                );
+                            for (var index in error.response.data.errors) {
+                                if (error.response.data.errors[index]) {
+                                    vm.errors.push(error.response.data.errors[index][0]);
+                                }
                             }
                         }
                     }
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                 });
             } else {
