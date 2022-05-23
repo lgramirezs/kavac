@@ -73,6 +73,7 @@ Route::group([
     Route::get('get-agencies/{bank_id?}', [FinanceBankingAgencyController::class, 'getAgencies']);
     Route::get('get-account-types', [FinanceAccountTypeController::class, 'getAccountTypes']);
     Route::get('get-accounts/{bank_id}', [FinanceBankAccountController::class, 'getBankAccounts']);
+    Route::get('get-bank-accounts', [FinanceBankAccountController::class, 'getFinanceBankAccount']);
     Route::get('get-payment-methods', [FinancePaymentMethodsController::class, 'getPaymentMethods']);
     Route::get('voucher-design', function () {
         return view('finance::vouchers.design');

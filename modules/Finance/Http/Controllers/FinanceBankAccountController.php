@@ -195,4 +195,22 @@ class FinanceBankAccountController extends Controller
 
         return response()->json(['result' => true, 'accounts' => $accounts], 200);
     }
+
+    /**
+     * Obtiene los datos de las cuentas bancarias para mostrar en campos select.
+     *
+     * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @return \Illuminate\Http\JsonResponse Devuelve un JSON con listado de las entidades bancarias
+     */
+    public function getFinanceBankAccount()
+    {
+        foreach (FinanceBankAccount::all() as $bank_account) {
+            $this->data[] = [
+                'id' => $bank_account->id,
+                'text' => $bank_account->ccc_number
+            ];
+        }
+
+        return response()->json($this->data);
+    }
 }

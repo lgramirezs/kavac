@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <div class="form-group is-required">
                     <label>Cuenta bancaria:</label>
-                    <select2 :options="lines" v-model="account"></select2>
+                    <select2 :options="accounts" v-model="record.account"></select2>
                 </div>
             </div>
         </div>
@@ -35,22 +35,9 @@
                 record: {
                     account: '',
                 },
+                accounts: [],
                 errors: [],
-                records: [],
                 columns: [
-                ],
-                lines: [
-                    { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "1" , "disabled": null },
-                    { "id": 2, "text": "2", "disabled": null },
-                    { "id": 3, "text": "3", "disabled": null },
-                    { "id": 4, "text": "4", "disabled": null },
-                    { "id": 5, "text": "5", "disabled": null },
-                    { "id": 6, "text": "6", "disabled": null },
-                    { "id": 7, "text": "7", "disabled": null },
-                    { "id": 8, "text": "8", "disabled": null },
-                    { "id": 9, "text": "9", "disabled": null },
-                    { "id": 10, "text": "10", "disabled": null },
                 ],
             }
         },
@@ -64,8 +51,23 @@
                 this.record = {
                 };
             },
+
+            /**
+             * Obtiene los datos de las cuentas bancarias.
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            async getBankAccounts() {
+                let vm = this;
+                await axios.get(`${vm.app_url}/finance/get-bank-accounts/`).then(response => {
+                    vm.accounts = response.data;
+                }).catch(error => {
+                    vm.logs('Budget/Resources/assets/js/_all.js', 127, error, 'getBankAccounts');
+                });
+            },
         },
         created() {
+            this.getBankAccounts();
         },
         mounted() {
         },
