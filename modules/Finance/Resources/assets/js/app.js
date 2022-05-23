@@ -168,7 +168,7 @@ Vue.mixin({
 			});;
 		},
 		/**
-		 * Obtiene los datos de las cuentas bancarias
+		 * Obtiene las agencias bancarias registradas.
 		 *
 		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 		 */
@@ -178,14 +178,14 @@ Vue.mixin({
 			const bank_id = this.record.finance_bank_id || '';
 
 			if (bank_id) {
-				 axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
+				axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
 					vm.agencies = response.data;
 				}).catch(error => {
 					vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getAgencies');
 				});
 
 				if ($("#bank_code").length) {
-					 axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
+					axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
 						if (response.data.result) {
 							vm.record.bank_code = response.data.bank.code;
 						}
