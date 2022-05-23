@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-header">
                     <h6 class="card-title">
-                        {{ __('Conciliación') }}
+                        {{ __('Conciliación bancaria') }}
                         {{-- @include('buttons.help') --}}
                     </h6>
                     <div class="card-btns">
