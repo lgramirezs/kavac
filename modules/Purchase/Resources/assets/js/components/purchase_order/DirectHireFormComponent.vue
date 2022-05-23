@@ -446,8 +446,8 @@ export default {
             convertion_list: [],
             load_data_edit: false,
             files: {
-                'Presupuesto_base_estimado': null,
-                'Disponibilidad_presupuestaria': null,
+                'presupuesto_base_estimado': null,
+                'disponibilidad_presupuestaria': null,
             },
         }
     },
@@ -683,8 +683,12 @@ export default {
             /** Se obtiene y da formato para enviar el archivo a la ruta */
             let vm = this;
             var formData = new FormData();
-            // var inputFile = document.querySelector('#'+id);
-            // formData.append("file", inputFile.files[0]);
+
+            var inputFile = document.querySelector('#presupuesto_base_estimado');
+            formData.append("presupuesto_base_estimado", inputFile.files[0]);
+
+            inputFile = document.querySelector('#disponibilidad_presupuestaria');
+            formData.append("disponibilidad_presupuestaria", inputFile.files[0]);
 
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);

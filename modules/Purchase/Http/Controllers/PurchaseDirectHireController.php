@@ -17,6 +17,8 @@ use Modules\Purchase\Models\PurchasePivotModelsToRequirementItem;
 use Modules\Purchase\Models\PurchaseSupplierObject;
 use Modules\Purchase\Models\PurchaseDirectHire;
 
+use App\Repositories\UploadDocRepository;
+
 use Nwidart\Modules\Facades\Module;
 
 /**
@@ -128,41 +130,79 @@ class PurchaseDirectHireController extends Controller
      *
      * @return    Renderable    [description de los datos devueltos]
      */
-    public function store(Request $request)
+    public function store(Request $request, UploadDocRepository $upDoc)
     {
         // dd($request->all());
         $this->validate($request, [
-            'institution_id'              => 'required|integer',
-            'contracting_department_id'   => 'required|integer',
-            'user_department_id'          => 'required|integer',
-            'purchase_supplier_id'        => 'required|integer',
-            'purchase_supplier_object_id' => 'required|integer',
-            'fiscal_year_id'              => 'required|integer',
-            'currency_id'                 => 'required|integer',
-            'funding_source'              => 'required',
-            'description'                 => 'required',
-            // 'file'                 => 'required|mimes:pdf',
+            'institution_id'                => 'required|integer',
+            'contracting_department_id'     => 'required|integer',
+            'user_department_id'            => 'required|integer',
+            'purchase_supplier_id'          => 'required|integer',
+            'purchase_supplier_object_id'   => 'required|integer',
+            'fiscal_year_id'                => 'required|integer',
+            'currency_id'                   => 'required|integer',
+            'funding_source'                => 'required',
+            'description'                   => 'required',
+            'presupuesto_base_estimado'     => 'required|mimes:pdf',
+            'disponibilidad_presupuestaria' => 'required|mimes:pdf',
         ], [
-            // 'file.required'                 => 'El archivo de proforma / cotización es obligatorio.',
-            // 'file.mimes'                    => 'El archivo de proforma / cotización debe estar en formato pdf.',
-            'institution_id.required'              => 'El campo institución es obligatorio',
-            'contracting_department_id.required'   => 'El campo unidad contratante es obligatorio',
-            'user_department_id.required'          => 'El campo unidad usuaria es obligatorio',
-            'purchase_supplier_id.required'        => 'El campo proveedor es obligatorio',
-            'purchase_supplier_object_id.required' => 'El campo denominación del requerimiento es obligatorio',
-            'fiscal_year_id.required'              => 'El campo año de ejercicio económico es obligatorio',
-            'currency_id.required'                 => 'El campo tipo de moneda es obligatorio',
-            'funding_source.required'              => 'El campo fuente de financiamiento es obligatorio',
-            'description.required'                 => 'El campo denominación especifica del requerimiento es obligatorio',
+            'presupuesto_base_estimado.required'     => 'El archivo de presupuesto base estimado es obligatorio.',
+            'presupuesto_base_estimado.mimes'        => 'El archivo de presupuesto base estimado debe estar en formato pdf.',
+            'disponibilidad_presupuestaria.required' => 'El archivo de disponibilidad presupuestaria es obligatorio.',
+            'disponibilidad_presupuestaria.mimes'    => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
+            'institution_id.required'                => 'El campo institución es obligatorio',
+            'contracting_department_id.required'     => 'El campo unidad contratante es obligatorio',
+            'user_department_id.required'            => 'El campo unidad usuaria es obligatorio',
+            'purchase_supplier_id.required'          => 'El campo proveedor es obligatorio',
+            'purchase_supplier_object_id.required'   => 'El campo denominación del requerimiento es obligatorio',
+            'fiscal_year_id.required'                => 'El campo año de ejercicio económico es obligatorio',
+            'currency_id.required'                   => 'El campo tipo de moneda es obligatorio',
+            'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
+            'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
         ]);
-        PurchaseDirectHire::create($request->all());
+        $purchaseDirectHire = PurchaseDirectHire::create($request->all());
+
+        /** Registro y asociación de documentos */
+        $documentFormat = ['pdf'];
+        if ($request->file('presupuesto_base_estimado')) {
+            $file = $request->file('presupuesto_base_estimado');
+            $extensionFile = $file->getClientOriginalExtension();
+
+            if (in_array($extensionFile, $documentFormat)) {
+                /**
+                 * Se guarda el archivo y se almacena
+                 */
+                $upDoc->uploadDoc(
+                    $file,
+                    'documents',
+                    PurchaseDirectHire::class,
+                    $purchaseDirectHire->id
+                );
+            }
+        }
+
+        if ($request->file('disponibilidad_presupuestaria')) {
+            $file = $request->file('disponibilidad_presupuestaria');
+            $extensionFile = $file->getClientOriginalExtension();
+
+            if (in_array($extensionFile, $documentFormat)) {
+                /**
+                 * Se guarda el archivo y se almacena
+                 */
+                $upDoc->uploadDoc(
+                    $file,
+                    'documents',
+                    PurchaseDirectHire::class,
+                    $purchaseDirectHire->id
+                );
+            }
+        }
 
         /**
 		 * [$has_budget determina si esta instalado y habilitado el modulo Budget]
 		 * @var [boolean]
 		 */
 		$has_budget = (Module::has('Budget') && Module::isEnabled('Budget'));
-
 		if (!Module::has('Budget') || !Module::isEnabled('Budget')) {
 			// 
 		}
@@ -216,7 +256,44 @@ class PurchaseDirectHireController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'institution_id'                => 'required|integer',
+            'contracting_department_id'     => 'required|integer',
+            'user_department_id'            => 'required|integer',
+            'purchase_supplier_id'          => 'required|integer',
+            'purchase_supplier_object_id'   => 'required|integer',
+            'fiscal_year_id'                => 'required|integer',
+            'currency_id'                   => 'required|integer',
+            'funding_source'                => 'required',
+            'description'                   => 'required',
+            'presupuesto_base_estimado'     => 'required|mimes:pdf',
+            'disponibilidad_presupuestaria' => 'required|mimes:pdf',
+        ], [
+            'presupuesto_base_estimado.required'     => 'El archivo de presupuesto base estimado es obligatorio.',
+            'presupuesto_base_estimado.mimes'        => 'El archivo de presupuesto base estimado debe estar en formato pdf.',
+            'disponibilidad_presupuestaria.required' => 'El archivo de disponibilidad presupuestaria es obligatorio.',
+            'disponibilidad_presupuestaria.mimes'    => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
+            'institution_id.required'                => 'El campo institución es obligatorio',
+            'contracting_department_id.required'     => 'El campo unidad contratante es obligatorio',
+            'user_department_id.required'            => 'El campo unidad usuaria es obligatorio',
+            'purchase_supplier_id.required'          => 'El campo proveedor es obligatorio',
+            'purchase_supplier_object_id.required'   => 'El campo denominación del requerimiento es obligatorio',
+            'fiscal_year_id.required'                => 'El campo año de ejercicio económico es obligatorio',
+            'currency_id.required'                   => 'El campo tipo de moneda es obligatorio',
+            'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
+            'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
+        ]);
+
+        /**
+		 * [$has_budget determina si esta instalado y habilitado el modulo Budget]
+		 * @var [boolean]
+		 */
+		$has_budget = (Module::has('Budget') && Module::isEnabled('Budget'));
+		if (!Module::has('Budget') || !Module::isEnabled('Budget')) {
+			// 
+		}
+
+        return response()->json(['message' => 'Success'], 200);
     }
 
     /**
@@ -230,10 +307,19 @@ class PurchaseDirectHireController extends Controller
      *
      * @return    Renderable    [description de los datos devueltos]
      */
-    public function destroy($id)
+    public function destroy(UploadDocRepository $upDoc, $id)
     {
         $record = PurchaseDirectHire::find($id);
         if ($record) {
+            /** Se elimina la relacion y los documentos previos **/
+            $supp_docs = $record->documents()->get();
+            if (count($supp_docs) > 0) {
+                foreach ($supp_docs as $doc) {
+                    $upDoc->deleteDoc($doc->file, 'documents');
+                    $doc->delete();
+                }
+            }
+
             $record->delete();
         }
         return response()->json(['message' => 'Success'], 200);

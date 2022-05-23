@@ -80,6 +80,16 @@ class PurchaseDirectHire extends Model implements Auditable
     }
 
     /**
+     * Obtiene todos los documentos asociados al proveedor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
+
+    /**
      * PurchaseDirectHire belongs to PurchaseSupplier.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
