@@ -54,40 +54,6 @@
                     <select2 :options="suppliers" id="suppliers" v-model="purchase_supplier_id"></select2>
                 </div>
             </div>
-            <!-- <div class="col-3">
-                <div class="form-group">
-                    <label class="control-label" for="currencies">Tipo de proveedor</label><br>
-                    <div v-if="record.purchase_supplier_object">
-                        <div v-if="record.purchase_supplier_object.type == 'S'">
-                            <strong>Servicios / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'O'">
-                            <strong>Obras / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'B'">
-                            <strong>Bienes / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!--   <div class="col-3">
-                <label for="estimated_base_budget">Presupuesto base estimado</label>
-                <label class="custom-control">
-                    <button type="button" data-toggle="tooltip"
-                            class="btn btn-sm btn-info btn-import"
-                            title="Presione para subir el archivo del documento."
-                            @click="setFile('estimated_base_budget')">
-                        <i class="fa fa-upload"></i>
-                    </button>
-                    <input type="file" 
-                            id="estimated_base_budget" 
-                            @change="uploadFile('estimated_base_budget', $event)"
-                            style="display:none;">
-                    <span class="badge badge-success" id="status_estimated_base_budget" style="display:none;">
-                        <strong>Documento Cargado.</strong>
-                    </span>
-                </label>
-            </div> -->
             <div class="col-3">
                 <div class="form-group is-required">
                     <label for="purchase_supplier_objects">Denominación del requerimiento</label>
@@ -106,26 +72,6 @@
                     <input type="text" id="description" v-model="record.description" class="form-control">
                 </div>
             </div>
-            <!--             <div class="col-3">
-                <div class="form-group is-required">
-                    <label for="Disponibilidad presupuestaria">Disponibilidad presupuestaria</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                @click="setFile('Disponibilidad presupuestaria')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="Disponibilidad presupuestaria" 
-                                @change="uploadFile('Disponibilidad presupuestaria', $event)"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_Disponibilidad presupuestaria" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-            </div> -->
             <div class="col-12">
                 <br>
             </div>
@@ -174,149 +120,6 @@
             <div class="col-12">
                 <hr>
             </div>
-            <!--  <div class="col-12 row">
-                <div class="col-3">
-                    <label for="acta_inicio">Acta de inicio (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                @click="setFile('acta_inicio')"
-                                disabled="">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="acta_inicio" 
-                                @change="uploadFile('acta_inicio')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_acta_inicio" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-                <div class="col-3">
-                    <label for="invitation_bussiness">Invitación de la empresa (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                disabled="" 
-                                @click="setFile('invitation_bussiness')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="invitation_bussiness" 
-                                @change="uploadFile('invitation_bussiness')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_invitation_bussiness" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-                <div class="col-3">
-                    <label for="invitation_bussiness">Proforma / Cotización (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                disabled="" 
-                                @click="setFile('invitation_bussiness')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="invitation_bussiness" 
-                                @change="uploadFile('invitation_bussiness')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_invitation_bussiness" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-            </div>
-            <div class="col-12">
-                <v-client-table :columns="columns" :data="requirements" :options="table_options">
-                    <div slot="requirement_status" slot-scope="props" class="text-center">
-                        <div class="d-inline-flex">
-                            <span class="badge badge-info"    
-                                v-show="props.row.requirement_status == 'PROCESSED'">
-                                <strong>PROCESADO</strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div slot="id" slot-scope="props" class="text-center">
-                        <div class="feature-list-content-left mr-2" v-if="record.currency">
-                            <label class="custom-control custom-checkbox">
-                                <p-check class="p-icon p-smooth p-plain p-curve"
-                                         color="primary-o"
-                                         :value="'_'+props.row.id"
-                                         :id="'requirement_check_'+props.row.id"
-                                         :checked="indexOf(requirement_list, props.row.id, true)"
-                                         @change="requirementCheck(props.row)">
-                                    <i slot="extra" class="icon fa fa-check"></i>
-                                </p-check>
-                            </label>
-                        </div>
-                    </div>
-                </v-client-table>
-            </div> -->
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- <div class="col-12">
-                <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
-                    <div slot="unit_price" slot-scope="props">
-                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
-                    </div>
-                    <div slot="qty_price" slot-scope="props">
-                        <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
-                    </div>
-                </v-client-table>
-            </div> -->
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- <div class="col-12" v-if="record_items.length > 0">
-                <div class="VueTables VueTables--client" style="margin-top: -1rem;">
-                    <div class="table-responsive">
-                        <table class="VueTables__table table table-striped table-bordered table-hover">
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.65%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">SUB-TOTAL {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ sub_total.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">{{ tax?tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ tax_value.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">TOTAL {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ (total).toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div class="card-footer text-right">
             <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
@@ -407,35 +210,6 @@ export default {
                 'purchase_base_budget.currency.name',
                 'id'
             ],
-            columns2: ['requirement_code',
-                'name',
-                'quantity',
-                'measurement_unit.acronym',
-                'unit_price',
-                'qty_price',
-            ],
-            table2_options: {
-                pagination: { edge: true },
-                //filterByColumn: true,
-                highlightMatches: true,
-                texts: {
-                    filter: "Buscar:",
-                    filterBy: 'Buscar por {column}',
-                    //count:'Página {page}',
-                    count: ' ',
-                    first: 'PRIMERO',
-                    last: 'ÚLTIMO',
-                    limit: 'Registros',
-                    //page: 'Página:',
-                    noResults: 'No existen registros',
-                },
-                sortIcon: {
-                    is: 'fa-sort cursor-pointer',
-                    base: 'fa',
-                    up: 'fa-sort-up cursor-pointer',
-                    down: 'fa-sort-down cursor-pointer'
-                },
-            },
             requirement_list: [],
             requirement_list_deleted: [],
             sub_total: 0,
@@ -446,7 +220,6 @@ export default {
             convertion_list: [],
             load_data_edit: false,
             files: {
-                'presupuesto_base_estimado': null,
                 'disponibilidad_presupuestaria': null,
             },
         }
@@ -474,26 +247,6 @@ export default {
             'purchase_base_budget.currency.name': 'col-xs-1',
             'id': 'col-xs-1'
         };
-
-        vm.table2_options.headings = {
-            'requirement_code': 'Código de requerimiento',
-            'name': 'Nombre',
-            'quantity': 'Cantidad',
-            'measurement_unit.acronym': 'Unidad de medida',
-            'unit_price': 'Precio unitario sin IVA',
-            'qty_price': 'Cantidad * precio unitario',
-        };
-
-        vm.table2_options.columnsClasses = {
-            'requirement_code': 'col-xs-1 text-center',
-            'name': 'col-xs-3',
-            'quantity': 'col-xs-2',
-            'measurement_unit.acronym': 'col-xs-2',
-            'unit_price': 'col-xs-2',
-            'qty_price': 'col-xs-2',
-        };
-
-        vm.table2_options.filterable = [];
 
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
@@ -674,20 +427,11 @@ export default {
         },
 
         createRecord() {
-
-            // if (id == 'acta_inicio' || id == 'invitation_bussiness') {
-            //     $('#status_'+id).show('slow');
-            //     return;
-            // }
-
             /** Se obtiene y da formato para enviar el archivo a la ruta */
             let vm = this;
             var formData = new FormData();
 
-            var inputFile = document.querySelector('#presupuesto_base_estimado');
-            formData.append("presupuesto_base_estimado", inputFile.files[0]);
-
-            inputFile = document.querySelector('#disponibilidad_presupuestaria');
+            var inputFile = document.querySelector('#disponibilidad_presupuestaria');
             formData.append("disponibilidad_presupuestaria", inputFile.files[0]);
 
             formData.append("purchase_supplier_id", this.purchase_supplier_id);

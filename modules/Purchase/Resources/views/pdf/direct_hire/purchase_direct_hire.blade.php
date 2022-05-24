@@ -1,1 +1,0 @@
-Acta de inicio

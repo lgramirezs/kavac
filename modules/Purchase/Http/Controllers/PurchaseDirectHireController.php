@@ -156,11 +156,8 @@ class PurchaseDirectHireController extends Controller
             'currency_id'                   => 'required|integer',
             'funding_source'                => 'required',
             'description'                   => 'required',
-            'presupuesto_base_estimado'     => 'required|mimes:pdf',
             'disponibilidad_presupuestaria' => 'required|mimes:pdf',
         ], [
-            'presupuesto_base_estimado.required'     => 'El archivo de presupuesto base estimado es obligatorio.',
-            'presupuesto_base_estimado.mimes'        => 'El archivo de presupuesto base estimado debe estar en formato pdf.',
             'disponibilidad_presupuestaria.required' => 'El archivo de disponibilidad presupuestaria es obligatorio.',
             'disponibilidad_presupuestaria.mimes'    => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
             'institution_id.required'                => 'El campo institución es obligatorio',
@@ -180,22 +177,6 @@ class PurchaseDirectHireController extends Controller
 
         /** Registro y asociación de documentos */
         $documentFormat = ['pdf'];
-        if ($request->file('presupuesto_base_estimado')) {
-            $file = $request->file('presupuesto_base_estimado');
-            $extensionFile = $file->getClientOriginalExtension();
-
-            if (in_array($extensionFile, $documentFormat)) {
-                /**
-                 * Se guarda el archivo y se almacena
-                 */
-                $upDoc->uploadDoc(
-                    $file,
-                    'documents',
-                    PurchaseDirectHire::class,
-                    $purchaseDirectHire->id
-                );
-            }
-        }
 
         if ($request->file('disponibilidad_presupuestaria')) {
             $file = $request->file('disponibilidad_presupuestaria');
