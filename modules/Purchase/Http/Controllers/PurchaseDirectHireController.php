@@ -18,6 +18,8 @@ use Modules\Purchase\Models\PurchaseSupplierObject;
 use Modules\Purchase\Models\PurchaseDirectHire;
 
 use App\Repositories\UploadDocRepository;
+use App\Models\CodeSetting;
+use App\Rules\CodeSetting as CodeSettingRule;
 
 use Nwidart\Modules\Facades\Module;
 
@@ -132,6 +134,17 @@ class PurchaseDirectHireController extends Controller
      */
     public function store(Request $request, UploadDocRepository $upDoc)
     {
+        // Se genera el código de acta de inicio
+        // $code = $this->generateCodeAvailable();
+        // if (strpos($code, 'Error') !== false) {
+        //     return response()->json([
+        //         'errors' => [
+        //             'internal_error' => [$code]
+        //         ],
+        //         'message'=> 'The given data was invalid.'
+        //     ], 422);
+        // }
+
         // dd($request->all());
         $this->validate($request, [
             'institution_id'                => 'required|integer',
@@ -160,6 +173,9 @@ class PurchaseDirectHireController extends Controller
             'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
             'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
         ]);
+
+        $all = $request->all();
+        
         $purchaseDirectHire = PurchaseDirectHire::create($request->all());
 
         /** Registro y asociación de documentos */
@@ -339,5 +355,35 @@ class PurchaseDirectHireController extends Controller
     public function updatePurchaseOrder($id)
     {
         //
+    }
+
+    /**
+     * [generateCodeAvailable genera el código disponible]
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     * @return string [código que se asignara]
+     */
+    public function generateCodeAvailable()
+    {
+        $codeSetting = CodeSetting::where('table', 'minutes_code')
+                                    ->first();
+
+        if (!$codeSetting) {
+            $codeSetting = CodeSetting::where('table', 'minutes_code')
+                                    ->first();
+        }
+
+        if ($codeSetting) {
+            $code  = generate_registration_code(
+                $codeSetting->format_prefix,
+                strlen($codeSetting->format_digits),
+                (strlen($codeSetting->format_year) == 2) ? date('y') : date('Y'),
+                PurchaseDirectHire::class,
+                $codeSetting->field
+            );
+        } else {
+            $code = 'Error al generar código de la contratación directa';
+        }
+
+        return $code;
     }
 }

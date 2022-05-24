@@ -54,7 +54,7 @@
                     <select2 :options="suppliers" id="suppliers" v-model="purchase_supplier_id"></select2>
                 </div>
             </div>
-            <div class="col-3">
+            <!-- <div class="col-3">
                 <div class="form-group">
                     <label class="control-label" for="currencies">Tipo de proveedor</label><br>
                     <div v-if="record.purchase_supplier_object">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!--   <div class="col-3">
                 <label for="estimated_base_budget">Presupuesto base estimado</label>
                 <label class="custom-control">
