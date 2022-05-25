@@ -15,6 +15,7 @@ use Modules\Purchase\Models\PurchaseBaseBudget;
 use Modules\Purchase\Models\PurchaseRequirement;
 use Modules\Purchase\Models\PurchasePivotModelsToRequirementItem;
 use Modules\Purchase\Models\HistoryTax;
+use Modules\Purchase\Models\Tax;
 
 class PurchaseBaseBudgetController extends Controller
 {
@@ -50,9 +51,7 @@ class PurchaseBaseBudgetController extends Controller
      */
     public function create()
     {
-        $historyTax = HistoryTax::with('tax')->whereHas('tax', function ($query) {
-            $query->where('active', true);
-        })->where('operation_date', '<=', date('Y-m-d'))->orderBy('operation_date', 'DESC')->first();
+        $taxes = template_choices('App\Models\Tax', 'name', [], true);
 
         $requirements = PurchaseRequirement::with(
             'contratingDepartment',
@@ -61,7 +60,7 @@ class PurchaseBaseBudgetController extends Controller
         )->where('requirement_status', 'WAIT')->orderBy('code', 'ASC')->get();
         return view('purchase::requirements.base_budget', [
                     'requirements' => $requirements,
-                    'tax'          => json_encode($historyTax),
+                    'taxes'          => json_encode($taxes),
                     'currencies'   => json_encode($this->currencies),
         ]);
     }
@@ -120,9 +119,7 @@ class PurchaseBaseBudgetController extends Controller
             'relatable'
         )->find($id);
 
-        $historyTax = HistoryTax::with('tax')->whereHas('tax', function ($query) {
-            $query->where('active', true);
-        })->where('operation_date', '<=', date('Y-m-d'))->orderBy('operation_date', 'DESC')->first();
+        $taxes = template_choices('App\Models\Tax', 'name', [], true);;
 
         // $requirements = PurchaseRequirement::with(
         //     'contratingDepartment',
@@ -132,7 +129,7 @@ class PurchaseBaseBudgetController extends Controller
 
         return view('purchase::requirements.base_budget', [
                     'requirements' => json_encode([0 => $baseBudget['purchaseRequirement']]),
-                    'tax'          => json_encode($historyTax),
+                    'taxes'        => json_encode($taxes),
                     'currencies'   => json_encode($this->currencies),
                     'baseBudget'   => $baseBudget,
         ]);

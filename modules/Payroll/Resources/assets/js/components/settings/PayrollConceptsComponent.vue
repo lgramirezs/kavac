@@ -140,8 +140,8 @@
                             <!-- ./¿asignar a? -->
                         </div>
                         <div class="row" style="align-items: flex-end;" v-if="record.assign_to">
-                             <div class="col-md-4" v-for="field in record.assign_to" :key="field['id']">
-                                <div v-if="field['type'] && assign_options[field['id']] && record.assign_options[field['id']]">
+                             <div class="col-md-4" v-for="field in record.assign_to" :key="field['id']"
+                                  v-if="field['type'] && assign_options[field['id']] && record.assign_options[field['id']]">
                                     <!-- registro de opciones a asignar -->
                                     <div class="form-group is-required"
                                         v-if="field['type'] == 'list'">
@@ -184,7 +184,6 @@
                                         </div>
                                     </div>
                                     <!-- ./registro de opciones a asignar -->
-                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -470,7 +469,7 @@
                     assign_to:                   '',
                     accounting_account_id:       '',
                     budget_account_id:           '',
-                    currency_id:           '',
+                    currency_id:                 '',
                     assign_options:              {}
 
                 },

@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if(!isset($tax))
+                    @if(!isset($taxes) || count(json_decode($taxes)) < 2)
                         <br>
                         <div class="alert alert-danger">
                             <div class="container">
@@ -43,12 +43,12 @@
 
                     @if(isset($baseBudget))
                         <purchase-base-budget-form :records="{{ $requirements }}"
-                                                   :record_tax="{{ $tax }}"
+                                                   :taxes="{{ $taxes }}"
                                                    :currencies="{{ $currencies }}"
                                                    :base_budget_edit="{{ $baseBudget }}" />
                     @else
                         <purchase-base-budget-form :records="{{ $requirements }}"
-                                                   :record_tax="{{ $tax }}"
+                                                   :taxes="{{ $taxes }}"
                                                    :currencies="{{ $currencies }}" />
                     @endif
                 </div>

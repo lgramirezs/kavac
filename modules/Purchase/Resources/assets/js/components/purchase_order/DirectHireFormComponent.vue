@@ -55,6 +55,12 @@
                 </div>
             </div>
             <div class="col-3">
+                <div class="form-group">
+                    <label for="supplier_direction">Dirección fiscal del proveedor</label>
+                    <p v-html="supplier.direction"></p>
+                </div>
+            </div>
+            <div class="col-3">
                 <div class="form-group is-required">
                     <label for="purchase_supplier_objects">Denominación del requerimiento</label>
                     <select2 :options="purchase_supplier_objects" id="purchase_supplier_objects" v-model='record.purchase_supplier_object_id'></select2>
@@ -68,8 +74,20 @@
             </div>
             <div class="col-3">
                 <div class="form-group is-required">
-                    <label for="description">Denominación especifica del requerimiento</label>
+                    <label for="description">Descripción de contratación</label>
                     <input type="text" id="description" v-model="record.description" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="supplier_rnc">Número de certificado (RNC)</label>
+                    <p>
+                        {{
+                            supplier.rnc_certificate_number 
+                            ? supplier.rnc_status+' - '+supplier.rnc_certificate_number
+                            : 'No definido'
+                        }}
+                    </p>
                 </div>
             </div>
             <div class="col-12">
@@ -197,6 +215,14 @@ export default {
                 purchase_supplier_object: '',
                 currency: null,
             },
+            // variables para proveedor
+            purchase_supplier_id: '',
+            supplier: {
+                address: '',
+                rnc: ''
+            },
+            // .variables para proveedor
+
             fiscalYear: null,
             institutions: [{ id: '', text: 'Seleccione...' }],
             departments: [],
@@ -216,7 +242,6 @@ export default {
             tax_value: 0,
             total: 0,
             currency_id: '',
-            purchase_supplier_id: '',
             convertion_list: [],
             load_data_edit: false,
             files: {
@@ -550,12 +575,15 @@ export default {
                 })
             }
         },
-        purchase_supplier_id: function(res) {
-            if (res) {
-                axios.get('/purchase/get-purchase-supplier-object/' + res).then(response => {
+        purchase_supplier_id(newVal) {
+            if (newVal) {
+                axios.get('/purchase/get-purchase-supplier-object/' + newVal).then(response => {
                     this.record.purchase_supplier_object = response.data;
-                    this.record.purchase_supplier_id = res;
-                })
+                    this.record.purchase_supplier_id = newVal;
+                });
+                axios.get('/purchase/suppliers/' + newVal).then(response => {
+                    this.supplier = response.data.records;
+                });
             }
         },
     },
