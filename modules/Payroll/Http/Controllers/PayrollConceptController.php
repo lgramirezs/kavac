@@ -78,7 +78,7 @@ class PayrollConceptController extends Controller
                 'id'    => 'all',
                 'name'  => 'Todos los trabajadores',
                 'model' => 'Modules\Payroll\Models\PayrollStaff',
-                'type'  => 'list'
+                'type'  => ''
             ],
             [
                 'id'    => 'all_active_staff',

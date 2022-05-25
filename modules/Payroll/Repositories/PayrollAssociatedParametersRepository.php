@@ -26,6 +26,12 @@ class PayrollAssociatedParametersRepository
      */
     protected $associatedWorkerFile;
 
+    /**
+     * Arreglo con los registros asociados a la configuración de prestaciones sociales
+     * @var Array $associatedBenefit
+     */
+    protected $associatedBenefit;
+
     public function __construct()
     {
         /** Define los campos de la configuración de vacaciones a emplear en el formulario */
@@ -212,6 +218,34 @@ class PayrollAssociatedParametersRepository
                         'required' => ['payroll_contract_type_id']
                     ]
                 ]
+            ]
+        ];
+
+        /** Define los campos de la configuración de prestaciones sociales a emplear en el formulario */
+        $this->associatedBenefit = [
+            [
+                'id'       => 'BENEFIT_DAYS',
+                'name'     => 'Días a cancelar por garantías de prestaciones sociales',
+                'model'    => 'Modules\Payroll\Models\PayrollBenefitsPolicy',
+                'required' => ['benefit_days'],
+            ],
+            [
+                'id'       => 'ADDITIONAL_DAYS_PER_YEAR',
+                'name'     => 'Días de disfrute adicionales por año de servicio',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['additional_days_per_year'],
+            ],
+            [
+                'id'       => 'WORK_INTERRUPTION_DAYS',
+                'name'     => 'Días a cancelar por interrupción de relación laboral',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['work_interruption_days'],
+            ],
+            [
+                'id'       => 'MONTH_WORKED_DAYS',
+                'name'     => 'Días a cancelar por mes trabajado',
+                'model'    => 'Modules\Payroll\Models\PayrollVacationPolicy',
+                'required' => ['month_worked_days'],
             ]
         ];
     }
