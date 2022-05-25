@@ -229,6 +229,41 @@ class FinanceRoleAndPermissionsTableSeeder extends Seeder
                 'slug_alt' => 'orden_pago.eliminar',
                 'short_description' => 'eliminar órden de pago'
             ],
+            [
+                'name' => 'Crear un movimiento bancario', 'slug' => 'finance.movements.create',
+                'description' => 'Acceso para crear un movimiento bancario',
+                'model' => '',
+                'model_prefix' => 'finanzas',
+                'slug_alt' => 'movimiento_bancario.crear',
+                'short_description' => 'agregar un movimiento bancario'
+            ],
+            [
+                'name' => 'Editar un movimiento bancario',
+                'slug' => 'finance.movements.edit',
+                'description' => 'Acceso para editar un movimiento bancario',
+                'model' => '',
+                'model_prefix' => 'finanzas',
+                'slug_alt' => 'movimiento_bancario.editar',
+                'short_description' => 'editar un movimiento bancario'
+            ],
+            [
+                'name' => 'Ver movimientos bancario',
+                'slug' => 'finance.movements.list',
+                'description' => 'Acceso para ver los movimientos bancario',
+                'model' => '',
+                'model_prefix' => 'finanzas',
+                'slug_alt' => 'movimiento_bancario.ver',
+                'short_description' => 'ver los movimientos bancario'
+            ],
+            [
+                'name' => 'Eliminar un movimiento bancario',
+                'slug' => 'finance.movements.delete',
+                'description' => 'Acceso para eliminar un movimiento bancario',
+                'model' => '',
+                'model_prefix' => 'finanzas',
+                'slug_alt' => 'movimiento_bancario.eliminar',
+                'short_description' => 'eliminar un movimiento bancario'
+            ],
 
             /**
             * Configuraciones de los archivos de conciliación bancaria.

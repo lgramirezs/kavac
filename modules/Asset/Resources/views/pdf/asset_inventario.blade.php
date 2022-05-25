@@ -10,7 +10,7 @@
                 <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Serial</th>
                 <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Marca</th>
                 <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Modelo</th>
-                <th width="20%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificación</th>
+                <th width="20%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificaciones</th>
             </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@
                     <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Serial</th>
                     <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Marca</th>
                     <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Modelo</th>
-                    <th width="20%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificación</th>
+                    <th width="20%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificaciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,7 +146,7 @@
                     <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Marca</th>
                     <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Modelo</th>
                     <th width="20%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Motivo de desincorporación</th>
-                    <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificación</th>
+                    <th width="10%" style="font-size:9rem; background-color: #BDBDBD;" align="center">Especificaciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -162,7 +162,7 @@
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
                             </td>
-                            <td width="10%" style="font-size:9rem;" align="center">
+                            <td width="20%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">

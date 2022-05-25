@@ -28,6 +28,20 @@ class FinanceMovementsController extends Controller
     use ValidatesRequests;
 
     /**
+     * Define la configuración de la clase
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:finance.movements.list', ['only' => ['index', 'vueList']]);
+        $this->middleware('permission:finance.movements.create', ['only' => 'store']);
+        $this->middleware('permission:finance.movements.edit', ['only' => ['create', 'update']]);
+        $this->middleware('permission:finance.movements.delete', ['only' => 'destroy']);
+    }
+
+    /**
      * Muestra la plantilla del módulo Finanzas > Banco > Movimientos.
      *
      * @method index
@@ -39,7 +53,21 @@ class FinanceMovementsController extends Controller
      */
     public function index()
     {
-        return view('finance::movements.index');
+        return view('finance::movements.list');
+    }
+
+    /**
+     * Muestra el formulario de registro de movimientos bancarios
+     *
+     * @method    create
+     *
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
+     *
+     * @return    Renderable    Vista con el formulario
+     */
+    public function create()
+    {
+        return view('finance::movements.create');
     }
 
     public function store(Request $request)

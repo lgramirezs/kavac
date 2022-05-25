@@ -121,6 +121,36 @@ Vue.component('finance-payment-execute', () => import(
 ));
 
 /**
+ * Componente para la creación de movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-create', () => import(
+    /* webpackChunkName: "finance-bank-movements-create" */
+    './components/bank/movements/FinanceBankMovementCreateComponent.vue'
+));
+
+/**
+ * Componente para listar los movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-list', () => import(
+    /* webpackChunkName: "finance-bank-movements-list" */
+    './components/bank/movements/FinanceBankMovementListComponent.vue'
+));
+
+/**
+ * Componente para detallar la información de los movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-info', () => import(
+    /* webpackChunkName: "finance-bank-movements-info" */
+    './components/bank/movements/FinanceBankMovementInfoComponent.vue'
+));
+
+/**
  * Opciones de configuración global del módulo de finanzas
  *
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
