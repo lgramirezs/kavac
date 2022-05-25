@@ -238,9 +238,17 @@
 									) !!}
 								</div>
 							</div>
+								<div class="col-md-4">
+								<div class="form-group is-required">
+									{!! Form::label('institution_sector_id', __('Sectores Economicos'), []) !!}
+									{!! Form::select('institution_sector_id', (isset($sectors))?$sectors:[], null, [
+										'class' => 'form-control select2', 'id' => 'institution_sector_id'
+									]) !!}
+								</div>
+							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4">
+							<!-- <div class="col-md-4">
 								<div class="form-group">
 									{!! Form::label('organism_adscript_id', __('Adscrito a'), []) !!}
 									{!! Form::select(
@@ -250,18 +258,11 @@
 										]
 									) !!}
 								</div>
-							</div>
+							</div> -->
+						
 							<div class="col-md-4">
 								<div class="form-group is-required">
-									{!! Form::label('institution_sector_id', __('Sector'), []) !!}
-									{!! Form::select('institution_sector_id', (isset($sectors))?$sectors:[], null, [
-										'class' => 'form-control select2', 'id' => 'institution_sector_id'
-									]) !!}
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group is-required">
-									{!! Form::label('institution_type_id', __('Tipo'), []) !!}
+									{!! Form::label('institution_type_id', __('Tipo de organizacion'), []) !!}
 									{!! Form::select('institution_type_id', (isset($types))?$types:[], null, [
 										'class' => 'form-control select2', 'id' => 'institution_type_id'
 									]) !!}
@@ -674,29 +675,28 @@
                                         disabled="true" id="modal-start_operations_date">
 
 					</div>
-					<div class="col-4">
-					</div>
-				</div>
-                <hr>
-                <div class="row justify-content-center">
-					<div class="col-4">
-                        <span class="font-weight-bold">Adscrito a</span>
-                        <br>
-						<input type="text" data-toggle="tooltip"
-                                        class="form-control input-sm"
-                                        disabled="true" id="modal-organism_adscript_id">
-                   
-					</div>
-					<div class="col-4">
-                        <span class="font-weight-bold">Sector</span>
+								<div class="col-4">
+                        <span class="font-weight-bold">Sectores Economicos</span>
                         <br>
 						<input type="text" data-toggle="tooltip"
                                         class="form-control input-sm"
                                         disabled="true" id="modal-institution_sector_id">
                      
 					</div>
+				</div>
+                <hr>
+                <div class="row ">
+					<!-- <div class="col-4">
+                        <span class="font-weight-bold">Adscrito a</span>
+                        <br>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-organism_adscript_id">
+                   
+					</div> -->
+	
 					<div class="col-4">
-                        <span class="font-weight-bold">Tipo</span>
+                        <span class="font-weight-bold">Tipo de Organizacion</span>
                         <br>
 						<input type="text" data-toggle="tooltip"
                                         class="form-control input-sm"
