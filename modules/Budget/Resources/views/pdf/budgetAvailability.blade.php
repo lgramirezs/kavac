@@ -17,7 +17,6 @@
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="0">
-    {{-- {{ dd($records) }} --}}
     @foreach ($records as $budgetAccounts)
         @if (count($budgetAccounts[0]) < 0)
             @php

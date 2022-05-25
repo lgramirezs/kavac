@@ -78,7 +78,7 @@ class ReportRepository implements ReportInterface
      */
     public function setConfig($params = [])
     {
-        $this->reportDate = \Carbon\Carbon::now();
+        $this->reportDate = \Carbon\Carbon::now()->format('d-m-Y');
         $this->orientation = $params['orientation'] ?? 'P';
         $this->units = $params['units'] ?? 'mm';
         $this->format = $params['format'] ?? 'LETTER';

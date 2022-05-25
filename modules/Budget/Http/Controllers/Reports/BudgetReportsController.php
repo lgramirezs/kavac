@@ -16,6 +16,7 @@ use Modules\Budget\Models\Institution;
 use App\Models\FiscalYear;
 use Modules\Budget\Models\Currency;
 use App\Repositories\ReportRepository;
+use Carbon\Carbon;
 
 /**
  * @class BudgetAccountOpenController
@@ -132,7 +133,6 @@ class BudgetReportsController extends Controller
      * 
      * @return    Array Arreglo ordenado de cuentas presupuestarias formuladas
      */
-    // public function getBudgetAccountsOpen(bool $accountsWithMovements, array $specific_action_ids)
     public function getBudgetAccountsOpen(bool $accountsWithMovements, object $project)
     {
         $project_accounts_open = array();
@@ -165,7 +165,6 @@ class BudgetReportsController extends Controller
             );
         }
 
-        // dd($project_accounts_open);
         foreach ($project_accounts_open as $budgetItem) {
 
             usort($budgetItem[0], function ($budgetItemOne, $budgetItemTwo) {
@@ -289,10 +288,9 @@ class BudgetReportsController extends Controller
             'institution' => $institution,
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
-            "report_date" => $now = \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => $data['initialDate'],
-            'finalDate' => $data['finalDate'],
-            'project_code' => $project->code,
+            "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
         ]);
     }
 
@@ -366,9 +364,8 @@ class BudgetReportsController extends Controller
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
             "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => $data['initialDate'],
-            'finalDate' => $data['finalDate'],
-            'project_code' => $project->code,
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
         ]);
     }
 
