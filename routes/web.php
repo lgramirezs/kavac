@@ -215,8 +215,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('parishes', 'ParishController', ['except' => ['create', 'show', 'edit']]);
 
     /** Rutas para la gestión de Impuestos */
+    Route::get('get-last-history-tax/{tax_id}', 'TaxController@getLastHistoryTax');
     Route::resource('taxes', 'TaxController', ['except' => ['create', 'show', 'edit']]);
     Route::get('get-taxes', 'TaxController@getAll')->name('taxes.get-all');
+    Route::get('get-taxes-vue-select', 'TaxController@getTaxesVueSelect');
 
     /** Rutas para la gestión de Unidades Tributarias */
     Route::resource('tax-units', 'TaxUnitController', ['except' => ['create', 'show', 'edit']]);
