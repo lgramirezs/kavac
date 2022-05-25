@@ -142,9 +142,10 @@ class BudgetReportsController extends Controller
             $accounts_open = $specificAction->subSpecificFormulations[0]->accountOpens->all();
 
             foreach ($accounts_open as $account) {
-                $account['asigned_percentage'] = round($account->total_year_amount / $specificAction->subSpecificFormulations[0]->total_formulated, 2);
+                $account['asigned_percentage'] = round(($account->total_year_amount * 100) / $specificAction->subSpecificFormulations[0]->total_formulated, 2);
 
-                $currentMonth = date('n') - 1;
+                // $currentMonth = date('n') - 1;
+                $currentMonth = 0;
                 $amountAvailable = 0;
 
                 for ($i = $currentMonth; $i < 12; $i++) {
