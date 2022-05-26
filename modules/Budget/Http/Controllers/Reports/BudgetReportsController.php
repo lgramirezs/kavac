@@ -230,7 +230,7 @@ class BudgetReportsController extends Controller
      */
     public function getPdf(Request $request)
     {
-        
+
         $data = $request->validate([
             'initialDate' => 'required',
             'finalDate' => 'required',
@@ -289,8 +289,8 @@ class BudgetReportsController extends Controller
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
             "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
-            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
         ]);
     }
 
@@ -308,18 +308,20 @@ class BudgetReportsController extends Controller
         $data = $request->toArray();
         $data["projects_ids"] = json_decode('[' . $data["projects_ids"] . ']', true);
         $data["centralized_actions_ids"] = json_decode('[' . $data["centralized_actions_ids"] . ']', true);
+        $projects_ids = $data["projects_ids"];
+        $centralized_ids = $data["centralized_actions_ids"];
 
         $projects = BudgetProject::with(['specificActions' => function ($query) {
             $query->with(['subSpecificFormulations' => function ($query) {
                 $query->with('accountOpens')->whereHas('accountOpens');
             }])->get();
-        }])->find($data["projects_ids"]);
+        }])->whereIn('id', $projects_ids)->get();
 
         $centrilized_actions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
             $query->with(['subSpecificFormulations' => function ($query) {
                 $query->with('accountOpens')->whereHas('accountOpens');
             }])->get();
-        }])->find($data["centralized_actions_ids"]);
+        }])->whereIn('id', $centralized_ids)->get();
 
         $projects_accounts = array();
         foreach ($projects as $project) {
@@ -364,8 +366,8 @@ class BudgetReportsController extends Controller
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
             "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
-            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d' ,$data['initialDate'])->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
         ]);
     }
 
