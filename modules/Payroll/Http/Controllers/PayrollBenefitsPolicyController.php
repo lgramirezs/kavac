@@ -85,7 +85,7 @@ class PayrollBenefitsPolicyController extends Controller
                                                            'de prestaciones es obligatorio.',
             'number_advances_per_year.required'         => 'El campo número de anticipos permitidos por año ' .
                                                            'es obligatorio.',
-            'salary_type.required'                      => 'El campo salario a emplear para el cálculo de las' .
+            // 'salary_type.required'                      => 'El campo salario a emplear para el cálculo de las' .
                                                            'prestaciones sociales es obligatorio.',
             'payroll_payment_type_id.required'          => 'El campo tipo de pago de nómina es obligatorio.'
         ];
@@ -135,7 +135,7 @@ class PayrollBenefitsPolicyController extends Controller
                 [
                     'maximum_advance_percentage' => ['required'],
                     'number_advances_per_year'   => ['required'],
-                    'salary_type'                => ['required'],
+                    // 'salary_type'                => ['required'],
                     'payroll_payment_type_id'    => ['required']
                 ]
             );
@@ -143,7 +143,7 @@ class PayrollBenefitsPolicyController extends Controller
             $validateRules  = array_merge(
                 $validateRules,
                 [
-                    'salary_type'                => ['required'],
+                    // 'salary_type'                => ['required'],
                     'payroll_payment_type_id'    => ['required']
                 ]
             );
@@ -185,7 +185,7 @@ class PayrollBenefitsPolicyController extends Controller
                                                     : false,
             'maximum_advance_percentage'       => $request->input('maximum_advance_percentage'),
             'number_advances_per_year'         => $request->input('number_advances_per_year'),
-            'salary_type'                      => $request->input('salary_type'),
+            // 'salary_type'                      => $request->input('salary_type'),
             'institution_id'                   => $request->input('institution_id'),
             'payroll_payment_type_id'          => $request->input('payroll_payment_type_id')
         ]);
@@ -235,7 +235,7 @@ class PayrollBenefitsPolicyController extends Controller
                 [
                     'maximum_advance_percentage' => ['required'],
                     'number_advances_per_year'   => ['required'],
-                    'salary_type'                => ['required'],
+                    // 'salary_type'                => ['required'],
                     'payroll_payment_type_id'    => ['required']
                 ]
             );
@@ -243,7 +243,7 @@ class PayrollBenefitsPolicyController extends Controller
             $validateRules  = array_merge(
                 $validateRules,
                 [
-                    'salary_type'                => ['required'],
+                    // 'salary_type'                => ['required'],
                     'payroll_payment_type_id'    => ['required']
                 ]
             );
@@ -280,7 +280,7 @@ class PayrollBenefitsPolicyController extends Controller
                                                     : false,
             'maximum_advance_percentage'       => $request->input('maximum_advance_percentage'),
             'number_advances_per_year'         => $request->input('number_advances_per_year'),
-            'salary_type'                      => $request->input('salary_type'),
+            // 'salary_type'                      => $request->input('salary_type'),
             'institution_id'                   => $request->input('institution_id'),
             'payroll_payment_type_id'          => $request->input('payroll_payment_type_id')
         ]);
