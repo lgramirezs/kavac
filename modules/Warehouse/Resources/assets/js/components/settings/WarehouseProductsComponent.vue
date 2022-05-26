@@ -261,7 +261,8 @@
             },
             exportData() {
                 //instrucciones para exportar registros
-                location.href = '/warehouse/products/export/all';
+                location.href = `${window.app_url}/warehouse/products/export/all`;
+                //location.href = '/warehouse/products/export/all';
             },
             importData() {
                 //instrucciones para exportar registros
