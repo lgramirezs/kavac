@@ -311,17 +311,47 @@ class BudgetReportsController extends Controller
         $projects_ids = $data["projects_ids"];
         $centralized_ids = $data["centralized_actions_ids"];
 
+        // 
+        // $entity = $request->input('is_project')
+        //     ? BudgetProject::class
+        //     : BudgetCentralizedAction::class;
+        
+        // $entity = BudgetProject::class;
+
+        // $query = BudgetSubSpecificFormulation::query();
+
+        // $query = $query->whereHas('specificAction', function ($query) use ($entity, $projects_ids) {
+        //     $query->whereHasMorph('specificable', [BudgetProject::class], function ($query) use ($entity, $projects_ids) {
+        //         return $query->whereIn('specificable_id', $projects_ids)
+        //             ->where('specificable_type', $entity);
+        //     });
+        // })->with('accountOpens')->where('assigned', true);
+
+
+        // dd($query->get());
         $projects = BudgetProject::with(['specificActions' => function ($query) {
-            $query->with(['subSpecificFormulations' => function ($query) {
-                $query->with('accountOpens')->whereHas('accountOpens');
-            }])->get();
-        }])->whereIn('id', $projects_ids)->get();
+            $query->with('subSpecificFormulations')->whereHas('subSpecificFormulations', function ($query) {
+                $query->with('accountOpens')->whereHas('accountOpens')->where('assigned', true);
+            });
+        }])->whereIn('id', $data["projects_ids"])->get();
+
+        // dd($projects);
+
+
+        // $centrilized_actions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
+        //     $query->with(['subSpecificFormulations' => function ($query) {
+        //         $query->with('accountOpens')->whereHas('accountOpens')->where('assigned', true)->get();
+        //     }])->whereHas('subSpecificFormulations');
+        // }])->whereIn('id', $data["centralized_actions_ids"])->get();
 
         $centrilized_actions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
-            $query->with(['subSpecificFormulations' => function ($query) {
-                $query->with('accountOpens')->whereHas('accountOpens');
-            }])->get();
-        }])->whereIn('id', $centralized_ids)->get();
+            $query->with('subSpecificFormulations')->whereHas('subSpecificFormulations', function ($query) {
+                $query->with('accountOpens')->whereHas('accountOpens')->where('assigned', true);
+            });
+        }])->whereIn('id', $data["centralized_actions_ids"])->get();
+
+
+        // dd($projects, $centrilized_actions);
 
         $projects_accounts = array();
         foreach ($projects as $project) {
@@ -332,6 +362,8 @@ class BudgetReportsController extends Controller
         foreach ($centrilized_actions as $centrilized_action) {
             array_push($centrilized_actions_accounts, $this->getBudgetAccountsOpen($data['accountsWithMovements'], $centrilized_action));
         }
+
+        // dd($projects_accounts, $centrilized_actions_accounts);
 
         $records = array();
 
