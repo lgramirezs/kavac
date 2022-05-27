@@ -96,20 +96,23 @@
             <div class="col-12">
                 <h6 class="card-title">Lista de documentos requeridos</h6>
             </div>
-            <div class="col-12">
+            <div class="col-6" v-for="(file, idx) in files" :key="idx">
                 <ul class="feature-list list-group list-group-flush">
-                    <li class="list-group-item" v-for="(file, idx) in files" :key="idx">
+                    <li class="list-group-item">
                         <div class="feature-list-indicator bg-info">
-                            <label style="margin-left: 2rem;">
-                                {{ idx.replace(/_/g, ' ') }}
+                            <label style="margin-left: 2rem; width: 5rem;">
+                                {{ traslate_name_files[idx] }}
                             </label>
                         </div>
-                        <div class="feature-list-content p-0" style="margin-left: 6rem;">
+                        <div class="feature-list-content p-0" style="margin-left: 8rem;">
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-success btn-import" 
-                                            title="Presione para subir el archivo." @click="setFile(idx)">
+                                        <button type="button" 
+                                            data-toggle="tooltip" 
+                                            v-has-tooltip class="btn btn-sm btn-info btn-import" 
+                                            title="Presione para subir el archivo." 
+                                            @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
                                         <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
@@ -125,7 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="feature-list-subheading" :id="'status_'+idx" style="display:none;">
-                                        <span class="badge badge-success">
+                                        <span class="badge badge-info">
                                             <strong>Documento Cargado.</strong>
                                         </span>
                                     </div>
@@ -138,6 +141,115 @@
             <div class="col-12">
                 <hr>
             </div>
+            <div class="col-12 row">
+                <div class="col-12">
+                    <h6 class="card-title">Formas de pago</h6>
+                </div>
+                <div class="col-3">
+                    <label for="pay_order">Orden de pago </label>
+                    <input type="radio" id="pay_order" value="pay_order" v-model="record.payment_methods">
+                </div>
+                <div class="col-2">
+                    <label for="direct">Directa </label>
+                    <input type="radio" id="direct" value="direct" v-model="record.payment_methods">
+                </div>
+                <div class="col-2">
+                    <label for="credit">Crédito </label>
+                    <input type="radio" id="credit" value="credit" v-model="record.payment_methods">
+                </div>
+                <div class="col-2">
+                    <label for="advance">Avances </label>
+                    <input type="radio" id="advance" value="advance" v-model="record.payment_methods">
+                </div>
+                <div class="col-2">
+                    <label for="others">Otras </label>
+                    <input type="radio" id="others" value="others" v-model="record.payment_methods">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <br>
+                <hr>
+            </div>
+
+            <div class="col-12 row">
+                <div class="col-12">
+                    <h6 class="card-title">Factura</h6>
+                </div>
+                <div class="col-4">
+                    <div class="form-group is-required">
+                        <label for="receiver_invoice_to">Facturar a</label>
+                        <input type="text" id="receiver_invoice_to" v-model="record.receiver.invoice_to" class="form-control">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group is-required">
+                        <label for="receiver_send_to">Enviar a</label>
+                        <input type="text" id="receiver_send_to" v-model="record.receiver.send_to" class="form-control">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group is-required">
+                        <label for="receiver_rif">RIF</label>
+                        <input type="text" id="receiver_rif" v-model="record.receiver.rif" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de requerimientos -->
+            <div class="col-12">
+                <br>
+                <hr>
+                <label><strong>NOTA</strong> Solo se podran seleccionar presupuestos base con un impuesto asignado</label>
+            </div>
+
+            <div class="col-12">
+                <v-client-table :columns="columns" :data="requirements" :options="table_options">
+                    <div slot="requirement_status" slot-scope="props" class="text-center">
+                        <div class="d-inline-flex">
+                            <span class="badge badge-info" v-show="props.row.requirement_status == 'PROCESSED'">
+                                <strong>PROCESADO</strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div slot="purchase_base_budget.tax.name" slot-scope="props" class="text-center">
+                        {{ 
+                            props.row.purchase_base_budget.tax 
+                            ? (props.row.purchase_base_budget.tax.name+' '+
+                                props.row.purchase_base_budget.tax.histories[props.row.purchase_base_budget.tax.histories.length-1].percentage)+'%'
+                            : 'No definido' 
+                        }}
+                    </div>
+                    <div slot="id" slot-scope="props" class="text-center">
+                        <div class="feature-list-content-left mr-2" v-if="record.currency && props.row.purchase_base_budget.tax">
+                            <label class="custom-control custom-checkbox">
+                                <p-check class="p-icon p-smooth p-plain p-curve" 
+                                    color="primary-o" 
+                                    :value="'_'+props.row.id" 
+                                    :id="'requirement_check_'+props.row.id" 
+                                    :checked="indexOf(requirement_list, props.row.id, true)" 
+                                    @change="requirementCheck(props.row)">
+                                    <i slot="extra" class="icon fa fa-check"></i>
+                                </p-check>
+                            </label>
+                        </div>
+                    </div>
+                </v-client-table>
+            </div>
+            <!-- ./Tabla de requerimientos -->
+
+            <!-- Tabla de productos -->
+            <div class="col-12">
+                <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
+                    <div slot="unit_price" slot-scope="props">
+                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
+                    </div>
+                    <div slot="qty_price" slot-scope="props">
+                        <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
+                    </div>
+                </v-client-table>
+            </div>
+            <!-- ./Tabla de productos -->
         </div>
         <div class="card-footer text-right">
             <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
@@ -214,6 +326,15 @@ export default {
                 purchase_supplier_id: '',
                 purchase_supplier_object: '',
                 currency: null,
+
+                contract_number: '',
+                delivery_time: '',
+                payment_methods: 'pay_order',
+                receiver: {
+                    invoice_to: '',
+                    send_to: '',
+                    rif: '',
+                }
             },
             // variables para proveedor
             purchase_supplier_id: '',
@@ -227,15 +348,6 @@ export default {
             institutions: [{ id: '', text: 'Seleccione...' }],
             departments: [],
             record_items: [],
-            columns: ['code',
-                'description',
-                'fiscal_year.year',
-                'contrating_department.name',
-                'user_department.name',
-                'purchase_supplier_type.name',
-                'purchase_base_budget.currency.name',
-                'id'
-            ],
             requirement_list: [],
             requirement_list_deleted: [],
             sub_total: 0,
@@ -245,43 +357,115 @@ export default {
             convertion_list: [],
             load_data_edit: false,
             files: {
-                'disponibilidad_presupuestaria': null,
+                'start_minutes': null,
+                'company_invitation': null,
+                'certificate_receipt_of_offer': null,
+                'motivatedact': null,
+                'budget_availability': null,
+            },
+            traslate_name_files: {
+                'start_minutes': 'Acta de inicio',
+                'company_invitation': 'Invitación de la empresa',
+                'certificate_receipt_of_offer': 'Acta de recepción de la oferta',
+                'motivatedact': 'Acto motivado',
+                'budget_availability': 'Disponibilidad presupuestaria',
+            },
+
+            columns: [
+                'code',
+                'description',
+                'fiscal_year.year',
+                'contrating_department.name',
+                'user_department.name',
+                'purchase_base_budget.currency.name',
+                'purchase_base_budget.tax.name',
+                'id'
+            ],
+            columns2: ['requirement_code',
+                'name',
+                'quantity',
+                'measurement_unit.acronym',
+                'unit_price',
+                'qty_price',
+            ],
+            table2_options: {
+                pagination: { edge: true },
+                //filterByColumn: true,
+                highlightMatches: true,
+                texts: {
+                    filter: "Buscar:",
+                    filterBy: 'Buscar por {column}',
+                    //count:'Página {page}',
+                    count: ' ',
+                    first: 'PRIMERO',
+                    last: 'ÚLTIMO',
+                    limit: 'Registros',
+                    //page: 'Página:',
+                    noResults: 'No existen registros',
+                },
+                sortIcon: {
+                    is: 'fa-sort cursor-pointer',
+                    base: 'fa',
+                    up: 'fa-sort-up cursor-pointer',
+                    down: 'fa-sort-down cursor-pointer'
+                },
             },
         }
     },
     created() {
         const vm = this;
-        vm.table_options.headings = {
+        this.table_options.headings = {
             'code': 'Código',
             'description': 'Descripción',
             'fiscal_year.year': 'Año fiscal',
             'contrating_department.name': 'Departamento contatante',
             'user_department.name': 'Departamento Usuario',
-            'purchase_supplier_type.name': 'Tipo de Proveedor',
             'purchase_base_budget.currency.name': 'Moneda',
+            'purchase_base_budget.tax.name': 'Impuesto',
             'id': 'Acción'
         };
 
-        vm.table_options.columnsClasses = {
+        this.table_options.columnsClasses = {
             'code': 'col-xs-1 text-center',
             'description': 'col-xs-2',
             'fiscal_year.year': 'col-xs-1 text-center',
             'contrating_department.name': 'col-xs-2',
             'user_department.name': 'col-xs-2',
-            'purchase_supplier_type.name': 'col-xs-2',
             'purchase_base_budget.currency.name': 'col-xs-1',
+            'purchase_base_budget.tax.name' :'col-xs-1',
             'id': 'col-xs-1'
         };
 
+        this.table2_options.headings = {
+            'requirement_code': 'Código de requerimiento',
+            'name': 'Nombre',
+            'quantity': 'Cantidad',
+            'measurement_unit.acronym': 'Unidad de medida',
+            'unit_price': 'Precio unitario sin IVA',
+            'qty_price': 'Cantidad * precio unitario',
+        };
+
+        this.table2_options.columnsClasses = {
+            'requirement_code': 'col-xs-1 text-center',
+            'name': 'col-xs-3',
+            'quantity': 'col-xs-1',
+            'measurement_unit.acronym': 'col-xs-2',
+            'unit_price': 'col-xs-2',
+            'qty_price': 'col-xs-2',
+        };
+
+        this.table2_options.filterable = [];
+
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
-            // console.log(response.data.institutions)
         });
+        vm.reset();
     },
     mounted() {
         const vm = this;
 
         vm.records = vm.requirements;
+
         if (vm.record_edit) {
             vm.load_data_edit = true;
             vm.currency_id = vm.record_edit.currency_id;
@@ -308,8 +492,27 @@ export default {
             this.requirement_list = [];
             this.requirement_list_deleted = [];
             this.record = {
+                institution_id: '',
+                contracting_department_id: '',
+                user_department_id: '',
+                warehouse_id: '',
+                purchase_supplier_object_id: '',
+                funding_source:'',
+                description: '',
+                fiscal_year_id: '',
+                products: [],
                 purchase_supplier_id: '',
-                currency: '',
+                purchase_supplier_object: '',
+                currency: null,
+
+                contract_number: '',
+                delivery_time: '',
+                payment_methods: 'pay_order',
+                receiver: {
+                    invoice_to: '',
+                    send_to: '',
+                    rif: '',
+                }
             };
             this.sub_total = 0;
             this.tax_value = 0;
@@ -356,9 +559,9 @@ export default {
                         if ($('#requirement_check_' + record.id + ' input:checkbox').prop('checked')) {
                             this.showMessage(
                                 'custom', 'Error', 'danger', 'screen-error',
-                                "Imposible realizar la conversión de " + this.record.currency.name +
+                                "No se puede realizar la conversión de " + this.record.currency.name +
                                 " a " + record.purchase_base_budget.currency.name +
-                                ". Revisar conversiones configuradas en el sistema."
+                                " ya que no existe una tasa asignada. Revisar las conversiones configuradas en el sistema."
                             );
                             $('#requirement_check_' + record.id + ' input:checkbox').prop('checked', false);
                         }
@@ -456,8 +659,30 @@ export default {
             let vm = this;
             var formData = new FormData();
 
-            var inputFile = document.querySelector('#disponibilidad_presupuestaria');
-            formData.append("disponibilidad_presupuestaria", inputFile.files[0]);
+            /**
+             * Agrega los archivos a formData
+             */
+            for (const key in vm.files) {
+                if (Object.hasOwnProperty.call(vm.files, key)) {
+                    var inputFile = document.querySelector('#'+key);
+                    formData.append(key, inputFile.files[0]);
+                }
+            }
+
+            // var inputFile = document.querySelector('#start_minutes');
+            // formData.append("start_minutes", inputFile.files[0]);
+
+            // inputFile = document.querySelector('#company_invitation');
+            // formData.append("company_invitation", inputFile.files[0]);
+
+            // inputFile = document.querySelector('#certificate_receipt_of_offer');
+            // formData.append("certificate_receipt_of_offer", inputFile.files[0]);
+
+            // inputFile = document.querySelector('#motivatedact');
+            // formData.append("motivatedact", inputFile.files[0]);
+            
+            // inputFile = document.querySelector('#budget_availability');
+            // formData.append("budget_availability", inputFile.files[0]);
 
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);

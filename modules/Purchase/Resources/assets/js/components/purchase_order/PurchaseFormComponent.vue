@@ -205,7 +205,8 @@ export default {
                 currency: null,
             },
             record_items: [],
-            columns: ['code',
+            columns: [
+                'code',
                 'description',
                 'fiscal_year.year',
                 'contrating_department.name',
@@ -214,7 +215,8 @@ export default {
                 'purchase_base_budget.currency.name',
                 'id'
             ],
-            columns2: ['requirement_code',
+            columns2: [
+                'requirement_code',
                 'name',
                 'quantity',
                 'measurement_unit.acronym',
