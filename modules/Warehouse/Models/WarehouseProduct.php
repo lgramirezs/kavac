@@ -35,7 +35,7 @@ class WarehouseProduct extends Model implements Auditable
      *
      * @var array $fillable
      */
-    protected $fillable = ['name', 'description', 'define_attributes', 'measurement_unit_id'];
+    protected $fillable = ['name', 'description', 'define_attributes', 'measurement_unit_id', 'budget_account_id'];
 
     /**
      * Método que obtiene los atributos personalizados de un producto
@@ -59,5 +59,18 @@ class WarehouseProduct extends Model implements Auditable
     public function measurementUnit()
     {
         return $this->belongsTo(\App\Models\MeasurementUnit::class);
+    }
+
+    /**
+     * Método que obtiene la información de la cuenta presupuestaria asociada al insumo
+     *
+     * @author    Yennifer Ramirez <yramirez@cenditel.gob.ve>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function budgetAccount()
+    {
+        return (Module::has('Budget'))
+               ? $this->belongsTo(\Modules\Budget\Models\BudgetAccount::class) : null;
     }
 }

@@ -106,7 +106,8 @@ class PurchaseDirectHireController extends Controller
             'contratingDepartment',
             'userDepartment',
             'purchaseRequirementItems.warehouseProduct.measurementUnit',
-            'purchaseBaseBudget.currency'
+            'purchaseBaseBudget.currency',
+            'purchaseBaseBudget.tax.histories',
         )->where('requirement_status', 'PROCESSED')
         ->orderBy('id', 'ASC')->get();
 

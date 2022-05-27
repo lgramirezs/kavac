@@ -25,8 +25,10 @@ class UpdateTaxIdFieldToBudgetCompromiseDetailsTable extends Migration
     public function up()
     {
         Schema::table('budget_compromise_details', function (Blueprint $table) {
-            if (Schema::hasColumn('budget_compromise_details', 'tax_id')) {
-                $table->bigInteger('tax_id')->nullable()->change();
+		if (Schema::hasColumn('budget_compromise_details', 'tax_id')) {
+			$table->dropForeign(['tax_id']);
+			$table->bigInteger('tax_id')->nullable()->change();
+			$table->foreign('tax_id')->references('id')->on('taxes')->onDelete('restrict')->onUpdate('cascade');
             }
         });
     }
@@ -39,8 +41,10 @@ class UpdateTaxIdFieldToBudgetCompromiseDetailsTable extends Migration
     public function down()
     {
         Schema::table('budget_compromise_details', function (Blueprint $table) {
-            if (Schema::hasColumn('budget_compromise_details', 'tax_id')) {
-                $table->bigInteger('tax_id')->change();
+		if (Schema::hasColumn('budget_compromise_details', 'tax_id')) {
+			$table->dropForeign(['tax_id']);
+			$table->bigInteger('tax_id')->change();
+			$table->foreign('tax_id')->references('id')->on('taxes')->onDelete('restrict')->onUpdate('cascade');
             }
         });
     }
