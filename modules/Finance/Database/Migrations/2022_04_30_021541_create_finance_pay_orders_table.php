@@ -26,6 +26,7 @@ class CreateFinancePayOrdersTable extends Migration
      */
     public function up()
     {
+	    if (!Schema::hasTable('finance_pay_orders')) {
         Schema::create('finance_pay_orders', function (Blueprint $table) {
             $table->id();
             
@@ -61,7 +62,8 @@ class CreateFinancePayOrdersTable extends Migration
             $table->nullableMorphs('document_sourceable');
             /** Relación al proveedor o beneficiario de la órden de pago */
             $table->nullableMorphs('name_sourceable');
-        });
+	});
+	    }
     }
 
     /**
