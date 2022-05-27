@@ -332,7 +332,7 @@ class AssetController extends Controller
                     ])->orderBy('id');
             }
         } elseif ($operation_id == null) {
-            if ($operation == 'asignations' || 'requests') {
+            if ($operation == 'asignations' || $operation == 'requests') {
                 if (Auth()->user()->isAdmin()) {
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
