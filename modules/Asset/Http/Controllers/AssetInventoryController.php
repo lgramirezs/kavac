@@ -66,17 +66,19 @@ class AssetInventoryController extends Controller
         $inventory = AssetInventory::create([
             'code' => $code,
         ]);
-        $assets = Asset::with('assetCondition', 'assetStatus', 'assetUseFunction')->withTrashed()->get();
+        $assets = Asset::with('assetCondition', 'assetStatus', 'assetUseFunction'
+                            , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                            , 'assetRequestAsset')->withTrashed()->get();
 
         $registered = count($assets);
         $assigned = $disincorporated = $reserved = 0;
 
         foreach ($assets as $asset) {
-            if ($asset->asset_status_id == 1) {
+            if (($asset->asset_status_id == 1) && ($asset->assetAsignationAsset != null)) {
                 $assigned++;
-            } elseif ($asset->asset_status_id == 6) {
+            } elseif (($asset->asset_status_id == 6) && ($asset->assetRequestAsset != null)) {
                 $reserved++;
-            } elseif (in_array($asset->asset_status_id, [5,7,8,9])) {
+            } elseif (($asset->asset_status_id == null) && ($asset->assetDisincorporationAsset != null)) {
                 $disincorporated++;
             }
 
