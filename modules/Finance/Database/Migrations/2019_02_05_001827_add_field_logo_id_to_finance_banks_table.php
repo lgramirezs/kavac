@@ -13,12 +13,12 @@ class AddFieldLogoIdToFinanceBanksTable extends Migration
      */
     public function up()
     {
-        Schema::table('finance_banks', function (Blueprint $table) {
-            $table->unsignedBigInteger('logo_id')->nullable()
-                  ->comment('Identificador del logotipo del banco');
-            $table->foreign('logo_id')->references('id')
-                  ->on('images')->onDelete('restrict')->onUpdate('cascade');
-        });
+        if (!Schema::hasColumn('finance_banks', 'logo_id')) {
+            Schema::table('finance_banks', function (Blueprint $table) {
+                $table->unsignedBigInteger('logo_id')->nullable()->comment('Identificador del logotipo del banco');
+                $table->foreign('logo_id')->references('id')->on('images')->onDelete('restrict')->onUpdate('cascade');
+            });
+        }
     }
 
     /**

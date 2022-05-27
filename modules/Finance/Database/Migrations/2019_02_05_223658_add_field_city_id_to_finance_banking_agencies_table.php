@@ -13,9 +13,11 @@ class AddFieldCityIdToFinanceBankingAgenciesTable extends Migration
      */
     public function up()
     {
-        Schema::table('finance_banking_agencies', function (Blueprint $table) {
-            $table->foreignId('city_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
-        });
+        if (!Schema::hasColumn('finance_banking_agencies', 'city_id')) {
+            Schema::table('finance_banking_agencies', function (Blueprint $table) {
+                $table->foreignId('city_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
+            });
+        }
     }
 
     /**
