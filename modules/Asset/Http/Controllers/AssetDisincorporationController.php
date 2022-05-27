@@ -251,6 +251,15 @@ class AssetDisincorporationController extends Controller
      */
     public function destroy(AssetDisincorporation $disincorporation)
     {
+        $assets_disincorporation_assets = AssetDisincorporationAsset::where('asset_disincorporation_id', $disincorporation->id)->get();
+        
+        foreach($assets_disincorporation_assets as $assets_disincorporation){
+            $asset = Asset::find($assets_disincorporation->asset_id);
+            $asset->asset_status_id = 10;
+            $asset->save();
+
+            $assets_disincorporation->delete();
+        }
         $disincorporation->delete();
         return response()->json(['message' => 'destroy'], 200);
     }

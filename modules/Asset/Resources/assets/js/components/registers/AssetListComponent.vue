@@ -39,7 +39,8 @@
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(props.row.asset_request_asset == null)
                                     &&(props.row.asset_status_id == 10)
-                                    &&(props.row.asset_condition_id == 1))?false:true"
+                                    &&(props.row.asset_condition_id == 1)
+                                    &&(props.row.asset_type_id == 1))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-filter"></i>
                     </button>
@@ -50,7 +51,8 @@
                         data-toggle="tooltip"
                         :disabled="((props.row.asset_asignation_asset == null)
                                     &&(props.row.asset_disincorporation_asset == null)
-                                    &&(props.row.asset_request_asset == null))?false:true"
+                                    &&(props.row.asset_request_asset == null)
+                                    &&(props.row.asset_type_id == 1))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-chain"></i>
                     </button>

@@ -13,18 +13,20 @@ class CreateFinanceBankAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('finance_bank_accounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('ccc_number', 20)->comment('Número de Código de Cuenta Cliente');
-            $table->string('description')->comment('Descripción u objetivo de la cuenta');
-            $table->date('opened_at')->comment('Fecha en la que fue aperturada la cuenta bancaria');
-            $table->foreignId('finance_banking_agency_id')->nullable()->constrained()
-                  ->onDelete('restrict')->onUpdate('cascade');
-            $table->foreignId('finance_account_type_id')->nullable()->constrained()
-                  ->onDelete('restrict')->onUpdate('cascade');
-            $table->timestamps();
-            $table->softDeletes()->comment('Fecha y hora en la que el registro fue eliminado');
-        });
+        if (!Schema::hasTable('finance_bank_accounts')) {
+            Schema::create('finance_bank_accounts', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('ccc_number', 20)->comment('Número de Código de Cuenta Cliente');
+                $table->string('description')->comment('Descripción u objetivo de la cuenta');
+                $table->date('opened_at')->comment('Fecha en la que fue aperturada la cuenta bancaria');
+                $table->foreignId('finance_banking_agency_id')->nullable()->constrained()
+                      ->onDelete('restrict')->onUpdate('cascade');
+                $table->foreignId('finance_account_type_id')->nullable()->constrained()
+                      ->onDelete('restrict')->onUpdate('cascade');
+                $table->timestamps();
+                $table->softDeletes()->comment('Fecha y hora en la que el registro fue eliminado');
+            });
+        }
     }
 
     /**

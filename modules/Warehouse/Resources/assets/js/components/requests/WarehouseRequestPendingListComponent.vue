@@ -14,6 +14,11 @@
 		<div slot="motive" slot-scope="props" class="text-center">
 			<span> {{  prepareText(props.row.motive) }} </span>
 		</div>
+		<div slot="created_at" slot-scope="props">
+			<span>
+				{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
+			</span>
+		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
 				<warehouse-request-pending
