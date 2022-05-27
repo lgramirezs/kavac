@@ -219,8 +219,10 @@ class AssetAsignationController extends Controller
             $asset = Asset::find($assets_asignation->asset_id);
             $asset->asset_status_id = 10;
             $asset->save();
-        }
 
+            $assets_asignation->delete();
+        }
+        
         $asignation->delete();
         return response()->json(['message' => 'destroy'], 200);
     }

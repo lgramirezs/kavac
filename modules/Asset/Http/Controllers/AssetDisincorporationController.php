@@ -257,6 +257,8 @@ class AssetDisincorporationController extends Controller
             $asset = Asset::find($assets_disincorporation->asset_id);
             $asset->asset_status_id = 10;
             $asset->save();
+
+            $assets_disincorporation->delete();
         }
         $disincorporation->delete();
         return response()->json(['message' => 'destroy'], 200);
