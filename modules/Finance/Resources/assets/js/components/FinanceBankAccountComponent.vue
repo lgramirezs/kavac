@@ -213,7 +213,9 @@
                 vm.record.finance_bank_id = vm.record.finance_banking_agency.finance_bank_id;
                 vm.record.ccc_number = recordEdit.ccc_number.substr(4);
                 vm.record.opened_at = moment(vm.record.opened_at).add(1, 'days').format('YYYY-MM-DD');
-                vm.record.finance_banking_agency_id = vm.record.finance_banking_agency.id;
+                setTimeout(() => {
+                    vm.record.finance_banking_agency_id = vm.record.finance_banking_agency.id; 
+                }, 1500);
                 /**
                  * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
                  * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
