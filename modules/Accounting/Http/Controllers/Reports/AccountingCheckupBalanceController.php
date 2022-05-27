@@ -561,7 +561,7 @@ class AccountingCheckupBalanceController extends Controller
                                                                         $currentDate.' 00:00:00',
                                                                         $currentDate.' 23:59:59'
                                                                     ])
-                                        ->where('report', 'Balance de Comporbación'.(($all)?' - todas las cuentas':
+                                        ->where('report', 'Balance de Comprobación'.(($all)?' - todas las cuentas':
                                                                 ' - solo cuentas con operaciones'))
                                         ->where('institution_id', $institution_id)->first();
 
@@ -574,7 +574,7 @@ class AccountingCheckupBalanceController extends Controller
                     'url'            => $url,
                     'currency_id'    => $currency['id'],
                     'institution_id' => $institution_id,
-                    'report'         => 'Balance de Comporbación'.(($all)?' - todas las cuentas' :
+                    'report'         => 'Balance de Comprobación'.(($all)?' - todas las cuentas' :
                                                                           ' - solo cuentas con operaciones'),
                 ]
             );
@@ -751,7 +751,7 @@ class AccountingCheckupBalanceController extends Controller
                                                                         $currentDate.' 00:00:00',
                                                                         $currentDate.' 23:59:59'
                                                                     ])
-                                        ->where('report', 'Balance de Comporbación'.(($all)?' - todas las cuentas':
+                                        ->where('report', 'Balance de Comprobación'.(($all)?' - todas las cuentas':
                                                                 ' - solo cuentas con operaciones'))
                                         ->where('institution_id', $institution_id)->first();
 
@@ -764,7 +764,7 @@ class AccountingCheckupBalanceController extends Controller
                     'url'            => $url,
                     'currency_id'    => $currency['id'],
                     'institution_id' => $institution_id,
-                    'report'         => 'Balance de Comporbación'.(($all)?' - todas las cuentas' :
+                    'report'         => 'Balance de Comprobación'.(($all)?' - todas las cuentas' :
                                                                           ' - solo cuentas con operaciones'),
                 ]
             );
