@@ -82,6 +82,7 @@ class WarehouseProductController extends Controller
      * Valida y Registra un nuevo producto almacenable
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author Yennifer Ramirez <yramirez@cenditel.gob.ve>
      * @param  \Illuminate\Http\Request  $request (Datos de la petición)
      * @return \Illuminate\Http\JsonResponse (JSON con los registros a mostrar)
      */
@@ -95,6 +96,7 @@ class WarehouseProductController extends Controller
             'define_attributes'   => !empty($request->define_attributes)
                                         ? $request->input('define_attributes')
                                         : false,
+            'budget_account_id'   => $request->budget_account_id,                          
             'measurement_unit_id' => $request->input('measurement_unit_id')
         ]);
 
@@ -113,6 +115,7 @@ class WarehouseProductController extends Controller
      * Actualiza la información de los Productos Almacenables
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author Yennifer Ramirez <yramirez@cenditel.gob.ve>
      * @param  \Illuminate\Http\Request  $request (Datos de la petición)
      * @param  \Modules\Warehouse\Models\WarehouseProduct $product (Registro a ser actualizado)
      * @return \Illuminate\Http\JsonResponse (JSON con los registros a mostrar)
@@ -130,6 +133,7 @@ class WarehouseProductController extends Controller
         $product->define_attributes   =  !empty($request->define_attributes)
                                           ? $request->input('define_attributes')
                                           : false;
+        $product->budget_account_id   = $request->budget_account_id;
         $product->measurement_unit_id = $request->input('measurement_unit_id');
         $product->save();
 
