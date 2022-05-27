@@ -250,7 +250,7 @@
                 this.reset();
                 const vm = this;
                 url = vm.setUrl(url);
-                console.log('url: ', url);
+               
                 axios.get(url).then(response => {
                     if (typeof(response.data.records) !== "undefined") {
                         vm.records  = response.data.records;

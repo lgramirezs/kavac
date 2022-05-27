@@ -64,7 +64,7 @@ class AssetController extends Controller
             'asset_condition_id' => ['required'],
             'value' => ['required', 'regex:/^\d+(\.\d+)?$/u'],
             'currency_id' => ['required'],
-            'serial' => ['required', 'unique:assets, serial'],
+            'serial' => ['required', 'unique:assets,serial'],
             'institution_id' => ['required'],
         ];
 
@@ -317,33 +317,29 @@ class AssetController extends Controller
 
         if ($operation == null) {
             if (Auth()->user()->isAdmin()) {
-                $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id');
+                $assets = Asset::with('institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->orderBy('id');
             } else {
                 $assets = Asset::where('institution_id', $institution_id)
                     ->with([
                         'institution',
                         'assetCondition',
-                        'assetStatus'
+                        'assetStatus',
+                        'assetAsignationAsset',
+                        'assetDisincorporationAsset',
+                        'assetRequestAsset'
                     ])->orderBy('id');
             }
         } elseif ($operation_id == null) {
-            if ($operation == 'asignations') {
+            if ($operation == 'asignations' || 'requests') {
                 if (Auth()->user()->isAdmin()) {
-                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
-                } else {
-                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('institution_id', $institution_id)
-                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
-                }
-            } elseif ($operation == 'disincorporations') {
-                if (Auth()->user()->isAdmin()) {
-                    $selected = [];
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                        , 'assetRequestAsset')->orderBy('id')->get();
-                    
-                   
+                                        , 'assetRequestAsset')
+                                        ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->orderBy('id')->get();
+                    $selected = [];
                     foreach($assets_list as $asset_index){
                         if($asset_index->assetAsignationAsset == null
                             && $asset_index->assetDisincorporationAsset == null
@@ -352,23 +348,71 @@ class AssetController extends Controller
                     }
                    
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
-                                    ->whererIn('id', $selected)->orderBy('id');
+                                    ->whereIn('id', $selected)->orderBy('id');
+                } else {
+                    $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->where('institution_id', $institution_id)
+                                        ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->orderBy('id')->get();
+                    $selected = [];
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
+                    }
+                   
+                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->whereIn('id', $selected)->orderBy('id');
+                }
+            } elseif ($operation == 'disincorporations') {
+                if (Auth()->user()->isAdmin()) {
+                    
+                    $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')
+                                        ->orderBy('id')->get();
+                    
+                    $selected = [];
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
+                    }
+                   
+                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->whereIn('id', $selected)->orderBy('id');
                    
                 } else {
-                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('institution_id', $institution_id)
-                        ->where('asset_status_id','!=', null);
+                    $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->where('institution_id', $institution_id)
+                                        ->orderBy('id')->get();
+                    
+                    $selected = [];
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
+                    }
+                   
+                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
+                                    ->whereIn('id', $selected)->orderBy('id');
                 }
-            } elseif ($operation == 'requests') {
-                if (Auth()->user()->isAdmin()) {
-                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
-                } else {
-                    $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->where('institution_id', $institution_id)
-                        ->where('asset_condition_id', 1)->where('asset_status_id', 10);
-                }
-            }
+            } 
+                // elseif ($operation == 'requests') {
+            //     if (Auth()->user()->isAdmin()) {
+            //         $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
+            //             ->where('asset_condition_id', 1)->where('asset_status_id', 10);
+            //     } else {
+            //         $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
+            //             ->where('institution_id', $institution_id)
+            //             ->where('asset_condition_id', 1)->where('asset_status_id', 10);
+            //     }
+            // }
         } else {
             if ($operation == 'asignations') {
                 $selected = [];
