@@ -43,7 +43,8 @@
                                 <i class="now-ui-icons ui-1_calendar-60"></i>
                             </span>
                             <input
-                                type="date"
+                                type="date" 
+                                :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]"
                                 class="form-control input-sm no-restrict"
                                 data-toggle="tooltip"
                                 title="Indique la fecha de entrega de los equipos"

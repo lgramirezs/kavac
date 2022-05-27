@@ -194,7 +194,7 @@ class AssetAsignationController extends Controller
 
         foreach ($assets_asignation as $asset_asignation) {
             $asset = Asset::find($asset_asignation->asset_id);
-            $asset->asset_status_id = 10;
+            $asset->asset_status_id = 1;
             $asset->save();
 
             $asset_asignation->delete();
@@ -213,6 +213,14 @@ class AssetAsignationController extends Controller
      */
     public function destroy(AssetAsignation $asignation)
     {
+        $assets_asignation_assets = AssetAsignationAsset::where('asset_asignation_id', $asignation->id)->get();
+        
+        foreach($assets_asignation_assets as $assets_asignation){
+            $asset = Asset::find($assets_asignation->asset_id);
+            $asset->asset_status_id = 10;
+            $asset->save();
+        }
+
         $asignation->delete();
         return response()->json(['message' => 'destroy'], 200);
     }
