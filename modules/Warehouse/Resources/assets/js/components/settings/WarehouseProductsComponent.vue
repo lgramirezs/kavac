@@ -87,6 +87,15 @@
                                     <select2 :options="measurement_units" v-model="record.measurement_unit_id"></select2>
                                 </div>
                             </div>
+                            <!-- cuenta presupuestaria -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cuenta presupuestaria</label>
+                                    <select2 :options="budget_accounts"
+                                             v-model="record.budget_account_id"></select2>
+                                </div>
+                            </div>
+                            <!-- ./cuenta presupuestaria -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="control-label">Atributos personalizados</label>
@@ -203,6 +212,7 @@
                     description: '',
                     define_attributes: false,
                     measurement_unit_id: '',
+                    budget_account_id: '',
                     warehouse_product_attributes: [],
                 },
 
@@ -210,6 +220,7 @@
                 records: [],
                 columns: ['name', 'description', 'attributes', 'id'],
                 measurement_units: [],
+                budget_accounts: [],
                 formImport: false,
 
             }
@@ -229,6 +240,7 @@
                     description:                  '',
                     define_attributes:            false,
                     measurement_unit_id:          '',
+                    budget_account_id:            '',
                     warehouse_product_attributes: []
                 };
             },
@@ -261,7 +273,8 @@
             },
             exportData() {
                 //instrucciones para exportar registros
-                location.href = '/warehouse/products/export/all';
+                location.href = `${window.app_url}/warehouse/products/export/all`;
+                //location.href = '/warehouse/products/export/all';
             },
             importData() {
                 //instrucciones para exportar registros
@@ -283,6 +296,31 @@
                     console.log('failure');
                     vm.loading = false;
 
+                });
+            },
+            /**
+             * Obtiene un listado de cuentas presupuestarias
+             *
+             * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getBudgetAccounts() {
+                const vm = this;
+                vm.budget_accounts = [];
+                axios.get(`${window.app_url}/budget/accounts/vue-list`).then(response => {
+                    if (response.data.records.length > 0) {
+                        vm.budget_accounts.push({
+                            id:   '',
+                            text: 'Seleccione...'
+                        });
+                        $.each(response.data.records, function() {
+                            vm.budget_accounts.push({
+                                id:   this.id,
+                                text: `${this.code} - ${this.denomination}`
+                            });
+                        });
+                    }
+                }).catch(error => {
+                    vm.logs('WarehouseProductsComponent', 258, error, 'getBudgetAccounts');
                 });
             }
 
@@ -306,8 +344,11 @@
         },
         mounted() {
             const vm = this;
-            vm.getMeasurementUnits();
-            vm.switchHandler('define_attributes');
+            $("#add_product").on('show.bs.modal', function() {
+                vm.getMeasurementUnits();
+                vm.getBudgetAccounts();
+                vm.switchHandler('define_attributes');
+            });
         }
     };
 </script>

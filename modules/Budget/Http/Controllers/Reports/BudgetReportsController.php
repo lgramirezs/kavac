@@ -16,7 +16,7 @@ use Modules\Budget\Models\Institution;
 use App\Models\FiscalYear;
 use Modules\Budget\Models\Currency;
 use App\Repositories\ReportRepository;
-use Modules\Budget\Models\BudgetSpecificAction;
+use Carbon\Carbon;
 
 /**
  * @class BudgetAccountOpenController
@@ -59,33 +59,8 @@ class BudgetReportsController extends Controller
 
         $budgetItems = $this->getBudgetAccounts();
 
-        $budgetProjects = BudgetProject::with(['specificActions'])->whereHas('specificActions', function ($query) {
-            $query->whereHas('subSpecificFormulations', function ($query) {
-                $query->where('assigned', true);
-            });
-        })->get()->all();
-        $budgetProjects = array_map(function ($budgeProject) {
-            return array(
-                'id' => $budgeProject->id,
-                'text' => $budgeProject->code . ' - ' . $budgeProject->name,
-            );
-        }, $budgetProjects);
-        array_unshift($budgetProjects, ['id' => "", 'text' => "Seleccione..."]);
-
-
-
-        $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions'])->whereHas('specificActions', function ($query) {
-            $query->whereHas('subSpecificFormulations', function ($query) {
-                $query->where('assigned', true);
-            });
-        })->get()->all();
-        $budgetCentralizedActions = array_map(function ($budgetCentralizedAction) {
-            return array(
-                'id' => $budgetCentralizedAction->id,
-                'text' => $budgetCentralizedAction->code . ' - ' . $budgetCentralizedAction->name,
-            );
-        }, $budgetCentralizedActions);
-        array_unshift($budgetCentralizedActions, ['id' => "", 'text' => "Seleccione..."]);
+        $budgetProjects = $this->getBudgetProjects(true);
+        $budgetCentralizedActions = $this->getBudgetCentralizedActions(true);
 
         $data = array();
         $temp = array('text' => '', 'children' => []);
@@ -158,51 +133,64 @@ class BudgetReportsController extends Controller
      * 
      * @return    Array Arreglo ordenado de cuentas presupuestarias formuladas
      */
-    public function getBudgetAccountsOpen(bool $accountsWithMovements, int $specific_action_id)
+    public function getBudgetAccountsOpen(bool $accountsWithMovements, object $project)
     {
-        $subSpecificFormulation = BudgetSpecificAction::with(['subSpecificFormulations' => function ($query) {
-            $query->with('accountOpens')->whereHas('accountOpens');
-        }])->where('id', $specific_action_id)->first();
-        // dd($subSpecificFormulation);
-        $budgetItems = $subSpecificFormulation->subSpecificFormulations[0]->accountOpens->all();
-        // dd($budgetItems);
-        
+        $project_accounts_open = array();
 
-        usort($budgetItems, function ($budgetItemOne, $budgetItemTwo) {
+        foreach ($project->specificActions as $specificAction) {
 
-            $codeOne = str_replace('.', '', $budgetItemOne->budgetAccount->getCodeAttribute());
-            $codeTwo = str_replace('.', '', $budgetItemTwo->budgetAccount->getCodeAttribute());
+            $accounts_open = $specificAction->subSpecificFormulations[0]->accountOpens->all();
 
-            if ($codeOne > $codeTwo) return 1;
+            foreach ($accounts_open as $account) {
+                $account['asigned_percentage'] = round(($account->total_year_amount * 100) / $specificAction->subSpecificFormulations[0]->total_formulated, 2);
 
-            else if ($codeOne == $codeTwo) return 0;
+                // $currentMonth = date('n') - 1;
+                $currentMonth = 0;
+                $amountAvailable = 0;
 
-            else return -1;
-        });
+                for ($i = $currentMonth; $i < 12; $i++) {
+                    $amountAvailable += $account[$this->monthColumnNames[$i]];
+                }
 
-        $budgetItems = array_map(function ($budgetItem) {
-            $subSpecificFormulation = BudgetSubSpecificFormulation::where('id', $budgetItem->budget_sub_specific_formulation_id)->first();
-
-            $budgetItem['asigned_percentage'] = round(($budgetItem->total_year_amount * 100) / $subSpecificFormulation->total_formulated, 2);
-
-            $currentMonth = date('n') - 1;
-            $amountAvailable = 0;
-
-            for ($i = $currentMonth; $i < 12; $i++) {
-                $amountAvailable += $budgetItem[$this->monthColumnNames[$i]];
+                $account['amount_available'] = $amountAvailable;
             }
+            array_push(
+                $project_accounts_open,
+                [
+                    $accounts_open,
+                    $specificAction->subSpecificFormulations[0],
+                    "project_code" => $project->code,
+                    "specific_action_code" => $specificAction->code
+                ]
+            );
+        }
 
-            $budgetItem['amount_available'] = $amountAvailable;
+        foreach ($project_accounts_open as $budgetItem) {
 
-            return $budgetItem;
-        }, $budgetItems);
+            usort($budgetItem[0], function ($budgetItemOne, $budgetItemTwo) {
 
-        return array_filter($budgetItems, function ($budgetItem) use ($accountsWithMovements) {
+                $codeOne = str_replace('.', '', $budgetItemOne->budgetAccount->getCodeAttribute());
+                $codeTwo = str_replace('.', '', $budgetItemTwo->budgetAccount->getCodeAttribute());
 
-            if ($accountsWithMovements && $budgetItem['amount_available'] === $budgetItem['total_year_amount']) return false;
+                if ($codeOne > $codeTwo) return 1;
 
-            return true;
-        });
+                else if ($codeOne == $codeTwo) return 0;
+
+                else return -1;
+            });
+        }
+
+        foreach ($project_accounts_open as $accounts) {
+
+            array_filter($accounts[0], function ($account) use ($accountsWithMovements) {
+
+                if ($accountsWithMovements && ($account['amount_available'] === $account['total_year_amount'])) return false;
+
+                return true;
+            });
+        }
+
+        return $project_accounts_open;
     }
 
 
@@ -215,8 +203,6 @@ class BudgetReportsController extends Controller
      */
     public function filterBudgetAccounts(array $budgetAccountsOpen, int $initialCode, int $finalCode, string $initialDate, string $finalDate)
     {
-        
-
         $filteredArray = array();
 
         foreach ($budgetAccountsOpen as $budgetItem) {
@@ -227,11 +213,12 @@ class BudgetReportsController extends Controller
 
             $code = str_replace('.', '', $budgetItem->budgetAccount->getCodeAttribute());
 
-            if ($code >= $initialCode && $code <= $finalCode && strtotime($specificAction->from_date) >= strtotime($initialDate) && strtotime($specificAction->to_date) <= strtotime($finalDate)) {
-                $filteredArray[] = $budgetItem;
+            if ($code >= $initialCode && $code <= $finalCode) {
+                if (($initialDate <= $specificAction->from_date->toDateString()) && ($specificAction->to_date->toDateString() <= $finalDate)) {
+                    array_push($filteredArray, $budgetItem);
+                }
             }
         }
-
         return $filteredArray;
     }
 
@@ -243,6 +230,7 @@ class BudgetReportsController extends Controller
      */
     public function getPdf(Request $request)
     {
+
         $data = $request->validate([
             'initialDate' => 'required',
             'finalDate' => 'required',
@@ -251,21 +239,34 @@ class BudgetReportsController extends Controller
             'accountsWithMovements' => 'required',
             'project_id' => 'required',
             'project_type' => 'required',
-            'specific_action_id' => 'required'
+            'specific_actions_ids' => 'required',
         ]);
+
+        // Convierte un string que contiene enteros en un array de enteros
+        $data["specific_actions_ids"] = json_decode('[' . $request->all()["specific_actions_ids"] . ']', true);
+        $ids = $data["specific_actions_ids"];
 
         $pdf = new ReportRepository();
 
         if ($request->project_type === 'project') {
-            $project = BudgetProject::with('specificActions')->find($data["project_id"]);
+            $project = BudgetProject::with(['specificActions' => function ($query) use ($ids) {
+                $query->with(['subSpecificFormulations' => function ($query) {
+                    $query->with('accountOpens')->whereHas('accountOpens');
+                }])->whereIn('id', $ids)->get();
+            }])->find($data["project_id"]);
         } else {
-            $project = BudgetCentralizedAction::with('specificActions')->find($data["project_id"]);
+            $project = BudgetCentralizedAction::with(['specificActions' => function ($query) use ($ids) {
+                $query->with(['subSpecificFormulations' => function ($query) {
+                    $query->with('accountOpens')->whereHas('accountOpens');
+                }])->whereIn('id', $ids)->get();
+            }])->find($data["project_id"]);
         }
 
-        $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $data['specific_action_id']);
+        $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $project);
 
-        $records = $this->filterBudgetAccounts($records, $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
-
+        for ($i = 0; $i < count($records); $i++) {
+            $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+        }
 
         $institution = Institution::find(1);
 
@@ -287,10 +288,85 @@ class BudgetReportsController extends Controller
             'institution' => $institution,
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
-            "report_date" => $now = \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => $data['initialDate'],
-            'finalDate' => $data['finalDate'],
-            'project' => $project,
+            "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
+        ]);
+    }
+
+    public function consolidatedReportPdf(Request $request)
+    {
+
+        $request->validate([
+            'initialDate' => 'required',
+            'finalDate' => 'required',
+            'initialCode' => 'required',
+            'finalCode' => 'required',
+            'accountsWithMovements' => 'required',
+        ]);
+
+        $data = $request->toArray();
+        $data["projects_ids"] = json_decode('[' . $data["projects_ids"] . ']', true);
+        $data["centralized_actions_ids"] = json_decode('[' . $data["centralized_actions_ids"] . ']', true);
+
+        $projects = BudgetProject::with(['specificActions' => function ($query) {
+            $query->with('subSpecificFormulations')->whereHas('subSpecificFormulations', function ($query) {
+                $query->with('accountOpens')->whereHas('accountOpens')->where('assigned', true);
+            });
+        }])->whereIn('id', $data["projects_ids"])->get();
+
+
+        $centrilized_actions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
+            $query->with('subSpecificFormulations')->whereHas('subSpecificFormulations', function ($query) {
+                $query->with('accountOpens')->whereHas('accountOpens')->where('assigned', true);
+            });
+        }])->whereIn('id', $data["centralized_actions_ids"])->get();
+
+        $projects_accounts = array();
+        foreach ($projects as $project) {
+            array_push($projects_accounts, $this->getBudgetAccountsOpen($data['accountsWithMovements'], $project));
+        }
+
+        $centrilized_actions_accounts = array();
+        foreach ($centrilized_actions as $centrilized_action) {
+            array_push($centrilized_actions_accounts, $this->getBudgetAccountsOpen($data['accountsWithMovements'], $centrilized_action));
+        }
+
+        $records = array();
+
+        foreach ($projects_accounts as $projects_account) {
+            $projects_account[0][0] = $this->filterBudgetAccounts($projects_account[0][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+            array_push($records, ...$projects_account);
+        }
+
+        foreach ($centrilized_actions_accounts as $centrilized_actions_account) {
+            $centrilized_actions_account[0][0] = $this->filterBudgetAccounts($centrilized_actions_account[0][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+            array_push($records, ...$centrilized_actions_account);
+        }
+
+        $pdf = new ReportRepository();
+
+        $institution = Institution::find(1);
+        $fiscal_year = FiscalYear::where('active', true)->first();
+        $currency = Currency::where('default', true)->first();
+        if (strtotime($data['initialDate']) > strtotime($data['finalDate'])) {
+            $temp = $data['initialDate'];
+            $data['initialDate'] = $data['finalDate'];
+            $data['finalDate'] = $temp;
+        }
+
+        $pdf->setConfig(['institution' => $institution]);
+        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setFooter();
+        $pdf->setBody('budget::pdf.budgetAvailability', true, [
+            'pdf' => $pdf,
+            'records' => $records,
+            'institution' => $institution,
+            'currencySymbol' => $currency['symbol'],
+            'fiscal_year' => $fiscal_year['year'],
+            "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['initialDate'])->format('d-m-Y'),
         ]);
     }
 
@@ -350,8 +426,6 @@ class BudgetReportsController extends Controller
             }
 
             $query = $query->get();
-
-
 
             $pdf = new ReportRepository();
             $institution = Institution::find(1);
@@ -513,11 +587,7 @@ class BudgetReportsController extends Controller
 
     public function getBudgetProjects(bool $list = null)
     {
-        $budgetProjects = BudgetProject::with(['specificActions' => function ($query) {
-            $query->with(['subSpecificFormulations' => function ($query) {
-                $query->where('assigned', true);
-            }])->whereHas('subSpecificFormulations');
-        }])->whereHas('specificActions', function ($query) {
+        $budgetProjects = BudgetProject::with(['specificActions'])->whereHas('specificActions', function ($query) {
             $query->whereHas('subSpecificFormulations', function ($query) {
                 $query->where('assigned', true);
             });
@@ -540,11 +610,7 @@ class BudgetReportsController extends Controller
 
     public function getBudgetCentralizedActions(bool $list = null)
     {
-        $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions' => function ($query) {
-            $query->with(['subSpecificFormulations' => function ($query) {
-                $query->where('assigned', true);
-            }])->whereHas('subSpecificFormulations');
-        }])->whereHas('specificActions', function ($query) {
+        $budgetCentralizedActions = BudgetCentralizedAction::with(['specificActions'])->whereHas('specificActions', function ($query) {
             $query->whereHas('subSpecificFormulations', function ($query) {
                 $query->where('assigned', true);
             });

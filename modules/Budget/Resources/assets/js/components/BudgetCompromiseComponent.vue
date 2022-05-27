@@ -2,9 +2,21 @@
     <div>
         <div class="card-body">
             <div class="alert alert-danger" v-if="errors.length > 0">
-                <ul>
-                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-                </ul>
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="now-ui-icons objects_support-17"></i>
+                    </div>
+                    <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                            @click.prevent="errors = []">
+                        <span aria-hidden="true">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </span>
+                    </button>
+                    <ul>
+                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
@@ -301,6 +313,7 @@
 
 <script>
     export default {
+      
         data() {
             return {
                 record: {
@@ -336,6 +349,13 @@
                 document_number: '',
             }
         },
+        	props: {
+		
+			edit_object: {
+				type: String,
+				required: false
+			}
+		},
         watch: {
             record: {
                 deep: true,
@@ -378,6 +398,77 @@
                 this.document_sources = [];
                 this.document_number = '';
             },
+            	async loadEditData() {
+				let vm = this;
+                
+				let editData = JSON.parse(vm.edit_object);
+                vm.record.id = editData.id;
+
+				vm.record.compromised_at = moment(editData.compromised_at).add(1,"days").format("YYYY-MM-DD"); 
+			
+                vm.record.institution_id = editData.institution_id;
+                                vm.record.description = editData.description;
+                                   vm.record.source_document = editData.document_number;
+           
+                   editData.budget_compromise_details.forEach( async function(word) {
+
+  let specificAction = {};
+                let account = {};
+
+  vm.specific_action_id = word.budget_sub_specific_formulation.budget_specific_action_id; 
+                 vm.account_id =word.budget_account_id;
+              
+                 vm.account_concept =word.description;
+                 vm.account_amount = word.amount;
+                 vm.account_tax_id = word.tax_id;
+            
+                await vm.getSpecificActionDetail(word.budget_sub_specific_formulation.budget_specific_action_id).then(detail => specificAction = detail.record);
+         
+               await vm.getAccountDetail(word.budget_account_id).then(detail => account = detail.record);
+                vm.record.accounts.push({
+                    'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                    'code': account.code,
+                    'description': word.description,
+                    'amount': word.amount,
+                     'budgetCompromiseDetails': word.id,
+                    'specific_action_id': word.budget_sub_specific_formulation.budget_specific_action_id,
+                    'account_id': word.budget_account_id,
+                    'tax_id':word.tax_id
+                });
+           
+                
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData){
+                        if (word.tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
+                    }
+
+                    vm.record.tax_accounts.push({
+                        'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        'code': account.code,
+                        'description': tax_description,
+                        'amount':  word.amount * tax_percentage / 100,
+                        'specific_action_id': word.budget_sub_specific_formulation.budget_specific_action_id,
+                        'account_id':word.budget_account_id,
+                        'tax_id': word.tax_id
+                    });
+                }
+
+
+
+});
+              
+               
+       
+                //   !vm.specific_action_id && !vm.account_id && !vm.account_concept && !vm.account_amount &&
+                //     !vm.account_tax_id
+	
+			},
             /**
              * Elimina una cuenta del listado de cuentas agregadas
              *
@@ -400,6 +491,7 @@
                     callback: function (result) {
                         if (result) {
                             vm.record.accounts.splice(index, 1);
+                              vm.record.tax_accounts.splice(index, 1);
                         }
                     }
                 });
@@ -426,8 +518,10 @@
 
                 let specificAction = {};
                 let account = {};
+
                 await vm.getSpecificActionDetail(vm.specific_action_id).then(detail => specificAction = detail.record);
-                await vm.getAccountDetail(vm.account_id).then(detail => account = detail.record);
+
+               await vm.getAccountDetail(vm.account_id).then(detail => account = detail.record);
                 vm.record.accounts.push({
                     'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
                     'code': account.code,
@@ -638,15 +732,22 @@
             },
         },
         created() {
-
-        },
+ 
+  
+        }, 
         mounted() {
             let vm = this;
             vm.reset();
             vm.getInstitutions();
             vm.taxesData = [];
             vm.getTaxes();
-
+            setTimeout(()=>{
+                       if (vm.edit_object) {
+				console.log(vm.edit_object);
+                	vm.loadEditData();
+			}
+            },1000);
+   
             $("#add_source").on('shown.bs.modal', function() {
                 /** Carga los documentos que faltan por comprometer */
                 vm.getDocumentSources();

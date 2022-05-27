@@ -1,80 +1,95 @@
 <template>
     <div class="row">
-        <div class="col-12 mb-4" v-if="showDetail">
-            <div class="row">
-                <div class="col-4">
-                    <img :src="moduleLogo(details)" alt="" class="img-responsive" style="width:100%">
-                    <div class="row">
-                        <div class="col-12 mt-4 text-yellow text-center" title="1000 instalaciones"
-                             data-toggle="tooltip">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-empty"></i>
-                            <i class="fa fa-star-o"></i>
+        <!-- Modal -->
+        <div id="modalDetails" class="modal fade" aria-labelledby="modalDetailsLabel" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="modalDetailsLabel" class="modal-title">Detalles del módulo {{ details.name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12 mb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-md-4 col-xl-2">
+                                    <img :src="moduleDetailsLogo(details)" alt="" class="img-fluid">
+                                    <div class="row">
+                                        <div class="col-12 pt-3 pb-2 text-yellow text-center" title="1000 instalaciones"
+                                            data-toggle="tooltip">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-empty"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8 offset-xl-1">
+                                    <p>{{ details.long_description }}</p>
+                                    <p>{{ details.description }}</p>
+                                    <div>
+                                        <ul class="pl-3">
+                                            <li v-for="(author, index) in details.authors" :key="index">
+                                                <a :href="'mailto:'+author.email[0]">{{ author.name }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-8 col-lg-4">
+                                            <button type="button" class="btn btn-info btn-simple btn-block">
+                                                Instalar
+                                            </button>
+                                        </div>
+                                        <div class="col-8 col-lg-4">
+                                            <button type="button" class="btn btn-primary btn-simple btn-block">
+                                                {{ (details.enabled) ? 'Deshabilitar' : 'Habilitar' }}
+                                            </button>
+                                        </div>
+                                        <div class="col-8 col-lg-4">
+                                            <button type="button" class="btn btn-success btn-simple btn-block">
+                                                Configurar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="details.requirements">
+                                        <div class="col-12 mt-4">
+                                            <h6 class="md-title">Requerimientos:</h6>
+                                            <ul v-if="details.requirements">
+                                                <li v-for="(version, require) in details.requirements" :key="require">
+                                                    <i :class="checkRequirement(require)"></i>
+                                                    {{ require }} v{{ version }}
+                                                </li>
+                                            </ul>
+                                            <p v-else>No aplica</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-8 col-md-4 col-xl-2"></div>
+                                <div class="col-12 col-md-8 offset-xl-1">
+                                    <h6 class="md-title text-right" title="Versión del módulo" data-toggle="tooltip">
+                                        v{{ details.version }}
+                                    </h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2 class="text-center">{{ details.name }}</h2>
-                            <p>{{ details.long_description }}</p>
-                        </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default btn-sm btn-round btn-modal-close" type="button"
+                            data-dismiss="modal">
+                            Cerrar
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-8">{{ details.description }}</div>
-                        <div class="col-4">
-                            <ul>
-                                <li v-for="(author, index) in details.authors" :key="index">
-                                    <a :href="'mailto:'+author.email[0]">{{ author.name }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-info btn-simple btn-block">Instalar</button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-primary btn-simple btn-block">
-                                {{ (details.enabled) ? 'Deshabilitar' : 'Habilitar' }}
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-success btn-simple btn-block">Configurar</button>
-                        </div>
-                    </div>
-                    <div class="row" v-if="details.requirements">
-                        <div class="col-12 mt-4">
-                            <h6 class="md-title">Requerimientos:</h6>
-                            <ul v-if="details.requirements">
-                                <li v-for="(version, require) in details.requirements" :key="require">
-                                    <i :class="checkRequirement(require)"></i>
-                                    {{ require }} v{{ version }}
-                                </li>
-                            </ul>
-                            <p v-else>No aplica</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <button type="button" class="btn btn-default btn-simple btn-block" @click="resetDetails">
-                        Listar Módulos
-                    </button>
-                </div>
-                <div class="col-8">
-                    <h6 class="md-title text-right" title="Versión del módulo" data-toggle="tooltip">
-                        v{{ details.version }}
-                    </h6>
                 </div>
             </div>
         </div>
-        <div class="col-12 mb-4" v-else>
+        <!-- Lista de módulos -->
+        <div class="col-12 mb-4">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div class="col-12 col-md-8">
                     <button type="button" class="btn btn-primary btn-simple btn-sm" data-toggle="tooltip"
                             title="Listar todos los módulos disponibles">Todos</button>
                     <button type="button" class="btn btn-primary btn-simple btn-sm" data-toggle="tooltip"
@@ -86,7 +101,7 @@
                     <button type="button" class="btn btn-primary btn-simple btn-sm" data-toggle="tooltip"
                             title="Listar sólo los módulos instalados y habilitados">Habilitados</button>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-12 col-md-4">
                     <div class="input-group input-sm">
                         <input placeholder="Buscar módulo..." data-toggle="tooltip" type="text"
                         data-original-title="Escriba el nombre o descripción del módulo que desea buscar"
@@ -99,14 +114,14 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-4 mb-4" v-for="(module, index) in modules" :key="index">
+                <div class="col-12 col-md-6 col-lg-4 mb-4" v-for="(module, index) in modules" :key="index">
                     <div class="list-group list-group-modules">
                         <a href="javascript:void(0);" class="list-group-item" data-toggle="tooltip"
                            :data-original-title="'Ver detalles del módulo de ' + module.name"
                            @click="viewDetails(module.alias)">
                             <div class="media">
                                 <div class="media-left">
-                                    <img :src="moduleLogo(module)" alt="logotipo / imagen" class="img-responsive">
+                                    <img :src="moduleLogo(module)" alt="logotipo / imagen" class="img-fluid">
                                 </div>
                                 <div class="media-middle media-body">
                                     <h5 class="media-heading">{{ module.name }}</h5>
@@ -132,13 +147,33 @@
     export default {
         data() {
             return {
-                showDetail: false,
                 details: {}
             }
         },
         props: ['modules'],
         methods: {
+            /**
+             * Obtiene los logos de los módulos listados
+             *
+             * @method     moduleLogo
+             *
+             * @author     Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+             *
+             * @param      {Array}         module    Nombre del módulo del cual se desea obtener el logo
+             */
             moduleLogo(module) {
+                return `${process.env.MIX_APP_URL}/${module[0].logo}`;
+            },
+            /**
+             * Obtiene el logo del módulo seleccionado
+             *
+             * @method     moduleDetailsLogo
+             *
+             * @author     Angelo Osorio <adosorio@cenditel.gob.ve> | <danielking.321@gmail.com>
+             *
+             * @param      {string}         module    Nombre del módulo del cual se desea obtener el logo
+             */
+            moduleDetailsLogo(module) {
                 return `${process.env.MIX_APP_URL}/${module.logo}`;
             },
             /**
@@ -156,7 +191,7 @@
                     module: module
                 }).then(response => {
                     vm.details = response.data.details;
-                    vm.showDetail = true;
+                    $('#modalDetails').modal('show');
                 }).catch(error => {
                     console.warn(error);
                 });
@@ -170,7 +205,6 @@
              */
             resetDetails() {
                 let vm = this;
-                vm.showDetail = false,
                 vm.details = {};
             },
             /**

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Institution;
 use App\Models\Setting;
+use App\Models\Parameter;
 use App\Rules\Rif as RifRule;
 use Illuminate\Validation\Rule;
 
@@ -124,6 +125,7 @@ class InstitutionController extends Controller
 
         /** @var Setting Objeto con información de la configuración de la aplicación */
         $setting = Setting::where('active', true)->first();
+        $Parameter = Parameter::where('p_key', "multi_institution")->first();
 
         /** @var array Arreglo con los datos del organismo a registrar */
         $data = [
@@ -152,17 +154,26 @@ class InstitutionController extends Controller
             'logo_id' => $logo,
             'banner_id' => $banner,
         ];
-     
+       $multi_institution = false;
 
+       if(is_null($Parameter)){
+         $multi_institution = false;
+       }else{
+          
+          $multi_institution = $Parameter->p_value;
+   
 
-        if (is_null($setting->multi_institution) || !$setting->multi_institution) {
+       } 
+
+        if (is_null($setting->multi_institution) || !$setting->multi_institution  AND !$multi_institution ) {
             // Crea o actualiza información de una organización si la aplicación esta configurada 
             // para el uso de un solo organismo
+    
 
             $data['default'] = true;
             Institution::updateOrCreate(['rif' => $request->rif], $data);
         } else {
-
+          
     
 
             if($request->default!==null){

@@ -47,6 +47,7 @@ class TaxController extends Controller
      */
     public function index()
     {
+
         return response()->json(['records' => Tax::with(['histories' => function ($query) {
             return $query->orderBy('operation_date', 'desc');
         }])->get()], 200);
@@ -114,6 +115,12 @@ class TaxController extends Controller
             'description' => ['required'],
             'operation_date' => ['required', 'date'],
             'percentage' => ['required']
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.max' => 'El campo nombre no debe ser mayor que 60 caracteres.',
+            'name.unique' => 'El campo nombre ya ha sido registrado.',
+            'operation_date.required' => 'El campo fecha entrada en vigencia es obligatorio.',
+            'percentage.required' => 'El campo porcentaje es obligatorio.',
         ]);
 
         $tax->name = $request->name;
@@ -162,5 +169,36 @@ class TaxController extends Controller
             $q->orderBy('operation_date', 'desc');
         }])->where('active', true)->get();
         return response()->json(['records' => $taxes]);
+    }
+
+    /**
+     * Listado de impuestos registrados para select de vue
+     *
+     * @method    getTaxesVueSelect
+     *
+     * @author     Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    JsonResponse    Objeto con información de los impuestos
+     */
+    public function getTaxesVueSelect()
+    {
+        return response()->json(['records' => template_choices('App\Models\Tax', 'name', [], true)]);
+    }
+
+    /**
+     * Listado de impuestos registrados para select de vue
+     *
+     * @method    getTax
+     *
+     * @author     Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+     *
+     * @return    JsonResponse    Objeto con información de los impuestos
+     */
+    public function getLastHistoryTax($tax_id)
+    {
+        return response()->json([
+            'record' => HistoryTax::where('tax_id', $tax_id)
+                        ->orderBy('operation_date', 'DESC')->first()
+        ]);
     }
 }

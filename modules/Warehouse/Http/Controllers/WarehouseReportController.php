@@ -351,7 +351,6 @@ class WarehouseReportController extends Controller
         $institution = Institution::where('default', true)
             ->where('active', true)->first();
         $pdf = new ReportRepository();
-        $filename = 'warehouse-report-' . Carbon::now() . '.pdf';
 
         $codeSetting = CodeSetting::where('table', 'warehouse_reports')->first();
         if (is_null($codeSetting)) {
@@ -369,6 +368,8 @@ class WarehouseReportController extends Controller
             $codeSetting->model,
             $codeSetting->field
         );
+
+        $filename = 'warehouse-report-' . $code . '.pdf';
 
         $report = WarehouseReport::create([
             'code'           => $code,
@@ -399,7 +400,7 @@ class WarehouseReportController extends Controller
             true,
             [
                 'pdf'    => $pdf,
-                'fields' => $fields
+                'fields' => $fields->get()
             ]
         );
         $url = '/warehouse/reports/show/' . $report->code;
@@ -408,8 +409,8 @@ class WarehouseReportController extends Controller
 
     public function show($code)
     {
-        $report = WarehouseReport::where('code', $code)->first();
-        $pdf = new ReportRepository();
-        $pdf->show($report->filename);
+        $file = storage_path() . '/reports/' . 'warehouse-report-' . $code . '.pdf';
+
+        return response()->download($file, $code, [], 'inline');
     }
 }

@@ -9,8 +9,8 @@ use Illuminate\Database\Migrations\Migration;
  * 
  * @brief Configuraciones de los archivos de conciliación bancaria
  *
- * Clase que gestiona los métodos para de la configuración de archivos
- * de conciliación bancaria.
+ * Clase que gestiona los métodos para la gestión de la configuración de
+ * archivos de conciliación bancaria.
  *
  * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
  *

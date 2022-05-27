@@ -1,6 +1,6 @@
 <template>
     <section>
-        <purchase-show-errors ref="PurchaseOrderFormComponent" />
+        <purchase-show-errors ref="purchaseShowError" />
         <div class="row">
             <div class="col-3">
                 <div class="form-group">
@@ -56,38 +56,10 @@
             </div>
             <div class="col-3">
                 <div class="form-group">
-                    <label class="control-label" for="currencies">Tipo de proveedor</label><br>
-                    <div v-if="record.purchase_supplier_object">
-                        <div v-if="record.purchase_supplier_object.type == 'S'">
-                            <strong>Servicios / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'O'">
-                            <strong>Obras / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'B'">
-                            <strong>Bienes / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                    </div>
+                    <label for="supplier_direction">Dirección fiscal del proveedor</label>
+                    <p v-html="supplier.direction"></p>
                 </div>
             </div>
-            <!--   <div class="col-3">
-                <label for="estimated_base_budget">Presupuesto base estimado</label>
-                <label class="custom-control">
-                    <button type="button" data-toggle="tooltip"
-                            class="btn btn-sm btn-info btn-import"
-                            title="Presione para subir el archivo del documento."
-                            @click="setFile('estimated_base_budget')">
-                        <i class="fa fa-upload"></i>
-                    </button>
-                    <input type="file" 
-                            id="estimated_base_budget" 
-                            @change="uploadFile('estimated_base_budget', $event)"
-                            style="display:none;">
-                    <span class="badge badge-success" id="status_estimated_base_budget" style="display:none;">
-                        <strong>Documento Cargado.</strong>
-                    </span>
-                </label>
-            </div> -->
             <div class="col-3">
                 <div class="form-group is-required">
                     <label for="purchase_supplier_objects">Denominación del requerimiento</label>
@@ -102,30 +74,22 @@
             </div>
             <div class="col-3">
                 <div class="form-group is-required">
-                    <label for="description">Denominación especifica del requerimiento</label>
+                    <label for="description">Descripción de contratación</label>
                     <input type="text" id="description" v-model="record.description" class="form-control">
                 </div>
             </div>
-            <!--             <div class="col-3">
-                <div class="form-group is-required">
-                    <label for="Disponibilidad presupuestaria">Disponibilidad presupuestaria</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                @click="setFile('Disponibilidad presupuestaria')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="Disponibilidad presupuestaria" 
-                                @change="uploadFile('Disponibilidad presupuestaria', $event)"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_Disponibilidad presupuestaria" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="supplier_rnc">Número de certificado (RNC)</label>
+                    <p>
+                        {{
+                            supplier.rnc_certificate_number 
+                            ? supplier.rnc_status+' - '+supplier.rnc_certificate_number
+                            : 'No definido'
+                        }}
+                    </p>
                 </div>
-            </div> -->
+            </div>
             <div class="col-12">
                 <br>
             </div>
@@ -174,149 +138,6 @@
             <div class="col-12">
                 <hr>
             </div>
-            <!--  <div class="col-12 row">
-                <div class="col-3">
-                    <label for="acta_inicio">Acta de inicio (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                @click="setFile('acta_inicio')"
-                                disabled="">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="acta_inicio" 
-                                @change="uploadFile('acta_inicio')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_acta_inicio" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-                <div class="col-3">
-                    <label for="invitation_bussiness">Invitación de la empresa (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                disabled="" 
-                                @click="setFile('invitation_bussiness')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="invitation_bussiness" 
-                                @change="uploadFile('invitation_bussiness')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_invitation_bussiness" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-                <div class="col-3">
-                    <label for="invitation_bussiness">Proforma / Cotización (inhabilitado temporalmente)</label>
-                    <label class="custom-control">
-                        <button type="button" data-toggle="tooltip"
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para subir el archivo del documento."
-                                disabled="" 
-                                @click="setFile('invitation_bussiness')">
-                            <i class="fa fa-upload"></i>
-                        </button>
-                        <input type="file" 
-                                id="invitation_bussiness" 
-                                @change="uploadFile('invitation_bussiness')"
-                                style="display:none;">
-                        <span class="badge badge-success" id="status_invitation_bussiness" style="display:none;">
-                            <strong>Documento Cargado.</strong>
-                        </span>
-                    </label>
-                </div>
-            </div>
-            <div class="col-12">
-                <v-client-table :columns="columns" :data="requirements" :options="table_options">
-                    <div slot="requirement_status" slot-scope="props" class="text-center">
-                        <div class="d-inline-flex">
-                            <span class="badge badge-info"    
-                                v-show="props.row.requirement_status == 'PROCESSED'">
-                                <strong>PROCESADO</strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div slot="id" slot-scope="props" class="text-center">
-                        <div class="feature-list-content-left mr-2" v-if="record.currency">
-                            <label class="custom-control custom-checkbox">
-                                <p-check class="p-icon p-smooth p-plain p-curve"
-                                         color="primary-o"
-                                         :value="'_'+props.row.id"
-                                         :id="'requirement_check_'+props.row.id"
-                                         :checked="indexOf(requirement_list, props.row.id, true)"
-                                         @change="requirementCheck(props.row)">
-                                    <i slot="extra" class="icon fa fa-check"></i>
-                                </p-check>
-                            </label>
-                        </div>
-                    </div>
-                </v-client-table>
-            </div> -->
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- <div class="col-12">
-                <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
-                    <div slot="unit_price" slot-scope="props">
-                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
-                    </div>
-                    <div slot="qty_price" slot-scope="props">
-                        <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
-                    </div>
-                </v-client-table>
-            </div> -->
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- <div class="col-12" v-if="record_items.length > 0">
-                <div class="VueTables VueTables--client" style="margin-top: -1rem;">
-                    <div class="table-responsive">
-                        <table class="VueTables__table table table-striped table-bordered table-hover">
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.65%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">SUB-TOTAL {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ sub_total.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">{{ tax?tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ tax_value.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">TOTAL {{ currency_symbol }}</h6>
-                                    </td>
-                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ (total).toFixed((record.currency)?currency_decimal_places:'') }}</h6>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div class="card-footer text-right">
             <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
@@ -378,6 +199,7 @@ export default {
     },
     data() {
         return {
+            errors:[],
             records: [],
             record: {
                 institution_id: '',
@@ -393,6 +215,14 @@ export default {
                 purchase_supplier_object: '',
                 currency: null,
             },
+            // variables para proveedor
+            purchase_supplier_id: '',
+            supplier: {
+                address: '',
+                rnc: ''
+            },
+            // .variables para proveedor
+
             fiscalYear: null,
             institutions: [{ id: '', text: 'Seleccione...' }],
             departments: [],
@@ -406,47 +236,16 @@ export default {
                 'purchase_base_budget.currency.name',
                 'id'
             ],
-            columns2: ['requirement_code',
-                'name',
-                'quantity',
-                'measurement_unit.acronym',
-                'unit_price',
-                'qty_price',
-            ],
-            table2_options: {
-                pagination: { edge: true },
-                //filterByColumn: true,
-                highlightMatches: true,
-                texts: {
-                    filter: "Buscar:",
-                    filterBy: 'Buscar por {column}',
-                    //count:'Página {page}',
-                    count: ' ',
-                    first: 'PRIMERO',
-                    last: 'ÚLTIMO',
-                    limit: 'Registros',
-                    //page: 'Página:',
-                    noResults: 'No existen registros',
-                },
-                sortIcon: {
-                    is: 'fa-sort cursor-pointer',
-                    base: 'fa',
-                    up: 'fa-sort-up cursor-pointer',
-                    down: 'fa-sort-down cursor-pointer'
-                },
-            },
             requirement_list: [],
             requirement_list_deleted: [],
             sub_total: 0,
             tax_value: 0,
             total: 0,
             currency_id: '',
-            purchase_supplier_id: '',
             convertion_list: [],
             load_data_edit: false,
             files: {
-                'Presupuesto_base_estimado': null,
-                'Disponibilidad_presupuestaria': null,
+                'disponibilidad_presupuestaria': null,
             },
         }
     },
@@ -473,26 +272,6 @@ export default {
             'purchase_base_budget.currency.name': 'col-xs-1',
             'id': 'col-xs-1'
         };
-
-        vm.table2_options.headings = {
-            'requirement_code': 'Código de requerimiento',
-            'name': 'Nombre',
-            'quantity': 'Cantidad',
-            'measurement_unit.acronym': 'Unidad de medida',
-            'unit_price': 'Precio unitario sin IVA',
-            'qty_price': 'Cantidad * precio unitario',
-        };
-
-        vm.table2_options.columnsClasses = {
-            'requirement_code': 'col-xs-1 text-center',
-            'name': 'col-xs-3',
-            'quantity': 'col-xs-2',
-            'measurement_unit.acronym': 'col-xs-2',
-            'unit_price': 'col-xs-2',
-            'qty_price': 'col-xs-2',
-        };
-
-        vm.table2_options.filterable = [];
 
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
@@ -535,7 +314,7 @@ export default {
             this.sub_total = 0;
             this.tax_value = 0;
             this.total = 0;
-            this.$refs.PurchaseOrderFormComponent.reset();
+            this.$refs.purchaseShowError.reset();
         },
 
         uploadFile(inputID, e) {
@@ -673,21 +452,27 @@ export default {
         },
 
         createRecord() {
-
-            // if (id == 'acta_inicio' || id == 'invitation_bussiness') {
-            //     $('#status_'+id).show('slow');
-            //     return;
-            // }
-
             /** Se obtiene y da formato para enviar el archivo a la ruta */
             let vm = this;
             var formData = new FormData();
-            // var inputFile = document.querySelector('#'+id);
-            // formData.append("file", inputFile.files[0]);
+
+            var inputFile = document.querySelector('#disponibilidad_presupuestaria');
+            formData.append("disponibilidad_presupuestaria", inputFile.files[0]);
+
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);
-            formData.append("subtotal", this.sub_total);
-            formData.append("requirement_list", JSON.stringify(this.requirement_list));
+            // formData.append("subtotal", this.sub_total);
+            // formData.append("requirement_list", JSON.stringify(this.requirement_list));
+
+            formData.append("institution_id", this.record.institution_id);
+            formData.append("contracting_department_id", this.record.contracting_department_id);
+            formData.append("user_department_id", this.record.user_department_id);
+            formData.append("fiscal_year_id", this.fiscalYear.id);
+            formData.append("purchase_supplier_id", this.record.purchase_supplier_id);
+            formData.append("purchase_supplier_object_id", this.record.purchase_supplier_object_id);
+            formData.append("funding_source", this.record.funding_source);
+            formData.append("description", this.record.description);
+
             vm.loading = true;
 
             if (!this.record_edit) {
@@ -697,18 +482,21 @@ export default {
                     }
                 }).then(response => {
                     vm.showMessage('store');
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                     location.href = this.route_list;
                 }).catch(error => {
+                    vm.errors = [];
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 422 || error.response.status == 500) {
-                            for (const i in error.response.data.errors) {
-                                vm.showMessage(
-                                    'custom', 'Error', 'danger', 'screen-error', error.response.data.errors[i][0]
-                                );
+                            for (var index in error.response.data.errors) {
+                                if (error.response.data.errors[index]) {
+                                    vm.errors.push(error.response.data.errors[index][0]);
+                                }
                             }
                         }
                     }
+                    vm.$refs.purchaseShowError.refresh();
                     vm.loading = false;
                 });
             } else {
@@ -787,12 +575,15 @@ export default {
                 })
             }
         },
-        purchase_supplier_id: function(res) {
-            if (res) {
-                axios.get('/purchase/get-purchase-supplier-object/' + res).then(response => {
+        purchase_supplier_id(newVal) {
+            if (newVal) {
+                axios.get('/purchase/get-purchase-supplier-object/' + newVal).then(response => {
                     this.record.purchase_supplier_object = response.data;
-                    this.record.purchase_supplier_id = res;
-                })
+                    this.record.purchase_supplier_id = newVal;
+                });
+                axios.get('/purchase/suppliers/' + newVal).then(response => {
+                    this.supplier = response.data.records;
+                });
             }
         },
     },

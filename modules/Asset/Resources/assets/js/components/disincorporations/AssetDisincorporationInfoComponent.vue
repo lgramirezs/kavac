@@ -19,7 +19,6 @@
 					</div>
 
 					<div class="modal-body">
-
 						<div class="alert alert-danger" v-if="errors.length > 0">
 							<ul>
 								<li v-for="error in errors" :key="error">{{ error }}</li>
@@ -139,25 +138,26 @@
             initRecords(url,modal_id){
             	this.errors = [];
 				this.reset();
-
+			
 				const vm = this;
             	var fields = {};
 
             	document.getElementById("info_general").click();
 				url = vm.setUrl(url);
-
+				
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
 						fields = response.data.records;
 
 						$(".modal-body #id").val( fields.id );
-		            	document.getElementById('date').innerText = (fields.date)?fields.date:fields.created_at;
+		            	document.getElementById('date').innerText = (fields.date)?vm.format_date(fields.date):vm.format_date(fields.created_at);
 		            	document.getElementById('motive').innerText = (fields.asset_disincorporation_motive)?fields.asset_disincorporation_motive.name:'N/A';
 		            	document.getElementById('observation').innerHTML = (fields.observation)?fields.observation:'N/A';
 					}
-					if ($("#" + modal_id).length) {
+					
+					 if ($("#" + modal_id).length) {
 						$("#" + modal_id).modal('show');
-					}
+					 }
 				}).catch(error => {
 					if (typeof(error.response) !== "undefined") {
 						if (error.response.status == 403) {
@@ -170,6 +170,7 @@
 						}
 					}
 				});
+			
             },
 			loadEquipment(){
 				var index = $(".modal-body #id").val();

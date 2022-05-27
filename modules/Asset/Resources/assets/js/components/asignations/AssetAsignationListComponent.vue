@@ -12,7 +12,7 @@
 		</div>
 		<div slot="created" slot-scope="props" class="text-center">
 			<span>
-				{{ (props.row.created_at)?props.row.created_at:'N/A' }}
+				{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
 			</span>
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">
@@ -26,7 +26,7 @@
 	    				title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 	    			<i class="fa fa-edit"></i>
 	    		</button>
-	    		<button @click="deleteRecord(props.index, '')"
+	    		<button @click="deleteRecord(props.row.id, '')"
 						class="btn btn-danger btn-xs btn-icon btn-action"
 						title="Eliminar registro" data-toggle="tooltip" v-has-tooltip 
 						type="button">

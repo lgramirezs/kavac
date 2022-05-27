@@ -17,10 +17,10 @@
             <a href="#">Banco</a>
             <ul class="submenu">
                 <li>
-                    <a href="#">Movimientos</a>
+                    <a href="{{ route('finance.movements.index') }}">Movimientos</a>
                 </li>
                 <li>
-                    <a href="#">Conciliación</a>
+                    <a href="{{ route('finance.conciliation.index') }}">Conciliación</a>
                 </li>
             </ul>
         </li>

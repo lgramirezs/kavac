@@ -23,15 +23,12 @@
 				<div class="card-header">
 					<h6 class="card-title">{{ __('Módulos') }}</h6>
 					<div class="card-btns">
-						@include('buttons.previous', ['route' => route('index')])
+						@include('buttons.previous', ['route' => url()->previous()])
                         @include('buttons.minimize')
 					</div>
 				</div>
 				<div class="card-body" style="padding-bottom: 2.25rem">
                     <manage-modules :modules='{!! json_encode($listModules) !!}'></manage-modules>
-					<div class="row">
-                        
-					</div>
 				</div>
 			</div>
 		</div>

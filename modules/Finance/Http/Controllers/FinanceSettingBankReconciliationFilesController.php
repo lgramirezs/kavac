@@ -12,7 +12,7 @@ use DB;
 /**
  * @class FinanceSettingBankReconciliationFilesController
  * 
- * @brief Configuraciones de los archivos de conciliación bancaria
+ * @brief Configuraciones de los archivos de conciliación bancaria.
  *
  * Clase que gestiona las configuraciones de archivos de conciliación bancarias.
  *
@@ -28,8 +28,30 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     use ValidatesRequests;
 
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\JsonResponse
+     * Define la configuración inicial de la clase.
+     *
+     * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /**
+         * Establece permisos de acceso para cada método del controlador
+         */
+        $this->middleware('permission:finance.settingbankreconciliationfiles.index', ['only' => 'index']);
+        $this->middleware('permission:finance.settingbankreconciliationfiles.store', ['only' => 'store']);
+        $this->middleware('permission:finance.settingbankreconciliationfiles.update', ['only' => 'update']);
+        $this->middleware('permission:finance.settingbankreconciliationfiles.destroy', ['only' => 'destroy']);
+    }
+
+    /**
+     * Obtiene un listado de los registros almacenados.
+     *
+     * @method index
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -50,22 +72,26 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     {
         $this->validate($request, [
             'bank_id' => ['required'],
+            'balance_according_bank' => ['required'],
             'position_reference_column' => ['required'],
             'position_date_column' => ['required'],
             'position_debit_amount_column' => ['required'],
             'position_credit_amount_column' => ['required'],
             'position_description_column' => ['required'],
+            'position_balance_according_bank' => ['required'],
             'separated_by' => ['required'],
             'date_format' => ['required'],
             'thousands_separator' => ['required'],
             'decimal_separator' => ['required'],
         ], [
             'bank_id.required' => 'El campo banco es obligatorio.',
+            'balance_according_bank.required' => 'El campo saldo según banco es obligatorio.',
             'position_reference_column.required' => 'El campo referencia es obligatorio.',
             'position_date_column.required' => 'El campo fecha es obligatorio.',
             'position_debit_amount_column.required' => 'El campo monto débito es obligatorio.',
             'position_credit_amount_column.required' => 'El campo monto crédito es obligatorio.',
             'position_description_column.required' => 'El campo descripción es obligatorio.',
+            'position_balance_according_bank.required' => 'El campo saldo según banco es obligatorio.',
             'separated_by.required' => 'El campo columnas separadas por es obligatorio.',
             'date_format.required' => 'El campo formato de fecha es obligatorio.',
             'thousands_separator.required' => 'El campo separador de miles es obligatorio.',
@@ -77,11 +103,13 @@ class FinanceSettingBankReconciliationFilesController extends Controller
                 'bank_id' => $request->bank_id,
                 'read_start_line' => $request->read_start_line,
                 'read_end_line' => $request->read_end_line,
+                'balance_according_bank' => $request->balance_according_bank,
                 'position_reference_column' => $request->position_reference_column,
                 'position_date_column' => $request->position_date_column,
                 'position_debit_amount_column' => $request->position_debit_amount_column,
                 'position_credit_amount_column' => $request->position_credit_amount_column,
                 'position_description_column' => $request->position_description_column,
+                'position_balance_according_bank' => $request->position_balance_according_bank,
                 'separated_by' => $request->separated_by,
                 'date_format' => $request->date_format,
                 'thousands_separator' => $request->thousands_separator,
@@ -101,9 +129,14 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * Actualiza un registro específico de la base de datos.
+     *
+     * @method update
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -111,11 +144,13 @@ class FinanceSettingBankReconciliationFilesController extends Controller
         $data->bank_id = $request->bank_id;
         $data->read_start_line = $request->read_start_line;
         $data->read_end_line = $request->read_end_line;
+        $data->balance_according_bank = $request->balance_according_bank;
         $data->position_reference_column = $request->position_reference_column;
         $data->position_date_column = $request->position_date_column;
         $data->position_debit_amount_column = $request->position_debit_amount_column;
         $data->position_credit_amount_column = $request->position_credit_amount_column;
         $data->position_description_column = $request->position_description_column;
+        $data->position_balance_according_bank = $request->position_balance_according_bank;
         $data->separated_by = $request->separated_by;
         $data->date_format = $request->date_format;
         $data->thousands_separator = $request->thousands_separator;
@@ -125,10 +160,20 @@ class FinanceSettingBankReconciliationFilesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @return \Illuminate\Http\JsonResponse
+     * Elimina un registro específico de la base de datos.
+     *
+     * @method destroy
+     *
+     * @author Argenis Osorio <aosorio@cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        /** @var object Datos de la entidad bancaria */
+        $data = FinanceSettingBankReconciliationFiles::find($id);
+        $data->delete();
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 }

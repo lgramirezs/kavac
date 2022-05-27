@@ -1,26 +1,23 @@
 <template>
     <section>
         <v-client-table :columns="columns" :data="records" :options="table_options">
-            <div slot="purchase_supplier.purchase_supplier_object" slot-scope="props" class="text-center">
-                <div v-if="props.row.purchase_supplier.purchase_supplier_object">
-                    <div v-if="props.row.purchase_supplier.purchase_supplier_object.type == 'S'">
-                        <strong>Servicios / {{ props.row.purchase_supplier.purchase_supplier_object.name }}</strong>
-                    </div>
-                    <div v-else-if="props.row.purchase_supplier.purchase_supplier_object.type == 'O'">
-                        <strong>Obras / {{ props.row.purchase_supplier.purchase_supplier_object.name }}</strong>
-                    </div>
-                    <div v-else-if="props.row.purchase_supplier.purchase_supplier_object.type == 'B'">
-                        <strong>Bienes / {{ props.row.purchase_supplier.purchase_supplier_object.name }}</strong>
-                    </div>
-                </div>
-            </div>
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
-                    <!-- <purchase-plan-show :id="props.row.id" :route_show="'/purchase/purchase_order/'+props.row.id" /> -->
-                    <button @click="editForm(props.row.id)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" v-has-tooltip>
+                    <!-- <button @click="editForm(props.row.id)" 
+                        class="btn btn-warning btn-xs btn-icon btn-action" 
+                        title="Modificar registro" 
+                        data-toggle="tooltip" 
+                        v-has-tooltip>
                         <i class="fa fa-edit"></i>
-                    </button>
-                    <button @click="deleteRecord(props.index,'/purchase/purchase_order')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
+                    </button> -->
+                    <a class="btn btn-primary btn-xs btn-icon" :href="url_start_certificate+props.row.id" title="Imprimir Acta de inicio" data-toggle="tooltip" v-has-tooltip target="_blank">
+                        <i class="fa fa-print" style="text-align: center;"></i>
+                    </a>
+                    <button @click="deleteRecord(props.index,'/purchase/direct_hire')" 
+                        class="btn btn-danger btn-xs btn-icon btn-action" 
+                        title="Eliminar registro" 
+                        data-toggle="tooltip" 
+                        v-has-tooltip>
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </div>
@@ -31,40 +28,37 @@
 </template>
 <script>
 export default {
-    props: {
-        records: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
-    },
     data() {
         return {
+            records: [],
+            url_start_certificate: `${window.app_url}/purchase/direct_hire/start_certificate/pdf/`,
             columns: [
-                'purchase_supplier.name',
-                'purchase_supplier.purchase_supplier_object',
-                'currency.name',
+                'fiscal_year.year',
+                'funding_source',
+                'description',
                 'id'
             ],
         }
     },
     created() {
         this.table_options.headings = {
-            'purchase_supplier.name': 'Proveedor',
-            'purchase_supplier.purchase_supplier_object': 'tipo de proveedor',
-            'currency.name': 'tipo de moneda',
-            'id': 'ACCIÓN'
+            'fiscal_year.year': 'Año fiscal',
+            'funding_source': 'Fuente de financiamiento',
+            'description': 'Denominación especifica del requerimiento',
+            'id': 'Acción'
         };
         this.table_options.columnsClasses = {
-            'purchase_supplier.name': 'col-xs-3',
-            'purchase_supplier.purchase_supplier_object': 'col-xs-5 text-center',
-            'currency.name': 'col-xs-3 text-center',
+            'fiscal_year.year': 'col-xs-2',
+            'funding_source': 'col-xs-4',
+            'description': 'col-xs-5',
             'id': 'col-xs-1'
         };
     },
     mounted() {
-        // 
+        const vm = this;
+        axios.get(`${window.app_url}/purchase/direct_hire/vue-list`).then(response => {
+            vm.records = response.data.records;
+        });
     }
 };
 </script>

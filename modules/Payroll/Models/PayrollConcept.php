@@ -9,6 +9,8 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 use Module;
 
+use Modules\Payroll\Repositories\PayrollAssociatedParametersRepository;
+
 /**
  * @class      PayrollConcept
  * @brief      Datos de conceptos
@@ -149,7 +151,46 @@ class PayrollConcept extends Model implements Auditable
 
     public function getTranslateFormulaAttribute()
     {
-        $formula = $this->formula;
-        return str_replace('if', 'Si', $formula);
+        $parameters = new PayrollAssociatedParametersRepository;
+        $formula = str_replace('if', 'Si', $this->formula);
+        $typesParameters = ['associatedVacation', 'associatedWorkerFile', 'associatedBenefit', 'parameter', 'concept', 'tabulator'];
+
+        foreach ($typesParameters as $typeParameter) {
+            if (in_array($typeParameter, ['parameter', 'concept', 'tabulator'])) {
+                if ($typeParameter == 'parameter') {
+                    $types = Parameter::where(
+                        [
+                            'required_by' => 'payroll',
+                            'active'      => true,
+                        ]
+                    )->where('p_key', 'like', 'global_parameter_%')->get();
+                    foreach ($types as $type) {
+                        $formula = str_replace('parameter(' . $type['id'] . ')', $type['name'], $formula);
+                    }
+                } elseif ($typeParameter == 'concept') {
+                    $types = PayrollConcept::all();
+                    foreach ($types as $type) {
+                        $formula = str_replace('concept(' . $type['id'] . ')', $type['name'], $formula);
+                    }
+                } elseif ($typeParameter == 'tabulator') {
+                    $types = PayrollSalaryTabulator::all();
+                    foreach ($types as $type) {
+                        $formula = str_replace('tabulator(' . $type['id'] . ')', $type['name'], $formula);
+                    }
+                }
+            } else {
+                $types = $parameters->loadData($typeParameter);
+                foreach ($types as $type) {
+                    if (empty($type['children'])) {
+                        $formula = str_replace($type['id'], $type['name'], $formula);
+                    } else {
+                        foreach ($type['children'] as $children) {
+                            $formula = str_replace($children['id'], $children['name'], $formula);
+                        }
+                    }
+                }
+            }
+        }
+        return $formula;
     }
 }

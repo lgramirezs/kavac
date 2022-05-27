@@ -14,7 +14,7 @@ class Tax extends BaseTax
      */
     public function purchaseBaseBudget()
     {
-        // hasMany(RelatedModel, foreignKeyOnRelatedModel = currency_id, localKey = id)
+        // hasMany(RelatedModel, foreignKeyOnRelatedModel = tax_id, localKey = id)
         return $this->hasMany(PurchaseBaseBudget::class);
     }
 }

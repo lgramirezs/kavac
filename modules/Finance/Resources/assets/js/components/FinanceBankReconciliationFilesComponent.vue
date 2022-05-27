@@ -84,6 +84,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group is-required">
+                                    <label>Saldo según banco:</label>
+                                    <select2
+                                        :options="balance_according_bank_list"
+                                        v-model="record.balance_according_bank"
+                                    >
+                                    </select2>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         <h6 class="card-title">
                             Posición de las columnas:
@@ -93,6 +105,7 @@
                                 <div class="form-group is-required">
                                     <label>Referencia:</label>
                                     <select2
+                                        @input="disabledInput()"
                                         :options="lines"
                                         v-model="record.position_reference_column"
                                     >
@@ -137,6 +150,16 @@
                                     <select2
                                         :options="lines"
                                         v-model="record.position_description_column"
+                                    >
+                                    </select2>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group is-required">
+                                    <label>Saldo según banco:</label>
+                                    <select2
+                                        :options="lines"
+                                        v-model="record.position_balance_according_bank"
                                     >
                                     </select2>
                                 </div>
@@ -201,16 +224,26 @@
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <a slot="bank_id" slot-scope="props" target="_blank"
                                 v-if="props.row.bank_id">
-                                {{ props.row.bank_id }}
+                                <span v-for="bank in banks" :key="bank.id">
+                                    <span v-if="props.row.bank_id==bank.id">
+                                        {{ bank.text }}
+                                    </span>
+                                </span>
                             </a>
                             <a slot="read_start_line" slot-scope="props" target="_blank"
                                 v-if="props.row.read_start_line">
-                                {{ props.row.read_start_line }}
+                                Sí
                             </a>
+                            <span v-else>
+                                No
+                            </span>
                             <a slot="read_end_line" slot-scope="props" target="_blank"
                                 v-if="props.row.read_end_line">
-                                {{ props.row.read_end_line }}
+                                Sí
                             </a>
+                            <span v-else>
+                                No
+                            </span>
                             <a slot="position_reference_column" slot-scope="props" target="_blank"
                                 v-if="props.row.position_reference_column">
                                 {{ props.row.position_reference_column }}
@@ -253,7 +286,7 @@
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button @click="deleteRecord(props.row.id, '/finance/banks')"
+                                <button @click="deleteRecord(props.row.id, '/finance/setting-bank-reconciliation-files')"
                                     class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
@@ -276,11 +309,13 @@
                     bank_id: '',
                     read_start_line: false,
                     read_end_line: false,
+                    balance_according_bank: '',
                     position_reference_column: '',
                     position_date_column: '',
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    position_balance_according_bank: '',
                     separated_by: '',
                     date_format: '',
                     thousands_separator: '',
@@ -290,32 +325,32 @@
                 records: [],
                 columns: [
                     'bank_id',
-                    'read_start_line',
-                    'read_end_line',
                     'position_reference_column',
                     'position_date_column',
                     'position_debit_amount_column',
                     'position_credit_amount_column',
                     'position_description_column',
-                    'separated_by',
-                    'date_format',
-                    'thousands_separator',
-                    'decimal_separator',
+                    'position_balance_according_bank',
                     'id'
                 ],
                 banks: [],
+                balance_according_bank_list: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": 1, "text": "Inicio"},
+                    { "id": 2, "text": "Final"},
+                ],
                 lines: [
                     { "id": "", "text": "Seleccione..." },
-                    { "id": 1, "text": "1" },
-                    { "id": 2, "text": "2" },
-                    { "id": 3, "text": "3" },
-                    { "id": 4, "text": "4" },
-                    { "id": 5, "text": "5" },
-                    { "id": 6, "text": "6" },
-                    { "id": 7, "text": "7" },
-                    { "id": 8, "text": "8" },
-                    { "id": 9, "text": "9" },
-                    { "id": 10, "text": "10" },
+                    { "id": 1, "text": "1" , "disabled": null },
+                    { "id": 2, "text": "2", "disabled": null },
+                    { "id": 3, "text": "3", "disabled": null },
+                    { "id": 4, "text": "4", "disabled": null },
+                    { "id": 5, "text": "5", "disabled": null },
+                    { "id": 6, "text": "6", "disabled": null },
+                    { "id": 7, "text": "7", "disabled": null },
+                    { "id": 8, "text": "8", "disabled": null },
+                    { "id": 9, "text": "9", "disabled": null },
+                    { "id": 10, "text": "10", "disabled": null },
                 ],
                 separated_list : [
                     { "id": "", "text": "Seleccione..." },
@@ -346,61 +381,56 @@
                     bank_id: '',
                     read_start_line: false,
                     read_end_line: false,
+                    balance_according_bank: '',
                     position_reference_column: '',
                     position_date_column: '',
                     position_debit_amount_column: '',
                     position_credit_amount_column: '',
                     position_description_column: '',
+                    position_balance_according_bank: '',
                     separated_by: '',
                     date_format: '',
                     thousands_separator: '',
                     decimal_separator: '',
                 };
             },
+            /**
+             * Método que deshabilita elementos del array lines cuando ya han sido.
+             * seleccionados.
+             */
+            disabledInput() {
+                const vm = this;
+                vm.lines.forEach(myFunction);
+                function myFunction(item, index) {
+                    if (item.id == vm.record.position_reference_column) {
+                        vm.lines[index].disabled=true;
+                    }
+                    else {
+                        vm.lines[index].disabled=false;
+                    }
+                }
+            }
         },
         created() {
             this.getBanks();
             this.table_options.headings = {
                 'bank_id': 'Banco',
-                'read_start_line': 'Leer línea de inicio',
-                'read_end_line': 'Leer línea final',
                 'position_reference_column': 'Referencia',
                 'position_date_column': 'Fecha',
                 'position_debit_amount_column': 'Monto débito',
                 'position_credit_amount_column': 'Monto crédito',
                 'position_description_column': 'Descripción',
-                'separated_by': 'Columnas separadas por',
-                'date_format': 'Formato de fecha',
-                'thousands_separator': 'Separador de miles',
-                'decimal_separator': 'Separador de decimales',
+                'position_balance_according_bank': 'Saldo según banco',
                 'id': 'Acción'
             };
             this.table_options.sortable = [
                 'bank_id',
-                'read_start_line',
-                'read_end_line',
                 'position_reference_column',
                 'position_date_column',
                 'position_debit_amount_column',
                 'position_credit_amount_column',
                 'position_description_column',
-                'separated_by',
-                'date_format',
-                'thousands_separator',
-                'decimal_separator'
-            ];
-            this.table_options.filterable = [
-                'bank_id',
-                'read_end_line',
-                'read_end_line',
-                'position_reference_column',
-                'position_date_column',
-                'position_debit_amount_column',
-                'position_credit_amount_column',
-                'position_description_column',
-                'separated_by',
-                'date_format',
-                'thousands_separator',
+                'position_balance_according_bank',
                 'decimal_separator'
             ];
         },

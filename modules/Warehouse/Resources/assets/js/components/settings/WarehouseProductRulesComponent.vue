@@ -36,7 +36,7 @@
 								</ul>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" v-if="this.record.warehouse_inventory_product_id == ''">
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Organización que gestiona el almacén:</label>
@@ -56,8 +56,27 @@
 			                    </div>
 							</div>
 						</div>
+						<div class="row" v-if="this.record.warehouse_inventory_product_id != ''">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Organización que gestiona el almacén:</label>
+									<select2 :options="institutions"
+											 v-model="institution_id"
+											 @input="getWarehouses()">
+									</select2>
+			                    </div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Almacén:</label>
+									<select2 :options="warehouses"
+											 v-model="warehouse_id">
+									</select2>
+			                    </div>
+							</div>
+						</div>
 						<hr>
-						<div class="row" v-show="this.record.warehouse_inventory_product_id != ''">
+						<div class="row" v-if="this.record.warehouse_inventory_product_id != ''">
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Minimo:</label>
@@ -99,7 +118,7 @@
 							<div slot="description" slot-scope="props">
 								<span>
 									{{ (props.row.warehouse_product)?
-											props.row.warehouse_product.name+': '+props.row.warehouse_product.description:'N/A'
+											props.row.warehouse_product.name+': '+ editField(props.row.warehouse_product.description):'N/A'
 									}}
 								</span>
 							</div>
@@ -239,6 +258,10 @@
 					};
 				else
 					vm.record = vm.records[index-1].warehouse_inventory_rule;
+				if(vm.records[index-1].warehouse_institution_warehouse) {
+					vm.institution_id = vm.records[index-1].warehouse_institution_warehouse.institution_id;
+					vm.warehouse_id = vm.records[index-1].warehouse_institution_warehouse.warehouse_id;
+				}
 				event.preventDefault();
 			},
 			/**
@@ -256,8 +279,8 @@
 	    		const vm = this;
 
 	    		bootbox.confirm({
-	    			title: "Eliminar registro?",
-	    			message: "Esta seguro de eliminar este registro?",
+	    			title: "¿Eliminar registro?",
+	    			message: "¿Esta seguro de eliminar esta regla?",
 	    			buttons: {
 	    				cancel: {
 	    					label: '<i class="fa fa-times"></i> Cancelar'
@@ -281,6 +304,17 @@
 	    				}
 	    			}
 	    		});
+			},
+			/**
+	         * Método edita el campo descripción
+	         *
+	         * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+	         */
+			editField(field) {
+				if(field) {
+					var editfield = field.replace('<p>','');
+					return editfield.replace('</p>','');
+				}
 			},
 		},
 		created() {

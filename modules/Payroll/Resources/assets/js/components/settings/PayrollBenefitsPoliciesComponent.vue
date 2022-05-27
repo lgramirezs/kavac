@@ -406,7 +406,7 @@
                     month_worked_days:                '',
                     maximum_advance_percentage:       '',
                     number_advances_per_year:         '',
-                    salary_type:                      '',
+                    // salary_type:                      '',
                     institution_id:                   '',
                     payroll_payment_type_id:          '',
                     active:                           false,
@@ -418,13 +418,13 @@
                 columns:               ['name', 'application_date', 'active', 'id'],
                 institutions:          [],
                 payroll_payment_types: [],
-                salary_types:          [
-                    {"id": "",                     "text": "Seleccione..."},
-                    {"id": "base_salary",          "text": "Salario Base"},
-                    {"id": "comprehensive_salary", "text": "Salario Integral"},
-                    {"id": "normal_salary",        "text": "Salario Normal"},
-                    {"id": "dialy_salary",         "text": "Salario Diario"}
-                ],
+                // salary_types:          [
+                //     {"id": "",                     "text": "Seleccione..."},
+                //     {"id": "base_salary",          "text": "Salario Base"},
+                //     {"id": "comprehensive_salary", "text": "Salario Integral"},
+                //     {"id": "normal_salary",        "text": "Salario Normal"},
+                //     {"id": "dialy_salary",         "text": "Salario Diario"}
+                // ],
                 panel:                 'benefitsPolicyForm',
             }
         },
@@ -480,7 +480,7 @@
                     month_worked_days:                '',
                     maximum_advance_percentage:       '',
                     number_advances_per_year:         '',
-                    salary_type:                      '',
+                    // salary_type:                      '',
                     institution_id:                   '',
                     payroll_payment_type_id:          '',
                     active:                           false,

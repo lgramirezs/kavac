@@ -63,7 +63,7 @@
 													<span class="left">Natural</span>
                                                     <div class="col-12 bootstrap-switch-mini">
     													{!! Form::radio('person_type', 'N', null, [
-    														'class' => 'form-control bootstrap-switch',
+    														'class' => 'form-control bootstrap-switch reseteable',
                                                             'data-on-label' => 'SI', 'data-off-label' => 'NO'
     													]) !!}
                                                     </div>
@@ -72,7 +72,7 @@
 													<span class="left">Jurídica</span>
                                                     <div class="col-12 bootstrap-switch-mini">
     													{!! Form::radio('person_type', 'J', null, [
-    														'class' => 'form-control bootstrap-switch',
+    														'class' => 'form-control bootstrap-switch reseteable',
                                                             'data-on-label' => 'SI', 'data-off-label' => 'NO'
     													]) !!}
                                                     </div>
@@ -112,7 +112,8 @@
                                                 <div class="col-12 bootstrap-switch-mini">
     												{!! Form::checkbox('active', true, null, [
     													'class' => 'form-control bootstrap-switch',
-                                                        'data-on-label' => 'SI', 'data-off-label' => 'NO'
+                                                        'data-on-label' => 'SI', 'data-off-label' => 'NO',
+                                                        'id' => 'activo'
     												]) !!}
                                                 </div>
 											</div>
@@ -165,7 +166,7 @@
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
 											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
 													(isset($model_supplier_objects)) ? $model_supplier_objects : null, [
-												'class' => 'form-control',
+												'class' => 'form-control multiple',
 												'multiple' => 'multiple',
 												'name' => 'purchase_supplier_object_id[]'
 											]) !!}
@@ -394,7 +395,26 @@
 						</div>
 					</div>
 					<div class="card-footer text-right">
-						@include('layouts.form-buttons')
+						<!-- @include('layouts.form-buttons') -->
+						@if (!isset($hide_clear) || !$hide_clear)
+							{!! Form::button('<i class="fa fa-eraser"></i>', [
+								'class' => 'btn btn-default btn-icon btn-round', 'data-toggle' => 'tooltip', 'type' => 'reset',
+								'id' => 'reset-select',
+								'title' => __('Borrar datos del formulario'),
+							]) !!}
+						@endif
+						@if (!isset($hide_previous) || !$hide_previous)
+						{!! Form::button('<i class="fa fa-ban"></i>', [
+							'class' => 'btn btn-warning btn-icon btn-round', 'data-toggle' => 'tooltip', 'type' => 'button',
+							'title' => __('Cancelar y regresar'), 'onclick' => 'window.location.href="' . url()->previous() . '"',
+						]) !!}
+						@endif
+						@if (!isset($hide_save) || !$hide_save)
+							{!! Form::button('<i class="fa fa-save"></i>', [
+								'class' => 'btn btn-success btn-icon btn-round', 'data-toggle' => 'tooltip',
+								'title' => __('Guardar registro'), 'type' => 'submit'
+							]) !!}
+						@endif
 					</div>
 				{!! Form::close() !!}
 			</div>
@@ -407,8 +427,24 @@
 	{!! Html::script('js/ckeditor.js', [], Request::secure()) !!}
 	<script>
 		let idclicker = 0;
+		
 		$(document).ready(function() {
 			$(".nav-link").tooltip();
+			$("#reset-select").on('click', function() {
+	    		$('#purchase_supplier_type_id').val('').change();
+	    		$('#purchase_supplier_object_id').val('').change();
+	    		$('#purchase_supplier_branch_id').val('').change();
+	    		$('#purchase_supplier_specialty_id').val('').change();
+	    		$('#country_id').val('').change();
+	    		$('#state_id').val('').change();
+	    		$('#city_id').val('').change();
+	    		$('#activo').prop('checked', false);
+	    		$(":radio").prop('checked', false).change();
+	    		$(":checkbox").prop('checked', false).change();
+			});
+			$(".multiple").select2({
+          placeholder: "Seleccione..."
+      });
 		});
 		function clickUploadDoc(id, ){
 			idclicker = id;

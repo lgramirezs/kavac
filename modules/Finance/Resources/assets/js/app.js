@@ -21,6 +21,16 @@ Vue.component('finance-bank-reconciliation-files', () => import(
 ));
 
 /**
+ * Componente para la gestión de conciliación bancaria.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('finance-conciliation', () => import(
+    /* webpackChunkName: "finance-conciliation" */
+    './components/FinanceConciliationComponent.vue'
+));
+
+/**
  * Componente para la gestión de agencias bancarias
  *
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
@@ -86,8 +96,8 @@ Vue.component('finance-voucher-design', () => import(
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
 Vue.component('finance-pay-order-list', () => import(
-	/* webpackChunkName: "finance-pay-order-list" */
-	'./components/FinancePayOrderListComponent.vue'
+    /* webpackChunkName: "finance-pay-order-list" */
+    './components/FinancePayOrderListComponent.vue'
 ));
 
 /**
@@ -96,18 +106,48 @@ Vue.component('finance-pay-order-list', () => import(
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
  Vue.component('finance-pay-order', () => import(
-	/* webpackChunkName: "finance-pay-order" */
-	'./components/FinancePayOrderComponent.vue'
+    /* webpackChunkName: "finance-pay-order" */
+    './components/FinancePayOrderComponent.vue'
 ));
 
 Vue.component('finance-payment-execute-list', () => import(
-	/* webpackChunkName: "finance-payment-execute-list" */
-	'./components/FinancePaymentExecuteListComponent.vue'
+    /* webpackChunkName: "finance-payment-execute-list" */
+    './components/FinancePaymentExecuteListComponent.vue'
 ));
 
 Vue.component('finance-payment-execute', () => import(
-	/* webpackChunkName: "finance-payment-execute" */
-	'./components/FinancePaymentExecuteComponent.vue'
+    /* webpackChunkName: "finance-payment-execute" */
+    './components/FinancePaymentExecuteComponent.vue'
+));
+
+/**
+ * Componente para la creación de movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-create', () => import(
+    /* webpackChunkName: "finance-bank-movements-create" */
+    './components/bank/movements/FinanceBankMovementCreateComponent.vue'
+));
+
+/**
+ * Componente para listar los movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-list', () => import(
+    /* webpackChunkName: "finance-bank-movements-list" */
+    './components/bank/movements/FinanceBankMovementListComponent.vue'
+));
+
+/**
+ * Componente para detallar la información de los movimientos bancarios.
+ *
+ * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('finance-bank-movements-info', () => import(
+    /* webpackChunkName: "finance-bank-movements-info" */
+    './components/bank/movements/FinanceBankMovementInfoComponent.vue'
 ));
 
 /**
@@ -116,123 +156,123 @@ Vue.component('finance-payment-execute', () => import(
  * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
 Vue.mixin({
-	methods: {
-		/**
-		 * Permite formatear la cadena de la cuenta bancaria
-		 *
-		 * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 * 
-		 * @param  {string}  account  Número de cuenta bancaria
-		 * @param  {boolean} formated Indica si se desea obtener o no el número de cuenta bancaria formateada
-		 * 
-		 * @return {string}           Número de cuenta formateado
-		 */
-		format_bank_account(account, formated=true) {
-			if (account.includes('Seleccione')) {
-				return account;
-			}
-			var formated = (typeof(formated) !== "undefined") ? formated : true;
+    methods: {
+        /**
+         * Permite formatear la cadena de la cuenta bancaria
+         *
+         * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param  {string}  account  Número de cuenta bancaria
+         * @param  {boolean} formated Indica si se desea obtener o no el número de cuenta bancaria formateada
+         *
+         * @return {string}           Número de cuenta formateado
+         */
+        format_bank_account(account, formated=true) {
+            if (account.includes('Seleccione')) {
+                return account;
+            }
+            var formated = (typeof(formated) !== "undefined") ? formated : true;
 
-			var account_formated = '';
+            var account_formated = '';
             for (var i = 0; i < account.length; i++) {
                 if (formated && [4, 8, 10].includes(i) && account.charAt(i) !== "-") {
-                	account_formated += '-';
+                    account_formated += '-';
                 }
-            	account_formated += account.charAt(i);
+                account_formated += account.charAt(i);
             }
 
             return account_formated;
-		},
-		/**
-		 * Obtiene los datos de las entidades bancarias registradas
-		 *
-		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 */
-		async getBanks() {
-			const vm = this;
-			
-			await axios.get(`${vm.app_url}/finance/get-banks`).then(response => {
-				vm.banks = response.data;
-			}).catch(error => {
-				vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getBanks');
-			});;
-		},
-		/**
-		 * Obtiene los datos de las cuentas bancarias
-		 *
-		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 */
-		async getAgencies() {
-			const vm = this;
-			vm.agencies = [];
-			const bank_id = this.record.finance_bank_id || '';
+        },
+        /**
+         * Obtiene los datos de las entidades bancarias registradas
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getBanks() {
+            const vm = this;
 
-			if (bank_id) {
-				 axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
-					vm.agencies = response.data;
-				}).catch(error => {
-					vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getAgencies');
-				});
+            await axios.get(`${vm.app_url}/finance/get-banks`).then(response => {
+                vm.banks = response.data;
+            }).catch(error => {
+                vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getBanks');
+            });;
+        },
+        /**
+         * Obtiene las agencias bancarias registradas.
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getAgencies() {
+            const vm = this;
+            vm.agencies = [];
+            const bank_id = this.record.finance_bank_id || '';
 
-				if ($("#bank_code").length) {
-					 axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
-						if (response.data.result) {
-							vm.record.bank_code = response.data.bank.code;
-						}
-					}).catch(error => {
-						vm.logs('Finance/Resources/assets/js/_all.js', 97, error, 'getAgencies');
-					});
-				}
-			}
-		},
-		/**
-		 * Obtiene los datos de los tipos de cuenta bancaria
-		 *
-		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 */
-		async getAccountTypes() {
-			const vm = this;
-			await axios.get(`${vm.app_url}/finance/get-account-types`).then(response => {
-				vm.account_types = response.data;
-			}).catch(error => {
-				console.log(error);
-			});
-		},
-		/**
-		 * Obtiene los datos de las cuentas asociadas a una entidad bancaria
-		 *
-		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 */
-		async getBankAccounts() {
-			const vm = this;
-			const bank_id = vm.record.finance_bank_id || '';
-			
-			if (bank_id) {
-				await axios.get(`${vm.app_url}/finance/get-accounts/${bank_id}`).then(response => {
-					if (response.data.result) {
-						vm.accounts = response.data.accounts;
-					}
-				}).catch(error => {
-					vm.logs('Budget/Resources/assets/js/_all.js', 127, error, 'getBankAccounts');
-				});
-			}
-		},
-		/**
-		 * Obtiene los datos de los métodos de pago
-		 *
-		 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-		 */
-		async getPaymentMethods() {
-			const vm = this;
+            if (bank_id) {
+                axios.get(`${vm.app_url}/finance/get-agencies/${bank_id}`).then(response => {
+                    vm.agencies = response.data;
+                }).catch(error => {
+                    vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getAgencies');
+                });
 
-			await axios.get(`${vm.app_url}/finance/get-payment-methods`).then(response => {
-				vm.paymentMethods = response.data || [];
-			}).catch(error => {
-				vm.logs('Finance/Resources/assets/js/_all.js', 127, error, 'getPaymentMethods');
-			});
-		}
-	},
-	mounted() {
-		// Agregar instrucciones para determinar el año de ejecución
-	}
+                if ($("#bank_code").length) {
+                    axios.get(`${vm.app_url}/finance/get-bank-info/${bank_id}`).then(response => {
+                        if (response.data.result) {
+                            vm.record.bank_code = response.data.bank.code;
+                        }
+                    }).catch(error => {
+                        vm.logs('Finance/Resources/assets/js/_all.js', 97, error, 'getAgencies');
+                    });
+                }
+            }
+        },
+        /**
+         * Obtiene los datos de los tipos de cuenta bancaria
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getAccountTypes() {
+            const vm = this;
+            await axios.get(`${vm.app_url}/finance/get-account-types`).then(response => {
+                vm.account_types = response.data;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        /**
+         * Obtiene los datos de las cuentas asociadas a una entidad bancaria
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getBankAccounts() {
+            const vm = this;
+            const bank_id = vm.record.finance_bank_id || '';
+
+            if (bank_id) {
+                await axios.get(`${vm.app_url}/finance/get-accounts/${bank_id}`).then(response => {
+                    if (response.data.result) {
+                        vm.accounts = response.data.accounts;
+                    }
+                }).catch(error => {
+                    vm.logs('Budget/Resources/assets/js/_all.js', 127, error, 'getBankAccounts');
+                });
+            }
+        },
+        /**
+         * Obtiene los datos de los métodos de pago
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getPaymentMethods() {
+            const vm = this;
+
+            await axios.get(`${vm.app_url}/finance/get-payment-methods`).then(response => {
+                vm.paymentMethods = response.data || [];
+            }).catch(error => {
+                vm.logs('Finance/Resources/assets/js/_all.js', 127, error, 'getPaymentMethods');
+            });
+        }
+    },
+    mounted() {
+        // Agregar instrucciones para determinar el año de ejecución
+    }
 });

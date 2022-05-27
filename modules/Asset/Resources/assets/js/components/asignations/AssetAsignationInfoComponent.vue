@@ -140,7 +140,7 @@
 						fields = response.data.records;
 
 						$(".modal-body #id").val( fields.id );
-		            	document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'';
+		            	document.getElementById('date_init').innerText = (fields.created_at)?vm.format_date(fields.created_at):'';
 		            	document.getElementById('staff').innerText = (fields.payroll_staff)?fields.payroll_staff.first_name + ' ' + fields.payroll_staff.last_name:'N/A';
 					}
 					if ($("#" + modal_id).length) {

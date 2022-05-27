@@ -126,9 +126,16 @@ class AccountingEntry extends Model implements Auditable
         }
     }
 
+    /**
+     * valida que el institution_id del usuario corresponda al del registro
+     * En caso de que el usuario tenga institution_id igual a null se entiende que es el administrador global
+     *
+     * @param  Integer $id Identificador de la institucion del usuario
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function queryAccess($id)
     {
-        if ($id != $this->institution_id && !auth()->user()->isAdmin()) {
+        if ($id != $this->institution_id && auth()->user()->institution_id != null) {
             return true;
         }
         return false;

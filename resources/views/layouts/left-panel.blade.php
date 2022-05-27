@@ -7,10 +7,14 @@
         <a class="float-left profile-thumb" href="{{ url('users') . "/" . Auth::user()->id }}">
             @php
                 $avatar = ($img_profile !== null && file_exists(base_path($img_profile)))
-                          ? $img_profile : 'images/default-avatar.png';
+                    ? $img_profile : 'images/default-avatar.png';
             @endphp
-            <img class="img-circle img-profile-mini" src="{{ asset($avatar, Request::secure()) }}"
-                 alt="{{ auth()->user()->name }}" title="{{ __('Imagen de perfil') }}" data-toggle="tooltip">
+            <img class="img-circle img-profile-mini"
+                src="{{ asset($avatar, Request::secure()) }}"
+                alt="{{ auth()->user()->name }}"
+                title="{{ __('Imagen de perfil') }}"
+                data-toggle="tooltip"
+            >
         </a>
         <div class="media-body">
             <h4 class="media-heading">{{ Auth::user()->name }}</h4>
@@ -19,7 +23,9 @@
     </div>
     @if (Auth::user()->hasVerifiedEmail())
         @if (!App\Models\Institution::all()->isEmpty())
-            <h5 class="navigation-panel-title text-center">{{ __('AÑO FISCAL:') }} <span class="fiscal-year"></span></h5>
+            <h5 class="navigation-panel-title text-center">{{ __('AÑO FISCAL:') }}
+                <span class="fiscal-year"></span>
+            </h5>
             <hr>
         @endif
         <h5 class="navigation-panel-title text-center">{{ __('MENU') }}</h5>
@@ -29,16 +35,19 @@
                 {{-- Acceso al panel de control del usuario --}}
                 <li class="{!! set_active_menu('index') !!}">
                     <a href="{{ route('index') }}" title="{{ __('Panel de control del usuario') }}"
-                       data-toggle="tooltip" data-placement="right">
-                        <i class="ion-ios-speedometer-outline"></i><span>{{ __('Panel de control') }}</span>
+                        data-toggle="tooltip" data-placement="right">
+                        <i class="ion-ios-speedometer-outline"></i>
+                        <span>{{ __('Panel de control') }}</span>
                     </a>
                 </li>
                 @role('admin')
                     {{-- Acceso a la configuración de la aplicación --}}
                     <li>
-                        <a href="javascript:void(0)" title="{{ __('Gestión de configuración') }}"
-                           data-toggle="tooltip" data-placement="right">
-                            <i class="ion-settings"></i><span>{{ __('Configuración') }}</span>
+                        <a href="javascript:void(0)"
+                            title="{{ __('Gestión de configuración') }}"
+                            data-toggle="tooltip" data-placement="right">
+                            <i class="ion-settings"></i>
+                            <span>{{ __('Configuración') }}</span>
                         </a>
                         @php
                             $submenu = '';
@@ -48,33 +57,43 @@
                         @endphp
                         <ul class="submenu" {!! $submenu !!}>
                             <li class="{!! set_active_menu('settings.index') !!}">
-                                <a href="{{ route('settings.index') }}" data-toggle="tooltip" data-placement="right"
-                                   title="{{ __('Configuración general de la aplicación') }}">
+                                <a href="{{ route('settings.index') }}"
+                                    data-toggle="tooltip"
+                                    data-placement="right"
+                                    title="{{ __('Configuración general de la aplicación') }}">
                                     {{ __('General') }}
                                 </a>
                             </li>
                             <li class="{!! set_active_menu('access.settings') !!}">
-                                <a href="" title="{{ __('Gestión de usuarios, roles y permisos') }}"
-                                   data-toggle="tooltip" data-placement="right">
+                                <a href=""
+                                    title="{{ __('Gestión de usuarios, roles y permisos') }}"
+                                    data-toggle="tooltip"
+                                    data-placement="right">
                                     {{ __('Acceso') }}
                                 </a>
                                 <ul class="submenu">
-                                    <li class="{!! set_active_menu('access.settings') !!}" data-toggle="tooltip"
+                                    <li class="{!! set_active_menu('access.settings') !!}"
+                                        data-toggle="tooltip"
                                         title="{{ __('Gestión de roles y permisos del sistema') }}"
                                         data-placement="right">
                                         <a href="{{ route('access.settings') }}">
                                             {{ __('Roles') }} / {{ __('Permisos') }}
                                         </a>
                                     </li>
-                                    <li class="{!! set_active_menu('access.settings.users') !!}" data-toggle="tooltip"
-                                        title="{{ __('Gestión de usuarios del sistema') }}" data-placement="right">
-                                        <a href="{{ route('access.settings.users') }}">{{ __('Usuarios') }}</a>
+                                    <li class="{!! set_active_menu('access.settings.users') !!}"
+                                        data-toggle="tooltip"
+                                        title="{{ __('Gestión de usuarios del sistema') }}"
+                                        data-placement="right">
+                                        <a href="{{ route('access.settings.users') }}">
+                                            {{ __('Usuarios') }}
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="{!! set_active_menu('module.list') !!}">
-                                <a href="{{ route('module.list') }}" title="{{ __('Gestión de módulos del sistema') }}"
-                                   data-toggle="tooltip" data-placement="right">
+                                <a href="{{ route('module.list') }}"
+                                    title="{{ __('Gestión de módulos del sistema') }}"
+                                    data-toggle="tooltip" data-placement="right">
                                     {{ __('Módulos') }}
                                 </a>
                             </li>
@@ -85,8 +104,10 @@
                 @if (count(App\Models\Institution::where('active', true)->get()) > 0)
                     {{-- Gestión de beneficiarios --}}
                     {{-- <li>
-                        <a href="#" title="Gestión de beneficiarios" data-toggle="tooltip" data-placement="right">
-                            <i class="ion-ios-people-outline"></i><span>Beneficiarios</span>
+                        <a href="#" title="Gestión de beneficiarios"
+                            data-toggle="tooltip" data-placement="right">
+                            <i class="ion-ios-people-outline"></i>
+                            <span>Beneficiarios</span>
                         </a>
                     </li> --}}
                     @foreach (\Module::collections(1) as $module)
@@ -95,19 +116,32 @@
                     @endforeach
 
                     {{-- <li>
-                        <a href="javascript:void(0)" title="{{ __('Gestión de cuentas por pagar') }}"
-                           data-toggle="tooltip" data-placement="right">
-                            <i class="ion-ios-paper-outline"></i><span>{{ __('Cuentas Por Pagar') }}</span>
+                        <a href="javascript:void(0)"
+                            title="{{ __('Gestión de cuentas por pagar') }}"
+                            data-toggle="tooltip"
+                            data-placement="right">
+                            <i class="ion-ios-paper-outline"></i>
+                            <span>{{ __('Cuentas Por Pagar') }}</span>
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="javascript:void(0)">{{ __('Ordenes de Pago') }}</a>
+                                <a href="javascript:void(0)">
+                                    {{ __('Ordenes de Pago') }}
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)">{{ __('Reportes') }}</a>
                                 <ul class="submenu">
-                                    <li><a href="javascript:void(0)">{{ __('Reporte 1') }}</a></li>
-                                    <li><a href="javascript:void(0)">{{ __('Reporte 2') }}</a></li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            {{ __('Reporte 1') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            {{ __('Reporte 2') }}
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -115,9 +149,11 @@
 
                     {{-- Gestión de cuentas por cobrar --}}
                     {{-- <li>
-                        <a href="javascript:void(0)" title="{{ __('Gestión de cuentas por cobrar') }}"
-                           data-toggle="tooltip" data-placement="right">
-                            <i class="ion-ios-paper-outline"></i><span>{{ __('Cuentas Por Cobrar') }}</span>
+                        <a href="javascript:void(0)"
+                            title="{{ __('Gestión de cuentas por cobrar') }}"
+                            data-toggle="tooltip" data-placement="right">
+                            <i class="ion-ios-paper-outline"></i>
+                            <span>{{ __('Cuentas Por Cobrar') }}</span>
                         </a>
                         <ul class="submenu">
                             <li>
@@ -132,8 +168,16 @@
                             <li>
                                 <a href="javascript:void(0)">{{ __('Reportes') }}</a>
                                 <ul class="submenu">
-                                    <li><a href="javascript:void(0)">{{ __('Reporte 1') }}</a></li>
-                                    <li><a href="javascript:void(0)">{{ __('Reporte 2') }}</a></li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            {{ __('Reporte 1') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            {{ __('Reporte 2') }}
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -141,9 +185,12 @@
 
                     {{-- Cierre de ejercicio económico --}}
                     <li>
-                        <a href="javascript:void()" title="{{ __('Cierre de ejercicio actual') }}"
-                           data-toggle="tooltip" data-placement="right">
-                            <i class="ion-lock-combination"></i><span>{{ __('Cierre de Ejercicio') }}</span>
+                        <a href="javascript:void()"
+                            title="{{ __('Cierre de ejercicio actual') }}"
+                            data-toggle="tooltip"
+                            data-placement="right">
+                            <i class="ion-lock-combination"></i>
+                            <span>{{ __('Cierre de Ejercicio') }}</span>
                         </a>
                     </li>
                 @endif

@@ -21,7 +21,7 @@
             </div>
             <div slot="asset_status" slot-scope="props" class="text-center">
                 <span>
-                    {{ (props.row.asset_status)?props.row.asset_status.name:'N/A' }}
+                    {{ (props.row.asset_status)?props.row.asset_status.name:'Descincorporado' }}
                 </span>
             </div>
             <div slot="id" slot-scope="props" class="text-center">
@@ -35,7 +35,12 @@
                         class="btn btn-primary btn-xs btn-icon btn-action"
                         title="Asignar Bien"
                         data-toggle="tooltip"
-                        :disabled="(props.row.asset_status_id == 10)?false:true"
+                        :disabled="((props.row.asset_asignation_asset == null)
+                                    &&(props.row.asset_disincorporation_asset == null)
+                                    &&(props.row.asset_request_asset == null)
+                                    &&(props.row.asset_status_id == 10)
+                                    &&(props.row.asset_condition_id == 1)
+                                    &&(props.row.asset_type_id == 1))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-filter"></i>
                     </button>
@@ -44,7 +49,10 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Desincorporar Bien"
                         data-toggle="tooltip"
-                        :disabled="((props.row.asset_status_id < 6)||(props.row.asset_status_id > 9))?false:true"
+                        :disabled="((props.row.asset_asignation_asset == null)
+                                    &&(props.row.asset_disincorporation_asset == null)
+                                    &&(props.row.asset_request_asset == null)
+                                    &&(props.row.asset_type_id == 1))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-chain"></i>
                     </button>
@@ -54,6 +62,9 @@
                         class="btn btn-warning btn-xs btn-icon btn-action"
                         title="Modificar registro"
                         data-toggle="tooltip"
+                        :disabled="((props.row.asset_asignation_asset == null)
+                                    &&(props.row.asset_disincorporation_asset == null)
+                                    &&(props.row.asset_request_asset == null))?false:true"
                         type="button"
                         v-has-tooltip>
                         <i class="fa fa-edit"></i>
@@ -63,6 +74,9 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Eliminar registro"
                         data-toggle="tooltip"
+                        :disabled="((props.row.asset_asignation_asset == null)
+                                    &&(props.row.asset_disincorporation_asset == null)
+                                    &&(props.row.asset_request_asset == null))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-trash-o"></i>
                     </button>
@@ -236,6 +250,7 @@
                 this.reset();
                 const vm = this;
                 url = vm.setUrl(url);
+                console.log('url: ', url);
                 axios.get(url).then(response => {
                     if (typeof(response.data.records) !== "undefined") {
                         vm.records  = response.data.records;

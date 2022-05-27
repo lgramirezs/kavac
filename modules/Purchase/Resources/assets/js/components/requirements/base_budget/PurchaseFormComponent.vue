@@ -34,13 +34,18 @@
         <div class="row">
             <div class="col-3">
                 <div class="form-group is-required">
-                    <label class="control-label">Tipo de moneda
-                    </label>
+                    <label class="control-label">Tipo de moneda</label>
                     <select2 :options="currencies" v-model="currency_id" tabindex="1"></select2>
                 </div>
             </div>
+            <div class="col-3">
+                <div class="form-group is-required">
+                    <label class="control-label">Impuesto</label>
+                    <select2 :options="taxes" v-model="tax_id" tabindex="2"></select2>
+                </div>
+            </div>
         </div>
-        <div class="form-horizontal" v-if="currency_id">
+        <div class="form-horizontal" v-if="currency_id && tax_id">
             <div class="card-body">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -89,7 +94,7 @@
                         <tr class="row">
                             <td style="border: 1px solid #dee2e6;" tabindex="0" class="col-8"></td>
                             <td style="border: 1px solid #dee2e6;" tabindex="0" class="col-2">
-                                <h6 align="right">{{ (record_tax && record_tax.percentage)?record_tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
+                                <h6 align="right">{{ (history_tax && history_tax.percentage)?history_tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
                             </td>
                             <td style="border: 1px solid #dee2e6;" tabindex="0" class="col-2">
                                 <h6 align="right">{{ (tax).toFixed((currency)?currency.decimal_places:'') }}</h6>
@@ -128,10 +133,10 @@ export default {
                 return [];
             }
         },
-        record_tax: {
-            type: Object,
+        taxes: {
+            type: Array,
             default: function() {
-                return null;
+                return [];
             }
         },
         base_budget_edit: {
@@ -146,7 +151,8 @@ export default {
             record_items: [],
             requirement_list: [],
             requirement_list_deleted: [],
-            columns: ['code',
+            columns: [
+                'code',
                 'description',
                 'fiscal_year.year',
                 'contrating_department.name',
@@ -156,6 +162,11 @@ export default {
                 // 'id'
             ],
             currency_id: '',
+            history_tax: {
+                id: '',
+                percentage: 0,
+            },
+            tax_id: '',
             currency: null,
             sub_total: 0,
             tax: 0,
@@ -219,7 +230,7 @@ export default {
             const vm = this;
             vm.errors = [];
 
-            if (!vm.record_tax) {
+            if (!vm.taxes || vm.taxes.length < 2) {
                 vm.errors.push('Debe configurar el IVA en el sistema.');
                 return;
             }
@@ -240,7 +251,7 @@ export default {
                     'list': vm.requirement_list,
                     'currency_id': vm.currency_id,
                     'subtotal': vm.sub_total,
-                    'tax_id': vm.record_tax.id,
+                    'tax_id': vm.history_tax.id,
                 }).then(response => {
                     vm.loading = false;
                     vm.showMessage('store');
@@ -265,7 +276,7 @@ export default {
                     'list_to_delete': vm.requirement_list_deleted,
                     'currency_id': vm.currency_id,
                     'subtotal': vm.sub_total,
-                    'tax_id': vm.record_tax.id,
+                    'tax_id': vm.history_tax.id,
                 }).then(response => {
                     vm.loading = false;
                     vm.showMessage('update');
@@ -306,7 +317,7 @@ export default {
                 r['qty_price'] = r.quantity * r.unit_price;
                 vm.sub_total += r['qty_price'];
             }
-            vm.tax = vm.sub_total * (parseFloat(vm.record_tax.percentage) / 100);
+            vm.tax = vm.sub_total * (parseFloat(vm.history_tax.percentage) / 100);
             vm.total = vm.sub_total + vm.tax;
         },
 
@@ -350,11 +361,13 @@ export default {
     },
     mounted() {
         const vm = this;
-        if (!vm.record_tax) {
+        if (!vm.taxes || vm.taxes.length < 2) {
             vm.errors.push('Debe configurar el IVA en el sistema.');
         }
         if (vm.base_budget_edit) {
             vm.currency_id = vm.base_budget_edit.currency_id;
+
+            vm.tax_id = vm.base_budget_edit.tax_id;
 
             var prices = [];
             for (var i = 0; i < vm.base_budget_edit.relatable.length; i++) {
@@ -382,10 +395,18 @@ export default {
         }
     },
     watch: {
-        currency_id(res) {
-            if (res) {
-                axios.get('/currencies/info/' + res).then(response => {
+        currency_id(newVal) {
+            if (newVal) {
+                axios.get('/currencies/info/' + newVal).then(response => {
                     this.currency = response.data.currency;
+                    this.CalculateTot();
+                });
+            }
+        },
+        tax_id(newVal){
+            if (newVal) {
+                axios.get('/get-last-history-tax/' + newVal).then(response => {
+                    this.history_tax = response.data.record;
                     this.CalculateTot();
                 });
             }

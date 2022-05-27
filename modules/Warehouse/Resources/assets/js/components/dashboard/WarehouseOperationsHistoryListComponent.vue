@@ -1,6 +1,11 @@
 <template>
 	<v-client-table :columns="columns" :data="records" :options="table_options">
 		<div slot="id" slot-scope="props" class="text-center">
+			<div slot="created_at" slot-scope="props">
+            <span>
+                {{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
+            </span>
+        </div>
 			<div class="d-inline-flex">
 				<warehouse-operations-history-info
 					route_list="/warehouse/dashboard/operations/info"

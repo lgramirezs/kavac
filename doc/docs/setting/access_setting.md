@@ -89,4 +89,9 @@ Para la gestión de cuentas de usuarios se deben seguir los siguientes pasos:
 -   Actualice los datos del formulario de **Gestión de Usuario**.
 -   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
 
+### Eliminar registro de cuenta de usuario
 
+-   Ingresar a través del panel lateral a **Configuración** > **Acceso** > **Usuarios**.
+-   Presione el botón **Eliminar registro** ![Screenshot](../img/delete.png) ubicado en la columna titulada **Acción** de un registro de usuario que se desea eliminar.
+
+![Screenshot](../img/g22.png)<div style="text-align: center;font-weight: bold">Figura: Eliminar Cuenta de Usuario</div>

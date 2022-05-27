@@ -238,9 +238,17 @@
 									) !!}
 								</div>
 							</div>
+								<div class="col-md-4">
+								<div class="form-group is-required">
+									{!! Form::label('institution_sector_id', __('Sectores Economicos'), []) !!}
+									{!! Form::select('institution_sector_id', (isset($sectors))?$sectors:[], null, [
+										'class' => 'form-control select2', 'id' => 'institution_sector_id'
+									]) !!}
+								</div>
+							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4">
+							<!-- <div class="col-md-4">
 								<div class="form-group">
 									{!! Form::label('organism_adscript_id', __('Adscrito a'), []) !!}
 									{!! Form::select(
@@ -250,18 +258,11 @@
 										]
 									) !!}
 								</div>
-							</div>
+							</div> -->
+						
 							<div class="col-md-4">
 								<div class="form-group is-required">
-									{!! Form::label('institution_sector_id', __('Sector'), []) !!}
-									{!! Form::select('institution_sector_id', (isset($sectors))?$sectors:[], null, [
-										'class' => 'form-control select2', 'id' => 'institution_sector_id'
-									]) !!}
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group is-required">
-									{!! Form::label('institution_type_id', __('Tipo'), []) !!}
+									{!! Form::label('institution_type_id', __('Tipo de organizacion'), []) !!}
 									{!! Form::select('institution_type_id', (isset($types))?$types:[], null, [
 										'class' => 'form-control select2', 'id' => 'institution_type_id'
 									]) !!}
@@ -285,12 +286,15 @@
 											  </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
+                
+
+								@if(isset($model_institution->default)) 
+								<div class="col-md-2">
+								    <div class="form-group">
                                     {!! Form::label('active', __('Activa'), []) !!}
                                     <div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('active', true, null, [
+                                            {!! Form::checkbox('active', true, ( $model_institution->active == TRUE ? TRUE: FALSE), [
                                                 'id' => 'active', 'class' => 'form-control bootstrap-switch',
                                                 'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                             ]) !!}
@@ -301,15 +305,53 @@
                                     {!! Form::label('default', __('Organización por defecto'), []) !!}
                                     <div class="col-12">
                                         <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('default', true, (isset($model_institution) && $model_institution->default)?null:true, [
+                                            {!! Form::checkbox('default', true, ( $model_institution->default == TRUE ? TRUE: FALSE), [
                                                 'id' => 'default', 'class' => 'form-control bootstrap-switch',
                                                 'data-on-label' => __('SI'), 'data-off-label' => __('NO')
                                             ]) !!}
                                         </div>
                                     </div>
                                 </div>
+								</div>
+								<div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('retention_agent', true,( $model_institution->retention_agent == TRUE ? TRUE: FALSE), [
+                                                'id' => 'retention_agent', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
+								@else
+								<div class="col-md-2"> 
+								<div class="form-group">
+                                    {!! Form::label('active', __('Activa'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('active', true, null, [
+                                                'id' => 'active', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+								    <div class="form-group">
+                                    {!! Form::label('default', __('Organización por defecto'), []) !!}
+                                    <div class="col-12">
+                                        <div class="col-12 bootstrap-switch-mini">
+                                            {!! Form::checkbox('default', true, false, [
+                                                'id' => 'default', 'class' => 'form-control bootstrap-switch',
+                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+								</div>
+								<div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
                                     <div class="col-12">
@@ -322,6 +364,9 @@
                                     </div>
                                 </div>
                             </div>
+								@endif
+                            
+
                         </div>
 						<div class="row">
 							<div class="col-md-4">
@@ -491,8 +536,8 @@
 												<i class="fa fa-eye"></i>
 											</a>
 											<a class="btn btn-warning btn-xs btn-icon btn-action" data-toggle="tooltip"
-												href="javascript:void(0)" title="Modificar registro" v-has-tooltip
-												onclick="loadInstitution('{{ $institution->id }}')">
+												 title="Modificar registro" v-has-tooltip  href='{{route("admin.settings.edit",$institution->id)}}'
+												>
 												<i class="fa fa-edit"></i>
 											</a>
 										</td>
@@ -630,29 +675,28 @@
                                         disabled="true" id="modal-start_operations_date">
 
 					</div>
-					<div class="col-4">
-					</div>
-				</div>
-                <hr>
-                <div class="row justify-content-center">
-					<div class="col-4">
-                        <span class="font-weight-bold">Adscrito a</span>
-                        <br>
-						<input type="text" data-toggle="tooltip"
-                                        class="form-control input-sm"
-                                        disabled="true" id="modal-organism_adscript_id">
-                   
-					</div>
-					<div class="col-4">
-                        <span class="font-weight-bold">Sector</span>
+								<div class="col-4">
+                        <span class="font-weight-bold">Sectores Economicos</span>
                         <br>
 						<input type="text" data-toggle="tooltip"
                                         class="form-control input-sm"
                                         disabled="true" id="modal-institution_sector_id">
                      
 					</div>
+				</div>
+                <hr>
+                <div class="row ">
+					<!-- <div class="col-4">
+                        <span class="font-weight-bold">Adscrito a</span>
+                        <br>
+						<input type="text" data-toggle="tooltip"
+                                        class="form-control input-sm"
+                                        disabled="true" id="modal-organism_adscript_id">
+                   
+					</div> -->
+	
 					<div class="col-4">
-                        <span class="font-weight-bold">Tipo</span>
+                        <span class="font-weight-bold">Tipo de Organizacion</span>
                         <br>
 						<input type="text" data-toggle="tooltip"
                                         class="form-control input-sm"

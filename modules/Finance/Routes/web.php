@@ -11,6 +11,8 @@ use Modules\Finance\Http\Controllers\FinanceBankingAgencyController;
 use Modules\Finance\Http\Controllers\FinancePaymentExecuteController;
 use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
 use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
+use Modules\Finance\Http\Controllers\FinanceConciliationController;
+use Modules\Finance\Http\Controllers\FinanceMovementsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,18 +52,28 @@ Route::group([
         Route::resource('setting-bank-reconciliation-files', FinanceSettingBankReconciliationFilesController::class, ['as' => 'finance']);
     });
 
+    /** Ruta para la gestión de Finanzas > Banco > Ordenes de pago */
     Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
     Route::post(
         'pay-orders/documents/get-sources', 
         [FinancePayOrderController::class, 'getSourceDocuments']
     );
+
+    /** Ruta para la gestión de Finanzas > Banco > Emisiones de pago */
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
+
+    /** Ruta para la gestión de Finanzas > Banco > Movimientos */
+    Route::resource('movements', FinanceMovementsController::class, ['as' => 'finance']);
+
+    /** Ruta para la gestión de Finanzas > Banco > Conciliación */
+    Route::resource('conciliation', FinanceConciliationController::class, ['as' => 'finance']);
 
     Route::get('get-banks/', [FinanceBankController::class, 'getBanks']);
     Route::get('get-bank-info/{bank_id}', [FinanceBankController::class, 'getBankInfo']);
     Route::get('get-agencies/{bank_id?}', [FinanceBankingAgencyController::class, 'getAgencies']);
     Route::get('get-account-types', [FinanceAccountTypeController::class, 'getAccountTypes']);
     Route::get('get-accounts/{bank_id}', [FinanceBankAccountController::class, 'getBankAccounts']);
+    Route::get('get-bank-accounts', [FinanceBankAccountController::class, 'getFinanceBankAccount']);
     Route::get('get-payment-methods', [FinancePaymentMethodsController::class, 'getPaymentMethods']);
     Route::get('voucher-design', function () {
         return view('finance::vouchers.design');
