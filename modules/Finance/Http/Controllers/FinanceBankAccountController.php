@@ -204,10 +204,17 @@ class FinanceBankAccountController extends Controller
      */
     public function getFinanceBankAccount()
     {
-        foreach (FinanceBankAccount::all() as $bank_account) {
+        $bank_accounts = FinanceBankAccount::with(['financeAccountType', 'financeBankingAgency' => function ($query) {
+            $query->with('financeBank');
+        }])->get();
+        $this->data = [['id' => '', 'text' => 'Seleccione...']];
+        foreach ($bank_accounts as $bank_account) {
             $this->data[] = [
                 'id' => $bank_account->id,
-                'text' => $bank_account->ccc_number
+                'text' => $bank_account->ccc_number,
+                'bank_name' => $bank_account->financeBankingAgency && $bank_account->financeBankingAgency->financeBank ?
+                               $bank_account->financeBankingAgency->financeBank->name : '',
+                'bank_account_type' => $bank_account->financeAccountType->name,
             ];
         }
 

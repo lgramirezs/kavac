@@ -51,7 +51,7 @@ class FinanceBankAccount extends Model implements Auditable
      * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function accountType()
+    public function financeAccountType()
     {
         return $this->belongsTo(FinanceAccountType::class);
     }
