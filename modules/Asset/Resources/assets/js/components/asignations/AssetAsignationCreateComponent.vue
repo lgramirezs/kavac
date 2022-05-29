@@ -32,17 +32,25 @@
 
 				</div>
 				<div class="col-md-4" id="helpStaff">
-					<div class="form-group is-required">
+					<div class="form-group">
 						<label>Trabajador:</label>
 						<select2 :options="payroll_staffs" v-model="record.payroll_staff_id"></select2>
                     </div>
 				</div>
 				<div class="col-md-4" id="helpDepartment">
-					<div class="form-group is-required">
+					<div class="form-group">
 						<label>Departamento:</label>
 						<select2 :options="departments" v-model="record.department_id"></select2>
                     </div>
 
+				</div>
+				<div class="col-md-4" id="helpLocationPlace">
+					<div class="form-group is-required">
+						<label>Lugar de ubicación.</label>
+						<input type="text" placeholder="Lugar de ubicación" data-toggle="tooltip"
+							   title="Indique el lugar de ubicación del bien a ser asignado"
+							   class="form-control input-sm" v-model="record.location_place">
+					</div>
 				</div>
 				<div class="col-md-4" id="helpPositionType">
 					<div class="form-group">

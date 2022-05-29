@@ -39,7 +39,7 @@ class AssetAsignation extends Model implements Auditable
      *
      * @var array $fillable
      */
-    protected $fillable = ['code', 'payroll_staff_id', 'department_id', 'user_id', 'institution_id'];
+    protected $fillable = ['code', 'payroll_staff_id', 'department_id', 'user_id', 'institution_id', 'location_place'];
 
     /**
      * Método que obtiene los bienes asignados
