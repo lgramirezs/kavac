@@ -166,6 +166,7 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
+            'purchase_supplier_id'       => $request->purchase_supplier_id
 
         ]);
         $asset->inventory_serial = $asset->getCode();
@@ -245,6 +246,7 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
+            'purchase_supplier_id'       => $request->purchase_supplier_id
 
         ]);
 
@@ -285,6 +287,7 @@ class AssetController extends Controller
                 'assetStatus',
                 'assetUseFunction',
                 'institution',
+                'purchaseSupplier',
                 'parish' => function ($query) {
                     $query->with(['municipality' => function ($query) {
                         $query->with(['estate' => function ($query) {
@@ -294,7 +297,7 @@ class AssetController extends Controller
                 }
             ]
         )->first();
-
+        
         return response()->json(['records' => $asset], 200);
     }
 
