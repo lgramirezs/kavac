@@ -250,6 +250,95 @@
                 </v-client-table>
             </div>
             <!-- ./Tabla de productos -->
+
+            <!-- Totales -->
+            <div class="col-12" v-if="record_items.length > 0">
+                <div class="VueTables VueTables--client" style="margin-top: -1rem;">
+                    <div class="table-responsive">
+                        <table class="VueTables__table table table-striped table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.65%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
+                                        <h6 align="right">SUB-TOTAL {{ currency_symbol }}</h6>
+                                    </td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
+                                        <h6 align="right">{{ sub_total.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
+                                        <h6 align="right">{{ tax?tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
+                                    </td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
+                                        <h6 align="right">{{ tax_value.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="8.2%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="25%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
+                                        <h6 align="right">TOTAL {{ currency_symbol }}</h6>
+                                    </td>
+                                    <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
+                                        <h6 align="right">{{ (total).toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Totales -->
+
+            <!-- Firmas autorizadas -->
+            <div class="col-12 row">
+                <div class="col-12">
+                    <br>
+                    <hr>
+                    <h6 class="card-title">Firmas autorizadas</h6>
+                </div>
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <label class="control-label" for="prepared_by">Preparado por</label><br>
+                        <select2 :options="signing_users" id="prepared_by" v-model="record.prepared_by"></select2>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <label class="control-label" for="reviewed_by">Revisado por</label><br>
+                        <select2 :options="signing_users" id="reviewed_by" v-model="record.reviewed_by"></select2>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <label class="control-label" for="verified_by">Verificado por</label><br>
+                        <select2 :options="signing_users" id="verified_by" v-model="record.verified_by"></select2>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <label class="control-label" for="first_signature">Firmado por</label><br>
+                        <select2 :options="signing_users" id="first_signature" v-model="record.first_signature"></select2>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group is-required">
+                        <label class="control-label" for="second_signature">Firmado por</label><br>
+                        <select2 :options="signing_users" id="second_signature" v-model="record.second_signature"></select2>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Firmas autorizadas -->
         </div>
         <div class="card-footer text-right">
             <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
@@ -312,6 +401,8 @@ export default {
     data() {
         return {
             errors:[],
+            // Variables para las firmas
+            signing_users: [],
             records: [],
             record: {
                 institution_id: '',
@@ -334,7 +425,14 @@ export default {
                     invoice_to: '',
                     send_to: '',
                     rif: '',
-                }
+                },
+
+                // variables para firmas
+                prepared_by: '',
+                reviewed_by: '',
+                verified_by: '',
+                first_signature: '',
+                second_signature: '',
             },
             // variables para proveedor
             purchase_supplier_id: '',
@@ -414,7 +512,7 @@ export default {
     },
     created() {
         const vm = this;
-        this.table_options.headings = {
+        vm.table_options.headings = {
             'code': 'Código',
             'description': 'Descripción',
             'fiscal_year.year': 'Año fiscal',
@@ -425,7 +523,7 @@ export default {
             'id': 'Acción'
         };
 
-        this.table_options.columnsClasses = {
+        vm.table_options.columnsClasses = {
             'code': 'col-xs-1 text-center',
             'description': 'col-xs-2',
             'fiscal_year.year': 'col-xs-1 text-center',
@@ -436,7 +534,7 @@ export default {
             'id': 'col-xs-1'
         };
 
-        this.table2_options.headings = {
+        vm.table2_options.headings = {
             'requirement_code': 'Código de requerimiento',
             'name': 'Nombre',
             'quantity': 'Cantidad',
@@ -445,7 +543,7 @@ export default {
             'qty_price': 'Cantidad * precio unitario',
         };
 
-        this.table2_options.columnsClasses = {
+        vm.table2_options.columnsClasses = {
             'requirement_code': 'col-xs-1 text-center',
             'name': 'col-xs-3',
             'quantity': 'col-xs-1',
@@ -454,15 +552,16 @@ export default {
             'qty_price': 'col-xs-2',
         };
 
-        this.table2_options.filterable = [];
+        vm.table2_options.filterable = [];
 
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
         });
-        vm.reset();
     },
     mounted() {
         const vm = this;
+
+        // vm.reset();
 
         vm.records = vm.requirements;
 
@@ -488,10 +587,11 @@ export default {
     methods: {
 
         reset() {
-            this.record_items = [];
-            this.requirement_list = [];
-            this.requirement_list_deleted = [];
-            this.record = {
+            const vm = this;
+            vm.record_items = [];
+            vm.requirement_list = [];
+            vm.requirement_list_deleted = [];
+            vm.record = {
                 institution_id: '',
                 contracting_department_id: '',
                 user_department_id: '',
@@ -512,12 +612,19 @@ export default {
                     invoice_to: '',
                     send_to: '',
                     rif: '',
-                }
+                },
+
+                // variables para firmas
+                prepared_by: '',
+                reviewed_by: '',
+                verified_by: '',
+                first_signature: '',
+                second_signature: '',
             };
-            this.sub_total = 0;
-            this.tax_value = 0;
-            this.total = 0;
-            this.$refs.purchaseShowError.reset();
+            vm.sub_total = 0;
+            vm.tax_value = 0;
+            vm.total = 0;
+            vm.$refs.purchaseShowError.reset();
         },
 
         uploadFile(inputID, e) {
@@ -697,6 +804,14 @@ export default {
             formData.append("purchase_supplier_object_id", this.record.purchase_supplier_object_id);
             formData.append("funding_source", this.record.funding_source);
             formData.append("description", this.record.description);
+
+
+            // variables para firmas
+            formData.append("prepared_by", this.record.prepared_by);
+            formData.append("reviewed_by", this.record.reviewed_by);
+            formData.append("verified_by", this.record.verified_by);
+            formData.append("first_signature", this.record.first_signature);
+            formData.append("second_signature", this.record.second_signature);
 
             vm.loading = true;
 
