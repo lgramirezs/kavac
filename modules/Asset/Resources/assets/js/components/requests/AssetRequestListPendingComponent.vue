@@ -14,6 +14,16 @@
 					<i class="fa fa-ban"></i>
 				</button>
 			</div>
+			 <div slot="created_at" slot-scope="props" class="text-center">
+                <span>
+                    {{ format_date(props.row.created_at) }}
+                </span>
+            </div>
+			<div slot="delivery_date" slot-scope="props" class="text-center">
+                <span>
+                    {{ format_date(props.row.delivery_date) }}
+                </span>
+            </div>
 
 		</v-client-table>
 	</div>

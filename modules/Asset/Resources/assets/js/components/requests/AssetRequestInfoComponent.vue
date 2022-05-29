@@ -212,10 +212,10 @@
 
                         $(".modal-body #id").val( fields.id );
 
-                        document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'N/A';
+                        document.getElementById('date_init').innerText = (fields.created_at)?vm.format_date(fields.created_at):'N/A';
                         document.getElementById('motive').innerHTML = (fields.motive)?fields.motive:'N/A';
                         document.getElementById('type').innerText = (fields.type)?vm.types[fields.type].text:'N/A';
-                        document.getElementById('delivery_date').innerText = (fields.delivery_date)?fields.delivery_date:'N/A';
+                        document.getElementById('delivery_date').innerText = (fields.delivery_date)?vm.format_date(fields.delivery_date):'N/A';
                         document.getElementById('ubication').innerText = (fields.ubication)?fields.ubication:'N/A';
                         document.getElementById('agent_name').innerText = (fields.agent_name)?fields.agent_name:'N/A';
                         document.getElementById('agent_telf').innerText = (fields.agent_telf)?fields.agent_telf:'N/A';
