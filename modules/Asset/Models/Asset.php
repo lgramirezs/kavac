@@ -162,18 +162,6 @@ class Asset extends Model implements Auditable
     }
 
     /**
-     * Método que obtiene el Proveedor
-     *
-     * @author Henry Paredes <hparedes@cenditel.gob.ve>
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
-     * AssetStatus
-     */
-    public function purchaseSupplier()
-    {
-        return $this->belongsTo(\Modules\Purchase\Models\PurchaseSupplier::class);
-    }
-
-    /**
      * Método que obtiene la función de uso del bien
      *
      * @author Henry Paredes <hparedes@cenditel.gob.ve>
