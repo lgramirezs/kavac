@@ -159,14 +159,4 @@ class PurchaseSupplier extends Model implements Auditable
         return $this->hasMany(PurchaseOrder::class);
     }
 
-    /**
-     * Método que obtiene los bienes asociados a un proveedor
-     *
-     * @author Henry Paredes <hparedes@cenditel.gob.ve>
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo Asset
-     */
-    public function assets()
-    {
-        return $this->hasMany(\Modules\Asset\Models\Asset::class);
-    }
 }

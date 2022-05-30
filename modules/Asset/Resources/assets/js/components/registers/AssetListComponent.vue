@@ -119,6 +119,7 @@
         data() {
             return {
                 records: [],
+                supplier: [],
                 search: '',
                 page: 1,
                 total: '',
