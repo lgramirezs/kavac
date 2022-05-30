@@ -63,6 +63,16 @@
 							            </div>
 									</div>
 
+									<div class="col-md-6">
+										<div class="form-group">
+											<strong>Lugar de ubicación de los bienes asiganados</strong>
+											<div class="row" style="margin: 1px 0">
+												<span class="col-md-12" id="location">
+												</span>
+											</div>
+							            </div>
+									</div>
+
 							    </div>
 	                    	</div>
 
@@ -142,6 +152,7 @@
 						$(".modal-body #id").val( fields.id );
 		            	document.getElementById('date_init').innerText = (fields.created_at)?vm.format_date(fields.created_at):'';
 		            	document.getElementById('staff').innerText = (fields.payroll_staff)?fields.payroll_staff.first_name + ' ' + fields.payroll_staff.last_name:'N/A';
+						document.getElementById('location').innerText = (fields.location_place)?fields.location_place:'N/A';
 					}
 					if ($("#" + modal_id).length) {
 						$("#" + modal_id).modal('show');

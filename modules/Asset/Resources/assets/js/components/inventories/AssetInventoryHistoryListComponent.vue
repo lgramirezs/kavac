@@ -20,7 +20,14 @@
 			</div>
 			<div class="card-body">
 				<v-client-table :columns="columns" :data="records" :options="table_options">
+					
+					<div slot="created_at" slot-scope="props" class="text-center">
+						<span>
+							{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
+						</span>
+					</div>
 					<div slot="id" slot-scope="props" class="text-center">
+						
 						<div class="d-inline-flex">
 
 							<button @click="createReport(props.row.code, 'create_report')"

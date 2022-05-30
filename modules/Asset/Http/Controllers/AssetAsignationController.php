@@ -38,12 +38,12 @@ class AssetAsignationController extends Controller
     {
         /** Establece permisos de acceso para cada método del controlador */
         $this->validateRules = [
-            'payroll_staff_id' => ['required']
+            'location_place' => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
-            'payroll_staff_id.required'    => 'El campo trabajador es obligatorio.'
+            'location_place.required'    => 'El campo lugar de ubicación es obligatorio.'
 
         ];
     }
@@ -121,6 +121,7 @@ class AssetAsignationController extends Controller
             'department_id' => $request->input('department_id'),
             'institution_id' => $request->input('institution_id'),
             'payroll_staff_id' => $request->input('payroll_staff_id'),
+            'location_place' => $request->input('location_place'),
             'user_id' => Auth::id()
         ]);
 
@@ -166,8 +167,11 @@ class AssetAsignationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->validateRules, $this->messages);
+
         $asignation = AssetAsignation::where('id', $id)->with('assetAsignationAssets')->first();
         $asignation->payroll_staff_id = $request->payroll_staff_id;
+        $asignation->location_place = $request->location_place;
         $asignation->save();
 
         $update = now();

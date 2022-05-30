@@ -62,7 +62,7 @@ class FinanceBankingMovement extends Model implements Auditable
      */
     public function accountingEntry()
     {
-        return $this->belongsTo(AccountingEntry::class);
+        return $this->morphOne(AccountingEntry::class, 'accounting_entryable');
     }
 
     /**

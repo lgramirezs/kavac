@@ -21,7 +21,7 @@
 
             <div class="row">
                 <div class="col-md-4" id="helpAssetRequestDate"
-                    v-if="record.id">
+                    v-if="false">
                     <div class="form-group">
                         <label>Fecha de solicitud</label>
                         <div class="input-group input-sm">
@@ -57,7 +57,7 @@
                         <label>Tipo de solicitud</label>
                         <select2
                             :options="types"
-                            v-model="record.type_id">
+                            v-model="record.type">
                         </select2>
                     </div>
                 </div>

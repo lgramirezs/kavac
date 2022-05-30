@@ -649,7 +649,7 @@ Vue.mixin({
              * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
              * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
              */
-            $.each(vm.record, function(el, value) { console.log('here', el, value);
+            $.each(vm.record, function(el, value) {
                 if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
                     /** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
                     $("input[name=" + el + "]").each(function() {

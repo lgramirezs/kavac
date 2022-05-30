@@ -15,6 +15,11 @@
                     </span>
                 </div>
             </div>
+            <div slot="created_at" slot-scope="props" class="text-center">
+                <span>
+                    {{ format_date(props.row.created_at) }}
+                </span>
+            </div>
             <div v-html="props.row.motive" slot="motive" slot-scope="props"
                 class="text-center">
             </div>
@@ -51,7 +56,7 @@
                 </button>
 
                 <button
-                    @click="deleteRecord(props.index, '')"
+                    @click="deleteRecord(props.row.id, '')"
                     class="btn btn-danger btn-xs btn-icon btn-action"
                     title="Eliminar registro"
                     data-toggle="tooltip"

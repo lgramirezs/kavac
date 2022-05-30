@@ -553,7 +553,8 @@
                                                 <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el pago de las vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
                                                             'alias': 'numeric',
                                                             'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.vacation_days">
+                                                            'digits': 0" 
+                                                            v-model="record.vacation_days">
                                             </div>
                                         </div>
                                         <!-- ./días a otorgar para el pago de vacaciones -->
@@ -1167,6 +1168,7 @@ export default {
         initRecords(url, modal_id) {
             const vm = this;
             vm.errors = [];
+            vm.records = [];
             vm.reset();
 
             url = vm.setUrl(url);
@@ -1672,16 +1674,22 @@ export default {
 		 * Método que carga el formulario con los datos a modificar
 		 *
 		 * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
+         * @author José Briceño <josejorgebriceno9@gmail.com>
 		 *
 		 * @param  {integer} index Identificador del registro a ser modificado
 		 * @param {object} event   Objeto que gestiona los eventos
 		 */
 		initUpdate(data, event) {
-			let vm = this;
+			const vm = this;
 			vm.errors = [];
-
-			vm.record = data;
-			console.log(vm.record)
+            
+            let recordEdit = vm.records.filter((rec) => {
+                return rec.id === data.id;
+            })[0];
+            vm.record = JSON.parse(JSON.stringify(recordEdit));
+            setTimeout(() => {
+                vm.record.vacation_days = recordEdit.vacation_days;        
+            }, 800);
 		},
     },
 };

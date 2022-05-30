@@ -7,19 +7,27 @@
 					{{ (props.row.observation)? props.row.observation:'No definido'}}
 				</span>
 			</div>
+			<div slot="created_at" slot-scope="props" class="text-center">
+				<span>
+					{{ (props.row.created_at)? format_date(props.row.created_at):'N/A'}}
+				</span>
+			</div>
 			<div slot="id" slot-scope="props" class="text-center">
 				<button @click="acceptRequest(props.index)"
+						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-success btn-xs btn-icon btn-action"
 						title="Aceptar Solicitud" data-toggle="tooltip" type="button">
 					<i class="fa fa-check"></i>
 				</button>
 
-				<button @click="rejectedRequest(props.index)"
+				<button @click="rejectedRequest(props.row.id)"
+						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-danger btn-xs btn-icon btn-action" title="Rechazar Solicitud" data-toggle="tooltip" type="button">
 					<i class="fa fa-ban"></i>
 				</button>
 
-				<button @click="deleteRecord(props.index, 'requests/deliveries')"
+				<button @click="deleteRecord(props.row.id, 'requests/deliveries')"
+						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
 					<i class="fa fa-trash-o"></i>
 				</button>

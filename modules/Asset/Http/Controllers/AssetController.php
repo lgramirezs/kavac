@@ -64,6 +64,7 @@ class AssetController extends Controller
             'asset_condition_id' => ['required'],
             'value' => ['required', 'regex:/^\d+(\.\d+)?$/u'],
             'currency_id' => ['required'],
+            'serial' => ['required', 'unique:assets,serial'],
             'institution_id' => ['required'],
         ];
 
@@ -80,6 +81,7 @@ class AssetController extends Controller
             'value.required'                                => 'El campo valor es obligatorio.',
             'currency_id.required'                          => 'El campo moneda es obligatorio.',
             'serial.required'                               => 'El campo serial es obligatorio.',
+            'serial.unique'                                 => 'El campo serial ya existe',
             'marca.required'                                => 'El campo marca es obligatorio.',
             'model.required'                                => 'El campo modelo es obligatorio.',
             'asset_use_function_id.required'                => 'El campo función de uso es obligatorio.',
@@ -132,7 +134,7 @@ class AssetController extends Controller
             $validateRules  = array_merge(
                 $validateRules,
                 [
-                    'serial' => new RequiredItem($item_required->serial),
+                    'serial' => [new RequiredItem($item_required->serial), 'unique:assets,serial'],
                     'marca'  => new RequiredItem($item_required->marca),
                     'model' => new RequiredItem($item_required->model),
                     'asset_use_function_id' => new RequiredItem($item_required->use_function),
@@ -164,6 +166,7 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
+            'purchase_supplier_id'       => $request->purchase_supplier_id
 
         ]);
         $asset->inventory_serial = $asset->getCode();
@@ -205,7 +208,7 @@ class AssetController extends Controller
             $validateRules  = array_merge(
                 $validateRules,
                 [
-                    'serial' => ['required', 'max:50'],
+                    'serial' => ['required', 'unique:assets,serial'. $asset->id, 'max:50'],
                     'marca'  => ['required', 'max:50'],
                     'model' => ['required', 'max:50'],
 
@@ -243,6 +246,7 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
+            'purchase_supplier_id'       => $request->purchase_supplier_id
 
         ]);
 
@@ -283,6 +287,7 @@ class AssetController extends Controller
                 'assetStatus',
                 'assetUseFunction',
                 'institution',
+                'purchaseSupplier',
                 'parish' => function ($query) {
                     $query->with(['municipality' => function ($query) {
                         $query->with(['estate' => function ($query) {
@@ -292,7 +297,7 @@ class AssetController extends Controller
                 }
             ]
         )->first();
-
+        
         return response()->json(['records' => $asset], 200);
     }
 
@@ -316,96 +321,92 @@ class AssetController extends Controller
         if ($operation == null) {
             if (Auth()->user()->isAdmin()) {
                 $assets = Asset::with('institution', 'assetCondition', 'assetStatus'
-                                    , 'assetAsignationAsset'
-                                    , 'assetDisincorporationAsset'
-                                    , 'assetRequestAsset'
-                                    )->orderBy('id');
-           //dd($assets->get()->toArray());
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->orderBy('id');
             } else {
                 $assets = Asset::where('institution_id', $institution_id)
                     ->with([
                         'institution',
                         'assetCondition',
-                        'assetStatus', 
-                        'assetAsignationAsset', 
-                        'assetDisincorporationAsset', 
+                        'assetStatus',
+                        'assetAsignationAsset',
+                        'assetDisincorporationAsset',
                         'assetRequestAsset'
                     ])->orderBy('id');
             }
         } elseif ($operation_id == null) {
             if ($operation == 'asignations' || $operation == 'requests') {
                 if (Auth()->user()->isAdmin()) {
-                      
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
-                                            , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                            , 'assetRequestAsset')
-                                            ->where('asset_condition_id', 1)->where('asset_status_id', 10)
-                                            ->orderBy('id')->get();
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')
+                                        ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->orderBy('id')->get();
                     $selected = [];
-
-                    foreach($assets_list as $asset){
-                        if($asset->assetAsignationAsset == null
-                        && $asset->assetDisincorporationAsset == null
-                        && $asset->assetRequestAsset == null)
-                            array_push($selected, $asset->id);
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
                     }
-
+                   
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
-                                ->whereIn('id', $selected)->orderBy('id');
+                                    ->whereIn('id', $selected)->orderBy('id');
                 } else {
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
-                                            , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                            , 'assetRequestAsset')->where('institution_id', $institution_id)
-                                            ->where('asset_condition_id', 1)->where('asset_status_id', 10)
-                                            ->orderBy('id')->get();
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->where('institution_id', $institution_id)
+                                        ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->orderBy('id')->get();
                     $selected = [];
-
-                    foreach($assets_list as $asset){
-                        if($asset->assetAsignationAsset == null
-                        && $asset->assetDisincorporationAsset == null
-                        && $asset->assetRequestAsset == null)
-                            array_push($selected, $asset->id);
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
                     }
-
+                   
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
-                                ->whereIn('id', $selected)->orderBy('id');
+                                    ->whereIn('id', $selected)->orderBy('id');
                 }
             } elseif ($operation == 'disincorporations') {
                 if (Auth()->user()->isAdmin()) {
+                    
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                        , 'assetRequestAsset')->orderBy('id')->get();
+                                        , 'assetRequestAsset')
+                                        ->orderBy('id')->get();
+                    
                     $selected = [];
-
-                    foreach($assets_list as $asset){
-                        if($asset->assetAsignationAsset == null
-                        && $asset->assetDisincorporationAsset == null
-                        && $asset->assetRequestAsset == null)
-                            array_push($selected, $asset->id);
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
                     }
-
+                   
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
                                     ->whereIn('id', $selected)->orderBy('id');
-                       
+                   
                 } else {
-                   $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
-                                            , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                            , 'assetRequestAsset')->where('institution_id', $institution_id)
-                                            ->orderBy('id')->get();
+                    $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset')->where('institution_id', $institution_id)
+                                        ->orderBy('id')->get();
+                    
                     $selected = [];
-
-                    foreach($assets_list as $asset){
-                        if($asset->assetAsignationAsset == null
-                        && $asset->assetDisincorporationAsset == null
-                        && $asset->assetRequestAsset == null)
-                            array_push($selected, $asset->id);
+                    foreach($assets_list as $asset_index){
+                        if($asset_index->assetAsignationAsset == null
+                            && $asset_index->assetDisincorporationAsset == null
+                            && $asset_index->assetRequestAsset == null)
+                                array_push($selected, $asset_index->id);
                     }
-
+                   
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
                                     ->whereIn('id', $selected)->orderBy('id');
                 }
             } 
-            // elseif ($operation == 'requests') {
+                // elseif ($operation == 'requests') {
             //     if (Auth()->user()->isAdmin()) {
             //         $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
             //             ->where('asset_condition_id', 1)->where('asset_status_id', 10);

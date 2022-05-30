@@ -199,6 +199,7 @@ class AssetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $asset_request = AssetRequest::find($id);
 
         $this->validate($request, [

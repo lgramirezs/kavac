@@ -105,7 +105,7 @@
 					<div class="form-group">
 						<label>Proveedor</label>
 						<select2 :options="supplier"
-								v-model="record.proveedor_id"></select2>
+								v-model="record.purchase_supplier_id"></select2>
 					</div>
 				</div>
 

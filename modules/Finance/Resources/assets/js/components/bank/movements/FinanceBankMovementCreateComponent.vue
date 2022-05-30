@@ -23,6 +23,13 @@
                 <div class="col-12 mb-4">
                     <h6>Datos del movimiento bancario</h6>
                 </div>
+                <div class="col-md-4" id="helpFinanceInstitution">
+                    <div class="form-group is-required">
+                        <label>Institución:</label>
+                        <select2 :options="institutions"
+                            v-model="record.institution_id"></select2>
+                    </div>
+                </div>
                 <div class="col-md-4" id="helpFinancePaymentDate">
                     <div class="form-group is-required">
                         <label>Fecha de pago:</label>
@@ -42,22 +49,22 @@
                 <div class="col-md-4" id="helpFinanceBankAccount">
                     <div class="form-group is-required">
                         <label>Nro. de cuenta:</label>
-                        <select2 :options="bank_accounts"
+                        <select2 :options="bank_accounts" @input="getBankAccountData()"
                             v-model="record.finance_bank_account_id">
                         </select2>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpFinanceBankName">
+                <div class="col-md-4" id="helpFinanceBankName" v-show="record.finance_bank_account_id">
                     <div class="form-group is-required">
                         <label>Banco:</label>
-                        <input type="text" class="form-control input-sm"
+                        <input type="text" class="form-control input-sm" v-model="record.bank"
                             disabled/>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpFinanceTypeAccount">
+                <div class="col-md-4" id="helpFinanceTypeAccount" v-show="record.finance_bank_account_id">
                     <div class="form-group is-required">
                         <label>Tipo de cuenta:</label>
-                        <input type="text" class="form-control input-sm"
+                        <input type="text" class="form-control input-sm" v-model="record.account_type"
                             disabled/>
                     </div>
                 </div>
@@ -82,12 +89,34 @@
                             v-model="record.amount"/>
                     </div>
                 </div>
+                <div class="col-md-4" id="helpFinanceCurrency">
+                    <div class="form-group is-required">
+                        <label>Tipo de moneda:</label>
+                        <select2 :options="currencies" @input="changeCurrency(record.currency_id)"
+                            v-model="record.currency_id">
+                        </select2>
+                    </div>
+                </div>
             </div>
             <br>
             <!-- Sección de asiento contable -->
             <div class="row">
                 <div class="col-12 mb-4">
                     <h6>Datos del asiento contable</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 form-group" id="helpEntriesCategory">
+                    <div class="form-group is-required">
+                        <label class="control-label">Categoría del asiento</label>
+                        <select2 :options="categories" v-model="record.entry_category" data-toggle="tooltip" v-has-tooltip title="Categoría del asiento"></select2>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 form-group" id="helpEntriesDescription">
+                    <div class="form-group is-required">
+                        <label class="control-label">Concepto ó Descripción</label>
+                        <input type="text" class="form-control input-sm" v-model="record.entry_concept" data-toggle="tooltip" v-has-tooltip title="Concepto ó Descripción">
+                    </div>
                 </div>
             </div>
             <table class="table table-formulation">
@@ -100,22 +129,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(record, index) in recordsAccounting" :key="index">
+                    <tr v-for="(data, index) in record.recordsAccounting" :key="index">
                         <td>
-                            <select2 :options="accounting_accounts" v-model="record.id" @input="changeSelectinTable(record)"></select2>
+                            <select2 :options="accounting_accounts" v-model="data.id" @input="changeSelectinTable(data)"></select2>
                         </td>
                         <td>
-                            <input :disabled="record.assets != 0" type="number" data-toggle="tooltip" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="record.debit" @change="CalculateTot()">
+                            <input :disabled="data.assets != 0" type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.debit" @change="CalculateTot()">
                         </td>
                         <td>
-                            <input :disabled="record.debit != 0 " type="number" data-toggle="tooltip" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="record.assets" @change="CalculateTot()">
+                            <input :disabled="data.debit != 0 " type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.assets" @change="CalculateTot()">
                         </td>
                         <td>
                             <div class="text-center">
-                                <button @click="clearValues(recordsAccounting.indexOf(record))" class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
+                                <button @click="clearValues(record.recordsAccounting.indexOf(data))" class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
                                     <i class="fa fa-eraser"></i>
                                 </button>
-                                <button @click="deleteAccount(recordsAccounting.indexOf(record), record.entryAccountId)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
+                                <button @click="deleteAccount(record.recordsAccounting.indexOf(data), data.entryAccountId)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
@@ -129,7 +158,7 @@
                     </tr>
                     <tr>
                         <td id="helpEntriesAccountSelect">
-                            <select2 :disabled="!enableInput" :options="accounting_accounts" id="select2" @input="addAccountingAccount()"></select2>
+                            <select2 :options="accounting_accounts" id="select2" @input="addAccountingAccount()"></select2>
                         </td>
                         <td id="helpEntriesTotDebit">
                             <div class="form-group text-center">Total Debe:
@@ -168,30 +197,128 @@
                     <h6>Datos del compromiso</h6>
                 </div>
             </div>
-            <h6 class="card-title" id="helpStaffPhone">
-                Agregar compromiso <i class="fa fa-plus-circle cursor-pointer" @click=""></i>
-            </h6>
-            <v-client-table :columns="columns" :data="records" :options="table_options">
-                <div slot="description" slot-scope="props" class="text-justify">
-                    <div v-html="props.row.description"></div>
+            <div class="row">
+                <div class="col-md-12 pad-top-20">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-2 text-uppercase">CÓDIGO</th>
+                                <th class="col-2 text-uppercase">CUENTA</th>
+                                <th class="col-3 text-uppercase">CÓDIGO ACCIÓN ESPECÍFICA</th>
+                                <th class="col-2 text-uppercase">DESCRIPCIÓN</th>
+                                <th class="col-2 text-uppercase">MONTO</th>
+                                <th class="col-1">
+                                    <a class="btn btn-sm btn-info btn-action btn-tooltip" href="#"
+                                       data-original-title="Agregar compromiso" data-toggle="modal"
+                                       data-target="#add_account">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(account, index) in record.accounts" :key="index">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <!--td>{{ account.spac_description }}</td>
+                                <td>{{ account.code }}</td>
+                                <td>{{ account.description }}</td>
+                                <td class="text-right">{{ formatToCurrency(account.amount, '') }}</td>
+                                <td class="text-center">
+                                    <input type="hidden" name="account_id[]" readonly
+                                           :value="account.specific_action_id + '|' + account.account_id">
+                                    <input type="hidden" name="budget_account_amount[]" readonly
+                                           :value="account.amount">
+                                    <a class="btn btn-sm btn-danger btn-action" href="#" @click="deleteAccount(index)"
+                                       title="Eliminar este registro" data-toggle="tooltip">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </a>
+                                </td-->
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div slot="code" slot-scope="props" class="text-center">
-                    {{ props.row.code }}
+            </div>
+            <!-- Modal para agregar cuentas presupuestarias -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="add_account">
+                <div class="modal-dialog vue-crud" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h6>
+                                <i class="ion-arrow-graph-up-right"></i>
+                                Agregar cuentas
+                            </h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger" v-if="errors.length > 0">
+                                <ul>
+                                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group is-required">
+                                        <label>Acción Específica:</label>
+                                        <select2 :options="specific_actions"
+                                                 @input="getAccounts"
+                                                 v-model="specific_action_id"/>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group is-required">
+                                        <label>Cuenta:</label>
+                                        <select2 :options="accounts" v-model="account_id"/>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Concepto:</label>
+                                        <input type="text" class="form-control input-sm" data-toggle="tooltip"
+                                               v-model="account_concept"
+                                               title="Indique el concepto de la cuenta presupuestaria a agregar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-4">
+                                    <div class="form-group is-required">
+                                        <label>Monto:</label>
+                                        <input type="number" onfocus="$(this).select()"
+                                               class="form-control input-sm"
+                                               data-toggle="tooltip"
+                                               title="Indique el monto a asignar para la cuenta seleccionada"
+                                               v-model="account_amount">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-4">
+                                    <div class="form-group">
+                                        <label>Impuesto:</label>
+                                        <select2 :options="taxes" v-model="account_tax_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
+                                    data-dismiss="modal">
+                                Cerrar
+                            </button>
+                            <button type="button" @click="addAccount"
+                                    class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div slot="id" slot-scope="props" class="text-center">
-                    <button @click="editCompromise(props.index, $event)"
-                            class="btn btn-warning btn-xs btn-icon btn-action"
-                            title="Modificar registro" data-toggle="tooltip" type="button">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button @click="removeCompromise(props.index, $event)"
-                            class="btn btn-danger btn-xs btn-icon btn-action"
-                            title="Eliminar registro" data-toggle="tooltip"
-                            type="button">
-                        <i class="fa fa-trash-o"></i>
-                    </button>
-                </div>
-            </v-client-table>
+            </div>
             <div class="card-footer pull-right" id="helpParamButtons">
                 <button class="btn btn-default btn-icon btn-round" data-toggle="tooltip" type="button"
                     title="Borrar datos del formulario" @click="reset"><i class="fa fa-eraser"></i>
@@ -210,9 +337,32 @@
 </template>
 <script>
     export default {
+        props: {
+            accounting_list: {
+                type: Array,
+                default: []
+            },
+            entry_categories: {
+                type: Array,
+                default: []
+            },
+        },
         data() {
             return {
-                record: {},
+                record: {
+                    payment_date: '',
+                    transaction_type: '',
+                    finance_bank_account_id: '',
+                    reference: '',
+                    concept: '',
+                    amount: '',
+                    currency_id:'',
+                    recordsAccounting: [],
+                    entry_concept: '',
+                    entry_category: '',
+                    institution_id: '',
+                    accounts: [],
+                },
                 records: [],
                 data: {
                     date: '',
@@ -222,8 +372,12 @@
                     category: '',
                     totDebit: 0,
                     totAssets: 0,
-                    institution_id: null,
-                    currency_id: null,
+                    institution: {
+                        id: '',
+                        rif: '',
+                        acronym: '',
+                        name: 0,
+                    },
                     currency: {
                         id: '',
                         symbol: '',
@@ -232,6 +386,10 @@
                     },
                 },
                 bank_accounts: [],
+                currencies: [],
+                accounting_accounts: [],
+                categories: [],
+                rowsToDelete: [],
                 transaction_types:  [
                     {'id' : '', 'text' : "Seleccione..."},
                     {'id' : 'Balance inicial', 'text' : 'Balance inicial'},
@@ -239,6 +397,15 @@
                     {'id' : ' Transferencia o deposito', 'text' : ' Transferencia o deposito'},
                     {'id' : 'Nota de débito', 'text' : 'Nota de débito'}
                 ],
+                taxes: [{'id': '', 'text': 'Seleccione...'}],
+                specific_actions: [],
+                specific_action_id: '',
+                account_id: '',
+                account_concept: '',
+                account_amount: 0,
+                account_tax_id: '',
+                accounts: [],
+                institutions: [],
                 columns: ['code', 'account', 'esp_code', 'description', 'amount', 'id'],
                 errors: [],
             }
@@ -264,23 +431,28 @@
                 'amount': 'col-md-2',
                 'id': 'col-md-2'
             };
-
+            this.accounting_accounts = this.accounting_list;
+            this.categories = this.entry_categories;
             vm.getFinanceBankAccounts();
+            vm.getCurrencies();
+            vm.getInstitutions();
+            this.record.recordsAccounting = [];
+            this.record.accounts = [];
         },
 
         mounted() {
-            if (this.entries) {
-                for (var i = 0; i < this.entries.accounting_accounts.length; i++) {
-                    this.recordsAccounting.push({
-                        id: this.entries.accounting_accounts[i].accounting_account_id,
-                        entryAccountId: this.entries.accounting_accounts[i].id,
-                        debit: this.entries.accounting_accounts[i].debit,
-                        assets: this.entries.accounting_accounts[i].assets,
-                    });
+            const vm = this;
+            $("#add_account").on('shown.bs.modal', function() {
+                if (vm.specific_actions.length === 0) {
+                    /** Carga las acciones específicas para la respectiva formulación */
+                    vm.getSpecificActions();
                 }
-                this.data.totDebit = parseFloat(this.entries.tot_debit);
-                this.data.totAssets = parseFloat(this.entries.tot_assets);
-            }
+            }).on('hide.bs.modal', function() {
+                /** @type {Array} Inicializa el arreglo de acciones específicas a seleccionar */
+                vm.specific_actions = [];
+                /** @type array Inicializa el arreglo de las cuentas presupuestarias seleccionadas */
+                vm.accounts = [];
+            });
         },
 
         methods: {
@@ -295,6 +467,141 @@
             addDecimals(value) {
                 return parseFloat(value).toFixed(this.data.currency.decimal_places);
             },
+
+            /**
+             * [validateTotals valida que los totales sean positivos]
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             * @return {boolean}
+             */
+            validateTotals: function() {
+                return !(this.data.totDebit.toFixed(this.data.currency.decimal_places) >= 0 &&
+                    this.data.totAssets.toFixed(this.data.currency.decimal_places) >= 0);
+            },
+
+            /**
+             * Vacia la información del debe y haber de la columna sin cuenta seleccionada
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            changeSelectinTable: function(record) {
+                // si asigna un select en vacio, vacia los valores del debe y haber de esa fila
+                if (record.id == '') {
+                    record.debit = 0;
+                    record.assets = 0;
+                    this.CalculateTot();
+                }
+            },
+
+            /**
+             * Establece la cantidad de decimales correspondientes a la moneda que se maneja
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            cualculateLimitDecimal() {
+                var res = "0.";
+                for (var i = 0; i < this.data.currency.decimal_places - 1; i++) {
+                    res += "0";
+                }
+                res += "1";
+                return res;
+            },
+
+            /**
+             * Calcula el total del debe y haber del asiento contable
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            CalculateTot: function() {
+
+                this.data.totDebit = 0;
+                this.data.totAssets = 0;
+
+                /** Se recorren todo el arreglo que tiene todas las filas de las cuentas y saldos para el asiento y se calcula el total */
+                for (var i = this.record.recordsAccounting.length - 1; i >= 0; i--) {
+                    if (this.record.recordsAccounting[i].id != '') {
+                        var debit = (this.record.recordsAccounting[i].debit != '') ? this.record.recordsAccounting[i].debit : 0;
+                        var assets = (this.record.recordsAccounting[i].assets != '') ? this.record.recordsAccounting[i].assets : 0;
+
+                        this.record.recordsAccounting[i].debit = parseFloat(debit).toFixed(this.data.currency.decimal_places);
+                        this.record.recordsAccounting[i].assets = parseFloat(assets).toFixed(this.data.currency.decimal_places)
+
+                        if (this.record.recordsAccounting[i].debit < 0 || this.record.recordsAccounting[i].assets < 0) {
+                            this.$refs.AccountingEntryGenerator.showAlertMessages('Los valores en la columna del DEBE y el HABER deben ser positivos.');
+                        }
+
+                        this.data.totDebit += (this.record.recordsAccounting[i].debit != '') ? parseFloat(this.record.recordsAccounting[i].debit) : 0;
+                        this.data.totAssets += (this.record.recordsAccounting[i].assets != '') ? parseFloat(this.record.recordsAccounting[i].assets) : 0;
+                    }
+                }
+            },
+
+            /**
+             * Establece la información base para cada fila de cuentas
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            addAccountingAccount: function() {
+                if ($('#select2').val() != '') {
+                    for (var i = this.accounting_accounts.length - 1; i >= 0; i--) {
+                        if (this.accounting_accounts[i].id == $('#select2').val()) {
+                            this.record.recordsAccounting.push({
+                                id: $('#select2').val(),
+                                entryAccountId: null,
+                                debit: 0,
+                                assets: 0,
+                            });
+                            $('#select2').val('');
+                            break;
+                        }
+                    }
+                }
+            },
+
+            /**
+             * cambia el tipo de moneda en el que se expresa el asiento contable
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            changeCurrency(currency_id) {
+                if (currency_id) {
+                    axios.get(`${window.app_url}/currencies/info/${currency_id}`).then(response => {
+                        this.data.currency = response.data.currency;
+                        this.data.currency_id = response.data.currency.id;
+                    });
+                } else {
+                    this.data.currency = {
+                        id: '',
+                        symbol: '',
+                        name: '',
+                        decimal_places: 0,
+                    };
+                    this.data.currency_id = '';
+                }
+                this.CalculateTot();
+            },
+
+            /**
+             * Elimina la fila de la cuenta y vuelve a calcular el total del asiento
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            deleteAccount: function(index, id) {
+                this.rowsToDelete.push(id);
+                this.record.recordsAccounting.splice(index, 1);
+                this.CalculateTot();
+            },
+
+            /**
+             * vacia los valores del debe y del haber de la fila de la cuenta y vuelve a calcular el total del asiento
+             *
+             * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+             */
+            clearValues: function(index) {
+                this.record.recordsAccounting[index].assets = 0.00;
+                this.record.recordsAccounting[index].debit = 0.00;
+                this.CalculateTot();
+            },
+
             /**
              * Obtiene los datos de las entidades bancarias registradas
              *
@@ -305,6 +612,185 @@
                 axios.get(`${window.app_url}/finance/get-bank-accounts`).then(response => {
                     this.bank_accounts = response.data;
                 });
+            },
+            /**
+             * Completa los campos de banco y de tipo de cuenta según el número de cuenta seleccionado
+             *
+             * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+             */
+            getBankAccountData() {
+                const vm = this;
+                vm.record.bank = '';
+                vm.record.account_type = '';
+                if (vm.record.finance_bank_account_id) {
+                    for (let account of vm.bank_accounts) {
+                        if (vm.record.finance_bank_account_id == account.id) {
+                            vm.record.bank = account.bank_name ? account.bank_name : '';
+                            vm.record.account_type = account.bank_account_type ? account.bank_account_type : '';
+                        }
+                    }
+                }
+            },
+
+            /**
+             * Obtiene las cuentas presupuestarias formuladas de la acción específica seleccionada
+             *
+             * @method    getAccounts
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            async getAccounts() {
+                const vm = this;
+                vm.loading = true;
+                vm.accounts = [];
+
+                if (vm.specific_action_id) {
+                    let specificActionId = vm.specific_action_id;
+                    let compromisedAt = vm.record.payment_date;
+                    await axios.get(
+                        `${window.app_url}/budget/get-opened-accounts/${specificActionId}/${compromisedAt}`
+                    ).then(response => {
+                        if (response.data.result) {
+                            vm.accounts = response.data.records;
+                        }
+                        if (response.data.records.length === 1 && response.data.records[0].id === "") {
+                            vm.showMessage(
+                                'custom', 'Alerta!', 'danger', 'screen-error',
+                                `No existen cuentas aperturadas para esta acción específica o con saldo para la fecha
+                                seleccionada`
+                            );
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+
+                vm.loading = false;
+            },
+
+            /**
+             * Agrega una cuenta presupuestaria al compromiso
+             *
+             * @method     addAccount
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            async addAccount() {
+                const vm = this;
+
+                /*if (
+                    !vm.specific_action_id && !vm.account_id && !vm.account_concept && !vm.account_amount &&
+                    !vm.account_tax_id
+                ) {
+                    vm.showMessage(
+                        'custom', 'Alerta!', 'warning', 'screen-error', 'Debe indicar todos los datos solicitados'
+                    );
+                    return;
+                }*/
+
+                let specificAction = {};
+                let account = {};
+
+                await vm.getSpecificActionDetail(vm.specific_action_id).then(detail => specificAction = detail.record);
+
+               await vm.getAccountDetail(vm.account_id).then(detail => account = detail.record);
+                vm.record.accounts.push({
+                    'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                    'code': account.code,
+                    'description': vm.account_concept,
+                    'amount': vm.account_amount,
+                    'specific_action_id': vm.specific_action_id,
+                    'account_id': vm.account_id,
+                    'tax_id': vm.account_tax_id
+                });
+
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData){
+                        if (vm.account_tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
+                    }
+
+                    vm.record.tax_accounts.push({
+                        'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        'code': account.code,
+                        'description': tax_description,
+                        'amount': vm.account_amount * tax_percentage / 100,
+                        'specific_action_id': vm.specific_action_id,
+                        'account_id': vm.account_id,
+                        'tax_id': vm.account_tax_id
+                    });
+                }
+
+
+                bootbox.confirm({
+                    title: "Agregar cuenta",
+                    message: `Desea agregar otra cuenta?`,
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> Cancelar'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> Confirmar'
+                        }
+                    },
+                    callback: function (result) {
+                        if (!result) {
+                            $("#add_account").find('.close').click();
+                        }
+
+                        vm.specific_action_id = '';
+                        vm.account_id = '';
+                        vm.account_concept = '';
+                        vm.account_amount = 0;
+                        vm.account_tax_id = '';
+                    }
+                });
+            },
+
+            /**
+             * Obtiene las Acciones Específicas
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @param {string} type Tipo de registro
+             */
+            async getSpecificActions() {
+                const vm = this;
+                vm.loading = true;
+                vm.specific_actions = [];
+                vm.accounts = [];
+
+                if (vm.record.payment_date && vm.record.institution_id) {
+                    let year = vm.record.payment_date.split("-")[0];
+                    let url = `${window.app_url}/budget/get-group-specific-actions/${year}/1/${vm.record.institution_id}`;
+                    await axios.get(url).then(response => {
+                        vm.specific_actions = response.data;
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                } else {
+                    $("#add_account").find('.close').click();
+                    bootbox.alert('Debe indicar la fecha del pago antes de agregar cuentas a un compromiso');
+                }
+
+                vm.loading = false;
+            },
+
+            async getSpecificActionDetail(id) {
+                const response = await axios.get(
+                    `${window.app_url}/budget/detail-specific-actions/${id}`
+                );
+                return response.data;
+            },
+            async getAccountDetail(id) {
+                const response = await axios.get(
+                    `${window.app_url}/budget/detail-accounts/${id}`
+                );
+                return response.data;
             },
         }
     };

@@ -13,7 +13,11 @@
 		<div slot="motive" slot-scope="props" class="text-center"
 			 v-html="prepareText(props.row.motive)">
 		</div>
-		
+		<div slot="created_at" slot-scope="props">
+			<span>
+				{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
+			</span>
+		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
 				<warehouse-request-info 

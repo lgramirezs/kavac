@@ -10,6 +10,11 @@
 				{{ (props.row.payroll_staff)?(props.row.payroll_staff.first_name + ' ' + props.row.payroll_staff.last_name):'N/A' }}
 			</span>
 		</div>
+		<div slot="location_place" slot-scope="props" class="text-center">
+			<span>
+				{{ props.row.location_place }}
+			</span>
+		</div>
 		<div slot="created" slot-scope="props" class="text-center">
 			<span>
 				{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
@@ -42,18 +47,19 @@
 		data() {
 			return {
 				records: [],
-				columns: ['code', 'payroll_staff', 'created', 'id']
+				columns: ['code', 'payroll_staff', 'location_place','created', 'id']
 			}
 		},
 		created() {
 			this.table_options.headings = {
 				'code': 'Código',
 				'payroll_staff': 'Trabajador',
+				'location_place': 'Lunagr de ubicación',
 				'created': 'Fecha de asignación',
 				'id': 'Acción'
 			};
-			this.table_options.sortable = ['code', 'payroll_staff', 'created'];
-			this.table_options.filterable = ['code', 'payroll_staff', 'created'];
+			this.table_options.sortable = ['code', 'payroll_staff', 'location_place', 'created'];
+			this.table_options.filterable = ['code', 'payroll_staff', 'location_place','created'];
 			this.table_options.orderBy = { 'column': 'code'};
 		},
 		mounted () {

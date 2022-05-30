@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
+use Modules\Accounting\Models\AccountingAccount;
+use Modules\Accounting\Models\AccountingEntryCategory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 
@@ -67,7 +69,37 @@ class FinanceMovementsController extends Controller
      */
     public function create()
     {
-        return view('finance::movements.create');
+        /**
+         * [$accountingList contiene las cuentas patrimoniales]
+         * @var [Json]
+         */
+        $accountingList = json_encode($this->getRecordsAccounting());
+
+        /**
+         * [$categories contendra las categorias]
+         * @var array
+         */
+        $categories = [];
+        array_push($categories, [
+            'id'      => '',
+            'text'    => 'Seleccione...',
+            'acronym' => ''
+        ]);
+
+        foreach (AccountingEntryCategory::all() as $category) {
+            array_push($categories, [
+                'id'      => $category->id,
+                'text'    => $category->name,
+                'acronym' => $category->acronym,
+            ]);
+        }
+
+        /**
+         * se convierte array a JSON
+         */
+        $categories = json_encode($categories);
+
+        return view('finance::movements.create', compact('accountingList', 'categories'));
     }
 
     public function store(Request $request)
@@ -84,5 +116,53 @@ class FinanceMovementsController extends Controller
 
     public function destroy($id)
     {
+    }
+
+    /**
+     * Consulta los registros del modelo AccountingAccount que posean conversión
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     * @param  Request $request [array con listado de cuentas a convertir]
+     *                             true= todo, false=solo sin conversiones
+     * @return Array
+     */
+    public function getRecordsAccounting()
+    {
+        /**
+         * [$records contendra registros]
+         * @var array
+         */
+        $records = [];
+        $index = 0;
+        array_push($records, [
+            'id'   => '',
+            'text' =>   "Seleccione..."
+        ]);
+
+        /**
+         * ciclo para almacenar en array cuentas patrimoniales disponibles para conversiones
+        */
+        foreach (AccountingAccount::with('accountable')
+                ->where('active', true)
+                ->orderBy('group', 'ASC')
+                ->orderBy('subgroup', 'ASC')
+                ->orderBy('item', 'ASC')
+                ->orderBy('generic', 'ASC')
+                ->orderBy('specific', 'ASC')
+                ->orderBy('subspecific', 'ASC')
+                ->orderBy('denomination', 'ASC')
+                ->cursor() as $AccountingAccount) {
+            array_push($records, [
+                    'id'   => $AccountingAccount->id,
+                    'text' =>   "{$AccountingAccount->getCodeAttribute()} - {$AccountingAccount->denomination}"
+                ]);
+            $index++;
+        }
+
+        $records[0]['index'] = $index;
+
+        /**
+         * se convierte array a JSON
+         */
+        return $records;
     }
 }

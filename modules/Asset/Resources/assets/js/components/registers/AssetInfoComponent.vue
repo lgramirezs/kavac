@@ -160,7 +160,7 @@
                                         <div class="form-group">
                                             <strong>Proveedor</strong>
                                             <div class="row" style="margin: 1px 0">
-                                                <span class="col-md-12" id="asset_proveedor">
+                                                <span class="col-md-12" id="purchase_supplier">
                                                 </span>
                                             </div>
                                         </div>
@@ -270,7 +270,7 @@
                         document.getElementById('asset_acquisition_type').innerText = (fields.asset_acquisition_type)?fields.asset_acquisition_type.name:'';
                         document.getElementById('asset_acquisition_date').innerText = (fields.acquisition_date)?vm.format_date(fields.acquisition_date):'';
                         document.getElementById('asset_ubication').innerText = (fields.ubication)?fields.ubication:'N/A';
-                        document.getElementById('asset_proveedor').innerText = (fields.proveedor)?fields.proveedor:'N/A';
+                        document.getElementById('purchase_supplier').innerText = (fields.purchase_supplier)?fields.purchase_supplier.name:'N/A';
                         document.getElementById('asset_condition').innerText = (fields.asset_condition)?fields.asset_condition.name:'';
                         document.getElementById('asset_status').innerText = (fields.asset_status)?fields.asset_status.name:'Desincorporado';
 
