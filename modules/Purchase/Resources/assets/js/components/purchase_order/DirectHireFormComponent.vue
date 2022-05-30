@@ -458,14 +458,14 @@ export default {
                 'start_minutes': null,
                 'company_invitation': null,
                 'certificate_receipt_of_offer': null,
-                'motivatedact': null,
+                'motivated_act': null,
                 'budget_availability': null,
             },
             traslate_name_files: {
                 'start_minutes': 'Acta de inicio',
                 'company_invitation': 'Invitación de la empresa',
                 'certificate_receipt_of_offer': 'Acta de recepción de la oferta',
-                'motivatedact': 'Acto motivado',
+                'motivated_act': 'Acto motivado',
                 'budget_availability': 'Disponibilidad presupuestaria',
             },
 
@@ -785,8 +785,8 @@ export default {
             // inputFile = document.querySelector('#certificate_receipt_of_offer');
             // formData.append("certificate_receipt_of_offer", inputFile.files[0]);
 
-            // inputFile = document.querySelector('#motivatedact');
-            // formData.append("motivatedact", inputFile.files[0]);
+            // inputFile = document.querySelector('#motivated_act');
+            // formData.append("motivated_act", inputFile.files[0]);
             
             // inputFile = document.querySelector('#budget_availability');
             // formData.append("budget_availability", inputFile.files[0]);

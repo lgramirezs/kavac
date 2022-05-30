@@ -135,18 +135,7 @@ class PurchaseDirectHireController extends Controller
      */
     public function store(Request $request, UploadDocRepository $upDoc)
     {
-        // Se genera el código de acta de inicio
-        // $code = $this->generateCodeAvailable();
-        // if (strpos($code, 'Error') !== false) {
-        //     return response()->json([
-        //         'errors' => [
-        //             'internal_error' => [$code]
-        //         ],
-        //         'message'=> 'The given data was invalid.'
-        //     ], 422);
-        // }
-
-        // dd($request->all());
+        dd($request->all());
         $this->validate($request, [
             'institution_id'                => 'required|integer',
             'contracting_department_id'     => 'required|integer',
@@ -157,10 +146,14 @@ class PurchaseDirectHireController extends Controller
             'currency_id'                   => 'required|integer',
             'funding_source'                => 'required',
             'description'                   => 'required',
-            'disponibilidad_presupuestaria' => 'required|mimes:pdf',
+            
+            // Archivos
+            'start_minutes'                 => 'required|mimes:pdf',
+            'company_invitation'            => 'required|mimes:pdf',
+            'certificate_receipt_of_offer'  => 'required|mimes:pdf',
+            'motivated_act'                 => 'required|mimes:pdf',
+            'budget_availability'           => 'required|mimes:pdf',
         ], [
-            'disponibilidad_presupuestaria.required' => 'El archivo de disponibilidad presupuestaria es obligatorio.',
-            'disponibilidad_presupuestaria.mimes'    => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
             'institution_id.required'                => 'El campo institución es obligatorio',
             'contracting_department_id.required'     => 'El campo unidad contratante es obligatorio',
             'user_department_id.required'            => 'El campo unidad usuaria es obligatorio',
@@ -170,6 +163,18 @@ class PurchaseDirectHireController extends Controller
             'currency_id.required'                   => 'El campo tipo de moneda es obligatorio',
             'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
             'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
+
+            // Archivos
+            'start_minutes.required'                => 'El archivo de acta de inicio es obligatorio.',
+            'start_minutes.mimes'                   => 'El archivo de acta de inicio debe estar en formato pdf.',
+            'company_invitation.required'           => 'El archivo de invitación de la empresa es obligatorio.',
+            'company_invitation.mimes'              => 'El archivo de invitación de la empresa debe estar en formato pdf.',
+            'certificate_receipt_of_offer.required' => 'El archivo de acta de recepción de la oferta es obligatorio.',
+            'certificate_receipt_of_offer.mimes'    => 'El archivo de acta de recepción de la oferta debe estar en formato pdf.',
+            'motivated_act.required'                => 'El archivo de acto motivado es obligatorio.',
+            'motivated_act.mimes'                   => 'El archivo de acto motivado debe estar en formato pdf.',
+            'budget_availability.required'          => 'El archivo de disponibilidad presupuestaria es obligatorio.',
+            'budget_availability.mimes'             => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
         ]);
 
         $all = $request->all();
@@ -179,20 +184,30 @@ class PurchaseDirectHireController extends Controller
         /** Registro y asociación de documentos */
         $documentFormat = ['pdf'];
 
-        if ($request->file('disponibilidad_presupuestaria')) {
-            $file = $request->file('disponibilidad_presupuestaria');
-            $extensionFile = $file->getClientOriginalExtension();
+        $documentListName = [
+            'start_minutes', 
+            'company_invitation', 
+            'certificate_receipt_of_offer', 
+            'motivated_act', 
+            'budget_availability'
+        ];
 
-            if (in_array($extensionFile, $documentFormat)) {
-                /**
-                 * Se guarda el archivo y se almacena
-                 */
-                $upDoc->uploadDoc(
-                    $file,
-                    'documents',
-                    PurchaseDirectHire::class,
-                    $purchaseDirectHire->id
-                );
+        foreach ($documentListName as $nameFile) {
+            if ($request->file($nameFile)) {
+                $file = $request->file($nameFile);
+                $extensionFile = $file->getClientOriginalExtension();
+    
+                if (in_array($extensionFile, $documentFormat)) {
+                    /**
+                     * Se guarda el archivo y se almacena
+                     */
+                    $upDoc->uploadDoc(
+                        $file,
+                        'documents',
+                        PurchaseDirectHire::class,
+                        $purchaseDirectHire->id
+                    );
+                }
             }
         }
 
