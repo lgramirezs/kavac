@@ -42,8 +42,11 @@
                         @include('layouts.help-text', ['codeSetting' => true])
                         @include('layouts.form-errors')
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-4">
                                 <h6>Cheques</h6>
+                            </div>
+                            <div class="col-4">
+                                <h6>Movimientos Bancarios</h6>
                             </div>
                         </div>
                         <div class="row">
@@ -55,6 +58,17 @@
                                         'title' => 'Formato para el código de la emisión de cheques',
                                         'placeholder' => 'Ej. XXX-00000000-YYYY',
                                         'readonly' => ($checkCode) ? true : false
+                                    ]) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('movements_code', 'Código del movimiento bancario', []) !!}
+                                    {!! Form::text('movements_code', ($movementCode) ? $movementCode->format_code : old('movements_code'), [
+                                        'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
+                                        'title' => 'Formato para el código de los movimientos bancarios',
+                                        'placeholder' => 'Ej. XXX-00000000-YYYY',
+                                        'readonly' => ($movementCode) ? true : false
                                     ]) !!}
                                 </div>
                             </div>

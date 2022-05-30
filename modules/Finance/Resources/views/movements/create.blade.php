@@ -31,6 +31,8 @@
                     </div>
                 </div>
                 <finance-bank-movements-create
+                    :accounting="{{ $accounting ? $accounting : 0 }}"
+                    :budget="{{ $budget ? $budget : 0 }}"
                     :entry_categories="{{ $categories }}"
                     :accounting_list="{{ $accountingList }}"
                     :movementid ="{!! (isset($movements)) ? $movements->id : 'null' !!}">
