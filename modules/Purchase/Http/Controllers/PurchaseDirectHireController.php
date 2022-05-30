@@ -135,7 +135,7 @@ class PurchaseDirectHireController extends Controller
      */
     public function store(Request $request, UploadDocRepository $upDoc)
     {
-        dd($request->all());
+        // dd($request->all());
         $this->validate($request, [
             'institution_id'                => 'required|integer',
             'contracting_department_id'     => 'required|integer',
