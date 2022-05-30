@@ -10,7 +10,7 @@ use Illuminate\Database\Migrations\Migration;
  *
  * [descripción corta]
  *
- * @author [autor de la clase] [correo del autor]
+ * @author Ing. Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
  *
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)

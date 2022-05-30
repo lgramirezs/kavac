@@ -314,32 +314,32 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
-                        <label class="control-label" for="prepared_by">Preparado por</label><br>
-                        <select2 :options="signing_users" id="prepared_by" v-model="record.prepared_by"></select2>
+                        <label class="control-label" for="prepared_by_id">Preparado por</label><br>
+                        <select2 :options="employments" id="prepared_by_id" v-model="record.prepared_by_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
-                        <label class="control-label" for="reviewed_by">Revisado por</label><br>
-                        <select2 :options="signing_users" id="reviewed_by" v-model="record.reviewed_by"></select2>
+                        <label class="control-label" for="reviewed_by_id">Revisado por</label><br>
+                        <select2 :options="employments" id="reviewed_by_id" v-model="record.reviewed_by_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
-                        <label class="control-label" for="verified_by">Verificado por</label><br>
-                        <select2 :options="signing_users" id="verified_by" v-model="record.verified_by"></select2>
+                        <label class="control-label" for="verified_by_id">Verificado por</label><br>
+                        <select2 :options="employments" id="verified_by_id" v-model="record.verified_by_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
-                        <label class="control-label" for="first_signature">Firmado por</label><br>
-                        <select2 :options="signing_users" id="first_signature" v-model="record.first_signature"></select2>
+                        <label class="control-label" for="first_signature_id">Firmado por</label><br>
+                        <select2 :options="employments" id="first_signature_id" v-model="record.first_signature_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
-                        <label class="control-label" for="second_signature">Firmado por</label><br>
-                        <select2 :options="signing_users" id="second_signature" v-model="record.second_signature"></select2>
+                        <label class="control-label" for="second_signature_id">Firmado por</label><br>
+                        <select2 :options="employments" id="second_signature_id" v-model="record.second_signature_id"></select2>
                     </div>
                 </div>
             </div>
@@ -402,12 +402,17 @@ export default {
                 return [{ id: '', text: 'Seleccione...' }];
             }
         },
+        /** Lista de empleados laborales */
+        employments: {
+            type: Array,
+            default: function() {
+                return [{ id: '', text: 'Seleccione...' }];
+            }
+        },
     },
     data() {
         return {
             errors:[],
-            // Variables para las firmas
-            signing_users: [],
             records: [],
             record: {
                 institution_id: '',
@@ -433,11 +438,11 @@ export default {
                 },
 
                 // variables para firmas
-                prepared_by: '',
-                reviewed_by: '',
-                verified_by: '',
-                first_signature: '',
-                second_signature: '',
+                prepared_by_id: '',
+                reviewed_by_id: '',
+                verified_by_id: '',
+                first_signature_id: '',
+                second_signature_id: '',
             },
             // variables para proveedor
             purchase_supplier_id: '',
@@ -621,11 +626,11 @@ export default {
                 },
 
                 // variables para firmas
-                prepared_by: '',
-                reviewed_by: '',
-                verified_by: '',
-                first_signature: '',
-                second_signature: '',
+                prepared_by_id: '',
+                reviewed_by_id: '',
+                verified_by_id: '',
+                first_signature_id: '',
+                second_signature_id: '',
             };
             vm.sub_total = 0;
             vm.tax_value = 0;
@@ -786,21 +791,6 @@ export default {
                 }
             }
 
-            // var inputFile = document.querySelector('#start_minutes');
-            // formData.append("start_minutes", inputFile.files[0]);
-
-            // inputFile = document.querySelector('#company_invitation');
-            // formData.append("company_invitation", inputFile.files[0]);
-
-            // inputFile = document.querySelector('#certificate_receipt_of_offer');
-            // formData.append("certificate_receipt_of_offer", inputFile.files[0]);
-
-            // inputFile = document.querySelector('#motivated_act');
-            // formData.append("motivated_act", inputFile.files[0]);
-            
-            // inputFile = document.querySelector('#budget_availability');
-            // formData.append("budget_availability", inputFile.files[0]);
-
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);
             // formData.append("subtotal", this.sub_total);
@@ -813,6 +803,7 @@ export default {
                 formData.append("requirement_list", '');
             }
 
+            formData.append("date", this.date);
             formData.append("institution_id", this.record.institution_id);
             formData.append("contracting_department_id", this.record.contracting_department_id);
             formData.append("user_department_id", this.record.user_department_id);
@@ -825,11 +816,11 @@ export default {
 
 
             // variables para firmas
-            formData.append("prepared_by", this.record.prepared_by);
-            formData.append("reviewed_by", this.record.reviewed_by);
-            formData.append("verified_by", this.record.verified_by);
-            formData.append("first_signature", this.record.first_signature);
-            formData.append("second_signature", this.record.second_signature);
+            formData.append("prepared_by_id", this.record.prepared_by_id);
+            formData.append("reviewed_by_id", this.record.reviewed_by_id);
+            formData.append("verified_by_id", this.record.verified_by_id);
+            formData.append("first_signature_id", this.record.first_signature_id);
+            formData.append("second_signature_id", this.record.second_signature_id);
 
             vm.loading = true;
 

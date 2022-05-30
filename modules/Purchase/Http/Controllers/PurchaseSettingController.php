@@ -10,6 +10,7 @@ use App\Rules\CodeSetting as CodeSettingRule;
 use Modules\Purchase\Models\PurchaseRequirement;
 use Modules\Purchase\Models\PurchaseQuotation;
 use Modules\Purchase\Models\PurchaseStates;
+use Modules\Purchase\Models\PurchaseDirectHire;
 
 class PurchaseSettingController extends Controller
 {
@@ -105,7 +106,7 @@ class PurchaseSettingController extends Controller
                         $model = PurchaseMinute::class;
                         break;
                     case 'buy-orders':
-                        $model = PurchaseOrder::class;
+                        $model = PurchaseDirectHire::class;
                         $type = 'buy';
                         break;
                     case 'service-orders':
