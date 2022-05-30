@@ -130,4 +130,15 @@ class PurchaseDirectHire extends Model implements Auditable
     {
         return $this->belongsTo(Department::class, 'user_department_id');
     }
+
+    /**
+     * PurchaseDirectHire morphs many PurchaseBaseBudget.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function purchaseBaseBudgets()
+    {
+        // morphMany(MorphedModel, morphableName, type = orderable_type, relatedKeyName = orderable_id, localKey = id)
+        return $this->morphMany(PurchaseBaseBudget::class, 'orderable');
+    }
 }

@@ -16,12 +16,15 @@ use Modules\Purchase\Models\PurchaseRequirement;
 use Modules\Purchase\Models\PurchasePivotModelsToRequirementItem;
 use Modules\Purchase\Models\PurchaseSupplierObject;
 use Modules\Purchase\Models\PurchaseDirectHire;
+use Modules\Purchase\Models\PurchaseBaseBudget;
 
 use App\Repositories\UploadDocRepository;
 use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
 
 use Nwidart\Modules\Facades\Module;
+
+use Illuminate\Support\Facades\DB;
 
 /**
  * @class PurchaseDirectHireController
@@ -138,6 +141,7 @@ class PurchaseDirectHireController extends Controller
     public function store(Request $request, UploadDocRepository $upDoc)
     {
         // dd($request->all());
+        // dd(json_decode(json_decode(json_encode($request->all()['requirement_list']))[0], true));
         $this->validate($request, [
             'institution_id'                => 'required|integer',
             'contracting_department_id'     => 'required|integer',
@@ -148,6 +152,7 @@ class PurchaseDirectHireController extends Controller
             'currency_id'                   => 'required|integer',
             'funding_source'                => 'required',
             'description'                   => 'required',
+            'requirement_list'              => 'required',
             
             // Archivos
             'start_minutes'                 => 'required|mimes:pdf',
@@ -165,6 +170,7 @@ class PurchaseDirectHireController extends Controller
             'currency_id.required'                   => 'El campo tipo de moneda es obligatorio',
             'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
             'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
+            'requirement_list.required'              => 'Debe seleccionar al menos un presupuesto base.',
 
             // Archivos
             'start_minutes.required'                => 'El archivo de acta de inicio es obligatorio.',
@@ -179,39 +185,52 @@ class PurchaseDirectHireController extends Controller
             'budget_availability.mimes'             => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
         ]);
 
-        $all = $request->all();
-        
-        $purchaseDirectHire = PurchaseDirectHire::create($request->all());
+        DB::transaction(function () use ($request) {
+            $purchaseDirectHire = PurchaseDirectHire::create($request->all());
 
-        /** Registro y asociación de documentos */
-        $documentFormat = ['pdf'];
-
-        $documentListName = [
-            'start_minutes', 
-            'company_invitation', 
-            'certificate_receipt_of_offer', 
-            'motivated_act', 
-            'budget_availability'
-        ];
-
-        foreach ($documentListName as $nameFile) {
-            if ($request->file($nameFile)) {
-                $file = $request->file($nameFile);
-                $extensionFile = $file->getClientOriginalExtension();
+            /** Registro y asociación de documentos */
+            $documentFormat = ['pdf'];
     
-                if (in_array($extensionFile, $documentFormat)) {
-                    /**
-                     * Se guarda el archivo y se almacena
-                     */
-                    $upDoc->uploadDoc(
-                        $file,
-                        'documents',
-                        PurchaseDirectHire::class,
-                        $purchaseDirectHire->id
-                    );
+            $documentListName = [
+                'start_minutes', 
+                'company_invitation', 
+                'certificate_receipt_of_offer', 
+                'motivated_act', 
+                'budget_availability'
+            ];
+    
+            foreach ($documentListName as $nameFile) {
+                if ($request->file($nameFile)) {
+                    $file = $request->file($nameFile);
+                    $extensionFile = $file->getClientOriginalExtension();
+        
+                    if (in_array($extensionFile, $documentFormat)) {
+                        /**
+                         * Se guarda el archivo y se almacena
+                         */
+                        $upDoc->uploadDoc(
+                            $file,
+                            'documents',
+                            PurchaseDirectHire::class,
+                            $purchaseDirectHire->id
+                        );
+                    }
                 }
             }
-        }
+    
+            /**
+             * Se relaciona los presupuestos base con la orden de contratación directa
+             */
+            $requirement_list = json_decode(json_encode($request->all()['requirement_list']));
+    
+            foreach ($requirement_list as $requirement) {
+                $req = json_decode($requirement, true);
+                $baseBudget = PurchaseBaseBudget::find($req['purchase_base_budget_id']);
+                $baseBudget->orderable_type = PurchaseDirectHire::class;
+                $baseBudget->orderable_id = $purchaseDirectHire->id;
+                $baseBudget->save();
+            }
+        });
 
         /**
 		 * [$has_budget determina si esta instalado y habilitado el modulo Budget]

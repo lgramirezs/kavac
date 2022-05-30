@@ -562,6 +562,7 @@ export default {
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
         });
+        vm.reset();
     },
     mounted() {
         const vm = this;
@@ -777,7 +778,11 @@ export default {
             for (const key in vm.files) {
                 if (Object.hasOwnProperty.call(vm.files, key)) {
                     var inputFile = document.querySelector('#'+key);
-                    formData.append(key, inputFile.files[0]);
+                    if(inputFile.files[0]){
+                        formData.append(key, inputFile.files[0]);
+                    } else {
+                        formData.append(key, '');
+                    }
                 }
             }
 
@@ -799,7 +804,14 @@ export default {
             formData.append("purchase_supplier_id", this.purchase_supplier_id);
             formData.append("currency_id", this.currency_id);
             // formData.append("subtotal", this.sub_total);
-            // formData.append("requirement_list", JSON.stringify(this.requirement_list));
+
+            if(this.requirement_list.length > 0){
+                for(let i = 0; i < this.requirement_list.length; i++){
+                    formData.append("requirement_list[]", JSON.stringify(this.requirement_list[i]));
+                }
+            } else {
+                formData.append("requirement_list", '');
+            }
 
             formData.append("institution_id", this.record.institution_id);
             formData.append("contracting_department_id", this.record.contracting_department_id);
@@ -809,6 +821,7 @@ export default {
             formData.append("purchase_supplier_object_id", this.record.purchase_supplier_object_id);
             formData.append("funding_source", this.record.funding_source);
             formData.append("description", this.record.description);
+            formData.append("payment_methods", this.record.payment_methods);
 
 
             // variables para firmas
