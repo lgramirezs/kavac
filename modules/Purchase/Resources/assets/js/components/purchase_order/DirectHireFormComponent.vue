@@ -242,7 +242,12 @@
             <div class="col-12">
                 <v-client-table :columns="columns2" :data="record_items" :options="table2_options">
                     <div slot="unit_price" slot-scope="props">
-                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
+                        <input type="number" 
+                            class="form-control"
+                            disabled
+                            :value="searchBaseBudgetUnitPrice(props.row.pivot_purchase, props.row.purchase_requirement.purchase_base_budget_id)" 
+                            :step="cualculateLimitDecimal()" 
+                            @input="CalculateTot(record_items[props.index-1], props.index-1)">
                     </div>
                     <div slot="qty_price" slot-scope="props">
                         <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
@@ -734,7 +739,7 @@ export default {
             vm.tax_value = 0;
             for (var i = vm.record_items.length - 1; i >= 0; i--) {
                 var r = vm.record_items[i];
-                r['qty_price'] = r.quantity * r.unit_price;
+                r['qty_price'] = r.quantity * vm.searchBaseBudgetUnitPrice(r.pivot_purchase, r.purchase_requirement.purchase_base_budget_id);
                 vm.sub_total += r['qty_price'];
             }
             vm.tax_value = vm.sub_total * (parseFloat(vm.tax.percentage) / 100);
@@ -891,6 +896,14 @@ export default {
                 this.products = response.data;
             });
         },
+
+        searchBaseBudgetUnitPrice(list, purchase_base_budget_id){
+            for (let idx = 0; idx < list.length; idx++) {
+                if (list[idx].relatable_type == 'Modules\\Purchase\\Models\\PurchaseBaseBudget' && list[idx].relatable_id == purchase_base_budget_id ) {
+                    return list[idx].unit_price;
+                }
+            }
+        }
     },
     watch: {
         currency_id: function(res, ant) {

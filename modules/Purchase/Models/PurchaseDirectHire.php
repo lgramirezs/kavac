@@ -45,6 +45,7 @@ class PurchaseDirectHire extends Model implements Auditable
         'currency_id',
         'funding_source',
         'description',
+        'payment_methods',
     ];
 
     /**

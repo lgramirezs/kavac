@@ -106,6 +106,8 @@ class PurchaseDirectHireController extends Controller
             'contratingDepartment',
             'userDepartment',
             'purchaseRequirementItems.warehouseProduct.measurementUnit',
+            'purchaseRequirementItems.pivotPurchase',
+            'purchaseRequirementItems.purchaseRequirement',
             'purchaseBaseBudget.currency',
             'purchaseBaseBudget.tax.histories',
         )->where('requirement_status', 'PROCESSED')
