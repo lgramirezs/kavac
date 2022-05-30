@@ -230,7 +230,8 @@
         data() {
             return {
                 errors: [],
-                records: []
+                records: [],
+                supplier: null,
             }
         },
         methods: {
@@ -253,50 +254,57 @@
                 this.reset();
 
                 const vm = this;
-                var fields = {};
-
+                
+                
                 document.getElementById("info_general").click();
-                url = vm.setUrl(url);
-                axios.get(url).then(response => {
-                    if (typeof(response.data.records) !== "undefined") {
-                        fields = response.data.records;
+                    
+                        
+                        vm.getSupplier(vm.records.purchase_supplier_id);
+                        console.log(vm.supplier);
+                         
+                        console.log('dentro del axios:  ', vm.supplier );
+                        document.getElementById('asset_type').innerText = (vm.records.asset_type)?vm.records.asset_type.name:'';
+                        document.getElementById('asset_category').innerText = (vm.records.asset_category)?vm.records.asset_category.name:'';
+                        document.getElementById('asset_subcategory').innerText = (vm.records.asset_subcategory)?vm.records.asset_subcategory.name:'';
+                        document.getElementById('asset_specific').innerText = (vm.records.asset_specific_category)?vm.records.asset_specific_category.name:'';
+                        document.getElementById('asset_codigo').innerText = vm.records.inventory_serial;
 
-                        document.getElementById('asset_type').innerText = (fields.asset_type)?fields.asset_type.name:'';
-                        document.getElementById('asset_category').innerText = (fields.asset_category)?fields.asset_category.name:'';
-                        document.getElementById('asset_subcategory').innerText = (fields.asset_subcategory)?fields.asset_subcategory.name:'';
-                        document.getElementById('asset_specific').innerText = (fields.asset_specific_category)?fields.asset_specific_category.name:'';
-                        document.getElementById('asset_codigo').innerText = fields.inventory_serial;
+                        document.getElementById('asset_acquisition_type').innerText = (vm.records.asset_acquisition_type)?vm.records.asset_acquisition_type.name:'';
+                        document.getElementById('asset_acquisition_date').innerText = (vm.records.acquisition_date)?vm.format_date(vm.records.acquisition_date):'';
+                        document.getElementById('asset_ubication').innerText = (vm.records.ubication)?vm.records.ubication:'N/A';
+                        
+                       setTimeout(()=>{
+                            document.getElementById('purchase_supplier').innerText = (vm.supplier)? vm.supplier : 'N/A';
+                       }, 1500);
+                       
+                        document.getElementById('asset_condition').innerText = (vm.records.asset_condition)?vm.records.asset_condition.name:'';
+                        document.getElementById('asset_status').innerText = (vm.records.asset_status)?vm.records.asset_status.name:'Desincorporado';
 
-                        document.getElementById('asset_acquisition_type').innerText = (fields.asset_acquisition_type)?fields.asset_acquisition_type.name:'';
-                        document.getElementById('asset_acquisition_date').innerText = (fields.acquisition_date)?vm.format_date(fields.acquisition_date):'';
-                        document.getElementById('asset_ubication').innerText = (fields.ubication)?fields.ubication:'N/A';
-                        document.getElementById('purchase_supplier').innerText = (fields.purchase_supplier)?fields.purchase_supplier.name:'N/A';
-                        document.getElementById('asset_condition').innerText = (fields.asset_condition)?fields.asset_condition.name:'';
-                        document.getElementById('asset_status').innerText = (fields.asset_status)?fields.asset_status.name:'Desincorporado';
-
-                        document.getElementById('asset_use_function').innerText = (fields.asset_use_function)?fields.asset_use_function.name:'N/A';
-                        document.getElementById('asset_serial').innerText = (fields.serial)?fields.serial:'';
-                        document.getElementById('asset_marca').innerText = (fields.marca)?fields.marca:'';
-                        document.getElementById('asset_model').innerText = (fields.model)?fields.model:'';
-                        document.getElementById('asset_value').innerText = (fields.value)?fields.value:'';
-                    }
+                        document.getElementById('asset_use_function').innerText = (vm.records.asset_use_function)?vm.records.asset_use_function.name:'N/A';
+                        document.getElementById('asset_serial').innerText = (vm.records.serial)?vm.records.serial:'';
+                        document.getElementById('asset_marca').innerText = (vm.records.marca)?vm.records.marca:'';
+                        document.getElementById('asset_model').innerText = (vm.records.model)?vm.records.model:'';
+                        document.getElementById('asset_value').innerText = (vm.records.value)?vm.records.value:'';
+                    
+                    
                     if ($("#" + modal_id).length) {
                         $("#" + modal_id).modal('show');
                     }
-                }).catch(error => {
-                    if (typeof(error.response) !== "undefined") {
-                        if (error.response.status == 403) {
-                            vm.showMessage(
-                                'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
-                            );
-                        }
-                        else {
-                            vm.logs('resources/js/all.js', 343, error, 'initRecords');
-                        }
-                    }
-                });
-            }
+            }, 
 
+            getSupplier(id) {
+				const vm = this;
+				
+                if(id){
+                    axios.get(`${window.app_url}/purchase/suppliers/${id}`).then(response => {
+                        vm.supplier = response.data.records.name;
+					});
+                }	
+			},
+
+        },
+        created(){
+            this.readRecords(this.route_list);
         },
     };
 </script>

@@ -100,221 +100,219 @@
             </div>
             <br>
             <!-- Sección de asiento contable -->
-            <div class="row">
-                <div class="col-12 mb-4">
-                    <h6>Datos del asiento contable</h6>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6 form-group" id="helpEntriesCategory">
-                    <div class="form-group is-required">
-                        <label class="control-label">Categoría del asiento</label>
-                        <select2 :options="categories" v-model="record.entry_category" data-toggle="tooltip" v-has-tooltip title="Categoría del asiento"></select2>
+            <div v-if="accounting == 1">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <h6>Datos del asiento contable</h6>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 form-group" id="helpEntriesDescription">
-                    <div class="form-group is-required">
-                        <label class="control-label">Concepto ó Descripción</label>
-                        <input type="text" class="form-control input-sm" v-model="record.entry_concept" data-toggle="tooltip" v-has-tooltip title="Concepto ó Descripción">
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group" id="helpEntriesCategory">
+                        <div class="form-group is-required">
+                            <label class="control-label">Categoría del asiento</label>
+                            <select2 :options="categories" v-model="record.entry_category" data-toggle="tooltip" v-has-tooltip title="Categoría del asiento"></select2>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 form-group" id="helpEntriesDescription">
+                        <div class="form-group is-required">
+                            <label class="control-label">Concepto ó Descripción</label>
+                            <input type="text" class="form-control input-sm" v-model="record.entry_concept" data-toggle="tooltip" v-has-tooltip title="Concepto ó Descripción">
+                        </div>
                     </div>
                 </div>
+                <table class="table table-formulation">
+                    <thead>
+                        <tr>
+                            <th class="text-uppercase" width="50%">CÓDIGO DE CUENTA - DENOMINACIÓN</th>
+                            <th class="text-uppercase" width="20%">DEBE</th>
+                            <th class="text-uppercase" width="20%">HABER</th>
+                            <th class="text-uppercase" width="10%">ACCIÓN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(data, index) in record.recordsAccounting" :key="index">
+                            <td>
+                                <select2 :options="accounting_accounts" v-model="data.id" @input="changeSelectinTable(data)"></select2>
+                            </td>
+                            <td>
+                                <input :disabled="data.assets != 0" type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.debit" @change="CalculateTot()">
+                            </td>
+                            <td>
+                                <input :disabled="data.debit != 0 " type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.assets" @change="CalculateTot()">
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <button @click="clearValues(record.recordsAccounting.indexOf(data))" class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
+                                        <i class="fa fa-eraser"></i>
+                                    </button>
+                                    <button @click="deleteAccount(record.recordsAccounting.indexOf(data), data.entryAccountId)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td id="helpEntriesAccountSelect">
+                                <select2 :options="accounting_accounts" id="select2" @input="addAccountingAccount()"></select2>
+                            </td>
+                            <td id="helpEntriesTotDebit">
+                                <div class="form-group text-center">Total Debe:
+                                    <h6>
+                                        <span>{{ data.currency.symbol }}</span>
+                                        <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
+                                                data.totDebit.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
+                                            <strong>{{ addDecimals(data.totDebit) }}</strong>
+                                        </span>
+                                        <span v-else style="color:#FF3636;">
+                                            <strong>{{ addDecimals(data.totDebit) }}</strong>
+                                        </span>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td id="helpEntriesTotAssets">
+                                <div class="form-group text-center">Total Haber:
+                                    <h6>
+                                        <span>{{ data.currency.symbol }}</span>
+                                        <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
+                                                data.totAssets.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
+                                            <strong>{{ addDecimals(data.totAssets) }}</strong>
+                                        </span>
+                                        <span v-else style="color:#FF3636;">
+                                            <strong>{{ addDecimals(data.totAssets) }}</strong>
+                                        </span>
+                                    </h6>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table table-formulation">
-                <thead>
-                    <tr>
-                        <th class="text-uppercase" width="50%">CÓDIGO DE CUENTA - DENOMINACIÓN</th>
-                        <th class="text-uppercase" width="20%">DEBE</th>
-                        <th class="text-uppercase" width="20%">HABER</th>
-                        <th class="text-uppercase" width="10%">ACCIÓN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(data, index) in record.recordsAccounting" :key="index">
-                        <td>
-                            <select2 :options="accounting_accounts" v-model="data.id" @input="changeSelectinTable(data)"></select2>
-                        </td>
-                        <td>
-                            <input :disabled="data.assets != 0" type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.debit" @change="CalculateTot()">
-                        </td>
-                        <td>
-                            <input :disabled="data.debit != 0 " type="number" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="data.assets" @change="CalculateTot()">
-                        </td>
-                        <td>
-                            <div class="text-center">
-                                <button @click="clearValues(record.recordsAccounting.indexOf(data))" class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
-                                    <i class="fa fa-eraser"></i>
-                                </button>
-                                <button @click="deleteAccount(record.recordsAccounting.indexOf(data), data.entryAccountId)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td id="helpEntriesAccountSelect">
-                            <select2 :options="accounting_accounts" id="select2" @input="addAccountingAccount()"></select2>
-                        </td>
-                        <td id="helpEntriesTotDebit">
-                            <div class="form-group text-center">Total Debe:
-                                <h6>
-                                    <span>{{ data.currency.symbol }}</span>
-                                    <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
-                                            data.totDebit.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
-                                        <strong>{{ addDecimals(data.totDebit) }}</strong>
-                                    </span>
-                                    <span v-else style="color:#FF3636;">
-                                        <strong>{{ addDecimals(data.totDebit) }}</strong>
-                                    </span>
-                                </h6>
-                            </div>
-                        </td>
-                        <td id="helpEntriesTotAssets">
-                            <div class="form-group text-center">Total Haber:
-                                <h6>
-                                    <span>{{ data.currency.symbol }}</span>
-                                    <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
-                                            data.totAssets.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
-                                        <strong>{{ addDecimals(data.totAssets) }}</strong>
-                                    </span>
-                                    <span v-else style="color:#FF3636;">
-                                        <strong>{{ addDecimals(data.totAssets) }}</strong>
-                                    </span>
-                                </h6>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
             <!-- Sección de compromisos -->
-            <div class="row">
-                <div class="col-12 mb-4">
-                    <h6>Datos del compromiso</h6>
+            <div v-if="budget == 1">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <h6>Datos del compromiso</h6>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 pad-top-20">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th class="col-2 text-uppercase">CÓDIGO</th>
-                                <th class="col-2 text-uppercase">CUENTA</th>
-                                <th class="col-3 text-uppercase">CÓDIGO ACCIÓN ESPECÍFICA</th>
-                                <th class="col-2 text-uppercase">DESCRIPCIÓN</th>
-                                <th class="col-2 text-uppercase">MONTO</th>
-                                <th class="col-1">
-                                    <a class="btn btn-sm btn-info btn-action btn-tooltip" href="#"
-                                       data-original-title="Agregar compromiso" data-toggle="modal"
-                                       data-target="#add_account">
-                                        <i class="fa fa-plus-circle"></i>
-                                    </a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(account, index) in record.accounts" :key="index">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <!--td>{{ account.spac_description }}</td>
-                                <td>{{ account.code }}</td>
-                                <td>{{ account.description }}</td>
-                                <td class="text-right">{{ formatToCurrency(account.amount, '') }}</td>
-                                <td class="text-center">
-                                    <input type="hidden" name="account_id[]" readonly
-                                           :value="account.specific_action_id + '|' + account.account_id">
-                                    <input type="hidden" name="budget_account_amount[]" readonly
-                                           :value="account.amount">
-                                    <a class="btn btn-sm btn-danger btn-action" href="#" @click="deleteAccount(index)"
-                                       title="Eliminar este registro" data-toggle="tooltip">
-                                        <i class="fa fa-minus-circle"></i>
-                                    </a>
-                                </td-->
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-12 pad-top-20">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-2 text-uppercase">CÓDIGO</th>
+                                    <th class="col-2 text-uppercase">CUENTA</th>
+                                    <th class="col-3 text-uppercase">CÓDIGO ACCIÓN ESPECÍFICA</th>
+                                    <th class="col-2 text-uppercase">DESCRIPCIÓN</th>
+                                    <th class="col-2 text-uppercase">MONTO</th>
+                                    <th class="col-1">
+                                        <a class="btn btn-sm btn-info btn-action btn-tooltip" href="#"
+                                           data-original-title="Agregar compromiso" data-toggle="modal"
+                                           data-target="#add_account">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(account, index) in record.accounts" :key="index">
+                                    <td class="text-center">Código</td>
+                                    <td class="text-center">{{ account.code }}</td>
+                                    <td class="text-center">{{ account.spac_description }}</td>
+                                    <td class="text-center">{{ account.description }}</td>
+                                    <td class="text-center">{{ formatToCurrency(account.amount, '') }}</td>
+                                    <td class="text-center">
+                                        <input type="hidden" name="account_id[]" readonly
+                                               :value="account.specific_action_id + '|' + account.account_id">
+                                        <input type="hidden" name="budget_account_amount[]" readonly
+                                               :value="account.amount">
+                                        <a class="btn btn-sm btn-danger btn-action" href="#" @click="deleteAccount(index)"
+                                           title="Eliminar este registro" data-toggle="tooltip">
+                                            <i class="fa fa-minus-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <!-- Modal para agregar cuentas presupuestarias -->
-            <div class="modal fade" tabindex="-1" role="dialog" id="add_account">
-                <div class="modal-dialog vue-crud" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <h6>
-                                <i class="ion-arrow-graph-up-right"></i>
-                                Agregar cuentas
-                            </h6>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger" v-if="errors.length > 0">
-                                <ul>
-                                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-                                </ul>
+                <!-- Modal para agregar cuentas presupuestarias -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="add_account">
+                    <div class="modal-dialog vue-crud" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h6>
+                                    <i class="ion-arrow-graph-up-right"></i>
+                                    Agregar cuentas
+                                </h6>
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group is-required">
-                                        <label>Acción Específica:</label>
-                                        <select2 :options="specific_actions"
-                                                 @input="getAccounts"
-                                                 v-model="specific_action_id"/>
+                            <div class="modal-body">
+                                <div class="alert alert-danger" v-if="errors.length > 0">
+                                    <ul>
+                                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group is-required">
+                                            <label>Acción Específica:</label>
+                                            <select2 :options="specific_actions"
+                                                     @input="getAccounts"
+                                                     v-model="specific_action_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group is-required">
+                                            <label>Cuenta:</label>
+                                            <select2 :options="accounts" v-model="account_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Concepto:</label>
+                                            <input type="text" class="form-control input-sm" data-toggle="tooltip"
+                                                   v-model="account_concept"
+                                                   title="Indique el concepto de la cuenta presupuestaria a agregar">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group is-required">
-                                        <label>Cuenta:</label>
-                                        <select2 :options="accounts" v-model="account_id"/>
+                                <div class="row">
+                                    <div class="col-md-3 mt-4">
+                                        <div class="form-group is-required">
+                                            <label>Monto:</label>
+                                            <input type="number" onfocus="$(this).select()"
+                                                   class="form-control input-sm"
+                                                   data-toggle="tooltip"
+                                                   title="Indique el monto a asignar para la cuenta seleccionada"
+                                                   v-model="account_amount">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Concepto:</label>
-                                        <input type="text" class="form-control input-sm" data-toggle="tooltip"
-                                               v-model="account_concept"
-                                               title="Indique el concepto de la cuenta presupuestaria a agregar">
+                                    <div class="col-md-3 mt-4">
+                                        <div class="form-group">
+                                            <label>Impuesto:</label>
+                                            <select2 :options="taxes" v-model="account_tax_id"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 mt-4">
-                                    <div class="form-group is-required">
-                                        <label>Monto:</label>
-                                        <input type="number" onfocus="$(this).select()"
-                                               class="form-control input-sm"
-                                               data-toggle="tooltip"
-                                               title="Indique el monto a asignar para la cuenta seleccionada"
-                                               v-model="account_amount">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-4">
-                                    <div class="form-group">
-                                        <label>Impuesto:</label>
-                                        <select2 :options="taxes" v-model="account_tax_id"/>
-                                    </div>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
+                                        data-dismiss="modal">
+                                    Cerrar
+                                </button>
+                                <button type="button" @click="addAccount"
+                                        class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                    Agregar
+                                </button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-                                    data-dismiss="modal">
-                                Cerrar
-                            </button>
-                            <button type="button" @click="addAccount"
-                                    class="btn btn-primary btn-sm btn-round btn-modal-save">
-                                Agregar
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -327,7 +325,7 @@
                         title="Cancelar y regresar" @click="redirect_back(route_list)">
                     <i class="fa fa-ban"></i>
                 </button>
-                <button type="button" @click="generateRecord()" data-toggle="tooltip"
+                <button type="button" @click="createRecord('finance/movements')" data-toggle="tooltip"
                         title="Guardar registro" class="btn btn-success btn-icon btn-round">
                     <i class="fa fa-save"></i>
                 </button>
@@ -346,6 +344,14 @@
                 type: Array,
                 default: []
             },
+            accounting: {
+                type: Number,
+                default: 0
+            },
+            budget: {
+                type: Number,
+                default: 0
+            },
         },
         data() {
             return {
@@ -362,6 +368,8 @@
                     entry_category: '',
                     institution_id: '',
                     accounts: [],
+                    totDebit: 0,
+                    totAssets: 0,
                 },
                 records: [],
                 data: {
@@ -436,6 +444,7 @@
             vm.getFinanceBankAccounts();
             vm.getCurrencies();
             vm.getInstitutions();
+            vm.getTaxes();
             this.record.recordsAccounting = [];
             this.record.accounts = [];
         },
@@ -533,6 +542,9 @@
                         this.data.totAssets += (this.record.recordsAccounting[i].assets != '') ? parseFloat(this.record.recordsAccounting[i].assets) : 0;
                     }
                 }
+
+                this.record.totDebit = this.data.totDebit;
+                this.record.totAssets = this.data.totAssets;
             },
 
             /**
@@ -669,6 +681,28 @@
             },
 
             /**
+             * Listado de impuestos
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getTaxes() {
+                const vm = this;
+                axios.get(`${window.app_url}/get-taxes`).then(response => {
+                    if (response.data.records.length > 0) {
+                        vm.taxesData = response.data.records;
+                        for (let tax of vm.taxesData) {
+                            vm.taxes.push({
+                                'id' : tax.id,
+                                'text' : tax.name + ' ' + tax.histories[0].percentage + '%',
+                            });
+                        }
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            },
+
+            /**
              * Agrega una cuenta presupuestaria al compromiso
              *
              * @method     addAccount
@@ -703,29 +737,6 @@
                     'account_id': vm.account_id,
                     'tax_id': vm.account_tax_id
                 });
-
-                if (vm.account_tax_id) {
-                    let tax;
-                    let tax_percentage;
-                    let tax_description;
-                    for (tax of vm.taxesData){
-                        if (vm.account_tax_id == tax.id) {
-                            tax_description = tax.description;
-                            tax_percentage = tax.histories[0].percentage;
-                        }
-                    }
-
-                    vm.record.tax_accounts.push({
-                        'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
-                        'code': account.code,
-                        'description': tax_description,
-                        'amount': vm.account_amount * tax_percentage / 100,
-                        'specific_action_id': vm.specific_action_id,
-                        'account_id': vm.account_id,
-                        'tax_id': vm.account_tax_id
-                    });
-                }
-
 
                 bootbox.confirm({
                     title: "Agregar cuenta",

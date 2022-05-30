@@ -63,6 +63,7 @@ Route::group([
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Movimientos */
+    Route::get('movements/vue-list', [FinanceMovementsController::class, 'vueList']);
     Route::resource('movements', FinanceMovementsController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Conciliación */
