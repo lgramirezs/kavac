@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <!-- fecha de inicio -->
-                            <div class="col-md-4">
+                            <div class="col-md-4" v-if="record.payment_periodicity != 'not_apply'">
                                 <div class="form-group is-required">
                                     <label>Fecha de inicio del primer período:</label>
                                     <input type="date" id="start_date" placeholder="Fecha de inicio"

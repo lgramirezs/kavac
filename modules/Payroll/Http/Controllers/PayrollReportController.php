@@ -126,7 +126,7 @@ class PayrollReportController extends Controller
             $payroll_staff_id = $request->input('payroll_staff_id');
 
             $records = PayrollVacationRequest::where('status', 'approved');
-            dump($records);
+            //dump($records);
 
             if ($payroll_staff_id) {
                 $records = $records->where('payroll_staff_id', $payroll_staff_id);
@@ -267,7 +267,7 @@ class PayrollReportController extends Controller
     public function show($filename)
     {
         $file = storage_path() . DIRECTORY_SEPARATOR . 'reports' . DIRECTORY_SEPARATOR . $filename ?? 'payroll-report-' . Carbon::now() . '.pdf';
-        dump($file);
+        //dump($file);
         return response()->download($file, $filename, [], 'inline');
     }
 
