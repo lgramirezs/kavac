@@ -803,6 +803,14 @@ export default {
                 formData.append("requirement_list", '');
             }
 
+            if(this.record_items.length > 0){
+                for(let i = 0; i < this.record_items.length; i++){
+                    formData.append("record_items[]", JSON.stringify(this.record_items[i]));
+                }
+            } else {
+                formData.append("record_items", '');
+            }
+
             formData.append("date", this.date);
             formData.append("institution_id", this.record.institution_id);
             formData.append("contracting_department_id", this.record.contracting_department_id);

@@ -25,8 +25,8 @@ use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
 
 use App\Models\DocumentStatus;
-
 use App\Models\Profile;
+use App\Models\Tax;
 
 use Nwidart\Modules\Facades\Module;
 
@@ -121,7 +121,9 @@ class PurchaseDirectHireController extends Controller
             'purchaseRequirementItems.purchaseRequirement',
             'purchaseBaseBudget.currency',
             'purchaseBaseBudget.tax.histories',
-        )->where('requirement_status', 'PROCESSED')
+        )->whereHas('purchaseBaseBudget', function ($query){
+            $query->where('orderable_id', null);
+        })->where('requirement_status', 'PROCESSED')
         ->orderBy('id', 'ASC')->get();
 
         /**
@@ -193,8 +195,6 @@ class PurchaseDirectHireController extends Controller
      */
     public function store(Request $request, UploadDocRepository $upDoc)
     {
-        // dd($request->all());
-        // dd(json_decode(json_decode(json_encode($request->all()['requirement_list']))[0], true));
         $this->validate($request, [
             'institution_id'                => 'required|integer',
             'contracting_department_id'     => 'required|integer',
@@ -251,7 +251,6 @@ class PurchaseDirectHireController extends Controller
             'budget_availability.required'          => 'El archivo de disponibilidad presupuestaria es obligatorio.',
             'budget_availability.mimes'             => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
         ]);
-        
 
         $codeSetting = CodeSetting::where("model", PurchaseDirectHire::class)->first();
 
@@ -271,7 +270,7 @@ class PurchaseDirectHireController extends Controller
             PurchaseDirectHire::class,
             'code'
         );
-        
+
         DB::transaction(function () use ($request, $upDoc, $codeDirectHire) {
 
             $data = $request->all();
@@ -289,7 +288,7 @@ class PurchaseDirectHireController extends Controller
                 'motivated_act', 
                 'budget_availability'
             ];
-    
+
             foreach ($documentListName as $nameFile) {
                 if ($request->file($nameFile)) {
                     $file = $request->file($nameFile);
@@ -308,29 +307,37 @@ class PurchaseDirectHireController extends Controller
                     }
                 }
             }
-    
+
             /**
              * Se relaciona los presupuestos base con la orden de contratación directa
              */
             $requirement_list = json_decode(json_encode($request->all()['requirement_list']));
     
+            $purchaseBaseBudgetsID = [];
+            $tax = null;
             foreach ($requirement_list as $requirement) {
                 $req = json_decode($requirement, true);
                 $baseBudget = PurchaseBaseBudget::find($req['purchase_base_budget_id']);
                 $baseBudget->orderable_type = PurchaseDirectHire::class;
                 $baseBudget->orderable_id = $purchaseDirectHire->id;
                 $baseBudget->save();
+
+                if (!$tax) {
+                    $tax = Tax::find($baseBudget->tax_id);
+                }
+
+                array_push($purchaseBaseBudgetsID, $req['purchase_base_budget_id']);
             }
 
             /**
              * [$has_budget determina si esta instalado y habilitado el modulo Budget]
              * @var [boolean]
              */
+
             $has_budget = (Module::has('Budget') && Module::isEnabled('Budget'));
             if ($has_budget) {
-                
                 $codeSetting = CodeSetting::where("model", \Modules\Budget\Models\BudgetCompromise::class)->first();
-                
+
                 if (!$codeSetting) {
                     return response()->json(['result' => false, 'message' => [
                         'type' => 'custom', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'danger',
@@ -339,7 +346,7 @@ class PurchaseDirectHireController extends Controller
                 }
 
                 $year = $request->fiscal_year ?? date("Y");
-
+                
                 $codeCompromise = generate_registration_code(
                     $codeSetting->format_prefix,
                     strlen($codeSetting->format_digits),
@@ -369,24 +376,27 @@ class PurchaseDirectHireController extends Controller
             $total = 0;
 
             /** Gestiona los ítems del compromiso */
-            // foreach ($request->accounts as $account) {
-            //     $spac = \Modules\Budget\Models\BudgetSpecificAction::find($account['specific_action_id']);
-            //     $formulation = $spac->subSpecificFormulations()->where('year', $compromisedYear)->first();
-            //     $tax = (isset($account['account_tax_id']) || isset($account['tax_id']))
-            //     ? Tax::find($account['account_tax_id'] ?? $account['tax_id'])
-            //     : new Tax();
-            //     $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
-            //     $taxAmount = ($account['amount'] * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
-            //     $compromise->budgetCompromiseDetails()->create([
-            //         'description' => $account['description'],
-            //         'amount' => $account['amount'],
-            //         'tax_amount' => $taxAmount,
-            //         'tax_id' => $account['account_tax_id'] ?? $account['tax_id'],
-            //         'budget_account_id' => $account['account_id'],
-            //         'budget_sub_specific_formulation_id' => $formulation->id,
-            //     ]);
-            //     $total += ($account['amount'] + $taxAmount);
-            // }
+            foreach ($request->record_items as $product) {
+                $prod = json_decode($product, true);
+                $amount = 0;
+                foreach ($prod['pivot_purchase'] as $pivot) {
+                    if (in_array($pivot['relatable_id'], $purchaseBaseBudgetsID)) {
+                        $amount = $pivot['unit_price'] * $prod['quantity'];
+                    }
+                }
+
+                $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
+                $taxAmount = ($amount * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
+                $compromise->budgetCompromiseDetails()->create([
+                    'description' => $prod['description'],
+                    'amount' => $amount,
+                    'tax_amount' => $taxAmount,
+                    'tax_id' => $tax->id,
+                    // 'budget_account_id' => $account['account_id'],
+                    // 'budget_sub_specific_formulation_id' => $formulation->id,
+                ]);
+                $total += ($amount + $taxAmount);
+            }
 
             $compromise->budgetStages()->create([
                 'code' => $codeCompromise,
@@ -394,9 +404,7 @@ class PurchaseDirectHireController extends Controller
                 'type' => 'PRE',
                 'amount' => $total,
             ]);
-            
         });
-
         return response()->json(['message' => 'Success'], 200);
     }
 
