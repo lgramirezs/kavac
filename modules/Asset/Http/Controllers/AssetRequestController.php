@@ -87,7 +87,7 @@ class AssetRequestController extends Controller
     public function store(Request $request, UploadDocRepository $upDoc)
     {
         $this->validate($request, [
-            'type_id'       => ['required'],
+            'type'       => ['required'],
             'motive'        => ['required'],
             'delivery_date' => ['required'],
             'files.*'       => ['max:5000', 'mimes:pdf,docx,doc,odt']
@@ -135,7 +135,7 @@ class AssetRequestController extends Controller
          */
         $asset_request = AssetRequest::create([
             'code' => $code,
-            'type' => $request->type_id,
+            'type' => $request->type,
             'motive' => $request->motive,
             'state' => 'Pendiente',
             'delivery_date' => $request->delivery_date,
@@ -203,7 +203,7 @@ class AssetRequestController extends Controller
         $asset_request = AssetRequest::find($id);
 
         $this->validate($request, [
-            'type_id' => ['required'],
+            'type' => ['required'],
             'motive' => ['required'],
             'delivery_date' => ['required'],
         ]);

@@ -21,7 +21,7 @@
             </div>
             <div slot="asset_status" slot-scope="props" class="text-center">
                 <span>
-                    {{ (props.row.asset_status)?props.row.asset_status.name:'Descincorporado' }}
+                    {{ (props.row.asset_status)?props.row.asset_status.name:'Desincorporado' }}
                 </span>
             </div>
             <div slot="id" slot-scope="props" class="text-center">

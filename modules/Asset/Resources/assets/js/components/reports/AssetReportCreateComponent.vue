@@ -243,7 +243,7 @@
                     <span>{{ (props.row.asset_condition)? props.row.asset_condition.name:props.row.asset_condition_id }}</span>
                 </div>
                 <div slot="status" slot-scope="props" class="text-center">
-                    <span>{{ (props.row.asset_status)? props.row.asset_status.name:props.row.asset_status_id }}</span>
+                    <span>{{ (props.row.asset_status)? props.row.asset_status.name:'Desincorporado'}}</span>
                 </div>
 
             </v-client-table>
