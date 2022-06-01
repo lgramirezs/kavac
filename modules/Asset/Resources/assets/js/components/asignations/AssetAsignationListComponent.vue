@@ -54,7 +54,7 @@
 			this.table_options.headings = {
 				'code': 'Código',
 				'payroll_staff': 'Trabajador',
-				'location_place': 'Lunagr de ubicación',
+				'location_place': 'Lugar de ubicación',
 				'created': 'Fecha de asignación',
 				'id': 'Acción'
 			};

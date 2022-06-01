@@ -165,7 +165,8 @@ class PayrollConcept extends Model implements Auditable
                         ]
                     )->where('p_key', 'like', 'global_parameter_%')->get();
                     foreach ($types as $type) {
-                        $formula = str_replace('parameter(' . $type['id'] . ')', $type['name'], $formula);
+                        $jsonValue = json_decode($type->p_value);
+                        $formula = str_replace('parameter(' . $jsonValue->id . ')', $jsonValue->name, $formula);
                     }
                 } elseif ($typeParameter == 'concept') {
                     $types = PayrollConcept::all();

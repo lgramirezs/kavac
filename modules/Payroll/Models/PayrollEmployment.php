@@ -9,6 +9,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
+use Nwidart\Modules\Facades\Module;
+
 /**
  * @class PayrollEmployment
  * @brief Datos laborales del trabajador
@@ -157,5 +159,16 @@ class PayrollEmployment extends Model implements Auditable
     public function profile()
     {
         return $this->belongsTo(Profile::class, 'employee_id');
+    }
+
+    /**
+     * Método que obtiene los trabajos anteriores asociados al trabajador
+     *
+     * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function purchaseDirectHires()
+    {
+        return (Module::has('Purchase') && Module::isEnabled('Purchase'))? $this->hasMany(\Modules\Purchase\Models\PurchaseDirectHire::class) : null;
     }
 }

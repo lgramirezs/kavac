@@ -147,7 +147,7 @@
                                         v-if="field['type'] == 'list'">
                                         <label>{{ field['name'] }}</label>
                                         <v-multiselect
-                                                    :options="assign_options_lists" track_by="text"
+                                                    :options="assign_options[field['id']]" track_by="text"
                                                     :hide_selected="false" data-toggle="tooltip"
                                                     title="Indique los registros a los que se les va asignar el concepto"
                                                     v-model="record.assign_options[field['id']]">
@@ -477,7 +477,6 @@
                 variable:                  '',
                 variable_option:           '',
                 assign_options:            {},
-                assign_options_lists:      [],
                 type:                      '',
                 value:                     '',
                 operator:                  '',
@@ -548,7 +547,6 @@
                 vm.getPayrollConceptAssignTo();
                 vm.getPayrollSalaryTabulators();
                 vm.getCurrencies();
-                vm.assign_options_lists = [];
 
                 $('.BlockDeletion').on('keydown', function (e) {
                     try {
@@ -687,13 +685,12 @@
                     if (field['type'] == 'list') {
                         if (typeof(vm.record.assign_options[field['id']] ) == 'undefined') {
                             vm.record.assign_options[field['id']] = [];
-                        }
-                        if (typeof(vm.assign_options[field['id']] ) == 'undefined') {
                             vm.assign_options[field['id']] = [];
+
                             axios.get(`${window.app_url}/payroll/get-concept-assign-options/${field['id']}`).then(response => {
-                                vm.assign_options_lists = response.data;
+                                vm.assign_options[field['id']] = response.data;
                             });
-                        }
+                        };
                     }
                     if (field['type'] == 'range') {
                         if (typeof(vm.record.assign_options[field['id']] ) == 'undefined') {
@@ -723,7 +720,7 @@
                         delete vm.record.assign_options[index];
                     }
                 });
-            }
+            },
         },
         methods: {
             /**
@@ -750,7 +747,6 @@
                     assign_options:              {}
                 };
             },
-
             /**
              * Obtiene un listado de cuentas patrimoniales
              *

@@ -287,7 +287,6 @@ class AssetController extends Controller
                 'assetStatus',
                 'assetUseFunction',
                 'institution',
-                'purchaseSupplier',
                 'parish' => function ($query) {
                     $query->with(['municipality' => function ($query) {
                         $query->with(['estate' => function ($query) {

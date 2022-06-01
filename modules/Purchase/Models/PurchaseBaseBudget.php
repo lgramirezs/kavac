@@ -26,7 +26,7 @@ class PurchaseBaseBudget extends Model implements Auditable
      * Lista de atributos que pueden ser asignados masivamente
      * @var array $fillable
      */
-    protected $fillable = ['currency_id', 'date', 'subtotal', 'tax_id'];
+    protected $fillable = ['currency_id', 'date', 'subtotal', 'tax_id', 'orderable_type', 'orderable_id'];
 
     /**
      * PurchaseBaseBudget belongs to Currency.
@@ -81,6 +81,18 @@ class PurchaseBaseBudget extends Model implements Auditable
     {
         // hasMany(RelatedModel, foreignKeyOnRelatedModel = purchaseBaseBudget_id, localKey = id)
         return $this->hasMany(Pivot::class, 'relatable_id');
+    }
+
+    /**
+     * PurchaseBaseBudget morphs to models in orderable_type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function orderable()
+    {
+        // morphTo($name = orderable, $type = orderable_type, $id = orderable_id)
+        // requires orderable_type and orderable_id fields on $this->table
+        return $this->morphTo();
     }
 
     /**

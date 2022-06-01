@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Nwidart\Modules\Facades\Module;
 
 use Modules\Accounting\Models\AccountingEntry;
 use Modules\Accounting\Models\AccountingEntryable;

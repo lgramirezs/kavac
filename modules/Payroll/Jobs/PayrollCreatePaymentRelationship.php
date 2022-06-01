@@ -79,47 +79,41 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
         foreach ($this->data['payroll_concepts'] as $concept) {
             $formula = null;
             $payrollConcept = PayrollConcept::find($concept['id']);
-            /** Si el concepto está calculado mediante fórmula se identifican y sustituyen los parámetros,
-             * en caso contrario se optiene su valor de acuerdo al tabulador */
-            if ($payrollConcept->calculation_way == 'formula') {
-                $exploded = multiexplode(
-                    [
-                        'if', '(', ')', '{', '}', ' ',
-                        '==', '<=', '>=', '<', '>', '!=',
-                        '+', '-','*','/'
-                    ],
-                    $payrollConcept->formula
-                );
-                while (count($exploded) > 0) {
-                    $complete = false;
-                    $current = max_length($exploded);
-                    $key = array_search($current, $exploded);
-                    /** Se descartan los elementos vacios y las constantes númericas */
-                    if ($current == '' || is_numeric($current)) {
-                        unset($exploded[$key]);
-                        $complete = true;
-                    } else {
-                        /** Se recorre el listado de parámetros para sustituirlos por su valor real
-                          * en la formula del concepto */
-                        foreach ($this->data['payroll_parameters'] as $parameter) {
-                            if ($parameter['code'] == $current) {
-                                unset($exploded[$key]);
-                                $complete = true;
-                                $formula = str_replace($parameter['code'], $parameter['value'], $formula ?? $payrollConcept->formula);
-                            }
-                        }
-                        if ($complete == false) {
-                            /** Se descartan los parametro de vacaciones y los del expediente del trabajador
-                             * para ser analizados mas adelante */
+            $exploded = multiexplode(
+                [
+                    'if', '(', ')', '{', '}', ' ',
+                    '==', '<=', '>=', '<', '>', '!=',
+                    '+', '-','*','/'
+                ],
+                $payrollConcept->translate_formula
+            );
+            while (count($exploded) > 0) {
+                $complete = false;
+                $current = max_length($exploded);
+                $key = array_search($current, $exploded);
+                /** Se descartan los elementos vacios y las constantes númericas */
+                if ($current == '' || is_numeric($current)) {
+                    unset($exploded[$key]);
+                    $complete = true;
+                } else {
+                    /** Se recorre el listado de parámetros para sustituirlos por su valor real
+                      * en la formula del concepto */
+                    foreach ($this->data['payroll_parameters'] as $parameter) {
+                        if ($parameter['name'] == $current) {
                             unset($exploded[$key]);
                             $complete = true;
+                            $formula = str_replace($parameter['name'], $parameter['value'], $formula ?? $payrollConcept->translate_formula);
                         }
                     }
+                    if ($complete == false) {
+                        /** Se descartan los parametro de vacaciones y los del expediente del trabajador
+                         * para ser analizados mas adelante */
+                        unset($exploded[$key]);
+                        $complete = true;
+                    }
                 }
-                array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula ?? $payrollConcept->formula]);
-            } elseif ($payrollConcept->calculation_way == 'tabulator') {
-                array_push($concepts, ['field' => $payrollConcept, 'formula' => null]);
             }
+            array_push($concepts, ['field' => $payrollConcept, 'formula' => $formula ?? $payrollConcept->translate_formula]);
         }
         /** Se evaluan los parámetros del expediente del trabajador y de la configuración de vacaciones */
         /** Se identifica la institución en la que se está operando */
@@ -145,74 +139,76 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
             $deductions  = [];
             foreach ($concepts as $concept) {
                 $formula = null;
-                if ($concept['field']->calculation_way == 'formula') {
-                    $exploded = multiexplode(
-                        [
-                            'if', '(', ')', '{', '}', ' ',
-                            '==', '<=', '>=', '<', '>', '!=',
-                            '+', '-','*','/'
-                        ],
-                        $concept['formula']
-                    );
-                    while (count($exploded) > 0) {
-                        $complete = false;
-                        $current = max_length($exploded);
-                        $key = array_search($current, $exploded);
-                        /** Se descartan los elementos vacios y las constantes númericas */
-                        if ($current == '' || is_numeric($current)) {
-                            unset($exploded[$key]);
-                            $complete = true;
-                        } else {
-                            /** Se recorre el listado de parámetros asociados a la configuración de vacaciones
-                              * para sustituirlos por su valor real en la formula del concepto */
-                            foreach ($payrollParameters->loadData('associatedVacation') as $parameter) {
-                                if ($parameter['id'] == $current) {
-                                    $records = (is_object($parameter['model']))
-                                        ? $parameter['model']
-                                        : $parameter['model']::where('institution_id', $institution->id)->first();
-                                    unset($exploded[$key]);
-                                    $complete = true;
-                                    $formula = str_replace(
-                                        $parameter['id'],
-                                        $records[$parameter['required'][0]],
-                                        $formula ?? $concept['formula']);
-                                }
+                $exploded = multiexplode(
+                    [
+                        'if', '(', ')', '{', '}', ' ',
+                        '==', '<=', '>=', '<', '>', '!=',
+                        '+', '-','*','/'
+                    ],
+                    $concept['formula']
+                );
+                while (count($exploded) > 0) {
+                    $complete = false;
+                    $current = max_length($exploded);
+                    $key = array_search($current, $exploded);
+                    /** Se descartan los elementos vacios y las constantes númericas */
+                    if ($current == '' || is_numeric($current)) {
+                        unset($exploded[$key]);
+                        $complete = true;
+                    } else {
+                        /** Se recorre el listado de parámetros asociados a la configuración de vacaciones
+                          * para sustituirlos por su valor real en la formula del concepto */
+                        foreach ($payrollParameters->loadData('associatedVacation') as $parameter) {
+                            if ($parameter['id'] == $current) {
+                                $records = (is_object($parameter['model']))
+                                    ? $parameter['model']
+                                    : $parameter['model']::where('institution_id', $institution->id)->first();
+                                unset($exploded[$key]);
+                                $complete = true;
+                                $formula = str_replace(
+                                    $parameter['id'],
+                                    $records[$parameter['required'][0]],
+                                    $formula ?? $concept['formula']
+                                );
                             }
-                            /** Se recorre el listado de parámetros asociados al expediente del trabajador
-                              * para sustituirlos por su valor real en la formula del concepto */
-                            if ($complete == false) {
-                                foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
-                                    if (!empty($parameter['children'])) {
-                                        foreach ($parameter['children'] as $children) {
-                                            if ($children['id'] == $current) {
-                                                $record = ($parameter['model'] != PayrollStaff::class)
-                                                    ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
-                                                    : $payrollStaff;
-                                                unset($exploded[$key]);
-                                                $complete = true;
-                                                if ($children['type'] == 'number') {
-                                                    /** Se calcula el número de registros existentes según sea el caso
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $record->loadCount($children['required'][0]);
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[Str::camel($children['required'][0]) . '_count'],
-                                                        $formula ?? $concept['formula']);
-                                                } elseif ($children['type'] == 'date') {
-                                                    /** Se calcula el número de años según la fecha de ingreso
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[age($record[$children['required'][0]])],
-                                                        $formula ?? $concept['formula']);
-                                                } else {
-                                                    /** Se identifica el valor según el expediente del trabajador
-                                                     * y se sustituye por su valor real en la fórmula del concepto */
-                                                    $formula = str_replace(
-                                                        $children['id'],
-                                                        $record[$children['required'][0]],
-                                                        $formula ?? $concept['formula']);
-                                                }
+                        }
+                        /** Se recorre el listado de parámetros asociados al expediente del trabajador
+                          * para sustituirlos por su valor real en la formula del concepto */
+                        if ($complete == false) {
+                            foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
+                                if (!empty($parameter['children'])) {
+                                    foreach ($parameter['children'] as $children) {
+                                        if ($children['id'] == $current) {
+                                            $record = ($parameter['model'] != PayrollStaff::class)
+                                                ? $parameter['model']::where('payroll_staff_id', $payrollStaff->id)->first()
+                                                : $payrollStaff;
+                                            unset($exploded[$key]);
+                                            $complete = true;
+                                            if ($children['type'] == 'number') {
+                                                /** Se calcula el número de registros existentes según sea el caso
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $record->loadCount($children['required'][0]);
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[Str::camel($children['required'][0]) . '_count'],
+                                                    $formula ?? $concept['formula']
+                                                );
+                                            } elseif ($children['type'] == 'date') {
+                                                /** Se calcula el número de años según la fecha de ingreso
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[age($record[$children['required'][0]])],
+                                                    $formula ?? $concept['formula']
+                                                );
+                                            } else {
+                                                /** Se identifica el valor según el expediente del trabajador
+                                                 * y se sustituye por su valor real en la fórmula del concepto */
+                                                $formula = str_replace(
+                                                    $children['id'],
+                                                    $record[$children['required'][0]],
+                                                    $formula ?? $concept['formula']
+                                                );
                                             }
                                         }
                                     }
@@ -220,7 +216,9 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                             }
                         }
                     }
-                } elseif ($payrollConcept->calculation_way == 'tabulator') {
+                }
+                /** Se excluyen temporalmente calculos por tabuladores */
+                if ($payrollConcept->calculation_way == 'tabulator') {
                     /** Se carga la propiedad tabulador asociada al concepto */
                     $payrollConcept->load('payrollSalaryTabulator');
                     $payrollSalaryTabulator = $payrollConcept->payrollSalaryTabulator;
@@ -258,7 +256,6 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                         $formula = json_decode($tabScale['value']);
                                                     }
                                                 }
-                                                
                                             } elseif ($children['type'] == 'date') {
                                                 /** Se calcula el número de años según la fecha de ingreso
                                                   * y se sustituye por su valor en el tabulador */
@@ -279,7 +276,6 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                         $formula = json_decode($tabScale['value']);
                                                     }
                                                 }
-                                                
                                             } else {
                                                 /** Se identifica el valor según el expediente del trabajador
                                                  * y se sustituye por su valor en el tabulador */
@@ -290,15 +286,14 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                     $formula = json_decode($tabScale['value']);
                                                 }
                                             }
-
                                         }
                                     }
                                 }
                             }
                         }
-                    } else if ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'vertical') {
+                    } elseif ($payrollSalaryTabulator->payroll_salary_tabulator_type == 'vertical') {
                         /** Se carga el escalafón vertical asociado al tabulador */
-                        $payrollSalaryTabulator->load(['payrollVerticalSalaryScale' => function($q) {
+                        $payrollSalaryTabulator->load(['payrollVerticalSalaryScale' => function ($q) {
                             $q->load('payrollScales');
                         }]);
                         foreach ($payrollParameters->loadData('associatedWorkerFile') as $parameter) {
@@ -330,7 +325,6 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                         $formula = json_decode($tabScale['value']);
                                                     }
                                                 }
-                                                
                                             } elseif ($children['type'] == 'date') {
                                                 /** Se calcula el número de años según la fecha de ingreso
                                                   * y se sustituye por su valor en el tabulador */
@@ -351,7 +345,6 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                         $formula = json_decode($tabScale['value']);
                                                     }
                                                 }
-                                                
                                             } else {
                                                 /** Se identifica el valor según el expediente del trabajador
                                                  * y se sustituye por su valor en el tabulador */
@@ -362,7 +355,6 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                                                     $formula = json_decode($tabScale['value']);
                                                 }
                                             }
-
                                         }
                                     }
                                 }
@@ -371,7 +363,7 @@ class PayrollCreatePaymentRelationship implements ShouldQueue
                     } else {
                         /** Se carga el escalafón horizontal asociado al tabulador */
                         $payrollSalaryTabulator->load([
-                            'payrollHorizontalSalaryScale' => function($q) {
+                            'payrollHorizontalSalaryScale' => function ($q) {
                                 $q->load('payrollScales');
                             }, 'payrollVerticalSalaryScale' => function($q) {
                                 $q->load('payrollScales');

@@ -15,6 +15,7 @@ use Modules\Budget\Models\BudgetStage as BaseBudgetStage;
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
-class BudgetState extends BaseBudgetStage
+class BudgetStage extends BaseBudgetStage
 {
+
 }

@@ -10,10 +10,10 @@
                         v-has-tooltip>
                         <i class="fa fa-edit"></i>
                     </button> -->
-                    <a class="btn btn-primary btn-xs btn-icon" :href="url_start_certificate+props.row.id" title="Imprimir Acta de inicio" data-toggle="tooltip" v-has-tooltip target="_blank">
+                    <!-- <a class="btn btn-primary btn-xs btn-icon" :href="url_start_certificate+props.row.id" title="Imprimir Acta de inicio" data-toggle="tooltip" v-has-tooltip target="_blank">
                         <i class="fa fa-print" style="text-align: center;"></i>
-                    </a>
-                    <button @click="deleteRecord(props.index,'/purchase/direct_hire')" 
+                    </a> -->
+                    <button @click="deleteRecord(props.row.id,'/purchase/direct_hire')" 
                         class="btn btn-danger btn-xs btn-icon btn-action" 
                         title="Eliminar registro" 
                         data-toggle="tooltip" 

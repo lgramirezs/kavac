@@ -5,17 +5,17 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * @class AddFieldInstitutionIdToPurchaseDirectHiresTable
+ * @class AddFieldCodeToPurchaseDirectHiresTable
  * @brief [descripción detallada]
  *
  * [descripción corta]
  *
- * @author Ing. Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+ * @author [autor de la clase] [correo del autor]
  *
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
-class AddFieldInstitutionIdToPurchaseDirectHiresTable extends Migration
+class AddFieldCodeToPurchaseDirectHiresTable extends Migration
 {
     /**
      * Ejecuta las migraciones.
@@ -25,7 +25,8 @@ class AddFieldInstitutionIdToPurchaseDirectHiresTable extends Migration
     public function up()
     {
         Schema::table('purchase_direct_hires', function (Blueprint $table) {
-            $table->foreignId('institution_id')->nullable()->constrained()->onUpdate('cascade');
+            $table->string('code', 20)->unique()->nullable()
+                      ->comment('Código generado por el sistema para identificar al proveedor');
         });
     }
 
@@ -37,8 +38,7 @@ class AddFieldInstitutionIdToPurchaseDirectHiresTable extends Migration
     public function down()
     {
         Schema::table('purchase_direct_hires', function (Blueprint $table) {
-            $table->dropForeign(['institution_id']);
-            $table->dropColumn('institution_id');
+            $table->dropColumn('code');
         });
     }
 }

@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="record.type_id > 1">
+            <div v-if="record.type > 1">
                 <div class="row" style="margin: 10px 0">
                     <div class="col-md-12">
                         <b>Ubicación</b>
