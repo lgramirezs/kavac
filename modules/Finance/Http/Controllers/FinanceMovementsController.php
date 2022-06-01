@@ -40,6 +40,18 @@ class FinanceMovementsController extends Controller
     use ValidatesRequests;
 
     /**
+     * Arreglo con las reglas de validación sobre los datos de un formulario
+     * @var Array $validateRules
+     */
+    protected $validateRules;
+
+    /**
+     * Arreglo con los mensajes para las reglas de validación
+     * @var Array $messages
+     */
+    protected $messages;
+
+    /**
      * Define la configuración de la clase
      *
      * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
@@ -51,6 +63,53 @@ class FinanceMovementsController extends Controller
         $this->middleware('permission:finance.movements.create', ['only' => 'store']);
         $this->middleware('permission:finance.movements.edit', ['only' => ['create', 'update']]);
         $this->middleware('permission:finance.movements.delete', ['only' => 'destroy']);
+
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'institution_id'             => ['required'],
+            'payment_date'               => ['required'],
+            'transaction_type'           => ['required'],
+            'finance_bank_account_id'    => ['required'],
+            'reference'                  => ['required', 'max:30'],
+            'concept'                    => ['required', 'max:400'],
+            'amount'                     => ['required', 'numeric', 'min:1'],
+            'currency_id'                => ['required'],
+            'entry_category'             => ['required'],
+            'entry_concept'              => ['required', 'max:400'],
+            'recordsAccounting'          => ['required'],
+            'recordsAccounting.*.assets' => ['numeric', 'min:0'],
+            'recordsAccounting.*.debit'  => ['numeric', 'min:0'],
+            'recordsAccounting'          => ['required'],
+            'accounts.*.description'     => ['max:400'],
+            'totDebit'                   => ['same:totAssets', 'numeric', 'min:1'],
+            'totAssets'                  => ['numeric', 'min:1']
+        ];
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+            'institution_id.required'           => 'El campo institución es obligatorio',
+            'payment_date.required'             => 'El campo fecha de pago es obligatorio',
+            'transaction_type.required'         => 'El campo tipo de transacción es obligatorio',
+            'finance_bank_account_id.required'  => 'El campo Nro. de Cuenta es obligatorio',
+            'reference.required'                => 'El campo documento de referencia es obligatorio',
+            'reference.max'                     => 'El campo documento de referencia debe ser menor a 30 caracteres',
+            'concept.required'                  => 'El campo concepto es obligatorio',
+            'concept.max'                       => 'El campo concepto debe ser menor a 400 caracteres',
+            'amount.required'                   => 'El campo monto es obligatorio',
+            'amount.numeric'                    => 'El campo monto debe ser de tipo numérico',
+            'amount.min'                        => 'El campo monto debe ser mayor que 0',
+            'currency_id.required'              => 'El campo tipo de moneda es obligatorio',
+            'entry_category.required'           => 'El campo categoría del asiento es obligatorio',
+            'entry_concept.required'            => 'El campo concepto o descripción es obligatorio',
+            'entry_concept.max'                 => 'El campo concepto o descripción debe ser menor a 400 caracteres',
+            'recordsAccounting.required'        => 'Es obligatorio registrar un asiento contable',
+            'accounts.*.description.max'        => 'El campo concepto del compromiso debe ser menor a 400 caracteres',
+            'totDebit.same'                     => 'El asiento no esta balanceado, Por favor verifique',
+            'recordsAccounting.*.debit.min'     => 'Los valores agregados en la columna del DEBE deben ser positivos',
+            'recordsAccounting.*.assets.min'    => 'Los valores agregados en la columna del HABER deben ser positivos',
+            'totDebit.min'                      => 'El total del asiento por la columna del DEBE debe ser mayor que 0',
+            'totAssets.min'                     => 'El total del asiento por la columna del HABER debe ser mayor que 0',
+        ];
     }
 
     /**
@@ -65,7 +124,14 @@ class FinanceMovementsController extends Controller
      */
     public function index()
     {
-        return view('finance::movements.list');
+        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
+            return view('finance::movements.list');
+        } else {
+            return redirect()->route('finance.setting.index')->with('message', [
+                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+                        ]);
+        }
     }
 
     /**
@@ -79,6 +145,20 @@ class FinanceMovementsController extends Controller
      */
     public function create()
     {
+
+        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
+            $accounting = 1;
+        } else {
+            return redirect()->route('finance.setting.index')->with('message', [
+                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+                        ]);
+        }
+
+        if (Module::has('Budget') && Module::isEnabled('Budget')) {
+            $budget = 1;
+        }
+
         /**
          * [$accountingList contiene las cuentas patrimoniales]
          * @var [Json]
@@ -109,13 +189,6 @@ class FinanceMovementsController extends Controller
          */
         $categories = json_encode($categories);
 
-        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
-            $accounting = 1;
-        }
-        if (Module::has('Budget') && Module::isEnabled('Budget')) {
-            $budget = 1;
-        }
-
         return view('finance::movements.create', compact('accountingList', 'categories', 'accounting', 'budget'));
     }
 
@@ -139,6 +212,8 @@ class FinanceMovementsController extends Controller
         );
 
         DB::transaction(function () use ($request, $codeMovement) {
+            $this->validate($request, $this->validateRules, $this->messages);
+
             $bankingMovement = FinanceBankingMovement::create([
                 'code' => $codeMovement,
                 'payment_date' => $request->input('payment_date'),
@@ -188,10 +263,11 @@ class FinanceMovementsController extends Controller
                     $codeSetting = CodeSetting::where("model", BudgetCompromise::class)->first();
 
                     if (!$codeSetting) {
-                        return response()->json(['result' => false, 'message' => [
-                            'type' => 'custom', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'danger',
-                            'text' => 'Debe configurar previamente el formato para el código a generar',
-                        ]], 200);
+                        $request->session()->flash('message', [
+                            'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                            'text' => 'Debe configurar previamente el formato para el código a generar'
+                            ]);
+                        return response()->json(['result' => false, 'redirect' => route('budget.setting.index')], 200);
                     }
 
                     $year = $request->fiscal_year ?? date("Y");

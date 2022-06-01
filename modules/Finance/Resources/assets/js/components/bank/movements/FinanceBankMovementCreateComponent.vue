@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 pad-top-20">
+                    <div class="col-md-12 pad-top-20 table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
@@ -231,10 +231,10 @@
                                                :value="account.specific_action_id + '|' + account.account_id">
                                         <input type="hidden" name="budget_account_amount[]" readonly
                                                :value="account.amount">
-                                        <a class="btn btn-sm btn-danger btn-action" href="#" @click="deleteAccount(index)"
+                                        <button class="btn btn-sm btn-danger btn-action" @click="deleteAccountCompromise(index)"
                                            title="Eliminar este registro" data-toggle="tooltip">
                                             <i class="fa fa-minus-circle"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -256,9 +256,21 @@
                             </div>
                             <div class="modal-body">
                                 <div class="alert alert-danger" v-if="errors.length > 0">
-                                    <ul>
-                                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-                                    </ul>
+                                    <div class="container">
+                                        <div class="alert-icon">
+                                            <i class="now-ui-icons objects_support-17"></i>
+                                        </div>
+                                        <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                                @click.prevent="errors = []">
+                                            <span aria-hidden="true">
+                                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                                            </span>
+                                        </button>
+                                        <ul>
+                                            <li v-for="error in errors" :key="error">{{ error }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -604,6 +616,17 @@
             },
 
             /**
+             * Elimina una cuenta del listado de cuentas agregadas
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @param  {integer} index Índice del elemento a eliminar
+             */
+            deleteAccountCompromise(index) {
+                let vm = this;
+                vm.record.accounts.splice(index, 1);
+            },
+
+            /**
              * vacia los valores del debe y del haber de la fila de la cuenta y vuelve a calcular el total del asiento
              *
              * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
@@ -727,40 +750,45 @@
 
                 await vm.getSpecificActionDetail(vm.specific_action_id).then(detail => specificAction = detail.record);
 
-               await vm.getAccountDetail(vm.account_id).then(detail => account = detail.record);
-                vm.record.accounts.push({
-                    'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
-                    'code': account.code,
-                    'description': vm.account_concept,
-                    'amount': vm.account_amount,
-                    'specific_action_id': vm.specific_action_id,
-                    'account_id': vm.account_id,
-                    'tax_id': vm.account_tax_id
-                });
+                await vm.getAccountDetail(vm.account_id).then(detail => account = detail.record);
 
-                bootbox.confirm({
-                    title: "Agregar cuenta",
-                    message: `Desea agregar otra cuenta?`,
-                    buttons: {
-                        cancel: {
-                            label: '<i class="fa fa-times"></i> Cancelar'
+                if (vm.account_concept.length > 400) {
+                    vm.errors.push('El campo concepto debe ser menor a 400 caracteres')
+                } else {
+                    vm.record.accounts.push({
+                        'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        'code': account.code,
+                        'description': vm.account_concept,
+                        'amount': vm.account_amount,
+                        'specific_action_id': vm.specific_action_id,
+                        'account_id': vm.account_id,
+                        'tax_id': vm.account_tax_id
+                    });
+
+                    bootbox.confirm({
+                        title: "Agregar cuenta",
+                        message: `Desea agregar otra cuenta?`,
+                        buttons: {
+                            cancel: {
+                                label: '<i class="fa fa-times"></i> Cancelar'
+                            },
+                            confirm: {
+                                label: '<i class="fa fa-check"></i> Confirmar'
+                            }
                         },
-                        confirm: {
-                            label: '<i class="fa fa-check"></i> Confirmar'
-                        }
-                    },
-                    callback: function (result) {
-                        if (!result) {
-                            $("#add_account").find('.close').click();
-                        }
+                        callback: function (result) {
+                            if (!result) {
+                                $("#add_account").find('.close').click();
+                            }
 
-                        vm.specific_action_id = '';
-                        vm.account_id = '';
-                        vm.account_concept = '';
-                        vm.account_amount = 0;
-                        vm.account_tax_id = '';
-                    }
-                });
+                            vm.specific_action_id = '';
+                            vm.account_id = '';
+                            vm.account_concept = '';
+                            vm.account_amount = 0;
+                            vm.account_tax_id = '';
+                        }
+                    });
+                }
             },
 
             /**
@@ -785,7 +813,7 @@
                     });
                 } else {
                     $("#add_account").find('.close').click();
-                    bootbox.alert('Debe indicar la fecha del pago antes de agregar cuentas a un compromiso');
+                    bootbox.alert('Debe indicar la institución y la fecha del pago antes de agregar cuentas a un compromiso');
                 }
 
                 vm.loading = false;
