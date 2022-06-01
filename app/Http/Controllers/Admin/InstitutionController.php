@@ -91,7 +91,8 @@ class InstitutionController extends Controller
             'institution_sector_id' => ['required'],
             'institution_type_id' => ['required'],
             'municipality_id' => ['required'],
-            'city_id' => ['required']
+            'city_id' => ['required'],
+            'logo_id' => ['required']
         ], [
             'rif.required' => __('El R.I.F. es obligatorio.'),
             'rif.size' => __('El R.I.F. debe contener 10 carácteres.'),
@@ -110,7 +111,8 @@ class InstitutionController extends Controller
             'institution_sector_id.required' => __('El sector del organismo es obligatorio.'),
             'institution_type_id.required' => __('El tipo de organismo es obligatorio.'),
             'municipality_id.required' => __('Seleccione un municipio.'),
-            'city_id.required' => __('Seleccione una ciudad.')
+            'city_id.required' => __('Seleccione una ciudad.'),
+            'logo_id.required' => __('El logo es obligatorio.'),
         ]);
 
         /**
