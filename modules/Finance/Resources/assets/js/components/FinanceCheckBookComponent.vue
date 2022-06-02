@@ -41,7 +41,7 @@
 								<div class="form-group is-required">
 									<label>Banco</label>
 									<select2 :options="banks" v-model="record.finance_bank_id"
-											 @input="getBankAccounts"></select2>
+											 @input="getBanksAccounts();"></select2>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -194,7 +194,16 @@
             		}
             	}
             	this.record.numbers = check_numbers;
-			}
+			},
+
+	        getBanksAccounts() {
+	            const vm = this;
+	            if (vm.record.finance_bank_id > 0) {
+	                axios.get('/finance/get-bank-account/' + vm.record.finance_bank_id).then(response => {
+	                    vm.accounts = response.data;
+	                });
+	            }
+	        },
 		},
 		created() {
 			this.table_options.headings = {

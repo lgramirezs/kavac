@@ -45,6 +45,9 @@ Route::group([
         Route::resource('bank-accounts', FinanceBankAccountController::class, ['as' => 'finance']);
         /** Rutas para la gestión de chequeras */
         Route::resource('check-books', FinanceCheckBookController::class, ['as' => 'finance', 'except' => ['edit']]);
+
+        Route::get('get-bank-account/{bank_id}', [FinanceCheckBookController::class, 'getBanksAccounts']);
+
         Route::get('check-books/edit/{id}', 'FinanceCheckBookController@edit')->name('finance.edit');
         /** Rutas para la gestión de los métodos de pago */
         Route::resource('payment_methods', FinancePaymentMethodsController::class, ['as' => 'finance']);
