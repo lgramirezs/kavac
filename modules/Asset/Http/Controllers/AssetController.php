@@ -287,7 +287,6 @@ class AssetController extends Controller
                 'assetStatus',
                 'assetUseFunction',
                 'institution',
-                'purchaseSupplier',
                 'parish' => function ($query) {
                     $query->with(['municipality' => function ($query) {
                         $query->with(['estate' => function ($query) {
@@ -341,6 +340,7 @@ class AssetController extends Controller
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
                                         , 'assetRequestAsset')
                                         ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->where('asset_type_id', 1)
                                         ->orderBy('id')->get();
                     $selected = [];
                     foreach($assets_list as $asset_index){
@@ -357,6 +357,7 @@ class AssetController extends Controller
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
                                         , 'assetRequestAsset')->where('institution_id', $institution_id)
                                         ->where('asset_condition_id', 1)->where('asset_status_id', 10)
+                                        ->where('asset_type_id', 1)
                                         ->orderBy('id')->get();
                     $selected = [];
                     foreach($assets_list as $asset_index){
@@ -374,7 +375,7 @@ class AssetController extends Controller
                     
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
-                                        , 'assetRequestAsset')
+                                        , 'assetRequestAsset')->where('asset_type_id', 1)
                                         ->orderBy('id')->get();
                     
                     $selected = [];
@@ -392,6 +393,7 @@ class AssetController extends Controller
                     $assets_list = Asset::with('institution', 'assetCondition', 'assetStatus'
                                         , 'assetAsignationAsset', 'assetDisincorporationAsset'
                                         , 'assetRequestAsset')->where('institution_id', $institution_id)
+                                        ->where('asset_type_id', 1)
                                         ->orderBy('id')->get();
                     
                     $selected = [];

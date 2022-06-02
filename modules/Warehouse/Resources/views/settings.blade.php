@@ -47,7 +47,7 @@
 						<warehouse-rules id="helpWarehouseRules"></warehouse-rules>
 
 						{{-- Configuración de cierres de almacén --}}
-						<warehouse-closes id="helpWarehouseCloses"></warehouse-closes>
+						<!--<warehouse-closes id="helpWarehouseCloses"></warehouse-closes> -->
 
 					</div>
 				</div>

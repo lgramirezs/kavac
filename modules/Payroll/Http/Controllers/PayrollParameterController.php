@@ -653,7 +653,7 @@ class PayrollParameterController extends Controller
                             '==', '<=', '>=', '<', '>', '!=',
                             '+', '-','*','/'
                         ],
-                        $payrollConcept->formula
+                        $payrollConcept->translate_formula
                     );
                     foreach ($exploded as $explod) {
                         /**
@@ -669,24 +669,27 @@ class PayrollParameterController extends Controller
                         if ($parameters) {
                             foreach ($parameters as $parameter) {
                                 $jsonValue = json_decode($parameter->p_value);
-                                if (isset($jsonValue->id)) {
-                                    if ($jsonValue->id == $explod) {
+                                if (isset($jsonValue->name)) {
+                                    if ($jsonValue->name == $explod) {
                                         if ($jsonValue->parameter_type == 'global_value') {
                                             /** Si el parámetro es de valor global */
                                             array_push($payrollParameters, [
-                                                'id'  => $jsonValue->id,
+                                                'id'    => $jsonValue->id,
+                                                'name'  => $jsonValue->name,
                                                 'value' => $jsonValue->value
                                             ]);
                                         } elseif ($jsonValue->parameter_type == 'resettable_variable') {
                                             /** Si el parámetro es reiniciable a cero por período de nómina */
                                             array_push($payrollParameters, [
-                                                'id'  => $jsonValue->id,
+                                                'id'    => $jsonValue->id,
+                                                'name'  => $jsonValue->name,
                                                 'value' => ''
                                             ]);
                                         } elseif ($jsonValue->parameter_type == 'processed_variable') {
                                             /** Si el parámetro es una variable procesada */
                                             array_push($payrollParameters, [
-                                                'id'  => $jsonValue->id,
+                                                'id'    => $jsonValue->id,
+                                                'name'  => $jsonValue->name,
                                                 'value' => $jsonValue->formula
                                             ]);
                                         }

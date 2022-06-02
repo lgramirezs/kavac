@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Nwidart\Modules\Facades\Module;
 
 use Modules\Accounting\Models\AccountingEntry;
 use Modules\Accounting\Models\AccountingEntryable;
@@ -96,29 +97,22 @@ class AccountingManageEntries implements ShouldQueue
                 ]);
         }
 
+        $entryAccounts = AccountingEntryAccount::where('accounting_entry_id', $newEntries->id)->get();
+        foreach($entryAccounts as $entryAccount){
+            $entryAccount->delete();
+        }
+
         foreach ($this->data['accountingAccounts'] as $account) {
             /**
-             * Se actualiza o crea la relación de cuenta a ese asiento si ya existe existe lo actualiza,
+             * Se crea la relación de cuenta a ese asiento si ya existe existe lo actualiza,
              * de lo contrario crea el nuevo registro de cuenta
              */
-            if ($account['entryAccountId']) {
-                /**
-                 * [$record contiene el registro de cuanta patrimonial asociada al asiento a actualizar]
-                 * @var AccountingEntryAccount
-                 */
-                $record = AccountingEntryAccount::find($account['entryAccountId']);
-                $record->accounting_account_id = $account['id'];
-                $record->debit = $account['debit'];
-                $record->assets = $account['assets'];
-                $record->save();
-            } else {
-                AccountingEntryAccount::create([
-                        'accounting_entry_id' => $newEntries->id,
-                        'accounting_account_id' => $account['id'],
-                        'debit' => $account['debit'],
-                        'assets' => $account['assets'],
-                    ]);
-            }
+            AccountingEntryAccount::create([
+                    'accounting_entry_id' => $newEntries->id,
+                    'accounting_account_id' => $account['id'],
+                    'debit' => $account['debit'],
+                    'assets' => $account['assets'],
+                ]);
         }
 
         // 

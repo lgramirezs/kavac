@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
 use Modules\Finance\Models\FinanceCheckBook;
+use Modules\Finance\Models\FinanceBankingMovement;
 
 /**
  * @class FinanceController
@@ -48,24 +49,50 @@ class FinanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'checks_code' => [new CodeSettingRule]
+            'checks_code' => [new CodeSettingRule],
+            'movements_code' => [new CodeSettingRule],
         ]);
 
-        list($prefix, $digits, $sufix) = CodeSetting::divideCode($request->checks_code);
+        /** @var array $codes Arreglo con información de los campos de códigos configurados */
+        $codes = $request->input();
+        /** @var boolean $saved Define el estatus verdadero para indicar que no se ha registrado información */
+        $saved = false;
 
-        CodeSetting::updateOrCreate([
-            'module' => 'finance',
-            'table' => 'finance_check_books',
-            'field' => 'code',
-            'type' => null
-        ], [
-            'format_prefix' => $prefix,
-            'format_digits' => $digits,
-            'format_year' => $sufix,
-            'model' => FinanceCheckBook::class,
-        ]);
+        foreach ($codes as $key => $value) {
+            /** @var string $model Define el modelo al cual hace referencia el código */
+            $model = '';
 
-        $request->session()->flash('message', ['type' => 'store']);
+            if ($key !== '_token' && !is_null($value)) {
+                list($table, $field) = explode("_", $key);
+                list($prefix, $digits, $sufix) = CodeSetting::divideCode($value);
+
+                if ($table === "check_books") {
+                    $table = "check_books";
+                    $model = FinanceCheckBook::class;
+                } elseif ($table === "movements") {
+                    $table = "movements_code";
+                    $model = FinanceBankingMovement::class;
+                }
+
+                CodeSetting::updateOrCreate([
+                    'module' => 'finance',
+                    'table' => 'finance_'. $table,
+                    'field' => $field,
+                ], [
+                    'format_prefix' => $prefix,
+                    'format_digits' => $digits,
+                    'format_year' => $sufix,
+                    'model' => $model,
+                ]);
+
+                /** @var boolean $saved Define el estado verdadero para indicar que se ha registrado información */
+                $saved = true;
+            }
+        }
+
+        if ($saved) {
+            $request->session()->flash('message', ['type' => 'store']);
+        }
 
         return redirect()->back();
     }
@@ -114,6 +141,7 @@ class FinanceController extends Controller
     public function setting()
     {
         $checkCode = CodeSetting::where('model', FinanceCheckBook::class)->first() ?? '';
-        return view('finance::settings', compact('checkCode'));
+        $movementCode = CodeSetting::where('model', FinanceBankingMovement::class)->first() ?? '';
+        return view('finance::settings', compact('checkCode', 'movementCode'));
     }
 }

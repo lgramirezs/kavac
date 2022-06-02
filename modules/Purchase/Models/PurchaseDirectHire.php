@@ -8,6 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
+use Nwidart\Modules\Facades\Module;
+
 /**
  * @class PurchaseDirectHire
  * @brief Modelo para la contratación directa
@@ -36,6 +38,8 @@ class PurchaseDirectHire extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
+        'code',
+        'date',
         'institution_id',
         'contracting_department_id',
         'user_department_id',
@@ -46,6 +50,13 @@ class PurchaseDirectHire extends Model implements Auditable
         'funding_source',
         'description',
         'payment_methods',
+
+        // variables para firmas
+        'prepared_by_id',
+        'reviewed_by_id',
+        'verified_by_id',
+        'first_signature_id',
+        'second_signature_id',
     ];
 
     /**
@@ -129,5 +140,68 @@ class PurchaseDirectHire extends Model implements Auditable
     public function userDepartment()
     {
         return $this->belongsTo(Department::class, 'user_department_id');
+    }
+
+    /**
+     * PurchaseDirectHire morphs many PurchaseBaseBudget.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function purchaseBaseBudgets()
+    {
+        // morphMany(MorphedModel, morphableName, type = orderable_type, relatedKeyName = orderable_id, localKey = id)
+        return $this->morphMany(PurchaseBaseBudget::class, 'orderable');
+    }
+
+    /**
+     * PurchaseDirectHire belongs to payroll_employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function preparedBy()
+    {
+        // belongsTo(RelatedModel, foreignKey = payroll_employment_id, keyOnRelatedModel = id)
+        return (Module::has('Payroll') && Module::isEnabled('Payroll'))? $this->belongsTo(\Modules\Payroll\Models\PayrollEmployment::class, 'prepared_by_id') : null;
+    }
+
+    /**
+     * PurchaseDirectHire belongs to payroll_employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reviewedBy()
+    {
+        // belongsTo(RelatedModel, foreignKey = payroll_employment_id, keyOnRelatedModel = id)
+        return (Module::has('Payroll') && Module::isEnabled('Payroll'))? $this->belongsTo(\Modules\Payroll\Models\PayrollEmployment::class, 'reviewed_by_id') : null;
+    }
+    /**
+     * PurchaseDirectHire belongs to payroll_employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function verifiedBy()
+    {
+        // belongsTo(RelatedModel, foreignKey = payroll_employment_id, keyOnRelatedModel = id)
+        return (Module::has('Payroll') && Module::isEnabled('Payroll'))? $this->belongsTo(\Modules\Payroll\Models\PayrollEmployment::class, 'verified_by_id') : null;
+    }
+    /**
+     * PurchaseDirectHire belongs to payroll_employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function firstSignature()
+    {
+        // belongsTo(RelatedModel, foreignKey = payroll_employment_id, keyOnRelatedModel = id)
+        return (Module::has('Payroll') && Module::isEnabled('Payroll'))? $this->belongsTo(\Modules\Payroll\Models\PayrollEmployment::class, 'first_signature_id') : null;
+    }
+    /**
+     * PurchaseDirectHire belongs to payroll_employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function secondSignature()
+    {
+        // belongsTo(RelatedModel, foreignKey = payroll_employment_id, keyOnRelatedModel = id)
+        return (Module::has('Payroll') && Module::isEnabled('Payroll'))? $this->belongsTo(\Modules\Payroll\Models\PayrollEmployment::class, 'second_signature_id') : null;
     }
 }

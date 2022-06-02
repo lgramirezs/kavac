@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
+use Modules\Accounting\Models\AccountingEntryable;
+use Modules\Budget\Models\BudgetCompromise;
+use App\Models\Currency;
+use App\Models\Institution;
 
 /**
  * @class FinanceBankingMovement
@@ -38,7 +42,7 @@ class FinanceBankingMovement extends Model implements Auditable
      */
     protected $fillable = [
         'payment_date', 'transaction_type', 'reference', 'concept', 'amount',
-        'finance_bank_account_id', 'accounting_entry_id', 'currency_id', 'budget_compromise_id'
+        'finance_bank_account_id', 'currency_id', 'institution_id', 'code'
     ];
 
     /**
@@ -60,9 +64,9 @@ class FinanceBankingMovement extends Model implements Auditable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
      * AccountingEntry
      */
-    public function accountingEntry()
+    public function accountingEntryPivot()
     {
-        return $this->morphOne(AccountingEntry::class, 'accounting_entryable');
+        return $this->morphOne(AccountingEntryable::class, 'accounting_entryable');
     }
 
     /**
@@ -74,7 +78,7 @@ class FinanceBankingMovement extends Model implements Auditable
      */
     public function budgetCompromise()
     {
-        return $this->belongsTo(BudgetCompromise::class);
+        return $this->morphOne(BudgetCompromise::class, 'compromiseable');
     }
 
     /**
@@ -87,5 +91,17 @@ class FinanceBankingMovement extends Model implements Auditable
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    /**
+     * Método que obtiene la institución
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
+     * Institution
+     */
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
     }
 }
