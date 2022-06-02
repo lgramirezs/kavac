@@ -10,6 +10,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
 use Modules\Finance\Models\FinanceBankingMovement;
+use Modules\Accounting\Models\AccountingEntry;
+use Modules\Accounting\Models\AccountingEntryAccount;
 use Modules\Accounting\Models\AccountingAccount;
 use Modules\Accounting\Models\AccountingEntryCategory;
 use Modules\Accounting\Jobs\AccountingManageEntries;
@@ -351,12 +353,225 @@ class FinanceMovementsController extends Controller
     {
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit($id)
+    {
+        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
+            $accounting = 1;
+        } else {
+            return redirect()->route('finance.setting.index')->with('message', [
+                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+                        ]);
+        }
+
+        if (Module::has('Budget') && Module::isEnabled('Budget')) {
+            $budget = 1;
+        }
+
+        /**
+         * [$accountingList contiene las cuentas patrimoniales]
+         * @var [Json]
+         */
+        $accountingList = json_encode($this->getRecordsAccounting());
+
+        /**
+         * [$categories contendra las categorias]
+         * @var array
+         */
+        $categories = [];
+        array_push($categories, [
+            'id'      => '',
+            'text'    => 'Seleccione...',
+            'acronym' => ''
+        ]);
+
+        foreach (AccountingEntryCategory::all() as $category) {
+            array_push($categories, [
+                'id'      => $category->id,
+                'text'    => $category->name,
+                'acronym' => $category->acronym,
+            ]);
+        }
+
+        /**
+         * se convierte array a JSON
+         */
+        $categories = json_encode($categories);
+
+        $movement = FinanceBankingMovement::find($id);
+
+        return view('finance::movements.create', compact('accountingList', 'categories', 'accounting', 'budget', 'movement'));
+    }
+
     public function update(Request $request, $id)
     {
+        $bankingMovement = FinanceBankingMovement::find($id);
+        $this->validate($request, $this->validateRules, $this->messages);
+
+        $bankingMovement->payment_date = $request->input('payment_date');
+        $bankingMovement->transaction_type = $request->input('transaction_type');
+        $bankingMovement->reference = $request->input('reference');
+        $bankingMovement->concept = $request->input('concept');
+        $bankingMovement->amount = $request->input('amount');
+        $bankingMovement->currency_id = $request->input('currency_id');
+        $bankingMovement->finance_bank_account_id = $request->input('finance_bank_account_id');
+        $bankingMovement->finance_bank_account_id = $request->input('institution_id');
+        $bankingMovement->save();
+
+        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
+            if ($request->recordsAccounting && !empty($request->recordsAccounting)) {
+                $is_admin = auth()->user()->isAdmin();
+
+                if ($is_admin) {
+                    $institution = Institution::where('default', true)->first();
+                }else{
+                    $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
+
+                    $institution = $user_profile['institution'];
+                }
+
+                AccountingManageEntries::dispatch([
+                        'date' => $request->input('payment_date'),
+                        'reference' => $request->input('reference'),
+                        'concept' => $request->input('entry_concept'),
+                        'observations' => '',
+                        'category' => $request->input('entry_category'),
+                        'currency_id' => $request->input('currency_id'),
+                        'totDebit' => $request->input('totDebit'),
+                        'totAssets' => $request->input('totAssets'),
+                        'module' => 'Finance',
+                        'model' => FinanceBankingMovement::class,
+                        'relatable_id' => $bankingMovement->id,
+                        'accountingAccounts' => $request->recordsAccounting
+                    ], ($request->institution_id) ?
+                        $request->institution_id :
+                        $institution->id,
+                );
+            }
+        }
+
+        if (Module::has('Budget') && Module::isEnabled('Budget')) {
+            $codeSetting = CodeSetting::where("model", BudgetCompromise::class)->first();
+
+            if (!$codeSetting) {
+                $request->session()->flash('message', [
+                    'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                    'text' => 'Debe configurar previamente el formato para el código a generar'
+                    ]);
+                return response()->json(['result' => false, 'redirect' => route('budget.setting.index')], 200);
+            }
+
+            $year = $request->fiscal_year ?? date("Y");
+
+            /** @var Object Estado inicial del compromiso establecido a elaborado */
+            $documentStatus = DocumentStatus::where('action', 'EL')->first();
+
+            $colum = [
+                'compromised_at' => $request->payment_date,
+                'description' => '',
+                'document_status_id' => $documentStatus->id,
+            ];
+
+            if (!BudgetCompromise::where('compromiseable_type', FinanceBankingMovement::class)
+                                    ->where('compromiseable_id', $bankingMovement->id)->first()) {
+                $code = generate_registration_code(
+                    $codeSetting->format_prefix,
+                    strlen($codeSetting->format_digits),
+                    (strlen($codeSetting->format_year) === 2) ? date("y") : $year,
+                    BudgetCompromise::class,
+                    'code'
+                );
+                $colum['code'] = $code;
+            }
+
+            $compromisedYear = explode("-", $request->payment_date)[0];
+
+            /** @var Object Datos del compromiso */
+            $compromise = BudgetCompromise::updateOrCreate(
+            [
+                'document_number' => $bankingMovement->code,
+                'institution_id' => $request->institution_id,
+                'compromiseable_type' => FinanceBankingMovement::class,
+                'compromiseable_id' => $bankingMovement->id
+            ], $colum);
+
+            $total = 0;
+
+            $compromiseDetails = $compromise->budgetCompromiseDetails()->get();
+
+            foreach($compromiseDetails as $details) {
+                $details->delete();
+            }
+
+            /** Gestiona los ítems del compromiso */
+            foreach ($request->accounts as $account) {
+                $spac = BudgetSpecificAction::find($account['specific_action_id']);
+                $formulation = $spac->subSpecificFormulations()->where('year', $compromisedYear)->first();
+                $tax = (isset($account['account_tax_id']) || isset($account['tax_id']))
+                ? Tax::find($account['account_tax_id'] ?? $account['tax_id'])
+                : new Tax();
+                $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
+                $taxAmount = ($account['amount'] * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
+
+                $compromise->budgetCompromiseDetails()->create([
+                    'description' => $account['description'],
+                    'amount' => $account['amount'],
+                    'tax_amount' => $taxAmount,
+                    'tax_id' => $account['account_tax_id'] ?? $account['tax_id'],
+                    'budget_account_id' => $account['account_id'],
+                    'budget_sub_specific_formulation_id' => $formulation->id,
+                ]);
+                $total += ($account['amount'] + $taxAmount);
+            }
+
+            $compromise->budgetStages()->updateOrcreate(
+            [
+                'code' => $compromise->code,
+            ],
+            [
+                'registered_at' => $request->payment_date,
+                'type' => 'PRE',
+                'amount' => $total,
+            ]);
+        }
+
+        $request->session()->flash('message', ['type' => 'update']);
+        return response()->json(['result' => true, 'redirect' => route('finance.movements.index')], 200);
     }
 
     public function destroy($id)
     {
+        $bankingMovement = FinanceBankingMovement::find($id);
+
+        if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
+            $entryAccount = AccountingEntry::where('reference', $bankingMovement->reference)->first();
+            $entries = AccountingEntryAccount::where('accounting_entry_id', $entryAccount->id)->get();
+
+            foreach($entries as $entry){
+                $entry->delete();
+            }
+
+            $entryAccount->delete();
+        }
+
+        if (Module::has('Budget') && Module::isEnabled('Budget')) {
+            $budgetCompromise = BudgetCompromise::where('compromiseable_type', FinanceBankingMovement::class)
+                                    ->where('compromiseable_id', $bankingMovement->id)->first();
+            $compromiseDetails = BudgetCompromiseDetail::where('budget_compromise_id', $budgetCompromise->id)->get();
+
+            foreach($compromiseDetails as $compromiseDetail){
+                $compromiseDetail->delete();
+            }
+
+            $budgetCompromise->delete();
+        }
+        $bankingMovement->delete();
+        return response()->json(['message' => 'destroy'], 200);
     }
 
     /**
@@ -369,8 +584,24 @@ class FinanceMovementsController extends Controller
     {
         $movements = FinanceBankingMovement::with(['financeBankAccount', 'currency', 'institution',
                                                 'accountingEntryPivot.accountingEntry.accountingAccounts.account',
-                                                'budgetCompromise.budgetCompromiseDetails'])->get();
+                                                'budgetCompromise.budgetCompromiseDetails.budgetSubSpecificFormulation',
+                                                'budgetCompromise.budgetCompromiseDetails.budgetAccount'])->get();
         return response()->json(['records' => $movements], 200);
+    }
+
+    /**
+     * Obtiene la información de un registro
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     * @return \Illuminate\Http\JsonResponse Objeto con el registro a mostrar
+     */
+    public function vueInfo($id)
+    {
+        $movements = FinanceBankingMovement::where('id', $id)->with(['financeBankAccount', 'currency', 'institution',
+                                                'accountingEntryPivot.accountingEntry.accountingAccounts.account',
+                                                'budgetCompromise.budgetCompromiseDetails.budgetSubSpecificFormulation',
+                                                'budgetCompromise.budgetCompromiseDetails.budgetAccount'])->get();
+        return response()->json(['record' => $movements], 200);
     }
 
     /**

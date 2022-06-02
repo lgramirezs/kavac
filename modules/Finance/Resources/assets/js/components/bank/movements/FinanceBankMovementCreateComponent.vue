@@ -221,9 +221,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(account, index) in record.accounts" :key="index">
-                                    <td class="text-center">Código</td>
+                                    <td class="text-center">{{ account.pro_code }}</td>
                                     <td class="text-center">{{ account.code }}</td>
-                                    <td class="text-center">{{ account.spac_description }}</td>
+                                    <td class="text-center">{{ account.sp_acc_code }}</td>
                                     <td class="text-center">{{ account.description }}</td>
                                     <td class="text-center">{{ formatToCurrency(account.amount, '') }}</td>
                                     <td class="text-center">
@@ -364,6 +364,9 @@
                 type: Number,
                 default: 0
             },
+            movementid: {
+                type: Number
+            },
         },
         data() {
             return {
@@ -457,6 +460,9 @@
             vm.getCurrencies();
             vm.getInstitutions();
             vm.getTaxes();
+            if (vm.movementid) {
+                vm.loadForm(vm.movementid);
+            }
             this.record.recordsAccounting = [];
             this.record.accounts = [];
         },
@@ -478,11 +484,117 @@
 
         methods: {
             /**
+             * Método que carga la información del formulario al editar
+             */
+            async loadForm(id){
+                const vm = this;
+
+                await axios.get('/finance/movements/vue-info/'+id).then(response => {
+                    if(typeof(response.data.record != "undefined")){
+                        let data = response.data.record[0];
+
+                        vm.record.id = data.id;
+                        vm.record.accounting_entry_id = data.accounting_entry_pivot.accounting_entry_id
+                        vm.record.payment_date = data.payment_date;
+                        vm.record.transaction_type = data.transaction_type;
+                        vm.record.finance_bank_account_id = data.finance_bank_account_id;
+                        vm.record.reference = data.reference;
+                        vm.record.concept = data.concept;
+                        vm.record.amount = data.amount;
+                        vm.record.currency_id = data.currency_id;
+
+                        vm.record.entry_concept = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                                                              data.accounting_entry_pivot.accounting_entry.concept :
+                                                              '';
+                        vm.record.entry_category = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                                                           data.accounting_entry_pivot.accounting_entry.accounting_entry_category_id :
+                                                           '';
+                        vm.record.institution_id = data.institution_id;
+                        vm.record.totDebit = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                                                       data.accounting_entry_pivot.accounting_entry.tot_debit :
+                                                       '';
+                        vm.record.totAssets = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                                                       data.accounting_entry_pivot.accounting_entry.tot_assets :
+                                                       '';
+
+                        if (data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry) {
+                            for (let entry of data.accounting_entry_pivot.accounting_entry.accounting_accounts) {
+                                vm.record.recordsAccounting.push({
+                                    assets: entry.assets,
+                                    debit: entry.debit,
+                                    entryAccountId: entry.id,
+                                    id: entry.account.id
+                                })
+                            }
+                        }
+
+                        if (data.budget_compromise) {
+                            for (let compromise_details of data.budget_compromise.budget_compromise_details) {
+                                vm.record.accounts.push({
+                                    spac_description: `${compromise_details.budget_sub_specific_formulation.specific_action.specificable.code}-
+                                                       ${compromise_details.budget_sub_specific_formulation.specific_action.code} |
+                                                       ${compromise_details.budget_sub_specific_formulation.specific_action.name}`,
+                                    code: compromise_details.budget_account.code,
+                                    description: compromise_details.description,
+                                    amount: compromise_details.amount,
+                                    specific_action_id: compromise_details.budget_sub_specific_formulation.budget_specific_action_id,
+                                    account_id: compromise_details.budget_account_id,
+                                    tax_id: compromise_details.tax_id ? compromise_details.tax_id : '',
+                                    pro_code: compromise_details.budget_sub_specific_formulation.specific_action.specificable.code,
+                                    sp_acc_code: compromise_details.budget_sub_specific_formulation.specific_action.code
+                                });
+                            }
+                        }
+                    }
+                });
+
+            },
+
+            /**
              * Método que borra todos los datos del formulario
              * 
              * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
              */
             reset() {
+                record = {
+                    payment_date: '',
+                    transaction_type: '',
+                    finance_bank_account_id: '',
+                    reference: '',
+                    concept: '',
+                    amount: '',
+                    currency_id:'',
+                    recordsAccounting: [],
+                    entry_concept: '',
+                    entry_category: '',
+                    institution_id: '',
+                    accounts: [],
+                    totDebit: 0,
+                    totAssets: 0,
+                };
+                records = [];
+                data = {
+                    date: '',
+                    reference: '',
+                    concept: '',
+                    observations: '',
+                    category: '',
+                    totDebit: 0,
+                    totAssets: 0,
+                    institution: {
+                        id: '',
+                        rif: '',
+                        acronym: '',
+                        name: 0,
+                    },
+                    currency: {
+                        id: '',
+                        symbol: '',
+                        name: '',
+                        decimal_places: 0,
+                    },
+                };
+                errors: [];
             },
 
             addDecimals(value) {
@@ -762,7 +874,9 @@
                         'amount': vm.account_amount,
                         'specific_action_id': vm.specific_action_id,
                         'account_id': vm.account_id,
-                        'tax_id': vm.account_tax_id
+                        'tax_id': vm.account_tax_id,
+                        'pro_code': specificAction.specificable.code,
+                        'sp_acc_code': specificAction.code
                     });
 
                     bootbox.confirm({

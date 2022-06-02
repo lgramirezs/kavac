@@ -64,6 +64,8 @@ Route::group([
 
     /** Ruta para la gestión de Finanzas > Banco > Movimientos */
     Route::get('movements/vue-list', [FinanceMovementsController::class, 'vueList']);
+    Route::get('movements/vue-info/{id}',[FinanceMovementsController::class, 'vueInfo']);
+    Route::get('movements/edit/{id}',[FinanceMovementsController::class, 'edit']);
     Route::resource('movements', FinanceMovementsController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Conciliación */
