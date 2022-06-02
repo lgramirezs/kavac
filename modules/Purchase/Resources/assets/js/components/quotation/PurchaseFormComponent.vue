@@ -119,7 +119,12 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-danger btn-import" title="Presione para subir el archivo." @click="setFile(idx)">
+                                        <button type="button" 
+                                            data-toggle="tooltip" 
+                                            v-has-tooltip 
+                                            class="btn btn-sm btn-info btn-import" 
+                                            title="Presione para subir el archivo." 
+                                            @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
                                         <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
@@ -135,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class="feature-list-subheading" :id="'status_'+idx" style="display:none;">
-                                        <span class="badge badge-success">
+                                        <span class="badge badge-info">
                                             <strong>Documento Cargado.</strong>
                                         </span>
                                     </div>
