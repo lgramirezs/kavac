@@ -9,22 +9,6 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="form-group">
-                    <label class="control-label" for="currencies">Tipo de proveedor</label><br>
-                    <div v-if="record.purchase_supplier_object">
-                        <div v-if="record.purchase_supplier_object.type == 'S'">
-                            <strong>Servicios / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'O'">
-                            <strong>Obras / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'B'">
-                            <strong>Bienes / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
                 <div class="form-group is-required">
                     <label class="control-label" for="currencies">Tipo de moneda</label><br>
                     <select2 :options="currencies" id="currencies" v-model="currency_id"></select2>
