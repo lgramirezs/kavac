@@ -345,6 +345,7 @@ Route::group(
          */
 
         Route::resource('services', 'SaleServiceController', ['as' => 'sale', 'except' => ['create','edit','show']]);
+        Route::get('services', 'SaleServiceController@index')->name('sale.services.index');
         Route::get('services/create', 'SaleServiceController@create')->name('sale.services.create');
         Route::get('services/vue-list', 'SaleServiceController@vueList');
         Route::get('services/edit/{id}', 'SaleServiceController@edit')->name('sale.services.edit');
