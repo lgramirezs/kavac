@@ -39,6 +39,7 @@ class PurchaseDirectHire extends Model implements Auditable
      */
     protected $fillable = [
         'code',
+        'date',
         'institution_id',
         'contracting_department_id',
         'user_department_id',

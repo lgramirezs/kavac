@@ -302,7 +302,11 @@ class PurchaseDirectHireController extends Controller
                             $file,
                             'documents',
                             PurchaseDirectHire::class,
-                            $purchaseDirectHire->id
+                            $purchaseDirectHire->id,
+                            $code = null,
+                            $sign = false,
+                            $public_url = false,
+                            $originalName = true,
                         );
                     }
                 }
@@ -421,7 +425,23 @@ class PurchaseDirectHireController extends Controller
      */
     public function show($id)
     {
-        return view('purchase::show');
+        return response()->json([
+            'records' => PurchaseDirectHire::with(
+                'contratingDepartment',
+                'currency',
+                'documents',
+                'firstSignature.payrollStaff',
+                'fiscalYear',
+                'institution',
+                'preparedBy.payrollStaff',
+                'purchaseSupplier',
+                'purchaseSupplierObject',
+                'reviewedBy.payrollStaff',
+                'secondSignature.payrollStaff',
+                'userDepartment',
+                'verifiedBy.payrollStaff'
+            )->find($id)
+        ], 200);
     }
 
     /**

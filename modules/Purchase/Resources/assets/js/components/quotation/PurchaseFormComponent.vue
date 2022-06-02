@@ -9,22 +9,6 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="form-group">
-                    <label class="control-label" for="currencies">Tipo de proveedor</label><br>
-                    <div v-if="record.purchase_supplier_object">
-                        <div v-if="record.purchase_supplier_object.type == 'S'">
-                            <strong>Servicios / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'O'">
-                            <strong>Obras / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                        <div v-else-if="record.purchase_supplier_object.type == 'B'">
-                            <strong>Bienes / {{ record.purchase_supplier_object.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
                 <div class="form-group is-required">
                     <label class="control-label" for="currencies">Tipo de moneda</label><br>
                     <select2 :options="currencies" id="currencies" v-model="currency_id"></select2>
@@ -135,7 +119,12 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-danger btn-import" title="Presione para subir el archivo." @click="setFile(idx)">
+                                        <button type="button" 
+                                            data-toggle="tooltip" 
+                                            v-has-tooltip 
+                                            class="btn btn-sm btn-info btn-import" 
+                                            title="Presione para subir el archivo." 
+                                            @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
                                         <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
@@ -151,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class="feature-list-subheading" :id="'status_'+idx" style="display:none;">
-                                        <span class="badge badge-success">
+                                        <span class="badge badge-info">
                                             <strong>Documento Cargado.</strong>
                                         </span>
                                     </div>
