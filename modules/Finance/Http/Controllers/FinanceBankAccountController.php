@@ -70,7 +70,6 @@ class FinanceBankAccountController extends Controller
      */
     public function store(Request $request)
     {
-        dump($request->accounting_account_id);
         $this->validate($request, [
             'ccc_number' => ['required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number'],
             'description' => ['required'],
