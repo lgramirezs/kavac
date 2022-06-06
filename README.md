@@ -52,6 +52,9 @@ Una vez instalado composer comprobamos la correcta instalación con el siguiente
 
 Por otro lado, se requiere contar con los paquetes NodeJS y NPM para gestionar los paquetes requeridos para la reactividad en la gestión de datos de algunos procesos.
 
+    -Versión de nodejs requerida: v14.18.2
+    -Versión de npm requerida: v8.11.0
+
 Se recomienda seguir la documentación disponible desde: https://linuxconfig.org/how-to-install-node-js-on-ubuntu-16-04-xenial-xerus-linux-server pero para este manual recomendamos los siguientes pasos:
 
 Procedimiento de instalación mediante el script nativo de node **nvm** el cual permite más
@@ -84,15 +87,13 @@ disponibles en el repositorio para lo cual se require ejecutar el comando:
 Esto debe mostrar un listado de versiones de node que correspondan
 a las versiones **LTS**, ejemplo:
 
-v10.15.3   (LTS: Dubnium)
-v10.16.0   (LTS: Dubnium)
-v10.16.1   (LTS: Dubnium)
-v10.16.2   (LTS: Dubnium)
-v10.16.3   (Latest LTS: Dubnium)
+v14.18.0   (LTS: Fermium)
+v14.18.1   (LTS: Fermium)
+v14.18.2   (LTS: Fermium)
 
 Ahora procedemos a la instalación de la versión de node más actualizada que presente la lista, para lo cual se ejecutará el comando:
 
-    $ nvm install 10.16.3
+    $ nvm install 14.18.2
 
 Una vez instalado NodeJS comprobamos la correcta instalación con el siguiente comando:
 
