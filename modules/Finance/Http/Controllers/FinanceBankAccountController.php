@@ -70,12 +70,13 @@ class FinanceBankAccountController extends Controller
      */
     public function store(Request $request)
     {
+        dump($request->accounting_account_id);
         $this->validate($request, [
             'ccc_number' => ['required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number'],
             'description' => ['required'],
             'opened_at' => ['required', 'date'],
             'finance_banking_agency_id' => ['required'],
-            'finance_account_type_id' => ['required']
+            'finance_account_type_id' => ['required'],
         ],[
             'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
         ], $this->customAttributes);
@@ -92,7 +93,8 @@ class FinanceBankAccountController extends Controller
             'description' => $request->description,
             'opened_at' => $request->opened_at,
             'finance_banking_agency_id' => $request->finance_banking_agency_id,
-            'finance_account_type_id' => $request->finance_account_type_id
+            'finance_account_type_id' => $request->finance_account_type_id,
+            'accounting_account_id' => $request->accounting_account_id
         ]);
 
         return response()->json(['record' => $financeBankAccount, 'message' => 'Success'], 200);
@@ -133,7 +135,8 @@ class FinanceBankAccountController extends Controller
             'description' => ['required'],
             'opened_at' => ['required', 'date'],
             'finance_banking_agency_id' => ['required'],
-            'finance_account_type_id' => ['required']
+            'finance_account_type_id' => ['required'],
+
         ], [
             'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
         ], $this->customAttributes);
@@ -150,6 +153,7 @@ class FinanceBankAccountController extends Controller
         $bankAccount->opened_at = $request->opened_at;
         $bankAccount->finance_banking_agency_id = $request->finance_banking_agency_id;
         $bankAccount->finance_account_type_id = $request->finance_account_type_id;
+        $bankAccount->accounting_account_id = $request->accounting_account_id;
         $bankAccount->save();
 
         return response()->json(['message' => 'Registro actualizado correctamente'], 200);
