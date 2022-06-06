@@ -49,7 +49,7 @@ class PayrollStaffController extends Controller
             'payroll_nationality_id' => ['required'],
             'id_number' => [],
             'passport' => [],
-            'email' => ['required', 'unique:payroll_staffs,email'],
+            'email' => ['required', 'unique:payroll_staffs,email', 'email'],
             'birthdate' => [],
             'payroll_gender_id' => ['required'],
             'emergency_contact' => ['nullable'],
@@ -283,6 +283,7 @@ class PayrollStaffController extends Controller
             'required', 'regex:/^([\d]{7}|[\d]{8})$/u', 'unique:payroll_staffs,id_number,' . $payrollStaff->id
         ];
         $this->rules['passport'] = ['nullable', 'max:20', 'unique:payroll_staffs,passport,' . $payrollStaff->id];
+        $this->rules['email'] = ['required', 'unique:payroll_staffs,email,' . $payrollStaff->id, 'email'];
         $this->rules['birthdate'] = ['required', 'date', new AgeToWork(($parameter) ? $parameter->p_value : 0)];
         $this->validate($request, $this->rules, [], $this->attributes);
         if ($request->has_disability) {
