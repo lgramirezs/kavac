@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div class="col-4" id="helpProfessionalAckName">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label>Nombre del Reconocimiento:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="payroll_cou_ack_file.ack_name"/>
@@ -538,12 +538,16 @@
             this.record.payroll_cou_ack_files = [];
             this.record.payroll_studies = [];
             //this.getPayrollStaffs();
-            this.getPayrollProfession((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             this.getPayrollInstructionDegrees();
             this.getProfessions();
             this.getPayrollStudyTypes();
             this.getPayrollLanguages();
             this.getPayrollLanguageLevels();
+            if (this.payroll_professional_id) {
+                this.getPayrollProfession(this.payroll_professional_id);
+            } else {
+                this.getPayrollProfession('filter');
+            }
         },
         mounted() {
             if(this.payroll_professional_id) {

@@ -1,202 +1,95 @@
 <template>
     <div>
-        <v-client-table :columns="columns" :data="records" :options="table_options">
-    		<div slot="id" slot-scope="props" class="text-center">
-    			<button @click="show_info(props.row.id)" v-if="route_show"
-        				class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
-        				title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
-        			<i class="fa fa-eye"></i>
-        		</button>
+        <v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResults">
+            <div slot="id" slot-scope="props" class="text-center">
+                <button @click.prevent="setDetails('SocioeconomicInfo', props.row.id, 'PayrollSocioeconomicInfo')"
+                        class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
+                        title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
+                    <i class="fa fa-eye"></i>
+                </button>
                 <button @click="editForm(props.row.id)" v-if="!props.row.assigned"
-        				class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
-        				title="Modificar registro" data-toggle="tooltip" data-placement="bottom" type="button">
-        			<i class="fa fa-edit"></i>
-        		</button>
-        		<button @click="deleteRecord(props.row.id, '')"
-    					class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
-    					title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
-    					type="button">
-    				<i class="fa fa-trash-o"></i>
-    			</button>
-    		</div>
-    	</v-client-table>
-        <div class="modal fade" tabindex="-1" role="dialog" id="show_socioeconomic">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h6>
-                            <i class="icofont icofont-read-book ico-2x"></i>
-                            Información Detallada de Datos Socioeconómicos
-                        </h6>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_staff">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Estado Civil</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="marital_status">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nombres y Apellidos de la Pareja del Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="full_name_twosome">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Cédula de Identidad de la Pareja del Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="id_number_twosome">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de Nacimiento de la Pareja del Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="birthdate_twosome">
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6 class="card-title">
-                                    Hijos del Trabajador
-                                </h6>
-                            </div>
-                            <div class="row" v-for="payroll_children in record.payroll_childrens" 
-                                 :key="payroll_children.id">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Nombres</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.first_name">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Apellidos</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.last_name">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Cédula de Identidad</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.id_number">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Fecha de Nacimiento</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.birthdate">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>¿Es estudiante?</label>
-                                        <div class="bootstrap-switch-mini">
-                                            <input id="has_disability" class="form-control bootstrap-switch"
-                                                data-on-label="SI" data-off-label="NO" type="checkbox" disabled="true"
-                                                :value="payroll_children.is_student">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" v-if="payroll_children.is_student">
-                                    <div class="form-group">
-                                        <label>Nivel de escolaridad</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.payroll_schooling_level.name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Centro de estudio</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.study_center">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>¿Posee una Discapacidad?</label>
-                                        <div class="bootstrap-switch-mini">
-                                            <input id="has_disability" class="form-control bootstrap-switch"
-                                                data-on-label="SI" data-off-label="NO" type="checkbox" disabled="true"
-                                                :value="payroll_children.has_disability">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" v-if="payroll_children.has_disability">
-                                    <div class="form-group">
-                                        <label>Discapacidad</label>
-                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                            disabled="true" :value="payroll_children.payroll_disability.name">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
+                        title="Modificar registro" data-toggle="tooltip" data-placement="bottom" type="button">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button @click="deleteRecord(props.row.id, '')"
+                        class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
+                        title="Eliminar registro" data-toggle="tooltip" data-placement="bottom"
+                        type="button">
+                    <i class="fa fa-trash-o"></i>
+                </button>
             </div>
-        </div>
-    </div>
+        </v-client-table>
+        <payroll-socioeconomic-info
+            ref="SocioeconomicInfo">
+        </payroll-socioeconomic-info>
+    </div>                       
 </template>
 <script>
     export default {
         data() {
-			return {
-				records: [],
+            return {
+                records: [],
                 record: [],
-				columns: ['payroll_staff.first_name', 'marital_status.name', 'id'],
-			}
-		},
+                columns: ['payroll_staff.first_name', 'payroll_staff.last_name', 'marital_status.name', 'id'],
+            }
+        },
 
         created() {
-			this.table_options.headings = {
-                'payroll_staff.first_name': 'Trabajador',
-				'marital_status.name': 'Estado Civil',
-				'id': 'Acción'
-			};
-            this.table_options.sortable = ['payroll_staff.first_name', 'marital_status.name'];
-			this.table_options.filterable = ['payroll_staff.first_name', 'marital_status.name'];
-		},
+            this.table_options.headings = {
+                'payroll_staff.first_name': 'Nombre del Trabajador',
+                'payroll_staff.last_name': 'Apellido del Trabajador',
+                'marital_status.name': 'Estado civil',
+                'id': 'Acción'
+            };
+            this.table_options.sortable = ['payroll_staff.first_name', 'payroll_staff.last_name'];
+            this.table_options.filterable = ['payroll_staff.first_name', 'payroll_staff.last_name'];
+        },
 
-		mounted() {
-			this.initRecords(this.route_list, '');
-		},
+        mounted() {
+            const vm = this;
+            vm.initRecords(vm.route_list, '');
+        },
 
         methods: {
             reset() {
 
             },
 
-            show_info(id) {
-                axios.get(`${window.app_url}/payroll/socioeconomics/${id}`).then(response => {
-					this.record = response.data.record;
-                    $('#payroll_staff').val(this.record.payroll_staff.first_name + ' ' + this.record.payroll_staff.last_name);
-                    $('#marital_status').val(this.record.marital_status.name);
-                    $('#full_name_twosome').val(this.record.full_name_twosome);
-                    $('#id_number_twosome').val(this.record.id_number_twosome);
-                    $('#birthdate_twosome').val(this.record.birthdate_twosome);
-				});
-                $('#show_socioeconomic').modal('show');
-            }
+            /**
+             * Método que establece los datos del registro seleccionado para el cual se desea mostrar detalles
+             *
+             * @method    setDetails
+             *
+             * @author     Pablo Sulbaran <psulbaran@cenditel.gob.ve>
+             *
+             * @param     string   ref       Identificador del componente
+             * @param     integer  id        Identificador del registro seleccionado
+             * @param     object  var_list  Objeto con las variables y valores a asignar en las variables del componente
+             */
+            setDetails(ref, id, modal ,var_list = null) {
+                const vm = this;
+                if (var_list) {
+                    for(var i in var_list){
+                        vm.$refs[ref][i] = var_list[i];
+                    }
+                }else{
+                    vm.$refs[ref].record = vm.$refs.tableResults.data.filter(r => {
+                        return r.id === id;
+                    })[0];
+                }
+                vm.$refs[ref].id = id;
+
+                $(`#${modal}`).modal('show');
+            },
+
+            /**
+             * Método que borra todos los datos del formulario
+             * 
+             * @author  Pablo Sulbaran <psulbaran@cenditel.gob.ve>
+             */
+            reset() {
+            },
         }
     };
 </script>

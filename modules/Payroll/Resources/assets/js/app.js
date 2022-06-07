@@ -199,6 +199,18 @@ Vue.component('payroll-staffs-list', () =>
 );
 
 /**
+ * Componente para mostrar la información detallada de datos personales
+ *
+ * @author Pablo Sulbarán <psulbaran@cenditel.gob.ve>
+ */
+Vue.component('payroll-staff-info', () =>
+    import(
+        /* webpackChunkName: "payroll-staff-info" */
+        './components/PayrollStaffInfoComponent.vue'
+    )
+);
+
+/**
  * Componente para registrar o actualizar información personal
  *
  * @author William Páez <wpaez@cenditel.gob.ve>
@@ -223,6 +235,19 @@ Vue.component('payroll-socioeconomic-list', () =>
 );
 
 /**
+ * Componente para mostrar la información detallada de datos socioeconómicos
+ *
+ * @author Pablo Sulbarán <psulbaran@cenditel.gob.ve>
+ */
+ 
+Vue.component('payroll-socioeconomic-info', () =>
+    import(
+        /* webpackChunkName: "payroll-socioeconomic-info" */
+        './components/PayrollSocioeconomicInfoComponent.vue'
+    )
+);
+
+/**
  * Componente para registrar o actualizar información socioeconómica
  *
  * @author William Páez <wpaez@cenditel.gob.ve>
@@ -244,6 +269,18 @@ Vue.component('payroll-professional-list', () =>
 		/* webpackChunkName: "payroll-professional-list" */
 		'./components/PayrollProfessionalListComponent.vue'
 	)
+);
+
+/**
+ * Componente para mostrar la información detallada de información profesional
+ *
+ * @author Pablo Sulbarán <psulbaran@cenditel.gob.ve>
+ */
+Vue.component('payroll-professional-info', () =>
+    import(
+        /* webpackChunkName: "payroll-professional-info" */
+        './components/PayrollProfessionalInfoComponent.vue'
+    )
 );
 
 /**

@@ -582,8 +582,8 @@ class FinanceMovementsController extends Controller
      */
     public function vueList()
     {
-        $movements = FinanceBankingMovement::with(['financeBankAccount', 'currency', 'institution',
-                                                'accountingEntryPivot.accountingEntry.accountingAccounts.account',
+        $movements = FinanceBankingMovement::with(['financeBankAccount.financeBankingAgency.financeBank', 'financeBankAccount.financeAccountType',
+                                                'currency', 'institution', 'accountingEntryPivot.accountingEntry.accountingAccounts.account',
                                                 'budgetCompromise.budgetCompromiseDetails.budgetSubSpecificFormulation',
                                                 'budgetCompromise.budgetCompromiseDetails.budgetAccount'])->get();
         return response()->json(['records' => $movements], 200);

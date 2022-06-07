@@ -5,31 +5,31 @@
     </a>
     <ul class="submenu" style="{!! display_submenu('sale') !!}">
          <li class="{!! set_active_menu('sale.settings.index') !!}">
-            <a href="/sale/settings" data-toggle="tooltip" data-placement="right" 
+            <a href="{{ route('sale.settings.index') }}" data-toggle="tooltip" data-placement="right" 
                title="Configuración de Comercialización">Configuración</a>
         </li>
         <li class="{!! set_active_menu('sale.services.index') !!}">
-            <a href="/sale/services" data-toggle="tooltip" data-placement="right" 
+            <a href="{{ route('sale.services.index') }}" data-toggle="tooltip" data-placement="right" 
                title="Solicitud de servicios">Solicitud de servicios</a>
         </li>
         <li class="{!! set_active_menu('sale.bill.index') !!}">
-            <a href="/sale/bills" data-toggle="tooltip" data-placement="right" 
+            <a href="{{ route('sale.bills.index') }}" data-toggle="tooltip" data-placement="right" 
                title="Facturas">Facturas</a>
         </li>
         <li class="{!! set_active_menu('sale.reception.index') !!}">
-            <a href="/sale/receptions" data-toggle="tooltip" data-placement="right"
+            <a href="{{ route('sale.reception.index') }}" data-toggle="tooltip" data-placement="right"
                title="Recepciones de almacén">Recepciones de almacén</a>
         </li>
         <li class="{!! set_active_menu('sale.payment.index') !!}">
-            <a href="/sale/payment" data-toggle="tooltip" data-placement="right"
+            <a href="{{ route('sale.payment.index') }}" data-toggle="tooltip" data-placement="right"
                title="Registro y aprobación de pagos">Pagos</a>
         </li>
         <li class="{!! set_active_menu('sale.reception.index') !!}">
-            <a href="/sale/order" data-toggle="tooltip" data-placement="right"
+            <a href="{{ route('sale.order.index') }}" data-toggle="tooltip" data-placement="right"
                title="Pedidos">Pedidos</a>
         </li>
         <li class="{!! set_active_menu('sale.quotes.index') !!}">
-            <a href="/sale/quotes" data-toggle="tooltip" data-placement="right"
+            <a href="{{ route('sale.quotes.index') }}" data-toggle="tooltip" data-placement="right"
                title="Registro y aprobación de cotizaciones">Cotizaciones</a>
         </li>
         <li>
@@ -41,30 +41,29 @@
             <ul class="submenu" style="{!! display_submenu('report') !!}">
                 <li title="Reporte de inventario de productos de almacén"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/inventory-products">Inventario de productos</a>
+                    <a href="{{ route('sale.report.inventory-products') }}">Inventario de productos</a>
                 </li>
                 <li title="Reporte de pedidos"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/orders">Pedidos</a>
+                    <a href="{{ route('sale.report.orders') }}">Pedidos</a>
                 </li>
                 <li title="Reporte de pagos"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/payment">Pagos</a>
+                    <a href="{{ route('sale.report.payment' )}}">Pagos</a>
                 </li>
                 <li title="Reporte de servicios"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/service-requests">Solicitudes de servicios</a>
+                    <a href="{{ route('sale.report.service-requests') }}">Solicitudes de servicios</a>
                 </li>
                 <li title="Reporte de facturas"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/bills">Facturas</a>
+                    <a href="{{ route('sale.report.bill') }}">Facturas</a>
                 </li>
                 <li title="Reporte de cotizaciones"
                     data-toggle="tooltip" data-placement="right">
-                    <a href="/sale/reports/quotes">Cotizaciones</a>
+                    <a href="{{ route('sale.report.quote') }}">Cotizaciones</a>
                 </li>
             </ul>
         </li>
-
     </ul>
 </li>

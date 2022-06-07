@@ -381,7 +381,7 @@ class PayrollSocioeconomicController extends Controller
     public function vueList()
     {
         return response()->json(['records' => PayrollSocioeconomic::with([
-            'payrollStaff', 'maritalStatus', 'payrollChildrens'
+            'payrollStaff', 'maritalStatus', 'payrollChildrens.payrollSchoolingLevel'
         ])->get()], 200);
     }
 }
