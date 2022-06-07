@@ -19,7 +19,27 @@
 		 id="app-navbar-info" data-nav-image="{{ asset('images/blurred-image.jpg') }}">
 		<div class="navbar-translate">
 			@php
-				$institution = App\Models\Institution::where(['active' => true, 'default' => true])->first();
+             if(isset(auth()->user()->profile)){
+				 if(isset(auth()->user()->profile->institution_id)){
+                  $institution = App\Models\Institution::where(['id' => auth()->user()->profile->institution_id])->first();
+
+                   
+				 } else{
+                  $institution = App\Models\Institution::where(['active' => true, 'default' => true])->first();
+
+			      }
+			
+
+        
+
+			 }
+			 else{
+                  $institution = App\Models\Institution::where(['active' => true, 'default' => true])->first();
+
+			 }
+			
+			
+				
 			@endphp
 			@if ($institution)
 				<div class="navbar-brand">

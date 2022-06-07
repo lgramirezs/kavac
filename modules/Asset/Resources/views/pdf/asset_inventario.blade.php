@@ -14,16 +14,23 @@
             </tr>
         </thead>
         <tbody>
+            
             @foreach($asset->assetInventoryAssets as $assetInventoryAsset)
                 <tr>
                     <td width="10%" style="font-size: 8rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['institution']['name'] }}
+                        {{ $assetInventoryAsset['asset']['institution']['name']?
+                            $assetInventoryAsset['asset']['institution']['name']:
+                            '' }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
+                        {{ $assetInventoryAsset['asset']['assetCondition']['name']?
+                            $assetInventoryAsset['asset']['assetCondition']['name']:
+                            '' }}
                     </td>
                     <td width="30%" style="font-size:9rem;" align="center">
-                        {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
+                        {{ isset($assetInventoryAsset['asset']['assetStatus']['name'])?
+                            $assetInventoryAsset['asset']['assetStatus']['name']:
+                            'Desincorporado: '.$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
                         {{ $assetInventoryAsset['asset']['serial'] ?
@@ -124,10 +131,7 @@
     $showTable = false;
     foreach($assets as $asset) {
         foreach($asset->assetInventoryAssets as $assetInventoryAsset) {
-            if ($assetInventoryAsset['asset']['asset_status_id'] == 5 ||
-                $assetInventoryAsset['asset']['asset_status_id'] == 7 ||
-                $assetInventoryAsset['asset']['asset_status_id'] == 8 ||
-                $assetInventoryAsset['asset']['asset_status_id'] == 9) {
+            if (!$assetInventoryAsset->asset->asset_status_id) {
                 $showTable = true;
             }
         }
@@ -151,10 +155,7 @@
             </thead>
             <tbody>
                 @foreach($asset->assetInventoryAssets as $assetInventoryAsset)
-                    @if($assetInventoryAsset['asset']['asset_status_id'] == 5 ||
-                        $assetInventoryAsset['asset']['asset_status_id'] == 7 ||
-                        $assetInventoryAsset['asset']['asset_status_id'] == 8 ||
-                        $assetInventoryAsset['asset']['asset_status_id'] == 9)
+                    @if(!$assetInventoryAsset->asset->asset_status_id)
                         <tr>
                             <td width="10%" style="font-size: 8rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['institution']['name'] }}
@@ -163,7 +164,9 @@
                                 {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
                             </td>
                             <td width="20%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['assetStatus']['name'] }}
+                                {{ isset($assetInventoryAsset['asset']['assetStatus']['name'])?
+                                    $assetInventoryAsset['asset']['assetStatus']['name']:
+                                    'Desincorporado: '.$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name']}}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['serial'] ?
@@ -181,7 +184,10 @@
                                     '' }}
                             </td>
                             <td width="20%" style="font-size: 8rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['assetDisincorporationAsset'] && $assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation'] ? $assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] : $assetInventoryAsset['asset']['assetStatus']['name'] }}
+                                {{ isset($assetInventoryAsset['asset']['assetDisincorporationAsset']) 
+                                    && isset($assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation'])? 
+                                    $assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name']: 
+                                    $assetInventoryAsset['asset']['assetStatus']['name'] }}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ str_replace("<p>", "", str_replace("</p>","",$assetInventoryAsset['asset']['specifications'])) ?

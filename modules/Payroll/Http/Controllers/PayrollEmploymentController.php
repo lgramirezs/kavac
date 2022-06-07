@@ -48,7 +48,7 @@ class PayrollEmploymentController extends Controller
             'years_apn' => ['max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
-            'institution_email' => ['required', 'unique:payroll_employments,institution_email'],
+            'institution_email' => ['required', 'unique:payroll_employments,institution_email', 'email'],
             'function_description' => ['nullable'],
             'payroll_position_type_id' => ['required'],
             'payroll_position_id' => ['required'],

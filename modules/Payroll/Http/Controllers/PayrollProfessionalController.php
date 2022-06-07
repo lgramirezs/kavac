@@ -170,15 +170,13 @@ class PayrollProfessionalController extends Controller
                 [
                     'payroll_cou_ack_files.' . $i . '.course_name' => ['required', 'max:200'],
                     'payroll_cou_ack_files.' . $i . '.course.id' => ['required'],
-                    'payroll_cou_ack_files.' . $i . '.ack_name' => ['required', 'max:200'],
-                    'payroll_cou_ack_files.' . $i . '.ack.id' => ['required'],
+                    'payroll_cou_ack_files.' . $i . '.ack_name' => ['max:200'],
                 ],
                 [],
                 [
                     'payroll_cou_ack_files.' . $i . '.course_name' => 'nombre del curso #' . ($i + 1),
                     'payroll_cou_ack_files.' . $i . '.course.id' => 'archivo del curso #' . ($i + 1),
                     'payroll_cou_ack_files.' . $i . '.ack_name' => 'nombre del reconocimiento #' . ($i + 1),
-                    'payroll_cou_ack_files.' . $i . '.ack.id' => 'archivo del reconocimiento #' . ($i + 1),
                 ]
             );
             $i++;
@@ -432,15 +430,11 @@ class PayrollProfessionalController extends Controller
                 [
                     'payroll_cou_ack_files.' . $i . '.course_name' => ['required'],
                     'payroll_cou_ack_files.' . $i . '.course.id' => ['required'],
-                    'payroll_cou_ack_files.' . $i . '.ack_name' => ['required'],
-                    'payroll_cou_ack_files.' . $i . '.ack.id' => ['required'],
                 ],
                 [],
                 [
                     'payroll_cou_ack_files.' . $i . '.course_name' => 'nombre del curso #' . ($i + 1),
                     'payroll_cou_ack_files.' . $i . '.course.id' => 'archivo del curso #' . ($i + 1),
-                    'payroll_cou_ack_files.' . $i . '.ack_name' => 'nombre del reconocimiento #' . ($i + 1),
-                    'payroll_cou_ack_files.' . $i . '.ack.id' => 'archivo del reconocimiento #' . ($i + 1),
                 ]
             );
             $i++;

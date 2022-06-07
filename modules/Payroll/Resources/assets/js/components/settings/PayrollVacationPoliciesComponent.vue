@@ -1687,6 +1687,9 @@ export default {
                 return rec.id === data.id;
             })[0];
             vm.record = JSON.parse(JSON.stringify(recordEdit));
+            vm.record.vacation_periods = JSON.parse(recordEdit.vacation_periods);
+            console.log(vm.record.vacation_periods);
+
             setTimeout(() => {
                 vm.record.vacation_days = recordEdit.vacation_days;        
             }, 800);

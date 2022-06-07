@@ -42,7 +42,10 @@
                                 <strong>Denominación Comercial:</strong> {{ records.purchase_supplier_type.name }}
                             </div>
                             <div class="col-3 ">
-                                <strong>Objeto Principal:</strong> {{ records.model_supplier_objects }}
+                                <strong>Objeto Principal:</strong>
+                                <span v-for="object in records.purchase_supplier_objects">
+                                    {{ object.name }}
+                                </span>
                             </div>
                             <div class="col-3 ">
                                 <strong>Rama:</strong> {{ records.purchase_supplier_branch.name }}

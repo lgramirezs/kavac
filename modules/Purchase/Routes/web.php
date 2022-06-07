@@ -128,6 +128,7 @@ Route::group([
     )->name('purchase.suppliers.vuelist');
     Route::resource('suppliers', 'PurchaseSupplierController', ['as' => 'purchase',]);
     Route::get('suppliers-list', 'PurchaseSupplierController@showall', ['as' => 'showallpurchase']);
+    Route::get('suppliers/{id}', 'PurchaseSupplierController@show');
 
 
     Route::get(

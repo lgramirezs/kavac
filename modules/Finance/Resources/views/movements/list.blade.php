@@ -30,7 +30,10 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <finance-bank-movements-list>
+                        <finance-bank-movements-list
+                        route_list="{{ url('finance/movements/vue-list') }}"
+                        route_edit="{{ url('finance/movements/edit') }}"
+                        route_delete="{{ url('finance/movements') }}">
                         </finance-bank-movements-list>
                     </div>
                 </div>

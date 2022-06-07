@@ -104,7 +104,7 @@
                                 <div class="col-md-6" :key="payroll_parameter['id']"
                                      v-for="payroll_parameter in payroll_parameters">
                                     <div class="form-group is-required">
-                                        <label>{{ payroll_parameter['id'] }}:</label>
+                                        <label>{{ payroll_parameter['name'] }}:</label>
                                         <input :id="'parameter_' + payroll_parameter['id']"
                                                class="form-control input-sm"
                                                type="text" data-toggle="tooltip"
@@ -328,7 +328,8 @@
                 $.each(vm.payroll_parameters, function(index, field) {
                     let input = document.getElementById('parameter_' + field['id']);
                     payroll_parameters.push({
-                        id:  field['id'],
+                        id:    field['id'],
+                        name:  field['name'],
                         value: input.value
                     });
                     if(input.value.trim() == '') {

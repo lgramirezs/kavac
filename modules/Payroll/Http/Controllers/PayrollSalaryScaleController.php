@@ -52,14 +52,14 @@ class PayrollSalaryScaleController extends Controller
             'name'           => ['required', 'unique:payroll_salary_scales,name'],
             'institution_id' => ['required'],
             'payroll_scales' => ['required'],
-            'payroll_scales.*.name' => ['unique:payroll_scales,name']
+            // 'payroll_scales.*.name' => ['unique:payroll_scales,name']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
         $this->messages = [
             'institution_id.required' => 'El campo institución es obligatorio.',
             'payroll_scales.required' => 'Debe registrar al menos una escala o nivel.',
-            'payroll_scales.*.name.unique' => 'El nombre de la escala ya ha sido registrado.'
+            // 'payroll_scales.*.name.unique' => 'El nombre de la escala ya ha sido registrado.'
         ];
     }
 

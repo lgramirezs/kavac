@@ -318,7 +318,7 @@ class PayrollPaymentTypeController extends Controller
         foreach ($payrollPaymentType->payrollConcepts as $payrollConcept) {
             array_push($listPayrollConcepts, [
                     'id'             => $payrollConcept->id,
-                    'text'           => $payrollConcept->code . ' - ' . $payrollConcept->name
+                    'text'           => $payrollConcept->name
                 ]);
         }
         $payrollPaymentPeriods = PayrollPaymentPeriod::where(
