@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div class="col-4" id="helpProfessionalAckName">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label>Nombre del Reconocimiento:</label>
                         <input type="text" class="form-control input-sm"
                             v-model="payroll_cou_ack_file.ack_name"/>
