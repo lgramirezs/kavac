@@ -33,7 +33,7 @@ class SaleTypeGoodController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        // $this->middleware('permission:sale.setting.type-good');
+        $this->middleware('permission:sale.setting.type.good');
     }
 
     /**

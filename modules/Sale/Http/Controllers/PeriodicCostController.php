@@ -30,17 +30,13 @@ class PeriodicCostController extends Controller
      * Define la configuración de la clase
      *
      * @author PHD. Juan Vizcarrondo <jvizcarrondo@cenditel.gob.ve> | <juanvizcarrondo@gmail.com>
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
      */
+
     public function __construct()
     {
-
         /** Establece permisos de acceso para cada método del controlador */
-        /*
-        $this->middleware('permission:sale.setting.periodic.cost.list', ['only' => 'index', 'vueList']);
-        $this->middleware('permission:sale.setting.periodic.cost.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sale.setting.periodic.cost.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sale.setting.periodic.cost.delete', ['only' => 'destroy']);
-        */
+        $this->middleware('permission:sale.setting.periodic.cost', ['only' => 'index']);
     }
     /**
      * Muesta todos los registros de Costos fijos

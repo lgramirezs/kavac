@@ -27,6 +27,21 @@ class SaleOrderSettingController extends Controller
     use ValidatesRequests;
 
     /**
+     * Define la configuración de la clase
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     */
+
+    public function __construct()
+    {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.order.list', ['only' => 'index']);
+        $this->middleware('permission:sale.order.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale.order.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sale.order.delete', ['only' => 'destroy']);
+    }
+
+    /**
      * @method    index
      */
     public function index()

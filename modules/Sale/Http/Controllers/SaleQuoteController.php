@@ -48,12 +48,11 @@ class SaleQuoteController extends Controller
     public function __construct()
     {
 
-        /** Establece permisos de acceso para cada método del controlador 
+        /** Establece permisos de acceso para cada método del controlador */
         $this->middleware('permission:sale.quote.list', ['only' => 'index']);
         $this->middleware('permission:sale.quote.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:sale.quote.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:sale.quote.delete', ['only' => 'destroy']);
-        */
     }
 
     /**

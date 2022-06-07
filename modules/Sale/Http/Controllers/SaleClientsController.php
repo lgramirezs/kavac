@@ -37,6 +37,9 @@ class SaleClientsController extends Controller
      */
     public function __construct()
     {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.setting.client', ['only' => 'index']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'type_person_juridica'       => ['required'],
