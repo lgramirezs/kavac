@@ -24,9 +24,7 @@ class AddFieldLocationPlaceToAssetAsignationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('asset_asignations', function (Blueprint $table) {
-            
-        });
+        
         if (Schema::hasTable('asset_asignations')) {
             Schema::table('asset_asignations', function (Blueprint $table) {
                 if (!Schema::hasColumn('asset_asignations', 'location_place')) {

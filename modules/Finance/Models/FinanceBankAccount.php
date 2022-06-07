@@ -31,7 +31,7 @@ class FinanceBankAccount extends Model implements Auditable
     protected $dates = ['deleted_at', 'opened_at'];
 
     protected $fillable = [
-        'ccc_number', 'description', 'opened_at', 'finance_banking_agency_id', 'finance_account_type_id'
+        'ccc_number', 'description', 'opened_at', 'finance_banking_agency_id', 'finance_account_type_id', 'accounting_account_id'
     ];
 
     /**
@@ -75,5 +75,18 @@ class FinanceBankAccount extends Model implements Auditable
     public function financePayOrders()
     {
         return $this->hasMany(FinancePayOrder::class);
+    }
+
+    /**
+     * Método que obtiene la información de la cuenta contable asociada al concepto
+     *
+     * @author    Pedro Buitrago <pbuitrago@cenditel.gob.ve>
+     *
+     * @return    \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function accountingAccount()
+    {
+        return (Module::has('Accounting'))
+               ? $this->belongsTo(\Modules\Accounting\Models\AccountingAccount::class) : null;
     }
 }
