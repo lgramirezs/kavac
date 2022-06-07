@@ -248,6 +248,9 @@ class PayrollEmploymentController extends Controller
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
         ];
+        $this->rules['institution_email'] = [
+            'required', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id, 'email'
+        ];
         
         if ($request->start_date) {
             $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
