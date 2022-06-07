@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollStaff;
 use Modules\Payroll\Models\PayrollProfessional;
+use Modules\Payroll\Models\PayrollEmployment;
 use Modules\Payroll\Models\PayrollSocioeconomic;
 use Modules\Payroll\Models\PayrollStaffUniformSize;
 use App\Models\Phone;
@@ -428,9 +429,20 @@ class PayrollStaffController extends Controller
         if ($type === 'all') {
             return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
         } else if (is_numeric($type)) {
-            return response()->json(
-                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
-            );
+            $options = [['id' => '', 'text' => 'Seleccione...']];
+
+            /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+            $staffs = PayrollStaff::doesnthave('payrollEmployment')->get();
+            foreach ($staffs as $staff) {
+                $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+            }
+            $editStaff = PayrollEmployment::with('payrollStaff')->where('id', (int)$type)->get();
+
+            $pushOptions = ['id' => $editStaff[0]->payrollStaff->id, 'text' => "{$editStaff[0]->payrollStaff->id_number} - {$editStaff[0]->payrollStaff->full_name}"];
+
+            array_push($options, $pushOptions);
+
+            return response()->json($options);
         }
 
         $options = [['id' => '', 'text' => 'Seleccione...']];
