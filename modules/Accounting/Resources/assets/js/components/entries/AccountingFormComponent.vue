@@ -110,6 +110,10 @@ export default {
         EventBus.$on('reset:accounting-entry-edit-create', () => {
             this.reset();
         });
+
+        EventBus.$on('validate-required:accounting-entry-edit-create', () => {
+            this.validateRequired();
+        });
     },
     methods: {
 
