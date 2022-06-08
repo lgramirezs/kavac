@@ -121,6 +121,7 @@ export default {
         }
     },
     created() {
+        const vm = this;
         this.table_options.headings = {
             'code': 'CÓDIGO PATRIMONIAL - DENOMINACIÓN',
             'debit': 'BEDE',
@@ -170,6 +171,7 @@ export default {
             this.data.totDebit = parseFloat(this.entries.tot_debit);
             this.data.totAssets = parseFloat(this.entries.tot_assets);
         }
+        EventBus.$emit('validate-required:accounting-entry-edit-create');
     },
     beforeDestroy() {
         EventBus.$off('enableInput:entries-account');
@@ -222,7 +224,7 @@ export default {
                 errors.push('El campo institución es obligatorio.');
                 res = true;
             }
-            if (!this.data.currency.id) {
+            if (!this.data.currency_id) {
                 errors.push('El tipo de moneda es obligatorio.');
                 res = true;
             }
@@ -343,6 +345,14 @@ export default {
          */
         storeEntry() {
             const vm = this;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+            // vm.data.category = vm.$parent.data.category;
+
             if (vm.validateErrors()) {
                 return;
             }
