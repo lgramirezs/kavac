@@ -57,7 +57,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <!--<div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="control-label">Principal</label>
                                     <div class="col-12">
@@ -70,7 +70,7 @@
                                             </div>
                                         </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="control-label">Activo</label>
@@ -190,12 +190,12 @@
                                                 v-if="props.row.manage">
                                             <i class="fa fa-minus-circle"></i>
                                         </button>
-                                        <button @click="warehouseManage(props.index, $event)"
+                                        <!--<button @click="warehouseManage(props.index, $event)"
                                                 class="btn btn-success btn-xs btn-icon btn-action"
                                                 title="Gestionar Almacén" data-toggle="tooltip" type="button"
                                                 v-else>
                                             <i class="fa fa-plus-circle"></i>
-                                        </button>
+                                        </button>-->
                                     </div>
                                     <button @click="editRecord(props.index, $event)"
                                             class="btn btn-warning btn-xs btn-icon btn-action"
