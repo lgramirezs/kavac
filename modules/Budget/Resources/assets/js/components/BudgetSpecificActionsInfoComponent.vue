@@ -32,7 +32,7 @@
                                         <strong>Fecha de inicio:</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ format_date (record.from_date) }}
+                                                {{ format_date(record.from_date) }}
                                             </span>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
                                         <strong>Fecha final:</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ format_date (record.to_date) }}
+                                                {{ format_date(record.to_date) }}
                                             </span>
                                         </div>
                                     </div>

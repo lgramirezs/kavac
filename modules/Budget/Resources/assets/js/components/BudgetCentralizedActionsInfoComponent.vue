@@ -45,7 +45,7 @@
                                 </div>
                             </div>
            
-                        
+             
                             <div class="col-4">
                                     <div class="form-group">
                                     <label>Fecha:</label>
@@ -133,6 +133,7 @@
       
         
                vm.budget=response.data.budget;
+               vm.budget.custom_date = this.format_date(vm.budget.custom_date);
                vm.personal=response.data.cargo;
                vm.departments=response.data.departments;
                vm.institution=response.data.departments.institution;
