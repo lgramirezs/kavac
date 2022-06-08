@@ -47,7 +47,6 @@ Vue.component('budget-centralized-actions-list', () =>
  )
 );
 
-
 /**
  * Componente para mostrar listado de acciones centralizadas
  *
@@ -58,6 +57,18 @@ Vue.component('budget-specific-actions-list', () =>
 		/* webpackChunkName: "budget-specific-actions-list" */
 		'./components/BudgetSpecificActionsListComponent.vue'
 	)
+);
+
+/**
+ * Componente para detallar la información de acciones específicas
+ *
+ * @author Pedro Contreras <pdrocont@gmail.com>
+ */
+ Vue.component('budget-specific-actions-info', () =>
+ import(
+	 /* webpackChunkName: "budget-specific-actions-info" */
+	 './components/BudgetSpecificActionsInfoComponent.vue'
+ )
 );
 
 /**
