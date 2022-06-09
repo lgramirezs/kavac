@@ -414,7 +414,7 @@ class PayrollStaffController extends Controller
     {
         return response()->json(['records' => PayrollStaff::with([
             'payrollNationality', 'payrollGender', 'parish', 'payrollLicenseDegree', 'payrollBloodType',
-            'payrollDisability'
+            'payrollDisability', 'phones'
         ])->get()], 200);
     }
 
