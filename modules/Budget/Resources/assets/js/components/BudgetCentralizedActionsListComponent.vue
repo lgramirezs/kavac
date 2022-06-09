@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { format } from 'path';
+
 	export default {
 		data() {
 			return {
@@ -52,9 +54,38 @@
 			};
 		},
 		mounted() {
-			this.initRecords(this.route_list, '');
+			this.initRecords();	
 		},
 		methods: {
+			initRecords() 
+			{ 
+            const vm = this;
+            let url = this.setUrl(this.route_list);
+
+            axios.get(url).then(response => {
+                if (typeof(response.data.records) !== "undefined") {
+                    vm.records = response.data.records;
+					vm.records.forEach(element => {
+						element.custom_date = this.format_date(element.custom_date);
+					});
+                }
+                if ($("#" + modal_id).length) {
+                    $("#" + modal_id).modal('show');
+                }
+            }).catch(error => {
+                if (typeof(error.response) !== "undefined") {
+                    if (error.response.status == 403) {
+                        vm.showMessage(
+                            'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+                        );
+                    }
+                    else {
+                        vm.logs('resources/js/all.js', 343, error, 'initRecords');
+                    }
+                }
+            });
+			},
+			
 			/**
 			 * Inicializa datos del formulario
 			 *

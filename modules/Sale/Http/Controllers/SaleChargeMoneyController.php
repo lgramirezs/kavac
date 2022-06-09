@@ -12,6 +12,18 @@ class SaleChargeMoneyController extends Controller
 {
   use ValidatesRequests;
 
+  /**
+   * Define la configuración de la clase
+   *
+   * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+   */
+
+  public function __construct()
+  {
+      /** Establece permisos de acceso para cada método del controlador */
+      $this->middleware('permission:sale.setting.charge.money', ['only' => 'index']);
+  }
+
   /** @var array Lista de elementos a mostrar */
   protected $data = [];
 

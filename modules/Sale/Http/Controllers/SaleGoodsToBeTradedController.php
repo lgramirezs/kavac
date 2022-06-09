@@ -45,6 +45,9 @@ class SaleGoodsToBeTradedController extends Controller
      */
     public function __construct()
     {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.setting.good.traded', ['only' => 'index']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'sale_type_good_id'    => ['required'],

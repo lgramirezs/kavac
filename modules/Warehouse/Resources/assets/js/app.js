@@ -429,5 +429,16 @@ Vue.mixin({
                 }
             }
         },
+
+        getPayrollStaffInfo(id) {
+            this.payroll_staff_info = [];
+            axios.get(`${window.app_url}/asset/get-payroll-staffs-info/${id}`).then(response => {
+                this.payroll_positions = [response.data[0]];
+                this.payroll_position_types = [response.data[1]];
+                this.departments = [response.data[2]];
+                this.payrollPositionId = response.data[1]['id'];
+                this.departmentId = response.data[2]['id'];
+            });
+        },
     },
 });

@@ -13,6 +13,18 @@ use App\Models\CodeSetting;
 class SaleSettingController extends Controller
 {
     use ValidatesRequests;
+
+    /**
+     * Define la configuración de la clase
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.setting', ['only' => 'index']);
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable

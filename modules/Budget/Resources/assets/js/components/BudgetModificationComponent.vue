@@ -171,7 +171,7 @@
 									<div class="col-6">
 										<div class="form-group is-required">
 											<label>Acción Específica:</label>
-											<select2 :options="specific_actions"
+											<select2 :options="specific_actions" @input="getAccounts()"
 													 v-model="from_specific_action_id"/>
 					                    </div>
 									</div>
@@ -207,7 +207,7 @@
 										<div class="col-6">
 											<div class="form-group is-required">
 												<label>Acción Específica:</label>
-												<select2 :options="specific_actions"
+												<select2 :options="specific_actions" @input="getAccounts()"
 														 v-model="to_specific_action_id"/>
 						                    </div>
 										</div>
@@ -310,7 +310,7 @@
 		mounted() {
 			const vm = this;
 
-			axios.get(
+			/*axios.get(
 				`${window.app_url}/budget/get-group-specific-actions/${window.execution_year}/true`
 			).then(response => {
 				if (!$.isEmptyObject(response.data)) {
@@ -318,11 +318,12 @@
 				}
 			}).catch(error => {
 				vm.logs('BudgetModificationComponent.vue', 263, error, 'mounted');
-			});
+			});*/
+
+			vm.getSpecificActions();
 
 			vm.reset();
 			vm.getInstitutions();
-			vm.getAccounts();
 			vm.record.type = vm.type_modification;
 
 			if (vm.edit_object) {
@@ -596,35 +597,65 @@
 					}
 				});
 			},
-			/**
-			 * Obtiene el listado de cuentas resupuestarias a mostrar para su selección
-			 *
-			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-			 */
-			getAccounts: function() {
-				const vm = this;
-				vm.accounts = [{
-					id: '',
-					text: 'Seleccione...',
-					title: ''
-				}];
 
-				axios.get(`${window.app_url}/budget/accounts/egress-list/`).then(response => {
-					if (!$.isEmptyObject(response.data.records)) {
-						$.each(response.data.records, function() {
-							if (this.specific !== "00") {
-								vm.accounts.push({
-									id: this.id,
-									text: `${this.code} - ${this.denomination}`,
-									title: 'Disponible: '
-								});
-							}
-						});
-					}
-				}).catch(error => {
-					vm.logs('BudgetModificationComponent.vue', 415, error, 'getAccounts');
-				});
-			},
+			/**
+             * Obtiene las Acciones Específicas
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @param {string} type Tipo de registro
+             */
+            async getSpecificActions() {
+                const vm = this;
+                vm.loading = true;
+                vm.specific_actions = [];
+                vm.accounts = [];
+
+                let year = vm.record.approved_at.split("-")[0];
+                let url = `${window.app_url}/budget/get-group-specific-actions/${window.execution_year}/true`;
+                await axios.get(url).then(response => {
+                    vm.specific_actions = response.data;
+                }).catch(error => {
+                    console.error(error);
+                });
+
+                vm.loading = false;
+            },
+
+            /**
+             * Obtiene las cuentas presupuestarias formuladas de la acción específica seleccionada
+             *
+             * @method    getAccounts
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            async getAccounts() {
+                const vm = this;
+                vm.loading = true;
+                vm.accounts = [];
+
+                if (vm.from_specific_action_id) {
+                    let specificActionId = vm.from_specific_action_id;
+                    let approvedAt = vm.record.approved_at;
+                    await axios.get(
+                        `${window.app_url}/budget/get-opened-accounts/${specificActionId}/${approvedAt}`
+                    ).then(response => {
+                        if (response.data.result) {
+                            vm.accounts = response.data.records;
+                        }
+                        if (response.data.records.length === 1 && response.data.records[0].id === "") {
+                            vm.showMessage(
+                                'custom', 'Alerta!', 'danger', 'screen-error',
+                                `No existen cuentas aperturadas para esta acción específica o con saldo para la fecha
+                                seleccionada`
+                            );
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+
+                vm.loading = false;
+            },
 		}
 	};
 </script>
