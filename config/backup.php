@@ -93,7 +93,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'rvargas@cenditel.gob.ve',
+            'to' => config('mail.from.address'),
         ],
 
         'slack' => [
