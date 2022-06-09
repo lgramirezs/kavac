@@ -392,8 +392,17 @@ class WarehouseRequestController extends Controller
         }, 'currency', 'warehouseProduct', 'warehouseInstitutionWarehouse' => function ($query) {
             $query->with('warehouse');
         }, 'warehouseInventoryRule'])->get();
+        
+        if($warehouse_product) {
+            $records = [];
+            for($i = 0; $i<count($warehouse_product); $i++) {
+                if($warehouse_product[$i]['warehouseInstitutionWarehouse']['warehouse']['active'] == true) {
+                    array_push($records, $warehouse_product[$i]); 
+                }
+            } 
+        }
 
-        return response()->json(['records' => $warehouse_product], 200);
+        return response()->json(['records' => $records], 200);
     }
 
     /**
