@@ -67,7 +67,7 @@
 								]) !!}
 							</div>
 						</div>
-						<div class="col-md-3" id="helpCodeInventory">
+						<!--div class="col-md-3" id="helpCodeInventory">
 							<div class="form-group">
 								{!! Form::label('inventory_code', 'Código de inventario', []) !!}
 								{!! Form::text('inventories_code', ($ivCode) ? $ivCode->format_code : old('inventories_code'), [
@@ -77,7 +77,7 @@
 									'readonly' => ($ivCode) ? true : false
 								]) !!}
 							</div>
-						</div>
+						</div-->
 					</div>
 				</div>
 				<div class="card-footer text-right">
