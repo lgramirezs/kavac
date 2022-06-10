@@ -382,10 +382,12 @@
 	            vm.getWarehouseProducts();
 	            setTimeout(function() {
 	            	$.each(fields.warehouse_inventory_product_movements, function(index,campo){
-	                  var element = document.getElementById("movement_product_"+campo.warehouse_inventory_product_id);
+	                  let element = document.getElementById("movement_product_"+campo.warehouse_initial_inventory_product_id);
 	                  if(element){
 	                      element.value = campo.quantity;
-	                      vm.selected.push(campo.warehouse_inventory_product_id);
+	                      vm.selected.push(campo.warehouse_initial_inventory_product_id);
+	                      let checkbox = document.getElementById('checkbox_' + campo.warehouse_initial_inventory_product_id);
+	                      checkbox.click();
 	                  }
 	              });
             	}, 2000);

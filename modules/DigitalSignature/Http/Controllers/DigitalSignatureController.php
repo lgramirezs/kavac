@@ -28,10 +28,22 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>
  */
-
 class DigitalSignatureController extends Controller
 {
-     use ValidatesRequests;
+    use ValidatesRequests;
+
+    /**
+     * Define la configuración inicial de la clase.
+     *
+     * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /**
+         * Establece permisos de acceso para cada método del controlador
+         */
+        $this->middleware('permission:digitalsignature.index', ['only' => 'index']);
+    }
 
     /**
      * Muestra la ventana principal del módulo Digital signature

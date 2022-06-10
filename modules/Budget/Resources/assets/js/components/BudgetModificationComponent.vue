@@ -167,20 +167,40 @@
 										</h6>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group is-required">
-											<label>Acción Específica:</label>
-											<select2 :options="specific_actions" @input="getAccounts()"
-													 v-model="from_specific_action_id"/>
-					                    </div>
+								<div v-if="(type_modification==='TR') || (type_modification==='RE')">
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Acción Específica:</label>
+												<select2 :options="specific_actions" @input="getAccounts()"
+														 v-model="from_specific_action_id"/>
+						                    </div>
+										</div>
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Cuenta:</label>
+												<select2 :options="accounts"
+														 v-model="from_account_id"/>
+						                    </div>
+										</div>
 									</div>
-									<div class="col-6">
-										<div class="form-group is-required">
-											<label>Cuenta:</label>
-											<select2 :options="accounts"
-													 v-model="from_account_id"/>
-					                    </div>
+								</div>
+								<div v-if="(type_modification==='AC')">
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Acción Específica:</label>
+												<select2 :options="specific_actions"
+														 v-model="from_specific_action_id"/>
+						                    </div>
+										</div>
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Cuenta:</label>
+												<select2 :options="accountsAC"
+														 v-model="from_account_id"/>
+						                    </div>
+										</div>
 									</div>
 								</div>
 								<div class="row">
@@ -207,14 +227,14 @@
 										<div class="col-6">
 											<div class="form-group is-required">
 												<label>Acción Específica:</label>
-												<select2 :options="specific_actions" @input="getAccounts()"
+												<select2 :options="specific_actions"
 														 v-model="to_specific_action_id"/>
 						                    </div>
 										</div>
 										<div class="col-6">
 											<div class="form-group is-required">
 												<label>Cuenta:</label>
-												<select2 :options="accounts"
+												<select2 :options="accountsAC"
 														 v-model="to_account_id"/>
 						                    </div>
 										</div>
@@ -281,6 +301,10 @@
 					id: '',
 					text: 'Seleccione...'
 				}],
+				accountsAC: [{
+					id: '',
+					text: 'Seleccione...'
+				}],
 				/*
 				 * Variables para cuentas a agregar en créditos adicionales, traspasos y reducciones
 				 */
@@ -325,6 +349,9 @@
 			vm.reset();
 			vm.getInstitutions();
 			vm.record.type = vm.type_modification;
+			if (vm.type_modification === 'AC' || vm.type_modification === 'TR') {
+				vm.getAccountsAC();
+			}
 
 			if (vm.edit_object) {
 				vm.loadEditData();
@@ -656,6 +683,35 @@
 
                 vm.loading = false;
             },
+
+            /**
+			 * Obtiene el listado de cuentas resupuestarias a mostrar para su selección
+			 *
+			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+			 */
+			getAccountsAC: function() {
+				const vm = this;
+				vm.accountsAC = [{
+					id: '',
+					text: 'Seleccione...',
+					title: ''
+				}];
+				axios.get(`${window.app_url}/budget/accounts/egress-list/`).then(response => {
+					if (!$.isEmptyObject(response.data.records)) {
+						$.each(response.data.records, function() {
+							if (this.specific !== "00") {
+								vm.accountsAC.push({
+									id: this.id,
+									text: `${this.code} - ${this.denomination}`,
+									title: 'Disponible: '
+								});
+							}
+						});
+					}
+				}).catch(error => {
+					vm.logs('BudgetModificationComponent.vue', 415, error, 'getAccounts');
+				});
+			},
 		}
 	};
 </script>
