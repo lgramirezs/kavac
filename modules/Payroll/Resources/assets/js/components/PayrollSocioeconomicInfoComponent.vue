@@ -81,53 +81,55 @@
                                 </div>
                             </div>
                             <hr>
-                                <h6 class="text-center">Información de hijos del Trabajador</h6><br>
+                            <h6 class="text-center">Información de hijos del Trabajador</h6><br>
                             <div v-if="record.payroll_childrens">
-                                <div class="row" v-for="child in record.payroll_childrens">
-                                    <div class="col-md-4">
+                                <div v-for="child in record.payroll_childrens">
+                                    <div class="row" >
+                                        <div class="col-md-4">
                                         <strong>Nombres:</strong>
-                                        <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
-                                                {{ child.first_name }}
-                                            </span>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ child.first_name }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <strong>Apellidos:</strong>
-                                        <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
-                                                {{ child.last_name }}
-                                            </span>
+                                        <div class="col-md-4">
+                                            <strong>Apellidos:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ child.last_name }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <strong>Cédula de identidad:</strong>
-                                        <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
-                                                {{ child.id_number }}
-                                            </span>
+                                        <div class="col-md-4">
+                                            <strong>Cédula de identidad:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ child.id_number }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <strong>Fecha de nacimiento:</strong>
-                                        <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
-                                                {{ child.birthdate }}
-                                            </span>
+                                        <div class="col-md-4">
+                                            <strong>Fecha de nacimiento:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ child.birthdate }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <strong>¿Es estudiante?</strong>
-                                        <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
-                                                {{ child.is_student ? 'Si' : 'No' }}
-                                            </span>
+                                        <div class="col-md-4">
+                                            <strong>¿Es estudiante?</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ child.is_student ? 'Si' : 'No' }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <hr>
+                                    </div> 
                                     <div v-if="child.is_student">
+                                    <hr>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                             <strong>Nivel de escolaridad:</strong>
                                                 <div class="row" style="margin: 1px 0">
                                                     <span class="col-md-12">
@@ -135,7 +137,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                             <strong>Centro de estudios:</strong>
                                                 <div class="row" style="margin: 1px 0">
                                                     <span class="col-md-12">
@@ -143,7 +145,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                             <strong>¿Posee discapacidad?</strong>
                                                 <div class="row" style="margin: 1px 0">
                                                     <span class="col-md-12">
@@ -151,11 +153,11 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4" v-if="child.has_disability">
+                                            <div class="col-md-3" v-if="child.has_disability">
                                             <strong>Discapacidad:</strong>
                                                 <div class="row" style="margin: 1px 0">
                                                     <span class="col-md-12">
-                                                        {{ child.payroll_disability.name }}
+                                                        {{ child.payroll_disability ? child.payroll_disability.name : '' }}
                                                     </span>
                                                 </div>
                                             </div>
