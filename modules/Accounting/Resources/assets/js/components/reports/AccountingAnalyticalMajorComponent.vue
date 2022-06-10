@@ -31,24 +31,26 @@
                 </div>
                 <div class="col-3" id="helpAnaliticalMajorRangeAccount">
                     <br>
-                    <div class="is-required">
+                    <div class=" col-12 is-required">
                         <label><strong>Cuenta Inicial</strong></label>
                         <select2 :options="OptionsAcc" v-model="InitAcc" :disabled="disabledSelect"></select2>
                     </div>
                     <br>
-                    <label><strong>Cuenta Final</strong></label>
-                    <select2 :options="OptionsAcc" v-model="EndAcc" :disabled="disabledSelect"></select2>
+                    <div class=" col-12 is-required">
+                         <label><strong>Cuenta Final</strong></label>
+                         <select2 :options="OptionsAcc" v-model="EndAcc" :disabled="disabledSelect"></select2>
+                    </div>
                 </div>
                 <div class="col-3">
                     <br>
-                    <div id="helpAnaliticalMajorCurrency">
+                    <div class="col-12 is-required" id="helpAnaliticalMajorCurrency">
                         <label class="control-label">Expresar en</label>
                         <select2 :options="currencies" v-model="currency"></select2>
                     </div>
                     <div id="helpAnaliticalMajorAllAccount">
                         <label for="" class="control-label mt-4">Seleccionar todas</label>
                         <div class="col-12 bootstrap-switch-mini">
-                            <input type="checkbox" name="sel_account_type" id="sel_all_acc" data-on-label="SI" data-off-label="NO" @click="checkAll()" class="form-control bootstrap-switch sel_pry_acc sel_all_acc_class">
+                        <input type="checkbox" name="sel_account_type" id="sel_all_acc" data-on-label="SI" data-off-label="NO" @click="checkAll()" class="form-control bootstrap-switch sel_pry_acc sel_all_acc_class">
                         </div>
                     </div>
                 </div>
