@@ -149,7 +149,7 @@
                             <hr>
                             <h6 class="text-center">Detalles del idioma</h6><br>
                             <div class="row" v-for="(payroll_language, index) in record.payroll_languages" :key="index">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <strong>Idioma:</strong>
                                         <div class="row" style="margin: 1px 0">
@@ -159,7 +159,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <strong>Nivel del lenguaje:</strong>
                                         <div v-for="level in payroll_language_levels">
@@ -176,9 +176,9 @@
                             <h6 class="text-center">Capacitación y Reconocimientos</h6><br>
                             <div v-if="record.payroll_acknowledgment">
                                 <div class="row" v-for="file in record.payroll_acknowledgment.payroll_acknowledgment_files">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong>Nombre del reconocimiento</strong>
+                                            <strong>Tipo de reconocimiento</strong>
                                             <div class="row" style="margin: 1px 0">
                                                 <span class="col-md-12">
                                                     {{ file.name }}
@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <strong>Certificado del reconocimiento:</strong>
                                             <div v-for="urls in file.documents">
@@ -202,9 +202,9 @@
                             </div>
                             <div v-if="record.payroll_course">
                                 <div class="row" v-for="course in record.payroll_course.payroll_course_files">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong>Nombre del reconocimiento</strong>
+                                            <strong>Nombre del curso realizado</strong>
                                             <div class="row" style="margin: 1px 0">
                                                 <span class="col-md-12">
                                                     {{ course.name }}
@@ -212,9 +212,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong>Certificado del reconocimiento:</strong>
+                                            <strong>Certificado del curso realizado:</strong>
                                             <div v-for="cert in course.documents">
                                                 <div class="row" style="margin: 1px 0">
                                                     <span class="col-md-12">

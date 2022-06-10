@@ -18,12 +18,10 @@
 					</ul>
 				</div>
 			</div>
-
 			<div class="row">
 				<div class="col-md-12">
 					<b>Datos de la solicitud</b>
 				</div>
-
 				<div class="col-md-4" id="helpWarehouseRequestDate">
 					<div class="form-group is-required">
 						<label>Fecha de la solicitud</label>
@@ -35,7 +33,6 @@
 						<input type="hidden" v-model="record.id">
                     </div>
 				</div>
-
 				<div class="col-md-8" id="helpWarehouseRequestMotive">
 					<div class="form-group is-required">
 						<label>Motivo de la solicitud</label>
@@ -79,7 +76,11 @@
 						<input type="checkbox" v-model="selectAll" @click="select()" class="cursor-pointer">
 					</label>
 				</div>
-
+				<div>
+					<b>
+						records
+					</b>
+				</div>
 				<div slot="check" slot-scope="props" class="text-center">
 					<label class="form-checkbox">
 						<input type="checkbox" class="cursor-pointer" :value="props.row.id" :id="'checkbox_'+props.row.id" v-model="selected">
@@ -106,7 +107,7 @@
 				<div slot="inventory" slot-scope="props">
 					<span>
 						<b>Almacén:</b> {{
-							props.row.warehouse_institution_warehouse.warehouse.name
+							props.row.warehouse_institution_warehouse.warehouse.active
 							}} <br>
 						<b>Existencia:</b> {{ props.row.exist }}<br>
 						<b>Reservados:</b> {{ (props.row.reserved === null)? '0':props.row.reserved }}
@@ -117,7 +118,6 @@
 						<input type="number" class="form-control table-form input-sm" data-toggle="tooltip" min=0 :max="props.row.exist" :id="'request_product_'+props.row.id" onfocus="this.select()" @input="selectElement(props.row.id); validateInput(props.row.exist, props.row.reserved, props.row.id)">
 					</div>
 				</div>
-
 			</v-client-table>
 		</div>
 		<div class="card-footer text-right">

@@ -4,12 +4,16 @@
             <accounting-show-errors ref="errorsDialyBook" />
             <div class="row">
                 <div class="col-3" id="helpDailyBookInitDate">
+                    <div class="is-required">
                     <label class="control-label">Fecha inicial</label>
                     <input type="date" class="form-control input-sm" v-model="dateIni">
+                    </div>
                 </div>
                 <div class="col-3" id="helpDailyBookEndDate">
+                    <div class="is-required">
                     <label class="control-label">Fecha final</label>
                     <input type="date" class="form-control input-sm" v-model="dateEnd" :min="dateIni?dateIni:''" :disabled="dateIni?false:true">
+                    </div>
                 </div>
                 <div class="col-3" id="helpDailyBookCurrency">
                     <label class="control-label">Expresar en</label>
