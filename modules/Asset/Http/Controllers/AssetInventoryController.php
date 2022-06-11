@@ -78,7 +78,7 @@ class AssetInventoryController extends Controller
                 $assigned++;
             } elseif (($asset->asset_status_id == 6) && ($asset->assetRequestAsset != null)) {
                 $reserved++;
-            } elseif (($asset->asset_status_id == null) && ($asset->assetDisincorporationAsset != null)) {
+            } elseif (($asset->asset_status_id == 11) && ($asset->assetDisincorporationAsset != null)) {
                 $disincorporated++;
             }
 

@@ -28,9 +28,9 @@
                             '' }}
                     </td>
                     <td width="30%" style="font-size:9rem;" align="center">
-                        {{ isset($assetInventoryAsset['asset']['assetStatus']['name'])?
+                        {{ $assetInventoryAsset['asset']['assetStatus']['id'] != 11?
                             $assetInventoryAsset['asset']['assetStatus']['name']:
-                            'Desincorporado: '.$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] }}
+                            $assetInventoryAsset['asset']['assetStatus']['name'] .$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
                         {{ $assetInventoryAsset['asset']['serial'] ?
@@ -131,7 +131,7 @@
     $showTable = false;
     foreach($assets as $asset) {
         foreach($asset->assetInventoryAssets as $assetInventoryAsset) {
-            if (!$assetInventoryAsset->asset->asset_status_id) {
+            if ($assetInventoryAsset->asset->asset_status_id == 11) {
                 $showTable = true;
             }
         }
@@ -155,7 +155,7 @@
             </thead>
             <tbody>
                 @foreach($asset->assetInventoryAssets as $assetInventoryAsset)
-                    @if(!$assetInventoryAsset->asset->asset_status_id)
+                    @if($assetInventoryAsset->asset->asset_status_id == 11)
                         <tr>
                             <td width="10%" style="font-size: 8rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['institution']['name'] }}
@@ -164,9 +164,7 @@
                                 {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
                             </td>
                             <td width="20%" style="font-size:9rem;" align="center">
-                                {{ isset($assetInventoryAsset['asset']['assetStatus']['name'])?
-                                    $assetInventoryAsset['asset']['assetStatus']['name']:
-                                    'Desincorporado: '.$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name']}}
+                                {{ $assetInventoryAsset['asset']['assetStatus']['name']}}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['serial'] ?

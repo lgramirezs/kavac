@@ -37,7 +37,7 @@
 								<i class="fa fa-file-pdf-o"></i>
 							</button>
 
-				    		<button @click="deleteRecord(props.index, 'asset/inventory-history/delete')"
+				    		<button @click="deleteRecord(props.row.id, 'asset/inventory-history/delete')"
 									class="btn btn-danger btn-xs btn-icon btn-action"
 									title="Eliminar registro" data-toggle="tooltip"
 									type="button" v-has-tooltip>

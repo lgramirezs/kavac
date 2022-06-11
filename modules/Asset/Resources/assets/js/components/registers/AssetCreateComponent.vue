@@ -392,7 +392,7 @@
 				const vm = this;
 				vm.asset_status = [];
 				axios.get(`${window.app_url}/asset/get-status`).then(response => {
-					vm.asset_status = response.data.filter((item) => item.id !== 12);
+					vm.asset_status = response.data.filter((item) => item.id !== 11);
 				});
 			},
 			
