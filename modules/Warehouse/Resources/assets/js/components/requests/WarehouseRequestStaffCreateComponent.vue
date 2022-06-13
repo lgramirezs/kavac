@@ -107,7 +107,7 @@
 				<div slot="inventory" slot-scope="props">
 					<span>
 						<b>Almacén:</b> {{
-							props.row.warehouse_institution_warehouse.warehouse.active
+							props.row.warehouse_institution_warehouse.warehouse.name
 							}} <br>
 						<b>Existencia:</b> {{ props.row.exist }}<br>
 						<b>Reservados:</b> {{ (props.row.reserved === null)? '0':props.row.reserved }}
