@@ -164,7 +164,8 @@
                                 {{ $assetInventoryAsset['asset']['assetCondition']['name'] }}
                             </td>
                             <td width="20%" style="font-size:9rem;" align="center">
-                                {{ $assetInventoryAsset['asset']['assetStatus']['name']}}
+                                {{ $assetInventoryAsset['asset']['assetStatus']['name'].': '
+                                .$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name']}}
                             </td>
                             <td width="10%" style="font-size:9rem;" align="center">
                                 {{ $assetInventoryAsset['asset']['serial'] ?
