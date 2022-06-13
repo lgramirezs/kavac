@@ -38,7 +38,7 @@
                     <button @click="approve(props.index)" class="btn btn-success btn-xs btn-icon btn-action" title="Aprobar Registro" data-toggle="tooltip" v-has-tooltip v-if="!props.row.approved">
                         <i class="fa fa-check"></i>
                     </button>
-                    <accounting-entry-show modal_name="show_accounting_approved_" :id="props.row.id" :route_show="app_url+'accounting/entries/'+props.row.id" />
+                    <accounting-entry-show modal_name="show_accounting_approved_" :id="props.row.id" :route_show="app_url+'/accounting/entries/'+props.row.id" />
                     <button @click="editForm(props.row.id)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" v-has-tooltip v-if="!props.row.approved">
                         <i class="fa fa-edit"></i>
                     </button>
