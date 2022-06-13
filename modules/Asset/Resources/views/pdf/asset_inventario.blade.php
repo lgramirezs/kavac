@@ -30,7 +30,7 @@
                     <td width="30%" style="font-size:9rem;" align="center">
                         {{ $assetInventoryAsset['asset']['assetStatus']['id'] != 11?
                             $assetInventoryAsset['asset']['assetStatus']['name']:
-                            $assetInventoryAsset['asset']['assetStatus']['name'] .$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] }}
+                            $assetInventoryAsset['asset']['assetStatus']['name'].': ' .$assetInventoryAsset['asset']['assetDisincorporationAsset']['assetDisincorporation']['assetDisincorporationMotive']['name'] }}
                     </td>
                     <td width="10%" style="font-size:9rem;" align="center">
                         {{ $assetInventoryAsset['asset']['serial'] ?
