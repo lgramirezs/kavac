@@ -221,7 +221,7 @@
 						fields = response.data.records;
 
 						$(".modal-body #id").val( fields.id );
-		            	document.getElementById('date_init').innerText = (fields.created_at)?fields.created_at:'';
+		            	document.getElementById('date_init').innerText = (fields.created_at)?vm.format_date(fields.created_at):'';
 						if(fields.description){
 						document.getElementById('description').innerText =fields.description.replace('<p>', '').replace('</p>', '');
 					}else{

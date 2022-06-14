@@ -16,6 +16,9 @@ class SaleDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        /** Seeder para roles y permisos disponibles en el módulo */
+        $this->call(SaleRoleAndPermissionsTableSeeder::class);
+
         $this->call(SaleSettingProductTypeTableSeeder::class);
 
     }

@@ -47,7 +47,7 @@
 							<div class="col-md-6">
 								<div class="form-group is-required">
 									<label>Cuenta</label>
-									<select2 :options="accounts" v-model="record.finance_bank_account_id"></select2>
+									<select2 :options="accounts" v-model="record.bank_account_id"></select2>
 								</div>
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 	                			{{ props.row.checks }}
 	                		</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
-	                			<button @click="initUpdate(props.row.id, $event)"
+	                			<button @click="initUpdate_finance(props.row.id, $event)"
 		                				class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
 		                				title="Modificar registro" data-toggle="tooltip" type="button"
 		                				>
@@ -138,10 +138,9 @@
 					code: '',
 					checks: '',
 					finance_bank_id: '',
-					finance_bank_account_id: '',
+					bank_account_id: '',
 					numbers: [],
 				},
-				finance_bank_account_id: [],
 				banks: [],
 				accounts: [],
 				errors: [],
@@ -168,7 +167,7 @@
 					code: '',
 					checks: '',
 					finance_bank_id: '',
-					finance_bank_account_id: '',
+					bank_account_id: '',
 					numbers: [],
 				};
 			},
@@ -194,7 +193,38 @@
             		}
             	}
             	this.record.numbers = check_numbers;
-			}
+			},
+
+			/**
+              * Método que carga el formulario con los datos a modificar
+              *
+              * @author  Tsu. Miguel Narvaez <mnarvaez@cenditel.gob.ve> | <miguelnarvaez31@gmail.com>
+              *
+              * @param  {integer} index Identificador del registro a ser modificado
+              * @param {object} event   Objeto que gestiona los eventos
+              */
+            initUpdate_finance(id, event) {
+                let vm = this;
+                vm.errors = [];
+  
+                let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                    return rec.id === id;
+                })[0])) || vm.reset();
+ 
+                vm.record.id = recordEdit.id;
+                vm.record.code = recordEdit.code;
+                vm.record.checks = recordEdit.checks;
+                vm.record.numbers = recordEdit.numbers;
+                vm.record.finance_bank_id = recordEdit.finance_bank_id;
+
+                const timeOpen = setTimeout(addBankAccountId, 4000);
+
+                function addBankAccountId () {
+                    vm.record.bank_account_id = recordEdit.finance_bank_account_id;
+                }
+                event.preventDefault();
+            },
+
 		},
 		created() {
 			this.table_options.headings = {

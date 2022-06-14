@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Payroll\Models\PayrollStaff;
+use Modules\Payroll\Models\PayrollProfessional;
+use Modules\Payroll\Models\PayrollEmployment;
+use Modules\Payroll\Models\PayrollSocioeconomic;
 use Modules\Payroll\Models\PayrollStaffUniformSize;
 use App\Models\Phone;
 use App\Models\CodeSetting;
@@ -49,7 +52,7 @@ class PayrollStaffController extends Controller
             'payroll_nationality_id' => ['required'],
             'id_number' => [],
             'passport' => [],
-            'email' => ['required', 'unique:payroll_staffs,email'],
+            'email' => ['required', 'unique:payroll_staffs,email', 'email'],
             'birthdate' => [],
             'payroll_gender_id' => ['required'],
             'emergency_contact' => ['nullable'],
@@ -283,6 +286,7 @@ class PayrollStaffController extends Controller
             'required', 'regex:/^([\d]{7}|[\d]{8})$/u', 'unique:payroll_staffs,id_number,' . $payrollStaff->id
         ];
         $this->rules['passport'] = ['nullable', 'max:20', 'unique:payroll_staffs,passport,' . $payrollStaff->id];
+        $this->rules['email'] = ['required', 'unique:payroll_staffs,email,' . $payrollStaff->id, 'email'];
         $this->rules['birthdate'] = ['required', 'date', new AgeToWork(($parameter) ? $parameter->p_value : 0)];
         $this->validate($request, $this->rules, [], $this->attributes);
         if ($request->has_disability) {
@@ -410,7 +414,7 @@ class PayrollStaffController extends Controller
     {
         return response()->json(['records' => PayrollStaff::with([
             'payrollNationality', 'payrollGender', 'parish', 'payrollLicenseDegree', 'payrollBloodType',
-            'payrollDisability'
+            'payrollDisability', 'phones'
         ])->get()], 200);
     }
 
@@ -425,9 +429,20 @@ class PayrollStaffController extends Controller
         if ($type === 'all') {
             return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
         } else if (is_numeric($type)) {
-            return response()->json(
-                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
-            );
+            $options = [['id' => '', 'text' => 'Seleccione...']];
+
+            /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+            $staffs = PayrollStaff::doesnthave('payrollEmployment')->get();
+            foreach ($staffs as $staff) {
+                $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+            }
+            $editStaff = PayrollEmployment::with('payrollStaff')->where('id', (int)$type)->get();
+
+            $pushOptions = ['id' => $editStaff[0]->payrollStaff->id, 'text' => "{$editStaff[0]->payrollStaff->id_number} - {$editStaff[0]->payrollStaff->full_name}"];
+
+            array_push($options, $pushOptions);
+
+            return response()->json($options);
         }
 
         $options = [['id' => '', 'text' => 'Seleccione...']];
@@ -453,9 +468,20 @@ class PayrollStaffController extends Controller
         if ($type === 'all') {
             return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
         } else if (is_numeric($type)) {
-            return response()->json(
-                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
-            );
+            $options = [['id' => '', 'text' => 'Seleccione...']];
+
+            /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+            $staffs = PayrollStaff::doesnthave('payrollSocioeconomic')->get();
+            foreach ($staffs as $staff) {
+                $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+            }
+            $editStaff = PayrollSocioeconomic::with('payrollStaff')->where('id', (int)$type)->get();
+
+            $pushOptions = ['id' => $editStaff[0]->payrollStaff->id, 'text' => "{$editStaff[0]->payrollStaff->id_number} - {$editStaff[0]->payrollStaff->full_name}"];
+
+            array_push($options, $pushOptions);
+
+            return response()->json($options);
         }
 
         $options = [['id' => '', 'text' => 'Seleccione...']];
@@ -479,9 +505,20 @@ class PayrollStaffController extends Controller
         if ($type === 'all') {
             return response()->json(template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true));
         } else if (is_numeric($type)) {
-            return response()->json(
-                template_choices(PayrollStaff::class, ['id_number', '-', 'full_name'], '', true, (int)$type)
-            );
+            $options = [['id' => '', 'text' => 'Seleccione...']];
+
+            /** Filtra por el personal que aún no tiene registrado los datos Socioeconomico */
+            $staffs = PayrollStaff::doesnthave('payrollProfessional')->get();
+            foreach ($staffs as $staff) {
+                $options[] = ['id' => $staff->id, 'text' => "{$staff->id_number} - {$staff->full_name}"];
+            }
+            $editStaff = PayrollProfessional::with('payrollStaff')->where('id', (int)$type)->get();
+
+            $pushOptions = ['id' => $editStaff[0]->payrollStaff->id, 'text' => "{$editStaff[0]->payrollStaff->id_number} - {$editStaff[0]->payrollStaff->full_name}"];
+
+            array_push($options, $pushOptions);
+
+            return response()->json($options);
         }
 
         $options = [['id' => '', 'text' => 'Seleccione...']];

@@ -1,9 +1,15 @@
 <template>
     <div>
-        <button @click="addRecord('show_entry_'+id, route_show, $event)" class="btn btn-info btn-xs btn-icon btn-action" title="Visualizar registro" data-toggle="tooltip" v-has-tooltip>
+        <button type="button" 
+            @click="addRecord(modal_name+id, route_show, $event)"
+            class="btn btn-info btn-xs btn-icon btn-action" 
+            title="Visualizar registro" 
+            v-has-tooltip
+            data-toggle="modal" 
+            :data-target="'#'+modal_name+id">
             <i class="fa fa-eye"></i>
         </button>
-        <div class="modal fade text-left" tabindex="-1" role="dialog" :id="'show_entry_'+id">
+        <div class="modal fade text-left" tabindex="-1" role="dialog" :id="modal_name+id">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,7 +99,7 @@
 </template>
 <script>
 export default {
-    props: ['id'],
+    props: ['id', 'modal_name'],
     data() {
         return {
             records: [],

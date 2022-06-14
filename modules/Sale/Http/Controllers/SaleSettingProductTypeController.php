@@ -21,11 +21,8 @@ class SaleSettingProductTypeController extends Controller
 
     public function __construct()
     {
-        /** Establece permisos de acceso para cada método del controlador *//*
-        $this->middleware('permission:sale.setting.product.list', ['only' => 'index']);
-        $this->middleware('permission:sale.setting.product.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sale.setting.product.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sale.setting.product.delete', ['only' => 'destroy']);*/
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.setting.product.type', ['only' => 'index']);
     }
 
     /**

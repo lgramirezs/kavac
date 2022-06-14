@@ -56,6 +56,12 @@ class SalePaymentController extends Controller
      */
     public function __construct()
     {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.payment.list', ['only' => 'index']);
+        $this->middleware('permission:sale.payment.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale.payment.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sale.payment.delete', ['only' => 'destroy']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'bank_id'               => ['required'],

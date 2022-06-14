@@ -18,12 +18,10 @@
 					</ul>
 				</div>
 			</div>
-
 			<div class="row">
 				<div class="col-md-12">
 					<b>Datos de la solicitud</b>
 				</div>
-
 				<div class="col-md-4" id="helpWarehouseRequestDate">
 					<div class="form-group is-required">
 						<label>Fecha de la solicitud</label>
@@ -35,7 +33,6 @@
 						<input type="hidden" v-model="record.id">
                     </div>
 				</div>
-
 				<div class="col-md-8" id="helpWarehouseRequestMotive">
 					<div class="form-group is-required">
 						<label>Motivo de la solicitud</label>
@@ -45,30 +42,32 @@
                                   v-model="record.motive"></ckeditor>
                     </div>
 				</div>
-
 				<div class="col-md-4" id="helpWarehouseRequestDepartment">
-					<div class=" form-group is-required">
+					<div class="form-group is-required">
+						<label>Solicitante</label>
+						<select2 
+							:options="payroll_staffs"
+							v-model="record.payroll_staff_id"> 
+						</select2>
+					</div>
+				</div>
+				<div class="col-md-4" id="helpDepartment">
+					<div class="form-group is-required">
 						<label>Departamento</label>
-						<select2 :options="departments"
-							v-model="record.department_id"></select2>
+						<select2 
+							:options="departments"
+							v-model="record.department_id"> 
+						</select2>
 					</div>
 				</div>
 				<div class="col-md-4" id="helpWarehouseRequestPosition">
-					<div class=" form-group is-required">
+					<div class="form-group is-required" >
 						<label>Cargo</label>
 						<select2 :options="payroll_positions"
 							v-model="record.payroll_position_id"></select2>
 					</div>
 				</div>
-				<div class="col-md-4" id="helpWarehouseRequestStaff">
-					<div class=" form-group is-required">
-						<label>Solicitante</label>
-						<select2 :options="payroll_staffs"
-							v-model="record.payroll_staff_id"></select2>
-					</div>
-				</div>
 			</div>
-
 			<hr>
 			<v-client-table id="helpTable"
 				@row-click="toggleActive" :columns="columns" :data="records" :options="table_options">
@@ -77,7 +76,11 @@
 						<input type="checkbox" v-model="selectAll" @click="select()" class="cursor-pointer">
 					</label>
 				</div>
-
+				<div>
+					<b>
+						records
+					</b>
+				</div>
 				<div slot="check" slot-scope="props" class="text-center">
 					<label class="form-checkbox">
 						<input type="checkbox" class="cursor-pointer" :value="props.row.id" :id="'checkbox_'+props.row.id" v-model="selected">
@@ -115,7 +118,6 @@
 						<input type="number" class="form-control table-form input-sm" data-toggle="tooltip" min=0 :max="props.row.exist" :id="'request_product_'+props.row.id" onfocus="this.select()" @input="selectElement(props.row.id); validateInput(props.row.exist, props.row.reserved, props.row.id)">
 					</div>
 				</div>
-
 			</v-client-table>
 		</div>
 		<div class="card-footer text-right">
@@ -170,6 +172,8 @@
 				departments: [],
 				payroll_positions: [],
 				payroll_staffs: [],
+				departmentId: '',
+				payrollPositionId: '',
 
 				table_options: {
 					rowClassCallback(row) {
@@ -196,6 +200,11 @@
 		},
 		props: {
 			requestid: Number,
+		},
+		watch: {
+			'record.payroll_staff_id'(new_id) {
+				this.getPayrollStaffInfo(new_id);
+			},
 		},
 		methods: {
 			toggleActive({ row }) {
@@ -319,6 +328,8 @@
 			createRequest(url){
 				const vm = this;
 				vm.record.warehouse_products = [];
+				vm.record.department_id = vm.departmentId;
+				vm.record.payroll_position_id = vm.payrollPositionId;
 				var complete = true;
                 if(!vm.selected.length > 0){
                     bootbox.alert("Debe agregar al menos un elemento a la solicitud");

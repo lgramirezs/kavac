@@ -82,7 +82,7 @@
                                         <strong>Descripción de funciones:</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ record.function_description }}
+                                                <span v-html="record.function_description"></span>
                                             </span>
                                         </div>
                                     </div>

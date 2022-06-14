@@ -260,9 +260,7 @@
                     
                         
                         vm.getSupplier(vm.records.purchase_supplier_id);
-                        console.log(vm.supplier);
-                         
-                        console.log('dentro del axios:  ', vm.supplier );
+                       
                         document.getElementById('asset_type').innerText = (vm.records.asset_type)?vm.records.asset_type.name:'';
                         document.getElementById('asset_category').innerText = (vm.records.asset_category)?vm.records.asset_category.name:'';
                         document.getElementById('asset_subcategory').innerText = (vm.records.asset_subcategory)?vm.records.asset_subcategory.name:'';
@@ -278,7 +276,9 @@
                        }, 1500);
                        
                         document.getElementById('asset_condition').innerText = (vm.records.asset_condition)?vm.records.asset_condition.name:'';
-                        document.getElementById('asset_status').innerText = (vm.records.asset_status)?vm.records.asset_status.name:'Desincorporado';
+                        document.getElementById('asset_status').innerText = (vm.records.asset_status_id == 11)?vm.records.asset_status.name + ': ' 
+                                                                                                                + vm.records.asset_disincorporation_asset.asset_disincorporation.asset_disincorporation_motive.name:
+                                                                                                                vm.records.asset_status.name;
 
                         document.getElementById('asset_use_function').innerText = (vm.records.asset_use_function)?vm.records.asset_use_function.name:'N/A';
                         document.getElementById('asset_serial').innerText = (vm.records.serial)?vm.records.serial:'';

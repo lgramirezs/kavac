@@ -43,6 +43,15 @@
                                         title="Indique la fecha en la que se aperturó la cuenta">
                                 </div>
                             </div>
+                            <!-- cuenta contable -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cuenta contable</label>
+                                    <select2 :options="accounting_accounts"
+                                             v-model="record.accounting_account_id"></select2>
+                                </div>
+                            </div>
+                            <!-- ./cuenta contable -->
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -163,12 +172,14 @@
                     bank_code: '',
                     description: '',
                     opened_at: '',
+                    accounting_account_id: '',
                 },
                 errors: [],
                 records: [],
                 banks: [],
                 agencies: [],
                 account_types: [],
+                accounting_accounts: [],
                 columns: ['finance_banking_agency', 'ccc_number', 'opened_at', 'id'],
             }
         },
@@ -188,7 +199,34 @@
                     bank_code: '',
                     description: '',
                     opened_at: '',
+                    accounting_account_id: '',
                 };
+            },
+
+            /**
+             * Obtiene un listado de cuentas patrimoniales
+             *
+             * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            getAccountingAccounts() {
+                const vm = this;
+                vm.accounting_accounts = [];
+                axios.get(`${window.app_url}/accounting/accounts`).then(response => {
+                    if (response.data.records.length > 0) {
+                        vm.accounting_accounts.push({
+                            id:   '',
+                            text: 'Seleccione...'
+                        });
+                        $.each(response.data.records, function() {
+                            vm.accounting_accounts.push({
+                                id:   this.id,
+                                text: `${this.code} - ${this.denomination}`
+                            });
+                        });
+                    }
+                }).catch(error => {
+                    vm.logs('PayrollConceptsComponent', 258, error, 'getAccountingAccounts');
+                });
             },
             /**
              * Método que cambia el formato de visualización de la fecha
@@ -212,6 +250,7 @@
                 vm.record = recordEdit;
                 vm.record.finance_bank_id = vm.record.finance_banking_agency.finance_bank_id;
                 vm.record.ccc_number = recordEdit.ccc_number.substr(4);
+                vm.record.accounting_account_id = recordEdit.accounting_account_id; 
                 vm.record.opened_at = moment(vm.record.opened_at).add(1, 'days').format('YYYY-MM-DD');
                 setTimeout(() => {
                     vm.record.finance_banking_agency_id = vm.record.finance_banking_agency.id; 
@@ -258,6 +297,8 @@
             this.getAccountTypes();
         },
         mounted() {
+            const vm = this;
+            vm.getAccountingAccounts();
         }
     };
 </script>

@@ -251,7 +251,11 @@
 
         created() {
             //this.getPayrollStaffs((this.payroll_employment_id)?this.payroll_employment_id:'filter');
-            this.getPayrollSocioeconomic((this.payroll_employment_id)?this.payroll_employment_id:'filter');
+            if (this.payroll_socioeconomic_id) {
+                this.getPayrollSocioeconomic(this.payroll_socioeconomic_id);
+            } else {
+                this.getPayrollSocioeconomic('filter');
+            }
             this.getMaritalStatus();
             this.getPayrollSchoolingLevels();
             this.getPayrollDisabilities();

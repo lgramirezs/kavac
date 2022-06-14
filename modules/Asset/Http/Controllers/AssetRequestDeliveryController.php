@@ -92,6 +92,8 @@ class AssetRequestDeliveryController extends Controller
                 $asset = $requested->asset;
                 $asset->asset_status_id = 10;
                 $asset->save();
+                
+                //$requested->delete();
             }
         } elseif ($request->state == 'Rechazado') {
             $asset_request = AssetRequest::find($request->asset_request_id);

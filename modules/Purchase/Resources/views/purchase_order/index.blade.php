@@ -29,7 +29,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <purchase-order-direct-hire-list :records="{{ $records }}" route_edit="/purchase/direct_hire/{id}/edit" route_delete="/purchase/direct_hire" />
+                    <purchase-order-direct-hire-list 
+                        :records="{{ $records }}" 
+                        route_edit="/purchase/direct_hire/{id}/edit" 
+                        route_delete="/purchase/direct_hire" />
                 </div>
             </div>
         </div>
@@ -44,7 +47,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <purchase-order-list :records="{{ $records }}" route_edit="/purchase/purchase_order/{id}/edit" />
+                    <purchase-order-list 
+                        :records="{{ $records }}" 
+                        route_edit="/purchase/purchase_order/{id}/edit" />
                 </div>
             </div>
         </div>

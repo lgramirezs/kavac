@@ -274,15 +274,17 @@ class WarehouseController extends Controller
             $institution = Institution::where('active', true)->where('default', true)->first();
             $institution = $institution->id;
         }
-        $records = WarehouseInstitutionWarehouse::where('institution_id', $institution)->with('warehouse')->get();
-
+        /*$records = WarehouseInstitutionWarehouse::where('institution_id', $institution)->with('warehouse')->get();*/
+        $records = WarehouseInstitutionWarehouse::where('institution_id', $institution)->with(['warehouse' => function ($query) { $query->where('active', true)->get(); }])->get();
         /** Inicia la opción vacia por defecto */
         $options = (count($records) >= 1) ? [['id' => '', 'text' => 'Seleccione...']] : [];
 
         foreach ($records as $rec) {
-            $text = $rec->warehouse->name;
-            array_push($options, ['id' => $rec->id, 'text' => $text]);
+            if($rec->warehouse) {
+                $text = $rec->warehouse->name;
+                array_push($options, ['id' => $rec->id, 'text' => $text]);
+            }
         }
-        return $options;
+        return $options; 
     }
 }

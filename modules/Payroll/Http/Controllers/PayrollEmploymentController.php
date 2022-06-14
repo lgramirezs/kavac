@@ -48,7 +48,7 @@ class PayrollEmploymentController extends Controller
             'years_apn' => ['max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
-            'institution_email' => ['required', 'unique:payroll_employments,institution_email'],
+            'institution_email' => ['required', 'unique:payroll_employments,institution_email', 'email'],
             'function_description' => ['nullable'],
             'payroll_position_type_id' => ['required'],
             'payroll_position_id' => ['required'],
@@ -247,6 +247,9 @@ class PayrollEmploymentController extends Controller
         $request->institution_id ? $institution = Institution::whereId($request->institution_id)->first() : $this->validate($request, $this->rules, [], $this->attributes);
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
+        ];
+        $this->rules['institution_email'] = [
+            'required', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id, 'email'
         ];
         
         if ($request->start_date) {

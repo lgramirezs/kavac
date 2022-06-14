@@ -125,7 +125,7 @@ class AssetDisincorporationController extends Controller
         $assets = explode(",", $request->assets);
         foreach ($assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = null;
+            $asset->asset_status_id = 11;
             $asset->save();
             $asset_disincorporation = AssetDisincorporationAsset::create([
                 'asset_id' => $asset->id,
@@ -212,29 +212,27 @@ class AssetDisincorporationController extends Controller
         $disincorporation->observation = $request->observation;
         $disincorporation->save();
 
-        $update = now();
+        /** Se eliminan los demas elementos de la solicitud */
+        $assets_disincorporation = AssetDisincorporationAsset::where('asset_disincorporation_id', $disincorporation->id)
+            ->get();
+
+        foreach ($assets_disincorporation as $asset_disincorporation) {
+            $asset = Asset::find($asset_disincorporation->asset_id);
+            $asset->asset_status_id = 10;
+            $asset->save();
+
+            $asset_disincorporation->delete();
+        }
         /** Se agregan los nuevos elementos a la solicitud */
 
         foreach ($request->assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = null;
+            $asset->asset_status_id = 11;
             $asset->save();
-            $asset_disincorporation = AssetDisincorporationAsset::updateOrCreate([
+            $asset_disincorporation = AssetDisincorporationAsset::Create([
                     'asset_id' => $asset->id,
-                    'asset_disincorporation_id' => $disincorporation->id,
-                    'updated_at' => $update
-                ]);
-        }
-        /** Se eliminan los demas elementos de la solicitud */
-        $assets_disincorporation = AssetDisincorporationAsset::where('asset_disincorporation_id', $disincorporation->id)
-            ->where('updated_at', '!=', $update)->get();
+                    'asset_disincorporation_id' => $disincorporation->id]);
 
-        foreach ($assets_disincorporation as $asset_disincorporation) {
-            $asset = Asset::find($asset_disincorporation->asset_id);
-            $asset->asset_status_id = null;
-            $asset->save();
-
-            $asset_disincorporation->delete();
         }
 
         $request->session()->flash('message', ['type' => 'update']);

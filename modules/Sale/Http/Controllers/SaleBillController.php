@@ -55,10 +55,10 @@ class SaleBillController extends Controller
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        // $this->middleware('permission:sale.bill.list', ['only' => 'index']);
-        // $this->middleware('permission:sale.bill.create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:sale.bill.edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:sale.bill.delete', ['only' => 'destroy']);
+        $this->middleware('permission:sale.bill.list', ['only' => 'index']);
+        $this->middleware('permission:sale.bill.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale.bill.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sale.bill.delete', ['only' => 'destroy']);
 
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
