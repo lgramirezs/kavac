@@ -25,7 +25,7 @@
                </div>
                 <div class="col-3" id="helpAuxiliaryBookCurrency">
                     <div class=" col-12 is-required">
-                        <label class="control-label">Expresar en</label>
+                        <label class="control-label">Tipo de moneda</label>
                         <br><br>
                         <select2 :options="currencies" v-model="currency"></select2>
                     </div>

@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-3" id="helpDailyBookCurrency">
                     <div class="is-required">
-                        <label class="control-label">Expresar en</label>
+                        <label class="control-label">Tipo de moneda</label>
                         <select2 :options="currencies" v-model="currency"></select2>
                     </div>
                 </div>
