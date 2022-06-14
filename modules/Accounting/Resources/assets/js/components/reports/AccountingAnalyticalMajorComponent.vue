@@ -44,7 +44,7 @@
                 <div class="col-3">
                     <br>
                     <div class="col-12 is-required" id="helpAnaliticalMajorCurrency">
-                        <label class="control-label">Expresar en</label>
+                        <label class="control-label">Tipo de moneda</label>
                         <select2 :options="currencies" v-model="currency"></select2>
                     </div>
                     <div id="helpAnaliticalMajorAllAccount">
