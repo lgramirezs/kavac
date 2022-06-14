@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-3" :id="'help'+this.type_report+'Currency'">
                     <div class="form-group">
-                        <label class="is-required control-label">Expresar en</label>
+                        <label class="is-required control-label">Tipo de moneda</label>
                         <select2 :options="currencies" v-model="currency"></select2>
                     </div>
                 </div>
