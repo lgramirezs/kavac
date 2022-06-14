@@ -51,6 +51,33 @@ class DigitalSignatureRoleAndPermissionsTableSeeder extends Seeder
                 'model_prefix' => 'firma_electronica',
                 'slug_alt' => 'firma_electronica.acceso',
                 'short_description' => 'Acceder al módulo de Firma Electrónica'
+            ],
+            [
+                'name' => 'Cargar certificado digital p12',
+                'slug' => 'digitalsignature.store',
+                'description' => 'Cargar certificado digital p12',
+                'model' => '',
+                'model_prefix' => 'firma_electronica',
+                'slug_alt' => 'firma_electronica.carga',
+                'short_description' => 'Cargar certificado digital p12'
+            ],
+            [
+                'name' => 'Actualizar certificado digital p12',
+                'slug' => 'digitalsignature.update',
+                'description' => 'Actualizar certificado digital p12',
+                'model' => '',
+                'model_prefix' => 'firma_electronica',
+                'slug_alt' => 'firma_electronica.actualizar',
+                'short_description' => 'Actualizar certificado digital p12'
+            ],
+            [
+                'name' => 'Eliminar certificado digital p12 cargado',
+                'slug' => 'digitalsignature.destroy',
+                'description' => 'Eliminar certificado digital p12 cargado',
+                'model' => '',
+                'model_prefix' => 'firma_electronica',
+                'slug_alt' => 'firma_electronica.eliminar',
+                'short_description' => 'Eliminar certificado digital p12 cargado'
             ]
         ];
 
