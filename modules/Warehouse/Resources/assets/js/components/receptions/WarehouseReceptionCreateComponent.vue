@@ -423,7 +423,12 @@
                 axios.get('/warehouse/receptions/info/' + id).then(response => {
                     vm.record = response.data.records;
                     vm.record.institution_id = vm.record.warehouse_institution_warehouse_end.institution_id;
-                    vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
+                    const timeOpen = setTimeout(addWarehouseId, 1000);
+                    function addWarehouseId () {
+                        vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
+                        vm.getWarehouseProducts();
+                    }
+                    //vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
 
                     $.each(vm.record.warehouse_inventory_product_movements, function(index, campo) {
                         var atts = [];

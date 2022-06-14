@@ -140,7 +140,7 @@
 
                 </div>
             </div>
-            <div v-show="record.type_id == 3">
+            <div v-show="record.type == 3">
                 <div class="row" style="margin: 10px 0">
                     <div class="col-md-12">
                         <b>Información de contacto</b>

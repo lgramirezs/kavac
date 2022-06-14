@@ -28,7 +28,7 @@ Como antecedentes de esta aplicación se considera como precursor a [SAID - Sist
 
 Se requiere de un Sistema Operativo de 64 bits y la instalación de algunos paquetes para el correcto funcionamiento de la aplicación:
 
-    php >= 7.4.x
+    php >= 8.1.x
     php-gd
     php-mbstring
     php-xml

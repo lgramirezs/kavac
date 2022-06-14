@@ -125,7 +125,7 @@ class AssetDisincorporationController extends Controller
         $assets = explode(",", $request->assets);
         foreach ($assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = 12;
+            $asset->asset_status_id = 11;
             $asset->save();
             $asset_disincorporation = AssetDisincorporationAsset::create([
                 'asset_id' => $asset->id,
@@ -227,7 +227,7 @@ class AssetDisincorporationController extends Controller
 
         foreach ($request->assets as $asset_id) {
             $asset = Asset::find($asset_id);
-            $asset->asset_status_id = 12;
+            $asset->asset_status_id = 11;
             $asset->save();
             $asset_disincorporation = AssetDisincorporationAsset::Create([
                     'asset_id' => $asset->id,

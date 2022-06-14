@@ -1686,13 +1686,15 @@ export default {
             let recordEdit = vm.records.filter((rec) => {
                 return rec.id === data.id;
             })[0];
+
+            
             vm.record = JSON.parse(JSON.stringify(recordEdit));
-            vm.record.vacation_periods = JSON.parse(recordEdit.vacation_periods);
-            console.log(vm.record.vacation_periods);
 
             setTimeout(() => {
                 vm.record.vacation_days = recordEdit.vacation_days;        
-            }, 800);
+            }, 1000);
+
+            vm.record.vacation_periods = JSON.parse(recordEdit.vacation_periods);
 		},
     },
 };
