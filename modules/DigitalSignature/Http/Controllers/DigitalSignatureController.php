@@ -46,6 +46,8 @@ class DigitalSignatureController extends Controller
         $this->middleware('permission:digitalsignature.store', ['only' => 'store']);
         $this->middleware('permission:digitalsignature.update', ['only' => 'update']);
         $this->middleware('permission:digitalsignature.destroy', ['only' => 'destroy']);
+        $this->middleware('permission:digitalsignature.sign', ['only' => 'signFileApi']);
+        $this->middleware('permission:digitalsignature.verify', ['only' => 'verifySignApi']);
     }
 
     /**
@@ -550,7 +552,6 @@ class DigitalSignatureController extends Controller
          * @var comand: comando para realizar el proceso de firma
          * @var run: respuesta del proceso de firma electrónica
          */
-
 
         if(Auth::user()) { //usuario autenticado
 

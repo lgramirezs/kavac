@@ -78,6 +78,24 @@ class DigitalSignatureRoleAndPermissionsTableSeeder extends Seeder
                 'model_prefix' => 'firma_electronica',
                 'slug_alt' => 'firma_electronica.eliminar',
                 'short_description' => 'Eliminar certificado digital p12 cargado'
+            ],
+            [
+                'name' => 'Firmar electrónicamente un documento',
+                'slug' => 'digitalsignature.sign',
+                'description' => 'Firmar electrónicamente un documento',
+                'model' => '',
+                'model_prefix' => 'firma_electronica',
+                'slug_alt' => 'firma_electronica.sign',
+                'short_description' => 'Firmar electrónicamente un documento'
+            ],
+            [
+                'name' => 'Verificar la firma electrónica de un documento',
+                'slug' => 'digitalsignature.verify',
+                'description' => 'Verificar la firma electrónica de un documento',
+                'model' => '',
+                'model_prefix' => 'firma_electronica',
+                'slug_alt' => 'firma_electronica.verify',
+                'short_description' => 'Verificar la firma electrónica de un documento'
             ]
         ];
 
