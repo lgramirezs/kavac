@@ -7,34 +7,34 @@
 				</ul>
 			</div>
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-2" id="approved_at">
 					<div class="form-group is-required">
 						<label class="control-label" for="approved_at">Fecha de creación</label>
-						<input type="date" name="approved_at" id="approved_at" class="form-control input-sm"
+						<input type="date" name="approved_at" class="form-control input-sm"
 							   placeholder="dd/mm/YY" data-toggle="tooltip" v-model="record.approved_at"
 							   title="Fecha en la que se aprobó la modificación presupuestaria">
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" id="institution_id">
 					<div class="form-group is-required">
 						<label class="control-label" for="institution_id">Institución</label>
 						<select2 :options="institutions" v-model="record.institution_id"></select2>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" id="document">
 					<div class="form-group is-required">
 						<label class="control-label" for="document">Documento</label>
-						<input type="text" name="document" id="document" class="form-control input-sm"
+						<input type="text" name="document" class="form-control input-sm"
 							   placeholder="Nro. Documento" data-toggle="tooltip" v-model="record.document"
 							   title="Número del documento, decreto o misiva que avala la modificación presupuestaria">
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" id="description">
 					<div class="form-group is-required">
 						<label class="control-label" for="description">Descripción</label>
-						<input type="text" name="description" id="description" class="form-control input-sm"
+						<input type="text" name="description" class="form-control input-sm"
 							   placeholder="Descripción / Detalles" data-toggle="tooltip"
 							   title="Descripción o detalle de la modificación presupuestaria"
 							   v-model="record.description">
