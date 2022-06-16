@@ -23,7 +23,6 @@
 				<div class="card-header">
 					<h6 class="card-title">
 						{{ __('Listado de Créditos Adicionales') }}
-						@include('buttons.help')
 					</h6>
 					<div class="card-btns">
 						@include('buttons.previous', ['route' => url()->previous()])
