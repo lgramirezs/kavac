@@ -92,7 +92,34 @@ export default {
     },
     data() {
         return {
-            recordsAccounting: [],
+            recordsAccounting: [
+                { id: 1, entryAccountId: null, debit: 2863168.22, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 335.14, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 619.18, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 626.56, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 890.45, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 183980.80, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 66269.70, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 146587.00, assets: 0.00 },
+                { id: 1, entryAccountId: null, debit: 137640.29, assets: 0.00 },
+
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 265742.49 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 14567.80 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 4507.06 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 67605.86 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 3637.19 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 676.63 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 675.96 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 4235.60 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 1640.67 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 2027.17 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 36796.16 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 15181.61 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 36396.75 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 0.40 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 118685.59 },
+                { id: 1, entryAccountId: null, debit: 0.00, assets: 2827740.4 },
+            ],
             recordsBudget: [],
             rowsToDelete: [],
             columns: ['code', 'debit', 'assets', 'id'],
@@ -202,45 +229,44 @@ export default {
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
         validateErrors: function() {
-            /**
-             * se cargan los errores
-             */
+            const vm = this;
+            /** se cargan los errores */
             var errors = [];
             var res = false;
 
-            if (!this.data.date) {
+            if (!vm.data.date) {
                 errors.push('El campo fecha es obligatorio.');
                 res = true;
             }
-            if (!this.data.concept) {
+            if (!vm.data.concept) {
                 errors.push('El campo concepto ó descripción es obligatorio.');
                 res = true;
             }
-            if (!this.data.category) {
+            if (!vm.data.category) {
                 errors.push('El campo categoria es obligatorio.');
                 res = true;
             }
-            if (!this.data.institution_id) {
+            if (!vm.data.institution_id) {
                 errors.push('El campo institución es obligatorio.');
                 res = true;
             }
-            if (!this.data.currency_id) {
+            if (!vm.data.currency_id) {
                 errors.push('El tipo de moneda es obligatorio.');
                 res = true;
             }
-            if (this.recordsAccounting.length < 1) {
+            if (vm.recordsAccounting.length < 1) {
                 errors.push('No está permitido registrar asientos contables vacíos');
                 res = true;
             }
-            if (this.data.totDebit != this.data.totAssets) {
+            if (vm.addDecimals(vm.data.totDebit) != vm.addDecimals(vm.data.totAssets)) {
                 errors.push('El asiento no esta balanceado, Por favor verifique.');
                 res = true;
             }
-            if (this.data.totDebit < 0 || this.data.totAssets < 0) {
+            if (vm.addDecimals(vm.data.totDebit) < 0 || vm.addDecimals(vm.data.totAssets) < 0) {
                 errors.push('Los valores en la columna del DEBE y el HABER deben ser positivos.');
                 res = true;
             }
-            this.$refs.AccountingAccountsInForm.showAlertMessages(errors);
+            vm.$refs.AccountingAccountsInForm.showAlertMessages(errors);
             return res;
         },
 
@@ -345,21 +371,14 @@ export default {
          */
         storeEntry() {
             const vm = this;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
-            // vm.data.category = vm.$parent.data.category;
 
             if (vm.validateErrors()) {
                 return;
             }
 
             vm.data['currency_id'] = vm.data.currency.id;
-            vm.data['tot'] = vm.data.totDebit;
-            vm.data['tot_confirmation'] = vm.data.totAssets;
+            vm.data['tot'] = vm.addDecimals(vm.data.totDebit);
+            vm.data['tot_confirmation'] = vm.addDecimals(vm.data.totAssets);
             vm.data['accountingAccounts'] = vm.recordsAccounting;
 
             vm.loading = true;
