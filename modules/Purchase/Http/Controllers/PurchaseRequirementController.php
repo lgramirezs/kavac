@@ -150,7 +150,9 @@ class PurchaseRequirementController extends Controller
 		]);
 
 		$data = $request->all();
+
 		$data['action'] = 'create';
+
 		PurchaseManageRequirements::dispatch($data);
 		return response()->json(['message'=>'success'], 200);
 	}
