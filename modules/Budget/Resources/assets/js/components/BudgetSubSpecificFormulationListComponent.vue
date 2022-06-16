@@ -46,7 +46,7 @@
 			this.table_options.headings = {
 				'code': 'Código',
 				'year': 'Año',
-				'specific_action': 'Acc. Especifica',
+				'specific_action': 'Acc. Específica',
 				'total_formulated': 'Total Formulado',
 				'assigned': 'Asignado',
 				'id': 'Acción'
