@@ -171,8 +171,37 @@ class WarehouseReportController extends Controller
                         );
                     }
                 ]
-            );
-            
+            )->whereHas('warehouseRequest', function ($query) use ($request) {
+                    if ($request->institution_id) {
+                        $query->whereHas('department', function ($q) use ($request) {
+                            $q->where('institution_id', $request->institution_id);
+                        });
+                    }
+                    if ($request->department_id) {
+                        $query->where('department_id', $request->department_id);
+                    }
+                    if ($request->payroll_staff_id) {
+                        $query->whereNotNull('payroll_staff_id')
+                          ->where('payroll_staff_id', $request->payroll_staff_id);
+                    }
+                    if ($request->budget_specific_action_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                          ->where('budget_specific_action_id', $request->budget_specific_action_id);
+                    }
+                    if ($request->budget_project_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                        ->whereHas('budgetSpecificAction', function ($q) use ($request) {
+                            $q->where('specificable_id', $request->budget_project_id);
+                        });
+                    }
+                    if ($request->budget_centralized_action_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                        ->whereHas('budgetSpecificAction', function ($q) use ($request) {
+                            $q->where('specificable_id', $request->budget_centralized_action_id);
+                        });
+                    }
+                });
+
             if ($request->type_search == "date") {
                 if (!is_null($request->start_date)) {
                     if (!is_null($request->end_date)) {
@@ -306,7 +335,6 @@ class WarehouseReportController extends Controller
             }
         } elseif ($request->current == "request-products") {
 
-
             $fields = WarehouseInventoryProductRequest::with(
                 [
                     'warehouseInventoryProduct' => function ($query) {
@@ -328,12 +356,80 @@ class WarehouseReportController extends Controller
                         $query->with(
                             'institution',
                             'department',
-                            'budgetSpecificAction'
+                            'budgetSpecificAction',
+                            'payrollStaff'
                         );
                     }
                 ]
-            );
+            )->whereHas('warehouseRequest', function ($query) use ($request) {
+                    if ($request->institution_id) {
+                        $query->whereHas('department', function ($q) use ($request) {
+                            $q->where('institution_id', $request->institution_id);
+                        });
+                    }
+                    if ($request->department_id) {
+                        $query->where('department_id', $request->department_id);
+                    }
+                    if ($request->payroll_staff_id) {
+                        $query->whereNotNull('payroll_staff_id')
+                          ->where('payroll_staff_id', $request->payroll_staff_id);
+                    }
+                    if ($request->budget_specific_action_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                          ->where('budget_specific_action_id', $request->budget_specific_action_id);
+                    }
+                    if ($request->budget_project_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                        ->whereHas('budgetSpecificAction', function ($q) use ($request) {
+                            $q->where('specificable_id', $request->budget_project_id);
+                        });
+                    }
+                    if ($request->budget_centralized_action_id) {
+                        $query->whereNotNull('budget_specific_action_id')
+                        ->whereHas('budgetSpecificAction', function ($q) use ($request) {
+                            $q->where('specificable_id', $request->budget_centralized_action_id);
+                        });
+                    }
+                });
 
+            if ($request->type_search == "date") {
+                if (!is_null($request->start_date)) {
+                    if (!is_null($request->end_date)) {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                $request->end_date
+                            ]
+                        );
+                    } else {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                now()
+                            ]
+                        );
+                    }
+                }
+            }
+
+            if ($request->type_search == "mes") {
+
+                if (!is_null($request->mes_id)) {
+                    if (!is_null($request->year)) {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        )->whereYear('created_at', $request->year);
+                    } else {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        );
+                    }
+                }
+            }
         /*
         Revisar filtros
             whereHas
@@ -381,9 +477,16 @@ class WarehouseReportController extends Controller
         /*
          *  Definicion de las caracteristicas generales de la página
          */
-        $body = ($report->type_report == 'stocks')
-                    ? 'warehouse::pdf.warehouse-report-stocks'
-                    : 'warehouse::pdf.warehouse-report-product';
+        if ($report->type_report == 'stocks') {
+            $body = 'warehouse::pdf.warehouse-report-stocks';
+        }
+        if ($report->type_report == 'inventory-products') {
+            $body = 'warehouse::pdf.warehouse-report-product';
+        }
+        if ($report->type_report == 'request-products') {
+            $body = 'warehouse::pdf.warehouse-report-request';
+        }
+
         $pdf->setConfig(
             [
                 'institution' => $institution,

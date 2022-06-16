@@ -236,17 +236,17 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         'CurrencyController@getCurrencyInfo'
     )->name('currency.info');
 
-    /** Ruta para obtener datos de selecs dependientes dinámicamente */
+    /** Ruta para obtener datos de selects dependientes dinámicamente */
     Route::get(
         'get-select-data/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
         'CommonController@getSelectData'
     )->name('get-select-data');
-        /** Ruta para obtener datos de selecs dependientes dinámicamente sin que ordene por el nombre*/
+        /** Ruta para obtener datos de selects dependientes dinámicamente sin que ordene por el nombre*/
     Route::get(
         'get-select-data-custom/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
         'CommonController@getSelectDataCustom'
     )->name('get-select-data-custom');
-/** Ruta para obtener datos de selecs dependientes dinámicamente sin que ordene por el nombre y discriminando que sean atributos activos*/
+/** Ruta para obtener datos de selects dependientes dinámicamente sin que ordene por el nombre y discriminando que sean atributos activos*/
 Route::get(
     'get-select-data-active/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
     'CommonController@getSelectActive'
@@ -362,7 +362,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Services'], 
         Route::get('readed', 'NotificationsController@getReaded');
         /** Obtiene todas las notificaciones del usuario */
         Route::get('all', 'NotificationsController@getAll');
-        /** Mustra el listado de notificaciones */
+        /** Muestra el listado de notificaciones */
         Route::get('list', 'NotificationsController@show')->name('notifications.list');
         /** Marca una notificación como leída o no leída */
         Route::post('mark', 'NotificationsController@mark');

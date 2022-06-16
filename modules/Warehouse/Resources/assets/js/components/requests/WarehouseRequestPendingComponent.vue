@@ -105,7 +105,7 @@
 				const vm = this;
 				var id = $(".modal-body #id").val();
 				if(typeof(url) != 'undefined'){
-					axios.put(url + id, vm.record).then(response => {
+					axios.patch(url + id, vm.record).then(response => {
 						if (typeof(response.data.redirect) !== "undefined")
 							location.href = response.data.redirect;
 					}).catch(error => {
