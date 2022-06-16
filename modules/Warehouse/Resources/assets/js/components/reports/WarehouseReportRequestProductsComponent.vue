@@ -28,8 +28,8 @@
                 <div class="col-md-12">
                     <strong>Filtros</strong>
                 </div>
-                <div class="col-md-6" id="helpWarehouseRequestProject">
-                    <div class=" form-group is-required">
+                <div class="col-md-4" id="helpWarehouseRequestProject">
+                    <div class=" form-group">
                         <label class="mb-4">
                             <div class="bootstrap-switch-mini">
                                 <input type="radio" name="project_centralized_action" value="project" id="sel_project"
@@ -38,13 +38,15 @@
                                 Proyecto
                             </div>
                         </label>
-                        <select2 :options="budget_projects" id="budget_project_id" @input="getBudgetSpecificActions('Project')" disabled
-                            v-model="record.budget_project_id"></select2>
+                        <div v-if="show_case_project" class="is-required">
+                            <select2 :options="budget_projects" id="budget_project_id" @input="getBudgetSpecificActions('Project')"
+                                v-model="record.budget_project_id"></select2>
+                        </div>
 
                     </div>
                 </div>
-                <div class="col-md-6" id="helpWarehouseRequestCentralizedAction">
-                    <div class=" form-group is-required">
+                <div class="col-md-4" id="helpWarehouseRequestCentralizedAction">
+                    <div class=" form-group">
                         <label class="mb-4">
                             <div class="bootstrap-switch-mini">
                                 <input type="radio" name="project_centralized_action" value="project"
@@ -53,11 +55,29 @@
                                 Acción Centralizada
                             </div>
                         </label>
-                        <select2 :options="budget_centralized_actions" id="budget_centralized_action_id" @input="getBudgetSpecificActions('CentralizedAction')" disabled
-                            v-model="record.budget_centralized_action_id"></select2>
+                        <div v-if="show_case_cent_acc" class="is-required">
+                            <select2 :options="budget_centralized_actions" id="budget_centralized_action_id" @input="getBudgetSpecificActions('CentralizedAction')"
+                                v-model="record.budget_centralized_action_id"></select2>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-12" id="helpWarehouseRequestSpecificAction">
+                <div class="col-md-4" id="helpWarehouseRequestStaff">
+                    <div class=" form-group">
+                        <label class="mb-4">
+                            <div class="bootstrap-switch-mini">
+                                <input type="radio" name="project_centralized_action" value="project"
+                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
+                                       id="sel_staff" data-on-label="SI" data-off-label="NO">
+                                Solicitante
+                            </div>
+                        </label>
+                        <div v-if="show_case_staff" class="is-required">
+                            <select2 :options="payroll_staffs" id="budget_centralized_action_id"
+                                v-model="record.payroll_staff_id"></select2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="helpWarehouseRequestSpecificAction" v-if="show_case_project || show_case_cent_acc">
                     <div class=" form-group is-required">
                         <label>Acción Específica</label>
                         <select2 :options="budget_specific_actions" id="budget_specific_action_id"
@@ -241,6 +261,7 @@
                     budget_project_id: '',
                     budget_centralized_action_id: '',
                     budget_specific_action_id: '',
+                    payroll_staff_id: '',
 
                     type_search: '',
                     department_id: '',
@@ -251,6 +272,9 @@
                     start_date: '',
                     end_date: ''
                 },
+                show_case_project: false,
+                show_case_cent_acc: false,
+                show_case_staff: false,
                 records: [],
                 errors: [],
                 columns: ['code', 'description', 'inventory'],
@@ -258,6 +282,7 @@
                 budget_projects: [],
                 budget_centralized_actions: [],
                 budget_specific_actions: [],
+                payroll_staffs: [],
                 mes: [
                     {"id":"","text":"Todos"},
                     {"id":1,"text":"Enero"},
@@ -285,6 +310,7 @@
                     budget_project_id: '',
                     budget_centralized_action_id: '',
                     budget_specific_action_id: '',
+                    payroll_staff_id: '',
 
                     type_search: '',
                     department_id: '',
@@ -372,26 +398,41 @@
 
         },
         mounted() {
-            this.switchHandler('type_search');
-            this.getInstitutions();
-            this.getBudgetProjects();
-            this.getBudgetCentralizedActions();
-            //this.loadInventoryProduct('request-products');
+            const vm = this;
+            vm.switchHandler('type_search');
+            vm.getInstitutions();
+            vm.getBudgetProjects();
+            vm.getBudgetCentralizedActions();
+            vm.getPayrollStaffs();
+            //vm.loadInventoryProduct('request-products');
             /**
              * Evento para determinar los datos a requerir según el tipo de formulación
              * (por proyecto o acción centralizada)
              */
             $('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
-                $('#budget_project_id').attr('disabled', (e.target.id!=="sel_project"));
-                $('#budget_centralized_action_id').attr('disabled', (e.target.id!=="sel_centralized_action"));
-
                 if (e.target.id === "sel_project") {
-                    $("#budget_centralized_action_id").closest('.form-group').removeClass('is-required');
-                    $("#budget_project_id").closest('.form-group').addClass('is-required');
+                    vm.show_case_project = true;
+                    vm.show_case_cent_acc = false;
+                    vm.show_case_staff = false;
+                    vm.record.budget_centralized_action_id = '';
+                    vm.record.budget_specific_action_id = '';
+                    vm.record.payroll_staff_id = '';
                 }
                 else if (e.target.id === "sel_centralized_action") {
-                    $("#budget_centralized_action_id").closest('.form-group').addClass('is-required');
-                    $("#budget_project_id").closest('.form-group').removeClass('is-required');
+                    vm.show_case_project = false;
+                    vm.show_case_staff = false;
+                    vm.show_case_cent_acc = true;
+                    vm.record.budget_project_id = '';
+                    vm.record.budget_specific_action_id = '';
+                    vm.record.payroll_staff_id = '';
+                }
+                else if (e.target.id === "sel_staff") {
+                    vm.show_case_project = false;
+                    vm.show_case_cent_acc = false;
+                    vm.show_case_staff = true;
+                    vm.record.budget_project_id = '';
+                    vm.record.budget_specific_action_id = '';
+                    vm.record.budget_centralized_action_id = '';
                 }
             });
         }
