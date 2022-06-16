@@ -39,7 +39,8 @@ class AssetStatusTableSeeder extends Seeder
             ['name' => 'En Desuso por Obsolescencia'],
             ['name' => 'En Desuso por Inservibilidad'],
             ['name' => 'En Desuso por Obsolescencia e Inservilidad'],
-            ['name' => 'En almacen o Depósito para su Asignación']
+            ['name' => 'En almacen o Depósito para su Asignación'],
+            ['name' => 'Desincorporado']
 
         ];
 

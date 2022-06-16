@@ -8,11 +8,13 @@
 <br>
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th style="font-size: 9rem;" width="20%" align="center">ACCION/PROYECTO</th>
-        <th style="font-size: 9rem;" width="20%" align="center">ACCION ESPECIFICA</th>
-        <th style="font-size: 9rem;" width="20%" align="center">CODIGO</th>
-        <th style="font-size: 9rem;" width="20%" align="center">DENOMINACION</th>
-        <th style="font-size: 9rem;" width="20%" align="center">DISPONIBILIDAD PRESUPUESTARIA AL DIA:
+        <th style="font-size: 9rem;" width="14.1%" align="center">ACCION/PROYECTO</th>
+        <th style="font-size: 9rem;" width="14.1%" align="center">ACCION ESPECIFICA</th>
+        <th style="font-size: 9rem;" width="14.1%" align="center">CODIGO</th>
+        <th style="font-size: 9rem;" width="14.1%" align="center">DENOMINACION</th>
+        <th style="font-size: 9rem;" width="14.5%" align="center">PROGRAMADO</th>
+        <th style="font-size: 9rem;" width="14.5%" align="center">COMPROMETIDO</th>
+        <th style="font-size: 9rem;" width="15%" align="center">DISPONIBILIDAD PRESUPUESTARIA AL DIA:
             {{ $report_date }}</th>
     </tr>
 </table>
@@ -30,13 +32,17 @@
             @endphp
             <tr>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ $budgetAccounts["project_code"] }}</td>
+                    {{ $budgetAccounts['project_code'] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ $budgetAccounts["specific_action_code"] }}</td>
+                    {{ $budgetAccounts['specific_action_code'] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
                     {{ $budgetAccount['budgetAccount']['code'] }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}">
                     {{ $budgetAccount['budgetAccount']['denomination'] }}</td>
+                <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
+                    {{ 'Programado' }}</td>
+                <td style="font-size: 9rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
+                    {{ 'Comprometido' }}</td>
                 <td style="font-size: 9rem; border-bottom: 1px solid #999;" align="center">
                     {{ $budgetAccount['amount_available'] . ' ' . $currencySymbol }}</td>
             </tr>

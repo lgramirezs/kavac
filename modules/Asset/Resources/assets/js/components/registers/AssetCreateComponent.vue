@@ -392,9 +392,10 @@
 				const vm = this;
 				vm.asset_status = [];
 				axios.get(`${window.app_url}/asset/get-status`).then(response => {
-					vm.asset_status = response.data;
+					vm.asset_status = response.data.filter((item) => item.id !== 11);
 				});
 			},
+			
 			/**
 			 * Obtiene los datos de las funciones de uso de los bienes institucionales
 			 *

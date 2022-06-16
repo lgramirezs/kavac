@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-3" id="helpCheckupBalanceCurrency">
                     <div class="form-group">
-                        <label class="control-label"><strong>Expresar en</strong></label>
+                        <label class="is-required control-label"><strong>Tipo de moneda</strong></label>
                         <div class="mt-4">
                             <select2 :options="currencies" v-model="currency"></select2>
                         </div>

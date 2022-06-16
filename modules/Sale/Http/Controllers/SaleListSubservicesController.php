@@ -27,15 +27,13 @@ class SaleListSubservicesController extends Controller
      * Define la configuración de la clase
      *
      * @author Miguel Narvaez <mnarvaez@cenditel.gob.ve>
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
      */
 
     public function __construct()
     {
-        /** Establece permisos de acceso para cada método del controlador *//*
-        $this->middleware('permission:sale.payment.method.list', ['only' => 'index']);
-        $this->middleware('permission:sale.payment.method.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sale.payment.method.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sale.payment.method.delete', ['only' => 'destroy']);*/
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.setting.subservices', ['only' => 'index']);
     }
 
     /**

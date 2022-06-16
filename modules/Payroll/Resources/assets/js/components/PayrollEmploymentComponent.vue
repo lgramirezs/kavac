@@ -547,7 +547,6 @@
         created() {
             this.record.active = true;
             this.record.previous_jobs = [];
-            this.getPayrollStaffs((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             this.getPayrollInactivityTypes();
             this.getPayrollPositionTypes();
             this.getPayrollPositions();
@@ -555,6 +554,11 @@
             this.getPayrollContractTypes();
             this.getInstitutions();
             this.getPayrollSectorTypes()
+            if (this.payroll_employment_id) {
+                this.getPayrollStaffs(this.payroll_employment_id);
+            } else {
+                this.getPayrollStaffs('filter');
+            }
         },
         mounted() {
             if(this.payroll_employment_id) {

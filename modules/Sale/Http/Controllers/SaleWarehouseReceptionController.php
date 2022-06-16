@@ -41,12 +41,11 @@ class SaleWarehouseReceptionController extends Controller
     public function __construct()
     {
 
-        /** Establece permisos de acceso para cada método del controlador 
-        $this->middleware('permission:sale.movement.list', ['only' => 'index']);
-        $this->middleware('permission:sale.movement.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sale.movement.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sale.movement.delete', ['only' => 'destroy']);
-        */
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.warehouse.reception.list', ['only' => 'index']);
+        $this->middleware('permission:sale.warehouse.reception.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale.warehouse.reception.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sale.warehouse.reception.delete', ['only' => 'destroy']);
     }
 
     /**

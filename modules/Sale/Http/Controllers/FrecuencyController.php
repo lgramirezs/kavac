@@ -27,16 +27,13 @@ class FrecuencyController extends Controller
      * Define la configuración de la clase
      *
      * @author PHD. Juan Vizcarrondo <jvizcarrondo@cenditel.gob.ve> | <juanvizcarrondo@gmail.com>
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
      */
+
     public function __construct()
     {
         /** Establece permisos de acceso para cada método del controlador */
-        /*
-        $this->middleware('permission:sale.setting.frecuency.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sale.setting.frecuency.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sale.setting.frecuency.delete', ['only' => 'destroy']);
-        $this->middleware('permission:sale.setting.frecuency.list', ['only' => 'index']);
-        */
+        $this->middleware('permission:sale.setting.frecuency', ['only' => 'index']);
     }
 
     /**

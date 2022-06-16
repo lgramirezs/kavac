@@ -28,10 +28,27 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>
  */
-
 class DigitalSignatureController extends Controller
 {
-     use ValidatesRequests;
+    use ValidatesRequests;
+
+    /**
+     * Define la configuración inicial de la clase.
+     *
+     * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+     */
+    public function __construct()
+    {
+        /**
+         * Establece permisos de acceso para cada método del controlador
+         */
+        $this->middleware('permission:digitalsignature.index', ['only' => 'index']);
+        $this->middleware('permission:digitalsignature.store', ['only' => 'store']);
+        $this->middleware('permission:digitalsignature.update', ['only' => 'update']);
+        $this->middleware('permission:digitalsignature.destroy', ['only' => 'destroy']);
+        $this->middleware('permission:digitalsignature.sign', ['only' => 'signFileApi']);
+        $this->middleware('permission:digitalsignature.verify', ['only' => 'verifySignApi']);
+    }
 
     /**
      * Muestra la ventana principal del módulo Digital signature
@@ -57,19 +74,19 @@ class DigitalSignatureController extends Controller
             $cert = openssl_x509_parse($certuser);
             $fecha = date('d-m-y H:i:s', $cert['validFrom_time_t']);
 
-            return view('digitalsignature::index', ['Identidad' => $cert['subject']['CN'],
-                                                    'Verificado' => $cert['issuer']['CN'],
-                                                    'Caduca' => $fecha,
-                                                    'cert' => 'true',
-                                                    'certdetail' => 'false'
-                                                   ]
-            );
+            return view('digitalsignature::index', [
+                'Identidad' => $cert['subject']['CN'],
+                'Verificado' => $cert['issuer']['CN'],
+                'Caduca' => $fecha,
+                'cert' => 'true',
+                'certdetail' => 'false'
+            ]);
         }
-        return view('digitalsignature::index',['informacion' => 'No posee un certificado firmante',
-                                               'cert' => 'false',
-                                               'certdetail' => 'false'
-                                              ]
-        );
+        return view('digitalsignature::index',[
+            'informacion' => 'No posee un certificado firmante',
+            'cert' => 'false',
+            'certdetail' => 'false'
+        ]);
     }
 
     /**
@@ -535,7 +552,6 @@ class DigitalSignatureController extends Controller
          * @var comand: comando para realizar el proceso de firma
          * @var run: respuesta del proceso de firma electrónica
          */
-
 
         if(Auth::user()) { //usuario autenticado
 

@@ -48,6 +48,12 @@ class SaleServiceController extends Controller
      */
     public function __construct()
     {
+        /** Establece permisos de acceso para cada método del controlador */
+        $this->middleware('permission:sale.service.list', ['only' => 'index']);
+        $this->middleware('permission:sale.service.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale.service.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sale.service.delete', ['only' => 'destroy']);
+
         /** Define las reglas de validación para el formulario */
         $this->validateRules = [
             'sale_client_id'          => ['required'],

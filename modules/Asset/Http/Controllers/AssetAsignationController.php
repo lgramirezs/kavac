@@ -174,7 +174,16 @@ class AssetAsignationController extends Controller
         $asignation->location_place = $request->location_place;
         $asignation->save();
 
-        $update = now();
+        /** Se eliminan los demas elementos de la solicitud */
+        $assets_asignation = AssetAsignationAsset::where('asset_asignation_id', $asignation->id)->get();
+
+        foreach ($assets_asignation as $asset_asignation) {
+            $asset = Asset::find($asset_asignation->asset_id);
+            $asset->asset_status_id = 10;
+            $asset->save();
+
+            $asset_asignation->delete();
+        }
         /** Se agregan los nuevos elementos a la solicitud */
         foreach ($request->assets as $asset_id) {
             $asset = Asset::find($asset_id);
@@ -189,19 +198,7 @@ class AssetAsignationController extends Controller
             $asset_asignation = AssetAsignationAsset::updateOrCreate([
                 'asset_id' => $asset->id,
                 'asset_asignation_id' => $asignation->id,
-                'updated_at' => $update
             ]);
-        }
-        /** Se eliminan los demas elementos de la solicitud */
-        $assets_asignation = AssetAsignationAsset::where('asset_asignation_id', $asignation->id)
-            ->where('updated_at', '!=', $update)->get();
-
-        foreach ($assets_asignation as $asset_asignation) {
-            $asset = Asset::find($asset_asignation->asset_id);
-            $asset->asset_status_id = 1;
-            $asset->save();
-
-            $asset_asignation->delete();
         }
 
         $request->session()->flash('message', ['type' => 'update']);

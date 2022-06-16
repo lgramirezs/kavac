@@ -403,7 +403,7 @@ class WarehouseReportController extends Controller
                 'fields' => $fields->get()
             ]
         );
-        $url = '/warehouse/reports/show/' . $report->code;
+        $url = route('warehouse.report.show', ['code' => $report->code]);
         return response()->json(['result' => true, 'redirect' => $url], 200);
     }
 

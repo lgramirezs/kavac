@@ -19,16 +19,18 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" v-if="record.id == ''">
                 <div class="col-md-12">
                     <b>Seleccione el destino de los insumos</b>
                 </div>
-
                 <div class="col-md-4" id="helpInstitution">
                     <div class="form-group is-required">
                         <label>Nombre de la organización:</label>
-                        <select2 :options="institutions" @input="getWarehouses"
-                        v-model="record.institution_id"></select2>
+                        <select2 
+                            :options="institutions" 
+                            @input="getWarehouses"
+                            v-model="record.institution_id"> 
+                        </select2>
                         <input type="hidden" v-model="record.id">
                     </div>
                 </div>
@@ -36,8 +38,37 @@
                 <div class="col-md-4" id="helpWarehouse">
                     <div class="form-group is-required">
                         <label>Nombre del almacén:</label>
-                        <select2 :options="warehouses" @input="getWarehouseProducts"
-                        v-model="record.warehouse_id"></select2>
+                        <select2 
+                            :options="warehouses" 
+                            @input="getWarehouseProducts"
+                            v-model="record.warehouse_id"> 
+                        </select2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" v-if="record.id != ''">
+                <div class="col-md-12">
+                    <b>Seleccione el destino de los insumos</b>
+                </div>
+                <div class="col-md-4" id="helpInstitution">
+                    <div class="form-group is-required">
+                        <label>Nombre de la organización:</label>
+                        <select2 
+                            :options="institutions"
+                            v-model="record.institution_id"> 
+                        </select2>
+                        <input type="hidden" v-model="record.id">
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="helpWarehouse">
+                    <div class="form-group is-required">
+                        <label>Nombre del almacén:</label>
+                        <select2 
+                            :options="warehouses"
+                            v-model="record.warehouse_id"> 
+                        </select2>
                     </div>
                 </div>
             </div>
@@ -249,7 +280,7 @@
 
             },
 
-            getWarehouses() {
+            /*getWarehouses() {
                 const vm = this;
                 vm.warehouses = [];
 
@@ -258,7 +289,7 @@
                         vm.warehouses = response.data;
                     });
                 }
-            },
+            }, */
 
             getWarehouseProducts() {
                 const vm = this;
@@ -392,7 +423,12 @@
                 axios.get('/warehouse/receptions/info/' + id).then(response => {
                     vm.record = response.data.records;
                     vm.record.institution_id = vm.record.warehouse_institution_warehouse_end.institution_id;
-                    vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
+                    const timeOpen = setTimeout(addWarehouseId, 1000);
+                    function addWarehouseId () {
+                        vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
+                        vm.getWarehouseProducts();
+                    }
+                    //vm.record.warehouse_id = vm.record.warehouse_institution_warehouse_end.warehouse_id;
 
                     $.each(vm.record.warehouse_inventory_product_movements, function(index, campo) {
                         var atts = [];

@@ -388,11 +388,12 @@ $(document).ready(function() {
     /** Evento que permite mostrar datos sobre la aplicación (acerca de) */
     $('.about_app').on('click', function(e) {
         e.preventDefault();
+        const d = new Date();
         const appInfo = new AppInfo([
             {
                 name: 'Roldan Vargas',
                 email: 'rvargas@cenditel.gob.ve | roldandvg@gmail.com',
-                group: 'Lider de proyecto / Diseño / Desarrollo / Autor / Director de Desarrollo (2021)'
+                group: `Lider de proyecto / Diseño / Desarrollo / Autor / Director de Desarrollo (2021 - ${d.getFullYear()})`
             },
             {
                 name: 'Cipriano Alvarado',
@@ -437,6 +438,16 @@ $(document).ready(function() {
             {
                 name: 'Kleivymar Montilla',
                 email: 'kmontilla@cenditel.gob.ve',
+                group: 'Analistas'
+            },
+            {
+                name: 'Alberto Gil',
+                email: 'rgil@cenditel.gob.ve',
+                group: 'Analistas'
+            },
+            {
+                name: 'María Morales',
+                email: 'mmorales@cenditel.gob.ve',
                 group: 'Analistas'
             },
             {
@@ -492,6 +503,21 @@ $(document).ready(function() {
             {
                 name: 'Miguel Narváez',
                 email: 'mnarvaez@cenditel.gob.ve',
+                group: 'Desarrolladores'
+            },
+            {
+                name: 'Francisco Ruiz',
+                email: 'fruiz@cenditel.gob.ve',
+                group: 'Desarrolladores'
+            },
+            {
+                name: 'Francisco Escala',
+                email: 'fescala@cenditel.gob.ve',
+                group: 'Desarrolladores'
+            },
+            {
+                name: 'José Briceño',
+                email: 'jbriceno@cenditel.gob.ve',
                 group: 'Desarrolladores'
             },
             {

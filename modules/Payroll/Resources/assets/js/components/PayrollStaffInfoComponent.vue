@@ -130,7 +130,17 @@
                                         <strong>¿Posee discapacidad?</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ record.payroll_disability == true ? 'Si' : 'No' }}
+                                                {{ record.has_disability == true ? 'Si' : 'No' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="record.has_disability == true" class="col-md-4">
+                                    <div class="form-group">
+                                        <strong>Discapacidad</strong>
+                                        <div class="row" style="margin: 1px 0">
+                                            <span class="col-md-12">
+                                                {{ record.payroll_disability ? record.payroll_disability.name : '' }}
                                             </span>
                                         </div>
                                     </div>
@@ -170,7 +180,7 @@
                                         <strong>Historial médico:</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ record.medical_history }}
+                                                <span v-html="record.medical_history"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -240,6 +250,42 @@
                                             <div class="row" style="margin: 1px 0">
                                                 <span class="col-md-12">
                                                     {{ uniform_size.size }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div>
+                            <h6 class="text-center">Teléfonos del trabajador</h6><br>
+                                <div v-for="phone in record.phones" class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <strong>Tipo de teléfono:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ phone.type }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <strong>Número de teléfono:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ phone.area_code + ' ' + phone.number }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <strong>Extensión telefónica:</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12">
+                                                    {{ phone.extension }}
                                                 </span>
                                             </div>
                                         </div>
