@@ -198,16 +198,11 @@
                                             <!-- escalafón horizontal -->
                                             <div class="form-group is-required">
                                                 <label>Escalafón horizontal:</label>
-                                                <select id="payroll_horizontal_salary_scale"
+                                                <select2 :id="record.payroll_horizontal_salary_scale_id + '_h'"
                                                         class="form-control select2"
                                                         @change="isDisable('horizontal');loadSalaryScales('horizontal')"
-                                                        v-model="record.payroll_horizontal_salary_scale_id">
-                                                    <option v-for="option in payroll_horizontal_salary_scales"
-                                                            :id="option.id + '_h'" :value="option.id" 
-                                                            :key="option.id">
-                                                        {{ option.text }}
-                                                    </option>
-                                                </select>
+                                                        v-model="record.payroll_horizontal_salary_scale_id" :options="payroll_horizontal_salary_scales">
+                                                </select2>
                                             </div>
                                             <!-- ./escalafón horizontal -->
                                         </div>
@@ -215,16 +210,11 @@
                                             <!-- escalafón vertical -->
                                             <div class="form-group is-required">
                                                 <label>Escalafón vertical:</label>
-                                                <select id="payroll_vertical_salary_scale"
+                                                <select2 :id="record.payroll_vertical_salary_scale_id + '_v'"
                                                         class="form-control select2"
                                                         @change="isDisable('vertical');loadSalaryScales('vertical')"
-                                                        v-model="record.payroll_vertical_salary_scale_id">
-                                                    <option v-for="option in payroll_vertical_salary_scales"
-                                                            :id="option.id + '_v'" :value="option.id" 
-                                                            :key="option.id">
-                                                        {{ option.text }}
-                                                    </option>
-                                                </select>
+                                                        v-model="record.payroll_vertical_salary_scale_id" :options="payroll_vertical_salary_scales">
+                                                </select2>
                                             </div>
                                             <!-- ./escalafón vertical -->
                                         </div>
@@ -873,6 +863,17 @@
                 })[0])) || vm.reset();
 
                 vm.record = recordEdit;
+
+                const timeOpen = setTimeout(addScaleId, 1000);
+                function addScaleId () {
+                    vm.record.payroll_horizontal_salary_scale_id = recordEdit.payroll_horizontal_salary_scale_id ?
+                                                                   recordEdit.payroll_horizontal_salary_scale_id.toString() :
+                                                                   '';
+                    vm.record.payroll_vertical_salary_scale_id = recordEdit.payroll_vertical_salary_scale_id ?
+                                                                 recordEdit.payroll_vertical_salary_scale_id.toString() :
+                                                                 '';
+                }
+
                 vm.edit   = true;
                 vm.payroll_salary_scale_v = (vm.record.payroll_vertical_salary_scale)
                                                 ? vm.record.payroll_vertical_salary_scale
