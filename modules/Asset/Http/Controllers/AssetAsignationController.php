@@ -287,7 +287,7 @@ class AssetAsignationController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList()
+    public function vueList($perPage = 10, $page = 1)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -295,11 +295,22 @@ class AssetAsignationController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetAsignations = AssetAsignation::with('payrollStaff')->get();
+            $assetAsignations = AssetAsignation::with('payrollStaff');
         } else {
             $assetAsignations = AssetAsignation::where('institution_id', $institution_id)
                 ->with('payrollStaff')->get();
         }
-        return response()->json(['records' => $assetAsignations], 200);
+
+        $total = $assetAsignations->count();
+        $assetAsignations = $assetAsignations->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assetAsignations,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        ); 
     }
 }

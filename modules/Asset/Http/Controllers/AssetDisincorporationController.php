@@ -298,7 +298,7 @@ class AssetDisincorporationController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList()
+    public function vueList($perPage = 10, $page = 1)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -306,16 +306,23 @@ class AssetDisincorporationController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetDisincorporations = AssetDisincorporation::with('assetDisincorporationMotive')->get();
+            $assetDisincorporations = AssetDisincorporation::with('assetDisincorporationMotive');
         } else {
             $assetDisincorporations = AssetDisincorporation::where('institution_id', $institution_id)
-                ->with('assetDisincorporationMotive')->get();
+                ->with('assetDisincorporationMotive');
         }
 
+        $total = $assetDisincorporations->count();
+        $assetDisincorporations = $assetDisincorporations->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
         return response()->json(
-            ['records' => $assetDisincorporations],
+            [
+                'records'  => $assetDisincorporations,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
             200
-        );
+        ); 
     }
 
     /**

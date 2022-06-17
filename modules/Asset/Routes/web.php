@@ -91,7 +91,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('asignations/vue-info/{asignation}', 'AssetAsignationController@vueInfo');
 
     /** Ruta que obtiene un listado de las asignacioes de bienes institucionales */
-    Route::get('asignations/vue-list', 'AssetAsignationController@vueList');
+    Route::get('asignations/vue-list/{perPage?}/{page?}', 'AssetAsignationController@vueList');
 
     /**
      * ---------------------------------------------------------------------
@@ -128,7 +128,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('disincorporations/vue-info/{disincorporation}', 'AssetDisincorporationController@vueInfo');
 
     /** Ruta que obtiene un listado de las desincorporaciones de bienes institucionales */
-    Route::get('disincorporations/vue-list', 'AssetDisincorporationController@vueList');
+    Route::get('disincorporations/vue-list/{perPage?}/{page?}', 'AssetDisincorporationController@vueList');
 
     /**
      * --------------------------------------------------------------
@@ -155,7 +155,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('requests/vue-info/{request}', 'AssetRequestController@vueInfo');
 
     /** Ruta que obtiene un listado de las solicitudes de bienes institucionales */
-    Route::get('requests/vue-list', 'AssetRequestController@vueList');
+    Route::get('requests/vue-list/{perPage?}/{page?}', 'AssetRequestController@vueList');
 
     /** Ruta que obtiene un array con los equipos institucionaes registrados, de acuerdo con la solicitud */
     Route::get('requests/get-equipments/{request}', 'AssetRequestController@getEquipments');
@@ -171,7 +171,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
      */
 
     /** Ruta que obtiene un listado de las solicitudes pendientes de bienes institucionales */
-    Route::get('requests/vue-pending-list', 'AssetRequestController@vuePendingList')
+    Route::get('requests/vue-pending-list/{perPage?}/{page?}', 'AssetRequestController@vuePendingList')
              ->name('asset.request.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */
@@ -220,7 +220,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
      */
     Route::get('inventory-history', 'AssetInventoryController@index')->name('asset.inventory-history.index');
     Route::post('inventory-history', 'AssetInventoryController@store')->name('asset.inventory-history.store');
-    Route::get('inventory-history/vue-list', 'AssetInventoryController@vueList')
+    Route::get('inventory-history/vue-list/{perPage?}/{page?}', 'AssetInventoryController@vueList')
             ->name('asset.inventory-history.vuelist');
     Route::delete('inventory-history/delete/{code_inventory}', 'AssetInventoryController@destroy')
             ->name('asset.inventory-history.destroy');

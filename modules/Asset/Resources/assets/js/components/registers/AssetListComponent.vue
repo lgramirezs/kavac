@@ -182,7 +182,12 @@
             }
         },
         methods: {
-
+            /**
+             * Función que verifica si un bien está en proceso de solicitud
+             *  o entregado
+             *
+             * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
+             */
             isReq(value){
 
                 if(value === null){
