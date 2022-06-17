@@ -9,7 +9,7 @@
     },
     {
         "element" : "#document",
-        "intro" : "Aquí se debe ingresar el número del documento que avala la modificación presupuestaria"
+        "intro" : "Se debe ingresar el número del documento que avala la modificación presupuestaria"
     },
     {
         "element" : "#description",
