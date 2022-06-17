@@ -120,8 +120,19 @@ class AssetInventoryController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList()
+    public function vueList($perPage = 10, $page = 1)
     {
-        return response()->json(['records' => AssetInventory::with('assetInventoryAssets')->get()], 200);
+        $inventories = AssetInventory::with('assetInventoryAssets');
+        $total = $inventories->count();
+        $inventories = $inventories->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $inventories,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 }
