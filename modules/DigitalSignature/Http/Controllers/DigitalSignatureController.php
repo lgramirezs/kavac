@@ -74,7 +74,7 @@ class DigitalSignatureController extends Controller
             $cert = openssl_x509_parse($certuser);
             $fecha = date('d-m-y H:i:s', $cert['validFrom_time_t']);
 
-            return view('digitalsignature::index', [
+            return view('digitalsignature::create', [
                 'Identidad' => $cert['subject']['CN'],
                 'Verificado' => $cert['issuer']['CN'],
                 'Caduca' => $fecha,
@@ -82,7 +82,7 @@ class DigitalSignatureController extends Controller
                 'certdetail' => 'false'
             ]);
         }
-        return view('digitalsignature::index',[
+        return view('digitalsignature::create',[
             'informacion' => 'No posee un certificado firmante',
             'cert' => 'false',
             'certdetail' => 'false'
