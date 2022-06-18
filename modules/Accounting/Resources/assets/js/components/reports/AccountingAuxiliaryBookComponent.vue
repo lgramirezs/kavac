@@ -17,14 +17,18 @@
                     </div>
                 </div>
                 <div class="col-3" id="helpAuxiliaryBookAccount">
-                    <label class="control-label"><strong>Cuentas Patrimoniales</strong></label>
-                    <br><br>
-                    <select2 :options="records" v-model="account_id" :disabled="allAccounts"></select2>
-                </div>
+                    <div class=" col-12 is-required">
+                        <label class="control-label"><strong>Cuentas Patrimoniales</strong></label>
+                        <br><br>
+                        <select2 :options="records" v-model="account_id" :disabled="allAccounts"></select2>
+                    </div>
+               </div>
                 <div class="col-3" id="helpAuxiliaryBookCurrency">
-                    <label class="control-label">Expresar en</label>
-                    <br><br>
-                    <select2 :options="currencies" v-model="currency"></select2>
+                    <div class=" col-12 is-required">
+                        <label class="control-label">Tipo de moneda</label>
+                        <br><br>
+                        <select2 :options="currencies" v-model="currency"></select2>
+                    </div>
                 </div>
                 <div class="col-3" id="helpAuxiliaryBookAllAccount">
                     <label for="" class="control-label mt-4">Seleccionar todas</label>

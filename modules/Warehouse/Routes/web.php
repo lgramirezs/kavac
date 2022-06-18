@@ -173,7 +173,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'warehous
         ['as' => 'warehouse.request', 'only' => ['store', 'update']]
     );
 
-    Route::put('requests/request-complete/{request}', 'WarehouseRequestController@confirmRequest');
+    Route::patch('requests/request-complete/{request}', 'WarehouseRequestController@confirmRequest');
     Route::put('requests/request-rejected/{request}', 'WarehouseRequestController@rejectedRequest');
     Route::put('requests/request-approved/{request}', 'WarehouseRequestController@approvedRequest');
 
@@ -205,7 +205,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'warehous
     Route::post('reports/inventory-products/vue-list', 'WarehouseReportController@vueList');
     Route::post('reports/inventory-products/create', 'WarehouseReportController@create');
 
-    Route::get('reports/show/{code}', 'WarehouseReportController@show');
+    Route::get('reports/show/{code}', 'WarehouseReportController@show')->name('warehouse.report.show');
 
     /**
      * ------------------------------------------------------------

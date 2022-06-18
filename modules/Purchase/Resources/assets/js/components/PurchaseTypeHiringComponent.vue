@@ -129,8 +129,7 @@ export default {
             };
             vm.errors = [];
             vm.$refs.purchaseShowError.refresh();
-        },
-
+        }, 
         createRecord(url) {
             const vm = this;
             vm.record.active = $('#active').prop('checked');

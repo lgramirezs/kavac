@@ -115,6 +115,41 @@
                     name: ''
                 };
             },
+
+            /**
+             * Funcioón que reescribe el comportamiento original de initRecords
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param {string}  url       Ruta que obtiene los datos a ser mostrado en listados
+             * @param {string}  modal_id  Identificador del modal a mostrar con la información solicitada
+             */
+            initRecords(url, modal_id) {
+                this.errors = [];
+                this.reset();
+                const vm = this;
+                url = this.setUrl(url);
+
+                axios.get(url).then(response => {
+                    if (typeof(response.data.records) !== "undefined") {
+                        vm.records = response.data.records.filter((item) => item.id !== 11);
+                    }
+                    if ($("#" + modal_id).length) {
+                        $("#" + modal_id).modal('show');
+                    }
+                }).catch(error => {
+                    if (typeof(error.response) !== "undefined") {
+                        if (error.response.status == 403) {
+                            vm.showMessage(
+                                'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+                            );
+                        }
+                        else {
+                            vm.logs('resources/js/all.js', 343, error, 'initRecords');
+                        }
+                    }
+                });
+            },
         },
         created() {
             this.table_options.headings = {

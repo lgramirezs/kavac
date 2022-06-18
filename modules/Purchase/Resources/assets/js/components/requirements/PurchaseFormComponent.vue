@@ -31,7 +31,7 @@
                 <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label" for="institutions">Institución</label><br>
-                        <select2 :options="institutions" id="institutions" v-model="record.institution_id" v-has-tooltip @input="getDepartments()"></select2>
+                        <select2 :options="institutions" id="institutions" v-model="record.institution_id" v-has-tooltip @input="getDepartmentsAndFiscalYear()"></select2>
                     </div>
                 </div>
                 <div class="col-6">
@@ -162,6 +162,7 @@ export default {
                 purchase_supplier_object_id: '',
                 description: '',
                 fiscal_year_id: '',
+                year: '',
                 products: [],
             },
             fiscalYear: null,
@@ -209,10 +210,7 @@ export default {
             vm.getDepartments();
         }
 
-        axios.get('/purchase/get-fiscal-year').then(response => {
-            vm.fiscalYear = response.data.fiscal_year;
-            vm.record.fiscal_year_id = vm.fiscalYear.id;
-        });
+        vm.getFiscalYear();
     },
     methods: {
         reset() {
@@ -288,17 +286,38 @@ export default {
         //         });
         //     }
         // },
+
+        getDepartmentsAndFiscalYear(){
+            this.getExecutionYear();
+            this.getDepartments();
+        },
+
+        getExecutionYear(){
+            const vm = this;
+            axios.get(`${window.app_url}/get-execution-year/${vm.record.institution_id}`).then(response => {
+                vm.getFiscalYear();
+            });
+        },
         getDepartments() {
             const vm = this;
             vm.departments = [];
 
             if (vm.record.institution_id != '') {
-                axios.get('/get-departments/' + vm.record.institution_id).then(response => {
+                axios.get(`${window.app_url}/get-departments/${vm.record.institution_id}`).then(response => {
                     vm.departments = response.data;
                     // vm.getWarehouses();
                     vm.getWarehouseProducts();
                 });
             }
+        },
+        getFiscalYear() {
+            const vm = this;
+            axios.get('/purchase/get-fiscal-year').then(response => {
+                if (response.data.fiscal_year) {
+                    vm.fiscalYear = response.data.fiscal_year;
+                    vm.record.fiscal_year_id = vm.fiscalYear.id;
+                }
+            });
         },
         removeProduct(index, event) {
             var v = this.record_products.splice(index - 1, 1)[0];

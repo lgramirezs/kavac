@@ -52,6 +52,17 @@ class AssetRequestController extends Controller
             'id' => '',
             'text' => 'Seleccione...'
         ];
+
+        $this->customAttributes = [
+            'code'          => 'código', 
+            'type'          => 'tipo de solicitud', 
+            'motive'        => 'motivo de la solicitud', 
+            'state'         => 'estado', 
+            'delivery_date' => 'fecha de entreg', 
+            'agent_name'    => 'nombre del agente externo', 
+            'agent_telf'    => 'teléfono del agente externo', 
+            'agent_email'   => 'correo del agente externo', 
+        ];
     }
 
     /**
@@ -92,23 +103,23 @@ class AssetRequestController extends Controller
             'delivery_date' => ['required'],
             'files.*'       => ['max:5000', 'mimes:pdf,docx,doc,odt']
         ], [
-            'type_id.required' => 'El campo tipo de solicitud es obligatorio.',
+            'type.required' => 'El campo tipo de solicitud es obligatorio.',
             'motive.required' => 'El campo motivo de la solicitud es obligatorio.',
             'delivery_date.required' => 'El campo fecha de entrega es obligatorio.',
-        ]);
+        ], $this->customAttributes);
 
         if ($request->type == 2) {
             $this->validate($request, [
-                'ubication'  => ['required'],
-            ]);
+                //'ubication'  => ['required'],
+            ], [], $this->customAttributes);
         }
         if ($request->type == 3) {
             $this->validate($request, [
-                'ubication'  => ['required'],
-                'agent_name' => ['required', 'regex:/^[\D][a-zA-ZÁ-ÿ\s]*/u', 'max:100'],
-                'agent_telf' => ['required', 'regex:[0-9\-]*'],
+                //'ubication'  => ['required'],
+                'agent_name' => ['required', 'regex:/^[\D][a-zA-ZÁ-ÿ\s]*/', 'max:100'],
+                'agent_telf' => ['required', 'regex:/[0-9\-]*/'],
                 'agent_email' => ['required'],
-            ]);
+            ], [], $this->customAttributes);
         }
 
         $codeSetting = CodeSetting::where('table', 'asset_requests')->first();
@@ -139,7 +150,7 @@ class AssetRequestController extends Controller
             'motive' => $request->motive,
             'state' => 'Pendiente',
             'delivery_date' => $request->delivery_date,
-            'ubication' => $request->ubication,
+            //'ubication' => $request->ubication,
             'agent_name' => $request->agent_name,
             'agent_telf' => $request->agent_telf,
             'agent_email' => $request->agent_email,
@@ -206,47 +217,33 @@ class AssetRequestController extends Controller
             'type' => ['required'],
             'motive' => ['required'],
             'delivery_date' => ['required'],
-        ]);
+        ], [], $this->customAttributes);
 
         if ($request->type == 2) {
             $this->validate($request, [
-                'ubication'  => ['required'],
-            ]);
+                //'ubication'  => ['required'],
+            ], [], $this->customAttributes);
         }
         if ($request->type == 3) {
             $this->validate($request, [
-                'ubication'  => ['required'],
+                //'ubication'  => ['required'],
                 'agent_name' => ['required'],
                 'agent_telf' => ['required'],
                 'agent_email' => ['required'],
-            ]);
+            ], [], $this->customAttributes);
         }
 
-        $asset_request->type = $request->type_id;
+        $asset_request->type = $request->type;
         $asset_request->motive = $request->motive;
         $asset_request->delivery_date = $request->delivery_date;
-        $asset_request->ubication = $request->ubication;
+        //$asset_request->ubication = $request->ubication;
         $asset_request->agent_name = $request->agent_name;
         $asset_request->agent_telf = $request->agent_telf;
         $asset_request->agent_email = $request->agent_email;
         $asset_request->save();
 
-
-        $update = now();
-        /** Se agregan los nuevos elementos a la solicitud */
-        foreach ($request->assets as $asset_id) {
-            $asset = Asset::find($asset_id);
-            $asset->asset_status_id = 6;
-            $asset->save();
-            $requested = AssetRequestAsset::updateOrCreate([
-                    'asset_id' => $asset->id,
-                    'asset_request_id' => $asset_request->id,
-                    'updated_at' => $update
-                ]);
-        }
         /** Se eliminan los demas elementos de la solicitud */
-        $asset_request_assets = AssetRequestAsset::where('asset_request_id', $asset_request->id)
-            ->where('updated_at', '!=', $update)->get();
+        $asset_request_assets = AssetRequestAsset::where('asset_request_id', $asset_request->id)->get();
 
         foreach ($asset_request_assets as $asset_request_asset) {
             $asset = Asset::find($asset_request_asset->asset_id);
@@ -255,6 +252,19 @@ class AssetRequestController extends Controller
 
             $asset_request_asset->delete();
         }
+       
+        /** Se agregan los nuevos elementos a la solicitud */
+        foreach ($request->assets as $asset_id) {
+            $asset = Asset::find($asset_id);
+            $asset->asset_status_id = 6;
+            $asset->save();
+            $requested = AssetRequestAsset::updateOrCreate([
+                    'asset_id' => $asset->id,
+                    'asset_request_id' => $asset_request->id,
+                    
+                ]);
+        }
+        
 
         $request->session()->flash('message', ['type' => 'update']);
         return response()->json(['result' => true, 'redirect' => route('asset.request.index')], 200);
@@ -277,6 +287,15 @@ class AssetRequestController extends Controller
         foreach ($assetRequestDeliveries as $assetRequestDelivery) {
             $assetRequestDelivery->delete();
         }
+
+        $assets_request_assets = AssetRequestAsset::where('asset_request_id', $request->id)->get();
+        foreach($assets_request_assets as $assets_request_asset){
+            $asset = Asset::find($assets_request_asset->asset_id);
+            $asset->asset_status_id = 10;
+            $asset->save();
+
+            $assets_request_asset->delete();
+        }
         $request->delete();
         session()->flash('message', ['type' => 'destroy']);
         return response()->json(['redirect' => route('asset.request.index')], 200);
@@ -288,7 +307,7 @@ class AssetRequestController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList()
+    public function vueList($perPage = 10, $page = 1)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -296,12 +315,22 @@ class AssetRequestController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetRequests = AssetRequest::all();
+            $assetRequests = AssetRequest::where('id', '>', 0);
         } else {
-            $assetRequests = AssetRequest::where('institution_id', $institution_id)->get();
+            $assetRequests = AssetRequest::where('institution_id', $institution_id);
         }
 
-        return response()->json(['records' => $assetRequests ], 200);
+        $total = $assetRequests->count();
+        $assetRequests = $assetRequests->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        return response()->json(
+            [
+                'records'  => $assetRequests,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**
@@ -310,7 +339,7 @@ class AssetRequestController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vuePendingList()
+    public function vuePendingList($perPage = 10, $page = 1)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -318,14 +347,24 @@ class AssetRequestController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetRequests = AssetRequest::with('user')->where('state', 'Pendiente')->get();
+            $assetRequests = AssetRequest::with('user')->where('state', 'Pendiente');
         } else {
             $assetRequests = AssetRequest::with('user')
                 ->where('institution_id', $institution_id)
-                ->where('state', 'Pendiente')->get();
+                ->where('state', 'Pendiente');
         }
-
-        return response()->json(['records' => $assetRequests ], 200);
+        $total = $assetRequests->count();
+        $assetRequests = $assetRequests->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        
+        return response()->json(
+            [
+                'records'  => $assetRequests,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**

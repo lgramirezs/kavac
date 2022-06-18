@@ -551,9 +551,339 @@
 		</div>
 	</div>
 </div>
+   <!-- Modal -->
+        <div
+      id="detailsInstitutionModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="detailsInstitutionModal"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog  modal-dialog-scrollable modal-xl text-left"
+        role="document"
+        style="max-width: 60rem; color: #636e7b; font-size: 13px"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+            <h6 style="font-size: 1em">
+              <i class="icofont icofont-read-book ico-2x"></i>
+               Información detallada
+            </h6>
+          </div>
 
-<!-- Modal -->
-<div id="detailsInstitutionModal" class="modal fade" tabindex="-1" aria-labelledby="detailsInstitutionModalLabel"
+          <div class="modal-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="general" role="tabpanel">
+				  	{{-- Imágenes --}}
+				<div class="row justify-content-center">
+					<div class="col-8 col-lg-3">
+						<p class="text-center mb-1 font-weight-bold">Logotipo</p>
+						<img id="modal-logo" class="w-100" src="{{ asset('/images/no-image2.png', Request::secure()) }}">
+					</div>
+					<div class="col-8 col-lg-7">
+						<p class="text-center mb-1 font-weight-bold">Banner o Cintillo</p>
+						<img id="modal-banner" class="w-100" src="{{ asset('/images/no-image3.png') }}">
+					</div>
+				</div>
+							{{-- Detalles --}}
+							<div class="row col-lg-12" style="padding-top: 3rem;padding-bottom: 1rem;">
+                               <u> <h6 class="">DATOS BÁSICOS:</h6></u>	
+							</div>
+			
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Código ONAPRE :</strong>
+                      <div class="row">
+                        <span  class="col-md-12">
+                         <a id="modal-onapre_code"></a>  
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>R.I.F.:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                          <a id="modal-rif"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Nombre:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                          <a id="modal-name"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Acrónimo (Nombre corto)</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                          <a id="modal-acronym"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Razón Social:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                          <a id="modal-business_name"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>País:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                          <a id="modal-country_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Estado:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-estate_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Municipio:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-municipality_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Ciudad:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-city_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Municipio:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-municipality_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Código Postal:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-postal_code"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Fecha de inicio de operaciones:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-start_operations_date"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Sectores Economicos:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-institution_sector_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Tipo de Organizacion:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-institution_type_id"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Dirección Fiscal:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-legal_address" ></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Activa:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-active"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Organización por defecto:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-default"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Agente de Retención:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-retention_agent"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Sitio web:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-web"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 "></div>
+				  <div class="col-md-4 "></div>
+					<div class="col-md-4 " style="padding-top: 3rem;padding-bottom: 1rem;">  
+						<u><h6 class="">DATOS COMPLEMENTARIOS:</h6></u> </div>
+									
+				   <div class="col-md-4 "></div>
+				  <div class="col-md-4 "></div>
+				    <div class="col-md-4 ">
+                    <div class="form-group">
+                      <strong>Base Legal:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-legal_base"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Forma Jurídica:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-legal_form"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Actividad Principal:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-main_activity"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Misión:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-mission"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Visión:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-vision"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				    <div class="col-md-4">
+                    <div class="form-group">
+                      <strong>Composición de Patrimonio:</strong>
+                      <div class="row">
+                        <span class="col-md-12">
+                         <a  id="modal-composition_assets"></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+				   
+				
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-default btn-sm btn-round btn-modal-close"
+                data-dismiss="modal"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+       
+        <!-- Modal -->
+<!-- Modal 2 -->
+<div id="detailsInstitutionModal1" class="modal fade" tabindex="-1" aria-labelledby="detailsInstitutionModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable modal-xl">
 		<div class="modal-content">
@@ -576,7 +906,7 @@
 					</div>
 				</div>
 				{{-- Detalles --}}
-                <h6 class="md-title mt-3 mb-3">DATOS BÁSICOS:</h6>
+                <h6 class="">DATOS BÁSICOS:</h6>
                 <div class="row justify-content-center">
 					<div class="col-4">
                         <span class="font-weight-bold">Código ONAPRE</span>
@@ -686,14 +1016,7 @@
 				</div>
                 <hr>
                 <div class="row ">
-					<!-- <div class="col-4">
-                        <span class="font-weight-bold">Adscrito a</span>
-                        <br>
-						<input type="text" data-toggle="tooltip"
-                                        class="form-control input-sm"
-                                        disabled="true" id="modal-organism_adscript_id">
-                   
-					</div> -->
+			
 	
 					<div class="col-4">
                         <span class="font-weight-bold">Tipo de Organizacion</span>
@@ -758,7 +1081,7 @@
 					</div>
 				</div>
                 <hr>
-                <h6 class="md-title mt-3 mb-3">DATOS COMPLEMENTARIOS:</h6>
+                <h6 class="">DATOS COMPLEMENTARIOS:</h6>
                 <div class="row justify-content-center">
 					<div class="col-6">
                         <span class="font-weight-bold">Base Legal</span>
@@ -1025,56 +1348,56 @@
 					}
 					$("#detailsInstitutionModalLabel").html(institution.name);
 					if (institution.onapre_code){
-						$("#modal-onapre_code").val(institution.onapre_code);
+						$("#modal-onapre_code").html(institution.onapre_code);
 						
 					}
-					$("#modal-name").val(institution.name);
-							$("#modal-rif").val(institution.rif);
+					$("#modal-name").html(institution.name);
+							$("#modal-rif").html(institution.rif);
 					
-					$("#modal-acronym").val(institution.acronym);
-					$("#modal-business_name").val(institution.business_name);
-					$("#modal-country_id").val(institution.municipality.estate.country.name);
-					$("#modal-estate_id").val(institution.municipality.estate.name);
-					$("#modal-municipality_id").val(institution.municipality.name);
+					$("#modal-acronym").html(institution.acronym);
+					$("#modal-business_name").html(institution.business_name);
+					$("#modal-country_id").html(institution.municipality.estate.country.name);
+					$("#modal-estate_id").html(institution.municipality.estate.name);
+					$("#modal-municipality_id").html(institution.municipality.name);
 					getCurrentData(institution.city_id, "get-city", "#modal-city_id");
-					$("#modal-postal_code").val(institution.postal_code);
-					$("#modal-start_operations_date").val(institution.start_operations_date);
+					$("#modal-postal_code").html(institution.postal_code);
+					$("#modal-start_operations_date").html(institution.start_operations_date);
 					if (institution.organism_adscript_id){
-						$("#modal-organism_adscript_id").val(institution.organism_adscript_id);
+						$("#modal-organism_adscript_id").html(institution.organism_adscript_id);
 					}
 					getCurrentData(institution.institution_sector_id, "get-sector", "#modal-institution_sector_id");
 					getCurrentData(institution.institution_type_id, "get-type", "#modal-institution_type_id");
 					var legal = institution.legal_address;
-					$("#modal-legal_address").val($(legal).text());
+					$("#modal-legal_address").html($(legal).text());
 					if (institution.web){
-						$("#modal-web").val(institution.web);
+						$("#modal-web").html(institution.web);
 					}
-					$('#modal-active').val(activeInst);
-					$('#modal-default').val(defaultInst);
-					$('#modal-retention_agent').val(retAgentInst);
+					$('#modal-active').html(activeInst);
+					$('#modal-default').html(defaultInst);
+					$('#modal-retention_agent').html(retAgentInst);
 					if (institution.legal_base){
 						var legal_base_modal = institution.legal_base;
-						$("#modal-legal_base").val($(legal_base_modal).text());
+						$("#modal-legal_base").html($(legal_base_modal).text());
 					}
 					if (institution.legal_form){
 						var legal_form_modal = institution.legal_form;
-						$("#modal-legal_form").val($(legal_form_modal).text());
+						$("#modal-legal_form").html($(legal_form_modal).text());
 					}
 					if (institution.main_activity){
 						var legal_main_activity_modal = institution.main_activity;
-						$("#modal-main_activity").val($(legal_main_activity_modal).text());
+						$("#modal-main_activity").html($(legal_main_activity_modal).text());
 					}
 					if (institution.mission){
 						var legal_mission_modal = institution.mission;
-						$("#modal-mission").val($(legal_mission_modal).text());
+						$("#modal-mission").html($(legal_mission_modal).text());
 					}
 					if (institution.vision){
 						var legal_vision_modal = institution.vision;
-						$("#modal-vision").val($(legal_vision_modal).text());
+						$("#modal-vision").html($(legal_vision_modal).text());
 					}
 					if (institution.composition_assets){
 						var composition_assets_modal = institution.composition_assets;
-						$("#modal-composition_assets").val($(composition_assets_modal).text());
+						$("#modal-composition_assets").html($(composition_assets_modal).text());
 					}
 
 					// Abre la modal
@@ -1136,7 +1459,7 @@
 		 */
 		function getCurrentData(id, url, target) {
 			axios.get(`${url}/${id}`).then(response => {
-				$(target).val(response.data.result.name);
+				$(target).html(response.data.result.name);
 			});
 		}
 	</script>

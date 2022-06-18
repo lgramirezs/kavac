@@ -114,7 +114,7 @@ class PurchaseSupplierController extends Controller
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
-            'phone_extension'                => ['array'],
+            'phone_extension'                => ['sometimes', 'array'],
         ];
 
         $messages = [
@@ -154,11 +154,11 @@ class PurchaseSupplierController extends Controller
                     $request->empty_phone_info = null;
                     break;
                 }
-                if (!$request->phone_extension[$key]) {
+                /**if (!$request->phone_extension[$key]) {
                     $rules['empty_phone_info'] = ['required'];
                     $request->empty_phone_info = null;
                     break;
-                }
+                }*/
             }
         }
 
@@ -225,7 +225,7 @@ class PurchaseSupplierController extends Controller
                     'type' => $phone_type,
                     'area_code' => $request->phone_area_code[$key],
                     'number' => $request->phone_number[$key],
-                    'extension' => $request->phone_extension[$key]
+                    'extension' => $request->phone_extension[$key] ?? null
                 ]));
             }
         }
@@ -356,7 +356,7 @@ class PurchaseSupplierController extends Controller
             'phone_type'                     => ['array'],
             'phone_area_code'                => ['array'],
             'phone_number'                   => ['array'],
-            'phone_extension'                => ['array'],
+            'phone_extension'                => ['sometimes', 'array'],
         ];
 
         $messages = [
@@ -396,11 +396,11 @@ class PurchaseSupplierController extends Controller
                     $request->empty_phone_info = null;
                     break;
                 }
-                if (!$request->phone_extension[$key]) {
+                /**if (!$request->phone_extension[$key]) {
                     $rules['empty_phone_info'] = ['required'];
                     $request->empty_phone_info = null;
                     break;
-                }
+                }*/
             }
         }
 
@@ -484,7 +484,7 @@ class PurchaseSupplierController extends Controller
                     'type' => $phone_type,
                     'area_code' => $request->phone_area_code[$key],
                     'number' => $request->phone_number[$key],
-                    'extension' => $request->phone_extension[$key]
+                    'extension' => $request->phone_extension[$key] ?? null
                 ]));
             }
         }

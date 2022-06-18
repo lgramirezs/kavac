@@ -26,7 +26,7 @@ class PurchaseTypeHiringController extends Controller
     
     /**
      * Display a listing of the resource.
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class PurchaseTypeHiringController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param  Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -62,7 +62,7 @@ class PurchaseTypeHiringController extends Controller
             'ut.required'                         => 'El campo unidades tributarias es obligatorio.',
         ]);
         if ($request->active) {
-            $record_ant = PurchaseTypeHiring::where('type', $request->type)->where('active', true)->first();
+            $record_ant = PurchaseTypeHiring::where('purchase_type_operation_id', $request->purchase_type_operation_id)->where('active', true)->first();
             if ($record_ant) {
                 $record_ant->active = false;
                 $record_ant->save();
@@ -81,7 +81,7 @@ class PurchaseTypeHiringController extends Controller
      */
     public function show()
     {
-        // return view('purchase::show');
+        return view('purchase::show');
     }
 
     /**
@@ -90,13 +90,13 @@ class PurchaseTypeHiringController extends Controller
      */
     public function edit()
     {
-        // return view('purchase::edit');
+        return view('purchase::edit');
     }
 
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -136,7 +136,7 @@ class PurchaseTypeHiringController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

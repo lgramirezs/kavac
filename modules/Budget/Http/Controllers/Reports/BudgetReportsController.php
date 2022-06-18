@@ -279,7 +279,7 @@ class BudgetReportsController extends Controller
             $data['initialDate'] = $data['finalDate'];
             $data['finalDate'] = $temp;
         }
-        $pdf->setConfig(['institution' => $institution]);
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P']);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
@@ -355,7 +355,7 @@ class BudgetReportsController extends Controller
             $data['finalDate'] = $temp;
         }
 
-        $pdf->setConfig(['institution' => $institution]);
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L']);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [

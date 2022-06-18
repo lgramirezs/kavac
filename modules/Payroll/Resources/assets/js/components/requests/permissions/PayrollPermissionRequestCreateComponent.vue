@@ -234,6 +234,19 @@
                         vm.payrollPermissionPolicy = field;
                     }
                 });
+                if (vm.record.start_date > vm.getMinDate()) {
+                    vm.record.start_date = '';
+                    vm.record.start_time = '';
+                    vm.record.end_date = '';
+                    vm.record.end_time = '';
+                    vm.record.time_permission = '';
+                }
+
+                if (vm.record.end_date > vm.getMaxDate()) {
+                    vm.record.end_date = '';
+                     vm.record.end_time = '';
+                    vm.record.time_permission = '';
+                }
             },
 
             getMinDate() {

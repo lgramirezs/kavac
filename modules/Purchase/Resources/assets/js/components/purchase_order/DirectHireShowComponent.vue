@@ -22,7 +22,7 @@
                     <!-- Fromulario -->
                     <div class="modal-body" v-if="records">
                         <hr>
-                        <h6>Datos Básicos</h6>
+                        <h6 class="card-title">Datos Básicos</h6>
                         <div class="row">
                             <div class="col-3">
                                 <strong class="d-block">Fecha</strong> {{ format_date(records.date ? records.date : records.created_at) }}
@@ -105,6 +105,64 @@
                             </div>
                         </div>
                         <br>
+                        <hr>
+                        <h6 class="card-title">Forma de pago</h6>
+                        <div class="row">
+                            <div class="col-3">
+                                <strong class="d-block">
+                                    Forma de pago
+                                </strong>
+                                {{ payment_methods[records.payment_methods] }}
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <h6 class="card-title">Factura</h6>
+                        <div class="row">
+                            <div class="col-3">
+                                <strong class="d-block">
+                                    Facturar a
+                                </strong>
+                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">
+                                    Enviar a
+                                </strong>
+                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">
+                                    RIF
+                                </strong>
+                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <h6 class="card-title">Firmas autorizadas</h6>
+                        <div class="row">
+                            <div class="col-3">
+                                <strong class="d-block">Preparado por</strong> 
+                                {{ records.prepared_by.payroll_staff.first_name +' '+ records.prepared_by.payroll_staff.last_name }}
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">Revisado por</strong> 
+                                {{ records.reviewed_by.payroll_staff.first_name +' '+ records.reviewed_by.payroll_staff.last_name }}
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">Verificado por</strong> 
+                                {{ records.verified_by.payroll_staff.first_name +' '+ records.verified_by.payroll_staff.last_name }}
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">Firmado por</strong> 
+                                {{ records.first_signature.payroll_staff.first_name +' '+ records.first_signature.payroll_staff.last_name }}
+                            </div>
+                            <div class="col-3">
+                                <strong class="d-block">Firmado por</strong> 
+                                {{ records.second_signature.payroll_staff.first_name +' '+ records.second_signature.payroll_staff.last_name }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,6 +176,13 @@ export default {
         return {
             records: null,
             files: {},
+            payment_methods: {
+                pay_order: 'Orden de pago',
+                direct: 'Directa',
+                credit: 'Crédito',
+                advance: 'Avances',
+                others: 'Otras',
+            }
         }
     },
     created() {

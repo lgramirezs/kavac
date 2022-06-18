@@ -121,6 +121,7 @@ export default {
         }
     },
     created() {
+        const vm = this;
         this.table_options.headings = {
             'code': 'CÓDIGO PATRIMONIAL - DENOMINACIÓN',
             'debit': 'BEDE',
@@ -170,6 +171,7 @@ export default {
             this.data.totDebit = parseFloat(this.entries.tot_debit);
             this.data.totAssets = parseFloat(this.entries.tot_assets);
         }
+        EventBus.$emit('validate-required:accounting-entry-edit-create');
     },
     beforeDestroy() {
         EventBus.$off('enableInput:entries-account');
@@ -200,45 +202,44 @@ export default {
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
         validateErrors: function() {
-            /**
-             * se cargan los errores
-             */
+            const vm = this;
+            /** se cargan los errores */
             var errors = [];
             var res = false;
 
-            if (!this.data.date) {
+            if (!vm.data.date) {
                 errors.push('El campo fecha es obligatorio.');
                 res = true;
             }
-            if (!this.data.concept) {
+            if (!vm.data.concept) {
                 errors.push('El campo concepto ó descripción es obligatorio.');
                 res = true;
             }
-            if (!this.data.category) {
+            if (!vm.data.category) {
                 errors.push('El campo categoria es obligatorio.');
                 res = true;
             }
-            if (!this.data.institution_id) {
+            if (!vm.data.institution_id) {
                 errors.push('El campo institución es obligatorio.');
                 res = true;
             }
-            if (!this.data.currency.id) {
+            if (!vm.data.currency_id) {
                 errors.push('El tipo de moneda es obligatorio.');
                 res = true;
             }
-            if (this.recordsAccounting.length < 1) {
+            if (vm.recordsAccounting.length < 1) {
                 errors.push('No está permitido registrar asientos contables vacíos');
                 res = true;
             }
-            if (this.data.totDebit != this.data.totAssets) {
+            if (vm.addDecimals(vm.data.totDebit) != vm.addDecimals(vm.data.totAssets)) {
                 errors.push('El asiento no esta balanceado, Por favor verifique.');
                 res = true;
             }
-            if (this.data.totDebit < 0 || this.data.totAssets < 0) {
+            if (vm.addDecimals(vm.data.totDebit) < 0 || vm.addDecimals(vm.data.totAssets) < 0) {
                 errors.push('Los valores en la columna del DEBE y el HABER deben ser positivos.');
                 res = true;
             }
-            this.$refs.AccountingAccountsInForm.showAlertMessages(errors);
+            vm.$refs.AccountingAccountsInForm.showAlertMessages(errors);
             return res;
         },
 
@@ -343,13 +344,14 @@ export default {
          */
         storeEntry() {
             const vm = this;
+
             if (vm.validateErrors()) {
                 return;
             }
 
             vm.data['currency_id'] = vm.data.currency.id;
-            vm.data['tot'] = vm.data.totDebit;
-            vm.data['tot_confirmation'] = vm.data.totAssets;
+            vm.data['tot'] = vm.addDecimals(vm.data.totDebit);
+            vm.data['tot_confirmation'] = vm.addDecimals(vm.data.totAssets);
             vm.data['accountingAccounts'] = vm.recordsAccounting;
 
             vm.loading = true;

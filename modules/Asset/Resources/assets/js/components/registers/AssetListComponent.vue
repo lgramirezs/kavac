@@ -21,7 +21,9 @@
             </div>
             <div slot="asset_status" slot-scope="props" class="text-center">
                 <span>
-                    {{ (props.row.asset_status)?props.row.asset_status.name:'Desincorporado' }}
+                    {{ (props.row.asset_status_id == 11)?props.row.asset_status.name + ': ' 
+                                                        + props.row.asset_disincorporation_asset.asset_disincorporation.asset_disincorporation_motive.name:
+                                                        props.row.asset_status.name }}
                 </span>
             </div>
             <div slot="id" slot-scope="props" class="text-center">
@@ -37,7 +39,7 @@
                         data-toggle="tooltip"
                         :disabled="((props.row.asset_asignation_asset == null)
                                     &&(props.row.asset_disincorporation_asset == null)
-                                    &&(props.row.asset_request_asset == null)
+                                    &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_status_id == 10)
                                     &&(props.row.asset_condition_id == 1)
                                     &&(props.row.asset_type_id == 1))?false:true"
@@ -51,7 +53,7 @@
                         data-toggle="tooltip"
                         :disabled="((props.row.asset_asignation_asset == null)
                                     &&(props.row.asset_disincorporation_asset == null)
-                                    &&(props.row.asset_request_asset == null)
+                                    &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_type_id == 1))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-chain"></i>
@@ -64,19 +66,19 @@
                         data-toggle="tooltip"
                         :disabled="((props.row.asset_asignation_asset == null)
                                     &&(props.row.asset_disincorporation_asset == null)
-                                    &&(props.row.asset_request_asset == null))?false:true"
+                                    &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button"
                         v-has-tooltip>
                         <i class="fa fa-edit"></i>
                     </button>
                     <button
-                        @click="deleteRecord(props.index, '')"
+                        @click="deleteRecord(props.row.id, '')"
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Eliminar registro"
                         data-toggle="tooltip"
                         :disabled="((props.row.asset_asignation_asset == null)
                                     &&(props.row.asset_disincorporation_asset == null)
-                                    &&(props.row.asset_request_asset == null))?false:true"
+                                    &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button" v-has-tooltip>
                         <i class="fa fa-trash-o"></i>
                     </button>
@@ -180,7 +182,24 @@
             }
         },
         methods: {
+            /**
+             * Función que verifica si un bien está en proceso de solicitud
+             *  o entregado
+             *
+             * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
+             */
+            isReq(value){
 
+                if(value === null){
+                    return true;
+                }else{
+                    if(value.asset_request.state === 'Entregados'){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            },
             /**
              * Inicializa los datos del formulario
              *

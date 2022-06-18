@@ -8,6 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Finance\Models\FinanceBank;
 use Modules\Finance\Models\FinanceCheckBook;
+use Modules\Finance\Models\FinanceBankAccount;
+
+
+
+
 
 /**
  * @class FinanceCheckBookController
@@ -70,6 +75,8 @@ class FinanceCheckBookController extends Controller
                 }
             }
         }
+      //  print($account->financeCheckBooks);
+       // dd($account->financeCheckBooks);
         return response()->json(['records' => $financeCheckBooks], 200);
     }
 
@@ -160,7 +167,7 @@ class FinanceCheckBookController extends Controller
     {
         //return view('finance::edit');
 
-        //dd($id);
+        dd($id);
         $record = FinanceCheckBook::find($id);
         //return view('finance::create', compact("checksUsed"));
 
@@ -205,18 +212,31 @@ class FinanceCheckBookController extends Controller
 
     /**
      * Obtiene los datos de las cuenta bancarias
+     *
      * @author Miguel Narvaez <mnarvaezcenditel.gob.ve | <miguelnarvaez31@gmail.com>
      *
      * @return \Illuminate\Http\JsonResponse Devuelve un JSON con listado de las cuentas bancarias
      */
-    public function getBanksAccounts()
+    public function getBanksAccounts($bank_id)
     {
-        foreach (FinanceBankAccount::all() as $accounts) {
+
+        $bank_account_id = ($bank_id)
+                    ? FinanceBankAccount::where('finance_banking_agency_id', $bank_id)->get()
+                    : FinanceBankAccount::all();
+        $this->data = [['id' => '', 'text' => 'Seleccione...']];
+        foreach ($bank_account_id as $account) {
             $this->data[] = [
-                'id' => $accounts->id,
-                'text' => $accounts->ccc_number
+                'id' => $account->id,
+                'text' => $account->ccc_number
             ];
         }
+
         return response()->json($this->data);
     }
+
+
+
+
+
+
 }

@@ -473,13 +473,30 @@ class WarehouseReceptionController extends Controller
      */
     public function vueList()
     {
+        $warehouseMovement = WarehouseMovement::whereNull('warehouse_institution_warehouse_initial_id')
+            ->with(
+                'warehouseInstitutionWarehouseInitial',
+                'warehouseInstitutionWarehouseEnd',
+                'user'
+            )->get(); 
+        if($warehouseMovement) {
+            $records = [];
+            for($i = 0; $i<count($warehouseMovement); $i++) {
+                if($warehouseMovement[$i]['warehouseInstitutionWarehouseEnd']['warehouse']['active'] == true) {
+                    array_push($records, $warehouseMovement[$i]);
+                }
+            }
+        }
         return response()->json([
+            'records' => $records
+        ], 200);
+        /*return response()->json([
             'records' => WarehouseMovement::whereNull('warehouse_institution_warehouse_initial_id')
             ->with(
                 'warehouseInstitutionWarehouseInitial',
                 'warehouseInstitutionWarehouseEnd',
                 'user'
-            )->get()], 200);
+            )->get()], 200);*/
     }
 
     /**

@@ -7,34 +7,34 @@
 				</ul>
 			</div>
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-2" id="approved_at">
 					<div class="form-group is-required">
 						<label class="control-label" for="approved_at">Fecha de creación</label>
-						<input type="date" name="approved_at" id="approved_at" class="form-control input-sm"
+						<input type="date" name="approved_at" class="form-control input-sm"
 							   placeholder="dd/mm/YY" data-toggle="tooltip" v-model="record.approved_at"
 							   title="Fecha en la que se aprobó la modificación presupuestaria">
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" id="institution_id">
 					<div class="form-group is-required">
 						<label class="control-label" for="institution_id">Institución</label>
 						<select2 :options="institutions" v-model="record.institution_id"></select2>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" id="document">
 					<div class="form-group is-required">
 						<label class="control-label" for="document">Documento</label>
-						<input type="text" name="document" id="document" class="form-control input-sm"
+						<input type="text" name="document" class="form-control input-sm"
 							   placeholder="Nro. Documento" data-toggle="tooltip" v-model="record.document"
 							   title="Número del documento, decreto o misiva que avala la modificación presupuestaria">
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" id="description">
 					<div class="form-group is-required">
 						<label class="control-label" for="description">Descripción</label>
-						<input type="text" name="description" id="description" class="form-control input-sm"
+						<input type="text" name="description" class="form-control input-sm"
 							   placeholder="Descripción / Detalles" data-toggle="tooltip"
 							   title="Descripción o detalle de la modificación presupuestaria"
 							   v-model="record.description">
@@ -167,20 +167,40 @@
 										</h6>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group is-required">
-											<label>Acción Específica:</label>
-											<select2 :options="specific_actions"
-													 v-model="from_specific_action_id"/>
-					                    </div>
+								<div v-if="(type_modification==='TR') || (type_modification==='RE')">
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Acción Específica:</label>
+												<select2 :options="specific_actions" @input="getAccounts()"
+														 v-model="from_specific_action_id"/>
+						                    </div>
+										</div>
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Cuenta:</label>
+												<select2 :options="accounts"
+														 v-model="from_account_id"/>
+						                    </div>
+										</div>
 									</div>
-									<div class="col-6">
-										<div class="form-group is-required">
-											<label>Cuenta:</label>
-											<select2 :options="accounts"
-													 v-model="from_account_id"/>
-					                    </div>
+								</div>
+								<div v-if="(type_modification==='AC')">
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Acción Específica:</label>
+												<select2 :options="specific_actions"
+														 v-model="from_specific_action_id"/>
+						                    </div>
+										</div>
+										<div class="col-6">
+											<div class="form-group is-required">
+												<label>Cuenta:</label>
+												<select2 :options="accountsAC"
+														 v-model="from_account_id"/>
+						                    </div>
+										</div>
 									</div>
 								</div>
 								<div class="row">
@@ -214,7 +234,7 @@
 										<div class="col-6">
 											<div class="form-group is-required">
 												<label>Cuenta:</label>
-												<select2 :options="accounts"
+												<select2 :options="accountsAC"
 														 v-model="to_account_id"/>
 						                    </div>
 										</div>
@@ -281,6 +301,10 @@
 					id: '',
 					text: 'Seleccione...'
 				}],
+				accountsAC: [{
+					id: '',
+					text: 'Seleccione...'
+				}],
 				/*
 				 * Variables para cuentas a agregar en créditos adicionales, traspasos y reducciones
 				 */
@@ -310,7 +334,7 @@
 		mounted() {
 			const vm = this;
 
-			axios.get(
+			/*axios.get(
 				`${window.app_url}/budget/get-group-specific-actions/${window.execution_year}/true`
 			).then(response => {
 				if (!$.isEmptyObject(response.data)) {
@@ -318,12 +342,16 @@
 				}
 			}).catch(error => {
 				vm.logs('BudgetModificationComponent.vue', 263, error, 'mounted');
-			});
+			});*/
+
+			vm.getSpecificActions();
 
 			vm.reset();
 			vm.getInstitutions();
-			vm.getAccounts();
 			vm.record.type = vm.type_modification;
+			if (vm.type_modification === 'AC' || vm.type_modification === 'TR') {
+				vm.getAccountsAC();
+			}
 
 			if (vm.edit_object) {
 				vm.loadEditData();
@@ -596,24 +624,83 @@
 					}
 				});
 			},
+
 			/**
+             * Obtiene las Acciones Específicas
+             *
+             * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @param {string} type Tipo de registro
+             */
+            async getSpecificActions() {
+                const vm = this;
+                vm.loading = true;
+                vm.specific_actions = [];
+                vm.accounts = [];
+
+                let year = vm.record.approved_at.split("-")[0];
+                let url = `${window.app_url}/budget/get-group-specific-actions/${window.execution_year}/true`;
+                await axios.get(url).then(response => {
+                    vm.specific_actions = response.data;
+                }).catch(error => {
+                    console.error(error);
+                });
+
+                vm.loading = false;
+            },
+
+            /**
+             * Obtiene las cuentas presupuestarias formuladas de la acción específica seleccionada
+             *
+             * @method    getAccounts
+             *
+             * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             */
+            async getAccounts() {
+                const vm = this;
+                vm.loading = true;
+                vm.accounts = [];
+
+                if (vm.from_specific_action_id) {
+                    let specificActionId = vm.from_specific_action_id;
+                    let approvedAt = vm.record.approved_at;
+                    await axios.get(
+                        `${window.app_url}/budget/get-opened-accounts/${specificActionId}/${approvedAt}`
+                    ).then(response => {
+                        if (response.data.result) {
+                            vm.accounts = response.data.records;
+                        }
+                        if (response.data.records.length === 1 && response.data.records[0].id === "") {
+                            vm.showMessage(
+                                'custom', 'Alerta!', 'danger', 'screen-error',
+                                `No existen cuentas aperturadas para esta acción específica o con saldo para la fecha
+                                seleccionada`
+                            );
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+
+                vm.loading = false;
+            },
+
+            /**
 			 * Obtiene el listado de cuentas resupuestarias a mostrar para su selección
 			 *
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 			 */
-			getAccounts: function() {
+			getAccountsAC: function() {
 				const vm = this;
-				vm.accounts = [{
+				vm.accountsAC = [{
 					id: '',
 					text: 'Seleccione...',
 					title: ''
 				}];
-
 				axios.get(`${window.app_url}/budget/accounts/egress-list/`).then(response => {
 					if (!$.isEmptyObject(response.data.records)) {
 						$.each(response.data.records, function() {
 							if (this.specific !== "00") {
-								vm.accounts.push({
+								vm.accountsAC.push({
 									id: this.id,
 									text: `${this.code} - ${this.denomination}`,
 									title: 'Disponible: '
