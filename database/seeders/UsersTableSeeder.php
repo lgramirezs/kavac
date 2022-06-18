@@ -70,14 +70,6 @@ class UsersTableSeeder extends Seeder
             }
 
             if (config('app.debug')) {
-                /** @var object Busca el rol de desarrollador del sistema */
-                $devRole = Role::where('slug', 'dev')->first();
-
-                if (isset($user_admin) && $devRole) {
-                    /** Asigna el rol de administrador */
-                    $user_admin->attachRole($devRole);
-                }
-
                 $usrTest = $this->command->askWithCompletion(
                     '¿Desea crear un usuario de prueba? (s)i/(n)o', ['s', 'n'], 'n'
                 );
