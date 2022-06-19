@@ -167,49 +167,49 @@ class SettingController extends Controller
             'active' => true, 'required_by' => 'core', 'p_value' => 'true',
         ])->get();
 
-/** @var Parameter Parámetro asociado a la gestión de soporte técnico */
+        /** @var Parameter Parámetro asociado a la gestión de soporte técnico */
         $paramSupport = $parameters->filter(function ($param) {
             return $param->p_key === 'support';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de chat */
+        /** @var Parameter Parámetro asociado a la gestión de chat */
         $paramChat = $parameters->filter(function ($param) {
             return $param->p_key === 'chat';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de notificaciones */
+        /** @var Parameter Parámetro asociado a la gestión de notificaciones */
         $paramNotify = $parameters->filter(function ($param) {
             return $param->p_key === 'notify';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de banner en reportes */
+        /** @var Parameter Parámetro asociado a la gestión de banner en reportes */
         $paramReportBanner = $parameters->filter(function ($param) {
             return $param->p_key === 'report_banner';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de multiples organismos */
+        /** @var Parameter Parámetro asociado a la gestión de multiples organismos */
         $paramMultiInstitution = $parameters->filter(function ($param) {
             return $param->p_key === 'multi_institution';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de firma electrónica */
+        /** @var Parameter Parámetro asociado a la gestión de firma electrónica */
         $paramDigitalSign = $parameters->filter(function ($param) {
             return $param->p_key === 'digital_sign';
         })->first();
-/** @var Parameter Parámetro asociado a la gestión de mantenimiento de la aplicación */
+        /** @var Parameter Parámetro asociado a la gestión de mantenimiento de la aplicación */
         $paramOnline = $parameters->filter(function ($param) {
             return $param->p_key === 'online';
         })->first();
 
-/** @var array Arreglo con atributos del formulario para la configuración de parámetros */
+        /** @var array Arreglo con atributos del formulario para la configuración de parámetros */
         $header_parameters = [
             'route' => 'settings.store', 'method' => 'POST', 'role' => 'form', 'class' => 'form',
         ];
-/** @var Institution|null Objeto con información del organismo. Por defecto el valos es nulo */
+        /** @var Institution|null Objeto con información del organismo. Por defecto el valos es nulo */
         $model_institution = $id;
 
-/** @var array Arreglo con atributos del formulario para la configuración de organismos */
+        /** @var array Arreglo con atributos del formulario para la configuración de organismos */
         $header_institution = [
             'route' => 'institutions.store', 'method' => 'POST', 'role' => 'form', 'class' => 'form',
             'enctype' => 'multipart/form-data',
         ];
 
-/** @var array Arreglo con información de los organismos de adscripción */
+        /** @var array Arreglo con información de los organismos de adscripción */
         $organism_adscripts = (!is_null($model_institution)) ? template_choices(
             Institution::class,
             'name',
@@ -218,23 +218,23 @@ class SettingController extends Controller
             $model_institution->id
         ) : ['' => 'Seleccione...'];
 
-/** @var Institution Objeto con información de los organismos registrados */
+        /** @var Institution Objeto con información de los organismos registrados */
         $institutions = Institution::all();
-/** @var Country Objeto con información de los Países registrados */
+        /** @var Country Objeto con información de los Países registrados */
         $countries = template_choices(Country::class);
-/** @var Estate Objeto con información de los Estados registrados */
+        /** @var Estate Objeto con información de los Estados registrados */
         $estates = template_choices(Estate::class);
-/** @var Municipality Objeto con información de los Municipios registrados */
+        /** @var Municipality Objeto con información de los Municipios registrados */
         $municipalities = template_choices(Municipality::class);
-/** @var Parish Objeto con información de las Parroquias registradas */
+        /** @var Parish Objeto con información de las Parroquias registradas */
         $parishes = template_choices(Parish::class);
-/** @var City Objeto con información de las Ciudades registradas */
+        /** @var City Objeto con información de las Ciudades registradas */
         $cities = template_choices(City::class);
-/** @var InstitutionSector Objeto con información de los sectores de organismos */
+        /** @var InstitutionSector Objeto con información de los sectores de organismos */
         $sectors = template_choices(InstitutionSector::class);
-/** @var InstitutionType Objeto con información de los tipos de organismos */
+        /** @var InstitutionType Objeto con información de los tipos de organismos */
         $types = template_choices(InstitutionType::class);
-/** @var array Arreglo con los nombres de las redes sociales más comúnes */
+        /** @var array Arreglo con los nombres de las redes sociales más comúnes */
         $social_networks = [
             'facebook', 'twitter', 'linkedin', 'instagram', 'youtube', 'telegram',
         ];
