@@ -72,6 +72,10 @@ class CurrenciesTableSeeder extends Seeder
                 ['country_id' => $country->id, 'symbol' => 'Pt'],
                 ['name' => 'Petro', 'default' => false, 'deleted_at' => null]
             );
+            Currency::withTrashed()->updateOrCreate(
+                ['country_id' => $country->id, 'symbol' => 'BsD'],
+                ['name' => 'Bolívar Digital', 'default' => false, 'deleted_at' => null]
+            );
 
             foreach ($permissions as $permission) {
                 $per = Permission::updateOrCreate(
