@@ -4,7 +4,7 @@
             <div v-html="props.row.description"></div>
         </div>
         <div slot="compromised_at" slot-scope="props" class="text-center">
-            {{ format_date(props.row.compromised_at) }}
+            {{  new Date(props.row.compromised_at).toLocaleDateString('en-GB', {timeZone: 'UTC'}) }}
         </div>
         <div slot="code" slot-scope="props" class="text-center">
             {{ props.row.code }}
