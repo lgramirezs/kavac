@@ -111,7 +111,7 @@
 				const vm = this;
 				vm.errors = [];
             	var fields = {};
-            	var url = `${window.app_url}/requests/vue-info/${this.requestid}`;
+            	var url = `${window.app_url}/asset/requests/vue-info/${this.requestid}`;
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
 						fields = response.data.records;
