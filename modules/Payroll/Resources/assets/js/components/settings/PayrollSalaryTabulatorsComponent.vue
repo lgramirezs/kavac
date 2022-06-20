@@ -199,9 +199,9 @@
                                             <div class="form-group is-required">
                                                 <label>Escalafón horizontal:</label>
                                                 <select2 :id="record.payroll_horizontal_salary_scale_id + '_h'"
-                                                        class="form-control select2"
-                                                        @change="isDisable('horizontal');loadSalaryScales('horizontal')"
-                                                        v-model="record.payroll_horizontal_salary_scale_id" :options="payroll_horizontal_salary_scales">
+                                                        class="form-control" v-model="record.payroll_horizontal_salary_scale_id"
+                                                        :options="payroll_horizontal_salary_scales" @input="isDisable('horizontal');
+                                                        loadSalaryScales('horizontal')">
                                                 </select2>
                                             </div>
                                             <!-- ./escalafón horizontal -->
@@ -211,9 +211,9 @@
                                             <div class="form-group is-required">
                                                 <label>Escalafón vertical:</label>
                                                 <select2 :id="record.payroll_vertical_salary_scale_id + '_v'"
-                                                        class="form-control select2"
-                                                        @change="isDisable('vertical');loadSalaryScales('vertical')"
-                                                        v-model="record.payroll_vertical_salary_scale_id" :options="payroll_vertical_salary_scales">
+                                                        class="form-control" v-model="record.payroll_vertical_salary_scale_id"
+                                                        :options="payroll_vertical_salary_scales" @input="isDisable('vertical');
+                                                        loadSalaryScales('vertical')">
                                                 </select2>
                                             </div>
                                             <!-- ./escalafón vertical -->
@@ -579,6 +579,7 @@
              * Método que permite habilitar/deshabilitar las opciones de los escalafones salariales
              *
              * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
              *
              * @param     {string}     ladder    Escalafón que invoco el método
              */
@@ -586,19 +587,33 @@
                 const vm = this;
                 if (ladder == 'horizontal') {
                     $.each(vm.payroll_vertical_salary_scales, function(index, field) {
-                        if ((field.id == vm.record.payroll_horizontal_salary_scale_id)
-                            && (vm.record.payroll_horizontal_salary_scale_id != '')) {
-                            $('#' + field.id + '_v').prop("disabled", true);
-                        } else
-                            $('#' + field.id + '_v').prop("disabled", false);
+                        let esc = document.getElementById(vm.record.payroll_vertical_salary_scale_id + '_v')
+                        if (Object.values(esc.options)[index]) {
+                            let escvalue = Object.values(esc.options)[index].value;
+                            if ((escvalue == vm.record.payroll_horizontal_salary_scale_id)
+                                && (vm.record.payroll_horizontal_salary_scale_id != '')) {
+                                if (escvalue == field.id) {
+                                    $(Object.values(esc.options)[index]).prop("disabled", 'disabled');
+                                }
+                            } else {
+                                $(Object.values(esc.options)[index]).prop("disabled", false);
+                            }
+                        }
                     })
                 } else {
                     $.each(vm.payroll_horizontal_salary_scales, function(index, field) {
-                        if ((field.id == vm.record.payroll_vertical_salary_scale_id)
-                            && (vm.record.payroll_vertical_salary_scale_id != '')) {
-                            $('#' + field.id + '_h').prop("disabled", true);
-                        } else
-                            $('#' + field.id + '_h').prop("disabled", false);
+                        let esc = document.getElementById(vm.record.payroll_horizontal_salary_scale_id + '_h')
+                        if (Object.values(esc.options)[index]) {
+                            let escvalue = Object.values(esc.options)[index].value;
+                            if ((escvalue == vm.record.payroll_vertical_salary_scale_id)
+                                && (vm.record.payroll_vertical_salary_scale_id != '')) {
+                                if (escvalue == field.id) {
+                                    $(Object.values(esc.options)[index]).prop("disabled", 'disabled');
+                                }
+                            } else {
+                                $(Object.values(esc.options)[index]).prop("disabled", false);
+                            }
+                        }
                     })
                 }
             },

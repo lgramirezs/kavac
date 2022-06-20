@@ -275,7 +275,7 @@
 				if (vm.record.type_report == 'dependence') {
 					return false;
 				}
-				var url = `${window.app_url}/asset/reports/${vm.record.type_report}/show/${vm.record.code}`;
+				var url = `${window.app_url}/asset/reports/general/show/${vm.record.code}`;
 				window.open(url, '_blank');
 				if ($("#" + modal_id).length) {
 					$("#" + modal_id).modal('hide');

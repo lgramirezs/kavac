@@ -4,8 +4,8 @@
         <i class="icofont icofont-ui-password"></i><span> Firma Electrónica </span>
     </a>
     <ul class="submenu" style="{!! display_submenu('digitalsignature') !!}">
-    	@role('admin')
+        @role(['admin','digitalsignature'])
             <li> <a href="{{ route('digitalsignature') }}"> Gestión y firmado </a> </li>
-	    @endrole
+        @endrole
     </ul>
 </li>
