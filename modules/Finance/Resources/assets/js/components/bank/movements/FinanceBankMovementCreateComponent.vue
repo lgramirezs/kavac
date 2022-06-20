@@ -100,7 +100,7 @@
             </div>
             <br>
             <!-- Sección de asiento contable -->
-            <div v-if="accounting == 1">
+            <div v-if="accounting == 1 && record.currency_id">
                 <div class="row">
                     <div class="col-12 mb-4">
                         <h6>Datos del asiento contable</h6>
@@ -510,10 +510,10 @@
                                                            data.accounting_entry_pivot.accounting_entry.accounting_entry_category_id :
                                                            '';
                         vm.record.institution_id = data.institution_id;
-                        vm.record.totDebit = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                        vm.record.totDebit = data.accounting_entry_pivot && vm.addDecimals(data.accounting_entry_pivot.accounting_entry) ?
                                                        data.accounting_entry_pivot.accounting_entry.tot_debit :
                                                        '';
-                        vm.record.totAssets = data.accounting_entry_pivot && data.accounting_entry_pivot.accounting_entry ?
+                        vm.record.totAssets = data.accounting_entry_pivot && vm.addDecimals(data.accounting_entry_pivot.accounting_entry) ?
                                                        data.accounting_entry_pivot.accounting_entry.tot_assets :
                                                        '';
 
@@ -667,8 +667,8 @@
                     }
                 }
 
-                this.record.totDebit = this.data.totDebit;
-                this.record.totAssets = this.data.totAssets;
+                this.record.totDebit = this.data.totDebit.toFixed(2);
+                this.record.totAssets = this.data.totAssets.toFixed(2);
             },
 
             /**
