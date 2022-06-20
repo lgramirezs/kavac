@@ -4,7 +4,7 @@
 			{{ props.row.institution.acronym }}
 		</div>
 		<div slot="approved_at" slot-scope="props">
-			{{ format_date(props.row.approved_at) }}
+			{{ format_date(props.row.approved_at, 'DD/MM/YYYY') }}
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<button @click="editForm(props.row.id)" data-placement="bottom"
@@ -62,6 +62,20 @@
 			reset() {
 
 			},
+			/**
+	         * Método que permite dar formato a una fecha
+	         *
+	         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+	         * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+	         *
+	         * @param  {string} value  Fecha ser formateada
+	         * @param  {string} format Formato de la fecha
+	         *
+	         * @return {string}       Fecha con el formato establecido
+	         */
+			format_date: function(value, format = 'DD/MM/YYYY') {
+	            return moment.utc(value).format(format);
+	        },
 		}
 	};
 </script>
