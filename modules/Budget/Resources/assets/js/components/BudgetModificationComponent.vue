@@ -407,6 +407,21 @@
 				this.to_amount = 0;
 			},
 			/**
+	         * Método que permite dar formato a una fecha
+	         *
+	         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+	         * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+	         *
+	         * @param  {string} value  Fecha ser formateada
+	         * @param  {string} format Formato de la fecha
+	         *
+	         * @return {string}       Fecha con el formato establecido
+	         */
+			format_date: function(value, format = 'DD/MM/YYYY') {
+	            return moment.utc(value).format(format);
+	        },
+
+			/**
 			 * Carga los datos para ser editados
 			 *
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
@@ -414,10 +429,14 @@
 			loadEditData: function() {
 				let vm = this;
 				let editData = JSON.parse(vm.edit_object);
-				vm.record.approved_at = vm.format_date(editData.approved_at);
-				vm.record.institution_id = editData.institution_id;
+
+				vm.record.approved_at = vm.format_date(editData.approved_at, 'YYYY-MM-DD');
 				vm.record.document = editData.document;
 				vm.record.description = editData.description;
+                const timeOpen = setTimeout(addInstitutionId, 500);
+                function addInstitutionId () {
+                    vm.record.institution_id = editData.institution_id;
+                }
 
 				let array_accounts = [];
 
@@ -441,14 +460,15 @@
 
 				var i = 0;
 				$.each(editData.budget_modification_accounts, function(index, account) {
-					var sp = account.budget_sub_specific_formulation.specificAction;
+					console.log(account)
+					var sp = account.budget_sub_specific_formulation.specific_action;
 					var spac_desc = `${sp.specificable.code} - ${sp.code} | ${sp.name}`;
-					var acc = account.budgetAccount;
+					var acc = account.budget_account;
 					var code = `${acc.group}.${acc.item}.${acc.generic}.${acc.specific}.${acc.subspecific}`;
-					if (account.operation === "D") {
+					if (account.operation === "D" || (account.operation === "I" && vm.type_modification !== "TR")) {
 						from_add.spac_description = spac_desc;
 						from_add.code = code;
-						from_add.description = account.budgetAccount.denomination;
+						from_add.description = account.budget_account.denomination;
 						from_add.amount = account.amount;
 						from_add.account_id = acc.id;
 						from_add.specific_action_id = sp.id;
@@ -456,7 +476,7 @@
 					else {
 						to_add.spac_description = spac_desc;
 						to_add.code = code;
-						to_add.description = account.budgetAccount.denomination;
+						to_add.description = account.budget_account.denomination;
 						to_add.amount = account.amount;
 						to_add.account_id = acc.id;
 						to_add.specific_action_id = sp.id;
@@ -481,7 +501,6 @@
 					}
 
 				});
-
 				vm.modification_accounts = array_accounts;
 			},
 			/**
