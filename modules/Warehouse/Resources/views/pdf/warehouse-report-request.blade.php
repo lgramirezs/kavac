@@ -7,12 +7,11 @@
         <th width="15%">Valor Unitario</th>
         <th width="15%">Inventario despues de entrega</th>
     </tr>
-
     @foreach($fields as $field)
         <tr>
             <td width="15%"> {{ $field->warehouseRequest && $field->warehouseRequest->payrollStaff
                 ? $field->warehouseRequest->payrollStaff->full_name
-                : 'N/A' }} </td>
+                : $field->warehouseRequest->department->name }} </td>
             <td width="15%"> {{ date_format($field->created_at, "d/m/Y") }} </td>
             <td width="25%"> {{ $field->warehouseInventoryProduct
                 ? $field->warehouseInventoryProduct->warehouseProduct->name

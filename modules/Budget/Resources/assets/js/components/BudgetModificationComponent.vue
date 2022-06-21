@@ -433,7 +433,7 @@
 				vm.record.approved_at = vm.format_date(editData.approved_at, 'YYYY-MM-DD');
 				vm.record.document = editData.document;
 				vm.record.description = editData.description;
-                const timeOpen = setTimeout(addInstitutionId, 500);
+                const timeOpen = setTimeout(addInstitutionId, 1000);
                 function addInstitutionId () {
                     vm.record.institution_id = editData.institution_id;
                 }
@@ -460,7 +460,6 @@
 
 				var i = 0;
 				$.each(editData.budget_modification_accounts, function(index, account) {
-					console.log(account)
 					var sp = account.budget_sub_specific_formulation.specific_action;
 					var spac_desc = `${sp.specificable.code} - ${sp.code} | ${sp.name}`;
 					var acc = account.budget_account;

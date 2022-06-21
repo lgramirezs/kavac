@@ -292,7 +292,7 @@ class FinanceMovementsController extends Controller
                         'document_number' => $codeMovement,
                         'institution_id' => $request->institution_id,
                         'compromised_at' => $request->payment_date,
-                        'description' => '',
+                        'description' => $request->concept,
                         'code' => $code,
                         'document_status_id' => $documentStatus->id,
                         'compromiseable_type' => FinanceBankingMovement::class,
