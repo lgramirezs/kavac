@@ -99,24 +99,20 @@
              * @param     integer  id        Identificador del registro seleccionado
              * @param     object  var_list  Objeto con las variables y valores a asignar en las variables del componente
              */
-            setDetails(ref, id, modal ,var_list = null) {
+              setDetails(ref, id, modal ,var_list = null) {
                 const vm = this;
                 if (var_list) {
                     for(var i in var_list){
                         vm.$refs[ref][i] = var_list[i];
                     }
                 }else{
-					setTimeout(()=> {vm.$refs[ref].record = vm.$refs.tableResultsTransfer.data.filter(r => {
+                    vm.$refs[ref].record = vm.$refs.tableResultsTransfer.data.filter(r => {
                         return r.id === id;
                     })[0];
-
-					} ,2000)
-                    
-					console.log(vm.$refs[ref].record)
-                }
+                }    
                 vm.$refs[ref].id = id;
-
-                $(`#${modal}`).modal('show');
+           
+               $(`#${modal}`).modal('show');
 			},
 		}
 	};

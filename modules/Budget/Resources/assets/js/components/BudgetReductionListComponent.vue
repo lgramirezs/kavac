@@ -100,7 +100,6 @@
              * @param     object  var_list  Objeto con las variables y valores a asignar en las variables del componente
              */
             setDetails(ref, id, modal ,var_list = null) {
-                console.log("djksajakhdkawj");
                 const vm = this;
                 if (var_list) {
                     for(var i in var_list){
@@ -110,7 +109,6 @@
                     vm.$refs[ref].record = vm.$refs.tableResultsReduction.data.filter(r => {
                         return r.id === id;
                     })[0];
-					console.log(vm.$refs[ref].record)
                 }    
                 vm.$refs[ref].id = id;
            
