@@ -1,6 +1,11 @@
 <template>
     <div class="col-xs-2 text-center">
-        <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de ramas de proveedores" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_branch', '/purchase/supplier-branches', $event)">
+        <a class="btn-simplex btn-simplex-md btn-simplex-primary" 
+            href="#" 
+            title="Registros de ramas de proveedores" 
+            data-toggle="tooltip" 
+            v-has-tooltip 
+            @click="addRecord('add_branch', '/purchase/supplier-branches', $event)">
             <i class="icofont icofont-cubes ico-3x"></i>
             <span>Ramas de<br>Proveedor</span>
         </a>
