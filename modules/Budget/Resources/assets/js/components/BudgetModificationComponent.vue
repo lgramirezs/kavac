@@ -15,7 +15,7 @@
 							   title="Fecha en la que se aprobó la modificación presupuestaria">
 					</div>
 				</div>
-				<div class="col-md-6" id="institution_id">
+				<div class="col-md-6" id="institution_id" v-if="institutions.length > 0">
 					<div class="form-group is-required">
 						<label class="control-label" for="institution_id">Institución</label>
 						<select2 :options="institutions" v-model="record.institution_id"></select2>
@@ -433,10 +433,7 @@
 				vm.record.approved_at = vm.format_date(editData.approved_at, 'YYYY-MM-DD');
 				vm.record.document = editData.document;
 				vm.record.description = editData.description;
-                const timeOpen = setTimeout(addInstitutionId, 1000);
-                function addInstitutionId () {
-                    vm.record.institution_id = editData.institution_id;
-                }
+                vm.record.institution_id = editData.institution_id;
 
 				let array_accounts = [];
 
