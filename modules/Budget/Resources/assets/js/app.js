@@ -72,6 +72,54 @@ Vue.component('budget-specific-actions-list', () =>
 );
 
 /**
+ * Componente para detallar la información de acciones específicas
+ *
+ * @author Jesús Paredes <danielparedessotillo13@gmail.com>
+ */
+ Vue.component('budget-modification-list-data', () =>
+ import(
+	 /* webpackChunkName: "budget-modification-list-data" */
+	 './components/BudgetModificationListComponentsData.vue'
+ )
+);
+
+/**
+ * Componente para detallar la información de acciones específicas
+ *
+ * @author Oscar Gonzales <>
+ */
+ Vue.component('budget-modification-list-reduction', () =>
+ import(
+	 /* webpackChunkName: "budget-modification-list-reduction" */
+	 './components/BudgetReductionListComponent.vue'
+ )
+);
+Vue.component('budget-reduction-modal', () =>
+import(
+	/* webpackChunkName: "budget-reduction-modal" */
+	'./components/BudgetReductionListModelComponents.vue'
+)
+);
+
+/**
+ * Componente para detallar la información de acciones específicas
+ *
+ * @author Daniel Ordaz <danielordaz61@gmail.com>
+ */
+ Vue.component('budget-modification-list-transfer', () =>
+ import(
+	 /* webpackChunkName: "budget-modification-list-transfer" */
+	 './components/BudgetTransferListComponent.vue'
+ )
+);
+Vue.component('budget-transfer-modal', () =>
+import(
+	/* webpackChunkName: "budget-transfer-modal" */
+	'./components/BudgetTransferListModelComponents.vue'
+)
+);
+
+/**
  * Componente para mostrar listado de formulaciones de presupuesto
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>

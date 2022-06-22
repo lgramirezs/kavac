@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResults">
+		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResultsTransfer">
 			<div slot="institution" slot-scope="props">
 				{{ props.row.institution.acronym }}
 			</div>
@@ -9,7 +9,7 @@
 			</div>
 			<div slot="id" slot-scope="props" class="text-center">
 				<button
-					@click.prevent="setDetails('BudgetSpecificData', props.row.id, 'BudgetSpecificDataModalLabel')"
+					@click.prevent="setDetails('BudgetTransferListModel', props.row.id, 'BudgetTransferListModel')"
 					class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
 					title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
 					<i class="fa fa-eye"></i>
@@ -27,9 +27,9 @@
 				</button>
 			</div>
 		</v-client-table>
-			<budget-modification-list-data
-				ref="BudgetSpecificData">
-			</budget-modification-list-data>
+			<budget-transfer-modal
+				ref="BudgetTransferListModel">
+			</budget-transfer-modal>
 	</section>
 </template>
 
@@ -66,7 +66,7 @@
 		},
 		methods: {
 			/**
-			 * Inicializa los datos del formulario
+			 * Inicializa los daudgetSpecificDattos del formulario
 			 *tableResults
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
 			 */
@@ -106,9 +106,12 @@
                         vm.$refs[ref][i] = var_list[i];
                     }
                 }else{
-                    vm.$refs[ref].record = vm.$refs.tableResults.data.filter(r => {
+					setTimeout(()=> {vm.$refs[ref].record = vm.$refs.tableResultsTransfer.data.filter(r => {
                         return r.id === id;
                     })[0];
+
+					} ,2000)
+                    
 					console.log(vm.$refs[ref].record)
                 }
                 vm.$refs[ref].id = id;
