@@ -47,7 +47,6 @@ export default {
             records: [],
             columns: [
                 'purchase_supplier.name',
-                'purchase_supplier.purchase_supplier_object',
                 'currency.name',
                 'id'
             ],
@@ -56,13 +55,11 @@ export default {
     created() {
         this.table_options.headings = {
             'purchase_supplier.name': 'Proveedor',
-            'purchase_supplier.purchase_supplier_object': 'tipo de proveedor',
             'currency.name': 'tipo de moneda',
             'id': 'ACCIÓN'
         };
         this.table_options.columnsClasses = {
             'purchase_supplier.name': 'col-xs-3',
-            'purchase_supplier.purchase_supplier_object': 'col-xs-5 text-center',
             'currency.name': 'col-xs-3 text-center',
             'id': 'col-xs-1'
         };
