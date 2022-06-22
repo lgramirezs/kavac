@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResults">
+		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableResultsReduction">
 			<div slot="institution" slot-scope="props">
 				{{ props.row.institution.acronym }}
 			</div>
@@ -9,7 +9,7 @@
 			</div>
 			<div slot="id" slot-scope="props" class="text-center">
 				<button
-					@click.prevent="setDetails('BudgetSpecificData', props.row.id, 'BudgetSpecificDataModalLabel')"
+					@click.prevent="setDetails('Budget', props.row.id, 'Budget')"
 					class="btn btn-info btn-xs btn-icon btn-action btn-tooltip"
 					title="Ver registro" data-toggle="tooltip" data-placement="bottom" type="button">
 					<i class="fa fa-eye"></i>
@@ -17,9 +17,9 @@
 				<button @click="editForm(props.row.id)" data-placement="bottom"
 						class="btn btn-warning btn-xs btn-icon"
 						title="Modificar registro" data-toggle="tooltip" type="button">
-					<i class="fa fa-edit"></i>
+					<i class="fa fa-trash-o"></i>
 				</button>
-				<button @click="deleteRecord(props.index, '')" data-placement="bottom"
+                <button @click="deleteRecord(props.index, '')" data-placement="bottom"
 						class="btn btn-danger btn-xs btn-icon"
 						title="Eliminar registro" data-toggle="tooltip"
 						type="button">
@@ -27,9 +27,9 @@
 				</button>
 			</div>
 		</v-client-table>
-			<budget-modification-list-data
-				ref="BudgetSpecificData">
-			</budget-modification-list-data>
+			<budget-reduction-modal
+				ref="Budget">
+			</budget-reduction-modal>
 	</section>
 </template>
 
@@ -100,20 +100,24 @@
              * @param     object  var_list  Objeto con las variables y valores a asignar en las variables del componente
              */
             setDetails(ref, id, modal ,var_list = null) {
+                console.log("djksajakhdkawj");
                 const vm = this;
                 if (var_list) {
                     for(var i in var_list){
                         vm.$refs[ref][i] = var_list[i];
                     }
                 }else{
-                    vm.$refs[ref].record = vm.$refs.tableResults.data.filter(r => {
+                    vm.$refs[ref].record = vm.$refs.tableResultsReduction.data.filter(r => {
                         return r.id === id;
                     })[0];
 					console.log(vm.$refs[ref].record)
-                }
+                }    
                 vm.$refs[ref].id = id;
+           
+               $(`#${modal}`).modal('show');
 
-                $(`#${modal}`).modal('show');
+			
+                
 			},
 		}
 	};
