@@ -16,7 +16,7 @@ Vue.component('purchase-supplier-branches', () =>
 Vue.component('purchase-supplier-objects', () =>
     import (
         /* webpackChunkName: "purchase-supplier-objects" */
-        './components/PurchaseSupplierObjectComponent.vue'));
+        './components/PurchaseSupplierObjectsComponent.vue'));
 
 /**
  * Componente para la gestión de las especialidades de proveedores

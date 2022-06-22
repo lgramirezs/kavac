@@ -1,6 +1,11 @@
 <template>
     <div class="col-xs-2 text-center">
-        <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Registros de objetos de proveedores" data-toggle="tooltip" v-has-tooltip @click="addRecord('add_object', '/purchase/supplier-objects', $event)">
+        <a class="btn-simplex btn-simplex-md btn-simplex-primary" 
+            href="#" 
+            title="Registros de objetos de proveedores" 
+            data-toggle="tooltip" 
+            v-has-tooltip 
+            @click="addRecord('add_object', '/purchase/supplier-objects', $event)">
             <i class="icofont icofont-box ico-3x"></i>
             <span>Objetos de<br>Proveedor</span>
         </a>

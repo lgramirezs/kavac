@@ -567,7 +567,7 @@ export default {
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
         });
-        vm.reset();
+        // vm.reset();
     },
     mounted() {
         const vm = this;
