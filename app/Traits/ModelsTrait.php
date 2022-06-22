@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Cache;
+use App\Scopes\OrganismScope;
 
 /**
  * @trait   Trait para la gestión de modelos
@@ -55,6 +56,19 @@ trait ModelsTrait
             Cache::put('deleted_records', $restored);
         });
     }
+
+    /**
+     * Método que establece las condiciones globales una vez el modelo este cargado
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new OrganismScope);
+    }
+
     /**
      * Método que escanea todos los modelos presentes en la aplicación
      *
