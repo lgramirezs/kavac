@@ -34,9 +34,9 @@ class WarehouseProductExport extends \App\Exports\DataExport implements
     public function headings(): array
     {
         return [
-            'id',
+            'Identificador del insumo',
             'Nombre del insumo',
-            'Descripción',
+            'Descripción del insumo',
             'Identificador de la unidad de medida',
             'Nombre de la unidad de medida',
             'Acrónimo de la unidad de medida',
@@ -61,7 +61,7 @@ class WarehouseProductExport extends \App\Exports\DataExport implements
         return [
             $warehouseProduct->id,
             $warehouseProduct->name,
-            strip_tags($warehouseProduct->description),
+            htmlspecialchars_decode(strip_tags($warehouseProduct->description)),
             $warehouseProduct->measurementUnit->id,
             $warehouseProduct->measurementUnit->name,
             $warehouseProduct->measurementUnit->acronym,

@@ -200,6 +200,7 @@
                         <h6>Datos del compromiso</h6>
                     </div>
                 </div>
+                <h6 class="text-center card-title">Cuentas presupuestarias de gastos</h6>
                 <div class="row">
                     <div class="col-md-12 pad-top-20 table-responsive">
                         <table class="table table-hover table-striped">
@@ -241,89 +242,123 @@
                         </table>
                     </div>
                 </div>
-                <!-- Modal para agregar cuentas presupuestarias -->
-                <div class="modal fade" tabindex="-1" role="dialog" id="add_account">
-                    <div class="modal-dialog vue-crud" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <h6>
-                                    <i class="ion-arrow-graph-up-right"></i>
-                                    Agregar cuentas
-                                </h6>
-                            </div>
-                            <div class="modal-body">
-                                <div class="alert alert-danger" v-if="errors.length > 0">
-                                    <div class="container">
-                                        <div class="alert-icon">
-                                            <i class="now-ui-icons objects_support-17"></i>
+                <div class="pad-top-40">
+                    <h6 class="text-center card-title">Cuentas presupuestarias de impuestos</h6>
+                    <div class="row">
+                        <div class="col-md-12 pad-top-20">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="col-2 text-uppercase">CÓDIGO</th>
+                                        <th class="col-2 text-uppercase">CUENTA</th>
+                                        <th class="col-3 text-uppercase">CÓDIGO ACCIÓN ESPECÍFICA</th>
+                                        <th class="col-2 text-uppercase">DESCRIPCIÓN</th>
+                                        <th class="col-2 text-uppercase">MONTO</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(tax_account, index) in record.tax_accounts" :key="index">
+                                        <td class="text-center">{{ tax_account.pro_code }}</td>
+                                        <td class="text-center">{{ tax_account.code }}</td>
+                                        <td class="text-center">{{ tax_account.sp_acc_code }}</td>
+                                        <td class="text-center">{{ tax_account.description }}</td>
+                                        <td class="text-center">{{ formatToCurrency(tax_account.amount, '') }}</td>
+                                        <td class="text-center">
+                                            <input type="hidden" name="account_id[]" readonly
+                                                   :value="tax_account.specific_action_id + '|' + tax_account.account_id">
+                                            <input type="hidden" name="budget_tax_account_amount[]" readonly
+                                                   :value="tax_account.amount">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Modal para agregar cuentas presupuestarias -->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="add_account">
+                        <div class="modal-dialog vue-crud" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h6>
+                                        <i class="ion-arrow-graph-up-right"></i>
+                                        Agregar cuentas
+                                    </h6>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-danger" v-if="errors.length > 0">
+                                        <div class="container">
+                                            <div class="alert-icon">
+                                                <i class="now-ui-icons objects_support-17"></i>
+                                            </div>
+                                            <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                                    @click.prevent="errors = []">
+                                                <span aria-hidden="true">
+                                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                </span>
+                                            </button>
+                                            <ul>
+                                                <li v-for="error in errors" :key="error">{{ error }}</li>
+                                            </ul>
                                         </div>
-                                        <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-                                                @click.prevent="errors = []">
-                                            <span aria-hidden="true">
-                                                <i class="now-ui-icons ui-1_simple-remove"></i>
-                                            </span>
-                                        </button>
-                                        <ul>
-                                            <li v-for="error in errors" :key="error">{{ error }}</li>
-                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group is-required">
+                                                <label>Acción Específica:</label>
+                                                <select2 :options="specific_actions"
+                                                         @input="getAccounts"
+                                                         v-model="specific_action_id"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group is-required">
+                                                <label>Cuenta:</label>
+                                                <select2 :options="accounts" v-model="account_id"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Concepto:</label>
+                                                <input type="text" class="form-control input-sm" data-toggle="tooltip"
+                                                       v-model="account_concept"
+                                                       title="Indique el concepto de la cuenta presupuestaria a agregar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 mt-4">
+                                            <div class="form-group is-required">
+                                                <label>Monto:</label>
+                                                <input type="number" onfocus="$(this).select()"
+                                                       class="form-control input-sm"
+                                                       data-toggle="tooltip"
+                                                       title="Indique el monto a asignar para la cuenta seleccionada"
+                                                       v-model="account_amount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-4">
+                                            <div class="form-group">
+                                                <label>Impuesto:</label>
+                                                <select2 :options="taxes" v-model="account_tax_id"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group is-required">
-                                            <label>Acción Específica:</label>
-                                            <select2 :options="specific_actions"
-                                                     @input="getAccounts"
-                                                     v-model="specific_action_id"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group is-required">
-                                            <label>Cuenta:</label>
-                                            <select2 :options="accounts" v-model="account_id"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>Concepto:</label>
-                                            <input type="text" class="form-control input-sm" data-toggle="tooltip"
-                                                   v-model="account_concept"
-                                                   title="Indique el concepto de la cuenta presupuestaria a agregar">
-                                        </div>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
+                                            data-dismiss="modal">
+                                        Cerrar
+                                    </button>
+                                    <button type="button" @click="addAccount"
+                                            class="btn btn-primary btn-sm btn-round btn-modal-save">
+                                        Agregar
+                                    </button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-3 mt-4">
-                                        <div class="form-group is-required">
-                                            <label>Monto:</label>
-                                            <input type="number" onfocus="$(this).select()"
-                                                   class="form-control input-sm"
-                                                   data-toggle="tooltip"
-                                                   title="Indique el monto a asignar para la cuenta seleccionada"
-                                                   v-model="account_amount">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mt-4">
-                                        <div class="form-group">
-                                            <label>Impuesto:</label>
-                                            <select2 :options="taxes" v-model="account_tax_id"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-                                        data-dismiss="modal">
-                                    Cerrar
-                                </button>
-                                <button type="button" @click="addAccount"
-                                        class="btn btn-primary btn-sm btn-round btn-modal-save">
-                                    Agregar
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -383,6 +418,7 @@
                     entry_category: '',
                     institution_id: '',
                     accounts: [],
+                    tax_accounts: [],
                     totDebit: 0,
                     totAssets: 0,
                 },
@@ -421,6 +457,7 @@
                     {'id' : 'Nota de débito', 'text' : 'Nota de débito'}
                 ],
                 taxes: [{'id': '', 'text': 'Seleccione...'}],
+                taxesData: [],
                 specific_actions: [],
                 specific_action_id: '',
                 account_id: '',
@@ -465,6 +502,7 @@
             }
             this.record.recordsAccounting = [];
             this.record.accounts = [];
+            this.record.tax_accounts = [];
         },
 
         mounted() {
@@ -543,6 +581,32 @@
                                     pro_code: compromise_details.budget_sub_specific_formulation.specific_action.specificable.code,
                                     sp_acc_code: compromise_details.budget_sub_specific_formulation.specific_action.code
                                 });
+
+                                if (compromise_details.tax_id) {
+                                    let tax;
+                                    let tax_percentage;
+                                    let tax_description;
+                                    for (tax of vm.taxesData){
+                                        if (compromise_details.tax_id && compromise_details.tax_id == tax.id) {
+                                            tax_description = tax.description;
+                                            tax_percentage = tax.histories[0].percentage;
+                                        }
+                                    }
+
+                                    vm.record.tax_accounts.push({
+                                        spac_description: `${compromise_details.budget_sub_specific_formulation.specific_action.specificable.code}-
+                                                           ${compromise_details.budget_sub_specific_formulation.specific_action.code} |
+                                                           ${compromise_details.budget_sub_specific_formulation.specific_action.name}`,
+                                        code: compromise_details.budget_account.code,
+                                        description: compromise_details.description,
+                                        amount: compromise_details.amount * tax_percentage / 100,
+                                        specific_action_id: compromise_details.budget_sub_specific_formulation.budget_specific_action_id,
+                                        account_id: compromise_details.budget_account_id,
+                                        tax_id: compromise_details.tax_id ? compromise_details.tax_id : '',
+                                        pro_code: compromise_details.budget_sub_specific_formulation.specific_action.specificable.code,
+                                        sp_acc_code: compromise_details.budget_sub_specific_formulation.specific_action.code
+                                    });
+                                }
                             }
                         }
                     }
@@ -878,6 +942,30 @@
                         'pro_code': specificAction.specificable.code,
                         'sp_acc_code': specificAction.code
                     });
+
+                    if (vm.account_tax_id) {
+                        let tax;
+                        let tax_percentage;
+                        let tax_description;
+                        for (tax of vm.taxesData){
+                            if (vm.account_tax_id == tax.id) {
+                                tax_description = tax.description;
+                                tax_percentage = tax.histories[0].percentage;
+                            }
+                        }
+
+                        vm.record.tax_accounts.push({
+                            'spac_description': `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                            'code': account.code,
+                            'description': tax_description,
+                            'amount': vm.account_amount * tax_percentage / 100,
+                            'specific_action_id': vm.specific_action_id,
+                            'account_id': vm.account_id,
+                            'tax_id': vm.account_tax_id,
+                            'pro_code': specificAction.specificable.code,
+                             'sp_acc_code': specificAction.code
+                        });
+                    }
 
                     bootbox.confirm({
                         title: "Agregar cuenta",
