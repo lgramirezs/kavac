@@ -271,7 +271,7 @@ class PurchaseDirectHireController extends Controller
             'code'
         );
 
-        DB::transaction(function () use ($request, $upDoc, $codeDirectHire) {
+        // DB::transaction(function () use ($request, $upDoc, $codeDirectHire) {
 
             $data = $request->all();
             $data['code'] = $codeDirectHire;
@@ -408,7 +408,7 @@ class PurchaseDirectHireController extends Controller
                 'type' => 'PRE',
                 'amount' => $total,
             ]);
-        });
+        // });
         return response()->json(['message' => 'Success'], 200);
     }
 

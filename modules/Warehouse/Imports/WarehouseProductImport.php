@@ -16,30 +16,30 @@ class WarehouseProductImport extends \App\Imports\DataImport implements
     */
     public function model(array $row)
     {
-        if (empty($row['measurement_unit_id']) || is_null($row['measurement_unit_id'])) {
+        if (empty($row['identificador_de_la_unidad_de_medida']) || is_null($row['identificador_de_la_unidad_de_medida'])) {
             /** @var array Datos de la unidad de medida a la cual asociar la información del producto */
             $dataMeasurementUnit = [
-                'name'        => $row['measurement_unit'],
-                'acronym'     => $row['measurement_unit_acronym'],
-                'description' => $row['measurement_unit_description']
+                'name'        => $row['nombre_de_la_unidad_de_medida'],
+                'acronym'     => $row['acronimo_de_la_unidad_de_medida'],
+                'description' => $row['descripcion_de_la_unidad_de_medida']
             ];
             /** @var object Crea la nueva unidad de medida a ser asociado el producto */
             $measurementUnit = MeasurementUnit::create($dataMeasurementUnit);
         } else {
             /** @var object Contiene los datos de la unidad de medida asociada al producto */
-            $measurementUnit = MeasurementUnit::find($row['measurement_unit_id']);
+            $measurementUnit = MeasurementUnit::find($row['identificador_de_la_unidad_de_medida']);
         }
 
         /** @var array Datos de los productos a importar */
         $data = [
-            'name'                => $row['name'],
-            'description'         => $row['description'],
+            'name'                => $row['nombre_del_insumo'],
+            'description'         => $row['descripcion_del_insumo'],
             'measurement_unit_id' => $measurementUnit->id
         ];
 
-        if (!empty($row['id']) || !is_null($row['id'])) {
+        if (!empty($row['identificador_del_insumo']) || !is_null($row['identificador_del_insumo'])) {
             return WarehouseProduct::updateOrCreate(
-                ['id' => $row['id']],
+                ['id' => $row['identificador_del_insumo']],
                 $data
             );
         }

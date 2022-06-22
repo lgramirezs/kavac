@@ -346,7 +346,18 @@
             <!-- ./Firmas autorizadas -->
         </div>
         <div class="card-footer text-right">
-            <buttonsDisplay route_list="/purchase/direct_hire" display="false" />
+            <button type="button" @click="reset()" class="btn btn-default btn-icon btn-round" data-toggle="tooltip"
+				title="Borrar datos del formulario">
+                <i class="fa fa-eraser"></i>
+            </button>
+            <button type="button" @click="redirect_back(url_list)" title="Cancelar y regresar"
+                    class="btn btn-warning btn-icon btn-round" data-toggle="tooltip">
+                <i class="fa fa-ban"></i>
+            </button>
+            <button type="button" @click="createRecord()" class="btn btn-success btn-icon btn-round"
+                    data-toggle="tooltip" title="Guardar registro">
+                <i class="fa fa-save"></i>
+            </button>
         </div>
     </section>
 </template>
@@ -412,6 +423,7 @@ export default {
     },
     data() {
         return {
+            url_list: `${window.app_url}/purchase/direct_hire`,
             errors:[],
             records: [],
             record: {
@@ -567,7 +579,7 @@ export default {
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
         });
-        vm.reset();
+        // vm.reset();
     },
     mounted() {
         const vm = this;
