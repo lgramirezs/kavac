@@ -268,8 +268,7 @@
                 });
             },
             prepareText(text) {
-                return text.substr(3, text.length-4); 
-
+                return text.replace(/(<([^>]+)>)/gi, "");
             },
             exportData() {
                 //instrucciones para exportar registros
