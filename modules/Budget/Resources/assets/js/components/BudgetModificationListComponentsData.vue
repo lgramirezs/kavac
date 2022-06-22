@@ -93,7 +93,6 @@
         },
         created() {
               const vm = this;
-           console.log(vm.record);
         
         },
         methods: {

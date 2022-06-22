@@ -109,7 +109,6 @@
                     vm.$refs[ref].record = vm.$refs.tableResults.data.filter(r => {
                         return r.id === id;
                     })[0];
-					console.log(vm.$refs[ref].record)
                 }
                 vm.$refs[ref].id = id;
 
