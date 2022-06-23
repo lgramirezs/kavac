@@ -20,16 +20,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" v-if="errors.length > 0">
-                                    <div class="alert-icon">
-                        <i class="now-ui-icons objects_support-17"></i>
-                    </div>
-                    <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-                            @click.prevent="errors = []">
-                        <span aria-hidden="true">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                        </span>
-                    </button>
+                            <div class="alert-icon">
+                                <i class="now-ui-icons objects_support-17"></i>
+                        </div>
+                        <strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
+                            <button type="button" class="close"
+                                data-dismiss="alert" aria-label="Close"
+                                @click.prevent="errors = []">
+                                <span aria-hidden="true">
+                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </span>
+                            </button>
                             <ul>
                                 <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                             </ul>
@@ -42,7 +43,8 @@
                                         <div class="pretty p-switch p-fill p-bigger p-toggle">
                                             <input type="checkbox" data-toggle="tooltip"
                                                 title="Indique si el campo está activo"
-                                                v-model="record.headquarters">
+                                                v-model="record.headquarters"
+                                                tabindex="1">
                                             <div class="state p-off">
                                                 <label></label>
                                             </div>
@@ -59,7 +61,8 @@
                                 <div class="form-group is-required">
                                     <label>País:</label>
                                     <select2 :options="countries" @input="getEstates"
-                                        v-model="record.country_id">
+                                        v-model="record.country_id"
+                                        tabindex="2">
                                     </select2>
                                     <input type="hidden" v-model="record.id">
                                 </div>
@@ -67,23 +70,27 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Estado:</label>
-                                    <select2 :options="estates" @input="getCities" v-model="record.estate_id"></select2>
+                                    <select2 :options="estates" @input="getCities"
+                                        tabindex="3" v-model="record.estate_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Ciudad:</label>
-                                    <select2 :options="cities" v-model="record.city_id"></select2>
+                                    <select2 :options="cities"
+                                    tabindex="4" v-model="record.city_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Banco:</label>
-                                    <select2 :options="banks" v-model="record.finance_bank_id"></select2>
+                                    <select2 :options="banks"
+                                    tabindex="5" v-model="record.finance_bank_id"></select2>
                                 </div>
                                 <div class="form-group">
                                     <label>Persona de contacto:</label>
-                                    <input type="text" placeholder="Nombre contacto" data-toggle="tooltip"
+                                    <input type="text" placeholder="Nombre contacto"
+                                        data-toggle="tooltip" tabindex="7"
                                         title="Indique el nombre de la persona de contacto"
                                         class="form-control input-sm" v-model="record.contact_person">
                                 </div>
@@ -91,13 +98,15 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Nombre de agencia:</label>
-                                    <input type="text" placeholder="Nombre agencia" data-toggle="tooltip"
+                                    <input type="text" placeholder="Nombre agencia"
+                                        tabindex="6" data-toggle="tooltip"
                                         title="Indique el nombre de la agencia bancaria (requerido)"
                                         class="form-control input-sm" v-model="record.name">
                                 </div>
                                 <div class="form-group">
                                     <label>Correo de contacto:</label>
-                                    <input type="text" placeholder="Nombre contacto" data-toggle="tooltip"
+                                    <input type="text" placeholder="Nombre contacto"
+                                        tabindex="8" data-toggle="tooltip"
                                         title="Indique el correo de la persona de contacto"
                                         class="form-control input-sm" v-model="record.contact_email">
                                 </div>
@@ -105,7 +114,8 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Dirección:</label>
-                                    <ckeditor :editor="ckeditor.editor" id="direction" data-toggle="tooltip"
+                                    <ckeditor :editor="ckeditor.editor"
+                                        tabindex="9" id="direction" data-toggle="tooltip"
                                         title="Indique la dirección de la agencia bancaria"
                                         :config="ckeditor.editorConfig" class="form-control" name="direction"
                                         tag-name="textarea" rows="3" v-model="record.direction">
