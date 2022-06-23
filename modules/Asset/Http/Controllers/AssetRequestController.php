@@ -139,6 +139,11 @@ class AssetRequestController extends Controller
             $codeSetting->field
         );
 
+        $user_profile = Profile::where('user_id', auth()->user()->id)->first();
+        $institution_id = isset($user_profile->institution_id)
+            ? $user_profile->institution_id
+            : null;
+
         /**
          * Objeto asociado al modelo AssetRequest
          *
@@ -154,7 +159,8 @@ class AssetRequestController extends Controller
             'agent_name' => $request->agent_name,
             'agent_telf' => $request->agent_telf,
             'agent_email' => $request->agent_email,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'institution_id' => $institution_id
         ]);
 
         $assets = explode(",", $request->assets);
