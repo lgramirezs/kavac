@@ -30,9 +30,22 @@ class AssetRequestDeliveryController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function index()
+    public function index($perPage = 10, $page = 1)
     {
-        return response()->json(['records' => AssetRequestDelivery::with('assetRequest', 'user')->get()], 200);
+        $assetRequestDelivery = AssetRequestDelivery::with('assetRequest', 'user');
+        
+        $total = $assetRequestDelivery->count();
+        $assetRequestDelivery = $assetRequestDelivery->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        
+        return response()->json(
+            [
+                'records'  => $assetRequestDelivery,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
+            200
+        );
     }
 
     /**

@@ -46,6 +46,7 @@ class AssetRequestExtensionController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $this->validate($request, [
             'asset_request_id' => ['required']
         ]);

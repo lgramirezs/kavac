@@ -212,6 +212,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
         'AssetRequestDeliveryController',
         ['except' => ['show', 'create', 'edit']]
     );
+    Route::get('requests/deliveries/{perPage?}/{page?}','AssetRequestDeliveryController@index');
 
     /**
      * ----------------------------------------------
