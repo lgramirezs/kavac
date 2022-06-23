@@ -46,7 +46,6 @@ class AssetRequestExtensionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $this->validate($request, [
             'asset_request_id' => ['required']
         ]);
@@ -102,10 +101,19 @@ class AssetRequestExtensionController extends Controller
     {
     }
 
-    public function vuePendingList()
+    public function vuePendingList($perPage = 10, $page = 1)
     {
+        $assetRequestExtension = AssetRequestExtension::with('user')->where('state', 'Pendiente');
+        $total = $assetRequestExtension->count();
+        $assetRequestExtension = $assetRequestExtension->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+        
         return response()->json(
-            ['records' => AssetRequestExtension::with('user')->where('state', 'Pendiente')->get()],
+            [
+                'records'  => $assetRequestExtension,
+                'total'    => $total,
+                'lastPage' => $lastPage,
+            ],
             200
         );
     }

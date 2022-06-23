@@ -187,9 +187,10 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
      * Rutas para gestionar las solicitudes de prorrogas pendientes
      * ------------------------------------------------------------
      */
+    
 
     /** Ruta que obtiene un listado de las solicitudes de prorroga pendientes */
-    Route::get('requests/extensions/vue-pending-list', 'AssetRequestExtensionController@vuePendingList')
+    Route::get('requests/extensions/vue-pending-list/{perPage?}/{page?}', 'AssetRequestExtensionController@vuePendingList')
              ->name('asset.request.extension.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */
