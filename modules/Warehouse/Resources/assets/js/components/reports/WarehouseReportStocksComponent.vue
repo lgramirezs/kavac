@@ -17,6 +17,35 @@
                         }}
                     </span>
                 </div>
+                <div slot="exist" slot-scope="props">
+                    <span>
+                        {{
+                        
+                            (props.row.warehouse_inventory_product)
+                            ? props.row.warehouse_inventory_product.exist
+                            : ''
+                            
+                        }}
+                    </span>
+                </div>
+                 <div slot="detail" slot-scope="props">
+                        <span v-if="props.row.minimum == props.row.warehouse_inventory_product.exist">
+                            El artículo llego al mínimo de existencia
+                        </span>
+
+                        <span v-else-if="props.row.warehouse_inventory_product.exist == 0">
+                            No hay existencia en inventario
+                        </span>
+                        
+                        <span v-else-if="props.row.minimum > props.row.warehouse_inventory_product.exist">
+                            El artículo sobrepasa el mínimo de existencia
+                        </span>
+
+                        <span v-else-if="props.row.warehouse_inventory_product.exist > props.row.minimum">
+                            Hay existencia del artículo en inventario
+                        </span>
+                </div>
+
             </v-client-table>
         </div>
         <div class="card-footer text-right">
@@ -42,7 +71,7 @@
                 },
                 records: [],
                 errors: [],
-                columns: ['product', 'minimum', 'maximum']
+                columns: ['product', 'minimum', 'exist', 'detail']
             }
         },
         methods: {
@@ -107,10 +136,11 @@
             this.table_options.headings = {
                 'product': 'Producto',
                 'minimum': 'Mínimo',
-                'maximum': 'Máximo',
+                'exist':   'Existencia actual',
+                'detail':  'Detalle'
             };
-            this.table_options.sortable = ['product', 'minimum', 'maximum'];
-            this.table_options.filterable = ['product', 'minimum', 'maximum'];
+            this.table_options.sortable = ['product', 'minimum', 'exist', 'detail'];
+            this.table_options.filterable = ['product', 'minimum', 'exist', 'detail'];
         },
         mounted() {
             this.loadInventoryProduct('stocks');

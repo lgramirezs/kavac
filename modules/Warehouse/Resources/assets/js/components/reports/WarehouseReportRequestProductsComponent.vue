@@ -344,8 +344,15 @@
                     }
                     vm.loading = false;
                 }).catch(error => {
-                    if (typeof(error.response) != "undefined") {
-                        console.log("error");
+                    if (typeof(error.response) !== "undefined") {
+                        if (error.response.status == 403) {
+                            vm.showMessage(
+                                'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+                            );
+                        }
+                        else {
+                            vm.logs('Warehouse/Resources/assets/js/_all.js', 343, error, 'createReport');
+                        }
                     }
                     vm.loading = false;
                 });
@@ -362,9 +369,7 @@
                 axios.post("/warehouse/reports/inventory-products/vue-list", fields).then(response => {
                     if (typeof(response.data.records) != "undefined") {
                         vm.records = response.data.records;
-                        console.log(response.data.records);
                     }else{
-                        console.log("Yo");
                         vm.records = [];
                     }
                     vm.loading = false;

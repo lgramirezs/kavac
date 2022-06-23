@@ -78,7 +78,8 @@
                 <li title="Reporte de stocks mínimo y máximo de almacén"
                     data-toggle="tooltip" data-placement="right"
                     class='{!! set_active_menu('warehouse.report.stocks') !!}'>
-                    <a href="{{ route('warehouse.report.stocks') }}">Stocks mínimo y máximo</a>
+                    <a href="{{ route('warehouse.report.stocks') }}">
+                    Reporte de mínimo inventario</a>
                 </li>
             </ul>
         </li>
