@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title text-uppercase">Stocks de Almacén
+                <h6 class="card-title text-uppercase">Reporte de mínimo inventario
                 </h6>
                 <div class="card-btns">
                     @include('buttons.previous', ['route' => url()->previous()])
