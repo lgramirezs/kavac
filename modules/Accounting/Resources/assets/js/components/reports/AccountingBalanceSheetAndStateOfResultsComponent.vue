@@ -38,9 +38,9 @@
                 <button class="btn btn-primary btn-sm" @click="OpenPdf(getUrlReport(), '_blank')" :id="'help'+this.type_report+'GenerateReport'">
                     Generar Reporte <i class="fa fa-print"></i>
                 </button>
-                <button class="btn btn-primary btn-sm" @click="OpenPdf(getUrlReportSign(), '_blank')" :id="'help'+this.type_report+'GenerateReportSign'">
+                <!-- <button class="btn btn-primary btn-sm" @click="OpenPdf(getUrlReportSign(), '_blank')" :id="'help'+this.type_report+'GenerateReportSign'">
                     Generar y firmar Reporte <i class="fa fa-print"></i>
-                </button>
+                </button> -->
             </div>
         </div>
     </div>

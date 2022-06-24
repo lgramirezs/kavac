@@ -28,10 +28,10 @@
                 <span>Generar reporte</span>
                 <i class="fa fa-print"></i>
             </button>
-            <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar y Firmar Reporte" v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpDailyBookGenerateReportSign">
+            <!-- <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar y Firmar Reporte" v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpDailyBookGenerateReportSign">
                 <span>Generar y firmar reporte</span>
                 <i class="fa fa-print"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </template>
