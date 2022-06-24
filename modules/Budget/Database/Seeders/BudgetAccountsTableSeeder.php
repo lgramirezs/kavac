@@ -29,6 +29,10 @@ class BudgetAccountsTableSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->command->line("");
+        $this->command->info("<fg=yellow>Cargando Clasificador presupuestario</>");
+        $this->command->line("");
+
         /** @var array Listado de cuentas presupuestarias a registrar */
         $budget_accounts = [
             [
@@ -9929,8 +9933,21 @@ class BudgetAccountsTableSeeder extends Seeder
             ]
         ];
 
+        
         DB::transaction(function () use ($budget_accounts) {
+            $group = '3';
+            $groupName = 'RECURSOS';
+            $groupCount = 0;
             foreach ($budget_accounts as $account) {
+                if ($group !== $account['group'] && in_array($groupName, ['RECURSOS', 'EGRESOS'])) {
+                    $this->command->line("");
+                    $this->command->info("<fg=green>Total de cuentas de ".$groupName.": </><fg=yellow>".$groupCount."</>");
+                    $this->command->line("");
+                    $groupCount = 0;
+                    $group = $account['group'];
+                    $groupName = $account['denomination'];
+                }
+
                 $parent = BudgetAccount::getParent(
                     $account['group'],
                     $account['item'],
@@ -9952,7 +9969,12 @@ class BudgetAccountsTableSeeder extends Seeder
                         'parent_id' => ($parent == false)?null:$parent->id
                     ]
                 );
+                $groupCount++;
             }
         });
+
+        $this->command->line("");
+        $this->command->info("<fg=yellow>Clasificador presupuestario cargado correctamente</>");
+        $this->command->line("");
     }
 }
