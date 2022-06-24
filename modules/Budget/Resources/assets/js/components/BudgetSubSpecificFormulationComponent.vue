@@ -144,7 +144,16 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row mt-2">
+				<div class="col-12">
+					<div class="form-group">
+						<label for="" class="control-label">
+							Distribución financiera
+						</label>
+					</div>
+				</div>
+			</div>
+			<!--div class="row">
 				<div class="col-4 offset-md-8">
 					<div class="float-right">
 						<form
@@ -188,7 +197,7 @@
 						</form>
 					</div>
 				</div>
-			</div>
+			</div-->
 			<!-- Tabla para la formulación del presupuesto -->
 			<table class="table table-formulation">
 				<thead>
