@@ -96,6 +96,13 @@ class BudgetSubSpecificFormulationController extends Controller
         $documentStatus = DocumentStatus::where('action', 'EL')->first();
         $codeSetting = CodeSetting::where("model", BudgetSubSpecificFormulation::class)->first();
 
+        if ((float)$request->formulated_accounts[0]['total_year_amount'] == 0 || 0.0) {
+            return response()->json(['result' => false, 'message' => [
+                'type' => 'custom', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'danger',
+                'text' => 'El total anual de la formulación debe ser mayor que cero'
+            ]], 200);
+        }
+
         if (!$codeSetting) {
             return response()->json(['result' => false, 'message' => [
                 'type' => 'custom', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'danger',
