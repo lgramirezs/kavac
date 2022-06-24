@@ -106,7 +106,9 @@ trait ModelsTrait
         /** Escanea los directorios de módulos para obtener los correspondientes modelos */
         $results_modules = scandir($modules_path);
         foreach ($results_modules as $result_module) {
-            if ($result_module === '.' or $result_module === '..') {
+            if (
+                $result_module === '.' || $result_module === '..' || 
+                !file_exists(base_path() . '/modules/' . $result_module . '/Models')) {
                 continue;
             }
 
