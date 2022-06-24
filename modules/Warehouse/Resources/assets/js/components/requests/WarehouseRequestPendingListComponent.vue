@@ -120,7 +120,7 @@
 			{
 				const vm = this;
 				var dialog = bootbox.confirm({
-                    title: 'Aprobar operación?',
+                    title: '¿Aprobar operación?',
                     message: "<p>¿Seguro que desea aprobar esta operación?. Una vez aprobada la operación no se podrán realizar cambios en la misma.<p>",
                     size: 'medium',
                     buttons: {
