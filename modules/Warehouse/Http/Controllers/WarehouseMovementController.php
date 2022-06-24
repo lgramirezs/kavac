@@ -46,6 +46,26 @@ class WarehouseMovementController extends Controller
         $this->middleware('permission:warehouse.movement.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:warehouse.movement.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:warehouse.movement.delete', ['only' => 'destroy']);
+
+        /** Define las reglas de validación para el formulario */
+        $this->validateRules = [
+            'description'            => ['required'],
+            'initial_warehouse_id'   => ['required'],
+            'end_warehouse_id'       => ['required'],
+            'initial_institution_id' => ['required'],
+            'end_institution_id'     => ['required'],
+            'warehouse_inventory_products'  => ['required'],
+        ];
+
+        /** Define los mensajes de validación para las reglas del formulario */
+        $this->messages = [
+            'description.required'            => 'El campo descripción es obligatorio.',
+            'initial_warehouse_id.required'   => 'El campo nombre del almacén de origen es obligatorio.',
+            'end_warehouse_id.required'       => 'El campo nombre del almacén destino es obligatorio.',
+            'initial_institution_id.required' => 'El campo nombre de la organización de origen es obligatorio.',
+            'end_institution_id.required'     => 'El campo nombre de la organización de destino es obligatorio. ', 
+        ];
+
     }
 
     /**
@@ -79,14 +99,7 @@ class WarehouseMovementController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'description'            => ['required'],
-            'initial_warehouse_id'   => ['required'],
-            'end_warehouse_id'       => ['required'],
-            'initial_institution_id' => ['required'],
-            'end_institution_id'     => ['required'],
-            'warehouse_inventory_products'  => ['required'],
-        ]);
+        $this->validate($request, $this->validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'warehouse_movements')->first();
         if (is_null($codeSetting)) {
@@ -270,14 +283,8 @@ class WarehouseMovementController extends Controller
     public function update(Request $request, $id)
     {
         $movement = WarehouseMovement::find($id);
-        $this->validate($request, [
-            'description'            => ['required'],
-            'initial_warehouse_id'   => ['required'],
-            'end_warehouse_id'       => ['required'],
-            'initial_institution_id' => ['required'],
-            'end_institution_id'     => ['required'],
-            'warehouse_inventory_products' => ['required'],
-        ]);
+        
+        $this->validate($request, $this->validateRules, $this->messages);
 
         $end_inst_ware = WarehouseInstitutionWarehouse::where('warehouse_id', $request->end_warehouse_id)
             ->where('institution_id', $request->end_institution_id)->first();
