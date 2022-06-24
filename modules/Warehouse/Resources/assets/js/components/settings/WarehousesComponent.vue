@@ -182,21 +182,21 @@
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <div class="d-inline-flex">
-                                    <div v-if="multi_warehouse">
-                                        <button @click="warehouseManage(props.index, $event)"
+                                    <!-- <div v-if="multi_warehouse"> -->
+                                        <!-- <button @click="warehouseManage(props.index, $event)"
                                                 class="btn btn-danger btn-xs btn-icon btn-action"
                                                 title="Dejar de Gestionar Almacén" data-toggle="tooltip"
                                                 type="button"
                                                 v-if="props.row.manage">
                                             <i class="fa fa-minus-circle"></i>
-                                        </button>
+                                        </button> -->
                                         <!--<button @click="warehouseManage(props.index, $event)"
                                                 class="btn btn-success btn-xs btn-icon btn-action"
                                                 title="Gestionar Almacén" data-toggle="tooltip" type="button"
                                                 v-else>
                                             <i class="fa fa-plus-circle"></i>
                                         </button>-->
-                                    </div>
+                                    <!-- </div> -->
                                     <button @click="editRecord(props.index, $event)"
                                             class="btn btn-warning btn-xs btn-icon btn-action"
                                             title="Modificar registro" data-toggle="tooltip" type="button">
