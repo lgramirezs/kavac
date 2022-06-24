@@ -223,7 +223,7 @@
 						document.getElementById('motive').innerText ="";
 					}
 
-		            	document.getElementById('observations').innerText = (fields.observations)?fields.observations:'No definido';
+		            	document.getElementById('observations').innerText = (fields.observations)?fields.observations.replace(/(<([^>]+)>)/gi, ""):'No definido';
 		            	document.getElementById('state').innerText = (fields.state)?fields.state:'';
 		            	this.records = fields.warehouse_inventory_product_requests;
 					}

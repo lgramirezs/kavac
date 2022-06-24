@@ -79,7 +79,7 @@
 			{
 				const vm = this;
 				var dialog = bootbox.confirm({
-                    title: 'Rechazar operación?',
+                    title: '¿Rechazar operación?',
                     message: "<p>¿Seguro que desea rechazar esta operación?. Una vez rechazada la operación no se podrán realizar cambios en la misma.<p>",
                     size: 'medium',
                     buttons: {
