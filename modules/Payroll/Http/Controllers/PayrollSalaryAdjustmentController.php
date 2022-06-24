@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Modules\Payroll\Models\PayrollSalaryAdjustment;
+use Modules\Payroll\Models\PayrollSalaryTabulatorScale;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @class      PayrollSalaryAdjustmentController
@@ -76,6 +79,7 @@ class PayrollSalaryAdjustmentController extends Controller
      * Valida y registra una nueva nómina de sueldos
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
      *
      * @param     \Illuminate\Http\Request         $request    Datos de la petición
      *
@@ -84,6 +88,44 @@ class PayrollSalaryAdjustmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, $this->validateRules, $this->messages);
+
+        DB::transaction(function () use ($request) {
+            /**
+             * Objeto asociado al modelo PayrollSalaryTabulator
+             * @var Object $salaryTabulator
+             */
+            $salaryTabulator = PayrollSalaryAdjustment::create([
+                'increase_of_date'                   => $request->input('increase_of_date'),
+                'increase_of_type'                   => $request->input('increase_of_type'),
+                'value'                              => $request->input('value'),
+                'payroll_salary_tabulator_id'        => $request->input('payroll_salary_tabulator_id')
+            ]);
+
+            if ($salaryTabulator) {
+                /** Se agregan las escalas del tabulador salarial */
+                foreach ($request->payroll_salary_tabulator['payroll_salary_tabulator_scales'] as $payrollScale) {
+                    /**
+                     * Objeto asociado al modelo PayrollSalaryTabulatorScale
+                     * @var Object $salaryTabulatorScale
+                     */
+                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $request->payroll_salary_tabulator_id)
+                                            ->first();
+                    foreach ($request->scale_values as $scale_value) {
+                        $valueScale = $scale_value;
+                        $value = $request->increase_of_type == 'percentage' ?
+                                 $payrollScale['value'] + $valueScale :
+                                 $valueScale;
+                        $salaryTabulatorScale->value                       = $value;
+                        $salaryTabulatorScale->payroll_vertical_scale_id   = $payrollScale['payroll_vertical_scale_id'] ?? null;
+                        $salaryTabulatorScale->payroll_horizontal_scale_id = $payrollScale['payroll_horizontal_scale_id'] ?? null;
+                        $salaryTabulatorScale->payroll_salary_tabulator_id = $request->payroll_salary_tabulator_id;
+                        $salaryTabulatorScale->save();
+                    }
+                }
+            }
+        });
+
+        $request->session()->flash('message', ['type' => 'store']);
         return response()->json(['redirect' => route('payroll.salary-adjustments.create')], 200);
     }
 }
