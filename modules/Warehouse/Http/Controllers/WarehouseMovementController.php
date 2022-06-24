@@ -63,7 +63,8 @@ class WarehouseMovementController extends Controller
             'initial_warehouse_id.required'   => 'El campo nombre del almacén de origen es obligatorio.',
             'end_warehouse_id.required'       => 'El campo nombre del almacén destino es obligatorio.',
             'initial_institution_id.required' => 'El campo nombre de la organización de origen es obligatorio.',
-            'end_institution_id.required'     => 'El campo nombre de la organización de destino es obligatorio. ', 
+            'end_institution_id.required'     => 'El campo nombre de la organización de destino es obligatorio. ',
+            'warehouse_inventory_products.required' => 'Debe ingresar la cantidad solicitada para cada insumo seleccionado.'
         ];
 
     }
