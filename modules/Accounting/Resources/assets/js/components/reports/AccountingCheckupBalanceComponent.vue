@@ -48,10 +48,10 @@
                 <span>Generar reporte</span>
                 <i class="fa fa-print"></i>
             </button>
-            <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar Reporte" v-on:click="OpenPdf(getUrlReportSign(), '_black')" id="helpCheckupBalanceGenerateReport">
+            <!-- <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar Reporte" v-on:click="OpenPdf(getUrlReportSign(), '_black')" id="helpCheckupBalanceGenerateReport">
                 <span>Generar y firmar reporte</span>
                 <i class="fa fa-print"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </template>
