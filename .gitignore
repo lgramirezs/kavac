@@ -4,6 +4,7 @@
 /public/storage
 /public/css/
 /public/js/*.js
+/public/js/*.LICENSE.txt
 /public/lang/lang.js
 /public/js/components
 /public/modules
