@@ -124,10 +124,8 @@
             <v-client-table :columns="columns" :data="records" :options="table_options">
                 <div slot="product" slot-scope="props">
                     <span>
-                        {{ (props.row.warehouse_inventory_product)
-                            ? (props.row.warehouse_inventory_product.warehouse_product)
-                                ? props.row.warehouse_inventory_product.warehouse_product.name
-                                : ''
+                        {{ (props.row.warehouse_product)
+                            ? props.row.warehouse_product.name
                             : ''
                         }}
                     </span>
@@ -136,27 +134,27 @@
                     <span>
                         {{
                         
-                            (props.row.warehouse_inventory_product)
-                            ? props.row.warehouse_inventory_product.exist
+                            (props.row.exist)
+                            ? props.row.exist
                             : ''
                             
                         }}
                     </span>
                 </div>
                  <div slot="detail" slot-scope="props">
-                        <span v-if="props.row.minimum == props.row.warehouse_inventory_product.exist">
+                        <span v-if="props.row.minimum == props.row.exist">
                             El artículo llego al mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.warehouse_inventory_product.exist == 0">
+                        <span v-else-if="props.row.exist == 0">
                             No hay existencia en inventario
                         </span>
                         
-                        <span v-else-if="props.row.minimum > props.row.warehouse_inventory_product.exist">
+                        <span v-else-if="props.row.minimum > props.row.exist">
                             El artículo sobrepasa el mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.warehouse_inventory_product.exist > props.row.minimum">
+                        <span v-else-if="props.row.exist > props.row.minimum">
                             Hay existencia del artículo en inventario
                         </span>
                 </div>
