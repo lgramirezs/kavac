@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="form-horizontal">
         <div class="card-body">
             <accounting-show-errors ref="errorsAnalyticalMajor" />
             <div class="row">
