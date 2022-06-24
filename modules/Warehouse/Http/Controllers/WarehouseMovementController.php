@@ -499,7 +499,7 @@ class WarehouseMovementController extends Controller
         $warehouse_movement = WarehouseMovement::find($id);
         DB::transaction(function () use ($warehouse_movement, $request) {
             $warehouse_movement->observations = !empty($request->observations)?$request->observations:'N/A';
-            $warehouse_movement->state = 'Aprobado';
+            $warehouse_movement->state = 'Confirmado';
             $warehouse_movement->save();
 
             $warehouse_inventory_product_movements = $warehouse_movement->WarehouseInventoryProductMovements;
@@ -536,7 +536,7 @@ class WarehouseMovementController extends Controller
             }
         });
         /** Si no se completo la operación, informo sobre el error */
-        if ($warehouse_movement->state != 'Aprobado') {
+        if ($warehouse_movement->state != 'Confirmado') {
             $request->session()->flash(
                 'message',
                 [
