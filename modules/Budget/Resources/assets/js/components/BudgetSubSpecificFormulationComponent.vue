@@ -255,6 +255,7 @@
                                 :readonly="account.locked"
                                 @change="calculateAmounts(index, 'real')"
                                 onfocus="this.select()"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -267,6 +268,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'estimated')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -279,6 +281,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'year')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -291,6 +294,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -303,6 +307,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -315,6 +320,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -327,6 +333,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -339,6 +346,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -351,6 +359,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -363,6 +372,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -375,6 +385,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
@@ -387,6 +398,7 @@
                                 :readonly="account.locked"
                                 onfocus="this.select()"
                                 @change="calculateAmounts(index, 'month')"
+                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
                             />
                         </td>
                         <td class="td-with-border">
