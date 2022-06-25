@@ -54,14 +54,21 @@ class AssetRequestController extends Controller
         ];
 
         $this->customAttributes = [
-            'code'          => 'código', 
-            'type'          => 'tipo de solicitud', 
-            'motive'        => 'motivo de la solicitud', 
-            'state'         => 'estado', 
-            'delivery_date' => 'fecha de entreg', 
-            'agent_name'    => 'nombre del agente externo', 
-            'agent_telf'    => 'teléfono del agente externo', 
-            'agent_email'   => 'correo del agente externo', 
+            'code'              => 'código', 
+            'type'              => 'tipo de solicitud', 
+            'motive'            => 'motivo de la solicitud', 
+            'state'             => 'estado', 
+            'delivery_date'     => 'fecha de entreg',
+            
+            'country_id'        => 'país',
+            'estate_id'         => 'estado',
+            'municipality_id'   => 'municipio',
+            'parish_id'         => 'parroquia',
+            'address'           => 'dirección',
+
+            'agent_name'        => 'nombre del agente externo', 
+            'agent_telf'        => 'teléfono del agente externo', 
+            'agent_email'       => 'correo del agente externo', 
         ];
     }
 
@@ -110,12 +117,20 @@ class AssetRequestController extends Controller
 
         if ($request->type == 2) {
             $this->validate($request, [
-                //'ubication'  => ['required'],
+                'country_id'        => ['required'],
+                'estate_id'         => ['required'],
+                'municipality_id'   => ['required'],
+                'parish_id'         => ['required'],
+                'address'           => ['required'],
             ], [], $this->customAttributes);
         }
         if ($request->type == 3) {
             $this->validate($request, [
-                //'ubication'  => ['required'],
+                'country_id'        => ['required'],
+                'estate_id'         => ['required'],
+                'municipality_id'   => ['required'],
+                'parish_id'         => ['required'],
+                'address'           => ['required'],
                 'agent_name' => ['required', 'regex:/^[\D][a-zA-ZÁ-ÿ\s]*/', 'max:100'],
                 'agent_telf' => ['required', 'regex:/[0-9\-]*/'],
                 'agent_email' => ['required'],
@@ -155,7 +170,11 @@ class AssetRequestController extends Controller
             'motive' => $request->motive,
             'state' => 'Pendiente',
             'delivery_date' => $request->delivery_date,
-            //'ubication' => $request->ubication,
+            'country_id'        => $request->country_id,
+            'estate_id'         => $request->estate_id,
+            'municipality_id'   => $request->municipality_id,
+            'parish_id'         => $request->parish_id,
+            'address'           => $request->address,
             'agent_name' => $request->agent_name,
             'agent_telf' => $request->agent_telf,
             'agent_email' => $request->agent_email,
@@ -216,7 +235,6 @@ class AssetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $asset_request = AssetRequest::find($id);
 
         $this->validate($request, [
@@ -227,22 +245,34 @@ class AssetRequestController extends Controller
 
         if ($request->type == 2) {
             $this->validate($request, [
-                //'ubication'  => ['required'],
+                'country_id'        => ['required'],
+                'estate_id'         => ['required'],
+                'municipality_id'   => ['required'],
+                'parish_id'         => ['required'],
+                'address'           => ['required'],
             ], [], $this->customAttributes);
         }
         if ($request->type == 3) {
             $this->validate($request, [
-                //'ubication'  => ['required'],
-                'agent_name' => ['required'],
-                'agent_telf' => ['required'],
-                'agent_email' => ['required'],
+                'country_id'        => ['required'],
+                'estate_id'         => ['required'],
+                'municipality_id'   => ['required'],
+                'parish_id'         => ['required'],
+                'address'           => ['required'],
+                'agent_name'        => ['required'],
+                'agent_telf'        => ['required'],
+                'agent_email'       => ['required'],
             ], [], $this->customAttributes);
         }
 
         $asset_request->type = $request->type;
         $asset_request->motive = $request->motive;
         $asset_request->delivery_date = $request->delivery_date;
-        //$asset_request->ubication = $request->ubication;
+        $asset_request->country_id = $request->country_id;
+        $asset_request->estate_id = $request->estate_id;
+        $asset_request->municipality_id = $request->municipality_id;
+        $asset_request->parish_id = $request->parish_id;
+        $asset_request->address = $request->address;
         $asset_request->agent_name = $request->agent_name;
         $asset_request->agent_telf = $request->agent_telf;
         $asset_request->agent_email = $request->agent_email;

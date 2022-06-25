@@ -64,7 +64,7 @@
                 </button>
 
                 <button
-                    @click="deleteRecord(props.row.id, '')"
+                    @click="deleteRecord(props.index, '')"
                     class="btn btn-danger btn-xs btn-icon btn-action"
                     title="Eliminar registro"
                     data-toggle="tooltip"

@@ -3,7 +3,7 @@
 		<a class="btn btn-default btn-xs btn-icon btn-action"
 		   href="#" title="Solicitud de Prorroga" data-toggle="tooltip"
 		   :disabled="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?false:true"
-		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?addRecord('add_prorroga','asset/request/request-extensions', $event):viewMessage()">
+		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?addRecord('add_prorroga', 'asset/requests/vue-info/' + requestid, $event):viewMessage()">
 			<i class="fa fa-calendar-plus-o"></i>
 		</a>
 
@@ -16,7 +16,7 @@
 						</button>
 						<h6>
 							<i class="icofont icofont-meeting-add ico-2x"></i>
-							Solicitud de Prorroga
+							Solicitud de Prorroga 
 						</h6>
 					</div>
 
@@ -46,9 +46,8 @@
 									<label>Fecha de entrega actual</label>
 					        		<input type="date"
 										data-toggle="tooltip"
-										class="form-control input-sm" v-model="record.date"
+										class="form-control input-sm" v-model="record.delivery_date"
 										id="delivery_date">
-									<input type="hidden" v-model="record.id">
 								</div>
 							</div>
 						</div>
@@ -56,13 +55,14 @@
 
 	                <div class="modal-footer">
 
-	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
+	                	<button type="button" @click="reset()"
+								class="btn btn-default btn-sm btn-round btn-modal-close"
 	                			data-dismiss="modal">
 	                		Cerrar
 	                	</button>
 	                	<button type="button" @click="createRecord('asset/requests/request-extensions')"
 	                			class="btn btn-primary btn-sm btn-round btn-modal-save">
-	                		Guardar
+	                		Aceptar
 		                </button>
 		            </div>
 
@@ -78,7 +78,7 @@
 			return {
 				record: {
 					id: '',
-					date: '',
+					delivery_date: '',
 					asset_request_id: ''
 				},
 				records: [],
@@ -89,6 +89,7 @@
 			requestid: Number,
 			state: String,
 		},
+	
 		methods: {
 			/**
              * Método que borra todos los datos del formulario
@@ -102,28 +103,27 @@
 					asset_request_id: ''
                 };
             },
+
             /**
 			 * Inicializa los registros base del formulario
 			 *
 			 * @author Henry Paredes <hparedes@cenditel.gob.ve>
 			 */
-            initRecords(url,modal_id){
+            initRecords(url, modal_id){
+			
 				const vm = this;
 				vm.errors = [];
             	var fields = {};
-            	var url = `${window.app_url}/asset/requests/vue-info/${this.requestid}`;
+            	url = vm.setUrl(url);
             	axios.get(url).then(response => {
 					if (typeof(response.data.records) !== "undefined") {
 						fields = response.data.records;
 
-						vm.record = {
-							id: '',
-							date: fields.delivery_date,
-							asset_request_id: vm.requestid
-						};
+						
+						
 					}
 					if ($("#" + modal_id).length) {
-						$("#" + modal_id).modal('show');
+						$("#" + modal_id).modal('show');	
 					}
 				}).catch(error => {
 					if (typeof(error.response) !== "undefined") {
@@ -137,6 +137,14 @@
 						}
 					}
 				});
+
+				setTimeout(()=>{
+					vm.record.delivery_date = vm.format_date(fields.delivery_date);
+					vm.record.asset_request_id = vm.requestid;
+					console.log(fields, vm.record);
+				}, 1500);
+				
+				
             },
             viewMessage() {
             	const vm = this;

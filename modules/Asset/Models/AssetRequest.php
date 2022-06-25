@@ -39,8 +39,9 @@ class AssetRequest extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'code', 'type', 'motive', 'state', 'delivery_date', 'agent_name', 'agent_telf', 'agent_email', 'user_id',
-        'institution_id'
+        'code', 'type', 'motive', 'state', 'delivery_date', 'address', 
+        'country_id', 'estate_id', 'municipality_id', 'parish_id',
+        'agent_name', 'agent_telf', 'agent_email', 'user_id', 'institution_id'
     ];
 
     /**
