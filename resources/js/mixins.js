@@ -573,13 +573,14 @@ Vue.mixin({
         createRecord(url, list = true, reset = true) {
             const vm = this;
             url = vm.setUrl(url);
-
+            
             if (vm.record.id) {
                 vm.updateRecord(url);
             }
             else {
                 vm.loading = true;
                 var fields = {};
+                
                 for (var index in vm.record) {
                     fields[index] = vm.record[index];
                 }

@@ -114,7 +114,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" @click="loadInventoryProduct('inventory-products')"
+                    <button type="button" @click="loadInventoryProduct('stocks')"
                             class='btn btn-sm btn-info float-right' title="Buscar registro" data-toggle="tooltip">
                         <i class="fa fa-search"></i>
                     </button>
@@ -124,8 +124,10 @@
             <v-client-table :columns="columns" :data="records" :options="table_options">
                 <div slot="product" slot-scope="props">
                     <span>
-                        {{ (props.row.warehouse_product)
-                            ? props.row.warehouse_product.name
+                        {{
+                            (props.row.warehouse_inventory_product &&
+                            props.row.warehouse_inventory_product.warehouse_product)
+                            ? props.row.warehouse_inventory_product.warehouse_product.name
                             : ''
                         }}
                     </span>
@@ -133,16 +135,15 @@
                 <div slot="exist" slot-scope="props">
                     <span>
                         {{
-                        
-                            (props.row.exist)
-                            ? props.row.exist
+                            (props.row.warehouse_inventory_product &&
+                             props.row.warehouse_inventory_product.exist)
+                            ? props.row.warehouse_inventory_product.exist
                             : ''
-                            
                         }}
                     </span>
                 </div>
                  <div slot="detail" slot-scope="props">
-                        <span v-if="props.row.minimum == props.row.exist">
+                        <span v-if="props.row.minimum == props.row.warehouse_inventory_product.exist">
                             El artículo llego al mínimo de existencia
                         </span>
 
@@ -150,11 +151,11 @@
                             No hay existencia en inventario
                         </span>
                         
-                        <span v-else-if="props.row.minimum > props.row.exist">
+                        <span v-else-if="props.row.minimum > props.row.warehouse_inventory_product.exist">
                             El artículo sobrepasa el mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.exist > props.row.minimum">
+                        <span v-else-if="props.row.warehouse_inventory_product.exist > props.row.minimum">
                             Hay existencia del artículo en inventario
                         </span>
                 </div>
@@ -294,7 +295,6 @@
             this.table_options.filterable = ['product', 'minimum', 'exist', 'detail'];
         },
         mounted() {
-            this.loadInventoryProduct('stocks');
             this.switchHandler('type_search');
             this.getInstitutions();
             this.getWarehouseProducts();

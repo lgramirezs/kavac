@@ -51,11 +51,11 @@ class AssetRequestExtensionController extends Controller
         ]);
         $asset_request = AssetRequest::find($request->asset_request_id);
         $this->validate($request, [
-            'date' => [new DateExtension($asset_request->delivery_date, '2')],
+            'delivery_date' => [new DateExtension($asset_request->delivery_date, '2')],
         ]);
 
         $prorroga = new AssetRequestExtension;
-        $prorroga->delivery_date = $request->date;
+        $prorroga->delivery_date = $request->delivery_date;
         $prorroga->asset_request_id = $request->asset_request_id;
         $prorroga->state = 'Pendiente';
         $prorroga->user_id = Auth::id();
