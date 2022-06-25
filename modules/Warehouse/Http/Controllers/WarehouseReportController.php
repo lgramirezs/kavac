@@ -248,10 +248,63 @@ class WarehouseReportController extends Controller
             $fields = WarehouseInventoryRule::with(
                 [
                     'warehouseInventoryProduct' => function ($query) {
-                        $query->with('WarehouseProduct');
+                        $query->with(['WarehouseProduct', 'warehouseInstitutionWarehouse']);
                     }
                 ]
-            );
+            )->whereHas('warehouseInventoryProduct', function ($query) use ($request) {
+                if ($request->institution_id) {
+                    $query->whereHas('warehouseInstitutionWarehouse', function ($q) use ($request) {
+                        $q->where('institution_id', $request->institution_id);
+                    });
+                }
+                if ($request->warehouse_id) {
+                    $query->whereHas('warehouseInstitutionWarehouse', function ($q) use ($request) {
+                        $q->where('warehouse_id', $request->warehouse_id);
+                    });
+                }
+                if ($request->warehouse_product_id) {
+                    $query->where('warehouse_product_id', $request->warehouse_product_id);
+                }
+            });
+
+            if ($request->type_search == "date") {
+                if (!is_null($request->start_date)) {
+                    if (!is_null($request->end_date)) {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                $request->end_date
+                            ]
+                        );
+                    } else {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                now()
+                            ]
+                        );
+                    }
+                }
+            }
+
+            if ($request->type_search == "mes") {
+
+                if (!is_null($request->mes_id)) {
+                    if (!is_null($request->year)) {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        )->whereYear('created_at', $request->year);
+                    } else {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        );
+                    }
+                }
+            }
         }
         return response()->json(['records' => $fields->get()], 200);
     }
@@ -438,10 +491,63 @@ class WarehouseReportController extends Controller
             $fields = WarehouseInventoryRule::with(
                 [
                     'warehouseInventoryProduct' => function ($query) {
-                        $query->with('WarehouseProduct');
+                        $query->with(['WarehouseProduct', 'warehouseInstitutionWarehouse']);
                     }
                 ]
-            );
+            )->whereHas('warehouseInventoryProduct', function ($query) use ($request) {
+                if ($request->institution_id) {
+                    $query->whereHas('warehouseInstitutionWarehouse', function ($q) use ($request) {
+                        $q->where('institution_id', $request->institution_id);
+                    });
+                }
+                if ($request->warehouse_id) {
+                    $query->whereHas('warehouseInstitutionWarehouse', function ($q) use ($request) {
+                        $q->where('warehouse_id', $request->warehouse_id);
+                    });
+                }
+                if ($request->warehouse_product_id) {
+                    $query->where('warehouse_product_id', $request->warehouse_product_id);
+                }
+            });
+
+            if ($request->type_search == "date") {
+                if (!is_null($request->start_date)) {
+                    if (!is_null($request->end_date)) {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                $request->end_date
+                            ]
+                        );
+                    } else {
+                        $fields = $fields->whereBetween(
+                            "created_at",
+                            [
+                                $request->start_date,
+                                now()
+                            ]
+                        );
+                    }
+                }
+            }
+
+            if ($request->type_search == "mes") {
+
+                if (!is_null($request->mes_id)) {
+                    if (!is_null($request->year)) {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        )->whereYear('created_at', $request->year);
+                    } else {
+                        $fields = $fields->whereMonth(
+                            'created_at',
+                            $request->mes_id
+                        );
+                    }
+                }
+            }
         }
         /*************************************************/
         $institution = Institution::where('default', true)
