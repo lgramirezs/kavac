@@ -488,19 +488,38 @@ class AssetController extends Controller
                 }
             } elseif ($operation == 'disincorporations') {
                 $selected = [];
+                $assets_list = Asset::with(['institution', 'assetCondition', 'assetStatus'
+                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetRequestAsset'=> function($query){
+                                            $query->with('assetRequest');
+                                        }])
+                                        ->where('asset_type_id', 1)
+                                        ->orderBy('id')->get();
+
+                foreach($assets_list as $asset_index){
+                    if($asset_index->assetAsignationAsset == null
+                        && $asset_index->assetDisincorporationAsset == null){
+                            if($asset_index->assetRequestAsset == null){
+                                array_push($selected, $asset_index->id);
+                            }
+                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                                array_push($selected, $asset_index->id);
+                            }
+                        }    
+                }
+                   
                 $assetDisincorporationAssets = AssetDisincorporation::find($operation_id)
                     ->assetDisincorporationAssets()->get();
                 foreach ($assetDisincorporationAssets as $assetDisincorporationAsset) {
                     array_push($selected, $assetDisincorporationAsset->asset_id);
                 }
+
                 if (Auth()->user()->isAdmin()) {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
-                        ->whereIn('id', $selected)
-                        ->orWhere('asset_status_id', 10);
+                        ->whereIn('id', $selected);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
-                        ->orWhere('asset_status_id', 10)
                         ->where('institution_id', $institution_id);
                 }
             } elseif ($operation == 'requests') {
@@ -512,11 +531,13 @@ class AssetController extends Controller
                 if (Auth()->user()->isAdmin()) {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
-                        ->orWhere('asset_status_id', 10);
+                        ->orWhere('asset_status_id', 10)
+                        ->where('asset_condition_id', 1);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
                         ->orWhere('asset_status_id', 10)
+                        ->where('asset_condition_id', 1)
                         ->where('institution_id', $institution_id);
                 }
             }
