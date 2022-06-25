@@ -43,10 +43,10 @@
                 <span>Generar reporte</span>
                 <i class="fa fa-print"></i>
             </button>
-            <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar Reporte" @click="OpenPdf(getUrlReportSign(),'_blank')" id="helpAuxiliaryBookGenerateReportSign">
+            <!-- <button class="btn btn-primary btn-sm" data-toggle="tooltip" v-has-tooltip title="Generar Reporte" @click="OpenPdf(getUrlReportSign(),'_blank')" id="helpAuxiliaryBookGenerateReportSign">
                 <span>Generar y firmar reporte</span>
                 <i class="fa fa-print"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </template>

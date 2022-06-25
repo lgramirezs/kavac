@@ -203,6 +203,44 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <table class="table table-hover table-striped table-responsive table-assignment"
+                                   v-else-if="payroll_salary_tabulator.payroll_horizontal_salary_scale_id > 0
+                                           && payroll_salary_tabulator.payroll_vertical_salary_scale_id > 0">
+                                <thead>
+                                    <th colspan="2">
+                                        <strong>{{ payroll_salary_tabulator.name }}</strong>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center">
+                                        <th>Nombre:</th>
+                                        <th
+                                            v-for="(field_h, index) in payroll_salary_tabulator.payroll_horizontal_salary_scale.payroll_scales" :key="index">
+                                            {{field_h.name}}
+                                        </th>
+                                    </tr>
+                                    <tr class="text-center"
+                                        v-if="payroll_salary_tabulator.payroll_horizontal_salary_scale_id > 0
+                                           && payroll_salary_tabulator.payroll_vertical_salary_scale_id > 0"
+                                        v-for="(field_v, index_v) in payroll_salary_tabulator.payroll_vertical_salary_scale.payroll_scales"
+                                        :key="index_v">
+                                        <th>
+                                            {{field_v.name}}
+                                        </th>
+                                        <td class="td-with-border"
+                                            v-for="(field_h, index_h) in payroll_salary_tabulator.payroll_horizontal_salary_scale.payroll_scales" :key="index_h">
+                                            <div>
+                                                <input type="text"
+                                                       :id="'salary_scale_' + field_v.id + '_' + field_h.id"
+                                                       class="form-control input-sm" data-toggle="tooltip"
+                                                       :disabled="record.increase_of_type != 'different'"
+                                                       onfocus="this.select()"
+                                                       :value="getScaleValue(field_v.id, field_h.id)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div style="padding-bottom: 20px;">
@@ -256,6 +294,8 @@
                     value:                       '',
                     increase_of_date:            '',
                     increase_of_type:            '',
+                    payroll_salary_tabulator:    {},
+                    scale_values:                [],
                     payroll_salary_tabulator_id: ''
                 },
 
@@ -280,6 +320,7 @@
         mounted() {
             const vm = this;
             vm.record.created_at = vm.format_date(new Date(), 'YYYY-MM-DD');
+            vm.record.scale_values = [];
         },
         methods: {
             /**
@@ -318,6 +359,7 @@
                         axios.get(url).then(response => {
                             if (typeof(response.data.record) !== "undefined") {
                                 vm.payroll_salary_tabulator = response.data.record;
+                                vm.record.payroll_salary_tabulator = vm.payroll_salary_tabulator;
                             }
                         }).catch(error => {
                             if (typeof(error.response) !== "undefined") {
@@ -408,9 +450,89 @@
                         }
                     }
                 });
+
                 return value;
 
-            }
+            },
+
+            /**
+             * Método que permite crear o actualizar un registro
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param  {string} url    Ruta de la acción a ejecutar para la creación o actualización de datos
+             * @param  {string} list   Condición para establecer si se cargan datos en un listado de tabla.
+             *                         El valor por defecto es verdadero.
+             * @param  {string} reset  Condición que evalúa si se inicializan datos del formulario.
+             *                         El valor por defecto es verdadero.
+             */
+            createRecord(url, list = true, reset = true) {
+                const vm = this;
+                url = vm.setUrl(url);
+
+                if (vm.record.id) {
+                    vm.updateRecord(url);
+                }
+                else {
+                    vm.loading = true;
+                    var fields = {};
+                    vm.record.scale_values = [];
+                    let id_scale;
+
+                    $.each(vm.payroll_salary_tabulator.payroll_salary_tabulator_scales, function(index, field) {
+                        let value = 0;
+                        let vertical = field["payroll_vertical_scale_id"];
+                        let horizontal = field["payroll_horizontal_scale_id"];
+                        if (horizontal && vertical == null) {
+                            id_scale = 'salary_scale_h_' + horizontal;
+                        }
+                        if (vertical && horizontal == null) {
+                            id_scale = 'salary_scale_v_' + vertical;
+                        }
+                        if (vertical && horizontal) {
+                            id_scale = salary_scale_ + vertical + '_' + horizontal;
+                        }
+
+                        let tabValue = document.getElementById(id_scale)
+                        value = tabValue.value;
+                        vm.record.scale_values.push(value);
+                    });
+
+                    for (var index in vm.record) {
+                        fields[index] = vm.record[index];
+                    }
+                    axios.post(url, fields).then(response => {
+                        if (typeof(response.data.redirect) !== "undefined") {
+                            location.href = response.data.redirect;
+                        }
+                        else {
+                            vm.errors = [];
+                            if (reset) {
+                                vm.reset();
+                            }
+                            if (list) {
+                                vm.readRecords(url);
+                            }
+                            vm.loading = false;
+                            vm.showMessage('store');
+                        }
+
+                    }).catch(error => {
+                        vm.errors = [];
+
+                        if (typeof(error.response) !="undefined") {
+                            for (var index in error.response.data.errors) {
+                                if (error.response.data.errors[index]) {
+                                    vm.errors.push(error.response.data.errors[index][0]);
+                                }
+                            }
+                        }
+
+                        vm.loading = false;
+                    });
+                }
+
+            },
         }
     };
 </script>

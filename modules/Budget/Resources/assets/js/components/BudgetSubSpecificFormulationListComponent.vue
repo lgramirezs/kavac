@@ -138,27 +138,21 @@ export default {
             })
               .then((response) => {
                 vm.errors = [];
-                
                 vm.showMessage("store");
-             
               })
               .catch(error => {
                 if (typeof(error.response) !== "undefined") {
-                  
-                        vm.showMessage(
-                            'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
-                        );
-                    
-                   
+                  vm.showMessage(
+                      'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+                  );
                 }
             });
           }
         },
       });
-	    setTimeout(function() {
-                	    vm.initRecords(vm.route_list, "");
-                }, 2000);
-
+      setTimeout(function() {
+        vm.initRecords(vm.route_list, "");
+      }, 2000);
     },
   },
 };

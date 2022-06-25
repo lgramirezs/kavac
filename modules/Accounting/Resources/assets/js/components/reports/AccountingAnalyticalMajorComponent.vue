@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="form-horizontal">
         <div class="card-body">
             <accounting-show-errors ref="errorsAnalyticalMajor" />
             <div class="row">
@@ -61,10 +61,10 @@
                 <span>Generar reporte</span>
                 <i class="fa fa-print"></i>
             </button>
-            <button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip" v-has-tooltip v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpAnaliticalMajorGenerateReport">
+            <!-- <button class="btn btn-primary btn-sm" title="Generar Reporte" data-toggle="tooltip" v-has-tooltip v-on:click="OpenPdf(getUrlReportSign(), '_blank')" id="helpAnaliticalMajorGenerateReport">
                 <span>Generar y firmar reporte</span>
                 <i class="fa fa-print"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </template>

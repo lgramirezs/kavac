@@ -9,7 +9,7 @@
                     </button>
                     <h6>
                         <i class="icofont icofont-read-book ico-2x"></i>
-                         Información Detallada de créditos adicionales
+                         Información Detallada de reducciones
                     </h6>
                 </div>
 
@@ -60,6 +60,37 @@
                             </div>
                         </div>
                     </div>
+                    <h6 class="text-center">Cuentas presupuestarias</h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Acción Específica</th>
+                                <th>Cuenta</th>
+                                <th>Descripción</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(account, index) in record.budget_modification_accounts" :key="index">
+                                <td class="text-center">
+                                    {{
+                                        account.budget_sub_specific_formulation.specific_action.specificable.code
+                                        + ' - ' + account.budget_sub_specific_formulation.specific_action.code
+                                        + ' | ' + account.budget_sub_specific_formulation.specific_action.name
+                                    }}
+                                </td>
+                                <td class="text-center">
+                                    {{
+                                        account.budget_account.group +'.'+ account.budget_account.item
+                                        +'.'+ account.budget_account.generic +'.'+ account.budget_account.specific
+                                        +'.'+ account.budget_account.subspecific
+                                    }}
+                                </td>
+                                <td class="text-center">{{ account.budget_account.denomination }}</td>
+                                <td class="text-center">{{ account.amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <div class="modal-footer">
 
