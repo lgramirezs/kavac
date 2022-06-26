@@ -76,7 +76,7 @@ if (!function_exists('generate_registration_code')) {
         $newCode = 1;
 
         $targetModel = $model::select($field)->where($field, 'like', "{$prefix}-%-{$year}")
-                             ->withTrashed()->orderBy('created_at', 'desc')->first();
+                             ->withTrashed()->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first();
         
         $newCode += ($targetModel) ? (int)explode('-', $targetModel->$field)[1] : 0;
 
