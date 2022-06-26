@@ -262,6 +262,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'warehous
      * Rutas para gestionar los productos de almacén
      */
     Route::resource('products', 'WarehouseProductController', ['except' => ['show']]);
+    Route::post('products/get-rules', 'WarehouseProductController@getRules');
     Route::get('products/export/all', 'WarehouseProductController@export');
     Route::post('products/import/all', 'WarehouseProductController@import');
 
