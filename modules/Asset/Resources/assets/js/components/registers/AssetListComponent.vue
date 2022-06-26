@@ -31,8 +31,8 @@
                     <asset-info
                         :route_list="app_url+'/asset/registers/info/'+ props.row.id">
                     </asset-info>
-
-                    <button
+                   
+                    <button 
                         @click="assignAsset(props.row.id)"
                         class="btn btn-primary btn-xs btn-icon btn-action"
                         title="Asignar Bien"

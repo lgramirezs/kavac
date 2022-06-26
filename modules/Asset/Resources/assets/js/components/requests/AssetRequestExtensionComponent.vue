@@ -3,11 +3,11 @@
 		<a class="btn btn-default btn-xs btn-icon btn-action"
 		   href="#" title="Solicitud de Prorroga" data-toggle="tooltip"
 		   :disabled="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?false:true"
-		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?addRecord('add_prorroga', 'asset/requests/vue-info/' + requestid, $event):viewMessage()">
+		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?showDate('add_prorroga', delivery_date, requestid, $event):viewMessage()">
 			<i class="fa fa-calendar-plus-o"></i>
 		</a>
 
-		<div class="modal fade text-left" tabindex="-1" role="dialog" id="add_prorroga">
+		<div id="add_prorroga" class="modal fade text-left" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-xs">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -46,8 +46,10 @@
 									<label>Fecha de entrega actual</label>
 					        		<input type="date"
 										data-toggle="tooltip"
-										class="form-control input-sm" v-model="record.delivery_date"
-										id="delivery_date">
+										:min="date_min"
+										id="delivery_date"
+										class="form-control" 
+										v-model="record.delivery_date">
 								</div>
 							</div>
 						</div>
@@ -79,17 +81,20 @@
 				record: {
 					id: '',
 					delivery_date: '',
-					asset_request_id: ''
+					asset_request_id: '',
 				},
+
+				date_min : '',
 				records: [],
 				errors: [],
 			}
 		},
 		props: {
 			requestid: Number,
+			delivery_date: String,
 			state: String,
 		},
-	
+		
 		methods: {
 			/**
              * Método que borra todos los datos del formulario
@@ -104,48 +109,21 @@
                 };
             },
 
-            /**
-			 * Inicializa los registros base del formulario
-			 *
-			 * @author Henry Paredes <hparedes@cenditel.gob.ve>
-			 */
-            initRecords(url, modal_id){
-			
+			async showDate(modal_id, delivery_date, requestid, event){
 				const vm = this;
-				vm.errors = [];
-            	var fields = {};
-            	url = vm.setUrl(url);
-            	axios.get(url).then(response => {
-					if (typeof(response.data.records) !== "undefined") {
-						fields = response.data.records;
+				vm.record = {
+					id: '',
+					delivery_date: vm.format_date(delivery_date, 'YYYY-MM-DD'),
+					asset_request_id: requestid,
+				};
+				//vm.date_min =  new Date(new Date(this.delivery_date) - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+			
 
-						
-						
-					}
-					if ($("#" + modal_id).length) {
-						$("#" + modal_id).modal('show');	
-					}
-				}).catch(error => {
-					if (typeof(error.response) !== "undefined") {
-						if (error.response.status == 403) {
-							vm.showMessage(
-								'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
-							);
-						}
-						else {
-							vm.logs('resources/js/all.js', 343, error, 'initRecords');
-						}
-					}
-				});
+				if ($("#" + modal_id).length) {
+					$("#" + modal_id).modal('show');	
+				}
+			},
 
-				setTimeout(()=>{
-					vm.record.delivery_date = vm.format_date(fields.delivery_date);
-					vm.record.asset_request_id = vm.requestid;
-					console.log(fields, vm.record);
-				}, 1500);
-				
-				
-            },
             viewMessage() {
             	const vm = this;
             	vm.showMessage(

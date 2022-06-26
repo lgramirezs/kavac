@@ -93,8 +93,8 @@
                             <label>Pais:</label>
                             <select2 
                                 :options="countries"
-                                v-model="record.country_id"
-                                @input="getEstates">
+                                @input="getEstates"
+                                v-model="record.country_id">
                             </select2>
                             <input type="hidden" v-model="record.id">
                         </div>
@@ -547,6 +547,10 @@
                         });
                     }
                 });
+                if (vm.record.country_id_aux) {
+          			vm.record.country_id = vm.record.country_id_aux;
+                    vm.getEstates();
+          		}
             },
             loadAssets(url) {
                 const vm = this;
@@ -562,25 +566,16 @@
                 });
             },
 
-            async getCountries() {
-                const vm = this;
-                await axios.get(`${window.app_url}/get-countries`).then(response => {
-                    vm.countries = response.data;
-                });
-                if((vm.record.country_id_aux) && (vm.record.id)){
-                    vm.record.country_id = vm.record.country_id_aux;
-                }
-            },
             async getEstates() {
                 const vm = this;
                 vm.estates = [];
                 if (vm.record.country_id) {
                     await axios.get(`${window.app_url}/get-estates/${vm.record.country_id}`).then(response => {
-                            vm.estates = response.data;
+                            vm.estates = response.data;    
                     });
                 }
                 if ((vm.record.estate_id_aux ) && (vm.record.id)) {
-                    vm.record.estate_id = vm.record.estate_id_aux;     
+                    vm.record.estate_id = vm.record.estate_id_aux;  
                 }
             },
             async getMunicipalities() {

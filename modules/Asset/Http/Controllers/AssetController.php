@@ -64,7 +64,6 @@ class AssetController extends Controller
             'asset_condition_id' => ['required'],
             'value' => ['required', 'regex:/^\d+(\.\d+)?$/u'],
             'currency_id' => ['required'],
-            'serial' => ['required', 'unique:assets,serial'],
             'institution_id' => ['required'],
         ];
 
@@ -129,24 +128,37 @@ class AssetController extends Controller
     {
         $item_required = AssetRequiredItem::where('asset_specific_category_id', $request->asset_specific_category_id)
             ->first();
-        if (!is_null($item_required)) {
-            $validateRules  = $this->validateRules;
-            $validateRules  = array_merge(
-                $validateRules,
-                [
-                    'serial' => [new RequiredItem($item_required->serial), 'unique:assets,serial'],
-                    'marca'  => new RequiredItem($item_required->marca),
-                    'model' => new RequiredItem($item_required->model),
-                    'asset_use_function_id' => new RequiredItem($item_required->use_function),
-                    'parish_id' => new RequiredItem($item_required->address),
-                    'address' => new RequiredItem($item_required->address),
 
-                ]
-            );
-            $this->validate($request, $validateRules, $this->messages, $this->attributes);
-        } else {
-            $this->validate($request, $this->validateRules, $this->messages, $this->attributes);
-        }
+            if (!is_null($item_required)){
+                if ($request->asset_type_id == 1) {
+                    $validateRules  = $this->validateRules;
+                    $validateRules  = array_merge(
+                        $validateRules,
+                        [
+                            'serial' => [new RequiredItem($item_required->serial), 'unique:assets,serial'],
+                            'marca'  => new RequiredItem($item_required->marca),
+                            'model' => new RequiredItem($item_required->model),
+        
+                        ]
+                    );
+                    $this->validate($request, $validateRules, $this->messages, $this->attributes);
+                } elseif ($request->type_id == 2) {
+                    $validateRules  = $this->validateRules;
+                    $validateRules  = array_merge(
+                        $validateRules,
+                        [
+                            'asset_use_function_id' => new RequiredItem($item_required->use_function),
+                            'parish_id' => new RequiredItem($item_required->address),
+                            'address' => new RequiredItem($item_required->address),
+        
+                        ]
+                    );
+                    $this->validate($request, $validateRules, $this->messages, $this->attributes);
+                }
+            } else {
+                $this->validate($request, $this->validateRules, $this->messages, $this->attributes);
+            }
+            
         $asset = Asset::create([
             'asset_type_id'              => $request->asset_type_id,
             'asset_category_id'          => $request->asset_category_id,
@@ -478,12 +490,14 @@ class AssetController extends Controller
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
                         ->orWhere('asset_status_id', 10)
-                        ->where('asset_condition_id', 1);
+                        ->where('asset_condition_id', 1)
+                        ->where('asset_type_id', 1);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
                         ->orWhere('asset_status_id', 10)
                         ->where('asset_condition_id', 1)
+                        ->where('asset_type_id', 1)
                         ->where('institution_id', $institution_id);
                 }
             } elseif ($operation == 'disincorporations') {
@@ -532,12 +546,14 @@ class AssetController extends Controller
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
                         ->orWhere('asset_status_id', 10)
-                        ->where('asset_condition_id', 1);
+                        ->where('asset_condition_id', 1)
+                        ->where('asset_type_id', 1);
                 } else {
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')->orderBy('id')
                         ->whereIn('id', $selected)
                         ->orWhere('asset_status_id', 10)
                         ->where('asset_condition_id', 1)
+                        ->where('asset_type_id', 1)
                         ->where('institution_id', $institution_id);
                 }
             }

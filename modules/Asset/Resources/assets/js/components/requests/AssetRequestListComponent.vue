@@ -39,6 +39,7 @@
 
                 <asset-request-extension
                     :requestid="props.row.id"
+                    :delivery_date="props.row.delivery_date"
                     :state="props.row.state">
                 </asset-request-extension>
 
