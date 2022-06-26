@@ -8,17 +8,23 @@
 <br>
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th style="font-size: 9rem;" width="14.1%" align="center">ACCION/PROYECTO</th>
-        <th style="font-size: 9rem;" width="14.1%" align="center">ACCION ESPECIFICA</th>
-        <th style="font-size: 9rem;" width="14.1%" align="center">CODIGO</th>
-        <th style="font-size: 9rem;" width="14.1%" align="center">DENOMINACION </th>
-        <th style="font-size: 9rem;" width="14.5%" align="center">PROGRAMADO {{ $currencySymbol }}</th>
-        <th style="font-size: 9rem;" width="14.5%" align="center">COMPROMETIDO {{ $currencySymbol }}</th>
+        <th style="font-size: 9rem;" width="14%" align="center">ACCION/PROYECTO</th>
+        <th style="font-size: 9rem;" width="14%" align="center">ACCION ESPECIFICA</th>
+        <th style="font-size: 9rem;" width="14%" align="center">CODIGO</th>
+        <th style="font-size: 9rem;" width="15%" align="center">DENOMINACION </th>
+        <th style="font-size: 9rem;" width="14%" align="center">PROGRAMADO </th>
+        <th style="font-size: 9rem;" width="14%" align="center">COMPROMETIDO </th>
         <th style="font-size: 9rem;" width="15%" align="center">DISPONIBILIDAD PRESUPUESTARIA AL DIA:
-            {{ $report_date }} {{ $currencySymbol }}</th>
+            {{ $report_date }} </th>
     </tr>
 </table>
-<table cellspacing="0" cellpadding="1" border="0">
+
+<table cellspacing="0" cellpadding="1" border="1">
+    @php
+        $total_programmed = 0;
+        $total_compromised = 0;
+        $total_amount_available = 0;
+    @endphp
     @foreach ($records as $budgetAccounts)
         @if (count($budgetAccounts[0]) < 0)
             @php
@@ -54,7 +60,31 @@
                 <td style="font-size: 8rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
                     {{ number_format($budgetAccount['amount_available'], 2) }}</td>
             </tr>
+            @php
+                if ($budgetAccount->budgetAccount->item === '00') {
+                    $total_programmed += $budgetAccount['programmed'];
+                    $total_compromised += $budgetAccount['compromised'];
+                    $total_amount_available += $budgetAccount['amount_available'];
+                }
+            @endphp
         @endforeach
     @endforeach
 
+</table>
+
+<table cellspacing="0" cellpadding="1" border="1" style="font-weight: bold">
+    <tr>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="57%">
+
+        </td>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999; " align="center" width="15%">
+            {{ number_format($total_programmed, 2) }}
+        </td>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="14%">
+            {{ number_format($total_compromised, 2) }}
+        </td>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="14%">
+            {{ number_format($total_amount_available, 2) }}
+        </td>
+    </tr>
 </table>
