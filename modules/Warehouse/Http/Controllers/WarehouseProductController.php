@@ -13,6 +13,7 @@ use Modules\Warehouse\Imports\WarehouseProductImport;
 use Modules\Warehouse\Models\WarehouseInventoryProduct;
 use Modules\Warehouse\Models\WarehouseProductAttribute;
 use Modules\Warehouse\Models\WarehouseProduct;
+use Modules\Warehouse\Models\WarehouseInstitutionWarehouse;
 
 /**
  * @class WarehouseProductController
@@ -284,5 +285,66 @@ class WarehouseProductController extends Controller
     {
         Excel::import(new WarehouseProductImport, request()->file('file'));
         return response()->json(['result' => true], 200);
+    }
+
+    /**
+     * Muestra una lista de los atributos de un producto
+     *
+     * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @return JsonResponse
+     */
+    public function getRules(Request $request)
+    {
+        $rules = [];
+        $product_id = $request['warehouse_inventory_product']['warehouse_product_id'];
+        $currency = $request['warehouse_inventory_product']['currency_id'];
+        $quantity = $request['warehouse_inventory_product']['quantity'];
+        $value = $request['warehouse_inventory_product']['unit_value'];
+
+        $inst_ware = WarehouseInstitutionWarehouse::where('warehouse_id', $request->warehouse_id)
+            ->where('institution_id', $request->institution_id)->first();
+
+        /** Se busca en el inventario por producto y unidad si existe un registro previo */
+
+        $inventory = WarehouseInventoryProduct::with('warehouseInventoryRule')
+            ->where('warehouse_product_id', $product_id)
+            ->where('warehouse_institution_warehouse_id', $inst_ware->id)
+            ->where('unit_value', $value)->get();
+
+        /** Si existe un registro previo se verifican los atributos del nuevo ingreso */
+        if (count($inventory) > 0) {
+            foreach ($inventory as $product_inventory) {
+                /** @var boolean $equal Define si los atributos coinciden con los registrados */
+                $equal = true;
+
+                foreach ($request['warehouse_inventory_product']['warehouse_product_attributes'] as $attribute) {
+                    $name = $attribute['name'];
+                    $val = $attribute['value'];
+
+                    $product_att = WarehouseProductAttribute::where('warehouse_product_id', $product_id)
+                        ->where('name', $name)->first();
+
+                    if (!is_null($product_att)) {
+                        $product_value = WarehouseProductValue::where('value', $val)
+                            ->where('warehouse_product_attribute_id', $product_att->id)
+                            ->where('warehouse_inventory_product_id', $product_inventory->id)->first();
+
+                        if (is_null($product_value)) {
+                            /** si el valor de este atributo no existe, son diferentes */
+                            $equal = false;
+                            break;
+                        }
+                    } else {
+                        $equal = false;
+                        break;
+                    }
+                }
+                if ($equal === true) {
+                    /** Si se encuentra el producto en inventario, se develven sus reglas de abastecimiento */
+                    $rules = $product_inventory->warehouseInventoryRule;
+                }
+            }
+        }
+        return response()->json(['records' => $rules], 200);
     }
 }

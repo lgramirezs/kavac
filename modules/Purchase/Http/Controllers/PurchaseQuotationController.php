@@ -169,7 +169,30 @@ class PurchaseQuotationController extends Controller
 	 */
 	public function edit($id)
 	{
-		
+		$suppliers  = template_choices('Modules\Purchase\Models\PurchaseSupplier', ['rif','-', 'name'], [], true);
+
+		$currencies = template_choices('Modules\Purchase\Models\Currency', ['name'], [], true);
+
+		$historyTax = HistoryTax::with('tax')->whereHas('tax', function ($query) {
+			$query->where('active', true);
+		})->where('operation_date', '<=', date('Y-m-d'))->orderBy('operation_date', 'DESC')->first();
+
+		$taxUnit    = TaxUnit::where('active', true)->first();
+
+		$record_base_budgets = PurchaseBaseBudget::with(
+			'currency',
+			'purchaseRequirement.contratingDepartment',
+			'purchaseRequirement.userDepartment',
+			'relatable.purchaseRequirementItem.purchaseRequirement'
+		)->where('status', 'WAIT_QUOTATION')->orderBy('id', 'ASC')->get();
+
+		return view('purchase::quotation.form', [
+			'record_base_budgets' => $record_base_budgets,
+			'currencies'   => json_encode($currencies),
+			'tax'          => json_encode($historyTax),
+			'tax_unit'     => json_encode($taxUnit),
+			'suppliers'    => json_encode($suppliers),
+		]);
 	}
 
 	/**

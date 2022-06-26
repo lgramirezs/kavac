@@ -251,8 +251,7 @@
              */
             initRecords(url,modal_id){
                 this.errors = [];
-                this.reset();
-
+                this.reset()
                 const vm = this;
                 
                 
@@ -269,7 +268,10 @@
 
                         document.getElementById('asset_acquisition_type').innerText = (vm.records.asset_acquisition_type)?vm.records.asset_acquisition_type.name:'';
                         document.getElementById('asset_acquisition_date').innerText = (vm.records.acquisition_date)?vm.format_date(vm.records.acquisition_date):'';
-                        document.getElementById('asset_ubication').innerText = (vm.records.ubication)?vm.records.ubication:'N/A';
+                        document.getElementById('asset_ubication').innerText = (vm.records.address)?vm.records.address.replace( /(<([^>]+)>)/ig, '') + ', ' +
+                                                                                                    vm.records.parish.name + ', ' +  vm.records.parish.municipality.name + ', ' +
+                                                                                                    vm.records.parish.municipality.estate.name + ', '+ 
+                                                                                                    vm.records.parish.municipality.estate.country.name :'N/A';
                         
                        setTimeout(()=>{
                             document.getElementById('purchase_supplier').innerText = (vm.supplier)? vm.supplier : 'N/A';
@@ -287,9 +289,10 @@
                         document.getElementById('asset_value').innerText = (vm.records.value)?vm.records.value:'';
                     
                     
-                    if ($("#" + modal_id).length) {
-                        $("#" + modal_id).modal('show');
-                    }
+                        if ($("#" + modal_id).length) {
+                            $("#" + modal_id).modal('show');
+                        }
+                           
             }, 
 
             getSupplier(id) {
