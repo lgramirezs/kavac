@@ -104,21 +104,15 @@ class PayrollSalaryAdjustmentController extends Controller
             if ($salaryTabulator) {
                 /** Se agregan las escalas del tabulador salarial */
                 foreach ($request->payroll_salary_tabulator['payroll_salary_tabulator_scales'] as $payrollScale) {
-                    /**
-                     * Objeto asociado al modelo PayrollSalaryTabulatorScale
-                     * @var Object $salaryTabulatorScale
-                     */
-                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $request->payroll_salary_tabulator_id)
-                                            ->first();
                     foreach ($request->scale_values as $scale_value) {
-                        $valueScale = $scale_value;
-                        $value = $request->increase_of_type == 'percentage' ?
-                                 $payrollScale['value'] + $valueScale :
-                                 $valueScale;
-                        $salaryTabulatorScale->value                       = $value;
-                        $salaryTabulatorScale->payroll_vertical_scale_id   = $payrollScale['payroll_vertical_scale_id'] ?? null;
-                        $salaryTabulatorScale->payroll_horizontal_scale_id = $payrollScale['payroll_horizontal_scale_id'] ?? null;
-                        $salaryTabulatorScale->payroll_salary_tabulator_id = $request->payroll_salary_tabulator_id;
+                        /**
+                         * Objeto asociado al modelo PayrollSalaryTabulatorScale
+                         * @var Object $salaryTabulatorScale
+                         */
+                        $salaryTabulatorScale = PayrollSalaryTabulatorScale::where('payroll_salary_tabulator_id', $request->payroll_salary_tabulator_id)->where('id', $scale_value['id'])->first();
+
+                        $valueScale = $scale_value['value'];
+                        $salaryTabulatorScale->value = (float)$valueScale;
                         $salaryTabulatorScale->save();
                     }
                 }
