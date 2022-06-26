@@ -98,6 +98,18 @@
 							</div>
 						</div>
 	                </div>
+					
+					<div class="modal-footer">
+
+		                <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
+	                			data-dismiss="modal">
+	                		Cerrar
+	                	</button>
+	                	<button type="button" @click="createRecord('asset/requests/request-event')"
+	                			class="btn btn-primary btn-sm btn-round btn-modal-save">
+	                		Guardar
+		                </button>
+		            </div>
 
 	                <div class="modal-body modal-table">
 	                	<hr>
@@ -125,17 +137,6 @@
 	                	</v-client-table>
 	                </div>
 
-	                <div class="modal-footer">
-
-		                <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-	                			data-dismiss="modal">
-	                		Cerrar
-	                	</button>
-	                	<button type="button" @click="createRecord('asset/requests/request-event')"
-	                			class="btn btn-primary btn-sm btn-round btn-modal-save">
-	                		Guardar
-		                </button>
-		            </div>
 		        </div>
 		    </div>
 		</div>
