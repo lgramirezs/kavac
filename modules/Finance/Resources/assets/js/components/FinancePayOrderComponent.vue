@@ -123,11 +123,12 @@
                 <div class="col-md-4">
                     <div class="form-group is-required">
                         <label for="" class="control-label">Nro. de Cuenta</label>
-                        <select class="form-control select2" data-toggle="tooltip" title="Seleccione el número de cuenta bancaria" v-model="record.finance_bank_account_id">
+                        <select2 :options="accounts" v-model="record.finance_bank_account_id"></select2>
+                        <!--<select class="form-control select2" data-toggle="tooltip" title="Seleccione el número de cuenta bancaria" v-model="record.finance_bank_account_id">
                             <option :value="account.id" v-for="(account, index) in accounts" :key="index">
                                 {{ format_bank_account(account.text) }}
                             </option>
-                        </select>
+                        </select>-->
                     </div>
                 </div>
                 <div class="col-12">
