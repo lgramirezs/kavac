@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Accounting\Imports\AccountingAccountImport;
+use Modules\Accounting\Exports\AccountingAccountExport;
 
 // use App\Imports\DataImport;
 // use Maatwebsite\Excel\HeadingRowImport;
@@ -43,7 +44,7 @@ class AccountingAccountController extends Controller
         $this->middleware('permission:accounting.account.list', ['only' => 'index']);
         $this->middleware(
             'permission:accounting.account.create',
-            ['only' => ['store', 'registerImportedAccounts']]
+            ['only' => ['store', 'registerImportedAccounts', 'export']]
         );
         $this->middleware(
             'permission:accounting.account.edit',
@@ -430,7 +431,7 @@ class AccountingAccountController extends Controller
      * [import Lee las filas de un archivo de hoja de calculo]
      * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
-     * @return     object           Objeto que permite descargar el archivo con la información a ser exportada
+     * @return     object           Objeto que permite descargar el archivo con la información a ser importada
      */
     public function import(Request $request)
     {
@@ -440,61 +441,15 @@ class AccountingAccountController extends Controller
     }
 
     /**
-     * [registerImportedAccounts Registra en la base de datos todas las cuentas cargadas desde la hoja de cálculo]
-     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-     * @return [Array] [con los errores en caso de existir]
-    */
-    public function registerImportedAccounts(Request $request)
+     * Realiza la acción necesaria para exportar los datos
+     *
+     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @return    object    Objeto que permite descargar el archivo con la información a ser exportada
+     */
+    public function export()
     {
-        foreach ($request->records as $account) {
-
-            /**
-             * [$acc almacena la consulta de la cuenta]
-             * @var [Modules\Accounting\Models\AccountingAccount]
-             */
-            $acc = AccountingAccount::where('group', $account['group'])
-                                ->where('subgroup', $account['subgroup'])
-                                ->where('item', $account['item'])
-                                ->where('generic', $account['generic'])
-                                ->where('specific', $account['specific'])
-                                ->where('subspecific', $account['subspecific'])->first();
-
-            /**
-             * [$parent  almacena la consulta de la cuenta de nivel superior]
-             * @var [Modules\Accounting\Models\AccountingAccount]
-             */
-            $parent = AccountingAccount::getParent(
-                $account['group'],
-                $account['subgroup'],
-                $account['item'],
-                $account['generic'],
-                $account['specific'],
-                $account['subspecific'],
-                $request['institutional'] ?? '000'
-            );
-
-            AccountingAccount::updateOrCreate(
-                [
-                    'group'       => $account['group'],
-                    'subgroup'    => $account['subgroup'],
-                    'item'        => $account['item'],
-                    'generic'     => $account['generic'],
-                    'specific'    => $account['specific'],
-                    'subspecific' => $account['subspecific'],
-                ],
-                [
-                    'denomination'    => $account['denomination'],
-                    'active'          => $account['active'],
-                    'inactivity_date' => (!$account['active'])?date('Y-m-d'):null,
-                    'parent_id'       => ($acc != null && $parent != false) ?
-                    (($acc->id        == $parent->id)?null:$parent->id) : (($parent == false)?null:$parent->id),
-                ]
-            );
-        }
-        return response()->json(['records'=>$this->getAccounts(),
-            'message'=>'Los registros importados fueron guardados de manera exitosa.']);
+        return Excel::download(new AccountingAccountExport, 'accounting_account.xlsx');
     }
-
 
     /**
      * [validatedErrors Verifica los posibles errores que se pueden presentar en las filas de archivo y

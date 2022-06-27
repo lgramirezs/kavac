@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-3 ">
                                 <strong>Objeto Principal:</strong>
-                                <span v-for="object in records.purchase_supplier_objects">
+                                <span v-for="object in records.purchase_supplier_objects" :key="object.id">
                                     {{ object.name }}
                                 </span>
                             </div>

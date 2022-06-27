@@ -6,16 +6,16 @@
             <table cellpadding="1" border="1">
                 <thead>
                     <tr>
-                        <td align="center"><strong>CODIGO</strong></td>
-                        <td align="center"><strong>DENOMINACION</strong></td>
-                        <td align="center"><strong>ACTIVA</strong></td>
+                        <td class="text-center"><strong>CÓDIGO</strong></td>
+                        <td class="text-center"><strong>DENOMINACION</strong></td>
+                        <td class="text-center"><strong>ACTIVA</strong></td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">Ej: 9.9.9.99.99.99.999</td>
-                        <td align="center">Nombre de denominación</td>
-                        <td align="center">SI ó NO</td>
+                        <td class="text-center">Ej: 9.9.9.99.99.99.999</td>
+                        <td class="text-center">Nombre de denominación</td>
+                        <td class="text-center">SI ó NO</td>
                     </tr>
                 </tbody>
             </table>
@@ -23,9 +23,20 @@
                 <div class="form-group">
                     <form method="post" enctype="multipart/form-data" @submit.prevent="">
                         <label>Cargar Hoja de calculo. Formatos permitidos:<strong>.xls .xlsx .csv</strong></label><br>
-                        <button type="button" data-toggle="tooltip" v-has-tooltip class="btn btn-sm btn-info btn-import" title="Presione para importar la información. Los archivos permitidos son: .xls .xlsx .csv .odt .docx" @click="setFile('import_account')">
-                            <i class="fa fa-upload"></i>
+                        <button type="button" 
+                            data-toggle="tooltip" 
+                            class="btn btn-sm btn-info btn-custom"
+                            v-has-tooltip
+                            title="Presione para importar la información. Los archivos permitidos son: .xls .xlsx .csv .odt .docx" 
+                            @click="setFile('import_account')">
+                            <i class="fa fa-cloud-upload"></i>
                         </button>
+                        <a :href="$parent.route_export" 
+                            class="btn btn-sm btn-primary btn-custom"
+                            v-has-tooltip
+                            title="Presione para exportar la información.">
+                            <i class="fa fa-cloud-download"></i>
+                        </a>
                         <input type="file" id="import_account" name="import_account" @change="onFileChange" style="display:none">
                         <br>
                     </form>
