@@ -202,7 +202,7 @@
             reset() {
                 this.record = {
                     id: '',
-                    date: '',
+                    date: new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0],
                     payroll_staff_id: '',
                     payroll_permission_policy_id: '',
                     start_date: '',
