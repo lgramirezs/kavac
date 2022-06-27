@@ -27,7 +27,7 @@ class AccountingAccountExport extends \App\Exports\DataExport implements
      *
      * @method    headings
      *
-     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
      * @return    array    Arreglo con las cabeceras de los datos a exportar
      */
@@ -45,7 +45,7 @@ class AccountingAccountExport extends \App\Exports\DataExport implements
      *
      * @method    map
      *
-     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
      * @param     object    $asset    Objeto con las propiedades del modelo a exportar
      *
