@@ -110,7 +110,7 @@
                             <span>Beneficiarios</span>
                         </a>
                     </li> --}}
-                    @foreach (\Module::collections(1) as $module)
+                    @foreach (\Module::getOrdered(1) as $module)
                         {{-- Menú de opciones de módulos instalados y habilitados --}}
                         @includeIf(strtolower($module->getName()) . '::layouts.menu-option')
                     @endforeach

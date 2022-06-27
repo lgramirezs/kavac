@@ -13,7 +13,8 @@
     ],
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 3,
+    "priority": 3,
     "logo": "purchase-logo.png",
     "providers": [
         "Modules\\Purchase\\Providers\\PurchaseServiceProvider"

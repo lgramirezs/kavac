@@ -14,7 +14,8 @@
     "logo": "accounting-logo.png",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 5,
+    "priority": 5,
     "providers": [
         "Modules\\Accounting\\Providers\\AccountingServiceProvider"
     ],
