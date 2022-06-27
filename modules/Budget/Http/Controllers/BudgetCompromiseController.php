@@ -105,7 +105,7 @@ class BudgetCompromiseController extends Controller
 
         DB::transaction(function () use ($request, $code, $compromisedYear) {
             /** @var Object Estado inicial del compromiso establecido a elaborado */
-            $documentStatus = DocumentStatus::where('action', 'EL')->first();
+            $documentStatus = DocumentStatus::where('action', 'AP')->first();
 
             /** @var Object Datos del compromiso */
             $compromise = BudgetCompromise::create([
@@ -177,8 +177,6 @@ class BudgetCompromiseController extends Controller
             }]);
         }])->find($id);
 
-        //    dd($budgetCompromise);
-
         return view('budget::compromises.create-edit-form', compact('budgetCompromise'));
     }
 
@@ -211,7 +209,7 @@ class BudgetCompromiseController extends Controller
         );
 
         $compromisedYear = explode("-", $request->compromised_at)[0];
-        $documentStatus = DocumentStatus::where('action', 'EL')->first();
+        $documentStatus = DocumentStatus::where('action', 'AP')->first();
 
         $budgetCentralizedAction = BudgetCompromise::find($request->id);
         $budgetCentralizedAction->document_number = $request->source_document;
@@ -225,7 +223,7 @@ class BudgetCompromiseController extends Controller
 
         $total = 0;
 
-/** Gestiona los ítems del compromiso */
+        /** Gestiona los ítems del compromiso */
         $deleted = BudgetCompromiseDetail::where('budget_compromise_id', $request->id)->delete();
 
         foreach ($request->accounts as $account) {
