@@ -68,10 +68,11 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <div class="form-group is-required">
+                    <div class="form-group is-required" v-if="currencies">
                         <select2
                             :options="currencies"
                             v-model="record.currency_id"
+                            disabled
                         ></select2>
                     </div>
                 </div>
@@ -1196,7 +1197,7 @@ export default {
         vm.loading = true;
         await vm.getOpenedFiscalYears();
         await vm.getInstitutions();
-        await vm.getCurrencies();
+        await vm.getDefaultCurrencies();
         await vm.getProjects();
         await vm.getCentralizedActions();
 
@@ -1238,6 +1239,7 @@ export default {
                     .removeClass('is-required');
             }
         });
+        vm.currencies ? vm.record.currency_id = vm.currencies[1].id : vm.record.currency_id = '';
     }
 };
 </script>
