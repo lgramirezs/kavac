@@ -93,14 +93,19 @@ class WarehouseRequestController extends Controller
     public function store(Request $request)
     {
         $validateRules = $this->validateRules;
+        $messages = $this->messages;
         for ($i=0; $i < count($request->warehouse_products); $i++) { 
             $validateRules = array_merge($validateRules, [
-                'warehouse_products.'. $i .'.requested' => ['required', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+                'warehouse_products.'. $i .'.requested' => ['required', 'integer', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+            ]);
+            $products = WarehouseInventoryProduct::where('id', $request->warehouse_products[$i]['id'])->with('warehouseProduct')->first();
+
+            $messages = array_merge($messages, [
+                'warehouse_products.'. $i .'.requested.max' => 'El producto '. $products->warehouseProduct->name . ' no posee suficiente existencia en almacén'
             ]);
         }
-       
 
-        $this->validate($request, $validateRules, $this->messages);
+        $this->validate($request, $validateRules, $messages);
 
         $codeSetting = CodeSetting::where('table', 'warehouse_requests')->first();
         if (is_null($codeSetting)) {
@@ -198,14 +203,21 @@ class WarehouseRequestController extends Controller
         $warehouse_request = WarehouseRequest::find($id);
         
         $validateRules = $this->validateRules;
+        $messages = $this->messages;
         for ($i=0; $i < count($request->warehouse_products); $i++) { 
             $validateRules = array_merge($validateRules, [
-                'warehouse_products.'. $i .'.requested' => ['required', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+                'warehouse_products.'. $i .'.requested' => ['required', 'integer', 'max:'. WarehouseInventoryProduct::find($request->warehouse_products[$i]['id'])->real],
+            ]);
+
+            $products = WarehouseInventoryProduct::where('id', $request->warehouse_products[$i]['id'])->with('warehouseProduct')->first();
+
+            $messages = array_merge($messages, [
+                'warehouse_products.'. $i .'.requested.max' => 'El producto '. $products->warehouseProduct->name . ' no posee suficiente existencia en almacén'
             ]);
         }
        
 
-        $this->validate($request, $validateRules, $this->messages);
+        $this->validate($request, $validateRules, $messages);
 
         DB::transaction(function () use ($request, $warehouse_request) {
             $warehouse_request->motive = $request->input('motive');
