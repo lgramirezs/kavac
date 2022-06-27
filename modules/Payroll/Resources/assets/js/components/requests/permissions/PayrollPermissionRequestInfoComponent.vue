@@ -87,9 +87,9 @@
 									</div>
 									<div class="col-md-4">
 											<div class="form-group">
-												<strong>Dias de permiso</strong>
+												<strong>Tiempo de permiso</strong>
 												<div class="row" style="margin: 1px 0">
-													<span class="col-md-12" id="day_permission">
+													<span class="col-md-12" id="time_permission">
 													</span>
 												</div>
 								            </div>
@@ -172,7 +172,7 @@
 		            	document.getElementById('payroll_permission_policy_id').innerText = (fields.payroll_permission_policy_id)?fields.payroll_permission_policy.name:'N/A';
 		            	document.getElementById('start_date').innerText = (fields.start_date)?fields.start_date:'N/A';
 		            	document.getElementById('end_date').innerText = (fields.end_date)?fields.end_date:'N/A';
-		            	document.getElementById('day_permission').innerText = (fields.day_permission)?fields.day_permission:'N/A';
+		            	document.getElementById('time_permission').innerText = (fields.time_permission)?fields.time_permission:'N/A';
 		            	document.getElementById('motive_permission').innerText = (fields.motive_permission)?fields.motive_permission:'N/A';
 					}
 
