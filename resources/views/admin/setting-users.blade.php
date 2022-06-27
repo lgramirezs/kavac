@@ -24,9 +24,9 @@
                     <h6 class="card-title">
                         {{ __('Usuarios') }}
                         @include('buttons.help', [
-						    'helpId' => 'SettingsUser',
-						    'helpSteps' => get_json_resource('ui-guides/settings_user.json')
-					    ])
+                            'helpId' => 'SettingsUser',
+                            'helpSteps' => get_json_resource('ui-guides/settings_user.json')
+                        ])
                     </h6>
                     <div class="card-btns">
                         @include('buttons.previous', ['route' => url()->previous()])
@@ -50,8 +50,8 @@
                                     <td>
                                         @php
                                             $institution = ($user->profile && $user->profile->institution)
-                                                           ? $user->profile->institution->acronym
-                                                           : __('NO ASIGNADA');
+                                                ? $user->profile->institution->acronym
+                                                : __('NO ASIGNADA');
                                         @endphp
                                         {{ $institution }}
                                     </td>

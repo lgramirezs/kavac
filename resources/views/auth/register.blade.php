@@ -20,11 +20,11 @@
     <div class="card">
         <div class="card-header">
             <h6 class="card-title">
-                {{ __('Gestión de usuario') }}
-                @include('buttons.help', [
-				    'helpId' => 'CreateUser',
-				    'helpSteps' => get_json_resource('ui-guides/create_user.json')
-				])
+            @if (isset($model))
+                {{ __('Actualizar usuario') }}
+            @else
+                {{ __('Registrar usuario') }}
+            @endif
             </h6>
             <div class="card-btns">
                 @include('buttons.previous', ['route' => url()->previous()])
