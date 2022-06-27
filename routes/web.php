@@ -274,6 +274,12 @@ Route::get(
         'CurrencyController@getCurrencies'
     )->name('get-currencies');
 
+    /** Ruta para obtener datos de las monedas por defecto */
+    Route::get(
+        '/get-default-currencies/{currency_id?}',
+        'CurrencyController@getDefaultCurrencies'
+    )->name('get-default-currencies');
+
     /** Ruta para la gestión de imágenes */
     Route::resource('upload-image', 'ImageController', [
         'except' => ['index', 'create', 'show', 'edit', 'update']
