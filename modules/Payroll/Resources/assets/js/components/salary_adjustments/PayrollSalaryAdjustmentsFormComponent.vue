@@ -490,7 +490,7 @@
                             id_scale = 'salary_scale_v_' + vertical;
                         }
                         if (vertical && horizontal) {
-                            id_scale = salary_scale_ + vertical + '_' + horizontal;
+                            id_scale = 'salary_scale_' + vertical + '_' + horizontal;
                         }
 
                         let tabValue = document.getElementById(id_scale)

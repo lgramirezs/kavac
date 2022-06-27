@@ -171,6 +171,22 @@ class CurrencyController extends Controller
     }
 
     /**
+     * Obtiene la moneda registrada por defecto
+     *
+     * @method    getDefaultCurrencies
+     *
+     * @author     Daniel Contreras <dcontreras@cenditel.gob.ve>
+     *
+     * @param     Integer           $id    Identificador de la moneda a buscar, este parámetro es opcional
+     *
+     * @return    JsonResponse             JSON con los datos de las monedas
+     */
+    public function getDefaultCurrencies($id = null)
+    {
+        return response()->json(template_choices('App\Models\Currency', ['symbol', '-', 'name'], ['default' => 't'], true));
+    }
+
+    /**
      * Obtiene información de una moneda
      *
      * @method    getCurrencyInfo

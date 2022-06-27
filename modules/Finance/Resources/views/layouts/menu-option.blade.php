@@ -29,12 +29,12 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <a href="#">Reportes</a>
+        <!--<li>
+            <a href="#">Reportes</a
             <ul class="submenu">
                 <li><a href="#">Vouchers</a></li>
                 <li><a href="#"></a></li>
             </ul>
-        </li>
+        </li>-->
     </ul>
 </li>
