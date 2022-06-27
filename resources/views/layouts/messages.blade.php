@@ -66,6 +66,12 @@
                     sticky: false,
                     time: 2500
                 });
+                
+                @if (Route::current()->getName() !== 'settings.index')
+                    setTimeout(() => {
+                        location.href = "{{ route('settings.index') }}";
+                    }, 2500);
+                @endif
             @endif
         @endrole
     });

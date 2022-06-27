@@ -191,7 +191,8 @@ class FinanceBankAccountController extends Controller
             foreach ($agency->bankAccounts as $bank_account) {
                 $accounts[] = [
                     'id' => $bank_account->id,
-                    'text' => $bank->code . $bank_account->ccc_number
+                    //'text' => $bank->code . $bank_account->ccc_number
+                    'text' => $bank_account->formated_ccc_number
                 ];
             }
         }
@@ -214,7 +215,8 @@ class FinanceBankAccountController extends Controller
         foreach ($bank_accounts as $bank_account) {
             $this->data[] = [
                 'id' => $bank_account->id,
-                'text' => $bank_account->ccc_number,
+                //'text' => $bank_account->ccc_number,
+                'text' => $bank_account->formated_ccc_number,
                 'bank_name' => $bank_account->financeBankingAgency && $bank_account->financeBankingAgency->financeBank ?
                                $bank_account->financeBankingAgency->financeBank->name : '',
                 'bank_account_type' => $bank_account->financeAccountType->name,

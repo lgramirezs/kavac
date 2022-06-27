@@ -224,7 +224,7 @@ class WarehouseProductController extends Controller
     public function getProductAttributes($product_id)
     {
         return response()->json([
-            'records' => WarehouseProductAttribute::with('MeasurementUnit')->where(
+            'records' => WarehouseProductAttribute::where(
                 'warehouse_product_id',
                 $product_id
             )->get()
