@@ -94,8 +94,11 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:25', 'unique:users'],
             'role' => ['required_without:permission', 'array'],
             'permission' => ['required_without:role', 'array']
-        ], [
-            'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado'
+        ],
+        [
+            'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado',
+            'role.required_without' => 'El campo roles es obligatorio cuando no se asignado al menos un permiso.',
+            'permission.required_without' => 'El campo permisos es obligatorio cuando no se asignado al menos un rol.'
         ]);
 
         if ($request->staff) {

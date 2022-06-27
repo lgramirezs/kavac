@@ -443,7 +443,7 @@ class AccountingAccountController extends Controller
     /**
      * Realiza la acción necesaria para exportar los datos
      *
-     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      * @return    object    Objeto que permite descargar el archivo con la información a ser exportada
      */
     public function export()

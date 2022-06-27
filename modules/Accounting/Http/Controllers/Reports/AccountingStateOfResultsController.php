@@ -868,33 +868,35 @@ class AccountingStateOfResultsController extends Controller
         $balanceChildren = 0;
 
         foreach ($account->entryAccount as $entryAccount) {
-            if ($entryAccount->entries['from_date'] >= $initD && $entryAccount->entries['from_date'] <= $endD &&
-                $entryAccount->entries['approved']) {
-                if (!array_key_exists($entryAccount['entries']['currency']['id'], $this->getConvertions())) {
-                    $this->setConvertions($this->calculateExchangeRates(
-                        $this->getConvertions(),
-                        $entryAccount['entries'],
-                        $this->getCurrencyId()
-                    ));
+            if ($entryAccount->entries) {
+                if ($entryAccount->entries['from_date'] >= $initD && $entryAccount->entries['from_date'] <= $endD &&
+                    $entryAccount->entries['approved']) {
+                    if (!array_key_exists($entryAccount['entries']['currency']['id'], $this->getConvertions())) {
+                        $this->setConvertions($this->calculateExchangeRates(
+                            $this->getConvertions(),
+                            $entryAccount['entries'],
+                            $this->getCurrencyId()
+                        ));
+                    }
+
+                    $debit += ($entryAccount['debit'] != 0)?
+                                $this->calculateOperation(
+                                    $this->getConvertions(),
+                                    $entryAccount['entries']['currency']['id'],
+                                    $entryAccount['debit'],
+                                    $entryAccount['entries']['from_date'],
+                                    ($entryAccount['entries']['currency']['id'] == $this->getCurrencyId())??false
+                                ):0;
+
+                    $assets += ($entryAccount['assets'] != 0)?
+                                $this->calculateOperation(
+                                    $this->getConvertions(),
+                                    $entryAccount['entries']['currency']['id'],
+                                    $entryAccount['assets'],
+                                    $entryAccount['entries']['from_date'],
+                                    ($entryAccount['entries']['currency']['id'] == $this->getCurrencyId())??false
+                                ):0;
                 }
-
-                $debit += ($entryAccount['debit'] != 0)?
-                            $this->calculateOperation(
-                                $this->getConvertions(),
-                                $entryAccount['entries']['currency']['id'],
-                                $entryAccount['debit'],
-                                $entryAccount['entries']['from_date'],
-                                ($entryAccount['entries']['currency']['id'] == $this->getCurrencyId())??false
-                            ):0;
-
-                $assets += ($entryAccount['assets'] != 0)?
-                            $this->calculateOperation(
-                                $this->getConvertions(),
-                                $entryAccount['entries']['currency']['id'],
-                                $entryAccount['assets'],
-                                $entryAccount['entries']['from_date'],
-                                ($entryAccount['entries']['currency']['id'] == $this->getCurrencyId())??false
-                            ):0;
             }
         }
 
