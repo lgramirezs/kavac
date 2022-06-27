@@ -731,8 +731,8 @@
                     }
                 }
 
-                this.record.totDebit = this.data.totDebit.toFixed(2);
-                this.record.totAssets = this.data.totAssets.toFixed(2);
+                this.record.totDebit = this.data.totDebit.toFixed(this.data.currency.decimal_places);
+                this.record.totAssets = this.data.totAssets.toFixed(this.data.currency.decimal_places);
             },
 
             /**
