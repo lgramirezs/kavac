@@ -1220,9 +1220,9 @@ Vue.mixin({
          *
          * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          */
-        getReceivers() {
+        async getReceivers() {
             const vm = this;
-            axios.get(`${window.app_url}/receivers`).then(response => {
+            await axios.get(`${window.app_url}/receivers`).then(response => {
                 if (response.data.records.length > 0) {
                     vm.receivers = response.data.records;
                 }
