@@ -33,11 +33,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'accounti
     Route::get('get-children-account/{parent_id}', 'AccountingAccountController@getChildrenAccount')
             ->name('accounting.accounts.getChildrenAccount');
 
+    /** Ruta que permite importar la información de las cuentas patrimoniales */
     Route::post('import', 'AccountingAccountController@import')
-            ->name('accounting.accounts.import');
+        ->name('accounting.accounts.import');
 
-    Route::post('importedAccounts', 'AccountingAccountController@registerImportedAccounts')
-            ->name('accounting.accounts.registerImportedAccounts');
+    /** Ruta que permite exportar la información de las cuentas patrimoniales */
+    Route::get('export/all', 'AccountingAccountController@export')
+        ->name('accounting.accounts.export.all');
 
     Route::resource(
         'accounts',

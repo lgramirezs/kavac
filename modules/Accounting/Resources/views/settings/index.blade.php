@@ -71,7 +71,7 @@
 							<accounting-setting-category></accounting-setting-category>
 						</div>
 						<div id="helpSettingAccount">
-							<accounting-setting-account></accounting-setting-account>
+							<accounting-setting-account route_export="{{ route('accounting.accounts.export.all') }}"></accounting-setting-account>
 						</div>
 					</div>
 				</div>

@@ -8,7 +8,7 @@
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="btn btn-sm btn-primary btn-custom" style="margin-right: 1.8rem; margin-top: -.1rem;" title="Importar cuentas patrimoniales desde hoja de cálculo" data-toggle="tooltip" v-has-tooltip @click="OpenImportForm(true)" v-show="!formImport">
+                        <button class="btn btn-sm btn-primary btn-custom" style="margin-right: 1.8rem; margin-top: -.1rem;" title="Importar/Exportar hoja de cálculo" data-toggle="tooltip" v-has-tooltip @click="OpenImportForm(true)" v-show="!formImport">
                             <i class="fa fa-file-excel-o"></i>
                         </button>
                         <button class="btn btn-sm btn-primary btn-custom" style="margin-right: 1.8rem; margin-top: -.1rem;" title="formulario de creación manual" data-toggle="tooltip" v-has-tooltip @click="OpenImportForm(false)" v-show="formImport">
@@ -58,6 +58,12 @@
 </template>
 <script>
 export default {
+    props: {
+        route_export: {
+            type: String,
+            default: '/'
+        },
+    },
     data() {
         return {
             records: [],
