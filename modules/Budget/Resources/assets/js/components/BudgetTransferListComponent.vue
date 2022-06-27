@@ -112,7 +112,82 @@
                 }    
                 vm.$refs[ref].id = id;
            
-               $(`#${modal}`).modal('show');
+                $(`#${modal}`).modal('show');
+
+                vm.loadData(vm.$refs[ref].record);
+			},
+
+			/**
+			 * Carga los datos para mostrar en la tabla al detallar la información
+			 *
+			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+			 * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+			 */
+			loadData(record) {
+				const vm = this;
+				let array_accounts = [];
+
+				var from_add = {
+					spac_description: '',
+					code: '',
+					description: '',
+					amount: 0,
+					account_id: '',
+					specific_action_id: '',
+				};
+
+				var to_add = {
+					spac_description: '',
+					code: '',
+					description: '',
+					amount: 0,
+					account_id: '',
+					specific_action_id: '',
+				};
+
+				var i = 0;
+				$.each(record.budget_modification_accounts, function(index, account) {
+					var sp = account.budget_sub_specific_formulation.specific_action;
+					var spac_desc = `${sp.specificable.code} - ${sp.code} | ${sp.name}`;
+					var acc = account.budget_account;
+					var code = `${acc.group}.${acc.item}.${acc.generic}.${acc.specific}.${acc.subspecific}`;
+					if (account.operation === "D") {
+						from_add.spac_description = spac_desc;
+						from_add.code = code;
+						from_add.description = account.budget_account.denomination;
+						from_add.amount = account.amount;
+						from_add.account_id = acc.id;
+						from_add.specific_action_id = sp.id;
+					}
+					else {
+						to_add.spac_description = spac_desc;
+						to_add.code = code;
+						to_add.description = account.budget_account.denomination;
+						to_add.amount = account.amount;
+						to_add.account_id = acc.id;
+						to_add.specific_action_id = sp.id;
+					}
+
+					if ((index % 2) === 1) {
+						array_accounts[i] = {
+							from_spac_description: from_add.spac_description,
+							from_code: from_add.code,
+							from_description: from_add.description,
+							from_amount: from_add.amount,
+							from_account_id: from_add.account_id,
+							from_specific_action_id: from_add.specific_action_id,
+							to_spac_description: to_add.spac_description,
+							to_code: to_add.code,
+							to_description: to_add.description,
+							to_amount: to_add.amount,
+							to_account_id: to_add.account_id,
+							to_specific_action_id: to_add.specific_action_id,
+						};
+						i++;
+					}
+
+				});
+				vm.modification_accounts = array_accounts;
 			},
 		}
 	};

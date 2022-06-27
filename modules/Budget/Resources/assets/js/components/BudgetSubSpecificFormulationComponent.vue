@@ -199,247 +199,249 @@
                 </div>
             </div-->
             <!-- Tabla para la formulación del presupuesto -->
-            <table class="table table-formulation">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-uppercase">Código</th>
-                        <th class="text-uppercase">Denominación</th>
-                        <th class="text-uppercase">Real</th>
-                        <th class="text-uppercase">Estimado</th>
-                        <th class="text-uppercase">Total año</th>
-                        <th class="text-uppercase" v-for="(month, index) in months" :key="index">
-                            <span v-if="month === 'jan'">Ene</span>
-                            <span v-else-if="month === 'apr'">Abr</span>
-                            <span v-else-if="month === 'aug'">Ago</span>
-                            <span v-else-if="month === 'dec'">Dic</span>
-                            <span v-else>{{ month }}</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(account, index) in records" :key="index"
-                        :class="account.specific === '00' ? 'disable-row' : ''"
-                        :data-index="index"
-                        :id="account.id"
-                        data-formulated="false"
-                        :data-code="account.code"
-                    >
-                        <td>
-                            <i
-                                class="fa fa-ban text-white"
-                                v-if="account.locked"
-                                title="Elemento bloqueado, de solo lectura"
-                                data-toggle="tooltip"
-                            ></i>
-                            <i
-                                class="fa fa-eye text-blue cursor-pointer"
-                                v-else
-                                title="Pulse para agregar esta cuenta presupuestaria a la formulación"
-                                data-toggle="tooltip"
-                                @click="showAccountInputs(index)"
-                                :id="'add_account_' + account.id"
-                            ></i>
-                        </td>
-                        <td class="td-code">
-                            {{ account.code }}
-                        </td>
-                        <td>{{ account.denomination }}</td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm total_real"
-                                v-model="account.total_real_amount"
-                                v-show="account.locked || account.formulated"
-                                data-toggle="tooltip"
-                                :readonly="account.locked"
-                                @change="calculateAmounts(index, 'real')"
-                                onfocus="this.select()"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm total_estimated"
-                                data-toggle="tooltip"
-                                v-model="account.total_estimated_amount"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'estimated')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm total_year"
-                                v-model="account.total_year_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'year')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm jan"
-                                v-model="account.jan_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm feb"
-                                v-model="account.feb_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm mar"
-                                v-model="account.mar_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm apr"
-                                v-model="account.apr_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm may"
-                                v-model="account.may_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm jun"
-                                v-model="account.jun_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm jul"
-                                v-model="account.jul_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm aug"
-                                v-model="account.aug_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm sep"
-                                v-model="account.sep_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                                oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm oct"
-                                v-model="account.oct_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm nov"
-                                v-model="account.nov_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                            />
-                        </td>
-                        <td class="td-with-border">
-                            <input
-                                type="text"
-                                class="form-control input-sm dec"
-                                v-model="account.dec_amount"
-                                data-toggle="tooltip"
-                                v-show="account.locked || account.formulated"
-                                :readonly="account.locked"
-                                onfocus="this.select()"
-                                @change="calculateAmounts(index, 'month')"
-                            />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive" style=" overflow-y: auto; max-height: 500px;">
+                <table class="table table-formulation">
+                    <thead class="sticky-top bg-light border-top border-light" style="top: -2px">
+                        <tr>
+                            <th></th>
+                            <th class="text-uppercase" style="min-width: 100px">Código</th>
+                            <th class="text-uppercase" style="min-width: 100px">Denominación</th>
+                            <th class="text-uppercase" style="min-width: 100px">Real</th>
+                            <th class="text-uppercase" style="min-width: 100px">Estimado</th>
+                            <th class="text-uppercase" style="min-width: 100px">Total año</th>
+                            <th class="text-uppercase" style="min-width: 100px" v-for="(month, index) in months" :key="index">
+                                <span v-if="month === 'jan'">Ene</span>
+                                <span v-else-if="month === 'apr'">Abr</span>
+                                <span v-else-if="month === 'aug'">Ago</span>
+                                <span v-else-if="month === 'dec'">Dic</span>
+                                <span v-else>{{ month }}</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(account, index) in records" :key="index"
+                            :class="account.specific === '00' ? 'disable-row' : ''"
+                            :data-index="index"
+                            :id="account.id"
+                            data-formulated="false"
+                            :data-code="account.code"
+                        >
+                            <td>
+                                <i
+                                    class="fa fa-ban text-white"
+                                    v-if="account.locked"
+                                    title="Elemento bloqueado, de solo lectura"
+                                    data-toggle="tooltip"
+                                ></i>
+                                <i
+                                    class="fa fa-eye text-blue cursor-pointer"
+                                    v-else
+                                    title="Pulse para agregar esta cuenta presupuestaria a la formulación"
+                                    data-toggle="tooltip"
+                                    @click="showAccountInputs(index)"
+                                    :id="'add_account_' + account.id"
+                                ></i>
+                            </td>
+                            <td class="td-code">
+                                {{ account.code }}
+                            </td>
+                            <td>{{ account.denomination }}</td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm total_real"
+                                    v-model="account.total_real_amount"
+                                    v-show="account.locked || account.formulated"
+                                    data-toggle="tooltip"
+                                    :readonly="account.locked"
+                                    @change="calculateAmounts(index, 'real')"
+                                    onfocus="this.select()"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm total_estimated"
+                                    data-toggle="tooltip"
+                                    v-model="account.total_estimated_amount"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'estimated')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm total_year"
+                                    v-model="account.total_year_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'year')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm jan"
+                                    v-model="account.jan_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm feb"
+                                    v-model="account.feb_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm mar"
+                                    v-model="account.mar_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm apr"
+                                    v-model="account.apr_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm may"
+                                    v-model="account.may_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm jun"
+                                    v-model="account.jun_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm jul"
+                                    v-model="account.jul_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm aug"
+                                    v-model="account.aug_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm sep"
+                                    v-model="account.sep_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm oct"
+                                    v-model="account.oct_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm nov"
+                                    v-model="account.nov_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                />
+                            </td>
+                            <td class="td-with-border">
+                                <input
+                                    type="text"
+                                    class="form-control input-sm dec"
+                                    v-model="account.dec_amount"
+                                    data-toggle="tooltip"
+                                    v-show="account.locked || account.formulated"
+                                    :readonly="account.locked"
+                                    onfocus="this.select()"
+                                    @change="calculateAmounts(index, 'month')"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <buttonsDisplay
                 :route_list="app_url+'/budget/subspecific-formulations'"
             ></buttonsDisplay>

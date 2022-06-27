@@ -39,6 +39,7 @@
 
                 <asset-request-extension
                     :requestid="props.row.id"
+                    :delivery_date="props.row.delivery_date"
                     :state="props.row.state">
                 </asset-request-extension>
 
@@ -64,7 +65,7 @@
                 </button>
 
                 <button
-                    @click="deleteRecord(props.row.id, '')"
+                    @click="deleteRecord(props.index, '')"
                     class="btn btn-danger btn-xs btn-icon btn-action"
                     title="Eliminar registro"
                     data-toggle="tooltip"

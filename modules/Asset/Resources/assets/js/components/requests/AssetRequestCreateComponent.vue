@@ -91,35 +91,39 @@
                     <div class="col-md-3" id="helpAssetCountry">
                         <div class="form-group is-required">
                             <label>Pais:</label>
-                            <select2 :options="countries" id="country_select"
-                                @input="getEstates()"
+                            <select2 
+                                :options="countries"
+                                @input="getEstates"
                                 v-model="record.country_id">
                             </select2>
+                            <input type="hidden" v-model="record.id">
                         </div>
                     </div>
                     <div class="col-md-3" id="helpAssetEstate">
                         <div class="form-group is-required">
                             <label>Estado:</label>
-                            <select2 :options="estates" id="estate_select"
-                                    @input="getMunicipalities()"
-                                    :disabled="(!this.record.country_id != '')"
-                                    v-model="record.estate_id"></select2>
+                            <select2 
+                                :options="estates"
+                                v-model="record.estate_id"
+                                @input="getMunicipalities">
+                            </select2>
                         </div>
                     </div>
                     <div class="col-md-3" id="helpAssetMunicipality">
                         <div class="form-group is-required">
                             <label>Municipio:</label>
-                            <select2 :options="municipalities" id="municipality_select"
-                                    @input="getParishes()"
-                                    :disabled="(!this.record.estate_id != '')"
-                                    v-model="record.municipality_id"></select2>
+                            <select2 
+                                :options="municipalities"
+                                v-model="record.municipality_id"
+                                @input="getParishes">
+                            </select2>
                         </div>
                     </div>
                     <div class="col-md-3" id="helpAssetParish">
                         <div class="form-group is-required">
                             <label>Parroquia:</label>
-                            <select2 :options="parishes" id="parish_select"
-                                :disabled="(!this.record.municipality_id != '')"
+                            <select2 
+                                :options="parishes"
                                 v-model="record.parish_id">
                             </select2>
                         </div>
@@ -285,6 +289,12 @@
                     estate_id: '',
                     municipality_id: '',
                     parish_id: '',
+
+                    country_id_aux: '',
+                    estate_id_aux: '',
+                    municipality_id_aux: '',
+                    parish_id_aux: '',
+
                     address: '',
 
                 },
@@ -409,6 +419,10 @@
                     estate_id: '',
                     municipality_id: '',
                     parish_id: '',
+                    country_id_aux: '',
+                    estate_id_aux: '',
+                    municipality_id_aux: '',
+                    parish_id_aux: '',
                     address: '',
                 };
 
@@ -459,7 +473,7 @@
                 const vm = this;
                 var inputFiles = document.querySelector('#files');
                 var formData   = new FormData();
-
+               
                 vm.errors = [];
                 if(!vm.selected.length > 0){
                     bootbox.alert("Debe agregar al menos un elemento a la solicitud");
@@ -467,6 +481,7 @@
                 };
 
                 if (this.record.id) {
+                    vm.record.assets = vm.selected;
                     this.updateRecord(url);
                 } else {
                     vm.loading = true;
@@ -521,12 +536,21 @@
                     if(typeof(response.data.records != "undefined")){
                         vm.record = response.data.records;
                         vm.record.created_at = vm.format_date(vm.record.created_at);
+                        vm.record.country_id_aux = response.data.records.country_id;
+                        vm.record.estate_id_aux = response.data.records.estate_id;
+                        vm.record.municipality_id_aux = response.data.records.municipality_id;
+                        vm.record.parish_id_aux = response.data.records.parish_id;
+                        
                         fields = response.data.records.asset_request_assets;
                         $.each(fields, function(index,campo){
                             vm.selected.push(campo.asset.id);
                         });
                     }
                 });
+                if (vm.record.country_id_aux) {
+          			vm.record.country_id = vm.record.country_id_aux;
+                    vm.getEstates();
+          		}
             },
             loadAssets(url) {
                 const vm = this;
@@ -540,6 +564,43 @@
                         vm.$refs.tableMax.setLimit(vm.perPage);
                     }
                 });
+            },
+
+            async getEstates() {
+                const vm = this;
+                vm.estates = [];
+                if (vm.record.country_id) {
+                    await axios.get(`${window.app_url}/get-estates/${vm.record.country_id}`).then(response => {
+                            vm.estates = response.data;    
+                    });
+                }
+                if ((vm.record.estate_id_aux ) && (vm.record.id)) {
+                    vm.record.estate_id = vm.record.estate_id_aux;  
+                }
+            },
+            async getMunicipalities() {
+                const vm = this;
+                vm.municipalities = [];
+                if (vm.record.estate_id) {
+                    await axios.get(`${window.app_url}/get-municipalities/${vm.record.estate_id}`).then(response => {
+                        vm.municipalities = response.data;                        
+                    });
+                }
+                if ((vm.record.municipality_id_aux ) && (vm.record.id)) {
+                    vm.record.municipality_id = vm.record.municipality_id_aux;
+                }
+            },
+            async getParishes() {
+                const vm = this;
+                vm.parishes = [];
+                if (vm.record.municipality_id) {
+                    await axios.get(`${window.app_url}/get-parishes/${vm.record.municipality_id}`).then(response => {
+                        vm.parishes = response.data;
+                    });
+                }
+                if ((vm.record.parish_id_aux ) && (vm.record.id)) {
+                    vm.record.parish_id = vm.record.parish_id_aux;
+                }
             },
         }
     };

@@ -494,7 +494,16 @@
                         }
 
                         let tabValue = document.getElementById(id_scale)
-                        value = tabValue.value;
+                        value = {
+                            id: field["id"],
+                            value: tabValue.value,
+                        }
+                        if (vm.record.increase_of_type == 'percentage') {
+                            value = {
+                                id: field["id"],
+                                value: parseFloat(tabValue.value) + parseFloat(field["value"]),
+                            }
+                        }
                         vm.record.scale_values.push(value);
                     });
 

@@ -9,7 +9,7 @@
                     </button>
                     <h6>
                         <i class="icofont icofont-read-book ico-2x"></i>
-                         Información Detallada de créditos adicionales
+                         Información Detallada de traspasos
                     </h6>
                 </div>
 
@@ -60,6 +60,43 @@
                             </div>
                         </div>
                     </div>
+                    <h6 class="text-center">Cuentas presupuestarias</h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="4" class="border-right">
+                                    Datos de Origen
+                                </th>
+                                <th colspan="4">
+                                    Datos de Destino
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Acción Específica</th>
+                                <th>Cuenta</th>
+                                <th>Descripción</th>
+                                <th class="border-right">Monto</th>
+                                <th>Acción Específica</th>
+                                <th>Cuenta</th>
+                                <th>Descripción</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(account, index) in $parent.modification_accounts" :key="index">
+                                <td class="text-center">{{ account.from_spac_description }}</td>
+                                <td class="text-center">{{ account.from_code }}</td>
+                                <td class="text-center">{{ account.from_description }}</td>
+                                <td class="text-center border-right">
+                                    {{ account.from_amount }}
+                                </td>
+                                <td class="text-center">{{ account.to_spac_description }}</td>
+                                <td class="text-center">{{ account.to_code }}</td>
+                                <td class="text-center">{{ account.to_description }}</td>
+                                <td class="text-center">{{ account.to_amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <div class="modal-footer">
 
@@ -93,7 +130,6 @@
         },
         created() {
               const vm = this;
-        
         },
         methods: {
             /**

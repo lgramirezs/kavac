@@ -8,10 +8,15 @@
             <a href="{{ route('finance.setting.index') }}">Configuración</a>
         </li>
         <li>
-            <a href="{{ route('finance.pay-orders.index') }}">Órdenes de Pago</a>
-        </li>
-        <li>
-            <a href="{{ route('finance.payment-execute.index') }}">Emisiones de Pago</a>
+            <a href="javascript:void('0')">Gestión de Pagos</a>
+            <ul class="submenu">
+                <li>
+                    <a href="{{ route('finance.pay-orders.index') }}">Órdenes</a>
+                </li>
+                <li>
+                    <a href="{{ route('finance.payment-execute.index') }}">Emisiones</a>
+                </li>
+            </ul>
         </li>
         <li>
             <a href="#">Banco</a>

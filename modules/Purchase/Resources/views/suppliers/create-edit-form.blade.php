@@ -200,29 +200,44 @@
 									</div>
 									<div class="col-6">
 										<div class="form-group is-required{{ $errors->has('country_id') ? ' has-error' : '' }}">
-											{!! Form::label('country_id', 'Pais') !!}
+											<!--{!! Form::label('country_id', 'Pais') !!}
 											{!! Form::select('country_id', $countries, null, [
 												'class' => 'form-control select2', 'id' => 'country_id',
+												'onchange' => 'updateSelect($(this), $("#estate_id"), "Estate")'
+											]) !!}-->
+											{!! Form::label('country_id', __('País'), []) !!}
+											{!! Form::select('country_id', (isset($countries))?$countries:[], (isset($model_institution)) ? $model_institution->city->estate->country->id : null, [
+												'class' => 'form-control select2 input-sm', 'id' => 'country_id',
 												'onchange' => 'updateSelect($(this), $("#estate_id"), "Estate")'
 											]) !!}
 										</div>
 									</div>
 									<div class="col-6">
 										<div class="form-group is-required{{ $errors->has('estate_id') ? ' has-error' : '' }}">
-											{!! Form::label('estate_id', 'Estado') !!}
+											<!--{!! Form::label('estate_id', 'Estado') !!}
 											{!! Form::select('estate_id', $estates, null, [
 												'class' => 'form-control select2', 'id' => 'estate_id',
 												'onchange' => 'updateSelect($(this), $("#city_id"), "City")',
 												'disabled' => (!isset($model))
+											]) !!} -->
+											{!! Form::label('estate_id', __('Estado'), []) !!}
+											{!! Form::select('estate_id', (isset($estates))?$estates:[], (isset($model_institution)) ? $model_institution->city->estate->id : old('estate_id'), [
+												'class' => 'form-control select2', 'id' => 'estate_id',
+												'onchange' => 'updateSelect($(this), $("#municipality_id"), "Municipality"),updateSelect($(this), $("#city_id"), "City")',
+												//'disabled' => (!isset($model_institution))
 											]) !!}
 										</div>
 									</div>
 									<div class="col-6">
 										<div class="form-group is-required{{ $errors->has('city_id') ? ' has-error' : '' }}">
-											{!! Form::label('city_id', 'Ciudad') !!}
+											<!--{!! Form::label('city_id', 'Ciudad') !!}
 											{!! Form::select('city_id', $cities, null, [
 												'class' => 'form-control select2', 'id' => 'city_id',
 												'disabled' => (!isset($model))
+											]) !!} -->
+											{!! Form::label('city_id', __('Ciudad'), []) !!}
+											{!! Form::select('city_id', (isset($cities))?$cities:[], (isset($model_institution))? $model_institution->city_id : old('city_id'), [
+												'class' => 'form-control select2', 'id' => 'city_id',
 											]) !!}
 										</div>
 									</div>
@@ -235,7 +250,7 @@
                                                       title="Indique la dirección del proveedor"
                                                       :config="ckeditor.editorConfig" name="direction"
                                                       class="form-control" tag-name="textarea" rows="3"
-                                                      placeholder="dirección del proveedor" value="{{isset($model) ? $model->direction : ''}}">
+                                                      placeholder="dirección del proveedor" value="{{ isset($model) ? $model->direction : old('direction') }}">
                                                       </ckeditor>
 										</div>
 									</div>
@@ -243,7 +258,17 @@
 								<hr>
 								@php
 									$contacts = [];
-									if (isset($model) && $model->contacts) {
+									$contact_names = session()->getOldInput('contact_names'); 
+									$contact_emails = session()->getOldInput('contact_emails');
+									if($contact_names) {
+										for($i = 0; $i < count($contact_names); $i++ ) {
+											array_push($contacts, [
+												'name' => $contact_names[$i],
+												'email' => $contact_emails[$i]
+											]);
+										}
+									}
+									elseif(isset($model) && $model->contacts) {
 										foreach ($model->contacts as $contact) {
 											array_push($contacts, [
 												'name' => $contact->name,
@@ -252,11 +277,27 @@
 										}
 									}
 								@endphp
+							
 								<contacts initial_data="{{ ($contacts) ? json_encode($contacts) : '' }}"></contacts>
 								<hr>
 								@php
 									$phones = [];
-									if (isset($model) && $model->phones) {
+									$phone_type = session()->getOldInput('phone_type'); 
+									$phone_area_code = session()->getOldInput('phone_area_code');
+									$phone_number = session()->getOldInput('phone_number'); 
+									$phone_extension = session()->getOldInput('phone_extension');
+
+									if($phone_type) {
+										for ($i = 0; $i < count($phone_type); $i++ ) {
+											array_push($phones, [
+												'type' => $phone_type[$i],
+												'area_code' => $phone_area_code[$i],
+												'number' => $phone_number[$i],
+												'extension' => $phone_extension[$i] ?? ''
+											]);
+										}
+									}
+									elseif (isset($model) && $model->phones) {
 										foreach ($model->phones as $phone) {
 											array_push($phones, [
 												'type' => $phone->type,
@@ -476,6 +517,22 @@
                 //this.files[inputID] = file;
                 $('#status_' + inputID).show("slow");
             }
-		}
+		};
+
+		//@if (old('name')!=='')
+		//	console.log("Entro");
+		//@else console.log("No entro");
+		//@endif
+		//console.log(old('estate_id'));
+
+		//$('#country_id').attr("onChange","return('cambio');");
+		//$('#country_id').attr('onChange','updateSelect($(this),$("#estate_id"),"Estate")');
+		//	$('#estate_id').attr('onChange','updateSelect($(this), $("#city_id"), "City")');
+		/*@if (old('country_id')!=='')
+			$("#country_id").click();
+		@endif
+		@if (old('estate_id')!=='')
+			$("#estate_id").click();
+		@endif */
 	</script>
 @stop

@@ -81,23 +81,29 @@
                 <div class="col-md-3" id="helpProductName">
                     <div class="form-group is-required">
                         <label>Nombre del insumo:</label>
-                        <select2 :options="warehouse_products" @input="getWarehouseProductAttributes" v-model="warehouse_inventory_product.warehouse_product_id"></select2>
+                        <select2 :options="warehouse_products" @input="getWarehouseProductAttributes();getWarehouseProductRules();" v-model="warehouse_inventory_product.warehouse_product_id"></select2>
                     </div>
                 </div>
                 <div class="col-md-3" id="helpProductQuantity">
                     <div class="form-group is-required">
                         <label>Cantidad:</label>
-                        <input type="number" min="1" placeholder="Cantidad del insumo"
+                        <input type="text" placeholder="Cantidad del insumo"
                                title="Cantidad del insumo" data-toggle="tooltip"
-                               class="form-control input-sm"
+                                class="form-control input-sm"
+                                v-input-mask data-inputmask="
+                                    'alias': 'numeric',
+                                    'allowMinus': 'false',
+                                    'digits': 2"
                                v-model="warehouse_inventory_product.quantity">
                     </div>
                 </div>
                 <div class="col-md-3" id="helpProductValue">
                     <div class="form-group is-required">
                         <label>Valor:</label>
-                        <input  type="text" data-toggle="tooltip"
+                        <input  id="productValue"
+                                type="text" data-toggle="tooltip"
                                 title="Valor por unidad del insumo"
+                                placeholder="Valor por unidad del insumo"
                                 class="form-control input-sm"
                                 v-input-mask data-inputmask="
                                     'alias': 'numeric',
@@ -112,6 +118,38 @@
                         <label>Moneda:</label>
                         <select2 :options="currencies"
                                  v-model="warehouse_inventory_product.currency_id"></select2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+                <div class="col-md-12">
+                    <b>Reglas de abastecimiento del insumo</b>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Minimo:</label>
+                        <input  type="text" data-toggle="tooltip"
+                                placeholder="Minimo establecido del insumo"
+                                class="form-control input-sm"
+                                v-input-mask data-inputmask="
+                                    'alias': 'numeric',
+                                    'allowMinus': 'false',
+                                    'digits': 2"
+                                v-model="warehouse_inventory_product.minimum">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Maximo:</label>
+                        <input  type="text" data-toggle="tooltip"
+                                placeholder="Maximo establecido del insumo"
+                                class="form-control input-sm"
+                                v-input-mask data-inputmask="
+                                    'alias': 'numeric',
+                                    'allowMinus': 'false',
+                                    'digits': 2"
+                                v-model="warehouse_inventory_product.maximum">
                     </div>
                 </div>
             </div>
@@ -153,7 +191,15 @@
                         <div v-for="att in props.row.warehouse_product_attributes">
                             <b>{{att.name +":"}}</b> {{ att.value}}
                         </div>
+                        <div>
                             <b>Valor:</b> {{props.row.unit_value}} {{(props.row.currency)?props.row.currency.name:''}}
+                        </div>
+                        <div v-if="props.row.minimum != ''">
+                            <b>Mínimo:</b> {{ props.row.minimum }}
+                        </div>
+                        <div v-if="props.row.maximum != ''">
+                            <b>Máximo:</b> {{ props.row.maximum }}
+                        </div>
                     </span>
                 </div>
                 <div slot="id" slot-scope="props" class="text-center">
@@ -219,6 +265,8 @@
                     quantity: '',
                     unit_value:'',
                     currency_id: '',
+                    minimum: '',
+                    maximum: '',
                     warehouse_product_id: '',
                     warehouse_product_attributes: [],
                 },
@@ -268,6 +316,9 @@
 
                     warehouse_product_id: '',
                     warehouse_product_name: '',
+
+                    minimum: '',
+                    maximum: '',
 
                     warehouse_product_attributes: [],
                 },
@@ -324,7 +375,29 @@
                         }
                     });
                 }
-            },      
+            },
+            getWarehouseProductRules() {
+                const vm = this;
+                var product_id = vm.warehouse_inventory_product.warehouse_product_id;
+                var unit_value = vm.warehouse_inventory_product.unit_value;
+                if ((product_id != '') && (vm.record.warehouse_id != '') && (vm.record.institution_id != '')) {
+                    let field = {
+                        institution_id: vm.record.institution_id,
+                        warehouse_id: vm.record.warehouse_id,
+                        warehouse_inventory_product: vm.warehouse_inventory_product,
+                    };
+                    axios.post('/warehouse/products/get-rules', field).then(response => {
+                        if (typeof response.data.records !== "undefined") {
+                            vm.warehouse_inventory_product.minimum = response.data.records.minimum
+                                ? response.data.records.minimum
+                                : '';
+                            vm.warehouse_inventory_product.maximum = response.data.records.maximum
+                                ? response.data.records.maximum
+                                : '';
+                        }
+                    });
+                }
+            },
 
             addProduct(event) {
                 const vm = this;
@@ -441,6 +514,8 @@
                             id: '',
                             quantity: campo.quantity,
                             unit_value: campo.new_value,
+                            minimum: campo.warehouse_inventory_product.warehouse_inventory_rule ? campo.warehouse_inventory_product.warehouse_inventory_rule.minimum : '',
+                            maximum: campo.warehouse_inventory_product.warehouse_inventory_rule ? campo.warehouse_inventory_product.warehouse_inventory_rule.maximum : '',
                             currency_id: campo.warehouse_inventory_product.currency_id,
                             currency: {
                                 name: campo.warehouse_inventory_product.currency.name,
@@ -473,10 +548,20 @@
             if (this.receptionid) {
                 this.loadReception(this.receptionid);
             }
-
-            
-
-
         },
+        mounted() {
+            var typingTimer;                //timer identifier
+            var doneTypingInterval = 1000;  //time in ms, 5 second 
+
+            const vm = this;
+            $('#productValue').keyup(function() {
+                clearTimeout(typingTimer);
+                if ($('#productValue').val) {
+                    typingTimer = setTimeout(function(){
+                        vm.getWarehouseProductRules();
+                    }, doneTypingInterval);
+                }
+            });
+        }
     };
 </script>

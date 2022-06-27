@@ -44,7 +44,7 @@
 						<warehouse-products id="helpWarehouseProducts"></warehouse-products>
 
 						{{-- Configuración de reglas de almacén --}}
-						<warehouse-rules id="helpWarehouseRules"></warehouse-rules>
+						<!--<warehouse-rules id="helpWarehouseRules"></warehouse-rules> -->
 
 						{{-- Configuración de cierres de almacén --}}
 						<!--<warehouse-closes id="helpWarehouseCloses"></warehouse-closes> -->

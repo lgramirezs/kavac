@@ -15,6 +15,7 @@ use Modules\Warehouse\Models\WarehouseInventoryProductMovement;
 use Modules\Warehouse\Models\WarehouseInstitutionWarehouse;
 use Modules\Warehouse\Models\WarehouseInventoryProduct;
 use Modules\Warehouse\Models\WarehouseProductAttribute;
+use Modules\Warehouse\Models\WarehouseInventoryRule;
 use Modules\Warehouse\Models\WarehouseProductValue;
 use Modules\Warehouse\Models\WarehouseMovement;
 
@@ -151,6 +152,8 @@ class WarehouseReceptionController extends Controller
                 $currency = $product['currency_id'];
                 $quantity = $product['quantity'];
                 $value = $product['unit_value'];
+                $minimum = $product['minimum'];
+                $maximum = $product['maximum'];
 
                 /** Se busca en el inventario por producto y unidad si existe un registro previo */
 
@@ -188,8 +191,18 @@ class WarehouseReceptionController extends Controller
                         }
                         if ($equal === true) {
 
-                            /** Se genera el movimiento, para su posterior aprobación */
+                            /** Se actualiza la regla de abastecimiento */
+                            if (isset($minimum)) {
+                                $rule = WarehouseInventoryRule::updateOrCreate([
+                                    'warehouse_inventory_product_id' => $product_inventory->id,
+                                ],[
+                                    'minimum' => $minimum,
+                                    'maximum' => $maximum,
+                                    'user_id' => Auth::id(),
+                                ]);
+                            }
 
+                            /** Se genera el movimiento, para su posterior aprobación */
                             $inventory_movement = WarehouseInventoryProductMovement::create([
                                 'quantity' => $quantity,
                                 'new_value' => $value,
@@ -198,7 +211,8 @@ class WarehouseReceptionController extends Controller
                             ]);
                         }
                     }
-                } elseif ((count($inventory) == 0) || ($equal == false)) {
+                }
+                if ((count($inventory) == 0) || ($equal == false)) {
                     /**
                      * Si no existe un registro previo de ese producto en inventario o algún atributo es diferente
                      * se genera un nuevo registro
@@ -220,6 +234,15 @@ class WarehouseReceptionController extends Controller
                         'unit_value' => $value,
                         'warehouse_institution_warehouse_id' => $inst_ware->id,
                     ]);
+
+                    if (isset($minimum)) {
+                        $rule = WarehouseInventoryRule::create([
+                            'minimum' => $minimum,
+                            'maximum' => $maximum,
+                            'warehouse_inventory_product_id' => $product_inventory->id,
+                            'user_id' => Auth::id(),
+                        ]);
+                    }
 
 
                     $inventory_movement = WarehouseInventoryProductMovement::create([
@@ -315,6 +338,8 @@ class WarehouseReceptionController extends Controller
                 $currency = $product['currency_id'];
                 $quantity = $product['quantity'];
                 $value = $product['unit_value'];
+                $minimum = $product['minimum'];
+                $maximum = $product['maximum'];
 
                 /** Se busca en el inventario por producto y unidad si existe un registro previo */
 
@@ -362,6 +387,18 @@ class WarehouseReceptionController extends Controller
                                 $old_inventory->new_value = $value;
                                 $old_inventory->updated_at = $update;
                                 $old_inventory->save();
+
+                                /** Se actualiza la regla de abastecimiento */
+                                if (isset($minimum)) {
+                                    $rule = WarehouseInventoryRule::updateOrCreate([
+                                        'warehouse_inventory_product_id' => $product_inventory->id,
+                                    ],[
+                                        'minimum' => $minimum,
+                                        'maximum' => $maximum,
+                                        'user_id' => Auth::id(),
+                                    ]);
+                                }
+
                             }
                         }
                     }
@@ -387,6 +424,15 @@ class WarehouseReceptionController extends Controller
                         'unit_value' => $value,
                         'warehouse_institution_warehouse_id' => $inst_ware->id,
                     ]);
+
+                    if (isset($minimum)) {
+                        $rule = WarehouseInventoryRule::create([
+                            'minimum' => $minimum,
+                            'maximum' => $maximum,
+                            'warehouse_inventory_product_id' => $product_inventory->id,
+                            'user_id' => Auth::id(),
+                        ]);
+                    }
 
                     $inventory_movement = WarehouseInventoryProductMovement::create([
                         'quantity' => $quantity,
@@ -459,7 +505,7 @@ class WarehouseReceptionController extends Controller
                                 $query->with('measurementUnit');
                             }, 'warehouseProductValues' => function ($query) {
                                 $query->with('warehouseProductAttribute');
-                            }, 'currency']);
+                            }, 'currency', 'warehouseInventoryRule']);
                         }]);
                     }, 'warehouseInstitutionWarehouseInitial', 'warehouseInstitutionWarehouseEnd', 'user']
             )->first()], 200);

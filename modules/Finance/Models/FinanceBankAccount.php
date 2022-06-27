@@ -2,11 +2,12 @@
 
 namespace Modules\Finance\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
+use Nwidart\Modules\Facades\Module;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 /**
  * @class FinanceBank
  * @brief Datos de las cuentas bancarias
@@ -33,6 +34,24 @@ class FinanceBankAccount extends Model implements Auditable
     protected $fillable = [
         'ccc_number', 'description', 'opened_at', 'finance_banking_agency_id', 'finance_account_type_id', 'accounting_account_id'
     ];
+
+    protected $appends = ['formated_ccc_number'];
+
+    public function getFormatedCccNumberAttribute()
+    {
+        if (empty($this->ccc_number)) {
+            return '';
+        }
+        
+        $newCccNumber = '';
+        for ($i=0; $i < strlen($this->ccc_number); $i++) { 
+            $newCccNumber .= $this->ccc_number[$i];
+            if (in_array($i, [3, 7, 9])) {
+                $newCccNumber .= "-";
+            }
+        }
+        return $newCccNumber;
+    }
 
     /**
      * FinanceBankAccount belongs to FinanceBankingAgency.

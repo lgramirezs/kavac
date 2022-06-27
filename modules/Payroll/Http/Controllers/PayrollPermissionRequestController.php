@@ -65,9 +65,9 @@ class PayrollPermissionRequestController extends Controller
             'start_date.required'                   => 'El campo desde es obligatorio.',
             'end_date.required'                     => 'El campo hasta es obligatorio.',
             'end_date.after_or_equal'    => 'La fecha hasta debe ser una fecha posterior o igual a la fecha desde.',
-            'time_permission.required'               => 'El campo días de permiso es obligatorio.',
-            'motive_permission.required'            => 'El campo motivos del permiso es obligatorio.',
-            'motive_permission.max'                 => 'El campo motivos del permiso no debe
+            'time_permission.required'               => 'El campo tiempo de permiso es obligatorio.',
+            'motive_permission.required'            => 'El campo motivo del permiso es obligatorio.',
+            'motive_permission.max'                 => 'El campo motivo del permiso no debe
                                                         contener más de 200 caracteres.',
         ];
     }

@@ -17,7 +17,7 @@
 				<button @click="editForm(props.row.id)" data-placement="bottom"
 						class="btn btn-warning btn-xs btn-icon"
 						title="Modificar registro" data-toggle="tooltip" type="button">
-					<i class="fa fa-trash-o"></i>
+					<i class="fa fa-edit"></i>
 				</button>
                 <button @click="deleteRecord(props.index, '')" data-placement="bottom"
 						class="btn btn-danger btn-xs btn-icon"
