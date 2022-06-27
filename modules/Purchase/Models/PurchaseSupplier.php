@@ -46,6 +46,13 @@ class PurchaseSupplier extends Model implements Auditable
         'social_purpose'
     ];
 
+    protected $appends = ['referential_name'];
+
+    public function getReferentialNameAttribute()
+    {
+        return $this->rif . " - " . $this->name;
+    }
+
     /**
      * Get all of the budget project's specific actions.
      *
