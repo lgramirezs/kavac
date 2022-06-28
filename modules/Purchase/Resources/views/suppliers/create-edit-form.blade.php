@@ -121,7 +121,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-3">
+									<div class="col-4">
 										<div class="form-group is-required{{ $errors->has('rif') ? ' has-error' : '' }}">
 											{!! Form::label('rif', 'R.I.F.') !!}
 											{!! Form::text('rif', null, [
@@ -129,13 +129,13 @@
 											]) !!}
 										</div>
 									</div>
-									<div class="col-2">
+									<div class="col-3">
 										{!! Form::button('<i class="icofont icofont-check-alt"></i> Validar', [
 											'class' => 'btn btn-sm btn-info btn-custom', 'style' => 'margin-top:25px',
 											'onclick' => ''
 										]) !!}
 									</div>
-									<div class="col-3 offset-1">
+									<div class="col-4 offset-1">
 										<div class="form-group is-required{{ $errors->has('name') ? ' has-error' : '' }}">
 											{!! Form::label('name', 'Nombre o Razón Social') !!}
 											{!! Form::text('name', null, [
@@ -143,7 +143,9 @@
 											]) !!}
 										</div>
 									</div>
-									<div class="col-3">
+								</div>
+								<div class="row">
+									<div class="col-4">
 										<div class="form-group {{ $errors->has('social_purpose') ? ' has-error' : '' }}">
 											{!! Form::label('social_purpose', 'Objeto Social de la organización') !!}
 											{!! Form::text('social_purpose', null, [
@@ -151,9 +153,7 @@
 											]) !!}
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-3">
+									<div class="col-4">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_type_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_type_id', 'Denominación Comercial') !!}
 											{!! Form::select('purchase_supplier_type_id', $supplier_types, null, [
@@ -161,7 +161,7 @@
 											]) !!}
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-4">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_object_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_object_id', 'Objeto Principal') !!}
 											{!! Form::select('purchase_supplier_object_id', $supplier_objects, 
@@ -172,7 +172,7 @@
 											]) !!}
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-4">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_branch_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_branch_id', 'Rama') !!}
 											{!! Form::select('purchase_supplier_branch_id', $supplier_branches, null, [
@@ -180,10 +180,18 @@
 											]) !!}
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-4">
 										<div class="form-group is-required{{ $errors->has('purchase_supplier_specialty_id') ? ' has-error' : '' }}">
 											{!! Form::label('purchase_supplier_specialty_id', 'Especialidad') !!}
 											{!! Form::select('purchase_supplier_specialty_id', $supplier_specialties, null, [
+												'class' => 'form-control select2'
+											]) !!}
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group is-required{{ $errors->has('accounting_account_id') ? ' has-error' : '' }}">
+											{!! Form::label('accounting_account_id', 'Cuentas contables') !!}
+											{!! Form::select('accounting_account_id', $accounting_accounts, null, [
 												'class' => 'form-control select2'
 											]) !!}
 										</div>
@@ -255,6 +263,7 @@
 										</div>
 									</div>
 								</div>
+
 								<hr>
 								@php
 									$contacts = [];
