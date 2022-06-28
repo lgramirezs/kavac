@@ -218,7 +218,7 @@
                 vm.record.finance_bank_id = recordEdit.finance_bank_id;
 
                 const timeOpen = setTimeout(addBankAccountId, 4000);
-
+                
                 function addBankAccountId () {
                     vm.record.bank_account_id = recordEdit.finance_bank_account_id;
                 }
