@@ -43,11 +43,11 @@
                 Orden de compra / servicio
             </a>
         </li>
-        <li>
+        <!--li>
             <a href="#">Acta</a>
         </li>
         <li>
             <a href="#">Reintegro</a>
-        </li>
+        </li-->
     </ul>
 </li>

@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <!--div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h6 class="card-title">Listado de ordenes de compra</h6>
@@ -52,6 +52,6 @@
                         route_edit="/purchase/purchase_order/{id}/edit" />
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 @stop
