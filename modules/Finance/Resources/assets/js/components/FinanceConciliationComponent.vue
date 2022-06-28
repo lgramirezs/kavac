@@ -45,6 +45,30 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group is-required">
+                    <label>Archivo:</label>
+                    <input type="file" accept=".txt">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Mostrar coincidencias:</label>
+                <br>
+                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                    <input type="checkbox" data-toggle="tooltip"
+                        title="Indique si el campo está activo"
+                        v-model="record.coincidences">
+                    <div class="state p-off">
+                        <label></label>
+                    </div>
+                    <div class="state p-on p-success">
+                        <label></label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -55,7 +79,9 @@
                 record: {
                     account: '',
                     month: '',
-                    year: ''
+                    year: '',
+                    file: '',
+                    coincidences: false,
                 },
                 accounts: [],
                 errors: [],
