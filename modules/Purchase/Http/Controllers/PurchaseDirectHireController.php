@@ -2,35 +2,37 @@
 /** [descripción del namespace] */
 namespace Modules\Purchase\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-
-use Modules\Purchase\Models\HistoryTax;
-use Modules\Purchase\Models\TaxUnit;
-use Modules\Purchase\Models\Department;
-
-use Modules\Purchase\Models\PurchaseOrder;
-use Modules\Purchase\Models\PurchaseRequirement;
-use Modules\Purchase\Models\PurchasePivotModelsToRequirementItem;
-use Modules\Purchase\Models\PurchaseSupplierObject;
-use Modules\Purchase\Models\PurchaseDirectHire;
-use Modules\Purchase\Models\PurchaseBaseBudget;
-
-use Modules\Payroll\Models\PayrollEmployment;
-
-use App\Repositories\UploadDocRepository;
-use App\Models\CodeSetting;
-use App\Rules\CodeSetting as CodeSettingRule;
-
-use App\Models\DocumentStatus;
-use App\Models\Profile;
 use App\Models\Tax;
+use App\Models\Profile;
+use App\Models\Receiver;
+use App\Models\CodeSetting;
 
-use Nwidart\Modules\Facades\Module;
+use Illuminate\Http\Request;
+use App\Models\DocumentStatus;
+use Illuminate\Routing\Controller;
 
 use Illuminate\Support\Facades\DB;
+use Nwidart\Modules\Facades\Module;
+use Modules\Purchase\Models\TaxUnit;
+use Modules\Purchase\Models\Department;
+use Modules\Purchase\Models\HistoryTax;
+use App\Repositories\UploadDocRepository;
+
+use Modules\Purchase\Models\PurchaseOrder;
+
+use Illuminate\Contracts\Support\Renderable;
+use App\Rules\CodeSetting as CodeSettingRule;
+use Modules\Payroll\Models\PayrollEmployment;
+
+use Modules\Purchase\Models\PurchaseSupplier;
+use Modules\Purchase\Models\PurchaseBaseBudget;
+use Modules\Purchase\Models\PurchaseDirectHire;
+
+use Modules\Purchase\Models\PurchaseRequirement;
+
+use Modules\Purchase\Models\PurchaseSupplierObject;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Modules\Purchase\Models\PurchasePivotModelsToRequirementItem;
 
 /**
  * @class PurchaseDirectHireController
@@ -358,57 +360,64 @@ class PurchaseDirectHireController extends Controller
                     \Modules\Budget\Models\BudgetCompromise::class,
                     'code'
                 );
-            }
 
-            $compromisedYear = explode("-", $request->date)[0];
+                $compromisedYear = explode("-", $request->date)[0];
 
-            /** @var Object Estado inicial del compromiso establecido a elaborado */
-            $documentStatus = DocumentStatus::where('action', 'EL')->first();
+                /** @var Object Estado inicial del compromiso establecido a elaborado */
+                $documentStatus = DocumentStatus::where('action', 'EL')->first();
 
-            /** @var Object Datos del compromiso */
-            $compromise = \Modules\Budget\Models\BudgetCompromise::create([
-                'document_number' => $codeDirectHire,
-                'institution_id' => $request->institution_id,
-                'compromised_at' => $request->date,
-                'sourceable_type' => PurchaseDirectHire::class,
-                'sourceable_id' => $purchaseDirectHire->id,
-                'description' => $request->description,
-                'code' => $codeCompromise,
-                'document_status_id' => $documentStatus->id,
-            ]);
+                /** @var Object Datos del compromiso */
+                $compromise = \Modules\Budget\Models\BudgetCompromise::create([
+                    'document_number' => $codeDirectHire,
+                    'institution_id' => $request->institution_id,
+                    'compromised_at' => $request->date,
+                    'sourceable_type' => PurchaseDirectHire::class,
+                    'sourceable_id' => $purchaseDirectHire->id,
+                    'description' => $request->description,
+                    'code' => $codeCompromise,
+                    'document_status_id' => $documentStatus->id,
+                ]);
 
-            $total = 0;
+                $total = 0;
 
-            /** Gestiona los ítems del compromiso */
-            foreach ($request->record_items as $product) {
-                $prod = json_decode($product, true);
-                $amount = 0;
-                foreach ($prod['pivot_purchase'] as $pivot) {
-                    if (in_array($pivot['relatable_id'], $purchaseBaseBudgetsID)) {
-                        $amount = $pivot['unit_price'] * $prod['quantity'];
+                /** Gestiona los ítems del compromiso */
+                foreach ($request->record_items as $product) {
+                    $prod = json_decode($product, true);
+                    $amount = 0;
+                    foreach ($prod['pivot_purchase'] as $pivot) {
+                        if (in_array($pivot['relatable_id'], $purchaseBaseBudgetsID)) {
+                            $amount = $pivot['unit_price'] * $prod['quantity'];
+                        }
                     }
+
+                    $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
+                    $taxAmount = ($amount * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
+                    $compromise->budgetCompromiseDetails()->create([
+                        'description' => $prod['description'],
+                        'amount' => $amount,
+                        'tax_amount' => $taxAmount,
+                        'tax_id' => $tax->id,
+                        // 'budget_account_id' => $account['account_id'],
+                        // 'budget_sub_specific_formulation_id' => $formulation->id,
+                    ]);
+                    $total += ($amount + $taxAmount);
                 }
 
-                $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
-                $taxAmount = ($amount * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
-                $compromise->budgetCompromiseDetails()->create([
-                    'description' => $prod['description'],
-                    'amount' => $amount,
-                    'tax_amount' => $taxAmount,
-                    'tax_id' => $tax->id,
-                    // 'budget_account_id' => $account['account_id'],
-                    // 'budget_sub_specific_formulation_id' => $formulation->id,
+                $compromise->budgetStages()->create([
+                    'code' => $codeCompromise,
+                    'registered_at' => $request->date,
+                    'type' => 'PRE',
+                    'amount' => $total,
                 ]);
-                $total += ($amount + $taxAmount);
             }
-
-            $compromise->budgetStages()->create([
-                'code' => $codeCompromise,
-                'registered_at' => $request->date,
-                'type' => 'PRE',
-                'amount' => $total,
-            ]);
         // });
+        
+        $supplier = PurchaseSupplier::find($request->purchase_supplier_id);
+        Receiver::firstOrCreate(
+            ['receiverable_id' => $request->purchase_supplier_id, 'receiverable_type' => PurchaseSupplier::class],
+            ['group' => 'Proveedores', 'description' => $supplier->referential_name]
+        );
+
         return response()->json(['message' => 'Success'], 200);
     }
 
@@ -510,6 +519,12 @@ class PurchaseDirectHireController extends Controller
 		if (!Module::has('Budget') || !Module::isEnabled('Budget')) {
 			// 
 		}
+
+        $supplier = PurchaseSupplier::find($request->purchase_supplier_id);
+        Receiver::firstOrCreate(
+            ['receiverable_id' => $request->purchase_supplier_id, 'receiverable_type' => PurchaseSupplier::class],
+            ['group' => 'Proveedores', 'description' => $supplier->referential_name]
+        );
 
         return response()->json(['message' => 'Success'], 200);
     }
