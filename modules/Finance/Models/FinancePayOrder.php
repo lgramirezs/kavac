@@ -53,7 +53,8 @@ class FinancePayOrder extends Model implements Auditable
         'budget_specific_action_id',
         'finance_payment_method_id',
         'finance_bank_account_id',
-        'institution_id'
+        'institution_id',
+        'document_status_id'
     ];
 
     /**
@@ -95,6 +96,16 @@ class FinancePayOrder extends Model implements Auditable
     public function institution()
     {
         return $this->belongsTo(Institution::class);
+    }
+
+    /**
+     * Get the documentStatus that owns the FinancePayOrder
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function documentStatus()
+    {
+        return $this->belongsTo(DocumentStatus::class, 'document_status_id');
     }
 
     /**

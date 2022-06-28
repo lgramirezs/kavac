@@ -1,6 +1,23 @@
 <template>
     <v-client-table :columns="columns" :data="records" :options="table_options">
+		<div slot="status" slot-scope="props" class="text-center">
+			<span class="text-danger" v-if="props.row.documentStatus.action==='AN'">Anulada</span>
+			<span class="text-danger" v-if="props.row.documentStatus.action==='RE'">Rechazada</span>
+			<span v-else>
+				<span class="text-success" v-if="props.row.status==='PA'">Pagada</span>
+				<span class="text-warning" v-if="props.row.status==='PE'">Pendiente</span>
+			</span>
+		</div>
 		<div slot="id" slot-scope="props" class="text-center">
+			<button class="btn btn-info btn-xs btn-icon btn-action" title="Ver detalles" data-toggle="tooltip" type="button">
+				<i class="fa fa-info-circle"></i>
+			</button>
+			<button class="btn btn-success btn-xs btn-icon btn-action" title="Aprobar" data-toggle="tooltip" type="button">
+				<i class="fa fa-check"></i>
+			</button>
+			<button class="btn btn-danger btn-xs btn-icon btn-action" title="Rechazar" data-toggle="tooltip" type="button">
+				<i class="fa fa-ban"></i>
+			</button>
 			<button @click="editForm(props.row.id)"
     				class="btn btn-warning btn-xs btn-icon btn-action"
     				title="Modificar registro" data-toggle="tooltip" type="button">
