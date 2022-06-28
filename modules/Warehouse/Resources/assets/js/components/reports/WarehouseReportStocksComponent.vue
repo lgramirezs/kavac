@@ -138,7 +138,7 @@
                             (props.row.warehouse_inventory_product &&
                              props.row.warehouse_inventory_product.exist)
                             ? props.row.warehouse_inventory_product.exist
-                            : ''
+                            : '0'
                         }}
                     </span>
                 </div>
@@ -147,7 +147,7 @@
                             El artículo llego al mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.exist == 0">
+                        <span v-else-if="props.row.warehouse_inventory_product.exist == 0">
                             No hay existencia en inventario
                         </span>
                         
