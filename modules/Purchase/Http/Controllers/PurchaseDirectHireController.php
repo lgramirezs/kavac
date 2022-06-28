@@ -211,10 +211,7 @@ class PurchaseDirectHireController extends Controller
 
             // Firmas
             'prepared_by_id'                => 'required',
-            'reviewed_by_id'                => 'required',
             'verified_by_id'                => 'required',
-            'first_signature_id'            => 'required',
-            'second_signature_id'           => 'required',
             
             // Archivos
             'start_minutes'                 => 'required|mimes:pdf',
@@ -236,10 +233,7 @@ class PurchaseDirectHireController extends Controller
 
             // firmas
             'prepared_by_id.required'                => 'El campo preparado por es obligatorio',
-            'reviewed_by_id.required'                => 'El campo revisado por es obligatorio',
             'verified_by_id.required'                => 'El campo verificado por es obligatorio',
-            'first_signature_id.required'            => 'El campo firmado por es obligatorio',
-            'second_signature_id.required'           => 'El campo firmado por es obligatorio',
 
             // Archivos
             'start_minutes.required'                => 'El archivo de acta de inicio es obligatorio.',

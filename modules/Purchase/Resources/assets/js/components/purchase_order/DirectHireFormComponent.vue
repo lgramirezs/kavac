@@ -319,7 +319,7 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label class="control-label" for="reviewed_by_id">Revisado por</label><br>
                         <select2 :options="employments" id="reviewed_by_id" v-model="record.reviewed_by_id"></select2>
                     </div>
@@ -331,13 +331,13 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label class="control-label" for="first_signature_id">Firmado por</label><br>
                         <select2 :options="employments" id="first_signature_id" v-model="record.first_signature_id"></select2>
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label class="control-label" for="second_signature_id">Firmado por</label><br>
                         <select2 :options="employments" id="second_signature_id" v-model="record.second_signature_id"></select2>
                     </div>
