@@ -148,22 +148,22 @@ class BudgetReportsController extends Controller
             foreach ($accounts_open as $account) {
                 if (!isset($account['compromised']) && !isset($account['amount_available']) && !isset($account['programmed'])) {
                     $compromised = $this->getAccountCompromisedAmout($account->id);
-                    $account['amount_available'] = ($account->total_real_amount - $compromised);
+                    $account['amount_available'] = ($account->total_year_amount - $compromised);
                     $account['compromised'] = $compromised;
-                    $account['programmed'] = $account->total_real_amount;
+                    $account['programmed'] = $account->total_year_amount;
 
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
                     if ($parent) {
                         $accounts_open[$parent]['compromised'] += $compromised;
-                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_real_amount - $accounts_open[$parent]['compromised'];
-                        $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_real_amount;
+                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
                     }
                 } else {
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
                     if ($parent) {
                         $accounts_open[$parent]['compromised'] += $account['compromised'];
-                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_real_amount - $accounts_open[$parent]['compromised'];
-                        $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_real_amount;
+                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
                     }
                 }
             }
