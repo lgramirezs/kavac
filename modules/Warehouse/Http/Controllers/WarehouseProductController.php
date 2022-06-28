@@ -12,6 +12,7 @@ use Modules\Warehouse\Imports\WarehouseProductImport;
 
 use Modules\Warehouse\Models\WarehouseInventoryProduct;
 use Modules\Warehouse\Models\WarehouseProductAttribute;
+use Modules\Warehouse\Models\WarehouseProductValue;
 use Modules\Warehouse\Models\WarehouseProduct;
 use Modules\Warehouse\Models\WarehouseInstitutionWarehouse;
 

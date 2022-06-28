@@ -399,20 +399,11 @@ class WarehouseRequestController extends Controller
      */
     public function getInventoryProduct()
     {
-        $warehouse_product = WarehouseInventoryProduct::with(['warehouseProductValues' => function ($query) {
+        $records = WarehouseInventoryProduct::whereNotNull('exist')->with(['warehouseProductValues' => function ($query) {
             $query->with('warehouseProductAttribute');
         }, 'currency', 'warehouseProduct', 'warehouseInstitutionWarehouse' => function ($query) {
             $query->with('warehouse');
         }, 'warehouseInventoryRule'])->get();
-        
-        if($warehouse_product) {
-            $records = [];
-            for($i = 0; $i<count($warehouse_product); $i++) {
-                if($warehouse_product[$i]['warehouseInstitutionWarehouse']['warehouse']['active'] == true) {
-                    array_push($records, $warehouse_product[$i]); 
-                }
-            } 
-        }
 
         return response()->json(['records' => $records], 200);
     }
