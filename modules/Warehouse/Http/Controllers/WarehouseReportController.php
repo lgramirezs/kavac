@@ -265,6 +265,7 @@ class WarehouseReportController extends Controller
                 if ($request->warehouse_product_id) {
                     $query->where('warehouse_product_id', $request->warehouse_product_id);
                 }
+                $query->whereNotNull('exist');
             });
 
             if ($request->type_search == "date") {
@@ -508,6 +509,7 @@ class WarehouseReportController extends Controller
                 if ($request->warehouse_product_id) {
                     $query->where('warehouse_product_id', $request->warehouse_product_id);
                 }
+                $query->whereNotNull('exist');
             });
 
             if ($request->type_search == "date") {
