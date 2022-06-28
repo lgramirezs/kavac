@@ -1,12 +1,18 @@
 {
+    "version": "1.0.0",
     "name": "$STUDLY_NAME$",
     "alias": "$LOWER_NAME$",
+    "name_es": "$LOWER_NAME$",
     "description": "",
+    "long_description": "",
     "keywords": [
         "CENDITEL",
         "KAVAC"
     ],
-    "order": 0,
+    "active": 1,
+    "order": 1000,
+    "priority": 1000,
+    "logo": "",
     "providers": [
         "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\$PROVIDER_NAMESPACE$\\$STUDLY_NAME$ServiceProvider"
     ],
