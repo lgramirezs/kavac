@@ -9,6 +9,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
 use Modules\Purchase\Models\PurchaseSupplierObject;
+use Modules\Accounting\Models\AccountingAccount;
 
 /**
  * @class PurchaseSupplier
@@ -42,7 +43,7 @@ class PurchaseSupplier extends Model implements Auditable
     protected $fillable = [
         'rif', 'code', 'name', 'direction', 'person_type', 'company_type', 'website',
         'active', 'purchase_supplier_specialty_id', 'purchase_supplier_type_id', 'purchase_supplier_object_id',
-        'purchase_supplier_branch_id', 'country_id', 'estate_id', 'city_id', 'rnc_status', 'rnc_certificate_number', 
+        'purchase_supplier_branch_id', 'accounting_account_id','country_id', 'estate_id', 'city_id', 'rnc_status', 'rnc_certificate_number', 
         'social_purpose'
     ];
 
@@ -164,6 +165,16 @@ class PurchaseSupplier extends Model implements Auditable
     {
         // hasMany(RelatedModel, foreignKeyOnRelatedModel = purchaseSupplier_id, localKey = id)
         return $this->hasMany(PurchaseOrder::class);
+    }
+
+    /**
+     * accountingAccount that belong to the PurchaseSupplier
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function accountingAccount()
+    {
+        return $this->belongsTo(AccountingAccount::class);
     }
 
 }
