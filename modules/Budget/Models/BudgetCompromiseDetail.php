@@ -41,6 +41,25 @@ class BudgetCompromiseDetail extends Model implements Auditable
     ];
 
     /**
+     * Agrega campos personalizados
+     *
+     * @var array 
+     */
+    protected $appends = ['total'];
+
+    /**
+     * Obtiene el total del compromiso
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    public function getTotalAttribute()
+    {
+        return $this->amount + $this->tax_amount;
+    }
+
+    /**
      * BudgetCompromiseDetail belongs to BudgetCompromise.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
