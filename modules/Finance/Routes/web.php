@@ -57,6 +57,9 @@ Route::group([
 
     /** Ruta para la gestión de Finanzas > Banco > Ordenes de pago */
     Route::get('pay-orders/vue-list', [FinancePayOrderController::class, 'vueList'])->name('finance.pay-order.vuelist');
+    Route::post('pay-orders/change-document-status', [FinancePayOrderController::class, 'changeDocumentStatus'])
+         ->name('finance.pay-order.change-document-status');
+    Route::get('pay-orders/pdf/{financePayOrder}', [FinancePayOrderController::class, 'pdf']);
     Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
     Route::post(
         'pay-orders/documents/get-sources', 
