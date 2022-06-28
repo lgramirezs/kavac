@@ -9,6 +9,7 @@ use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
 use Modules\Finance\Models\FinanceCheckBook;
 use Modules\Finance\Models\FinanceBankingMovement;
+use Modules\Finance\Models\FinancePayOrder;
 
 /**
  * @class FinanceController
@@ -51,13 +52,14 @@ class FinanceController extends Controller
         $request->validate([
             'checks_code' => [new CodeSettingRule],
             'movements_code' => [new CodeSettingRule],
+            'pay_orders_code' => [new CodeSettingRule],
         ]);
 
         /** @var array $codes Arreglo con información de los campos de códigos configurados */
         $codes = $request->input();
         /** @var boolean $saved Define el estatus verdadero para indicar que no se ha registrado información */
         $saved = false;
-
+        
         foreach ($codes as $key => $value) {
             /** @var string $model Define el modelo al cual hace referencia el código */
             $model = '';
@@ -65,15 +67,17 @@ class FinanceController extends Controller
             if ($key !== '_token' && !is_null($value)) {
                 list($table, $field) = explode("_", $key);
                 list($prefix, $digits, $sufix) = CodeSetting::divideCode($value);
-
+                
                 if ($table === "check_books") {
                     $table = "check_books";
                     $model = FinanceCheckBook::class;
                 } elseif ($table === "movements") {
                     $table = "movements_code";
                     $model = FinanceBankingMovement::class;
+                } elseif ($table === "payOrders") {
+                    $table = "pay_orders";
+                    $model = FinancePayOrder::class;
                 }
-
                 CodeSetting::updateOrCreate([
                     'module' => 'finance',
                     'table' => 'finance_'. $table,
@@ -142,6 +146,7 @@ class FinanceController extends Controller
     {
         $checkCode = CodeSetting::where('model', FinanceCheckBook::class)->first() ?? '';
         $movementCode = CodeSetting::where('model', FinanceBankingMovement::class)->first() ?? '';
-        return view('finance::settings', compact('checkCode', 'movementCode'));
+        $payOrderCode = CodeSetting::where('model', FinancePayOrder::class)->first() ?? '';
+        return view('finance::settings', compact('checkCode', 'movementCode', 'payOrderCode'));
     }
 }

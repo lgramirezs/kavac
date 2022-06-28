@@ -73,6 +73,25 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <h6>Gestión de pagos</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('payOrders_code', __('Código para Orden de Pago'), []) !!}
+                                    {!! Form::text('payOrders_code', ($payOrderCode) ? $payOrderCode->format_code : old('payOrders_code'), [
+                                        'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
+                                        'title' => __('Formato para el código de la orden de pago'),
+                                        'placeholder' => 'Ej. XXX-00000000-YYYY',
+                                        'readonly' => ($payOrderCode) ? true : false
+                                    ]) !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         @include('layouts.form-buttons')

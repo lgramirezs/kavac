@@ -19,7 +19,8 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <finance-pay-order route-list="{{ route('finance.pay-orders.index') }}"/>
+            <finance-pay-order route-list="{{ route('finance.pay-order.vuelist') }}" 
+                               :accounting_accounts="{{ $accountingAccounts }}"/>
         </div>
     </div>
 @endsection

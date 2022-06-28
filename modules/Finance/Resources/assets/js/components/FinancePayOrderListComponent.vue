@@ -24,6 +24,9 @@
 				columns: ['code', 'ordered_at', 'name_sourceable.full_name', 'concept', 'status', 'id']
             }
         },
+		methods: {
+			reset() {}
+		},
         created() {
 			this.table_options.headings = {
 				'code': 'Código',
@@ -44,8 +47,8 @@
 			this.table_options.sortable = ['code', 'ordered_at', 'name_sourceable.full_name', 'concept', 'status'];
 			this.table_options.filterable = ['code', 'ordered_at', 'name_sourceable.full_name', 'concept', 'status'];
 		},
-        /*mounted() {
+        mounted() {
 			this.initRecords(this.route_list, '');
-		},*/
+		},
     }
 </script>
