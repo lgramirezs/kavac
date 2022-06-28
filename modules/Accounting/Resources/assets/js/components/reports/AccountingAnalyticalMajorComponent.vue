@@ -37,8 +37,8 @@
                     </div>
                     <br>
                     <div class=" col-12 is-required">
-                         <label><strong>Cuenta Final</strong></label>
-                         <select2 :options="OptionsAcc" v-model="EndAcc" :disabled="disabledSelect"></select2>
+                        <label><strong>Cuenta Final</strong></label>
+                        <select2 :options="OptionsAcc" v-model="EndAcc" :disabled="disabledSelect"></select2>
                     </div>
                 </div>
                 <div class="col-3">

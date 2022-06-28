@@ -16,6 +16,7 @@ use Modules\Accounting\Models\AccountingAccount;
 use Modules\Accounting\Models\AccountingEntryAccount;
 use Modules\Accounting\Models\AccountingEntryCategory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Models\DocumentStatus;
 
 /**
  * @class FinancePayOrderController
@@ -131,7 +132,9 @@ class FinancePayOrderController extends Controller
             }
         }
 
-        $financePayOrder = DB::transaction(function () use ($request, $code, $specificActionId) {
+        $documentStatus = DocumentStatus::where('action', 'PR')->first(); // Estatus Por revisar = Por aprobar
+
+        $financePayOrder = DB::transaction(function () use ($request, $code, $specificActionId, $documentStatus) {
             $pendingAmount = $request->source_amount - $request->amount;
             $financePayOrder = FinancePayOrder::create([
                 'code' => $code,
@@ -149,7 +152,8 @@ class FinancePayOrderController extends Controller
                 'budget_specific_action_id' => $specificActionId,
                 'finance_payment_method_id' => $request->finance_payment_method_id,
                 'finance_bank_account_id' => $request->finance_bank_account_id,
-                'institution_id' => $request->institution_id
+                'institution_id' => $request->institution_id,
+                'document_status_id' => $documentStatus->id
             ]);
             $accountingCategory = AccountingEntryCategory::where('acronym', 'SOP')->first();
             $accountEntry = AccountingEntry::create([
@@ -373,6 +377,7 @@ class FinancePayOrderController extends Controller
                 'financePaymentMethod',
                 'financeBankAccount',
                 'institution',
+                'documentStatus'
             )->orderBy('ordered_at')->get(),
         ], 200);
     }

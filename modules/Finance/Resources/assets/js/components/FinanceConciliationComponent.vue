@@ -18,10 +18,54 @@
             </ul>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group is-required">
                     <label>Cuenta bancaria:</label>
                     <select2 :options="accounts" v-model="record.account"></select2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group is-required">
+                    <label>Mes:</label>
+                    <select2
+                        :options="months"
+                        v-model="record.month"
+                    >
+                    </select2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group is-required">
+                    <label>Año:</label>
+                    <select2
+                        :options="years"
+                        v-model="record.year"
+                    >
+                    </select2>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group is-required">
+                    <label>Archivo:</label>
+                    <input type="file" accept=".txt">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Mostrar coincidencias:</label>
+                <br>
+                <div class="pretty p-switch p-fill p-bigger p-toggle">
+                    <input type="checkbox" data-toggle="tooltip"
+                        title="Indique si el campo está activo"
+                        v-model="record.coincidences">
+                    <div class="state p-off">
+                        <label></label>
+                    </div>
+                    <div class="state p-on p-success">
+                        <label></label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,11 +78,31 @@
             return {
                 record: {
                     account: '',
+                    month: '',
+                    year: '',
+                    file: '',
+                    coincidences: false,
                 },
                 accounts: [],
                 errors: [],
                 columns: [
                 ],
+                months: [
+                    { "id": "", "text": "Seleccione..." },
+                    { "id": 1, "text": "Enero"},
+                    { "id": 2, "text": "Febrero"},
+                    { "id": 3, "text": "Marzo"},
+                    { "id": 4, "text": "Abril"},
+                    { "id": 5, "text": "Mayo"},
+                    { "id": 6, "text": "Junio"},
+                    { "id": 7, "text": "Julio"},
+                    { "id": 8, "text": "Agosto"},
+                    { "id": 9, "text": "Septiembre"},
+                    { "id": 10, "text": "Octubre"},
+                    { "id": 11, "text": "Noviembre"},
+                    { "id": 12, "text": "Diciembre"},
+                ],
+                years: [],
             }
         },
         methods: {
@@ -65,9 +129,32 @@
                     vm.logs('Budget/Resources/assets/js/_all.js', 127, error, 'getBankAccounts');
                 });
             },
+
+            /**
+             * Obtiene el año de inicio de operaciones de la organización
+             * y carga el select de años.
+             *
+             * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+             */
+            async getInstitutionStartOperationYear() {
+                let vm = this;
+                await axios.get(`${vm.app_url}/get-institution/details/1`).then(response => {
+                    let start_operations_date = response.data.institution.start_operations_date;
+                    const d = new Date(start_operations_date);
+                    let start_operations_year = d.getFullYear();
+                    vm.years = [
+                        { "id": "", "text": "Seleccione..." },
+                        { "id": start_operations_year, "text": start_operations_year }
+                    ]
+                }).catch(error => {
+                    console.log("Error");
+                });
+            },
+
         },
         created() {
             this.getBankAccounts();
+            this.getInstitutionStartOperationYear();
         },
         mounted() {
         },

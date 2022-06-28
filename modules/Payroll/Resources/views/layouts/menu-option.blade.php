@@ -7,8 +7,8 @@
         <li class="{!! set_active_menu(['payroll.settings.index']) !!}">
             <a href="{{ route('payroll.settings.index') }}" data-toggle="tooltip" data-placement="right" title="Configuración de nómina">Configuración</a>
         </li>
-        <li class="{!! set_active_menu(['payroll.salary-adjustments.create']) !!}">
-            <a href="{{ route('payroll.salary-adjustments.create') }}" data-toggle="tooltip" data-placement="right" title="Gestiona las actualizaciones de tablas salariales, de acuerdo a un aumento oficial de salarios.">
+        <li class="{!! set_active_menu(['payroll.salary-adjustments.index']) !!}">
+            <a href="{{ route('payroll.salary-adjustments.index') }}" data-toggle="tooltip" data-placement="right" title="Gestiona las actualizaciones de tablas salariales, de acuerdo a un aumento oficial de salarios.">
                 Ajustes en Tablas Salariales
             </a>
         </li>
