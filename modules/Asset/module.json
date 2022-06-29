@@ -7,7 +7,8 @@
     "long_description": "",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 7,
+    "priority": 7,
     "logo": "asset-logo.png",
     "providers": [
         "Modules\\Asset\\Providers\\AssetServiceProvider"

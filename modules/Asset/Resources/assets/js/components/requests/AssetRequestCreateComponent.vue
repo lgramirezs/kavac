@@ -93,8 +93,8 @@
                             <label>Pais:</label>
                             <select2 
                                 :options="countries"
-                                @input="getEstates"
-                                v-model="record.country_id">
+                                v-model="record.country_id"
+                                @input="getEstates">
                             </select2>
                             <input type="hidden" v-model="record.id">
                         </div>
@@ -541,16 +541,14 @@
                         vm.record.municipality_id_aux = response.data.records.municipality_id;
                         vm.record.parish_id_aux = response.data.records.parish_id;
                         
+                        
                         fields = response.data.records.asset_request_assets;
                         $.each(fields, function(index,campo){
                             vm.selected.push(campo.asset.id);
                         });
                     }
                 });
-                if (vm.record.country_id_aux) {
-          			vm.record.country_id = vm.record.country_id_aux;
-                    vm.getEstates();
-          		}
+                
             },
             loadAssets(url) {
                 const vm = this;
@@ -566,6 +564,17 @@
                 });
             },
 
+            async getCountries() {
+                const vm = this;
+                await axios.get('/get-countries').then(response => {
+                    vm.countries = response.data;
+                });
+                setTimeout(() => {
+                    vm.getEstates();
+                }, 500);
+                    
+                
+            },
             async getEstates() {
                 const vm = this;
                 vm.estates = [];
@@ -575,12 +584,12 @@
                     });
                 }
                 if ((vm.record.estate_id_aux ) && (vm.record.id)) {
-                    vm.record.estate_id = vm.record.estate_id_aux;  
+                    vm.record.estate_id = vm.record.estate_id_aux;
                 }
             },
             async getMunicipalities() {
                 const vm = this;
-                vm.municipalities = [];
+             vm.municipalities = [];
                 if (vm.record.estate_id) {
                     await axios.get(`${window.app_url}/get-municipalities/${vm.record.estate_id}`).then(response => {
                         vm.municipalities = response.data;                        

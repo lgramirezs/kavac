@@ -7,7 +7,8 @@
     "long_description": "",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 4,
+    "priority": 4,
     "logo": "finance-logo.png",
     "providers": [
         "Modules\\Finance\\Providers\\FinanceServiceProvider"

@@ -18,7 +18,8 @@
     "logo": "budget-logo.png",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 2,
+    "priority": 2,
     "providers": [
         "Modules\\Budget\\Providers\\BudgetServiceProvider"
     ],

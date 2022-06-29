@@ -476,6 +476,18 @@ Vue.component('payroll-salary-adjustments-form', () =>
 );
 
 /**
+ * Componente para listar ajustes en tablas salariales
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('payroll-salary-adjustments-list', () =>
+    import(
+        /* webpackChunkName: "payroll-salary-adjustments-list" */
+        './components/salary_adjustments/PayrollSalaryAdjustmentsListComponent.vue'
+    )
+);
+
+/**
  * Componente para mostrar el listado de las solicitudes vacacionales
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>

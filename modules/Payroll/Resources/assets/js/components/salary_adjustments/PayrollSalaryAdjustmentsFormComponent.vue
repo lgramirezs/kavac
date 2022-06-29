@@ -312,10 +312,16 @@
                 panel:                     'Form'
             }
         },
+        props: {
+            payroll_salary_adjustment_id : Number,
+        },
         created() {
             const vm = this;
             vm.reset();
             vm.getPayrollSalaryTabulators();
+            if (vm.payroll_salary_adjustment_id) {
+                vm.loadForm();
+            }
         },
         mounted() {
             const vm = this;
@@ -490,7 +496,7 @@
                             id_scale = 'salary_scale_v_' + vertical;
                         }
                         if (vertical && horizontal) {
-                            id_scale = salary_scale_ + vertical + '_' + horizontal;
+                            id_scale = 'salary_scale_' + vertical + '_' + horizontal;
                         }
 
                         let tabValue = document.getElementById(id_scale)
@@ -541,6 +547,104 @@
                     });
                 }
 
+            },
+
+
+            /**
+             * Método que carga la información en el formulario para editar un registro
+             *
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+
+            async loadForm() {
+                let vm = this;
+                await axios.get(`${window.app_url}/payroll/salary-adjustments/vue-info/${vm.payroll_salary_adjustment_id}`).then(response => {
+                    let data = response.data.record;
+
+                    vm.record = {
+                        id: data.id,
+                        created_at: vm.format_date(data.created_at, 'YYYY-MM-DD'),
+                        value: data.value,
+                        increase_of_date: data.increase_of_date,
+                        increase_of_type: data.increase_of_type,
+                        payroll_salary_tabulator: data.payroll_salary_tabulator,
+                        payroll_salary_tabulator_id: data.payroll_salary_tabulator_id,
+                        scale_values: [],
+                    }
+                });
+            },
+
+            /**
+             * Método que permite actualizar información
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             *
+             * @param  {string} url Ruta de la acci´on que modificará los datos
+             */
+            updateRecord(url) {
+                const vm = this;
+                vm.loading = true;
+                var fields = {};
+                url = vm.setUrl(url);
+
+                vm.record.scale_values = [];
+                let id_scale;
+
+                $.each(vm.payroll_salary_tabulator.payroll_salary_tabulator_scales, function(index, field) {
+                    let value = 0;
+                    let vertical = field["payroll_vertical_scale_id"];
+                    let horizontal = field["payroll_horizontal_scale_id"];
+                    if (horizontal && vertical == null) {
+                        id_scale = 'salary_scale_h_' + horizontal;
+                    }
+                    if (vertical && horizontal == null) {
+                        id_scale = 'salary_scale_v_' + vertical;
+                    }
+                    if (vertical && horizontal) {
+                        id_scale = 'salary_scale_' + vertical + '_' + horizontal;
+                    }
+
+                    let tabValue = document.getElementById(id_scale)
+                    value = {
+                        id: field["id"],
+                        value: tabValue.value,
+                    }
+                    if (vm.record.increase_of_type == 'percentage') {
+                        value = {
+                            id: field["id"],
+                            value: parseFloat(tabValue.value) + parseFloat(field["value"]),
+                        }
+                    }
+                    vm.record.scale_values.push(value);
+                });
+
+                for (var index in vm.record) {
+                    fields[index] = vm.record[index];
+                }
+                axios.patch(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.id}`, fields).then(response => {
+                    if (typeof(response.data.redirect) !== "undefined") {
+                        location.href = response.data.redirect;
+                    }
+                    else {
+                        vm.readRecords(url);
+                        vm.reset();
+                        vm.loading = false;
+                        vm.showMessage('update');
+                    }
+
+                }).catch(error => {
+                    vm.errors = [];
+
+                    if (typeof(error.response) !="undefined") {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+                    vm.loading = false;
+                });
             },
         }
     };

@@ -2,8 +2,10 @@
 /** [descripción del namespace] */
 namespace Modules\Finance\Models;
 
+use App\Models\Currency;
 use App\Models\Institution;
 use App\Traits\ModelsTrait;
+use App\Models\DocumentStatus;
 use Nwidart\Modules\Facades\Module;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -53,7 +55,11 @@ class FinancePayOrder extends Model implements Auditable
         'budget_specific_action_id',
         'finance_payment_method_id',
         'finance_bank_account_id',
-        'institution_id'
+        'institution_id',
+        'document_status_id',
+        'currency_id',
+        'name_sourceable_type',
+        'name_sourceable_id'
     ];
 
     /**
@@ -95,6 +101,26 @@ class FinancePayOrder extends Model implements Auditable
     public function institution()
     {
         return $this->belongsTo(Institution::class);
+    }
+
+    /**
+     * Get the documentStatus that owns the FinancePayOrder
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function documentStatus()
+    {
+        return $this->belongsTo(DocumentStatus::class, 'document_status_id');
+    }
+
+    /**
+     * Get the currency that owns the FinancePayOrder
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     /**

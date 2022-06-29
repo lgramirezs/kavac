@@ -7,7 +7,8 @@
     "long_description": "",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 9,
+    "priority": 9,
     "logo": "digital-signature-logo.png",
     "providers": [
         "Modules\\DigitalSignature\\Providers\\DigitalSignatureServiceProvider"

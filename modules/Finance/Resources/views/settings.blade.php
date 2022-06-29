@@ -42,15 +42,15 @@
                         @include('layouts.help-text', ['codeSetting' => true])
                         @include('layouts.form-errors')
                         <div class="row">
-                            <div class="col-4">
+                            <!--<div class="col-4">
                                 <h6>Cheques</h6>
-                            </div>
+                            </div>-->
                             <div class="col-4">
                                 <h6>Movimientos Bancarios</h6>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <!--<div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('checks_code', 'Código de cheques emitidos', []) !!}
                                     {!! Form::text('checks_code', ($checkCode) ? $checkCode->format_code : old('checks_code'), [
@@ -60,7 +60,7 @@
                                         'readonly' => ($checkCode) ? true : false
                                     ]) !!}
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('movements_code', 'Código del movimiento bancario', []) !!}
@@ -69,6 +69,25 @@
                                         'title' => 'Formato para el código de los movimientos bancarios',
                                         'placeholder' => 'Ej. XXX-00000000-YYYY',
                                         'readonly' => ($movementCode) ? true : false
+                                    ]) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <h6>Gestión de pagos</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('payOrders_code', __('Código para Orden de Pago'), []) !!}
+                                    {!! Form::text('payOrders_code', ($payOrderCode) ? $payOrderCode->format_code : old('payOrders_code'), [
+                                        'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
+                                        'title' => __('Formato para el código de la orden de pago'),
+                                        'placeholder' => 'Ej. XXX-00000000-YYYY',
+                                        'readonly' => ($payOrderCode) ? true : false
                                     ]) !!}
                                 </div>
                             </div>

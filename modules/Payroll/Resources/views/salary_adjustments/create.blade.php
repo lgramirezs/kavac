@@ -22,7 +22,8 @@
             <payroll-salary-adjustments-form
                 route_list="{{ url()->previous() }}"
                 route_show="{{ url('payroll/salary-tabulators/show/{id}') }}"
-                route_create="{{ url('payroll/salary-adjustments') }}">
+                route_create="{{ url('payroll/salary-adjustments') }}"
+                :payroll_salary_adjustment_id="{!! (isset($payrollSalaryAdjustment)) ? $payrollSalaryAdjustment->id : "null" !!}">
             </payroll-salary-adjustments-form>
         </div>
     </div>

@@ -7,7 +7,8 @@
     "long_description": "",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 6,
+    "priority": 6,
     "logo": "warehouse-logo.png",
     "providers": [
         "Modules\\Warehouse\\Providers\\WarehouseServiceProvider"

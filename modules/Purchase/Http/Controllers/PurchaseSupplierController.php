@@ -20,6 +20,7 @@ use Modules\Purchase\Models\PurchaseSupplierSpecialty;
 use Modules\Purchase\Models\PurchaseSupplierType;
 use Modules\Purchase\Models\PurchaseSupplier;
 use Modules\Purchase\Models\City;
+use Modules\Accounting\Models\AccountingAccount;
 
 class PurchaseSupplierController extends Controller
 {
@@ -33,6 +34,7 @@ class PurchaseSupplierController extends Controller
     protected $supplier_specialties;
     protected $supplier_objects;
     protected $requiredDocuments;
+    protected $accounting_accounts;
 
     public function __construct()
     {
@@ -44,6 +46,8 @@ class PurchaseSupplierController extends Controller
         $this->supplier_types = template_choices(PurchaseSupplierType::class);
         $this->supplier_branches = template_choices(PurchaseSupplierBranch::class);
         $this->supplier_specialties = template_choices(PurchaseSupplierSpecialty::class);
+        $this->accounting_accounts = template_choices(AccountingAccount::class,
+                                     ['code', '-', 'denomination' ], ['active' => 't'], false);
 
         $supplier_objects = ['Bienes' => [], 'Obras' => [], 'Servicios' => []];
         $assets = $works = $services = [];
@@ -83,7 +87,8 @@ class PurchaseSupplierController extends Controller
             'countries' => $this->countries, 'estates' => $this->estates, 'cities' => $this->cities,
             'supplier_types' => $this->supplier_types, 'supplier_objects' => $this->supplier_objects,
             'supplier_branches' => $this->supplier_branches, 'supplier_specialties' => $this->supplier_specialties,
-            'header' => $header, 'requiredDocuments' => $this->requiredDocuments
+            'header' => $header, 'requiredDocuments' => $this->requiredDocuments,
+            'accounting_accounts' => $this->accounting_accounts
         ]);
     }
 
@@ -104,6 +109,7 @@ class PurchaseSupplierController extends Controller
             'purchase_supplier_object_id'    => ['required'],
             'purchase_supplier_branch_id'    => ['required'],
             'purchase_supplier_specialty_id' => ['required'],
+            'accounting_account_id'          => ['required'],
             'country_id'                     => ['required'],
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
@@ -126,6 +132,7 @@ class PurchaseSupplierController extends Controller
             'purchase_supplier_object_id.required'    => 'El campo objeto principal es obligatorio.',
             'purchase_supplier_branch_id.required'    => 'El campo rama es obligatorio.',
             'purchase_supplier_specialty_id.required' => 'El campo especialidad es obligatorio.',
+            'accounting_account_id.required'          => 'El campo cuentas contables es obligatorio.',
             'country_id.required'                     => 'El campo pais es obligatorio.',
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
@@ -196,6 +203,7 @@ class PurchaseSupplierController extends Controller
             'purchase_supplier_branch_id'    => $request->purchase_supplier_branch_id,
             'purchase_supplier_specialty_id' => $request->purchase_supplier_specialty_id,
             'purchase_supplier_type_id'      => $request->purchase_supplier_type_id,
+            'accounting_account_id'          => $request->accounting_account_id,
             'country_id'                     => $request->country_id,
             'estate_id'                      => $request->estate_id,
             'city_id'                        => $request->city_id,
@@ -322,7 +330,8 @@ class PurchaseSupplierController extends Controller
             'supplier_types' => $this->supplier_types, 'supplier_objects' => $this->supplier_objects,
             'supplier_branches' => $this->supplier_branches, 'supplier_specialties' => $this->supplier_specialties,
             'header' => $header, 'requiredDocuments' => $this->requiredDocuments, 'model' => $model, 
-            'model_supplier_objects' => $purchase_supplier_objects, 'docs_to_download' => $docs_to_download
+            'model_supplier_objects' => $purchase_supplier_objects, 'docs_to_download' => $docs_to_download,
+            'accounting_accounts' => $this->accounting_accounts
         ]);
     }
 
@@ -343,6 +352,7 @@ class PurchaseSupplierController extends Controller
             'purchase_supplier_object_id'    => ['required'],
             'purchase_supplier_branch_id'    => ['required'],
             'purchase_supplier_specialty_id' => ['required'],
+            'accounting_account_id'          => ['required'],
             'country_id'                     => ['required'],
             'estate_id'                      => ['required'],
             'city_id'                        => ['required'],
@@ -365,6 +375,7 @@ class PurchaseSupplierController extends Controller
             'purchase_supplier_object_id.required'    => 'El campo objeto principal es obligatorio.',
             'purchase_supplier_branch_id.required'    => 'El campo rama es obligatorio.',
             'purchase_supplier_specialty_id.required' => 'El campo especialidad es obligatorio.',
+            'accounting_account_id.required'          => 'El campo cuentas contables es obligatorio.',
             'country_id.required'                     => 'El campo pais es obligatorio.',
             'estate_id.required'                      => 'El campo estado es obligatorio.',
             'city_id.required'                        => 'El campo ciudad es obligatorio.',
@@ -435,6 +446,7 @@ class PurchaseSupplierController extends Controller
         $supplier->purchase_supplier_branch_id    = $request->purchase_supplier_branch_id;
         $supplier->purchase_supplier_specialty_id = $request->purchase_supplier_specialty_id;
         $supplier->purchase_supplier_type_id      = $request->purchase_supplier_type_id;
+        $supplier->accounting_account_id          = $request->accounting_account_id;
         $supplier->country_id                     = $request->country_id;
         $supplier->estate_id                      = $request->estate_id;
         $supplier->city_id                        = $request->city_id;

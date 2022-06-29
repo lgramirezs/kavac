@@ -921,6 +921,22 @@ Vue.mixin({
             });
         },
         /**
+         * Obtiene un arreglo con las monedas registradas por defecto
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param  {integer} id Identificador de la moneda a buscar, este parámetro es opcional
+         */
+        getDefaultCurrencies(id) {
+            const vm = this;
+            let currency_id = (typeof(id)!=="undefined")?'/'+id:'';
+            const url = vm.setUrl(`get-default-currencies${currency_id}`);
+            vm.currencies = [];
+            axios.get(url).then(response => {
+                vm.currencies = response.data;
+            });
+        },
+        /**
          * Obtiene los departamentos o unidades de la organización
          *
          * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
@@ -1204,9 +1220,9 @@ Vue.mixin({
          *
          * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          */
-        getReceivers() {
+        async getReceivers() {
             const vm = this;
-            axios.get(`${window.app_url}/receivers`).then(response => {
+            await axios.get(`${window.app_url}/receivers`).then(response => {
                 if (response.data.records.length > 0) {
                     vm.receivers = response.data.records;
                 }

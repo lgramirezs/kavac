@@ -135,7 +135,8 @@ class ReportRepository implements ReportInterface
         $hasQR = true,
         $hasBarCode = false,
         $logoAlign = '',
-        $titleAlign = 'C'
+        $titleAlign = 'C',
+        $subTitleAlign = 'L'
     ) {
         $params = (object)[
             'institution' => $this->institution,
@@ -149,6 +150,7 @@ class ReportRepository implements ReportInterface
             'title' => $title,
             'titleAlign' => $titleAlign,
             'subTitle' => $subTitle,
+            'subTitleAlign' => $subTitleAlign,
             'reportDate' => $this->reportDate,
             'headerY' => $this->headerY,
             'logoAlign' => $logoAlign
@@ -243,7 +245,7 @@ class ReportRepository implements ReportInterface
                 4,
                 $params->subTitle,
                 0,
-                'L',
+                $params->subTitleAlign,
                 false,
                 1,
                 40,
@@ -292,8 +294,9 @@ class ReportRepository implements ReportInterface
      *                                         del reporte
      * @param      boolean        $isHTML      Establece si el cuerpo del reporte es una plantilla de blade a renderizar
      * @param      array          $htmlParams  Conjunto de parámetros requeridos por la plantilla de blade
+     * @param      string         $storeAction Acción para la generación del documento
      */
-    public function setBody($body, $isHTML = true, $htmlParams = [])
+    public function setBody($body, $isHTML = true, $htmlParams = [], $storeAction = 'I')
     {
         /** @var string Contenido del reporte */
         $htmlContent = $body;
@@ -336,7 +339,7 @@ class ReportRepository implements ReportInterface
          * FD: Es equivalente a las opciones F + D
          * E: Devuelve el documento del tipo mime base64 para ser adjuntado en correos electrónicos
          */
-        $this->pdf->Output($this->filename, 'I');
+        $this->pdf->Output($this->filename, $storeAction);
     }
 
     public function setFooter($pages = true, $footerText = '')

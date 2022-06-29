@@ -459,9 +459,20 @@ Route::group([
     Route::resource(
         'salary-adjustments',
         'PayrollSalaryAdjustmentController',
-        ['as' => 'payroll'],
-        ['only' => ['create', 'store']]
+        ['as' => 'payroll', 'except' => ['show']]
     );
+
+    /** Ruta que obtiene un listado de los ajustes en las tablas salariales */
+    Route::get(
+        'salary-adjustments/vue-list',
+        'PayrollSalaryAdjustmentController@vueList'
+    )->name('payroll.salary-adjustments.vue-list');
+
+    /** Ruta que obtiene la información de los ajustes en las tablas salariales */
+    Route::get(
+        'salary-adjustments/vue-info/{id}',
+        'PayrollSalaryAdjustmentController@vueInfo'
+    )->name('payroll.salary-adjustments.vue-info');
 
     /** Rutas para gestionar las solicitudes de vacaciones */
     Route::resource(

@@ -63,6 +63,8 @@ export default {
             'currency.name': 'col-xs-3 text-center',
             'id': 'col-xs-1'
         };
+        this.table_options.sortable = ['purchase_supplier.name', 'currency.name'];
+        this.table_options.filterable = ['purchase_supplier.name', 'currency.name'];
     },
     mounted() {
         this.records = this.record_lists;
