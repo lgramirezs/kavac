@@ -184,7 +184,7 @@
             </div>
             <div class="col-md-3" id="HelpFrecuency">
                 <div class="form-group is-required">
-                    <label>Duración:</label>
+                    <label>Unidad de tiempo:</label>
                     <select2 :options="frecuencies"
                              v-model="record.frecuency_id"></select2>
                 </div>
@@ -1104,36 +1104,38 @@ export default {
                 vm.errors.push('El porcentaje de actividades no debe ser menor a 100.');
             }
             else {
-                vm.loading = true;
-                var fields = {};
-                url = vm.setUrl(url);
+                if (vm.errors.length < 1) {
+                    vm.loading = true;
+                    var fields = {};
+                    url = vm.setUrl(url);
 
-                for (var index in vm.record) {
-                    fields[index] = vm.record[index];
-                }
-                axios.patch(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.sale_service_id}`, fields).then(response => {
-                    if (typeof(response.data.redirect) !== "undefined") {
-                        location.href = response.data.redirect;
+                    for (var index in vm.record) {
+                        fields[index] = vm.record[index];
                     }
-                    else {
-                        vm.readRecords(url);
-                        vm.reset();
-                        vm.loading = false;
-                        vm.showMessage('update');
-                    }
+                    axios.patch(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.sale_service_id}`, fields).then(response => {
+                        if (typeof(response.data.redirect) !== "undefined") {
+                            location.href = response.data.redirect;
+                        }
+                        else {
+                            vm.readRecords(url);
+                            vm.reset();
+                            vm.loading = false;
+                            vm.showMessage('update');
+                        }
 
-                }).catch(error => {
-                    vm.errors = [];
+                    }).catch(error => {
+                        vm.errors = [];
 
-                    if (typeof(error.response) !="undefined") {
-                        for (var index in error.response.data.errors) {
-                            if (error.response.data.errors[index]) {
-                                vm.errors.push(error.response.data.errors[index][0]);
+                        if (typeof(error.response) !="undefined") {
+                            for (var index in error.response.data.errors) {
+                                if (error.response.data.errors[index]) {
+                                    vm.errors.push(error.response.data.errors[index][0]);
+                                }
                             }
                         }
-                    }
-                    vm.loading = false;
-                });
+                        vm.loading = false;
+                    });
+                }
             }
         }
     },
