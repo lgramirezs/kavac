@@ -290,9 +290,9 @@ Vue.mixin({
             if (!url) {
                 return;
             }
-            url = vm.setUrl(url);
+            url = vm.setUrl(url).replace('/pdf', '/pdfVue');
             vm.loading = true;
-            axios.get(url.replace('/pdf', '/pdfVue')).then(response => {
+            axios.get(url).then(response => {
                 if (!response.data.result) {
                     vm.showMessage(
                         'custom', 'Error en conversión', 'danger', 'screen-error', response.data.message

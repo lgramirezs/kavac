@@ -111,12 +111,13 @@ class PayrollSalaryTabulatorController extends Controller
      */
     public function store(Request $request)
     {
+        $validateRules = $this->validateRules;
         if ($request->percentage == false) {
-            $this->validateRules = [
+            $validateRules = array_merge($validateRules, [
                 'currency_id'             => ['required'],
-            ];
+            ]);
         }
-        $this->validate($request, $this->validateRules, $this->messages);
+        $this->validate($request, $validateRules, $this->messages);
 
         $codeSetting = CodeSetting::where('table', 'payroll_salary_tabulators')->first();
         if (is_null($codeSetting)) {
@@ -192,12 +193,12 @@ class PayrollSalaryTabulatorController extends Controller
     public function update(Request $request, $id)
     {
         $salaryTabulator = PayrollSalaryTabulator::where('id', $id)->first();
-        if ($request->percentage == false) {
-            $this->validateRules = [
-                'currency_id'             => ['required'],
-            ];
-        }
         $validateRules = $this->validateRules;
+        if ($request->percentage == false) {
+            $validateRules = array_merge($validateRules, [
+                'currency_id'             => ['required'],
+            ]);
+        }
         $validateRules  = array_replace(
             $validateRules,
             ['name' => ['required', 'max:100', 'unique:payroll_salary_tabulators,name,' . $salaryTabulator->id]]

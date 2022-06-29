@@ -71,4 +71,14 @@ class PurchaseQuotation extends Model implements Auditable
         // morphMany(MorphedModel, morphableName, type = able_type, relatedKeyName = able_id, localKey = id)
         return $this->morphMany(PurchasePivotModelsToRequirementItem::class, 'relatable');
     }
+
+    /**
+     * Obtiene todos los documentos asociados al proveedor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
 }

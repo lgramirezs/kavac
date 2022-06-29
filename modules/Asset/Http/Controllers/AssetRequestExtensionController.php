@@ -50,9 +50,7 @@ class AssetRequestExtensionController extends Controller
             'asset_request_id' => ['required']
         ]);
         $asset_request = AssetRequest::find($request->asset_request_id);
-        $this->validate($request, [
-            'delivery_date' => [new DateExtension($asset_request->delivery_date, '2')],
-        ]);
+      
 
         $prorroga = new AssetRequestExtension;
         $prorroga->delivery_date = $request->delivery_date;

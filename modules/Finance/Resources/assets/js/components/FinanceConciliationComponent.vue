@@ -47,7 +47,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group is-required">
                     <label>Archivo:</label>
                     <input type="file" accept=".txt">
@@ -68,6 +68,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <hr>
+        <div class="form-group text-right">
+            <button type="button"
+                class="btn btn-warning btn-sm btn-round"
+                @click="reset()">
+                Cancelar
+            </button>
+            <button type="button" @click=""
+                class="btn btn-primary btn-sm btn-round">
+                Guardar
+            </button>
         </div>
     </div>
 </template>
@@ -102,7 +114,9 @@
                     { "id": 11, "text": "Noviembre"},
                     { "id": 12, "text": "Diciembre"},
                 ],
-                years: [],
+                years: [
+                    { "id": "", "text": "Seleccione..." },
+                ],
             }
         },
         methods: {
@@ -113,6 +127,11 @@
              */
             reset() {
                 this.record = {
+                    account: '',
+                    month: '',
+                    year: '',
+                    file: '',
+                    coincidences: false,
                 };
             },
 
@@ -131,21 +150,22 @@
             },
 
             /**
-             * Obtiene el año de inicio de operaciones de la organización
-             * y carga el select de años.
+             * Carga el select de años desde el año de inicio de operaciones de
+             * la organización hasta el año fiscal.
              *
              * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
              */
             async getInstitutionStartOperationYear() {
                 let vm = this;
                 await axios.get(`${vm.app_url}/get-institution/details/1`).then(response => {
+                    var currentTime = new Date();
+                    var year = currentTime.getFullYear()
                     let start_operations_date = response.data.institution.start_operations_date;
                     const d = new Date(start_operations_date);
                     let start_operations_year = d.getFullYear();
-                    vm.years = [
-                        { "id": "", "text": "Seleccione..." },
-                        { "id": start_operations_year, "text": start_operations_year }
-                    ]
+                    for (var i=start_operations_year; i < year+1; i++) {
+                        vm.years.push({ "id": i, "text": i});
+                    }
                 }).catch(error => {
                     console.log("Error");
                 });
