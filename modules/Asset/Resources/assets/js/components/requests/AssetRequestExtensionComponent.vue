@@ -46,8 +46,8 @@
 									<label>Fecha de entrega actual</label>
 					        		<input type="date"
 										data-toggle="tooltip"
-										:min="record.delivery_date"
-										max="2050-07-05"
+										:min="delivery_date"
+										:max="date_max"
 										id="delivery_date"
 										class="form-control" 
 										v-model="record.delivery_date">
@@ -84,7 +84,7 @@
 					delivery_date: '',
 					asset_request_id: '',
 				},
-
+                date_max:'2050-07-05',
 				date_min : '',
 				records: [],
 				errors: [],
