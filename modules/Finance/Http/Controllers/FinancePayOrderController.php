@@ -2,12 +2,15 @@
 /** [descripción del namespace] */
 namespace Modules\Finance\Http\Controllers;
 
+use App\Models\Receiver;
 use App\Models\CodeSetting;
 use Illuminate\Http\Request;
+use App\Models\DocumentStatus;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Nwidart\Modules\Facades\Module;
+use App\Repositories\ReportRepository;
 use Modules\Budget\Models\BudgetCompromise;
 use Modules\Finance\Models\FinancePayOrder;
 use Illuminate\Contracts\Support\Renderable;
@@ -16,7 +19,6 @@ use Modules\Accounting\Models\AccountingAccount;
 use Modules\Accounting\Models\AccountingEntryAccount;
 use Modules\Accounting\Models\AccountingEntryCategory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Models\DocumentStatus;
 
 /**
  * @class FinancePayOrderController
@@ -126,15 +128,18 @@ class FinancePayOrderController extends Controller
         $compromise = BudgetCompromise::find($request->budget_compromise_id);
         $specificActionId = null;
         if ($compromise) {
-            foreach ($compromise->budgetCompromiseDetails() as $compromiseDetail) {
+            foreach ($compromise->budgetCompromiseDetails as $compromiseDetail) {
                 $specificActionId = $compromiseDetail->budgetSubSpecificFormulation->specificAction->id;
                 break;
             }
         }
 
         $documentStatus = DocumentStatus::where('action', 'PR')->first(); // Estatus Por revisar = Por aprobar
+        $receiver = Receiver::find($request->name_sourceable_id);
 
-        $financePayOrder = DB::transaction(function () use ($request, $code, $specificActionId, $documentStatus) {
+        $financePayOrder = DB::transaction(
+            function () use ($request, $code, $compromise, $specificActionId, $documentStatus, $receiver
+        ) {
             $pendingAmount = $request->source_amount - $request->amount;
             $financePayOrder = FinancePayOrder::create([
                 'code' => $code,
@@ -148,12 +153,15 @@ class FinancePayOrderController extends Controller
                 'amount' => $request->amount,
                 'concept' => $request->concept,
                 'observations' => $request->observations,
-                'status' => ($pendingAmount > 0)?'PE':'PA',
+                'status' => 'PE', //Estatus pendiente por defecto, este estatus lo modifica la ejecución de pago
                 'budget_specific_action_id' => $specificActionId,
                 'finance_payment_method_id' => $request->finance_payment_method_id,
                 'finance_bank_account_id' => $request->finance_bank_account_id,
                 'institution_id' => $request->institution_id,
-                'document_status_id' => $documentStatus->id
+                'document_status_id' => $documentStatus->id,
+                'currency_id' => $request->accounting['currency']['id'],
+                'name_sourceable_type' => str_replace("modules", "Modules", $receiver->receiverable_type),
+                'name_sourceable_id' => $receiver->receiverable_id
             ]);
             $accountingCategory = AccountingEntryCategory::where('acronym', 'SOP')->first();
             $accountEntry = AccountingEntry::create([
@@ -175,11 +183,11 @@ class FinancePayOrderController extends Controller
                  * de lo contrario crea el nuevo registro de cuenta
                  */
                 AccountingEntryAccount::create([
-                        'accounting_entry_id' => $accountEntry->id,
-                        'accounting_account_id' => $account['id'],
-                        'debit' => $account['debit'],
-                        'assets' => $account['assets'],
-                    ]);
+                    'accounting_entry_id' => $accountEntry->id,
+                    'accounting_account_id' => $account['id'],
+                    'debit' => $account['debit'],
+                    'assets' => $account['assets'],
+                ]);
             }
             return $financePayOrder;
         });
@@ -263,9 +271,9 @@ class FinancePayOrderController extends Controller
         $financePayOrder = FinancePayOrder::find($id);
 
         if ($financePayOrder) {
-            if ($financePayOrder->restrictDelete()) {
+            /*if ($financePayOrder->restrictDelete()) {
                 return response()->json(['error' => true, 'message' => 'El registro no se puede eliminar'], 200);
-            }
+            }*/
             $financePayOrder->delete();
         }
 
@@ -377,8 +385,74 @@ class FinancePayOrderController extends Controller
                 'financePaymentMethod',
                 'financeBankAccount',
                 'institution',
-                'documentStatus'
+                'documentStatus',
+                'nameSourceable'
             )->orderBy('ordered_at')->get(),
         ], 200);
+    }
+
+    /**
+     * Establece el nuevo estatus del documento
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @param  \Illuminate\Http\Request $request 
+     *
+     * @return void                              
+     */
+    public function changeDocumentStatus(Request $request)
+    {
+        $financePayOrder = FinancePayOrder::find($request->id);
+        $documentStatus = DocumentStatus::where('action', $request->action)->first();
+        $financePayOrder->document_status_id = $documentStatus->id;
+        $financePayOrder->save();
+        $financePayOrder = FinancePayOrder::with(
+            'budgetSpecificAction',
+            'financePaymentMethod',
+            'financeBankAccount',
+            'institution',
+            'documentStatus'
+        )->where('id', $request->id)->first();
+        return response()->json(['record' => $financePayOrder, 'message' => 'Success'], 200);
+    }
+
+    public function pdf($id)
+    {
+        $financePayOrder = FinancePayOrder::with(
+            'institution', 'currency', 'financePaymentMethod', 'budgetSpecificAction'
+        )->find($id);
+        
+        $budjetProjectAcc = null;
+        $specificAction = null;
+        if ($financePayOrder) {
+            if ($financePayOrder->budgetSpecificAction) {
+                $budjetProjectAcc = $financePayOrder->budgetSpecificAction->specificable->getTable();
+                $specificAction = [
+                    'type' => ($budjetProjectAcc==='budget_projects')?'Proyecto':'Acción Centralizada',
+                    'code' => $financePayOrder->budgetSpecificAction->specificable->code . ' - ' . 
+                              $financePayOrder->budgetSpecificAction->code
+                ];
+            }
+            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function($q) {
+                $q->with('account');
+            }])->where('reference', $financePayOrder->code)->first();
+            $pdf = new ReportRepository;
+            $filename = "pay-order-$financePayOrder->code.pdf";
+            $file = storage_path() . '/reports/' . $filename;
+            list($year, $month, $day) = explode("-", $financePayOrder->ordered_at);
+            $pdf->setConfig(
+                [
+                    'institution' => $financePayOrder->institution,
+                    'urlVerify'   => url(''),
+                    'orientation' => 'P',
+                    'filename'    => $filename
+                ]
+            );
+            $pdf->setHeader("ORDEN DE PAGO Nº $financePayOrder->code", "En ejercicio fiscal: $year", true, false,'','C','C');
+            $pdf->setFooter();
+            $pdf->setBody(
+                'finance::pay_orders.report', true, compact('financePayOrder', 'specificAction', 'accountingEntry')
+            );
+        }
     }
 }

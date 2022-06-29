@@ -501,11 +501,11 @@
              * 
              * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
-            createRecord() {
+            async createRecord() {
                 const vm = this;
                 const url = vm.setUrl('finance/pay-orders');
                 if (vm.record.id) {
-                    vm.updateRecord(url);
+                    await vm.updateRecord(url);
                 }
                 else {
                     vm.loading = true;
@@ -516,8 +516,23 @@
                     /** Datos de los ítems contables */
                     fields['accounting'] = vm.accounting;
                     fields['accountingItems'] = vm.recordsAccounting;
-                    axios.post(url, fields).then(response => {
-                        location.href = vm.setUrl('finance/pay-orders');
+                    
+                    await axios.post(url, fields).then(response => {
+                        bootbox.confirm('Desea generar el comprobante?', function (result) {
+                            if (result) {
+                                let link = document.createElement('a');
+                                link.target = '_blank';
+                                link.href = vm.setUrl(`finance/pay-orders/pdf/${response.data.record.id}`);
+                                link.click();
+                                setTimeout(() => {
+                                    location.href = vm.setUrl('finance/pay-orders');
+                                }, 3000);
+                            }
+                            else {
+                                location.href = vm.setUrl('finance/pay-orders');
+                            }
+                        });
+                        resultStorage = true;
                     }).catch(error => {
                         console.error(error);
                     });

@@ -15,8 +15,8 @@ return [
     // See more info at the tcpdf_config.php file in TCPDF (if you do not set this here, TCPDF will use it default)
     // https://raw.githubusercontent.com/tecnickcom/TCPDF/develop/config/tcpdf_config.php
 
-    //    'path_main'           => '', // K_PATH_MAIN
-    //    'path_url'            => '', // K_PATH_URL
+    //'path_main'           => storage_path('reports'), // K_PATH_MAIN
+    //'path_url'            => storage_path('reports'), // K_PATH_URL
     //    'header_logo'         => '', // PDF_HEADER_LOGO
     //    'header_logo_width'   => '', // PDF_HEADER_LOGO_WIDTH
     //    'path_cache'          => '', // K_PATH_CACHE
