@@ -282,10 +282,7 @@ class PurchaseSupplierController extends Controller
      */
     public function showall()
     {
-  
       return template_choices(PurchaseSupplier::class, 'name', '', true);
-
-  
     }
     /**
      * Show the form for editing the specified resource.

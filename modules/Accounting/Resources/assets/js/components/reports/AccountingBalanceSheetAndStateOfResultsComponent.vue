@@ -29,8 +29,24 @@
                     <div class="form-group">
                         <label class="text-center"><strong>Mostrar valores en cero</strong></label>
                         <div class="col-12 bootstrap-switch-mini">
-                            <input :id="'zero'+type_report" data-on-label="SI" data-off-label="NO" name="zero" type="checkbox" class="form-control text-center bootstrap-switch">
+                            <input :id="'zero'+type_report" 
+                                data-on-label="SI" 
+                                data-off-label="NO" 
+                                name="zero" 
+                                type="checkbox" 
+                                class="form-control text-center bootstrap-switch">
                         </div>
+                        <div class="col-12">
+                            <p-check class="pretty p-switch p-fill p-bigger" 
+                                color="success" 
+                                off-color="text-gray" 
+                                toggle 
+                                data-toggle="tooltip" 
+                                title="¿La política vacacional se encuentra activa actualmente?" v-model="record.active">
+                                <label slot="off-label"></label>
+                            </p-check>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
