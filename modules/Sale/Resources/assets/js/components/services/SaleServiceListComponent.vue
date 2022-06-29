@@ -8,7 +8,7 @@
             </div>
             <div slot="application_date" slot-scope="props">
                 <span>
-                    {{ (props.row.created_at) ? props.row.created_at : '' }}
+                    {{ (props.row.created_at) ? format_date(props.row.created_at) : '' }}
                 </span>
             </div>
             <div slot="sale_client" slot-scope="props" v-if="props.row.sale_client">

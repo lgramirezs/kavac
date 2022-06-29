@@ -104,9 +104,9 @@
                                     <div class="form-group">
                                         <strong>Número telefónico</strong>
                                         <div class="row" style="margin: 1px 0">
-                                            <div v-if="record.sale_client && record.sale_client.phones">
-                                                <p v-for="client_phone in record.sale_client.phones" class="col-md-12" id="client_phone">
-                                                    {{ record.sale_client && record.sale_client.phones ? client_phone.extension + '-' + client_phone.area_code + client_phone.number : 'No definido' }}
+                                            <div v-if="record.sale_client && record.sale_client.sale_clients_phone">
+                                                <p v-for="client_phone in record.sale_client.sale_clients_phone" class="col-md-12" id="client_phone">
+                                                    {{ record.sale_client && record.sale_client.sale_clients_phone ? client_phone.phone : 'No definido' }}
                                                 </p>
                                             </div>
                                         </div>
