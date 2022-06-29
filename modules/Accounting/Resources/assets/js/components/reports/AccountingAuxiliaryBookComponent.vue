@@ -33,7 +33,16 @@
                 <div class="col-3" id="helpAuxiliaryBookAllAccount">
                     <label for="" class="control-label mt-4">Seleccionar todas</label>
                     <div class="col-12 bootstrap-switch-mini">
-                        <input type="checkbox" name="sel_account_type_auxiliary" id="sel_all_acc_auxiliary" data-on-label="SI" data-off-label="NO" @click="checkAll()" class="form-control bootstrap-switch sel_pry_acc sel_all_acc_class">
+                        <p-check class="pretty p-switch p-fill p-bigger" 
+                            color="success" 
+                            off-color="text-gray" 
+                            toggle 
+                            data-toggle="tooltip" 
+                            title="¿La política vacacional se encuentra activa actualmente?" 
+                            @click="checkAll()"
+                            v-model="check_sel_all">
+                            <label slot="off-label"></label>
+                        </p-check>
                     </div>
                 </div>
             </div>
@@ -77,6 +86,7 @@ export default {
             urlSign: `${window.app_url}/accounting/report/auxiliaryBookSign/pdf/`,
             currency: '',
             allAccounts: false,
+            check_sel_all: false,
         }
     },
     created() {
@@ -92,7 +102,7 @@ export default {
          */
         checkAll() {
             const vm = this;
-            if ($('#sel_all_acc_auxiliary').prop('checked')) {
+            if (vm.check_sel_all) {
                 vm.account_id = 0;
                 vm.allAccounts = true;
             } else {
@@ -157,5 +167,10 @@ export default {
             return (this.urlSign + (this.year_init + '-' + this.month_init) + '/' + this.currency + '/' + acc);
         }
     },
+    watch:{
+        check_sel_all: function(res){
+            this.checkAll()
+        }
+    }
 };
 </script>
