@@ -55,7 +55,7 @@
                                 off-color="text-gray" 
                                 toggle 
                                 data-toggle="tooltip" 
-                                title="¿La política vacacional se encuentra activa actualmente?" 
+                                title="Seleccionar todas las cuentas de mayor analítico" 
                                 @click="checkAll()"
                                 v-model="check_sel_all">
                                 <label slot="off-label"></label>

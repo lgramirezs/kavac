@@ -34,7 +34,7 @@
                                 off-color="text-gray" 
                                 toggle 
                                 data-toggle="tooltip" 
-                                title="¿La política vacacional se encuentra activa actualmente?" v-model="zero_accounts">
+                                title="Mostrar valores de cuentas en cero" v-model="zero_accounts">
                                 <label slot="off-label"></label>
                             </p-check>
                         </div>
