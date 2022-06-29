@@ -94,7 +94,7 @@
         <div class="col-12">
             <v-client-table :columns="columns" :data="records" :options="table_options">
                 <div slot="date" slot-scope="props">
-                    {{ props.row.created_at }}
+                    {{ format_date(props.row.created_at) }}
                 </div>
                 <div slot="id" slot-scope="props">
                     <input type="checkbox" id="CheckAddToReport" @click="addToReport(props.row.id)">

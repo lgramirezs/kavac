@@ -190,7 +190,7 @@ class SaleServiceRequestController extends Controller
             }
         }
 
-        $service_requests = SaleService::with('saleClient.phones', 
+        $service_requests = SaleService::with('saleClient.saleClientsPhone',
                                             'saleClient.saleClientsEmail', 
                                             'saleServiceRequirement', 
                                             'payrollStaff')->whereIn('id', $listIds)->get()->toArray();

@@ -31,17 +31,8 @@ function format_code($value)
                     @endforeach
                 </td>
                 <td style="font-size: 8rem; border-bottom-color:#BDBDBD;" align="left">
-                    @foreach($service_request['sale_client']['phones'] as $phone)
-                        @if($phone['type'] === 'M')
-                            Móvil:
-                        @elseif($phone['type'] === 'T')
-                            Teléfono:
-                        @elseif($phone['type'] === 'F')
-                            Fax:
-                        @endif
-
-                        {{ $phone['extension'] ? ('+'.$phone['extension'].'-') : '' }}
-                        {{ $phone['area_code'] }}-{{ $phone['number'] }}
+                    @foreach($service_request['sale_client']['sale_clients_phone'] as $phone)
+                        {{ $phone['phone'] }}
                     @endforeach
                 </td>
                 <td style="font-size: 8rem; border-bottom-color:#BDBDBD;" align="left">
