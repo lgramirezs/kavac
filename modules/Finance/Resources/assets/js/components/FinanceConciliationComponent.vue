@@ -47,7 +47,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group is-required">
                     <label>Archivo:</label>
                     <input type="file" accept=".txt">
@@ -68,6 +68,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <hr>
+        <div class="form-group text-right">
+            <button type="button"
+                class="btn btn-warning btn-sm btn-round"
+                @click="reset()">
+                Cancelar
+            </button>
+            <button type="button" @click=""
+                class="btn btn-primary btn-sm btn-round">
+                Guardar
+            </button>
         </div>
     </div>
 </template>
@@ -115,6 +127,11 @@
              */
             reset() {
                 this.record = {
+                    account: '',
+                    month: '',
+                    year: '',
+                    file: '',
+                    coincidences: false,
                 };
             },
 
