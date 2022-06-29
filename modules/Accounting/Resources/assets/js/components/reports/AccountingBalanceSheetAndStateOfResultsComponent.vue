@@ -29,24 +29,15 @@
                     <div class="form-group">
                         <label class="text-center"><strong>Mostrar valores en cero</strong></label>
                         <div class="col-12 bootstrap-switch-mini">
-                            <input :id="'zero'+type_report" 
-                                data-on-label="SI" 
-                                data-off-label="NO" 
-                                name="zero" 
-                                type="checkbox" 
-                                class="form-control text-center bootstrap-switch">
-                        </div>
-                        <div class="col-12">
                             <p-check class="pretty p-switch p-fill p-bigger" 
                                 color="success" 
                                 off-color="text-gray" 
                                 toggle 
                                 data-toggle="tooltip" 
-                                title="¿La política vacacional se encuentra activa actualmente?" v-model="record.active">
+                                title="¿La política vacacional se encuentra activa actualmente?" v-model="zero_accounts">
                                 <label slot="off-label"></label>
                             </p-check>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -93,6 +84,7 @@ export default {
             url: `${window.app_url}/accounting/report/`,
             urlSign: `${window.app_url}/accounting/report/`,
             currency: '',
+            zero_accounts: false,
         }
     },
     created() {
@@ -121,7 +113,7 @@ export default {
             }
             this.$refs[this.type_report].reset();
 
-            var zero = ($('#zero' + this.type_report).prop('checked')) ? 'true' : '';
+            var zero = this.zero_accounts ? 'true' : '';
             return (this.url + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
         },
 
@@ -145,7 +137,7 @@ export default {
 
             this.$refs[this.type_report].reset();
 
-            var zero = ($('#zero' + this.type_report).prop('checked')) ? 'true' : '';
+            var zero = this.zero_accounts ? 'true' : '';
             return (this.urlSign + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
         }
     }

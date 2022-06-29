@@ -422,8 +422,8 @@ class AccountingBalanceSheetController extends Controller
             }
         }
         $endDate = explode('/', $report->url)[1];
-        $level = explode('/', $report->url)[2];
-        $zero = explode('/', $report->url)[3];
+        $level   = explode('/', $report->url)[2];
+        $zero    = explode('/', $report->url)[3] == 'true' ?  true : false;
         $this->setCurrency($report->currency);
 
         $institution_id = null;

@@ -435,7 +435,7 @@ class AccountingStateOfResultsController extends Controller
         }
         $endDate = explode('/', $report->url)[1];
         $level   = explode('/', $report->url)[2];
-        $zero    = explode('/', $report->url)[3];
+        $zero    = explode('/', $report->url)[3] == 'true' ?  true : false;
         $date    = explode('-', $endDate)[0].'-'.explode('-', $endDate)[1];
         $this->setCurrency($report->currency);
 
