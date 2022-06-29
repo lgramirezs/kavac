@@ -46,7 +46,7 @@
 									<label>Fecha de entrega actual</label>
 					        		<input type="date"
 										data-toggle="tooltip"
-										:min="date_min"
+										:min="delivery_date"
 										id="delivery_date"
 										class="form-control" 
 										v-model="record.delivery_date">
@@ -116,8 +116,6 @@
 					delivery_date: vm.format_date(delivery_date, 'YYYY-MM-DD'),
 					asset_request_id: requestid,
 				};
-				//vm.date_min =  new Date(new Date(this.delivery_date) - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-			
 
 				if ($("#" + modal_id).length) {
 					$("#" + modal_id).modal('show');	
