@@ -11,7 +11,7 @@
 			<div class="modal-dialog modal-xs">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<button  @click="reset()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
@@ -105,7 +105,7 @@
             reset() {
                 this.record = {
                     id: '',
-					date: '',
+					delivery_date: '',
 					asset_request_id: ''
                 };
             },
