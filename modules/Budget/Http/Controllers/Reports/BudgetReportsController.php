@@ -223,9 +223,9 @@ class BudgetReportsController extends Controller
             $code = str_replace('.', '', $budgetItem->budgetAccount->getCodeAttribute());
 
             if ($code >= $initialCode && $code <= $finalCode) {
-                if (($initialDate <= $specificAction->from_date->toDateString()) && ($specificAction->to_date->toDateString() <= $finalDate)) {
+                // if (($initialDate <= $specificAction->from_date->toDateString()) && ($specificAction->to_date->toDateString() <= $finalDate)) {
                     array_push($filteredArray, $budgetItem);
-                }
+                // }
             }
         }
         return $filteredArray;
