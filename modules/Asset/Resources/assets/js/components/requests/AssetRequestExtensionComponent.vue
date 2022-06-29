@@ -3,11 +3,11 @@
 		<a class="btn btn-default btn-xs btn-icon btn-action"
 		   href="#" title="Solicitud de Prorroga" data-toggle="tooltip"
 		   :disabled="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?false:true"
-		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?showDate('add_prorroga', delivery_date, requestid, $event):viewMessage()">
+		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?showDate('add_prorroga'+ requestid, delivery_date, requestid, $event):viewMessage()">
 			<i class="fa fa-calendar-plus-o"></i>
 		</a>
 
-		<div id="add_prorroga" class="modal fade text-left" tabindex="-1" role="dialog">
+		<div :id="'add_prorroga'+ requestid" class="modal fade text-left" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-xs">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -46,7 +46,8 @@
 									<label>Fecha de entrega actual</label>
 					        		<input type="date"
 										data-toggle="tooltip"
-										:min="delivery_date"
+										:min="record.delivery_date"
+										max="2050-07-05"
 										id="delivery_date"
 										class="form-control" 
 										v-model="record.delivery_date">
@@ -109,13 +110,14 @@
                 };
             },
 
-			async showDate(modal_id, delivery_date, requestid, event){
+			 showDate(modal_id, delivery_date, requestid, event){
 				const vm = this;
 				vm.record = {
 					id: '',
 					delivery_date: vm.format_date(delivery_date, 'YYYY-MM-DD'),
 					asset_request_id: requestid,
 				};
+				console.log(vm.record);
 
 				if ($("#" + modal_id).length) {
 					$("#" + modal_id).modal('show');	
@@ -131,5 +133,10 @@
             	return false;
             },
 		},
+			mounted() {
+            const vm = this;
+            vm.record.delivery_date = vm.delivery_date;
+			vm.record.asset_request_id = vm.requestid;
+        },
 	};
 </script>
