@@ -8,6 +8,14 @@
                 <span class="badge badge-warning"><strong>Inactiva</strong></span>
             </div>
         </div>
+        <div slot="original" slot-scope="props" class="text-center">
+            <div v-if="props.row.original">
+                <span class="badge badge-success"><strong>SI</strong></span>
+            </div>
+            <div v-else>
+                <span class="badge badge-warning"><strong>NO</strong></span>
+            </div>
+        </div>
         <div slot="id" slot-scope="props" class="text-center">
             <button @click="initRecord(props.row)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" v-has-tooltip>
                 <i class="fa fa-edit"></i>
@@ -20,43 +28,47 @@
 </template>
 <script>
 export default {
-    props: {
-        records: {
-            type: Array,
-            default: []
-        },
+  props: {
+    records: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    data() {
-        return {
-            accRecords: [],
-            columns: ['code', 'denomination', 'status', 'id']
-        }
-    },
-    created() {
-        this.table_options.headings = {
-            'code': 'CÓDIGO',
-            'denomination': 'DENOMINACIÓN',
-            'status': 'ESTADO DE LA CUENTA',
-            'id': 'ACCIÓN'
-        };
-        this.table_options.sortable = ['code', 'denomination'];
-        this.table_options.filterable = ['code', 'denomination'];
-        this.table_options.columnsClasses = {
-            'code': 'col-xs-1',
-            'denomination': 'col-xs-7',
-            'status': 'col-xs-2',
-            'id': 'col-xs-2'
-        };
-    },
-    methods: {
-        initRecord: function(data) {
-            EventBus.$emit('load:data-account-form', data);
-        }
-    },
-    watch: {
-        records: function(res) {
-            this.accRecords = res;
-        }
+  },
+  data() {
+    return {
+      accRecords: [],
+      columns: ['code', 'denomination', 'status', 'original', 'id']
+    };
+  },
+  created() {
+    this.table_options.headings = {
+      'code': 'CÓDIGO',
+      'denomination': 'DENOMINACIÓN',
+      'status': 'ESTATUS',
+      'original': 'ORIGINAL',
+      'id': 'ACCIÓN'
+    };
+    this.table_options.sortable = ['code', 'denomination'];
+    this.table_options.filterable = ['code', 'denomination'];
+    this.table_options.columnsClasses = {
+      'code': 'col-xs-1',
+      'denomination': 'col-xs-7',
+      'status': 'col-xs-1',
+      'original': 'col-xs-1',
+      'id': 'col-xs-2'
+    };
+  },
+  methods: {
+    initRecord: function(data) {
+      EventBus.$emit('load:data-account-form', data);
     }
+  },
+  watch: {
+    records: function(res) {
+      this.accRecords = res;
+    }
+  }
 };
 </script>

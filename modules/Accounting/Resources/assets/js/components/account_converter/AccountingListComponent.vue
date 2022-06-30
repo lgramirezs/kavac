@@ -26,33 +26,33 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            records: [],
-            columns: ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account', 'id'],
-        }
-    },
-    created() {
-        this.table_options.headings = {
-            'codeBudget': 'CÓDIGO PRESUPUESTO',
-            'budget_account': 'DENOMINACIÓN',
-            'codeAccounting': 'CÓDIGO PATRIMONIAL',
-            'accounting_account': 'DENOMINACIÓN',
-            'id': 'ACCIÓN'
-        };
-        this.table_options.sortable = ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account'];
-        this.table_options.filterable = ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account'];
-        this.table_options.columnsClasses = {
-            'codeBudget': 'col-xs-2',
-            'budget_account': 'col-xs-3',
-            'codeAccounting': 'col-xs-2',
-            'accounting_account': 'col-xs-3',
-            'id': 'col-xs-2'
-        };
+  data() {
+    return {
+      records: [],
+      columns: ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account', 'id'],
+    };
+  },
+  created() {
+    this.table_options.headings = {
+      'codeBudget': 'CÓDIGO PRESUPUESTO',
+      'budget_account': 'DENOMINACIÓN',
+      'codeAccounting': 'CÓDIGO PATRIMONIAL',
+      'accounting_account': 'DENOMINACIÓN',
+      'id': 'ACCIÓN'
+    };
+    this.table_options.sortable = ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account'];
+    this.table_options.filterable = ['codeBudget', 'budget_account', 'codeAccounting', 'accounting_account'];
+    this.table_options.columnsClasses = {
+      'codeBudget': 'col-xs-2',
+      'budget_account': 'col-xs-3',
+      'codeAccounting': 'col-xs-2',
+      'accounting_account': 'col-xs-3',
+      'id': 'col-xs-2'
+    };
 
-        EventBus.$on('list:conversions', (data) => {
-            this.records = data;
-        });
-    }
+    EventBus.$on('list:conversions', (data) => {
+      this.records = data;
+    });
+  }
 };
 </script>

@@ -58,38 +58,38 @@
 </template>
 <script>
 export default {
-    props: {
-        route_export: {
-            type: String,
-            default: '/'
-        },
+  props: {
+    route_export: {
+      type: String,
+      default: '/'
     },
-    data() {
-        return {
-            records: [],
-            records_list: [],
-            formImport: false,
-            accounts: null,
-        }
-    },
-    created() {
-        EventBus.$on('reload:list-accounts', (data) => {
-            this.reset();
-            this.records = data;
-        });
-    },
-    methods: {
+  },
+  data() {
+    return {
+      records: [],
+      records_list: [],
+      formImport: false,
+      accounts: null,
+    };
+  },
+  created() {
+    EventBus.$on('reload:list-accounts', (data) => {
+      this.reset();
+      this.records = data;
+    });
+  },
+  methods: {
 
-        /**
+    /**
          * Método que borra todos los datos del formulario
          *
          * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
-        reset() {
-            this.formImport = false;
-        },
+    reset() {
+      this.formImport = false;
+    },
 
-        /**
+    /**
          * Método que permite mostrar una ventana emergente con la información registrada
          * y la nueva a registrar
          *
@@ -99,90 +99,90 @@ export default {
          * @param {string} url      Ruta para acceder a los datos solicitados
          * @param {object} event    Objeto que gestiona los eventos
          */
-        async addRecord(modal_id, url, event) {
-            event.preventDefault();
-            this.loading = true;
-            await this.initRecords(url, modal_id);
-            this.loading = false;
+    async addRecord(modal_id, url, event) {
+      event.preventDefault();
+      this.loading = true;
+      await this.initRecords(url, modal_id);
+      this.loading = false;
 
-            this.$refs.AccountForm.reset();
-        },
+      this.$refs.AccountForm.reset();
+    },
 
-        createRecord: function(url) {
-            const vm = this;
-            url = vm.setUrl(url);
-            if (this.formImport) {
-                this.registerImportedAccounts(url);
-            } else {
-                this.registerAccount(url);
-            }
-        },
+    createRecord: function(url) {
+      const vm = this;
+      url = vm.setUrl(url);
+      if (this.formImport) {
+        this.registerImportedAccounts(url);
+      } else {
+        this.registerAccount(url);
+      }
+    },
 
-        /**
+    /**
          * Función que cambia el valor para cambiar el formulario mostrado
          * @var boolean Usada para cambiar el tipo de formulario que se mostrara
          * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
-        OpenImportForm: function(val) {
-            if (val) {
-                EventBus.$emit('reset:import-form');
-            } else {
-                EventBus.$emit('load:data-account-form', null);
-            }
-            this.formImport = val;
+    OpenImportForm: function(val) {
+      if (val) {
+        EventBus.$emit('reset:import-form');
+      } else {
+        EventBus.$emit('load:data-account-form', null);
+      }
+      this.formImport = val;
 
-            this.errors = [];
-        },
+      this.errors = [];
+    },
 
-        /**
+    /**
          * Guarda los registros cargados desde la hora de cálculo
          *
          * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
-        registerImportedAccounts: function(url) {
-            const vm = this;
-            if (vm.accounts != null) {
-                url = vm.setUrl(url);
-                axios.post(url, { records: vm.accounts }).then(response => {
-                    vm.showMessage(
-                        'custom', 'Éxito', 'success', 'screen-ok',
-                        response.data.message
-                    );
-                    vm.reset();
-                    EventBus.$emit('reload:list-accounts', response.data.records);
-                });
-            } else {
-                this.errors = [];
-                this.errors.push('No hay cuentas cargadas.');
-            }
-        },
+    registerImportedAccounts: function(url) {
+      const vm = this;
+      if (vm.accounts != null) {
+        url = vm.setUrl(url);
+        axios.post(url, { records: vm.accounts }).then(response => {
+          vm.showMessage(
+            'custom', 'Éxito', 'success', 'screen-ok',
+            response.data.message
+          );
+          vm.reset();
+          EventBus.$emit('reload:list-accounts', response.data.records);
+        });
+      } else {
+        this.errors = [];
+        this.errors.push('No hay cuentas cargadas.');
+      }
+    },
 
-        /**
+    /**
          * [registerAccount emite un evento para guardar la cuenta patrimonial]
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        registerAccount(url) {
-            const vm = this;
-            url = vm.setUrl(url);
-            EventBus.$emit('register:account', url);
-        }
-    },
-    watch: {
-        records: function(res, ant) {
-            /**
-             * [records_list listado con las cuentas para la tabla]
-             * @type {array}
-             */
-            this.records_list = res;
-        }
-    },
-    computed: {
-        records_select: function() {
-            return [{
-                'id': '',
-                'text': 'Seleccione...'
-            }].concat(this.records);
-        }
+    registerAccount(url) {
+      const vm = this;
+      url = vm.setUrl(url);
+      EventBus.$emit('register:account', url);
     }
+  },
+  watch: {
+    records: function(res,) {
+      /**
+     * [records_list listado con las cuentas para la tabla]
+     * @type {array}
+     */
+      this.records_list = res;
+    }
+  },
+  computed: {
+    records_select: function() {
+      return [{
+        'id': '',
+        'text': 'Seleccione...'
+      }].concat(this.records);
+    }
+  }
 };
 </script>

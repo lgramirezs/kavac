@@ -36,7 +36,8 @@ class AccountingAccountExport extends \App\Exports\DataExport implements
         return [
             'CÓDIGO',
             'DENOMINACION',
-            'ACTIVA'
+            'ACTIVA',
+            'ORIGINAL',
         ];
     }
 
@@ -47,16 +48,17 @@ class AccountingAccountExport extends \App\Exports\DataExport implements
      *
      * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
-     * @param     object    $asset    Objeto con las propiedades del modelo a exportar
+     * @param     object    $record    Objeto con las propiedades del modelo a exportar
      *
      * @return    array     Arreglo con los campos estrictamente a ser exportados
      */
-    public function map($asset): array
+    public function map($record): array
     {
         return [
-            $asset->getCodeAttribute(),
-            $asset->denomination,
-            $asset->active ? 'SI' : 'NO',
+            $record->getCodeAttribute(),
+            $record->denomination,
+            $record->active ? 'SI' : 'NO',
+            $record->original ? 'SI' : 'NO',
         ];
     }
 }
