@@ -552,8 +552,7 @@
                                         </div>
                                         <!-- ./día general -->
                                         <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-6" v-show="record.payment_calculation == 'general_days' && 
-                                                                    record.vacation_type == 'collective_vacations'">
+                                        <div class="col-md-6" v-show="record.payment_calculation == 'general_days'">
                                             <div class="form-group is-required">
                                                 <label>Días a otorgar para el pago de vacaciones:</label>
                                                 <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el pago de las vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
