@@ -3,15 +3,15 @@
 		<a class="btn btn-default btn-xs btn-icon btn-action"
 		   href="#" title="Solicitud de Prorroga" data-toggle="tooltip"
 		   :disabled="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?false:true"
-		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?showDate('add_prorroga', delivery_date, requestid, $event):viewMessage()">
+		   @click="((state == 'Aprobado')||(state == 'Pendiente por entrega'))?showDate('add_prorroga'+ requestid, delivery_date, requestid, $event):viewMessage()">
 			<i class="fa fa-calendar-plus-o"></i>
 		</a>
 
-		<div id="add_prorroga" class="modal fade text-left" tabindex="-1" role="dialog">
+		<div :id="'add_prorroga'+ requestid" class="modal fade text-left" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-xs">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<button  @click="reset()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
@@ -47,6 +47,7 @@
 					        		<input type="date"
 										data-toggle="tooltip"
 										:min="delivery_date"
+										
 										id="delivery_date"
 										class="form-control" 
 										v-model="record.delivery_date">
@@ -83,7 +84,7 @@
 					delivery_date: '',
 					asset_request_id: '',
 				},
-
+                //date_max:'2050-07-05',
 				date_min : '',
 				records: [],
 				errors: [],
@@ -104,12 +105,12 @@
             reset() {
                 this.record = {
                     id: '',
-					date: '',
+					delivery_date: '',
 					asset_request_id: ''
                 };
             },
 
-			async showDate(modal_id, delivery_date, requestid, event){
+			 showDate(modal_id, delivery_date, requestid, event){
 				const vm = this;
 				vm.record = {
 					id: '',
@@ -131,5 +132,10 @@
             	return false;
             },
 		},
+		mounted() {
+            const vm = this;
+            vm.record.delivery_date = vm.delivery_date;
+			vm.record.asset_request_id = vm.requestid;
+        },
 	};
 </script>

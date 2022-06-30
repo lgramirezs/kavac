@@ -62,6 +62,16 @@ class AccountingEntry extends Model implements Auditable
         return $this->belongsTo(AccountingEntryCategory::class, 'accounting_entry_category_id');
     }
 
+    /**
+     * Get the accountingEntryable that owns the AccountingEntry
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function accountingEntryable()
+    {
+        return $this->belongsTo(AccountingEntryable::class);
+    }
+
 
     /**
      * Indica si el asiento contable esta aprobado

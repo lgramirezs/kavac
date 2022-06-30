@@ -2,6 +2,7 @@
 /** [descripción del namespace] */
 namespace Modules\Finance\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Receiver;
 use App\Models\CodeSetting;
 use Illuminate\Http\Request;
@@ -11,11 +12,13 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Nwidart\Modules\Facades\Module;
 use App\Repositories\ReportRepository;
+use Modules\Budget\Models\BudgetStage;
 use Modules\Budget\Models\BudgetCompromise;
 use Modules\Finance\Models\FinancePayOrder;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Accounting\Models\AccountingEntry;
 use Modules\Accounting\Models\AccountingAccount;
+use Modules\Accounting\Models\AccountingEntryable;
 use Modules\Accounting\Models\AccountingEntryAccount;
 use Modules\Accounting\Models\AccountingEntryCategory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -132,6 +135,14 @@ class FinancePayOrderController extends Controller
                 $specificActionId = $compromiseDetail->budgetSubSpecificFormulation->specificAction->id;
                 break;
             }
+            $codeStage = generate_registration_code('STG', 8, 4, BudgetStage::class, 'code');
+            
+            $compromise->budgetStages()->create([
+                'code' => $codeStage,
+                'registered_at' => Carbon::now(),
+                'type' => 'CAU',
+                'amount' => $request->amount
+            ]);
         }
 
         $documentStatus = DocumentStatus::where('action', 'PR')->first(); // Estatus Por revisar = Por aprobar
@@ -148,6 +159,7 @@ class FinancePayOrderController extends Controller
                 'is_partial' => ($request->is_partial!==null)?true:false,
                 'pending_amount' => $pendingAmount,
                 'completed' => ($pendingAmount > 0)?false:true,
+                'document_type' => $request->documentType,
                 'document_number' => $request->document_number ?? null,
                 'source_amount' => $request->source_amount,
                 'amount' => $request->amount,
@@ -161,7 +173,9 @@ class FinancePayOrderController extends Controller
                 'document_status_id' => $documentStatus->id,
                 'currency_id' => $request->accounting['currency']['id'],
                 'name_sourceable_type' => str_replace("modules", "Modules", $receiver->receiverable_type),
-                'name_sourceable_id' => $receiver->receiverable_id
+                'name_sourceable_id' => $receiver->receiverable_id,
+                'document_sourceable_id' => $request->document_sourceable_id ?? null,
+                'document_sourceable_type' => BudgetCompromise::class ?? null
             ]);
             $accountingCategory = AccountingEntryCategory::where('acronym', 'SOP')->first();
             $accountEntry = AccountingEntry::create([
@@ -189,6 +203,14 @@ class FinancePayOrderController extends Controller
                     'assets' => $account['assets'],
                 ]);
             }
+
+            /** Crea la relación entre el asiento contable y el registro de orden de pago */
+            AccountingEntryable::create([
+                'accounting_entry_id' => $accountEntry->id,
+                'accounting_entryable_type' => FinancePayOrder::class,
+                'accounting_entryable_id' => $financePayOrder->id
+            ]);
+
             return $financePayOrder;
         });
 
@@ -383,11 +405,16 @@ class FinancePayOrderController extends Controller
             'records' => FinancePayOrder::with(
                 'budgetSpecificAction',
                 'financePaymentMethod',
-                'financeBankAccount',
                 'institution',
                 'documentStatus',
-                'nameSourceable'
-            )->orderBy('ordered_at')->get(),
+                'nameSourceable',
+                'documentSourceable',
+                'currency'
+            )->with(['financeBankAccount' => function ($q) {
+                $q->with(['financeBankingAgency' => function ($qq) {
+                    $qq->with('financeBank');
+                }]);
+            }])->orderBy('ordered_at')->get(),
         ], 200);
     }
 
