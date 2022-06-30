@@ -79,179 +79,179 @@
 </template>
 <script>
 export default {
-    props: {
-        year_old: {
-            type: String,
-            default: ''
-        },
-        currencies: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        }
+  props: {
+    year_old: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            url: `${window.app_url}/accounting/report/analyticalMajor`,
-            urlSign: `${window.app_url}/accounting/report/analyticalMajorSign`,
-            InitAcc: 0,
-            EndAcc: 0,
-            dates: null,
-            OptionsAcc: [{ id: 0, text: 'Seleccione...' }],
-            disabledSelect: false,
-            currency: '',
-            check_sel_all: false,
-        }
-    },
-    created() {
-        this.CalculateOptionsYears(this.year_old);
-    },
-    mounted() {
-        const vm = this;
-        vm.getAccountingAccounts();
-    },
-    methods: {
+    currencies: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    }
+  },
+  data() {
+    return {
+      url: `${window.app_url}/accounting/report/analyticalMajor`,
+      urlSign: `${window.app_url}/accounting/report/analyticalMajorSign`,
+      InitAcc: 0,
+      EndAcc: 0,
+      dates: null,
+      OptionsAcc: [{ id: 0, text: 'Seleccione...' }],
+      disabledSelect: false,
+      currency: '',
+      check_sel_all: false,
+    };
+  },
+  created() {
+    this.CalculateOptionsYears(this.year_old);
+  },
+  mounted() {
+    const vm = this;
+    vm.getAccountingAccounts();
+  },
+  methods: {
 
-        /**
+    /**
          * Selecciona todo el rango de registros de cuantas
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        checkAll() {
-            const vm = this;
-            if (vm.check_sel_all) {
-                if (vm.OptionsAcc.length > 1) {
-                    vm.disabledSelect = true;
-                    vm.InitAcc = vm.OptionsAcc[1].id;
-                    vm.EndAcc = vm.OptionsAcc[vm.OptionsAcc.length - 1].id;
-                }
-            } else {
-                vm.disabledSelect = false;
-                vm.InitAcc = 0;
-                vm.EndAcc = 0;
-            }
-        },
+    checkAll() {
+      const vm = this;
+      if (vm.check_sel_all) {
+        if (vm.OptionsAcc.length > 1) {
+          vm.disabledSelect = true;
+          vm.InitAcc = vm.OptionsAcc[1].id;
+          vm.EndAcc = vm.OptionsAcc[vm.OptionsAcc.length - 1].id;
+        }
+      } else {
+        vm.disabledSelect = false;
+        vm.InitAcc = 0;
+        vm.EndAcc = 0;
+      }
+    },
 
-        /**
+    /**
          * Obtiene las cuentas encontradas en el rango de fecha dado
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        getAccountingAccounts: function() {
-            const vm = this;
-            vm.dates = {
-                initMonth: vm.month_init,
-                initYear: (vm.year_init > vm.year_end) ? vm.year_end : vm.year_init,
-                endMonth: vm.month_end,
-                endYear: (vm.year_init > vm.year_end) ? vm.year_init : vm.year_end,
-            };
-            axios.post(vm.url + "/AccAccount", vm.dates).then(response => {
-                vm.OptionsAcc = response.data.records;
-                vm.InitAcc = '';
-                vm.EndAcc = '';
-            });
-        },
-
-        /**
-         * genera la url para el reporte
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         * @return {string} url para el reporte
-         */
-        getUrlReport: function() {
-
-            var errors = [];
-            if (this.InitAcc <= 0) {
-                errors.push("Debe seleccionar una cuenta de inicio.");
-            }
-            if (this.EndAcc <= 0) {
-                errors.push("Debe seleccionar una cuenta de final.");
-            }
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
-
-            if (errors.length > 0) {
-                this.$refs.errorsAnalyticalMajor.showAlertMessages(errors);
-                return;
-            }
-            this.$refs.errorsAnalyticalMajor.reset();
-
-            var url = this.url + '/pdf';
-            var InitAcc = (this.InitAcc > this.EndAcc) ? this.EndAcc : this.InitAcc;
-            var EndAcc = (this.InitAcc > this.EndAcc) ? this.InitAcc : this.EndAcc;
-
-            var dates = '/' + this.dates.initYear + '-' + this.dates.initMonth +
-                '/' + this.dates.endYear + '-' + this.dates.endMonth;
-
-            url += dates;
-
-            if (InitAcc != 0) { url += '/' + InitAcc; }
-
-            if (EndAcc != 0) { url += '/' + EndAcc; }
-
-            url += '/' + this.currency;
-            return url;
-        },
-        /**
-         * genera la url para el reporte
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         * @return {string} url para el reporte
-         */
-        getUrlReportSign: function() {
-
-            var errors = [];
-            if (this.InitAcc <= 0) {
-                errors.push("Debe seleccionar una cuenta de inicio.");
-            }
-            if (this.EndAcc <= 0) {
-                errors.push("Debe seleccionar una cuenta de final.");
-            }
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
-
-            if (errors.length > 0) {
-                this.$refs.errorsAnalyticalMajor.showAlertMessages(errors);
-                return;
-            }
-            this.$refs.errorsAnalyticalMajor.reset();
-
-            var url = this.urlSign + '/pdf';
-            var InitAcc = (this.InitAcc > this.EndAcc) ? this.EndAcc : this.InitAcc;
-            var EndAcc = (this.InitAcc > this.EndAcc) ? this.InitAcc : this.EndAcc;
-
-            var dates = '/' + this.dates.initYear + '-' + this.dates.initMonth +
-                '/' + this.dates.endYear + '-' + this.dates.endMonth;
-
-            url += dates;
-
-            if (InitAcc != 0) { url += '/' + InitAcc; }
-
-            if (EndAcc != 0) { url += '/' + EndAcc; }
-
-            url += '/' + this.currency;
-            return url;
-        },
+    getAccountingAccounts: function() {
+      const vm = this;
+      vm.dates = {
+        initMonth: vm.month_init,
+        initYear: (vm.year_init > vm.year_end) ? vm.year_end : vm.year_init,
+        endMonth: vm.month_end,
+        endYear: (vm.year_init > vm.year_end) ? vm.year_init : vm.year_end,
+      };
+      axios.post(vm.url + '/AccAccount', vm.dates).then(response => {
+        vm.OptionsAcc = response.data.records;
+        vm.InitAcc = '';
+        vm.EndAcc = '';
+      });
     },
-    watch: {
-        month_init: function(res) {
-            this.getAccountingAccounts();
-        },
-        year_init: function(res) {
-            this.getAccountingAccounts();
-        },
-        month_end: function(res) {
-            this.getAccountingAccounts();
-        },
-        year_end: function(res) {
-            this.getAccountingAccounts();
-        },
-        check_sel_all: function(res){
-            this.checkAll();
-        }
+
+    /**
+         * genera la url para el reporte
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         * @return {string} url para el reporte
+         */
+    getUrlReport: function() {
+
+      var errors = [];
+      if (this.InitAcc <= 0) {
+        errors.push('Debe seleccionar una cuenta de inicio.');
+      }
+      if (this.EndAcc <= 0) {
+        errors.push('Debe seleccionar una cuenta de final.');
+      }
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
+
+      if (errors.length > 0) {
+        this.$refs.errorsAnalyticalMajor.showAlertMessages(errors);
+        return;
+      }
+      this.$refs.errorsAnalyticalMajor.reset();
+
+      var url = this.url + '/pdf';
+      var InitAcc = (this.InitAcc > this.EndAcc) ? this.EndAcc : this.InitAcc;
+      var EndAcc = (this.InitAcc > this.EndAcc) ? this.InitAcc : this.EndAcc;
+
+      var dates = '/' + this.dates.initYear + '-' + this.dates.initMonth +
+                '/' + this.dates.endYear + '-' + this.dates.endMonth;
+
+      url += dates;
+
+      if (InitAcc != 0) { url += '/' + InitAcc; }
+
+      if (EndAcc != 0) { url += '/' + EndAcc; }
+
+      url += '/' + this.currency;
+      return url;
+    },
+    /**
+         * genera la url para el reporte
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         * @return {string} url para el reporte
+         */
+    getUrlReportSign: function() {
+
+      var errors = [];
+      if (this.InitAcc <= 0) {
+        errors.push('Debe seleccionar una cuenta de inicio.');
+      }
+      if (this.EndAcc <= 0) {
+        errors.push('Debe seleccionar una cuenta de final.');
+      }
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
+
+      if (errors.length > 0) {
+        this.$refs.errorsAnalyticalMajor.showAlertMessages(errors);
+        return;
+      }
+      this.$refs.errorsAnalyticalMajor.reset();
+
+      var url = this.urlSign + '/pdf';
+      var InitAcc = (this.InitAcc > this.EndAcc) ? this.EndAcc : this.InitAcc;
+      var EndAcc = (this.InitAcc > this.EndAcc) ? this.InitAcc : this.EndAcc;
+
+      var dates = '/' + this.dates.initYear + '-' + this.dates.initMonth +
+                '/' + this.dates.endYear + '-' + this.dates.endMonth;
+
+      url += dates;
+
+      if (InitAcc != 0) { url += '/' + InitAcc; }
+
+      if (EndAcc != 0) { url += '/' + EndAcc; }
+
+      url += '/' + this.currency;
+      return url;
+    },
+  },
+  watch: {
+    month_init: function() {
+      this.getAccountingAccounts();
+    },
+    year_init: function() {
+      this.getAccountingAccounts();
+    },
+    month_end: function() {
+      this.getAccountingAccounts();
+    },
+    year_end: function() {
+      this.getAccountingAccounts();
+    },
+    check_sel_all: function(){
+      this.checkAll();
     }
+  }
 };
 </script>

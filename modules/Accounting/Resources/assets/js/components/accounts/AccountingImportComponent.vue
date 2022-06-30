@@ -9,12 +9,14 @@
                         <td class="text-center"><strong>CÓDIGO</strong></td>
                         <td class="text-center"><strong>DENOMINACION</strong></td>
                         <td class="text-center"><strong>ACTIVA</strong></td>
+                        <td class="text-center"><strong>ORIGINAL</strong></td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="text-center">Ej: 9.9.9.99.99.99.999</td>
                         <td class="text-center">Nombre de denominación</td>
+                        <td class="text-center">SI ó NO</td>
                         <td class="text-center">SI ó NO</td>
                     </tr>
                 </tbody>
@@ -47,95 +49,95 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            records: [],
-            columns: ['code', 'denomination', 'status'],
-            file: '',
-        }
-    },
-    created() {
-        this.table_options.headings = {
-            'code': 'CODIGO',
-            'denomination': 'DENOMINACION',
-            'status': 'ESTADO DE LA CUENTA',
-        };
-        this.table_options.sortable = ['code', 'denomination'];
-        this.table_options.filterable = ['code', 'denomination'];
+  data() {
+    return {
+      records: [],
+      columns: ['code', 'denomination', 'status'],
+      file: '',
+    };
+  },
+  created() {
+    this.table_options.headings = {
+      'code': 'CODIGO',
+      'denomination': 'DENOMINACION',
+      'status': 'ESTADO DE LA CUENTA',
+    };
+    this.table_options.sortable = ['code', 'denomination'];
+    this.table_options.filterable = ['code', 'denomination'];
 
-        EventBus.$on('reset:import-form', () => {
-            this.reset();
-        });
-    },
-    methods: {
+    EventBus.$on('reset:import-form', () => {
+      this.reset();
+    });
+  },
+  methods: {
 
-        /**
+    /**
          * Limpia los valores de las variables del formulario
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        reset() {
-            document.getElementById("import_account").value = "";
-            this.records = [];
-        },
+    reset() {
+      document.getElementById('import_account').value = '';
+      this.records = [];
+    },
 
-        createRecord(url) {
-            this.$parent.createRecord(url);
-        },
+    createRecord(url) {
+      this.$parent.createRecord(url);
+    },
 
-        onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-                return;
-            this.importCalculo(files[0]);
-        },
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.importCalculo(files[0]);
+    },
 
-        importCalculo(file) {
+    importCalculo(file) {
 
-            /** Se obtiene y da formato para enviar el archivo a la ruta */
-            let vm = this;
+      /** Se obtiene y da formato para enviar el archivo a la ruta */
+      let vm = this;
 
-            vm.records = [];
+      vm.records = [];
 
-            vm.$parent.$refs.accountingAccountForm.reset();
-            var formData = new FormData();
-            formData.append("file", file);
-            vm.loading = true;
-            axios.post(`${window.app_url}/accounting/import`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(response => {
+      vm.$parent.$refs.accountingAccountForm.reset();
+      var formData = new FormData();
+      formData.append('file', file);
+      vm.loading = true;
+      axios.post(`${window.app_url}/accounting/import`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => {
 
+        vm.showMessage(
+          'custom', 'Éxito', 'success', 'screen-ok',
+          'Cuentas cargadas de manera existosa.'
+        );
+        vm.records = response.data.records;
+        EventBus.$emit('reload:list-accounts', vm.records);
+
+        vm.loading = false;
+
+      }).catch(error => {
+        if (typeof(error.response) !== 'undefined') {
+          if (error.response.status == 422 || error.response.status == 500) {
+
+            for (var indexErrors in error.response.data.errors) {
+              var messages = error.response.data.errors[indexErrors];
+              for (var indexMsg in messages) {
+                var message = messages[indexMsg].split('. ')[1] + '. ' + messages[indexMsg].split('. ')[2];
                 vm.showMessage(
-                    'custom', 'Éxito', 'success', 'screen-ok',
-                    'Cuentas cargadas de manera existosa.'
+                  'custom', 'Error', 'danger', 'screen-error', message
                 );
-                vm.records = response.data.records;
-                EventBus.$emit('reload:list-accounts', vm.records);
+              }
+            }
 
-                vm.loading = false;
-
-            }).catch(error => {
-                if (typeof(error.response) !== "undefined") {
-                    if (error.response.status == 422 || error.response.status == 500) {
-
-                        for (var indexErrors in error.response.data.errors) {
-                            var messages = error.response.data.errors[indexErrors];
-                            for (var indexMsg in messages) {
-                                var message = messages[indexMsg].split('. ')[1] + '. ' + messages[indexMsg].split('. ')[2];
-                                vm.showMessage(
-                                    'custom', 'Error', 'danger', 'screen-error', message
-                                );
-                            }
-                        }
-
-                    }
-                }
-                vm.loading = false;
-            });
-        },
-    }
+          }
+        }
+        vm.loading = false;
+      });
+    },
+  }
 
 };
 </script>

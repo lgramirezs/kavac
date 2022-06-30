@@ -43,6 +43,7 @@ class AccountingAccount extends Model implements Auditable
         'active',
         'inactivity_date',
         'parent_id',
+        'original'
     ];
 
     /**

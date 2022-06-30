@@ -85,6 +85,7 @@ class AccountingAccountController extends Controller
                 'institutional'  => 'required|digits:3',
                 'denomination'   => 'required',
                 'active'         => 'required',
+                'original'       => 'required',
             ]
         );
 
@@ -125,6 +126,7 @@ class AccountingAccountController extends Controller
             [
                 'denomination'    => $request['denomination'],
                 'active'          => $request['active'],
+                'original'        => $request['original'],
                 'inactivity_date' => (!$request['active'])?date('Y-m-d'):null,
 
                 /**
@@ -160,6 +162,7 @@ class AccountingAccountController extends Controller
                 'institutional'  => 'required|digits:3',
                 'denomination'   => 'required',
                 'active'         => 'required',
+                'original'       => 'required',
             ]
         );
 
@@ -177,6 +180,7 @@ class AccountingAccountController extends Controller
         $record->institutional  = $request['institutional'];
         $record->denomination   = $request['denomination'];
         $record->active         = $request['active'];
+        $record->original       = $request['original'];
         $record->save();
 
         return response()->json(['records'=>$this->getAccounts(), 'message'=>'Success']);
@@ -379,16 +383,6 @@ class AccountingAccountController extends Controller
             'active'       => $parent->active
         ];
 
-        // $account = [
-        //     'group'        => (string)$parent->group,
-        //     'subgroup'     => (string)$subgroup,
-        //     'item'         => (string)$item,
-        //     'generic'      => (string)$generic,
-        //     'specific'     => (string)$specific,
-        //     'subspecific'  => (string)$subspecific,
-        //     'denomination' => $parent->denomination,
-        //     'active'       => $parent->active
-        // ];
         return response()->json(['account'=> $account, 'message' => 'Success'], 200);
     }
 
@@ -420,6 +414,7 @@ class AccountingAccountController extends Controller
                 'code'         => $record->getCodeAttribute(),
                 'denomination' => $record->denomination,
                 'active'       => $record->active,
+                'original'     => $record->original,
                 'text'         =>"{$record->getCodeAttribute()} - {$record->denomination}",
                 'parent'       => $record->parent,
             ]);

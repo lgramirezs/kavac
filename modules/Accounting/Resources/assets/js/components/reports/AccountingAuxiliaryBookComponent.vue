@@ -61,116 +61,116 @@
 </template>
 <script>
 export default {
-    props: {
-        records: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
-        currencies: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
-        year_old: {
-            type: String,
-            default: ''
-        },
+  props: {
+    records: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    data() {
-        return {
-            account_id: 0,
-            url: `${window.app_url}/accounting/report/auxiliaryBook/pdf/`,
-            urlSign: `${window.app_url}/accounting/report/auxiliaryBookSign/pdf/`,
-            currency: '',
-            allAccounts: false,
-            check_sel_all: false,
-        }
+    currencies: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    created() {
+    year_old: {
+      type: String,
+      default: ''
+    },
+  },
+  data() {
+    return {
+      account_id: 0,
+      url: `${window.app_url}/accounting/report/auxiliaryBook/pdf/`,
+      urlSign: `${window.app_url}/accounting/report/auxiliaryBookSign/pdf/`,
+      currency: '',
+      allAccounts: false,
+      check_sel_all: false,
+    };
+  },
+  created() {
 
-        this.CalculateOptionsYears(this.year_old);
-    },
-    methods: {
+    this.CalculateOptionsYears(this.year_old);
+  },
+  methods: {
 
-        /**
+    /**
          * Selecciona todo el rango de registros de cuantas
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        checkAll() {
-            const vm = this;
-            if (vm.check_sel_all) {
-                vm.account_id = 0;
-                vm.allAccounts = true;
-            } else {
-                vm.account_id = 0;
-                vm.allAccounts = false;
-            }
-        },
-
-        /**
-         * Formatea la url para el reporte
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         * @return {string} url para el reporte
-         */
-        getUrlReport: function() {
-
-            var errors = [];
-            if (!this.allAccounts && this.account_id <= 0) {
-                errors.push("Debe seleccionar una cuenta.");
-            }
-
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
-
-            if (errors.length > 0) {
-                this.$refs.errorAuxiliaryBook.showAlertMessages(errors);
-                return;
-            }
-
-            this.$refs.errorAuxiliaryBook.reset();
-
-            var acc = this.allAccounts ? '' : this.account_id;
-
-            return (this.url + (this.year_init + '-' + this.month_init) + '/' + this.currency + '/' + acc);
-        },
-
-        /**
-         * Formatea la url para el reporte
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         * @return {string} url para el reporte
-         */
-        getUrlReportSign: function() {
-
-            var errors = [];
-            if (!this.allAccounts && this.account_id <= 0) {
-                errors.push("Debe seleccionar una cuenta.");
-            }
-
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
-
-            if (errors.length > 0) {
-                this.$refs.errorAuxiliaryBook.showAlertMessages(errors);
-                return;
-            }
-
-            this.$refs.errorAuxiliaryBook.reset();
-            var acc = (this.account_id == 0 && this.allAccounts) ? '' : '0';
-            return (this.urlSign + (this.year_init + '-' + this.month_init) + '/' + this.currency + '/' + acc);
-        }
+    checkAll() {
+      const vm = this;
+      if (vm.check_sel_all) {
+        vm.account_id = 0;
+        vm.allAccounts = true;
+      } else {
+        vm.account_id = 0;
+        vm.allAccounts = false;
+      }
     },
-    watch:{
-        check_sel_all: function(res){
-            this.checkAll()
-        }
+
+    /**
+         * Formatea la url para el reporte
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         * @return {string} url para el reporte
+         */
+    getUrlReport: function() {
+
+      var errors = [];
+      if (!this.allAccounts && this.account_id <= 0) {
+        errors.push('Debe seleccionar una cuenta.');
+      }
+
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
+
+      if (errors.length > 0) {
+        this.$refs.errorAuxiliaryBook.showAlertMessages(errors);
+        return;
+      }
+
+      this.$refs.errorAuxiliaryBook.reset();
+
+      var acc = this.allAccounts ? '' : this.account_id;
+
+      return (this.url + (this.year_init + '-' + this.month_init) + '/' + this.currency + '/' + acc);
+    },
+
+    /**
+         * Formatea la url para el reporte
+         *
+         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+         * @return {string} url para el reporte
+         */
+    getUrlReportSign: function() {
+
+      var errors = [];
+      if (!this.allAccounts && this.account_id <= 0) {
+        errors.push('Debe seleccionar una cuenta.');
+      }
+
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
+
+      if (errors.length > 0) {
+        this.$refs.errorAuxiliaryBook.showAlertMessages(errors);
+        return;
+      }
+
+      this.$refs.errorAuxiliaryBook.reset();
+      var acc = (this.account_id == 0 && this.allAccounts) ? '' : '0';
+      return (this.urlSign + (this.year_init + '-' + this.month_init) + '/' + this.currency + '/' + acc);
     }
+  },
+  watch:{
+    check_sel_all: function(){
+      this.checkAll();
+    }
+  }
 };
 </script>

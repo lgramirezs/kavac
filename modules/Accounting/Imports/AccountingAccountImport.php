@@ -27,25 +27,25 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
         if ($parent) {
             for ($i=1; $i <= 6; $i++) { 
                 if ($i == 1 && $code[$i] == 0){
-                    $parent->where('subgroup', '0')->first();
+                    $parent->where('subgroup', '0');
                     break;
                 }
                 else if ($i == 2 && $code[$i] == 0){
                     $parent->where('subgroup', '0')
-                        ->where('item', '0')->first();
+                        ->where('item', '0');
                     break;
                 }
                 else if ($i == 3 && $code[$i] == 0){
                     $parent->where('subgroup', $code[1])
                         ->where('item', '0')
-                        ->where('generic', '00')->first();
+                        ->where('generic', '00');
                     break;
                 }
                 else if ($i == 4 && $code[$i] == 0){
                     $parent->where('subgroup', $code[1])
                         ->where('item', $code[2])
                         ->where('generic', '00')
-                        ->where('specific', '00')->first();
+                        ->where('specific', '00');
                     break;
                 }
                 else if ($i == 5 && $code[$i] == 0){
@@ -53,7 +53,7 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
                         ->where('item', $code[2])
                         ->where('generic', $code[3])
                         ->where('specific', '00')
-                        ->where('subspecific', '00')->first();
+                        ->where('subspecific', '00');
                     break;
                 }
                 else if ($i == 6 && $code[$i] == 0){
@@ -62,13 +62,13 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
                         ->where('generic', $code[3])
                         ->where('specific', $code[4])
                         ->where('subspecific', '00')
-                        ->where('institutional', '000')->first();
+                        ->where('institutional', '000');
                     break;
                 }
             }
         }
 
-        $parent_id = $parent ? $parent->id : null;
+        $parent_id = $parent ? $parent->first()->id : null;
 
         if (count($code) == 7) {
             return AccountingAccount::updateOrCreate(
@@ -85,6 +85,7 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
                     'parent_id' => $parent_id,
                     'denomination' => $row['denominacion'],
                     'status' => ($row['activa'] == 'SI')?true:false,
+                    'original' => ($row['original'] == 'SI')?true:false,
                 ]
             );
         }
@@ -105,6 +106,7 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
             '*.codigo'       => ['required'],
             '*.denominacion' => ['required'],
             '*.activa'       => ['required','max:2'],
+            '*.original'     => ['required','max:2'],
         ];
     }
 
@@ -124,6 +126,8 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
             'denominacion.required' => 'Error en la fila :row. El campo :attribute es obligatorio',
             'activa.required'       => 'Error en la fila :row. El campo :attribute es obligatorio',
             'activa.max'            => 'Error en la fila :row. El campo :attribute debe ser de maximo 2 caracteres.',
+            'original.required'     => 'Error en la fila :row. El campo :attribute es obligatorio',
+            'original.max'          => 'Error en la fila :row. El campo :attribute debe ser de maximo 2 caracteres.',
         ];
     }
 }

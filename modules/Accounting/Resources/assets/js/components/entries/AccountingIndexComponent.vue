@@ -99,119 +99,123 @@
 </template>
 <script>
 export default {
-    props: {
-        categories: {
-            type: Array,
-            default: []
-        },
-        year_old: {
-            type: [String, Number],
-            default: 0
-        },
-        institutions: {
-            type: Array,
-            default: []
-        },
-        currency: {
-            type: Object,
-            default: null
-        },
+  props: {
+    categories: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    data() {
-        return {
-            records: [],
-            typeSearch: 'origin', //states: 'reference', 'origin'
-            filterDate: 'generic', //states: 'generic','specific'
-            data: {
-                reference: '',
-                category: 0,
-                init: '',
-                end: '',
-                year: 0,
-                month: 0,
-                institution: 0,
-            },
-        }
+    year_old: {
+      type: [String, Number],
+      default: 0
     },
-    created() {
-        this.CalculateOptionsYears(this.year_old, true);
-        this.months.unshift({ id: 0, text: 'Todos' });
-        this.data.institution = this.institutions[0]['id'];
+    institutions: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    mounted() {
+    currency: {
+      type: Object,
+      default: null
+    },
+  },
+  data() {
+    return {
+      records: [],
+      typeSearch: 'origin', //states: 'reference', 'origin'
+      filterDate: 'generic', //states: 'generic','specific'
+      data: {
+        reference: '',
+        category: 0,
+        init: '',
+        end: '',
+        year: 0,
+        month: 0,
+        institution: 0,
+      },
+    };
+  },
+  created() {
+    this.CalculateOptionsYears(this.year_old, true);
+    this.months.unshift({ id: 0, text: 'Todos' });
+    this.data.institution = this.institutions[0]['id'];
+  },
+  mounted() {
 
-        /**
+    /**
          * Evento para determinar los datos a requerir segun la busqueda seleccionada
          */
-        const vm = this;
-        $('.sel_search').on('switchChange.bootstrapSwitch', function(e) {
-            if (e.target.id === "sel_ref") {
-                vm.typeSearch = 'reference';
-            } else if (e.target.id === "sel_origin") {
-                vm.typeSearch = 'origin';
-            }
-        });
+    const vm = this;
+    $('.sel_search').on('switchChange.bootstrapSwitch', function(e) {
+      if (e.target.id === 'sel_ref') {
+        vm.typeSearch = 'reference';
+      } else if (e.target.id === 'sel_origin') {
+        vm.typeSearch = 'origin';
+      }
+    });
 
-        $('.sel_filterDate').on('switchChange.bootstrapSwitch', function(e) {
-            if (e.target.id === "sel_fil_date_specific") {
-                vm.filterDate = 'specific';
-            } else if (e.target.id === "sel_fil_date_generic") {
-                vm.filterDate = 'generic';
-            }
-        });
-    },
-    methods: {
-        /**
+    $('.sel_filterDate').on('switchChange.bootstrapSwitch', function(e) {
+      if (e.target.id === 'sel_fil_date_specific') {
+        vm.filterDate = 'specific';
+      } else if (e.target.id === 'sel_fil_date_generic') {
+        vm.filterDate = 'generic';
+      }
+    });
+  },
+  methods: {
+    /**
          * Funcion para la verificación y manejo de errores
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {boolean} Devuelve true si la información no cumple algun campo
          */
-        ErrorsInForm: function() {
-            var errors = [];
-            if (this.typeSearch == 'reference' && this.data.reference == '') {
-                errors.push('El campo referencia es obligatorio');
-            }
+    ErrorsInForm: function() {
+      var errors = [];
+      if (this.typeSearch == 'reference' && this.data.reference == '') {
+        errors.push('El campo referencia es obligatorio');
+      }
 
-            if (this.typeSearch == 'origin') {
-                if (this.filterDate == '') {
-                    errors.push('Debe seleccionar un rango de busqueda (por perdiodo o por mes.)');
-                }
+      if (this.typeSearch == 'origin') {
+        if (this.filterDate == '') {
+          errors.push('Debe seleccionar un rango de busqueda (por perdiodo o por mes.)');
+        }
 
-                if (this.filterDate == 'specific' && (this.data.init == '' || this.data.end == '')) {
-                    errors.push('Debe especificar el rango de las fechas');
-                }
-            }
+        if (this.filterDate == 'specific' && (this.data.init == '' || this.data.end == '')) {
+          errors.push('Debe especificar el rango de las fechas');
+        }
+      }
 
-            if (errors.length > 0) {
-                this.$refs.accountingEntriesSearch.showAlertMessages(errors);
-                return true;
-            }
-            this.$refs.accountingEntriesSearch.reset();
-            return false;
-        },
+      if (errors.length > 0) {
+        this.$refs.accountingEntriesSearch.showAlertMessages(errors);
+        return true;
+      }
+      this.$refs.accountingEntriesSearch.reset();
+      return false;
+    },
 
-        /**
+    /**
          * Obtiene la información de los asientos contables
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-        searchRecords: function() {
+    searchRecords: function() {
 
-            const vm = this;
-            // manejo de errores
-            if (vm.ErrorsInForm()) {
-                return;
-            }
-            vm.data['typeSearch'] = vm.typeSearch;
-            vm.data['filterDate'] = vm.filterDate;
-            vm.data['firstSearch'] = true;
+      const vm = this;
+      // manejo de errores
+      if (vm.ErrorsInForm()) {
+        return;
+      }
+      vm.data['typeSearch'] = vm.typeSearch;
+      vm.data['filterDate'] = vm.filterDate;
+      vm.data['firstSearch'] = true;
 
-            vm.loading = true;
+      vm.loading = true;
 
-            EventBus.$emit('list:entries', vm.data);
-            vm.loading = false;
-        },
+      EventBus.$emit('list:entries', vm.data);
+      vm.loading = false;
     },
+  },
 };
 </script>
