@@ -20,6 +20,56 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         $code = explode('.', $row['codigo']);
+
+        /** Información de cuenta padre */
+        $parent = AccountingAccount::where('group', $code[0]);
+
+        if ($parent) {
+            for ($i=1; $i <= 6; $i++) { 
+                if ($i == 1 && $code[$i] == 0){
+                    $parent->where('subgroup', '0')->first();
+                    break;
+                }
+                else if ($i == 2 && $code[$i] == 0){
+                    $parent->where('subgroup', '0')
+                        ->where('item', '0')->first();
+                    break;
+                }
+                else if ($i == 3 && $code[$i] == 0){
+                    $parent->where('subgroup', $code[1])
+                        ->where('item', '0')
+                        ->where('generic', '00')->first();
+                    break;
+                }
+                else if ($i == 4 && $code[$i] == 0){
+                    $parent->where('subgroup', $code[1])
+                        ->where('item', $code[2])
+                        ->where('generic', '00')
+                        ->where('specific', '00')->first();
+                    break;
+                }
+                else if ($i == 5 && $code[$i] == 0){
+                    $parent->where('subgroup', $code[1])
+                        ->where('item', $code[2])
+                        ->where('generic', $code[3])
+                        ->where('specific', '00')
+                        ->where('subspecific', '00')->first();
+                    break;
+                }
+                else if ($i == 6 && $code[$i] == 0){
+                    $parent->where('subgroup', $code[1])
+                        ->where('item', $code[2])
+                        ->where('generic', $code[3])
+                        ->where('specific', $code[4])
+                        ->where('subspecific', '00')
+                        ->where('institutional', '000')->first();
+                    break;
+                }
+            }
+        }
+
+        $parent_id = $parent ? $parent->id : null;
+
         if (count($code) == 7) {
             return AccountingAccount::updateOrCreate(
                 [
@@ -32,6 +82,7 @@ class AccountingAccountImport implements ToModel, WithHeadingRow, WithValidation
                     'institutional' => $code[6],
                 ],
                 [
+                    'parent_id' => $parent_id,
                     'denomination' => $row['denominacion'],
                     'status' => ($row['activa'] == 'SI')?true:false,
                 ]

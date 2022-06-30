@@ -315,7 +315,7 @@ Vue.mixin({
             var url = `${window.app_url}/accounting/entries/approve`;
             var records = this.records;
             var confirmated = false;
-            var index = index - 1;
+            index = index - 1;
             const vm = this;
 
             bootbox.confirm({
@@ -343,7 +343,9 @@ Vue.mixin({
                             vm.showMessage('update');
                             vm.reload = true;
                             vm.loading = false;
-                        }).catch(error => {});
+                        }).catch(error => {
+                            console.log(error)
+                        });
                     }
                 }
             });
@@ -373,7 +375,7 @@ Vue.mixin({
          */
         displayDetails(id) {
             if (!document.getElementById) return false;
-            fila = document.getElementsByName('details_' + id);
+            let fila = document.getElementsByName('details_' + id);
             for (var i = 0; i < fila.length; i++) {
                 if (fila[i].style.display != "none") {
                     fila[i].style.display = "none"; //ocultar fila
