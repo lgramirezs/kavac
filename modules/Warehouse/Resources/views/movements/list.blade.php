@@ -32,7 +32,7 @@
 					<warehouse-movement-list
 						route_list="{{ url('warehouse/movements/vue-list') }}"
 						route_edit="{{ url('warehouse/movements/edit/{id}') }}"
-						route_delete="{{ url('warehouse/movements/delete)') }}">
+						route_delete="{{ url('warehouse/movements/delete') }}">
 					</warehouse-movement-list>
 				</div>
 			</div>
