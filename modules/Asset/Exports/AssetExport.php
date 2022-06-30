@@ -2,43 +2,85 @@
 
 namespace Modules\Asset\Exports;
 
-use Modules\Asset\Models\Asset;
-
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Modules\Asset\Models\Asset;
+use App\Models\User;
 
+use Illuminate\Support\Facades\Log;
 class AssetExport extends \App\Exports\DataExport implements
-    WithHeadings,
-    ShouldAutoSize,
-    WithMapping
+WithHeadings,
+ShouldAutoSize,
+WithMapping
 {
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
-    {
-        return Asset::with(
-            [
-                'assetType',
-                'assetCategory',
-                'assetSubcategory',
-                'assetSpecificCategory',
-                'assetAcquisitionType',
-                'assetCondition',
-                'assetStatus',
-                'assetUseFunction',
-                'institution',
-                'parish' => function ($query) {
-                    $query->with(['municipality' => function ($query) {
-                        $query->with(['estate' => function ($query) {
-                            $query->with('country')->get();
+    { 
+        $auth = auth()->user();
+
+        $user = User::where('id', auth()->user()->id)->with('profile')->first();
+    
+
+
+       
+
+        if (
+            $user !== null && !is_null($user->profile) &&
+             !is_null($user->profile->institution_id) && $user->profile->institution_id != ""
+        ) {
+     
+
+            return Asset::where('institution_id', $user->profile->institution_id)->with(
+                [
+                    'assetType',
+                    'assetCategory',
+                    'assetSubcategory',
+                    'assetSpecificCategory',
+                    'assetAcquisitionType',
+                    'assetCondition',
+                    'assetStatus',
+                    'assetUseFunction',
+                    'institution',
+                    'parish' => function ($query) {
+                        $query->with(['municipality' => function ($query) {
+                            $query->with(['estate' => function ($query) {
+                                $query->with('country')->get();
+                            }])->get();
                         }])->get();
-                    }])->get();
-                }
-            ]
-        )->get();
+                    },
+                ]
+            )->get();
+
+        } else {
+         
+
+            return Asset::with(
+                [
+                    'assetType',
+                    'assetCategory',
+                    'assetSubcategory',
+                    'assetSpecificCategory',
+                    'assetAcquisitionType',
+                    'assetCondition',
+                    'assetStatus',
+                    'assetUseFunction',
+                    'institution',
+                    'parish' => function ($query) {
+                        $query->with(['municipality' => function ($query) {
+                            $query->with(['estate' => function ($query) {
+                                $query->with('country')->get();
+                            }])->get();
+                        }])->get();
+                    },
+                ]
+            )->get();
+
+        }
+
     }
 
     /**
@@ -83,7 +125,7 @@ class AssetExport extends \App\Exports\DataExport implements
             'ID Parroquia',
             'Parroquia',
             'ID Institución',
-            'Institución'
+            'Institución',
         ];
     }
 
@@ -131,7 +173,7 @@ class AssetExport extends \App\Exports\DataExport implements
             $asset->parish->id ?? '',
             $asset->parish->name ?? '',
             $asset->institution->id ?? '',
-            $asset->institution->name ?? ''
+            $asset->institution->name ?? '',
         ];
     }
 }
