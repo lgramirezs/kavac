@@ -87,7 +87,7 @@
 				vm.record.state = 'Aprobado';
 				vm.record.asset_request_id = fields.asset_request.id;
 				var dialog = bootbox.confirm({
-				    title: 'Aprobar entrega de equipos?',
+				    title: '¿Aprobar entrega de equipos?',
 				    message: "<div class='row'><div class='col-md-12'><div class='form-group'><label>Observaciones generales</label> <textarea data-toggle='tooltip' class='form-control input-sm' title='Indique las observaciones presentadas en la solicitud' id='request_observation'></textarea></div></div></div>",
 				    size: 'medium',
 				    buttons: {
@@ -115,7 +115,7 @@
 				vm.record.state = 'Rechazado';
 				vm.record.asset_request_id = fields.asset_request.id;
 				var dialog = bootbox.confirm({
-				    title: 'Rechazar entrega de equipos?',
+				    title: '¿Rechazar entrega de equipos?',
 				    message: "<div class='row'><div class='col-md-12'><div class='form-group'><label>Observaciones generales</label> <textarea data-toggle='tooltip' class='form-control input-sm' title='Indique las observaciones presentadas en la solicitud' id='request_observation'></textarea></div></div></div>",
 				    size: 'medium',
 				    buttons: {

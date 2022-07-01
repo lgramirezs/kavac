@@ -177,7 +177,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
      */
 
     /** Ruta que obtiene un listado de las solicitudes pendientes de bienes institucionales */
-    Route::get('requests/vue-pending-list/{perPage?}/{page?}', 'AssetRequestController@vuePendingList')
+    Route::get('requests/vue-pending-list', 'AssetRequestController@vuePendingList')
              ->name('asset.request.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */
@@ -196,7 +196,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     
 
     /** Ruta que obtiene un listado de las solicitudes de prorroga pendientes */
-    Route::get('requests/extensions/vue-pending-list/{perPage?}/{page?}', 'AssetRequestExtensionController@vuePendingList')
+    Route::get('requests/extensions/vue-pending-list', 'AssetRequestExtensionController@vuePendingList')
              ->name('asset.request.extension.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */

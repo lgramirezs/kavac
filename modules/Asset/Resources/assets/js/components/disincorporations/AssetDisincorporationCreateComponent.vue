@@ -423,8 +423,7 @@
 				};
 				if (this.record.id) {
 					vm.selected = vm.selected.filter( (ele,pos)=>vm.selected.indexOf(ele) == pos);
-					vm.record.assets = vm.selected;
-					console.info(vm.selected);
+					vm.record.assets = vm.selected;	
 	                this.updateRecord(url);
 	            } else {
 	            	vm.loading = true;
