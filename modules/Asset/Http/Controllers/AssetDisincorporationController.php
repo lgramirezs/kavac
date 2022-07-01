@@ -188,7 +188,41 @@ class AssetDisincorporationController extends Controller
         $disincorporation = AssetDisincorporation::find($id);
         return view('asset::disincorporations.create', compact('disincorporation'));
     }
+         public function showDocuments($filename)
+    {
+        if (\Storage::disk('pictures')->exists($filename)) {
+            $file = storage_path() . '/pictures/' . $filename;
+        } elseif (\Storage::disk('documents')->exists($filename)) {
+            $file = storage_path() . '/documents/' . $filename;
+        }
 
+        return response()->download($file, $filename, [], 'inline');
+    }
+
+       public function getDisincorporationRequestDocuments($id, $all=null)
+    {
+       
+            $AssetDisincorporation = AssetDisincorporation::where(['id' => $id])
+            ->with('documents', 'images')->first();
+     
+        $docs = $AssetDisincorporation->documents ?? null;
+        $images = $AssetDisincorporation->images ?? null;
+        $records = [];
+        if (isset($docs)) {
+            if (isset($images)) {
+                $records = $docs->merge($images);
+            } else {
+                $records = $docs;
+            }
+        } elseif (isset($images)) {
+            if (isset($docs)) {
+                $records = $images->merge($docs);
+            } else {
+                $records = $images;
+            }
+        }
+        return response()->json(['records' => $records], 200);
+    }
     /**
      * Actualiza la información de las desincorporaciones de bienes institucionales
      *

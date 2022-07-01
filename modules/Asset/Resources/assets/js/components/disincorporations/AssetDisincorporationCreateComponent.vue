@@ -56,6 +56,15 @@
 						<input  id="files" name="files" type="file"
 							    accept=".doc, .docx, .odt, .pdf, .png, .jpg, .jpeg" multiple>
 					</div>
+						<div class="row">
+											<div class="form-group">	
+												<strong>Archivos Subidos</strong>
+												<div class="row" style="margin: 1px 0">
+														<span class="col-md-12" id="archive">
+														</span>
+												</div>
+											</div>	
+										</div>
 				</div>
 			</div>
 
@@ -464,7 +473,9 @@
 			},
 			loadForm(id){
 				const vm = this;
-	            var fields = {};
+	           	var fields = {};
+                var tipo="";
+				var documents="";
 
 	            axios.get(`${window.app_url}/asset/disincorporations/vue-info/${id}`).then(response => {
 	                if(typeof(response.data.records != "undefined")){
@@ -475,6 +486,36 @@
 	                    });
 	                }
 	            });
+					axios.get(
+						`${window.app_url}/asset/disincorporations/get-documents/${id}`
+					).then(response => {
+
+
+                      documents=response.data;
+					  console.log(response.data);
+					let fileText = ``;
+					documents.records.forEach(function(files) {
+						fileText += `<div class ="row">`;
+						fileText +=`<a href='${window.app_url}/asset/disincorporations/get-documents/show/${files.file}'>${files.file}</a>`
+
+
+						fileText += '</div>';
+					});
+
+				
+                        document.getElementById('archive').innerHTML = fileText;
+					}).catch(error => {
+						if (typeof(error.response) !== "undefined") {
+							if (error.response.status == 403) {
+								vm.showMessage(
+									'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+								);
+							}
+							else {
+								vm.logs('resources/js/all.js', 343, error, 'initRecords');
+							}
+						}
+					});
 			},
 			loadAssets(url) {
 				const vm = this;

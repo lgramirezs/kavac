@@ -41,7 +41,25 @@ class AssetDisincorporation extends Model implements Auditable
     protected $fillable = [
         'code', 'asset_disincorporation_motive_id', 'date', 'observation', 'user_id', 'institution_id'
     ];
+      /**
+     * Obtiene todos documentos asociados 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function documents()
+    {
+        return $this->morphMany(\App\Models\Document::class, 'documentable');
+    }
 
+    /**
+     * Obtiene todos las imagenes 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(\App\Models\Image::class, 'imageable');
+    }
     /**
     * Método que obtiene los bienes desincorporados
     *

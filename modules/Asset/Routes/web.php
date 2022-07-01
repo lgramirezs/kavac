@@ -129,7 +129,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
 
     /** Ruta que obtiene un listado de las desincorporaciones de bienes institucionales */
     Route::get('disincorporations/vue-list/{perPage?}/{page?}', 'AssetDisincorporationController@vueList');
+    
+    /** Ruta que obtiene los documentos e imagenes subidos en una disincorporation registrados */
+    Route::get('disincorporations/get-documents/show/{code}', 'AssetDisincorporationController@showDocuments');
 
+    Route::get('disincorporations/get-documents/{id}/{all?}', 'AssetDisincorporationController@getDisincorporationRequestDocuments');
+
+     
     /**
      * --------------------------------------------------------------
      * Rutas para gestionar las solicitudes de bienes institucionales
