@@ -142,26 +142,35 @@ class SaleOrderSettingController extends Controller
      */
     public function store(Request $request)
     {
-      $this->saleOrderValidate($request);
+        $this->saleOrderValidate($request);
 
-      $products = [];
-      if (count($request->list_products)) {
-        foreach ($request->list_products as $product) {
-          $products[] = $product;
+        $products = [];
+        if (count($request->list_products)) {
+            foreach ($request->list_products as $product) {
+                $inventory_product = SaleWarehouseInventoryProduct::find($product['sale_warehouse_inventory_product_id']);
+                if (!is_null($inventory_product)) {
+                    $exist_real = $inventory_product->exist - $inventory_product->reserved;
+                    if ($exist_real >= $product['quantity']) {
+                        $inventory_product->reserved = $inventory_product->reserved + $product['quantity'];
+                        $inventory_product->save();
+                        $products[] = $product;
+                    }
+                }
+            }
         }
-      }
 
-      $order = SaleOrder::create([
-        'name'        => $request->name,
-        'id_number'   => $request->id_number,
-        'email'       => $request->email,
-        'type_person' => $request->type_person,
-        'phone'       => $request->phone,
-        'products'    => json_encode($products, JSON_FORCE_OBJECT),
-        'status' => 'pending'
-      ]);
 
-      return response()->json(['record' => $order, 'message' => 'Success', 'redirect' => route('sale.order.index')], 200);
+        $order = SaleOrder::create([
+          'name'        => $request->name,
+          'id_number'   => $request->id_number,
+          'email'       => $request->email,
+          'type_person' => $request->type_person,
+          'phone'       => $request->phone,
+          'products'    => json_encode($products, JSON_FORCE_OBJECT),
+          'status' => 'pending'
+        ]);
+
+        return response()->json(['record' => $order, 'message' => 'Success', 'redirect' => route('sale.order.index')], 200);
     }
 
     /**
@@ -185,7 +194,7 @@ class SaleOrderSettingController extends Controller
         $validation = [];
         $validation['type_person'] = ['required'];
         $validation['name'] = ['required', 'max:100'];
-        $validation['id_number'] = ['required', 'digits_between:1,10'];
+        $validation['id_number'] = ['required', 'max:10'];
         $validation['phone'] = ['required'];
         $validation['email'] = ['required', 'email'];
         $this->validate($request, $validation, [], $attributes);
@@ -297,6 +306,15 @@ class SaleOrderSettingController extends Controller
         $sale_order->status = 'rechazado';
         $sale_order->save();
 
+        $products = json_decode($sale_order->products, true);
+        foreach ($products as $id => $row) {
+          $inventory_product = SaleWarehouseInventoryProduct::find($row['inventory_product']['id']);
+          $reserved = $inventory_product->reserved;
+          $reserved -= $row['quantity'];
+          $inventory_product->reserved = $reserved;
+          $inventory_product->save();
+        }
+
         $request->session()->flash('message', ['type' => 'update']);
         return response()->json(['result' => true, 'redirect' => route('sale.order.index')], 200);
     }
@@ -315,6 +333,9 @@ class SaleOrderSettingController extends Controller
           $inventory_product = SaleWarehouseInventoryProduct::find($row['inventory_product']['id']);
           $exist = $inventory_product->exist;
           $exist -= $row['quantity'];
+          $reserved = $inventory_product->reserved;
+          $reserved -= $row['quantity'];
+          $inventory_product->reserved = $reserved;
           $inventory_product->exist = $exist;
           $inventory_product->save();
         }

@@ -237,7 +237,7 @@
     {
       const vm = this;
       var dialog = bootbox.confirm({
-        title: 'Rechazar el pedido solicitado?',
+        title: '¿Rechazar el pedido solicitado?',
         message: "<p>¿Seguro que desea rechazar esta solicitud?. Una vez rechazada la operación no se podrán realizar cambios en la misma.<p>",
         size: 'medium',
         buttons: {
@@ -274,7 +274,7 @@
       {
         const vm = this;
         var dialog = bootbox.confirm({
-          title: 'Aprobar el pedido solicitado?',
+          title: '¿Aprobar el pedido solicitado?',
           message: "<p>¿Seguro que desea aprobar esta solicitud?. Una vez aprobada la operación no se podrán realizar cambios en la misma.<p>",
           size: 'medium',
           buttons: {

@@ -467,7 +467,7 @@
               vm.record.history_tax_value = parseFloat(tax_value) / 100;
               vm.record.has_quantity_max = 0;
               vm.record.quantity_max_value = '';
-              product_value = product.exist? product.exist : 0;
+              product_value = product.exist ? product.exist - product.reserved  : 0;
               if (product_value) {
                 vm.record.has_quantity_max = 1;
                 vm.record.quantity_max_value = product_value;
@@ -600,12 +600,14 @@
       extractQuote() {
         const vm = this;
         if (vm.order) {
+          console.log(vm.order)
           vm.quote_edit = true;
           vm.record.id = vm.order.id;
           //extract client data
           vm.record.type_person = vm.order.type_person;
           vm.record.name = vm.order.name;
           vm.record.sale_clients_phone = vm.order.sale_clients_phone;
+          vm.record.phone = vm.order.phone;
           vm.record.id_number = vm.order.id_number;
           vm.record.quote_total_without_tax = vm.order.total_without_tax;
           vm.record.quote_total = vm.order.total;
@@ -634,7 +636,7 @@
           option_name = inventory_product.code;
           if (inventory_product.exist) {
             product.has_quantity_max = 1;
-            product.quantity_max_value = inventory_product.exist;
+            product.quantity_max_value = inventory_product.exist - inventory_product.reserved;
           }
         }
         product.inventory_product = {
