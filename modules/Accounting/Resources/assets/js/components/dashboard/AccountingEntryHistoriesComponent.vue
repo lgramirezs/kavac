@@ -69,68 +69,68 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            reload: false,
-            records: [],
-            record: {},
-            url: `${window.app_url}/accounting/entries/`,
-            columns: ['from_date', 'reference', 'concept', 'total', 'approved', 'id']
-        }
-    },
-    created() {
-        this.table_options.headings = {
-            'from_date': 'FECHA',
-            'reference': 'REFERENCIA',
-            'concept': 'CONCEPTO',
-            'total': 'TOTAL',
-            'approved': 'ESTADO DEL ASIENTO',
-            'id': 'ACCIÓN'
-        };
-        this.table_options.sortable = [];
-        this.table_options.filterable = [];
-        this.table_options.columnsClasses = {
-            'from_date': 'col-xs-1',
-            'reference': 'col-xs-1',
-            'denomination': 'col-xs-5',
-            'total': 'col-xs-2',
-            'approved': 'col-xs-1',
-            'id': 'col-xs-2'
-        };
-    },
-    mounted() {
-        this.loadRecords();
-    },
-    methods: {
+  data() {
+    return {
+      reload: false,
+      records: [],
+      record: {},
+      url: `${window.app_url}/accounting/entries/`,
+      columns: ['from_date', 'reference', 'concept', 'total', 'approved', 'id']
+    };
+  },
+  created() {
+    this.table_options.headings = {
+      'from_date': 'FECHA',
+      'reference': 'REFERENCIA',
+      'concept': 'CONCEPTO',
+      'total': 'TOTAL',
+      'approved': 'ESTADO DEL ASIENTO',
+      'id': 'ACCIÓN'
+    };
+    this.table_options.sortable = [];
+    this.table_options.filterable = [];
+    this.table_options.columnsClasses = {
+      'from_date': 'col-xs-1',
+      'reference': 'col-xs-1',
+      'denomination': 'col-xs-5',
+      'total': 'col-xs-2',
+      'approved': 'col-xs-1',
+      'id': 'col-xs-2'
+    };
+  },
+  mounted() {
+    this.loadRecords();
+  },
+  methods: {
 
-        /**
+    /**
          * Redirecciona al formulario de actualización de datos
          * 
          * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          * @param  {integer} id Identificador del registro a actualizar
          */
-        editForm(id) {
-            location.href = this.url + id + '/edit';
-        },
+    editForm(id) {
+      location.href = this.url + id + '/edit';
+    },
 
-        /**
+    /**
          * Obtiene los registros de asientos contable
          * 
          * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
-        loadRecords() {
-            axios.post(`${window.app_url}/accounting/lastOperations`).then(response => {
-                this.records = response.data.lastRecords;
-            });
-        }
-    },
-    watch: {
-        reload(res) {
-            if (res) {
-                this.loadRecords();
-                this.reload = false;
-            }
-        }
+    loadRecords() {
+      axios.post(`${window.app_url}/accounting/lastOperations`).then(response => {
+        this.records = response.data.lastRecords;
+      });
     }
+  },
+  watch: {
+    reload(res) {
+      if (res) {
+        this.loadRecords();
+        this.reload = false;
+      }
+    }
+  }
 };
 </script>

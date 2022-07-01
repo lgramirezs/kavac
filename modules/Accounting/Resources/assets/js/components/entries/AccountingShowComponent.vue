@@ -99,91 +99,98 @@
 </template>
 <script>
 export default {
-    props: ['id', 'modal_name'],
-    data() {
-        return {
-            records: [],
-            columns: ['account.denomination', 'debit', 'assets'],
-        }
-    },
-    created() {
-        this.table_options.headings = {
-            'account.denomination': 'Denominación',
-            'debit': 'Debe',
-            'assets': 'Haber',
-        };
-        this.table_options.columnsClasses = {
-            'account.denomination': 'col-xs-8',
-            'debit': 'col-xs-2',
-            'assets': 'col-xs-2',
-        };
-    },
-    mounted() {
+  props: ['id', 'modal_name'],
+  data() {
+    return {
+      records: [],
+      columns: ['account.denomination', 'debit', 'assets'],
+    };
+  },
+  created() {
+    this.table_options.headings = {
+      'account.denomination': 'Denominación',
+      'debit': 'Debe',
+      'assets': 'Haber',
+    };
+    this.table_options.columnsClasses = {
+      'account.denomination': 'col-xs-8',
+      'debit': 'col-xs-2',
+      'assets': 'col-xs-2',
+    };
+  },
+  mounted() {
 
-    },
-    methods: {
+  },
+  methods: {
 
-        /**
+    /**
          * Método que borra todos los datos del formulario
          *
          * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
          */
-        reset() {
+    reset() {
 
-        },
-        addDecimals(value) {
-            return parseFloat(value).toFixed(this.currency_decimal_places);
-        },
     },
-    computed: {
-        reference: function() {
-            if (this.records.reference) {
-                return this.records.reference;
-            }
-        },
-        accounting_entry_category: function() {
-            if (this.records.accounting_entry_category) {
-                return this.records.accounting_entry_category.name;
-            }
-        },
-        institution: function() {
-            if (this.records.institution) {
-                return this.records.institution.name;
-            }
-        },
-        currency: function() {
-            if (this.records.currency) {
-                return this.records.currency.name;
-            }
-        },
-        currency_decimal_places: function() {
-            if (this.records.currency) {
-                return this.records.currency.decimal_places;
-            }
-        },
-        currency_symbol: function() {
-            if (this.records.currency) {
-                return this.records.currency.symbol;
-            }
-        },
-        concept: function() {
-            if (this.records.concept) {
-                return this.records.concept;
-            }
-        },
-        observations: function() {
-            if (this.records.observations) {
-                return this.records.observations;
-            }
-            return [];
-        },
-        accounting_accounts: function() {
-            if (this.records.accounting_accounts) {
-                return this.records.accounting_accounts;
-            }
-            return [];
-        },
+    addDecimals(value) {
+      return parseFloat(value).toFixed(this.currency_decimal_places);
+    },
+  },
+  computed: {
+    reference: function() {
+      if (this.records.reference) {
+        return this.records.reference;
+      }
+      return null;
+    },
+    accounting_entry_category: function() {
+      if (this.records.accounting_entry_category) {
+        return this.records.accounting_entry_category.name;
+      }
+      return null;
+    },
+    institution: function() {
+      if (this.records.institution) {
+        return this.records.institution.name;
+      }
+      return null;
+    },
+    currency: function() {
+      if (this.records.currency) {
+        return this.records.currency.name;
+      }
+      return null;
+    },
+    currency_decimal_places: function() {
+      if (this.records.currency) {
+        return this.records.currency.decimal_places;
+      }
+      return 0;
+    },
+    currency_symbol: function() {
+      if (this.records.currency) {
+        return this.records.currency.symbol;
+      }
+      return null;
+    },
+    concept: function() {
+      if (this.records.concept) {
+        return this.records.concept;
+      }
+      return null;
+    },
+    observations: function() {
+      if (this.records.observations) {
+        return this.records.observations;
+      }
+      return [];
+    },
+    accounting_accounts: function() {
+      if (this.records.accounting_accounts) {
+        return this.records.accounting_accounts;
+      }
+      return [];
+    },
 
-    }
+  }
 };
 </script>

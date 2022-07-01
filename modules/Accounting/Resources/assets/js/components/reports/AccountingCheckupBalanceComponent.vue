@@ -57,83 +57,83 @@
 </template>
 <script>
 export default {
-    props: {
-        year_old: {
-            type: String,
-            default: ''
-        },
-        currencies: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
+  props: {
+    year_old: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            url: `${window.app_url}/accounting/report/balanceCheckUp/pdf/`,
-            urlSign: `${window.app_url}/accounting/report/balanceCheckUpSign/pdf/`,
-            currency: '',
-        }
+    currencies: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    created() {
-        this.CalculateOptionsYears(this.year_old);
-    },
-    methods: {
-        /**
+  },
+  data() {
+    return {
+      url: `${window.app_url}/accounting/report/balanceCheckUp/pdf/`,
+      urlSign: `${window.app_url}/accounting/report/balanceCheckUpSign/pdf/`,
+      currency: '',
+    };
+  },
+  created() {
+    this.CalculateOptionsYears(this.year_old);
+  },
+  methods: {
+    /**
          * Formatea la url para el reporte
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {string} url para el reporte
          */
-        getUrlReport: function() {
+    getUrlReport: function() {
 
-            var errors = [];
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
+      var errors = [];
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
 
-            if (errors.length > 0) {
-                this.$refs.errorsCheckUpBalance.showAlertMessages(errors);
-                return;
-            }
-            this.$refs.errorsCheckUpBalance.reset();
+      if (errors.length > 0) {
+        this.$refs.errorsCheckUpBalance.showAlertMessages(errors);
+        return;
+      }
+      this.$refs.errorsCheckUpBalance.reset();
 
-            var zero = ($('#zero').prop('checked')) ? 'true' : '';
+      var zero = ($('#zero').prop('checked')) ? 'true' : '';
 
-            var initDate = (this.year_init > this.year_end) ? (this.year_end + '-' + this.month_end) : (this.year_init + '-' + this.month_init);
-            var endDate = (this.year_init > this.year_end) ? (this.year_init + '-' + this.month_init) : (this.year_end + '-' + this.month_end);
+      var initDate = (this.year_init > this.year_end) ? (this.year_end + '-' + this.month_end) : (this.year_init + '-' + this.month_init);
+      var endDate = (this.year_init > this.year_end) ? (this.year_init + '-' + this.month_init) : (this.year_end + '-' + this.month_end);
 
-            var url = this.url + initDate + '/' + endDate + '/' + this.currency + '/' + zero;
-            return url;
-        },
-        /**
+      var url = this.url + initDate + '/' + endDate + '/' + this.currency + '/' + zero;
+      return url;
+    },
+    /**
          * Formatea la url para el reporte
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {string} url para el reporte
          */
-        getUrlReportSign: function() {
+    getUrlReportSign: function() {
 
-            var errors = [];
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
+      var errors = [];
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
 
-            if (errors.length > 0) {
-                this.$refs.errorsCheckUpBalance.showAlertMessages(errors);
-                return;
-            }
-            this.$refs.errorsCheckUpBalance.reset();
+      if (errors.length > 0) {
+        this.$refs.errorsCheckUpBalance.showAlertMessages(errors);
+        return;
+      }
+      this.$refs.errorsCheckUpBalance.reset();
 
-            var zero = ($('#zero').prop('checked')) ? 'true' : '';
+      var zero = ($('#zero').prop('checked')) ? 'true' : '';
 
-            var initDate = (this.year_init > this.year_end) ? (this.year_end + '-' + this.month_end) : (this.year_init + '-' + this.month_init);
-            var endDate = (this.year_init > this.year_end) ? (this.year_init + '-' + this.month_init) : (this.year_end + '-' + this.month_end);
+      var initDate = (this.year_init > this.year_end) ? (this.year_end + '-' + this.month_end) : (this.year_init + '-' + this.month_init);
+      var endDate = (this.year_init > this.year_end) ? (this.year_init + '-' + this.month_init) : (this.year_end + '-' + this.month_end);
 
-            var url = this.urlSign + initDate + '/' + endDate + '/' + this.currency + '/' + zero;
-            return url;
-        }
-    },
+      var url = this.urlSign + initDate + '/' + endDate + '/' + this.currency + '/' + zero;
+      return url;
+    }
+  },
 };
 </script>

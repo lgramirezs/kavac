@@ -43,9 +43,10 @@ class AccountingAccount extends Model implements Auditable
         'active',
         'inactivity_date',
         'parent_id',
+        'original'
     ];
 
-/**
+    /**
      * AccountingAccount morphs many Accountable.
      *
      * @author    Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>

@@ -103,7 +103,9 @@ class BudgetCompromiseController extends Controller
 
         $compromisedYear = explode("-", $request->compromised_at)[0];
 
-        DB::transaction(function () use ($request, $code, $compromisedYear) {
+        $codeStage = generate_registration_code('STG', '00000000', 'YYYY', BudgetStage::class, 'code');
+
+        DB::transaction(function () use ($request, $code, $codeStage, $compromisedYear) {
             /** @var Object Estado inicial del compromiso establecido a elaborado */
             $documentStatus = DocumentStatus::where('action', 'AP')->first();
 
@@ -189,37 +191,18 @@ class BudgetCompromiseController extends Controller
     public function update(Request $request)
     {
 
-        $codeSetting = CodeSetting::where("model", BudgetCompromise::class)->first();
-
-        if (!$codeSetting) {
-            return response()->json(['result' => false, 'message' => [
-                'type' => 'custom', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'danger',
-                'text' => 'Debe configurar previamente el formato para el código a generar',
-            ]], 200);
-        }
-
         $year = $request->fiscal_year ?? date("Y");
-
-        $code = generate_registration_code(
-            $codeSetting->format_prefix,
-            strlen($codeSetting->format_digits),
-            (strlen($codeSetting->format_year) === 2) ? date("y") : $year,
-            BudgetCompromise::class,
-            'code'
-        );
 
         $compromisedYear = explode("-", $request->compromised_at)[0];
         $documentStatus = DocumentStatus::where('action', 'AP')->first();
 
-        $budgetCentralizedAction = BudgetCompromise::find($request->id);
-        $budgetCentralizedAction->document_number = $request->source_document;
-        $budgetCentralizedAction->institution_id = $request->institution_id;
-        $budgetCentralizedAction->compromised_at = $request->compromised_at;
-        $budgetCentralizedAction->description = $request->description;
-        $budgetCentralizedAction->code = $code;
-        $budgetCentralizedAction->document_status_id = $documentStatus->id;
-
-        $budgetCentralizedAction->save();
+        $budget = BudgetCompromise::find($request->id);
+        $budget->document_number = $request->source_document;
+        $budget->institution_id = $request->institution_id;
+        $budget->compromised_at = $request->compromised_at;
+        $budget->description = $request->description;
+        $budget->document_status_id = $documentStatus->id;
+        $budget->save();
 
         $total = 0;
 
@@ -235,7 +218,7 @@ class BudgetCompromiseController extends Controller
             $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
             $taxAmount = ($account['amount'] * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
 
-            $budgetCentralizedAction->budgetCompromiseDetails()->Create(
+            $budget->budgetCompromiseDetails()->Create(
                 [
                     'description' => $account['description'],
                     'amount' => $account['amount'],
@@ -247,10 +230,7 @@ class BudgetCompromiseController extends Controller
             $total += ($account['amount'] + $taxAmount);
         }
 
-        $budgetCentralizedAction->budgetStages()->update([
-            'code' => $code,
-            'registered_at' => $request->compromised_at,
-            'type' => 'COM',
+        $budget->budgetStages()->update([
             'amount' => $total,
         ]);
 

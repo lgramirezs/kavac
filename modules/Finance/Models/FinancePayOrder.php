@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
+use Modules\Accounting\Models\AccountingEntryable;
 
 /**
  * @class FinancePayOrder
@@ -46,6 +47,7 @@ class FinancePayOrder extends Model implements Auditable
         'is_partial',
         'pending_amount',
         'completed',
+        'document_type',
         'document_number',
         'source_amount',
         'amount',
@@ -59,8 +61,36 @@ class FinancePayOrder extends Model implements Auditable
         'document_status_id',
         'currency_id',
         'name_sourceable_type',
-        'name_sourceable_id'
+        'name_sourceable_id',
+        'document_sourceable_type',
+        'document_sourceable_id'
     ];
+
+    protected $appends = ['accounting_entryable'];
+
+    /**
+     * Obtiene los datos del asiento contable asociado
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    public function getAccountingEntryableAttribute()
+    {
+        $accountingEntryable = null;
+        
+        if (Module::has('Accounting')) {
+            $accountingEntryable = AccountingEntryable::with(['accountingEntry' => function($q) {
+                $q->with(['accountingAccounts' => function ($qq) {
+                    $qq->with('account');
+                }]);
+            }])->where([
+                'accounting_entryable_type' => FinancePayOrder::class,
+                'accounting_entryable_id' => $this->id
+            ])->first();
+        }
+        return $accountingEntryable;
+    }
 
     /**
      * Get the budgetSpecificAction that owns the FinancePayOrder

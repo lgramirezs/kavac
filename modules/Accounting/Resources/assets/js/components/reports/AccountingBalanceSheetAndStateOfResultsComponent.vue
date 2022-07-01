@@ -54,92 +54,92 @@
 </template>
 <script>
 export default {
-    props: {
-        type_report: {
-            type: String,
-            default: ''
-        },
-        currencies: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
-        year_old: {
-            type: String,
-            default: ''
-        },
+  props: {
+    type_report: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            level: 1,
-            levels: [
-                { id: 1, text: 'Nivel 1' },
-                { id: 2, text: 'Nivel 2' },
-                { id: 3, text: 'Nivel 3' },
-                { id: 4, text: 'Nivel 4' },
-                { id: 5, text: 'Nivel 5' },
-                { id: 6, text: 'Nivel 6' },
-            ],
-            url: `${window.app_url}/accounting/report/`,
-            urlSign: `${window.app_url}/accounting/report/`,
-            currency: '',
-            zero_accounts: false,
-        }
+    currencies: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    created() {
-        this.CalculateOptionsYears(this.year_old);
-        this.url += this.type_report + '/pdf/';
-        this.urlSign += this.type_report + 'Sign/pdf/';
+    year_old: {
+      type: String,
+      default: ''
     },
-    methods: {
+  },
+  data() {
+    return {
+      level: 1,
+      levels: [
+        { id: 1, text: 'Nivel 1' },
+        { id: 2, text: 'Nivel 2' },
+        { id: 3, text: 'Nivel 3' },
+        { id: 4, text: 'Nivel 4' },
+        { id: 5, text: 'Nivel 5' },
+        { id: 6, text: 'Nivel 6' },
+      ],
+      url: `${window.app_url}/accounting/report/`,
+      urlSign: `${window.app_url}/accounting/report/`,
+      currency: '',
+      zero_accounts: false,
+    };
+  },
+  created() {
+    this.CalculateOptionsYears(this.year_old);
+    this.url += this.type_report + '/pdf/';
+    this.urlSign += this.type_report + 'Sign/pdf/';
+  },
+  methods: {
 
-        /**
+    /**
          * Formatea la url para el reporte
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {string} url para el reporte
          */
-        getUrlReport: function() {
+    getUrlReport: function() {
 
-            var errors = [];
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
+      var errors = [];
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
 
-            if (errors.length > 0) {
-                this.$refs[this.type_report].showAlertMessages(errors);
-                return;
-            }
-            this.$refs[this.type_report].reset();
+      if (errors.length > 0) {
+        this.$refs[this.type_report].showAlertMessages(errors);
+        return;
+      }
+      this.$refs[this.type_report].reset();
 
-            var zero = this.zero_accounts ? 'true' : '';
-            return (this.url + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
-        },
+      var zero = this.zero_accounts ? 'true' : '';
+      return (this.url + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
+    },
 
-        /**
+    /**
          * Formatea la url para el reporte
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {string} url para el reporte
          */
-        getUrlReportSign: function() {
+    getUrlReportSign: function() {
 
-            var errors = [];
-            if (!this.currency) {
-                errors.push("El tipo de moneda es obligatorio.");
-            }
+      var errors = [];
+      if (!this.currency) {
+        errors.push('El tipo de moneda es obligatorio.');
+      }
 
-            if (errors.length > 0) {
-                this.$refs[this.type_report + 'Sign'].showAlertMessages(errors);
-                return;
-            }
+      if (errors.length > 0) {
+        this.$refs[this.type_report + 'Sign'].showAlertMessages(errors);
+        return;
+      }
 
-            this.$refs[this.type_report].reset();
+      this.$refs[this.type_report].reset();
 
-            var zero = this.zero_accounts ? 'true' : '';
-            return (this.urlSign + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
-        }
+      var zero = this.zero_accounts ? 'true' : '';
+      return (this.urlSign + (this.year_init + '-' + this.month_init)) + '/' + this.level + '/' + this.currency + '/' + zero;
     }
+  }
 };
 </script>

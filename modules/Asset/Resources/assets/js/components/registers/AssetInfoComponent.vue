@@ -233,7 +233,9 @@
                 records: [],
                 supplier: null,
             }
+            
         },
+        
         methods: {
             /**
              * Método que borra todos los datos del formulario
@@ -254,12 +256,15 @@
                 this.reset()
                 const vm = this;
                 
-                
-                document.getElementById("info_general").click();
-                    
-                        
+                url = this.setUrl(url);
+
+                axios.get(url).then(response => {
+                    if (typeof(response.data.records) !== "undefined") {
+                        vm.records = response.data.records;
+
+                        document.getElementById("info_general").click();     
                         vm.getSupplier(vm.records.purchase_supplier_id);
-                       
+                        
                         document.getElementById('asset_type').innerText = (vm.records.asset_type)?vm.records.asset_type.name:'';
                         document.getElementById('asset_category').innerText = (vm.records.asset_category)?vm.records.asset_category.name:'';
                         document.getElementById('asset_subcategory').innerText = (vm.records.asset_subcategory)?vm.records.asset_subcategory.name:'';
@@ -273,10 +278,10 @@
                                                                                                     vm.records.parish.municipality.estate.name + ', '+ 
                                                                                                     vm.records.parish.municipality.estate.country.name :'N/A';
                         
-                       setTimeout(()=>{
+                        setTimeout(()=>{
                             document.getElementById('purchase_supplier').innerText = (vm.supplier)? vm.supplier : 'N/A';
-                       }, 1500);
-                       
+                        }, 1500);
+                        
                         document.getElementById('asset_condition').innerText = (vm.records.asset_condition)?vm.records.asset_condition.name:'';
                         document.getElementById('asset_status').innerText = (vm.records.asset_status_id == 11)?vm.records.asset_status.name + ': ' 
                                                                                                                 + vm.records.asset_disincorporation_asset.asset_disincorporation.asset_disincorporation_motive.name:
@@ -288,10 +293,15 @@
                         document.getElementById('asset_model').innerText = (vm.records.model)?vm.records.model:'';
                         document.getElementById('asset_value').innerText = (vm.records.value)?vm.records.value:'';
                     
-                    
                         if ($("#" + modal_id).length) {
                             $("#" + modal_id).modal('show');
                         }
+
+                    }
+                    
+                }).catch(error => {
+                    vm.logs('mixins.js', 285, error, 'readRecords');
+                });
                            
             }, 
 
@@ -305,9 +315,6 @@
                 }	
 			},
 
-        },
-        created(){
-            this.readRecords(this.route_list);
         },
     };
 </script>

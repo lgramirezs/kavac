@@ -19,68 +19,68 @@
 </template>
 <script>
 export default {
-    props: {
-        ref_code: {
-            type: Object,
-            default: null
-        }
+  props: {
+    ref_code: {
+      type: Object,
+      default: null
+    }
+  },
+  data() {
+    return {
+      code: '',
+    };
+  },
+  mounted() {
+    if (this.ref_code) {
+      this.code = this.ref_code.format_prefix + '-' + this.ref_code.format_digits + '-' + this.ref_code.format_year;
+    }
+  },
+  methods: {
+    reset() {
+      if (!this.ref_code) {
+        this.code = '';
+      }
     },
-    data() {
-        return {
-            code: '',
-        }
-    },
-    mounted() {
-        if (this.ref_code) {
-            this.code = this.ref_code.format_prefix + '-' + this.ref_code.format_digits + '-' + this.ref_code.format_year;
-        }
-    },
-    methods: {
-        reset() {
-            if (!this.ref_code) {
-                this.code = '';
-            }
-        },
-        validatedFormatCode() {
-            var res = false;
-            var errors = [];
-            if (this.code != '') {
-                var prefix = this.code.split('-')[0];
-                var digits = this.code.split('-')[1];
-                var year = this.code.split('-')[2];
-                if ((!prefix || (prefix.length < 1 || prefix.length > 3)) ||
+    validatedFormatCode() {
+      var res = false;
+      var errors = [];
+      if (this.code != '') {
+        var prefix = this.code.split('-')[0];
+        var digits = this.code.split('-')[1];
+        var year = this.code.split('-')[2];
+        if ((!prefix || (prefix.length < 1 || prefix.length > 3)) ||
                     (!digits || (digits.length < 6 || digits.length > 8)) ||
                     (!year || (year.toUpperCase() != 'YY' && year.toUpperCase() != 'YYYY'))) {
-                    errors.push('El campo código de referencia no cumple con el formato valido.');
-                    res = true;
-                }
-            } else {
-                errors.push('El campo código de referencia es obligatorio.');
-                res = true;
-            }
-
-            this.$refs.settingCode.showAlertMessages(errors);
-            return res;
-        },
-        createRecord() {
-            const vm = this;
-            if (vm.validatedFormatCode()) {
-                return;
-            }
-            axios.post(`${window.app_url}/accounting/settings/code`, { entries_reference: vm.code })
-                .then(response => {
-                    vm.showMessage('store');
-                    vm.redirect_back(`${window.app_url}/accounting/settings`);
-                });
-
+          errors.push('El campo código de referencia no cumple con el formato valido.');
+          res = true;
         }
+      } else {
+        errors.push('El campo código de referencia es obligatorio.');
+        res = true;
+      }
+
+      this.$refs.settingCode.showAlertMessages(errors);
+      return res;
     },
-    watch: {
-        code: function(res) {
-            if (this.$refs.settingCode) {
-                this.$refs.settingCode.reset();
-            }
-        }
+    createRecord() {
+      const vm = this;
+      if (vm.validatedFormatCode()) {
+        return;
+      }
+      axios.post(`${window.app_url}/accounting/settings/code`, { entries_reference: vm.code })
+        .then(() => {
+          vm.showMessage('store');
+          vm.redirect_back(`${window.app_url}/accounting/settings`);
+        });
+
     }
+  },
+  watch: {
+    code: function() {
+      if (this.$refs.settingCode) {
+        this.$refs.settingCode.reset();
+      }
+    }
+  }
 };
 </script>

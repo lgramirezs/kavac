@@ -85,87 +85,87 @@
 </template>
 <script>
 export default {
-    props: {
-        entries: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        },
+  props: {
+    entries: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    data() {
-        return {
-            url: `${window.app_url}/accounting/entries/Filter-Records`,
-            dataForm: {},
-            records: [],
-            search: '',
-            page: 1,
-            total: '',
-            perPage: 10,
-            lastPage: '',
-            pageValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            perPageValues: [{
-                    'id': 10,
-                    'text': '10'
-                },
-                {
-                    'id': 25,
-                    'text': '25'
-                },
-                {
-                    'id': 50,
-                    'text': '50'
-                }
-            ],
+  },
+  data() {
+    return {
+      url: `${window.app_url}/accounting/entries/Filter-Records`,
+      dataForm: {},
+      records: [],
+      search: '',
+      page: 1,
+      total: '',
+      perPage: 10,
+      lastPage: '',
+      pageValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      perPageValues: [{
+        'id': 10,
+        'text': '10'
+      },
+      {
+        'id': 25,
+        'text': '25'
+      },
+      {
+        'id': 50,
+        'text': '50'
+      }
+      ],
 
-            urlPdf: `${window.app_url}/accounting/entries`,
-            columns: ['from_date', 'reference', 'concept', 'total', 'approved', 'id']
-        }
+      urlPdf: `${window.app_url}/accounting/entries`,
+      columns: ['from_date', 'reference', 'concept', 'total', 'approved', 'id']
+    };
+  },
+  watch: {
+    perPage(res) {
+      if (this.page == 1) {
+        this.initRecords(this.url + '/' + res, '');
+      } else {
+        this.changePage(1);
+      }
     },
-    watch: {
-        perPage(res) {
-            if (this.page == 1) {
-                this.initRecords(this.url + '/' + res, '');
-            } else {
-                this.changePage(1);
-            }
-        },
-        page(res) {
-            this.initRecords(this.url + '/' + this.perPage + '/' + res, '');
-        },
-        search(res) {
-            this.changePage(1);
-            this.initRecords(this.url);
-        }
+    page(res) {
+      this.initRecords(this.url + '/' + this.perPage + '/' + res, '');
     },
-    methods: {
+    search(res) {
+      this.changePage(1);
+      this.initRecords(this.url);
+    }
+  },
+  methods: {
 
-        /**
+    /**
          * Cambia la pagina actual de la tabla
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          *
          * @param [Integer] $page Número de pagina actual
          */
-        changePage(page) {
-            const vm = this;
-            vm.page = page;
-            var pag = 0;
-            while (1) {
-                if (pag + 10 >= vm.page) {
-                    pag += 1;
-                    break;
-                } else {
-                    pag += 10;
-                }
-            }
-            vm.pageValues = [];
-            for (var i = 0; i < 10; i++) {
-                vm.pageValues.push(pag + i);
-            }
-        },
+    changePage(page) {
+      const vm = this;
+      vm.page = page;
+      var pag = 0;
+      while (1) {
+        if (pag + 10 >= vm.page) {
+          pag += 1;
+          break;
+        } else {
+          pag += 10;
+        }
+      }
+      vm.pageValues = [];
+      for (var i = 0; i < 10; i++) {
+        vm.pageValues.push(pag + i);
+      }
+    },
 
-        /**
+    /**
          * Reescribe el método initRecords para cambiar su comportamiento por defecto y realiza la consulta
          * en base a la informacion del formulario
          *
@@ -173,70 +173,70 @@ export default {
          *
          * @param {string} url      Ruta que obtiene los datos a ser mostrado en listados
          */
-        initRecords(url) {
-            const vm = this;
-            vm.dataForm['search'] = vm.search;
-            axios.post(url, vm.dataForm).then(response => {
-                if (response.data.records.length == 0) {
-                    vm.showMessage(
-                        'custom', 'Error', 'danger', 'screen-error', "No se encontraron asientos contables aprobados con los parámetros de busqueda dados."
-                    );
-                } else {
-                    if (vm.dataForm['firstSearch']) {
-                        vm.showMessage('custom', 'Éxito', 'success', 'screen-ok', 'Busqueda realizada de manera exitosa.');
-                        vm.dataForm['firstSearch'] = false;
-                    }
-                }
-                vm.records = response.data.records;
-                vm.total = response.data.total;
-                vm.lastPage = response.data.lastPage;
-                vm.$refs.tableMax.setLimit(vm.perPage);
-            }).catch(error => {
-                if (typeof(error.response) !== "undefined") {
-                    if (error.response.status == 403) {
-                        vm.showMessage(
-                            'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
-                        );
-                    } else {
-                        vm.logs('resources/js/all.js', 343, error, 'initRecords');
-                    }
-                }
-            });
-        },
-    },
-    created() {
-        this.table_options.headings = {
-            'from_date': 'FECHA',
-            'reference': 'REFERENCIA',
-            'concept': 'CONCEPTO',
-            'total': 'TOTAL',
-            'approved': 'ESTATUS',
-            'id': 'ACCIÓN'
-        };
-        this.table_options.sortable = [];
-        this.table_options.filterable = [];
-        this.table_options.columnsClasses = {
-            'from_date': 'col-xs-1',
-            'reference': 'col-xs-2',
-            'denomination': 'col-xs-4',
-            'total': 'col-xs-2',
-            'approved': 'col-xs-1',
-            'id': 'col-xs-2'
-        };
-
-        this.table_options.filterable = [];
-        if (this.entries) {
-            this.records = this.entries;
+    initRecords(url) {
+      const vm = this;
+      vm.dataForm['search'] = vm.search;
+      axios.post(url, vm.dataForm).then(response => {
+        if (response.data.records.length == 0) {
+          vm.showMessage(
+            'custom', 'Error', 'danger', 'screen-error', 'No se encontraron asientos contables aprobados con los parámetros de busqueda dados.'
+          );
+        } else {
+          if (vm.dataForm['firstSearch']) {
+            vm.showMessage('custom', 'Éxito', 'success', 'screen-ok', 'Busqueda realizada de manera exitosa.');
+            vm.dataForm['firstSearch'] = false;
+          }
         }
-        // EventBus.$on('reload:listing',(data)=>{
-        //  this.records = data;
-        // });
-
-        // EventBus.$on('list:entries',(data)=>{
-        //  this.search = '';
-        //  this.dataForm = data;
-        //  this.initRecords(this.url);
-        // });
+        vm.records = response.data.records;
+        vm.total = response.data.total;
+        vm.lastPage = response.data.lastPage;
+        vm.$refs.tableMax.setLimit(vm.perPage);
+      }).catch(error => {
+        if (typeof(error.response) !== 'undefined') {
+          if (error.response.status == 403) {
+            vm.showMessage(
+              'custom', 'Acceso Denegado', 'danger', 'screen-error', error.response.data.message
+            );
+          } else {
+            vm.logs('resources/js/all.js', 343, error, 'initRecords');
+          }
+        }
+      });
     },
+  },
+  created() {
+    this.table_options.headings = {
+      'from_date': 'FECHA',
+      'reference': 'REFERENCIA',
+      'concept': 'CONCEPTO',
+      'total': 'TOTAL',
+      'approved': 'ESTATUS',
+      'id': 'ACCIÓN'
+    };
+    this.table_options.sortable = [];
+    this.table_options.filterable = [];
+    this.table_options.columnsClasses = {
+      'from_date': 'col-xs-1',
+      'reference': 'col-xs-2',
+      'denomination': 'col-xs-4',
+      'total': 'col-xs-2',
+      'approved': 'col-xs-1',
+      'id': 'col-xs-2'
+    };
+
+    this.table_options.filterable = [];
+    if (this.entries) {
+      this.records = this.entries;
+    }
+    // EventBus.$on('reload:listing',(data)=>{
+    //  this.records = data;
+    // });
+
+    // EventBus.$on('list:entries',(data)=>{
+    //  this.search = '';
+    //  this.dataForm = data;
+    //  this.initRecords(this.url);
+    // });
+  },
 };
 </script>

@@ -18,49 +18,49 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            options: [],
-            classAlert: 'danger'
-        }
-    },
-    computed: {
-        existErrors: function() {
-            return (this.options.length > 0);
-        }
-    },
-    methods: {
-        /**
-         * [reset resetea valores de variables]
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         */
-        reset() {
-            this.options = [];
-        },
-
-        /**
-         * [showAlertMessages carga la informacion de los errores]
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         * @param  {string|array} messages mensajes de error
-         * @param  {string} messages clase de mensaje
-         */
-        showAlertMessages(messages, classAlert) {
-
-            this.classAlert = (classAlert) ? classAlert : 'danger';
-
-            if (Array.isArray(messages)) {
-                if (messages.length == 0) {
-                    this.options = [];
-                } else {
-                    this.options = messages;
-                }
-            } else if (!messages) {
-                this.options = [];
-            } else {
-                this.options = [];
-                this.options.push(messages);
-            }
-        },
+  data() {
+    return {
+      options: [],
+      classAlert: 'danger'
+    };
+  },
+  computed: {
+    existErrors: function() {
+      return (this.options.length > 0);
     }
+  },
+  methods: {
+    /**
+     * [reset resetea valores de variables]
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     */
+    reset() {
+      this.options = [];
+    },
+
+    /**
+     * [showAlertMessages carga la informacion de los errores]
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     * @param  {string|array} messages mensajes de error
+     * @param  {string} messages clase de mensaje
+     */
+    showAlertMessages(messages, classAlert) {
+
+      this.classAlert = (classAlert) ? classAlert : 'danger';
+
+      if (Array.isArray(messages)) {
+        if (messages.length == 0) {
+          this.options = [];
+        } else {
+          this.options = messages;
+        }
+      } else if (!messages) {
+        this.options = [];
+      } else {
+        this.options = [];
+        this.options.push(messages);
+      }
+    },
+  }
 };
 </script>
