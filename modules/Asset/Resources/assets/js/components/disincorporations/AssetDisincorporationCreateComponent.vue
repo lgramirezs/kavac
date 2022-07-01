@@ -413,7 +413,9 @@
 					return false;
 				};
 				if (this.record.id) {
-					this.record.assets=this.selected;
+					vm.selected = vm.selected.filter( (ele,pos)=>vm.selected.indexOf(ele) == pos);
+					vm.record.assets = vm.selected;
+					console.info(vm.selected);
 	                this.updateRecord(url);
 	            } else {
 	            	vm.loading = true;
