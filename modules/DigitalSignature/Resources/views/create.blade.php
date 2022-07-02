@@ -72,15 +72,38 @@
                   <td class="text-center">{{ $Verificado }}</td>
                   <td class="text-center">{{ $Caduca }}</td>
                   <td class="text-center">
-                    <a class="btn btn-info btn-xs btn-icon btn-action" href="#" onclick="certificateDetails()" data-target="#modalDetailCert" data-toggle="modal" title="Detalles del certificado">
+                    <a class="btn btn-info btn-xs btn-icon btn-action" href="#"
+                      onclick="certificateDetails()"
+                      data-target="#modalDetailCert"
+                      data-toggle="modal" title="Detalles del certificado">
                       <i class="fa fa-eye"></i>
                     </a>
-                    <a class="btn btn-warning btn-xs btn-icon btn-action" href="#" data-target="#modalUpdateCert" data-toggle="modal" title="Actualizar certificado">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-danger btn-xs btn-icon btn-action" href="#" data-target="#modalConfirmDelete" data-toggle="modal" title="Eliminar certificado">
-                      <i class="fa fa-trash-o"></i>
-                    </a>
+                    @if($permissionUpdate)
+                      <a class="btn btn-warning btn-xs btn-icon btn-action"
+                        href="#" data-target="#modalUpdateCert"
+                        data-toggle="modal" title="Actualizar certificado">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    @else
+                      <a class="btn btn-warning btn-xs btn-icon btn-action"
+                        href="#" title="Actualizar certificado"
+                        onclick="showMessagePerms();">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    @endif
+                    @if($permissionDestroy)
+                      <a class="btn btn-danger btn-xs btn-icon btn-action"
+                        href="#" data-target="#modalConfirmDelete"
+                        data-toggle="modal" title="Eliminar certificado">
+                        <i class="fa fa-trash-o"></i>
+                      </a>
+                    @else
+                      <a class="btn btn-danger btn-xs btn-icon btn-action"
+                        href="#" title="Eliminar certificado"
+                        onclick="showMessagePerms();">
+                        <i class="fa fa-trash-o"></i>
+                      </a>
+                    @endif
                   </td>
                 </tr>
             </tbody>
@@ -231,20 +254,67 @@
       <div class="card-body">
         <div class="row">
           @if($cert == 'true')
-            <digitalsignature-verifysign-component></digitalsignature-verifysign-component>
-            <digitalsignature-signfile-component></digitalsignature-signfile-component>
+            @if($permissionVerify)
+              <digitalsignature-verifysign-component></digitalsignature-verifysign-component>
+            @else
+              <a class="btn-simplex btn-simplex-md btn-simplex-primary"
+                href="#" title="Formulario de actualización del certificado"
+                onclick="showMessagePerms();">
+                <i class="icofont icofont-file-pdf ico-3x"></i>
+                <span>Verificar firma PDF</span>
+              </a>
+            @endif
+            @if($permissionSign)
+              <digitalsignature-signfile-component></digitalsignature-signfile-component>
+            @else
+              <a class="btn-simplex btn-simplex-md btn-simplex-primary"
+                href="#" title="Formulario de actualización del certificado"
+                onclick="showMessagePerms();">
+                <i class="icofont icofont-fountain-pen ico-3x"></i>
+                <span>Firmar PDF</span>
+              </a>
+            @endif
           @endif
 
           <div class="col-xs-2 text-center">
-            <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#" title="Formulario de carga del certificado" data-toggle="modal" data-target="#{!! $cert=='true' ? 'modalUpdateCert' : 'modalUploadCert' !!}">
+            @if($permissionStore)
               @if($cert == 'true')
-                <i class="icofont icofont-certificate-alt-1 ico-3x"></i>
-                <span class="pt-2"> Actualizar certificado </span>
+                @if($permissionUpdate)
+                  <a class="btn-simplex btn-simplex-md btn-simplex-primary"
+                    href="#" title="Formulario de carga del certificado"
+                    data-toggle="modal" data-target="#{!! 'modalUpdateCert' !!}">
+                    <i class="icofont icofont-certificate-alt-1 ico-3x"></i>
+                    <span class="pt-2"> Actualizar certificado </span>
+                  </a>
+                @else
+                  <a class="btn-simplex btn-simplex-md btn-simplex-primary"
+                    href="#" title="Formulario de actualización del certificado"
+                    onclick="showMessagePerms();">
+                    <i class="icofont icofont-certificate-alt-1 ico-3x"></i>
+                    <span class="pt-2"> Actualizar certificado </span>
+                  </a>
+                @endif
               @else
-                <i class="icofont icofont-upload-alt ico-3x"></i>
-                <span class="pt-2"> Cargar certificado </span>
+                <a class="btn-simplex btn-simplex-md btn-simplex-primary"
+                  href="#" title="Formulario de carga del certificado"
+                  data-toggle="modal" data-target="#{!! 'modalUploadCert' !!}">
+                  <i class="icofont icofont-upload-alt ico-3x"></i>
+                  <span class="pt-2"> Cargar certificado </span>
+                </a>
               @endif
-            </a>
+            @else
+              <a class="btn-simplex btn-simplex-md btn-simplex-primary" href="#"
+                title="Formulario de carga del certificado"
+                data-toggle="modal" onclick="showMessagePerms();">
+                @if($cert == 'true')
+                  <i class="icofont icofont-certificate-alt-1 ico-3x"></i>
+                  <span class="pt-2"> Actualizar certificado </span>
+                @else
+                  <i class="icofont icofont-upload-alt ico-3x"></i>
+                  <span class="pt-2"> Cargar certificado </span>
+                @endif
+              </a>
+            @endif
 
             <!-- upload certificate button modal  -->
             <div class="modal fade" id="modalUploadCert" tabindex="-1" aria-labelledby="modalUploadCertLabel" aria-hidden="true">
@@ -328,5 +398,45 @@
       $("#idvalidFrom").text(response.data.records['certificateDetail']['validFrom']);
       $("#idversion").text(response.data.records['certificateDetail']['version']);
     });
+  }
+
+  /**
+   * Método que muestra un mensaje al usuario sobre el resultado de una acción
+   *
+   * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+   *
+   * @param  {string} type        Tipo de mensaje a mostrar
+   * @param  {string} msg_title   Título del mensaje (opcional)
+   * @param  {string} msg_class   Clase CSS a utilizar en el mensaje (opcional)
+   * @param  {string} msg_icon    Ícono a mostrar en el mensaje (opcional)
+   * @param  {string} custom_text Texto personalizado para el mensaje (opcional)
+   */
+  function showMessage(type, msg_title, msg_class, msg_icon, custom_text) {
+    msg_title = (typeof(msg_title) == "undefined" || !msg_title)?'Éxito':msg_title;
+    msg_class = (typeof(msg_class) == "undefined" || !msg_class)?'growl-success':'growl-'+msg_class;
+    msg_icon = (typeof(msg_icon) == "undefined" || !msg_icon)?'screen-ok':msg_icon;
+    custom_text = (typeof(custom_text)!=="undefined")?custom_text:'';
+    var msg_text;
+    if (type=='custom') {
+      msg_text = custom_text;
+    }
+    $.gritter.add({
+      title: msg_title,
+      text: msg_text,
+      class_name: msg_class,
+      image: `${window.app_url}/images/${msg_icon}.png`,
+      sticky: false,
+      time: 3500
+    });
+  };
+
+  /**
+   * Método que invoca a showMessage para mostrar la notificación ante el
+   * usuario sin permisos suficientes para acceder a la funcionalidad.
+   *
+   * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+   */
+  function showMessagePerms() {
+    showMessage('custom', 'Acceso Denegado', 'danger', 'screen-error', 'No dispone de permisos para acceder a esta funcionalidad');
   }
 </script>

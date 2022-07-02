@@ -1,9 +1,9 @@
 <template>
     <div class="text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary" href title="Firmar PDF" data-toggle="tooltip"
-           @click="addRecord('digitalsignature-apiVerifySign', '', $event)">
+            @click="addRecord('digitalsignature-apiVerifySign', '', $event)">
             <i class="icofont icofont-file-pdf ico-3x"></i>
-            <span>Verificar firma PDF </span>
+            <span>Verificar firma PDF</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog" id="digitalsignature-apiVerifySign">
             <div class="modal-dialog modal-lg">
@@ -30,13 +30,16 @@
                                 <i class="fa fa-upload"></i>
                             </button>
                             <input id="pdf" class="d-none" type="file" name="file" accept=".pdf"
-                                   @change="selectedFile('pdf')" required />
+                                @change="selectedFile('pdf')" required />
                             <label id="pdf-label" for="pdf"> Seleccionar archivo pdf </label>
                         </div>
                         <div class="row" v-if="show">
-                            <div class="col-12 pt-3">
-                                <h6> Detalle de la firma </h6>
-                                <p> Número de firma(s): {{ records.count }} </p>
+                            <div class="col-12 pt-3" v-if="!records.signs">
+                                <h6>El archivo no está firmado</h6>
+                            </div>
+                            <div v-else class="col-12 pt-3">
+                                <h6>Detalle de la firma</h6>
+                                <p>Número de firma(s): {{ records.count }}</p>
                                 <table class="table table-bordered">
                                     <tbody v-for="item in records.signs">
                                         <tr v-for="(value, key, index) in item">
@@ -120,8 +123,8 @@
                 axios.post('/digitalsignature/apiVerifysignfile', data).then(function (response) {
                     vm.errors = [];
                     vm.records = (typeof(response.data.records) === 'string')
-                               ? JSON.parse(response.data.records)
-                               : response.data.records;
+                        ? JSON.parse(response.data.records)
+                        : response.data.records;
                     vm.show = true;
                     vm.loading = false;
                 }).catch(error => {

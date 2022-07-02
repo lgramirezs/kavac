@@ -68,6 +68,48 @@ class DigitalSignatureController extends Controller
          * @var fecha: fecha de expiración del certificado firmante del usuario
          */
 
+        if (Auth::user()->hasPermission('digitalsignature.index')) {
+            $permissionIndex = true;
+        }
+        else {
+            $permissionIndex = false;
+        }
+
+        if (Auth::user()->hasPermission('digitalsignature.store')) {
+            $permissionStore = true;
+        }
+        else {
+            $permissionStore = false;
+        }
+
+        if (Auth::user()->hasPermission('digitalsignature.update')) {
+            $permissionUpdate = true;
+        }
+        else {
+            $permissionUpdate = false;
+        }
+
+        if (Auth::user()->hasPermission('digitalsignature.sign')) {
+            $permissionSign = true;
+        }
+        else {
+            $permissionSign = false;
+        }
+
+        if (Auth::user()->hasPermission('digitalsignature.verify')) {
+            $permissionVerify = true;
+        }
+        else {
+            $permissionVerify = false;
+        }
+
+        if (Auth::user()->hasPermission('digitalsignature.destroy')) {
+            $permissionDestroy = true;
+        }
+        else {
+            $permissionDestroy = false;
+        }
+
         if (User::find(auth()->user()->id)->signprofiles) {
             $userprofile = User::find(auth()->user()->id)->signprofiles;
             $certuser = Crypt::decryptString($userprofile['cert']);
@@ -79,13 +121,25 @@ class DigitalSignatureController extends Controller
                 'Verificado' => $cert['issuer']['CN'],
                 'Caduca' => $fecha,
                 'cert' => 'true',
-                'certdetail' => 'false'
+                'certdetail' => 'false',
+                'permissionStore' => $permissionStore,
+                'permissionIndex' => $permissionIndex,
+                'permissionUpdate' => $permissionUpdate,
+                'permissionSign' => $permissionSign,
+                'permissionVerify' => $permissionVerify,
+                'permissionDestroy' => $permissionDestroy
             ]);
         }
         return view('digitalsignature::create',[
             'informacion' => 'No posee un certificado firmante',
             'cert' => 'false',
-            'certdetail' => 'false'
+            'certdetail' => 'false',
+            'permissionStore' => $permissionStore,
+            'permissionIndex' => $permissionIndex,
+            'permissionUpdate' => $permissionUpdate,
+            'permissionSign' => $permissionSign,
+            'permissionVerify' => $permissionVerify,
+            'permissionDestroy' => $permissionDestroy
         ]);
     }
 
@@ -145,7 +199,6 @@ class DigitalSignatureController extends Controller
         $cert = Crypt::encryptString($certInfo['cert']);
         $pkey = Crypt::encryptString($certInfo['pkey']);
         $passphraseCrypt = Crypt::encryptString($passphrase);
-
 
         $profile = new Signprofile();
         $profile->cert = $cert;
