@@ -552,7 +552,7 @@ export default {
           let specificAction = {};
           let account = {};
 
-          vm.account_concept = word.description;
+          vm.account_concept = word.description.replace(/(<([^>]+)>)/gi, "");;
           vm.account_amount = word.amount;
           vm.account_tax_id = word.tax_id;
         });

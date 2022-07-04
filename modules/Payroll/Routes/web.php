@@ -623,6 +623,10 @@ Route::group([
         ['as' => 'payroll', 'except' => ['show', 'create', 'edit']]
     );
 
+    /* Ruta para obtener la lista de los días feriados */
+    Route::get(
+        'get-holidays', 'PayrollHolidayController@getHolidays'
+    )->name('payroll.get-holidays');
 
 
     /**
