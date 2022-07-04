@@ -256,9 +256,9 @@ class DigitalSignatureController extends Controller
          * @var profile: objetivo tipo Signprofile
          */
 
+        //Se toma el certificado que se va actualizar (Borrar) 
         if(User::find(auth()->user()->id)->signprofiles) {
             $userprofile = User::find(auth()->user()->id)->signprofiles;
-            $userprofile->delete();
         }
 
         $filename = Str::random(10) . '.p12';
@@ -295,6 +295,11 @@ class DigitalSignatureController extends Controller
         $profile->passphrase = $passphraseCrypt;
         $profile->user_id = Auth::user()->id;
         $profile->save();
+
+        //Se borra el certificado viejo
+        $userprofile->delete();
+
+        //Se borra el archivo .p12 
         Storage::disk('temporary')->delete($filename);
         $request->session()->flash(
             'message',
