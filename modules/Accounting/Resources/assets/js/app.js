@@ -343,7 +343,7 @@ Vue.mixin({
               vm.showMessage('update');
               vm.reload = true;
               vm.loading = false;
-            }).catch(error => {
+            }).catch(() => {
               console.log(error);
             });
           }

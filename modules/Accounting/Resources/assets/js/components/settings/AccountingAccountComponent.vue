@@ -49,7 +49,7 @@
                     <!-- Tabla de cuentas patrimoniales -->
                     <div class="modal-body modal-table" v-show="records_list.length > 0">
                         <hr>
-                        <accounting-accounts-list :records="records_list" />
+                        <accounting-accounts-list :initial_records="records_list" />
                     </div>
                 </div>
             </div>
