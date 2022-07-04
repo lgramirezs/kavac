@@ -616,6 +616,13 @@ Route::group([
         'PayrollPermissionRequestController@rejected'
     );
 
+    /* Ruta para la informacion de los días feriados */
+    Route::resource(
+        'holidays',
+        'PayrollHolidayController',
+        ['as' => 'payroll', 'except' => ['show', 'create', 'edit']]
+    );
+
 
 
     /**
