@@ -157,7 +157,7 @@
 
           <!-- Modal delete certificate -->
           <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-labelledby="modalConfirmDeleteLabel"
-             aria-hidden="true">
+            aria-hidden="true">
             <div class="modal-dialog modal-sm vue-crud">
               <div class="modal-content">
                 <div class="modal-header">
@@ -183,8 +183,8 @@
           <!-- End of delete certificate button modal -->
 
           <!-- Certificate details button modal  -->
-          <div class="modal fade" id="modalDetailCert" tabindex="-1" aria-labelledby="modalDetailCertLabel" aria-hidden="true">
-            <div class="modal-dialog vue-crud">
+          <div class="modal fade text-left" role="dialog" id="modalDetailCert" tabindex="-1" aria-labelledby="modalDetailCertLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm vue-crud">
               <div class="modal-content">
                 <div class="modal-header">
                   <h6><i class="fa fa-eye"></i> Detalles del certificado</h6>
@@ -193,36 +193,88 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <h6 class="text-info">Asunto</h6>
-                  <ul class="list-group">
-                    <li class="list-group-item"><b>C(País):</b> <span id="idsubjC"></span></li>
-                    <li class="list-group-item"><b>ST(Estado):</b> <span id="idsubjST"></span></li>
-                    <li class="list-group-item"><b>L(Localidad):</b> <span id="idsubjL"></span></li>
-                    <li class="list-group-item"><b>O(Organización):</b> <span id="idsubjO"></span></li>
-                    <li class="list-group-item"><b>OU(Unidad de organización):</b> <span id="idsubjOU"></span></li>
-                    <li class="list-group-item"><b>CN(Nombre común):</b> <span id="idsubjCN"></span></li>
-                    <li class="list-group-item"><b>EMAIL(Dirección de correo electrónico):</b> <span id="idsubjEMAIL"></span></li>
-                  </ul>
-                  <h6 class="text-info mt-3">Nombre del emisor</h6>
-                  <ul class="list-group">
-                    <li class="list-group-item"><b>C(País):</b> <span id="idissC"></span></li>
-                    <li class="list-group-item"><b>ST(Estado):</b> <span id="idissST"></span></li>
-                    <li class="list-group-item"><b>L(Localidad):</b> <span id="idissL"></span></li>
-                    <li class="list-group-item"><b>O(Organización):</b> <span id="idissO"></span></li>
-                    <li class="list-group-item"><b>OU(Unidad de organización):</b> <span id="idissOU"></span></li>
-                    <li class="list-group-item"><b>CN(Nombre común):</b> <span id="idissCN"></span></li>
-                    <li class="list-group-item"><b>EMAIL(Dirección de correo electrónico):</b> <span id="idissEMAIL"></span></li>
-                  </ul>
-                  <h6 class="text-info mt-3">Certificado</h6>
-                  <ul class="list-group">
-                    <li class="list-group-item"><b>Algoritmo de firma LN:</b> <span id="idsignatureTypeLN"></span></li>
-                    <li class="list-group-item"><b>Algoritmo de firma NID:</b> <span id="idsignatureTypeNID"></span></li>
-                    <li class="list-group-item"><b>Algoritmo de firma SN:</b> <span id="idsignatureTypeSN"></span></li>
-                    <li class="list-group-item"><b>Serial:</b> <span id="idserialNumber"></span></li>
-                    <li class="list-group-item"><b>Válido desde:</b> <span id="idvalidFrom"></span></li>
-                    <li class="list-group-item"><b>Válido hasta:</b> <span id="idvalidTo"></span></li>
-                    <li class="list-group-item"><b>Versión:</b> <span id="idversion"></span></li>
-                  </ul>
+                  <table class="table table-bordered">
+                    <tbody>
+                      <h6 class="text-info">Asunto</h6>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>C(País)</b><br><span id="idsubjC"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>ST(Estado)</b><br><span id="idsubjST"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>L(Localidad)</b><br><span id="idsubjL"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>OU(Unidad de organización)</b><br><span id="idsubjOU"></span>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>CN(Nombre común)</b><br><span id="idsubjCN"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>EMAIL(Dirección de correo electrónico)</b><br><span id="idsubjEMAIL"></span>
+                        </div>
+                      </div>
+                      <h6 class="text-info mt-3">Nombre del emisor</h6>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>C(País)</b><br><span id="idissC"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>ST(Estado)</b><br><span id="idissST"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>L(Localidad)</b><br><span id="idissL"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>O(Organización)</b><br><span id="idissO"></span>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>OU(Unidad de organización)</b><br><span id="idissOU"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>CN(Nombre común)</b><br><span id="idissCN"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>EMAIL(Dirección de correo electrónico)</b><br><span id="idissEMAIL"></span>
+                        </div>
+                      </div>
+                      <h6 class="text-info mt-3">Certificado</h6>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>Algoritmo de firma LN:</b><br><span id="idsignatureTypeLN"></span>
+                        </div>
+                        <div class="col-3">
+                        <b>Algoritmo de firma NID:</b><br><span id="idsignatureTypeNID"></span>
+                        </div>
+                        <div class="col-3">
+                        <b>Algoritmo de firma SN:</b><br><span id="idsignatureTypeSN"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>Serial:</b><br><span id="idserialNumber"></span>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-3">
+                          <b>Válido desde:</b><br><span id="idvalidFrom"></span>
+                        </div>
+                        <div class="col-3">
+                          <b>Válido hasta:</b><br><span id="idvalidTo"></span>
+                        </div>
+                        <div class="col-3">
+                        <b>Versión:</b><br><span id="idversion"></span>
+                        </div>
+                      </div>
+                    </tbody>
+                  </table>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
