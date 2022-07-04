@@ -515,12 +515,12 @@ class BudgetSpecificActionController extends Controller
         foreach ($openedAccounts as $openAccount) {
             $records[] = [
                 'id' => $openAccount->id,
-                 'amount' => $openAccount->total_year_amount,
+                 'amount' => $openAccount->total_year_amount_m ? $openAccount->total_year_amount_m : $openAccount->total_year_amount,
                 'text' => $openAccount->budgetAccount->code . ' - ' .
                     $openAccount->budgetAccount->denomination . ' (' .
                     $openAccount->subSpecificFormulation->currency->symbol . " " .
                     number_format(
-                        $openAccount->total_year_amount,
+                        $openAccount->total_year_amount_m ? $openAccount->total_year_amount_m : $openAccount->total_year_amount,
                         $openAccount->subSpecificFormulation->currency->decimal_places,
                         ",",
                         "."
