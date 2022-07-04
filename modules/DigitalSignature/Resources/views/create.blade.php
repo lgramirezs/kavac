@@ -252,10 +252,10 @@
                           <b>Algoritmo de firma LN:</b><br><span id="idsignatureTypeLN"></span>
                         </div>
                         <div class="col-3">
-                        <b>Algoritmo de firma NID:</b><br><span id="idsignatureTypeNID"></span>
+                          <b>Algoritmo de firma NID:</b><br><span id="idsignatureTypeNID"></span>
                         </div>
                         <div class="col-3">
-                        <b>Algoritmo de firma SN:</b><br><span id="idsignatureTypeSN"></span>
+                          <b>Algoritmo de firma SN:</b><br><span id="idsignatureTypeSN"></span>
                         </div>
                         <div class="col-3">
                           <b>Serial:</b><br><span id="idserialNumber"></span>
@@ -270,15 +270,17 @@
                           <b>Válido hasta:</b><br><span id="idvalidTo"></span>
                         </div>
                         <div class="col-3">
-                        <b>Versión:</b><br><span id="idversion"></span>
+                          <b>Versión:</b><br><span id="idversion"></span>
                         </div>
                       </div>
                     </tbody>
                   </table>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-                      data-dismiss="modal">
+                  <button type="button"
+                    class="btn btn-default btn-sm btn-round btn-modal-close"
+                    data-dismiss="modal"
+                  >
                     Cerrar
                   </button>
                 </div>
@@ -298,7 +300,10 @@
       <div class="card-header">
         <h6 class="card-title"> Acciones Comunes </h6>
         <div class="card-btns">
-          <a href="#" data-toggle="tooltip" class="card-minimize btn btn-card-action btn-round" data-original-title="Minimize Panel">
+          <a href="#" data-toggle="tooltip"
+            class="card-minimize btn btn-card-action btn-round"
+            data-original-title="Minimize Panel"
+          >
             <i class="now-ui-icons arrows-1_minimal-up"></i>
           </a>
         </div>
@@ -369,31 +374,44 @@
             @endif
 
             <!-- upload certificate button modal  -->
-            <div class="modal fade" id="modalUploadCert" tabindex="-1" aria-labelledby="modalUploadCertLabel" aria-hidden="true">
+            <div class="modal fade" id="modalUploadCert" tabindex="-1"
+              aria-labelledby="modalUploadCertLabel" aria-hidden="true">
               <div class="modal-dialog vue-crud">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h6> <i class="icofont icofont-upload-alt inline-block"></i> Cargar certificado</h6>
+                    <h6>
+                      <i class="icofont icofont-upload-alt inline-block"></i> Cargar certificado
+                    </h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body text-left">
-                    <form method="POST" enctype="multipart/form-data" accept-charset="UTF-8" action="{{ route('signprofilestore') }}">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <form method="POST" enctype="multipart/form-data"
+                      accept-charset="UTF-8"
+                      action="{{ route('signprofilestore') }}"
+                    >
+                      <input type="hidden" name="_token"
+                        value="{{ csrf_token() }}" />
                       <p>
                         <label for="pkcs12">Cargar certificado del firmante</label>
-                        <input id="pkcs12" class="form-control" type="file" name="pkcs12" accept=".p12" autocomplete="off" required />
+                        <input id="pkcs12" class="form-control" type="file"
+                          name="pkcs12" accept=".p12" autocomplete="off"
+                          required />
                       </p>
                       <p>
                         <label for="phasepass">Contraseña del certificado</label>
-                        <input id="phasepass" class="form-control" type="password" name="password" placeholder="XXXXXX" autocomplete="off" required />
+                        <input id="phasepass" class="form-control" type="password"
+                          name="password" placeholder="XXXXXX" autocomplete="off"
+                          required />
                       </p>
                       <p class="text-right">
-                        <button class="btn btn-warning btn-icon btn-round btn-modal-close" data-dismiss="modal" data-original-title="Cancelar">
+                        <button class="btn btn-warning btn-icon btn-round btn-modal-close"
+                          data-dismiss="modal" data-original-title="Cancelar">
                           <i class="fa fa-ban"></i>
                         </button>
-                        <button type="submit" class="btn btn-success btn-icon btn-round" data-original-title="Subir certificado" title="Subir certificado">
+                        <button type="submit" class="btn btn-success btn-icon btn-round"
+                          data-original-title="Subir certificado" title="Subir certificado">
                           <i class="fa fa-save"></i>
                         </button>
                       </p>
@@ -403,13 +421,12 @@
               </div>
             </div>
             <!-- End of upload certificate button modal -->
-
           </div>
+
         </div>
       </div>
     </div>
   </div>
-
 @stop
 
 <script>
