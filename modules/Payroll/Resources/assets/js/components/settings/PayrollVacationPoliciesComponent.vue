@@ -906,6 +906,7 @@ export default {
             payroll_salary_tabulators_groups: [],
             errors: [],
             records: [],
+            holidays: [],
             columns: ['name', 'application_date', 'vacation_type', 'active', 'id'],
             institutions: [],
             payroll_payment_types: [],
@@ -986,6 +987,7 @@ export default {
             vm.getInstitutions();
             vm.getPayrollSalaryTabulatorsGroups();
             vm.getPayrollConceptAssignTo();
+            vm.getHolidays();
             
         });
     },
@@ -1722,12 +1724,22 @@ export default {
             if (vm.record.vacation_periods[index].start_date && vm.record.vacation_periods[index].end_date) {
                 let start_date = new Date(document.getElementById('start_date_vacation_' + index).value.replaceAll('-', '/'));
                 let end_date   = new Date(document.getElementById('end_date_vacation_' + index).value.replaceAll('-', '/'));
+                let holidayDiscount = [];
 
                 let diff = end_date.getTime() - start_date.getTime()
                 let dias = diff/(1000*60*60*24)
                 let cont = 0;
 
                 if (vm.record.vacation_periods[index].business_days) {
+                    for (let holiday of vm.holidays) {
+                        if (holiday.text != 'Seleccione...') {
+                            let holidayDate = new Date(holiday.text)
+                            if (holidayDate.getTime() >= start_date && holidayDate.getTime() <= end_date) {
+                                holidayDiscount.push(holiday.text);
+                            }
+                        }
+                    }
+
                     const sumarLaborables = (f, n) => {
                         const options = { weekday: 'long'};
                         for(var i=0; i<n; i++) {
@@ -1739,14 +1751,31 @@ export default {
                                 dias--;
                             }
                         }
-
                     }
 
                     sumarLaborables(start_date, dias);
+                    dias = dias - holidayDiscount.length;
                 }
 
                 $(`#vacations_days_${index}`).val(`${(dias + 1)} días`);
             }
+        },
+
+        /**
+         * Método que carga los días feriados
+         *
+         * @author  Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+         *
+         */
+        getHolidays() {
+            const vm = this;
+            let url = vm.setUrl('payroll/get-holidays');
+
+            axios.get(url).then(response => {
+                if (typeof(response.data) !== "undefined") {
+                    vm.holidays = response.data;
+                }
+            });
         },
     },
 

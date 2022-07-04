@@ -173,4 +173,9 @@ class PayrollHolidayController extends Controller
         $payrollHoliday->delete();
         return response()->json(['record' => $payrollHoliday, 'message' => 'Success'], 200);
     }
+
+    public function getHolidays()
+    {
+        return response()->json(template_choices(PayrollHoliday::class, 'date', '', true));
+    }
 }
