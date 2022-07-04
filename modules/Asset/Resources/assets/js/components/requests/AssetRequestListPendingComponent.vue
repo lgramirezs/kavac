@@ -12,7 +12,7 @@
 					<i class="fa fa-ban"></i>
 				</button>
 			</div>
-			<div slot="asset_request.code" slot-scope="props" class="text-center">
+			<div slot="code" slot-scope="props" class="text-center">
                 <span>
                     {{ props.row.code }}
                 </span>
@@ -38,7 +38,7 @@
 				records: [],
 				errors: [],
 				
-				columns: ['asset_request.code', 'state', 'user.name', 'created_at', 'delivery_date', 'id'],
+				columns: ['code', 'state', 'user.name', 'created_at', 'delivery_date', 'id'],
 			}
 		},
 		

@@ -112,9 +112,9 @@ class AssetRequestDeliveryController extends Controller
      * @param     Modules\Asset\Models\AssetRequestDelivery    $delivery    Datos de la solicitud
      * @return    \Illuminate\Http\JsonResponse                Objeto con los registros a mostrar
      */
-    public function destroy(AssetRequestDelivery $delivery)
+    public function destroy($id)
     {
-            dd($delivery);
+        $delivery = AssetRequestDelivery::find($id);
         if ($delivery->state == 'Pendiente') {
             $asset_request = AssetRequest::find($delivery->asset_request_id);
             $asset_request->state = 'Pendiente por entrega';
