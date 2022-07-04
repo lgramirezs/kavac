@@ -121,7 +121,7 @@
                                         <div class="col-md-5">
                                             <div class="form-group is-required">
                                                 <label>Fecha de inicio:</label>
-                                                <input @input=getTime(index) type="date" :id="'start_date_vacation_' + index" placeholder="Fecha de inicio" data-toggle="tooltip" title="Indique la fecha del inicio del salidas individuales" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date" class="form-control input-sm" v-model="vacation_period.start_date">
+                                                <input @input=getCalculateTime(index) type="date" :id="'start_date_vacation_' + index" placeholder="Fecha de inicio" data-toggle="tooltip" title="Indique la fecha del inicio del salidas individuales" :min="record.start_date" :max="(vacation_period.end_date == '') ? record.end_date : vacation_period.end_date" class="form-control input-sm" v-model="vacation_period.start_date">
                                             </div>
                                         </div>
                                         <!-- ./fecha de inicio del período de vacaciones colectivas -->
@@ -129,7 +129,7 @@
                                         <div class="col-md-5">
                                             <div class="form-group is-required">
                                                 <label>Fecha de Finalización:</label>
-                                                <input @input=getTime(index) type="date" :id="'end_date_vacation_' + index" placeholder="Fecha de Finalización" data-toggle="tooltip" title="Indique la fecha de Finalización del salidas individuales" :min="vacation_period.start_date" :max="record.end_date" :disabled="(vacation_period.start_date == '')" class="form-control input-sm" v-model="vacation_period.end_date">
+                                                <input @input=getCalculateTime(index) type="date" :id="'end_date_vacation_' + index" placeholder="Fecha de Finalización" data-toggle="tooltip" title="Indique la fecha de Finalización del salidas individuales" :min="vacation_period.start_date" :max="record.end_date" :disabled="(vacation_period.start_date == '')" class="form-control input-sm" v-model="vacation_period.end_date">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
@@ -138,6 +138,18 @@
                                                 <input type="text" data-toggle="tooltip" :id="'vacations_days_' + index" title="Días a otorgar para el disfrute de vacaciones" class="form-control input-sm" disabled>
                                             </div>
                                         </div>
+                                        <!-- activa -->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>¿Son días hábiles?</label>
+                                                <div class="col-12">
+                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="¿La fecha incluye días hábiles?" v-model="vacation_period.business_days" @change="getCalculateTime(index)">
+                                                        <label slot="off-label"></label>
+                                                    </p-check>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./activa -->
                                         <!-- ./fecha de finalización del período de vacaciones colectivas -->
                                         <div class="col-1" style="align-self: flex-end;">
                                             <div class="form-group">
@@ -871,6 +883,7 @@ export default {
                 days_group_by: '',
                 payroll_days_scales: [],
                 days_type: '',
+                business_days: false,
             },
             type:'',
             days_type:'',
@@ -1246,7 +1259,8 @@ export default {
             const vm = this;
             vm.record.vacation_periods.push({
                 start_date: '',
-                end_date: ''
+                end_date: '',
+                business_days: false
             });
         },
 
@@ -1702,15 +1716,38 @@ export default {
             vm.record.vacation_periods = JSON.parse(recordEdit.vacation_periods);
 		},
 
-        getTime(index) {
+        getCalculateTime(index) {
             const vm = this;
-            if(vm.record.vacation_periods[index].start_date && vm.record.vacation_periods[index].end_date){
-                let start_date = new Date(vm.record.vacation_periods[index].start_date).getTime();
-                let end_date = new Date(vm.record.vacation_periods[index].end_date).getTime();
-                let days = Math.ceil((end_date - start_date) / (1000 * 3600 * 24));
-                $(`#vacations_days_${index}`).val(`${days}`);
+
+            if (vm.record.vacation_periods[index].start_date && vm.record.vacation_periods[index].end_date) {
+                let start_date = new Date(document.getElementById('start_date_vacation_' + index).value.replaceAll('-', '/'));
+                let end_date   = new Date(document.getElementById('end_date_vacation_' + index).value.replaceAll('-', '/'));
+
+                let diff = end_date.getTime() - start_date.getTime()
+                let dias = diff/(1000*60*60*24)
+                let cont = 0;
+
+                if (vm.record.vacation_periods[index].business_days) {
+                    const sumarLaborables = (f, n) => {
+                        const options = { weekday: 'long'};
+                        for(var i=0; i<n; i++) {
+                            f.setTime( f.getTime() + (1000*60*60*24) );
+                            console.log(new Intl.DateTimeFormat('UTC', options).format(f));
+                            / Se identifica si existen sabados o domingos en el periodo establecido */
+                            if( (f.getDay()==6) || (f.getDay()==0) ) {
+                                / Si existe un dia no laborable se hace el bucle una unidad mas larga */
+                                dias--;
+                            }
+                        }
+
+                    }
+
+                    sumarLaborables(start_date, dias);
+                }
+
+                $(`#vacations_days_${index}`).val(`${(dias + 1)} días`);
             }
-        }
+        },
     },
 
     
