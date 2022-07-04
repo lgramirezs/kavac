@@ -7,6 +7,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Models\Profile;
+use App\Models\User;
 use DB;
 
 /**
@@ -56,5 +58,12 @@ class FinanceConciliationController extends Controller
 
     public function destroy($id)
     {
+    }
+
+    public function getInstitution()
+    {
+        // $user = Profile::find(auth()->user()->id);
+        // return response()->json(['records' => Profile::all()], 200);
+        // return response()->json(['user' => $user], 200);
     }
 }

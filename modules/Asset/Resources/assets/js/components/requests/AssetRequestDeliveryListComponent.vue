@@ -25,7 +25,7 @@
 					<i class="fa fa-ban"></i>
 				</button>
 
-				<button @click="deleteRecord(props.row.id, 'requests/deliveries')"
+				<button @click="deleteRecord(props.row.id, 'asset/requests/deliveries')"
 						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
 					<i class="fa fa-trash-o"></i>
