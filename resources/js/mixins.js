@@ -966,6 +966,9 @@ Vue.mixin({
             const vm = this;
             await axios.get(`/list/deductions`).then(response => {
                 vm.deductions = response.data.records;
+                if (typeof(vm.tmpDeductions)!=="undefined") {
+                    vm.tmpDeductions = response.data.records;
+                }
             }).catch(error => {
                 console.error(error);
             });

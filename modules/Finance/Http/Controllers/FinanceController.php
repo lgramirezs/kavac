@@ -9,6 +9,7 @@ use App\Models\CodeSetting;
 use App\Rules\CodeSetting as CodeSettingRule;
 use Modules\Finance\Models\FinanceCheckBook;
 use Modules\Finance\Models\FinanceBankingMovement;
+use Modules\Finance\Models\FinancePaymentExecute;
 use Modules\Finance\Models\FinancePayOrder;
 
 /**
@@ -53,6 +54,7 @@ class FinanceController extends Controller
             'checks_code' => [new CodeSettingRule],
             'movements_code' => [new CodeSettingRule],
             'pay_orders_code' => [new CodeSettingRule],
+            'payment_executes_code' => [new CodeSettingRule],
         ]);
 
         /** @var array $codes Arreglo con información de los campos de códigos configurados */
@@ -77,6 +79,9 @@ class FinanceController extends Controller
                 } elseif ($table === "payOrders") {
                     $table = "pay_orders";
                     $model = FinancePayOrder::class;
+                } elseif ($table === "paymentExecutes") {
+                    $table = "payment_executes";
+                    $model = FinancePaymentExecute::class;
                 }
                 CodeSetting::updateOrCreate([
                     'module' => 'finance',
@@ -147,6 +152,7 @@ class FinanceController extends Controller
         $checkCode = CodeSetting::where('model', FinanceCheckBook::class)->first() ?? '';
         $movementCode = CodeSetting::where('model', FinanceBankingMovement::class)->first() ?? '';
         $payOrderCode = CodeSetting::where('model', FinancePayOrder::class)->first() ?? '';
-        return view('finance::settings', compact('checkCode', 'movementCode', 'payOrderCode'));
+        $paymentExecutesCode = CodeSetting::where('model', FinancePaymentExecute::class)->first() ?? '';
+        return view('finance::settings', compact('checkCode', 'movementCode', 'payOrderCode', 'paymentExecutesCode'));
     }
 }

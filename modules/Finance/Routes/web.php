@@ -13,6 +13,8 @@ use Modules\Finance\Http\Controllers\FinancePaymentMethodsController;
 use Modules\Finance\Http\Controllers\FinanceSettingBankReconciliationFilesController;
 use Modules\Finance\Http\Controllers\FinanceConciliationController;
 use Modules\Finance\Http\Controllers\FinanceMovementsController;
+use Modules\Finance\Models\FinancePaymentExecute;
+use Modules\Finance\Models\FinancePayOrder;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,8 @@ Route::group([
     });
 
     /** Ruta para la gestión de Finanzas > Banco > Ordenes de pago */
+    Route::get('pay-orders/pending/{receiver_id?}', [FinancePayOrderController::class, 'getPendingPayOrders'])
+         ->name('finance.pay-order.pending');
     Route::get('pay-orders/vue-list', [FinancePayOrderController::class, 'vueList'])->name('finance.pay-order.vuelist');
     Route::post('pay-orders/change-document-status', [FinancePayOrderController::class, 'changeDocumentStatus'])
         ->name('finance.pay-order.change-document-status');
@@ -67,6 +71,11 @@ Route::group([
     );
 
     /** Ruta para la gestión de Finanzas > Banco > Emisiones de pago */
+    Route::get(
+        'payment-execute/list/get-receivers', [FinancePaymentExecuteController::class, 'getPayOrderReceivers']
+    );
+    Route::get('payment-execute/vue-list', [FinancePaymentExecuteController::class, 'vueList'])
+         ->name('finance.payment-execute.vuelist');
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Movimientos */

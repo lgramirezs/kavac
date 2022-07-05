@@ -112,14 +112,14 @@ class DeductionController extends Controller
      */
     public function list()
     {
-        $deductions = Deduction::where('active', true)->get();
+        $deductions = Deduction::with('accountingAccount')->where('active', true)->get();
         $options = [['id' => '', 'text' => 'Seleccione...']];
         foreach ($deductions as $deduction) {
             array_push($options, [
                 'id' => $deduction->id,
                 'text' => $deduction->name,
                 'formula' => $deduction->formula,
-                'accounting_account_id' => $deduction->accounting_account_id
+                'accounting_account' => $deduction->accountingAccount
             ]);
         }
         return response()->json(['records' => $options], 200);
