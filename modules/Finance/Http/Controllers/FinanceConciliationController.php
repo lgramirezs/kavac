@@ -7,8 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Models\Profile;
-use App\Models\User;
+use App\Models\Institution;
 use DB;
 
 /**
@@ -60,10 +59,37 @@ class FinanceConciliationController extends Controller
     {
     }
 
+    /**
+     * Obtiene los datos de la organización asociada al usuario autenticado o en
+     * su defecto, la organización activa y por defecto.
+     *
+     * @method  getInstitution
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     *
+     * @param  Institution $institution Objeto con información asociada a un organismo
+     *
+     * @return JsonResponse JSON con información del organismo
+     */
     public function getInstitution()
     {
-        // $user = Profile::find(auth()->user()->id);
-        // return response()->json(['records' => Profile::all()], 200);
-        // return response()->json(['user' => $user], 200);
+        if(isset(auth()->user()->profile)){
+            if (isset(auth()->user()->profile->institution_id)) {
+                $institution = Institution::where(['id' => auth()->user()->profile->institution_id])->first();
+            }
+            else {
+                $institution = Institution::where(['active' => true, 'default' => true])->first();
+            }
+        }
+        else {
+            $institution = Institution::where(['active' => true, 'default' => true])->first();
+        }
+        $inst = Institution::where('id', $institution->id)->with(['municipality' => function ($q) {
+            return $q->with(['estate' => function ($qq) {
+                return $qq->with('country');
+            }]);
+        }, 'banner', 'logo'])->first();
+
+        return response()->json(['result' => true, 'institution' => $inst], 200);
     }
 }

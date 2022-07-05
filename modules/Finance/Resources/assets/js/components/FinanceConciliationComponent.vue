@@ -157,7 +157,7 @@
              */
             async getInstitutionStartOperationYear() {
                 let vm = this;
-                await axios.get(`${vm.app_url}/get-institution/details/1`).then(response => {
+                await axios.get(`${vm.app_url}/finance/get-institution`).then(response => {
                     var currentTime = new Date();
                     var year = currentTime.getFullYear()
                     let start_operations_date = response.data.institution.start_operations_date;
