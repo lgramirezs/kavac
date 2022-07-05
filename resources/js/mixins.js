@@ -43,7 +43,7 @@ Vue.directive('is-numeric', {
             let tab = (key === 9), backspace = (key === 8), alt = (key === 18),
                 numeric = (key >= 48 && key <=57) || (key >= 96 && key <= 105), supr = (key === 46),
                 ctrl = (key === 17), ctrlA = (key === 65), ini = (key === 36), end = (key === 35),
-                dot = (key === 190 && !el.value.includes("."));
+                dot = ((key === 190 || key === 110) && !el.value.includes("."));
 
             if (numeric || tab || ini || end || backspace || alt || supr || dot) {
                 return;
@@ -956,6 +956,19 @@ Vue.mixin({
                                      });
                 });
             }
+        },
+        /**
+         * Obtiene el listado de deducciones registradas
+         * 
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+        async getDeductions() {
+            const vm = this;
+            await axios.get(`/list/deductions`).then(response => {
+                vm.deductions = response.data.records;
+            }).catch(error => {
+                console.error(error);
+            });
         },
         /**
          * Obtiene un arreglo con los estados civiles
