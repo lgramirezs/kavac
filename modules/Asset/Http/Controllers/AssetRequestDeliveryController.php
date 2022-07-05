@@ -30,22 +30,9 @@ class AssetRequestDeliveryController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function index($perPage = 10, $page = 1)
-    {
-        $assetRequestDelivery = AssetRequestDelivery::with('assetRequest', 'user');
-        
-        $total = $assetRequestDelivery->count();
-        $assetRequestDelivery = $assetRequestDelivery->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
-        
-        return response()->json(
-            [
-                'records'  => $assetRequestDelivery,
-                'total'    => $total,
-                'lastPage' => $lastPage,
-            ],
-            200
-        );
+    public function index()
+    { 
+        return response()->json(['records' => AssetRequestDelivery::with('assetRequest', 'user')->get()], 200);
     }
 
     /**
@@ -125,8 +112,9 @@ class AssetRequestDeliveryController extends Controller
      * @param     Modules\Asset\Models\AssetRequestDelivery    $delivery    Datos de la solicitud
      * @return    \Illuminate\Http\JsonResponse                Objeto con los registros a mostrar
      */
-    public function destroy(AssetRequestDelivery $delivery)
+    public function destroy($id)
     {
+        $delivery = AssetRequestDelivery::find($id);
         if ($delivery->state == 'Pendiente') {
             $asset_request = AssetRequest::find($delivery->asset_request_id);
             $asset_request->state = 'Pendiente por entrega';

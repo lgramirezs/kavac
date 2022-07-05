@@ -40,8 +40,8 @@ class BudgetAccountOpen extends Model implements Auditable
     protected $fillable = [
         'jan_amount', 'feb_amount', 'mar_amount', 'apr_amount', 'may_amount', 'jun_amount',
         'jul_amount', 'aug_amount', 'sep_amount', 'oct_amount', 'nov_amount', 'dec_amount',
-        'total_year_amount', 'total_real_amount', 'total_estimated_amount', 'budget_account_id',
-        'budget_sub_specific_formulation_id'
+        'total_year_amount', 'total_year_amount_m', 'total_real_amount', 'total_estimated_amount',
+        'budget_account_id', 'budget_sub_specific_formulation_id'
     ];
 
     /**

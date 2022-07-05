@@ -47,8 +47,8 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group is-required">
+            <div class="col-md-3">
+                <div class="form-group">
                     <label>Archivo:</label>
                     <input type="file" accept=".txt">
                 </div>
@@ -78,7 +78,7 @@
             </button>
             <button type="button" @click=""
                 class="btn btn-primary btn-sm btn-round">
-                Guardar
+                Consultar
             </button>
         </div>
     </div>
@@ -157,7 +157,7 @@
              */
             async getInstitutionStartOperationYear() {
                 let vm = this;
-                await axios.get(`${vm.app_url}/get-institution/details/1`).then(response => {
+                await axios.get(`${vm.app_url}/finance/get-institution`).then(response => {
                     var currentTime = new Date();
                     var year = currentTime.getFullYear()
                     let start_operations_date = response.data.institution.start_operations_date;

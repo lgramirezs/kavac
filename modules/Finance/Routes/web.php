@@ -58,7 +58,7 @@ Route::group([
     /** Ruta para la gestión de Finanzas > Banco > Ordenes de pago */
     Route::get('pay-orders/vue-list', [FinancePayOrderController::class, 'vueList'])->name('finance.pay-order.vuelist');
     Route::post('pay-orders/change-document-status', [FinancePayOrderController::class, 'changeDocumentStatus'])
-         ->name('finance.pay-order.change-document-status');
+        ->name('finance.pay-order.change-document-status');
     Route::get('pay-orders/pdf/{financePayOrder}', [FinancePayOrderController::class, 'pdf']);
     Route::resource('pay-orders', FinancePayOrderController::class, ['as' => 'finance']);
     Route::post(
@@ -77,6 +77,7 @@ Route::group([
 
     /** Ruta para la gestión de Finanzas > Banco > Conciliación */
     Route::resource('conciliation', FinanceConciliationController::class, ['as' => 'finance']);
+    Route::get('get-institution', [FinanceConciliationController::class, 'getInstitution']);
 
     Route::get('get-banks/', [FinanceBankController::class, 'getBanks']);
     Route::get('get-bank-info/{bank_id}', [FinanceBankController::class, 'getBankInfo']);

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Budget\Models\BudgetCompromise;
 use Modules\Budget\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetSpecificAction;
+use Modules\Budget\Models\BudgetStage;
 
 class BudgetCompromiseController extends Controller
 {
