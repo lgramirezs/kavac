@@ -245,7 +245,7 @@
                                         <a
                                             class="btn btn-sm btn-warning btn-action btn-tooltip"
                                             href="#"
-                                            data-original-title="Agregar cuenta presupuestaria"
+                                            data-original-title="Editar cuenta presupuestaria"
                                             data-toggle="modal"
                                             data-target="#add_account"
                                             @click="editAccount(index)"
@@ -409,6 +409,7 @@
                                     type="button"
                                     class="btn btn-default btn-sm btn-round btn-modal-close"
                                     data-dismiss="modal"
+                                    @click="resetAccount"
                                 >
                                     Cerrar
                                 </button>
@@ -681,6 +682,21 @@ export default {
             vm.specific_action_id = vm.record.accounts[vm.editIndex]['specific_action_id'];
 
             event.preventDefault();
+        },
+        /**
+         * Elimina los valores de los campos en el modal de las cuentas
+         *
+         * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+         * @param  {integer} index Índice del elemento a editar
+         */
+        resetAccount() {
+            const vm = this;
+            vm.account_amount = '';
+            vm.account_concept = '';
+            vm.account_id = '';
+            vm.account_tax_id = '';
+            vm.specific_action_id = '';
+            vm.editIndex = null;
         },
         /**
          * Agrega una cuenta presupuestaria al compromiso
