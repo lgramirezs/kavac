@@ -3,17 +3,19 @@
         <v-client-table :columns="columns" :data="records" :options="table_options">
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
-                    <!-- <button @click="editForm(props.row.id)" 
+                    <purchase-order-direct-hire-show 
+                        :id="props.row.id">
+                    </purchase-order-direct-hire-show>
+                    <button @click="editForm(props.row.id)" 
                         class="btn btn-warning btn-xs btn-icon btn-action" 
                         title="Modificar registro" 
                         data-toggle="tooltip" 
                         v-has-tooltip>
                         <i class="fa fa-edit"></i>
-                    </button> -->
+                    </button>
                     <!-- <a class="btn btn-primary btn-xs btn-icon" :href="url_start_certificate+props.row.id" title="Imprimir Acta de inicio" data-toggle="tooltip" v-has-tooltip target="_blank">
                         <i class="fa fa-print" style="text-align: center;"></i>
                     </a> -->
-                    <purchase-order-direct-hire-show :id="props.row.id"></purchase-order-direct-hire-show>
                     <button @click="deleteRecord(props.row.id,'/purchase/direct_hire')" 
                         class="btn btn-danger btn-xs btn-icon btn-action" 
                         title="Eliminar registro" 
