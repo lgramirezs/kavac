@@ -514,7 +514,7 @@ class BudgetSpecificActionController extends Controller
 
         foreach ($openedAccounts as $openAccount) {
             $records[] = [
-                'id' => $openAccount->id,
+                'id' => $openAccount->budget_account_id,
                  'amount' => $openAccount->total_year_amount_m ? $openAccount->total_year_amount_m : $openAccount->total_year_amount,
                 'text' => $openAccount->budgetAccount->code . ' - ' .
                     $openAccount->budgetAccount->denomination . ' (' .
