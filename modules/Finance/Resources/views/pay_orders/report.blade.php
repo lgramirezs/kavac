@@ -18,6 +18,14 @@
             <td colspan="2">&#160;</td>
         </tr>
         <tr>
+            <td colspan="2" class="text-justify font-weight-bold" style="font-size: 1.2em;font-weight:bold">
+                {{ convertirNumeros(number_format($financePayOrder->amount, $financePayOrder->currency->decimal_places, ".", "")) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&#160;</td>
+        </tr>
+        <tr>
             <td colspan="2">
                 CONCEPTO: {{ $financePayOrder->concept }}
             </td>

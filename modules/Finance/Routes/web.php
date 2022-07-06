@@ -76,6 +76,7 @@ Route::group([
     );
     Route::get('payment-execute/vue-list', [FinancePaymentExecuteController::class, 'vueList'])
          ->name('finance.payment-execute.vuelist');
+    Route::get('payment-execute/pdf/{financePaymentExecute}', [FinancePaymentExecuteController::class, 'pdf']);
     Route::resource('payment-execute', FinancePaymentExecuteController::class, ['as' => 'finance']);
 
     /** Ruta para la gestión de Finanzas > Banco > Movimientos */

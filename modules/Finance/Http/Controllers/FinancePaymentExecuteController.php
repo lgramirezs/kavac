@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\DocumentStatus;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\ReportRepository;
 use Modules\Finance\Models\FinancePayOrder;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Accounting\Models\AccountingEntry;
@@ -343,5 +344,51 @@ class FinancePaymentExecuteController extends Controller
                 'financePayOrders', 'financePaymentDeductions', 'documentStatus'
             )->orderBy('paid_at')->get(),
         ], 200);
+    }
+
+    public function pdf($id)
+    {
+        $financePaymentExecute = FinancePaymentExecute::with([
+            'financePaymentDeductions' => function($q) {
+                $q->with('deduction');
+            }
+        ])->find($id);
+        
+        /*$budjetProjectAcc = null;
+        $specificAction = null;*/
+        if ($financePaymentExecute) {
+            /*if ($financePaymentExecute->budgetSpecificAction) {
+                $budjetProjectAcc = $financePaymentExecute->budgetSpecificAction->specificable->getTable();
+                $specificAction = [
+                    'type' => ($budjetProjectAcc==='budget_projects')?'Proyecto':'Acción Centralizada',
+                    'code' => $financePaymentExecute->budgetSpecificAction->specificable->code . ' - ' . 
+                              $financePaymentExecute->budgetSpecificAction->code
+                ];
+            }*/
+            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function($q) {
+                $q->with('account');
+            }])->where('reference', $financePaymentExecute->code)->first();
+            $payOrderPaymentExecute = FinancePayOrderFinancePaymentExecute::where([
+                'finance_payment_execute_id' => $financePaymentExecute->id
+            ])->first();
+            $payOrder = $payOrderPaymentExecute->financePayOrder()->with('institution')->first();
+            $pdf = new ReportRepository;
+            $filename = "payment-execute-$financePaymentExecute->code.pdf";
+            $file = storage_path() . '/reports/' . $filename;
+            list($year, $month, $day) = explode("-", $financePaymentExecute->paid_at);
+            $pdf->setConfig(
+                [
+                    'institution' => $payOrder->institution,
+                    'urlVerify'   => url(''),
+                    'orientation' => 'P',
+                    'filename'    => $filename
+                ]
+            );
+            $pdf->setHeader("COMPROBANTE DE EMISIÓN Nº $financePaymentExecute->code", "ACUSE DE PAGO RECIBIDO", true, false,'','C','C');
+            $pdf->setFooter();
+            $pdf->setBody(
+                'finance::payments_execute.report', true, compact('payOrder', 'financePaymentExecute', 'accountingEntry')
+            );
+        }
     }
 }

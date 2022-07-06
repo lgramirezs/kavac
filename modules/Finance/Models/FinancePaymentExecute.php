@@ -31,7 +31,7 @@ class FinancePaymentExecute extends Model implements Auditable
      * Lista de atributos para la gestión de fechas
      * @var array $dates
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'paid_at'];
 
     /**
      * Lista de atributos que pueden ser asignados masivamente
