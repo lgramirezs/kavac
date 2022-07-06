@@ -239,6 +239,18 @@ Vue.component('budget-formulated-report', () =>
 );
 
 /**
+ * Componente para mostrar lista de proyectos
+ *
+ * @author José Briceño <josejorgebriceno9@gmail.com> | <jonathanalvarado1407@gmail.com>
+ */
+ Vue.component('budget-analytical-major', () =>
+ import(
+	 /* webpackChunkName: "budget-formulated-list-report" */
+	 './components/BudgetAnalyticalMajorComponent.vue'
+ )
+);
+
+/**
  * Opciones de configuración global del módulo de presupuesto
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>

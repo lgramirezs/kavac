@@ -4,7 +4,6 @@
 
 namespace Modules\Budget\Http\Controllers\Reports;
 
-use Carbon\Carbon;
 use App\Models\FiscalYear;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,12 +13,11 @@ use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\BudgetAccount;
 use Modules\Budget\Models\BudgetProject;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Validation\Rules\In;
 use Modules\Budget\Models\BudgetAccountOpen;
 use Modules\Budget\Models\BudgetCentralizedAction;
 use Modules\Purchase\Models\BudgetCompromiseDetail;
+use Modules\Budget\Models\BudgetModificationAccount;
 use Modules\Budget\Models\BudgetSubSpecificFormulation;
-use Symfony\Polyfill\Intl\Idn\Idn;
 
 /**
  * @class BudgetAccountOpenController
@@ -57,11 +55,10 @@ class BudgetReportsController extends Controller
      *
      * @return    Renderable 
      */
-    public function budgetAvailability()
+    public function budgetAvailability($flag = null)
     {
 
         $budgetItems = $this->getBudgetAccounts();
-
         $budgetProjects = $this->getBudgetProjects(true);
         $budgetCentralizedActions = $this->getBudgetCentralizedActions(true);
 
@@ -91,6 +88,14 @@ class BudgetReportsController extends Controller
         }
 
         array_push($data, $temp);
+
+        if ($flag) {
+            return [
+                'budgetItems' => json_encode($data),
+                'budgetProjects' => json_encode($budgetProjects),
+                'budgetCentralizedActions' => json_encode($budgetCentralizedActions)
+            ];
+        }
 
         return view('budget::reports.budgetAvailability', [
             'budgetItems' => json_encode($data),
@@ -188,6 +193,19 @@ class BudgetReportsController extends Controller
         return $project_accounts_open;
     }
 
+    /**
+     * Metodo que retorna el monto comprometido para la cuenta $account_id
+     * 
+     * @author José Briceño <josejorgebriceno9@gmail.com>
+     * 
+     * @method getAccountCompromisedAmout
+     * 
+     * @param int $account_id
+     * 
+     * @return Float Monto del compromiso para la cuenta presupuestaria con 'id' $account_id
+     * 
+     */
+
     public function getAccountCompromisedAmout(int $accout_id)
     {
         $compromised = BudgetCompromiseDetail::where('budget_account_id', $accout_id)->get()->all();
@@ -207,6 +225,8 @@ class BudgetReportsController extends Controller
      * Metodo para filtrar y retornar un array con las cuentas presupuestarias formuladas
      *
      * @author    Jonathan Alvarado <wizardx1407@gmail.com> | <jonathanalvarado1407@gmail.com>
+     * 
+     * @author José Briceño <josejorgebriceno9@gmail.com>
      *
      * @return    Array Arreglo ordenado de cuentas presupuestarias formuladas
      */
@@ -218,13 +238,13 @@ class BudgetReportsController extends Controller
 
             if ($budgetItem->code > $finalCode) break;
 
-            $specificAction = BudgetSubSpecificFormulation::where('id', $budgetItem->budget_sub_specific_formulation_id)->first()->specificAction;
+            // $specificAction = BudgetSubSpecificFormulation::where('id', $budgetItem->budget_sub_specific_formulation_id)->first()->specificAction;
 
             $code = str_replace('.', '', $budgetItem->budgetAccount->getCodeAttribute());
 
             if ($code >= $initialCode && $code <= $finalCode) {
                 // if (($initialDate <= $specificAction->from_date->toDateString()) && ($specificAction->to_date->toDateString() <= $finalDate)) {
-                    array_push($filteredArray, $budgetItem);
+                array_push($filteredArray, $budgetItem);
                 // }
             }
         }
@@ -235,6 +255,8 @@ class BudgetReportsController extends Controller
      * Metodo para generar el reporte en PDF de disponibilad presupuestaria
      *
      * @author    Jonathan Alvarado <wizardx1407@gmail.com> | <jonathanalvarado1407@gmail.com>
+     * 
+     * @author  José Briceño <josejorgebriceno9@gmail.com>
      *
      */
     public function getPdf(Request $request)
@@ -303,6 +325,18 @@ class BudgetReportsController extends Controller
             'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $data['finalDate'])->format('d-m-Y'),
         ]);
     }
+
+
+    /**
+     * Metodo que retorna el monto comprometido para la cuenta $account_id
+     * 
+     * @author José Briceño <josejorgebriceno9@gmail.com>
+     * 
+     * @method consolidatedReportPdf
+     * 
+     * @param Request $request
+     * 
+     */
 
     public function consolidatedReportPdf(Request $request)
     {
@@ -642,5 +676,105 @@ class BudgetReportsController extends Controller
         }
 
         return $budgetCentralizedActions;
+    }
+
+
+    public function budgetAnalyticalMajor()
+    {
+        $budgetAvailability = $this->budgetAvailability(true);
+        return view('budget::reports.budgetAnalyticalMajor', $budgetAvailability);
+    }
+
+    public function getbudgetAnalyticalMajorPdf(Request $request)
+    {
+        $data = $request->validate([
+            'initialDate' => ['required', 'before_or_equal:finalDate'],
+            'finalDate' => ['required', 'after_or_equal:initialDate'],
+            'initialCode' => 'required',
+            'finalCode' => 'required',
+            'accountsWithMovements' => 'required',
+        ]);
+
+        $data = $request->toArray();
+        $data["specific_actions_ids"] = json_decode('[' . $data["specific_actions_ids"] . ']', true);
+        $ids = $data["specific_actions_ids"];
+
+        if ($request->project_type === 'project') {
+            $project = BudgetProject::with(['specificActions' => function ($query) use ($ids) {
+                $query->with(['subSpecificFormulations' => function ($query) {
+                    $query->with(['accountOpens' => function ($query) {
+                        $query->with('budgetAccount');
+                        $query->orderBy('id', 'desc');
+                    }])->whereHas('accountOpens');
+                }])->whereIn('id', $ids)->get();
+            }])->find($data["project_id"]);
+        } else {
+            $project = BudgetCentralizedAction::with(['specificActions' => function ($query) use ($ids) {
+                $query->with(['subSpecificFormulations' => function ($query) {
+                    $query->with(['accountOpens' => function ($query) {
+                        $query->with('budgetAccount');
+                        $query->orderBy('id', 'desc');
+                    }])->whereHas('accountOpens');
+                }])->whereIn('id', $ids)->get();
+            }])->find($data["project_id"]);
+        }
+
+        $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $project);
+
+        foreach ($records as $record) {
+            $record[0] = $this->getAccountModifications($record[0]);
+        }
+
+        // dd($records[2][0]);
+
+        for ($i = 0; $i < count($records); $i++) {
+            $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
+        }
+
+
+        $pdf = new ReportRepository();
+
+        $institution = Institution::find(1);
+        $fiscal_year = FiscalYear::where('active', true)->first();
+        $currency = Currency::where('default', true)->first();
+
+
+
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE']);
+        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setFooter();
+        $pdf->setBody('budget::pdf.budgetAnalyticMajor', true, [
+            'pdf' => $pdf,
+            'records' => $records,
+            'institution' => $institution,
+            'currencySymbol' => $currency['symbol'],
+            'fiscal_year' => $fiscal_year['year'],
+            "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
+            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['initialDate'])->format('d-m-Y'),
+            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['finalDate'])->format('d-m-Y'),
+        ]);
+    }
+
+    public function getAccountModifications($budgetAccountsOpen)
+    {
+
+        foreach ($budgetAccountsOpen as $budgetAccountOpen) {
+            $modifications = BudgetModificationAccount::where('budget_sub_specific_formulation_id', $budgetAccountOpen->budget_sub_specific_formulation_id)->get();
+            $increment = 0;
+            $decrement = 0;
+            if (count($modifications->toArray()) > 0) {
+                foreach ($modifications as $modif) {
+                    if ($budgetAccountOpen->budget_account_id == $modif->budget_account_id) {
+                        if ($modif->operation == 'I') {
+                            $increment += $modif->amount;
+                        } else {
+                            $decrement += $modif->amount;
+                        }
+                    }
+                }
+                $budgetAccountOpen['increment'] = $increment;
+                $budgetAccountOpen['decrement'] = $increment;
+            }
+        }
     }
 }
