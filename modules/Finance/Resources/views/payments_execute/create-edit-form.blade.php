@@ -19,7 +19,8 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <finance-payment-execute route-list="{{ route('finance.payment-execute.index') }}"/>
+            <finance-payment-execute route-list="{{ route('finance.payment-execute.index') }}" 
+                                     :accounting_accounts="{{ $accountingAccounts }}"/>
         </div>
     </div>
 @endsection

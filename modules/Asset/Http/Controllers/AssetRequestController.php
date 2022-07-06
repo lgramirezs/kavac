@@ -351,19 +351,14 @@ class AssetRequestController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetRequests = AssetRequest::where('id', '>', 0);
+            $assetRequests = AssetRequest::where('id', '>', 0)->get();
         } else {
-            $assetRequests = AssetRequest::where('institution_id', $institution_id);
+            $assetRequests = AssetRequest::where('institution_id', $institution_id)->get();
         }
-
-        $total = $assetRequests->count();
-        $assetRequests = $assetRequests->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
+        
         return response()->json(
             [
                 'records'  => $assetRequests,
-                'total'    => $total,
-                'lastPage' => $lastPage,
             ],
             200
         );

@@ -105,8 +105,8 @@ class PayrollAssociatedParametersRepository
             [
                 'id'       => 'PROFESIONAL',
                 'name'     => 'Datos Profesionales',
-                'model'    => 'Modules\Payroll\Models\PayrollProfesional',
-                'required' => ['payrollProfesional'],
+                'model'    => 'Modules\Payroll\Models\PayrollProfessional',
+                'required' => ['payrollProfessional'],
                 'children' =>
                 [
                     [
@@ -165,6 +165,7 @@ class PayrollAssociatedParametersRepository
             [
                 'id'       => 'EMPLOYMENT_INFORMATION',
                 'name'     => 'Datos Laborales',
+                'model'    => 'Modules\Payroll\Models\PayrollEmployment',
                 'required' => ['payrollEmployment'],
                 'children' =>
                 [

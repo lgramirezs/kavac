@@ -99,18 +99,18 @@ class AssetRequestExtensionController extends Controller
     {
     }
 
-    public function vuePendingList($perPage = 10, $page = 1)
+    public function vuePendingList()
     {
-        $assetRequestExtension = AssetRequestExtension::with('user')->where('state', 'Pendiente');
-        $total = $assetRequestExtension->count();
-        $assetRequestExtension = $assetRequestExtension->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
-        
+        $assetRequestExtension = AssetRequestExtension::with('user', 'assetRequest')->where('state', 'Pendiente')->get();
+        $asset_request_exten_code = [];
+        foreach($assetRequestExtension as $assetRequestExten){
+            $assetRequestExten->code = $assetRequestExten->assetRequest->code;
+            array_push($asset_request_exten_code, $assetRequestExten);
+        }
+       
         return response()->json(
             [
-                'records'  => $assetRequestExtension,
-                'total'    => $total,
-                'lastPage' => $lastPage,
+                'records'  => $asset_request_exten_code,
             ],
             200
         );

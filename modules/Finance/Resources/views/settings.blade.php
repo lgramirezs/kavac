@@ -91,6 +91,17 @@
                                     ]) !!}
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('paymentExecutes_code', __('Código para la Ejecución de Pagos'), []) !!}
+                                    {!! Form::text('paymentExecutes_code', ($paymentExecutesCode) ? $paymentExecutesCode->format_code : old('paymentExecutes_code'), [
+                                        'class' => 'form-control input-sm', 'data-toggle' => 'tooltip',
+                                        'title' => __('Formato para el código de la ejecución de pago'),
+                                        'placeholder' => 'Ej. XXX-00000000-YYYY',
+                                        'readonly' => ($paymentExecutesCode) ? true : false
+                                    ]) !!}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">

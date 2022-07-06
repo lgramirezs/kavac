@@ -764,6 +764,17 @@ Vue.component('payroll-schooling-levels', () =>
 );
 
 /**
+ * Componente para listar, crear, actualizar y borrar datos de días feriados
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+ */
+Vue.component('payroll-holidays', () =>
+    import(
+        /* webpackChunkName: "payroll-holidays" */
+        './components/settings/PayrollHolidaysComponent.vue')
+);
+
+/**
  * Componente para la gestión de calculos de salario
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>

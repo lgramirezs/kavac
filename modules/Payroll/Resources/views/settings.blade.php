@@ -240,6 +240,9 @@
 
 						{{-- Niveles de escolaridad --}}
 						<payroll-schooling-levels></payroll-schooling-levels>
+
+						{{-- Días feriados --}}
+						<payroll-holidays></payroll-holidays>
 					</div>
 				</div>
 			</div>

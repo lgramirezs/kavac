@@ -129,7 +129,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
 
     /** Ruta que obtiene un listado de las desincorporaciones de bienes institucionales */
     Route::get('disincorporations/vue-list/{perPage?}/{page?}', 'AssetDisincorporationController@vueList');
+    
+    /** Ruta que obtiene los documentos e imagenes subidos en una disincorporation registrados */
+    Route::get('disincorporations/get-documents/show/{code}', 'AssetDisincorporationController@showDocuments');
 
+    Route::get('disincorporations/get-documents/{id}/{all?}', 'AssetDisincorporationController@getDisincorporationRequestDocuments');
+
+     
     /**
      * --------------------------------------------------------------
      * Rutas para gestionar las solicitudes de bienes institucionales
@@ -171,7 +177,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
      */
 
     /** Ruta que obtiene un listado de las solicitudes pendientes de bienes institucionales */
-    Route::get('requests/vue-pending-list/{perPage?}/{page?}', 'AssetRequestController@vuePendingList')
+    Route::get('requests/vue-pending-list', 'AssetRequestController@vuePendingList')
              ->name('asset.request.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */
@@ -190,7 +196,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     
 
     /** Ruta que obtiene un listado de las solicitudes de prorroga pendientes */
-    Route::get('requests/extensions/vue-pending-list/{perPage?}/{page?}', 'AssetRequestExtensionController@vuePendingList')
+    Route::get('requests/extensions/vue-pending-list', 'AssetRequestExtensionController@vuePendingList')
              ->name('asset.request.extension.vuependinglist');
 
     /** Ruta que permite aprobar una solicitud */
@@ -213,7 +219,6 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
         'AssetRequestDeliveryController',
         ['except' => ['show', 'create', 'edit']]
     );
-    Route::get('requests/deliveries/{perPage?}/{page?}','AssetRequestDeliveryController@index');
 
     /**
      * ----------------------------------------------

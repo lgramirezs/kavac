@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function () {
 
         /** Ruta de configuración de permisos asociados a los distintos roles del sistema */
         Route::post('settings/roles-permissions', 'UserController@setRolesAndPermissions')
-             ->name('roles.permissions.settings');
+            ->name('roles.permissions.settings');
 
         /** Ruta para la assignación de roles y permisos a usuarios del sistema */
         Route::get('assign/roles-permissions/{user}', 'UserController@assignAccess')->name('assign.access');

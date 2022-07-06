@@ -1,5 +1,5 @@
 <template>
-    <v-client-table :columns="columns" :data="accRecords" :options="table_options">
+    <v-client-table :columns="columns" :data="records" :options="table_options">
         <div slot="status" slot-scope="props" class="text-center">
             <div v-if="props.row.active">
                 <span class="badge badge-success"><strong>Activa</strong></span>
@@ -20,7 +20,7 @@
             <button @click="initRecord(props.row)" class="btn btn-warning btn-xs btn-icon btn-action" title="Modificar registro" data-toggle="tooltip" v-has-tooltip>
                 <i class="fa fa-edit"></i>
             </button>
-            <button @click="deleteRecord(props.index,'/accounting/accounts')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
+            <button @click="deleteRecord(props.row.id,'/accounting/accounts')" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
                 <i class="fa fa-trash-o"></i>
             </button>
         </div>
@@ -29,7 +29,7 @@
 <script>
 export default {
   props: {
-    records: {
+    initial_records: {
       type: Array,
       default() {
         return [];
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      accRecords: [],
+      records: [],
       columns: ['code', 'denomination', 'status', 'original', 'id']
     };
   },
@@ -66,8 +66,8 @@ export default {
     }
   },
   watch: {
-    records: function(res) {
-      this.accRecords = res;
+    initial_records: function(res) {
+      this.records = res;
     }
   }
 };

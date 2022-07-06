@@ -634,7 +634,7 @@
 					},
 					callback: function (result) {
 						if (result) {
-							vm.budget_modification_accounts.splice(index, 1);
+							vm.modification_accounts.splice(index, 1);
 						}
 					}
 				});

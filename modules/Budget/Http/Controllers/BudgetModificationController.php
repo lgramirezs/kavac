@@ -12,6 +12,7 @@ use App\Models\DocumentStatus;
 use Modules\Budget\Models\BudgetModification;
 use Modules\Budget\Models\BudgetModificationAccount;
 use Modules\Budget\Models\BudgetSubSpecificFormulation;
+use Modules\Budget\Models\BudgetAccountOpen;
 
 /**
  * @class BudgetModificationController
@@ -158,11 +159,28 @@ class BudgetModificationController extends Controller
             foreach ($request->budget_account_id as $account) {
 
                 /** @var object Obtiene la formulación correspondiente a la acción específica seleccionada */
-                $formulation = BudgetSubSpecificFormulation::currentFormulation(
-                    $account['from_specific_action_id']
-                )->first();
+                $formulation = BudgetSubSpecificFormulation::where('budget_specific_action_id', $account['from_specific_action_id'])
+                     ->where('document_status_id', $documentStatus->id)
+                     ->where('assigned', true)
+                     ->orderBy('year', 'desc')->first();
 
                 if ($formulation) {
+                    $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
+                                                            ->where('budget_account_id', $account['from_account_id'])
+                                                            ->first();
+
+                    $modificationType = ($type==="C") ? 'I' : 'D';
+
+                    if ($modificationType == 'D') {
+                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $account['from_amount'];
+                        $budgetAccountOpen->save();
+                    }
+
+                    if ($modificationType == 'I') {
+                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['from_amount'];
+                        $budgetAccountOpen->save();
+                    }
+
                     BudgetModificationAccount::create([
                         'amount' => $account['from_amount'],
                         'operation' => ($type==="C") ? 'I' : 'D',
@@ -178,6 +196,14 @@ class BudgetModificationController extends Controller
                     $formulation_transfer = BudgetSubSpecificFormulation::currentFormulation(
                         $account['to_specific_action_id']
                     );
+                    $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation_transfer->id)
+                                                            ->where('budget_account_id', $account['to_account_id'])
+                                                            ->first();
+                    $modificationType = ($type==="C") ? 'I' : 'D';
+                    if ($modificationType == 'D') {
+                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['to_amount'];
+                        $budgetAccountOpen->save();
+                    }
 
                     if ($formulation_transfer) {
                         BudgetModificationAccount::create([

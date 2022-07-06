@@ -14,6 +14,7 @@ use App\Models\CodeSetting;
 use Modules\Warehouse\Models\WarehouseInventoryProductMovement;
 use Modules\Warehouse\Models\WarehouseInstitutionWarehouse;
 use Modules\Warehouse\Models\WarehouseInventoryProduct;
+use Modules\Warehouse\Models\WarehouseInventoryRule;
 use Modules\Warehouse\Models\WarehouseProductAttribute;
 use Modules\Warehouse\Models\WarehouseProductValue;
 use Modules\Warehouse\Models\WarehouseMovement;
@@ -139,18 +140,21 @@ class WarehouseMovementController extends Controller
             $equal = null;
 
             foreach ($request->warehouse_inventory_products as $product) {
-                $inventory_product_init = WarehouseInventoryProduct::find($product['id']);
+                $minimum = $product['minimum'];
+                $maximum = $product['maximum'];
+
+                $inventory_product_init = WarehouseInventoryProduct::with('warehouseInventoryRule')->find($product['id']);
                 if (!is_null($inventory_product_init)) {
                     $exist_real = $inventory_product_init->exist - $inventory_product_init->reserved;
                     if ($exist_real >= $product['movemented']) {
 
                         /** Se verifica si el almacén destino tiene un registro previo del producto movilizado */
-                        $products_inventory = WarehouseInventoryProduct::where(
-                            'warehouse_institution_warehouse_id',
-                            $end_inst_ware->id
-                        )
-                            ->where('warehouse_product_id', $inventory_product_init->warehouse_product_id)
-                            ->where('unit_value', $inventory_product_init->unit_value)->get();
+                        $products_inventory = WarehouseInventoryProduct::with('warehouseInventoryRule')
+                            ->where(
+                                'warehouse_institution_warehouse_id',
+                                $end_inst_ware->id
+                            )->where('warehouse_product_id', $inventory_product_init->warehouse_product_id)
+                             ->where('unit_value', $inventory_product_init->unit_value)->get();
 
                         /** Si existe se comparan los atributos perzonalizados si los tiene */
                         if ((count($products_inventory) > 0)) {
@@ -187,6 +191,17 @@ class WarehouseMovementController extends Controller
                                 }
                                 /** Si todos los atributos son iguales se genera el movimiento */
                                 if ($equal == true) {
+                                    /** Se actualiza la regla de abastecimiento */
+                                    if (isset($minimum)) {
+                                        $rule = WarehouseInventoryRule::updateOrCreate([
+                                            'warehouse_inventory_product_id' => $inventory_product_finish->id,
+                                        ], [
+                                            'minimum' => $minimum,
+                                            'maximum' => $maximum,
+                                            'user_id' => Auth::id(),
+                                        ]);
+                                    }
+
                                     $inventory_movement = WarehouseInventoryProductMovement::create([
                                         'quantity'                               => $product['movemented'],
                                         'new_value'                              => $inventory_product_init->unit_value,
@@ -217,6 +232,15 @@ class WarehouseMovementController extends Controller
                                 'currency_id' => $inventory_product_init->currency_id,
                                 'warehouse_institution_warehouse_id' => $end_inst_ware->id,
                             ]);
+
+                            if (isset($minimum)) {
+                                $rule = WarehouseInventoryRule::create([
+                                    'minimum' => $minimum,
+                                    'maximum' => $maximum,
+                                    'warehouse_inventory_product_id' => $inventory_product_finish->id,
+                                    'user_id' => Auth::id(),
+                                ]);
+                            }
 
                             /** Se genera el movimiento */
                             $inventory_movement = WarehouseInventoryProductMovement::create([
@@ -299,6 +323,8 @@ class WarehouseMovementController extends Controller
 
             /** Se agregan los nuevos elementos a la solicitud */
             foreach ($request->warehouse_inventory_products as $product) {
+                $minimum = $product['minimum'];
+                $maximum = $product['maximum'];
                 $inventory_product_init = WarehouseInventoryProduct::find($product['id']);
                 if (!is_null($inventory_product_init)) {
                     $exist_real = $inventory_product_init->exist - $inventory_product_init->reserved;
@@ -459,7 +485,7 @@ class WarehouseMovementController extends Controller
                         ->where('institution_id', $institution)->first();
 
         if ($inst_ware) {
-            $warehouse_product = WarehouseInventoryProduct::where('warehouse_institution_warehouse_id', $inst_ware->id)
+            $warehouse_product = WarehouseInventoryProduct::whereNotNull('exist')->where('warehouse_institution_warehouse_id', $inst_ware->id)
                 ->with(['warehouseProductValues' => function ($query) {
                     $query->with('warehouseProductAttribute');
                 }, 'currency', 'warehouseProduct', 'warehouseInstitutionWarehouse' => function ($query) {

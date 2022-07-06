@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Modules\Budget\Models\BudgetCompromise;
 use Modules\Budget\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetSpecificAction;
+use Modules\Budget\Models\BudgetStage;
+use Modules\Budget\Models\BudgetAccountOpen;
 
 class BudgetCompromiseController extends Controller
 {
@@ -138,6 +140,12 @@ class BudgetCompromiseController extends Controller
                     'budget_sub_specific_formulation_id' => $formulation->id,
                 ]);
                 $total += ($account['amount'] + $taxAmount);
+
+                $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
+                                                            ->where('budget_account_id', $account['account_id'])
+                                                            ->first();
+                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $total;
+                        $budgetAccountOpen->save();
             }
 
             $compromise->budgetStages()->create([
@@ -190,7 +198,6 @@ class BudgetCompromiseController extends Controller
      */
     public function update(Request $request)
     {
-
         $year = $request->fiscal_year ?? date("Y");
 
         $compromisedYear = explode("-", $request->compromised_at)[0];
@@ -205,6 +212,7 @@ class BudgetCompromiseController extends Controller
         $budget->save();
 
         $total = 0;
+        $totalEdit = 0;
 
         /** Gestiona los ítems del compromiso */
         $deleted = BudgetCompromiseDetail::where('budget_compromise_id', $request->id)->delete();
@@ -228,6 +236,27 @@ class BudgetCompromiseController extends Controller
                     'budget_sub_specific_formulation_id' => $formulation->id,
                 ]);
             $total += ($account['amount'] + $taxAmount);
+            $totalEdit = ($account['amountEdit'] + $taxAmount);
+
+            $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
+                                                            ->where('budget_account_id', $account['account_id'])
+                                                            ->first();
+            if ($account['operation'] == 'I') {
+                $budgetAccountOpen->update([
+                    'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m,
+                ]);
+            } elseif ($account['operation'] == 'S') {
+                $budgetAccountOpen->update([
+                    'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m + $totalEdit,
+                ]);
+            } elseif ($account['operation'] == 'R') {
+                $budgetAccountOpen->update([
+                    'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m - ($totalEdit < 0 ? $totalEdit * -1 : $totalEdit),
+                ]);
+            } else {
+                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $total;
+                        $budgetAccountOpen->save();
+            }
         }
 
         $budget->budgetStages()->update([

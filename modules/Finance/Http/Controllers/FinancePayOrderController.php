@@ -419,6 +419,68 @@ class FinancePayOrderController extends Controller
     }
 
     /**
+     * Listado con órdenes de pago pendientes por cancelar
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    public function getPendingPayOrders($receiver_id = null)
+    {
+        if ($receiver_id === null) {
+            $financePayOrders = FinancePayOrder::with(
+                'budgetSpecificAction',
+                'financePaymentMethod',
+                'institution',
+                'documentStatus',
+                'nameSourceable',
+                'documentSourceable',
+                'currency'
+            )->with(['financeBankAccount' => function ($q) {
+                $q->with('accountingAccount');
+            }])->where('status', 'PE')->orderBy('code')->get();
+        } else {
+            $receiver = Receiver::find($receiver_id);
+            
+            $financePayOrders = FinancePayOrder::with(
+                'budgetSpecificAction',
+                'financePaymentMethod',
+                'institution',
+                'documentStatus',
+                'nameSourceable',
+                'documentSourceable',
+                'currency'
+            )->with(['financeBankAccount' => function ($q) {
+                $q->with('accountingAccount');
+            }])->where([
+                'status' => 'PE',
+                'name_sourceable_type' => $receiver->receiverable_type,
+                'name_sourceable_id' => $receiver->receiverable_id
+            ])->orderBy('code')->get();
+        }
+
+        $options = [['id'   => '', 'text' => 'Seleccione...']];
+
+        foreach ($financePayOrders as $financePayOrder) {
+            array_push($options, [
+                'id' => $financePayOrder->id,
+                'text' => $financePayOrder->code,
+                'amount' => $financePayOrder->amount,
+                'budgetSpecificAction' => $financePayOrder->budgetSpecificAction,
+                'financePaymentMethod' => $financePayOrder->financePaymentMethod,
+                'institution' => $financePayOrder->institution,
+                'documentStatus' => $financePayOrder->documentStatus,
+                'nameSourceable' => $financePayOrder->nameSourceable,
+                'documentSourceable' => $financePayOrder->documentSourceable,
+                'currency' => $financePayOrder->currency,
+                'financeBankAccount' => $financePayOrder->financeBankAccount
+            ]);
+        }
+
+        return response()->json(['records' => $options], 200);
+    }
+
+    /**
      * Establece el nuevo estatus del documento
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
