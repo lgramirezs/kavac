@@ -102,4 +102,26 @@ class DeductionController extends Controller
         $deduction->delete();
         return response()->json(['record' => $deduction, 'message' => 'Success'], 200);
     }
+
+    /**
+     * Listado de deducciones
+     *
+     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     *
+     * @return void 
+     */
+    public function list()
+    {
+        $deductions = Deduction::with('accountingAccount')->where('active', true)->get();
+        $options = [['id' => '', 'text' => 'Seleccione...']];
+        foreach ($deductions as $deduction) {
+            array_push($options, [
+                'id' => $deduction->id,
+                'text' => $deduction->name,
+                'formula' => $deduction->formula,
+                'accounting_account' => $deduction->accountingAccount
+            ]);
+        }
+        return response()->json(['records' => $options], 200);
+    }
 }

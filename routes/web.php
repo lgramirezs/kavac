@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Response;
+use App\Models\Deduction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\DeductionController;
 
 
 /*
@@ -225,6 +227,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Rutas para la gestión de deducciones */
     Route::resource('deductions', 'DeductionController', ['except' => ['create', 'show', 'edit']]);
+    Route::get('list/deductions', [DeductionController::class, 'list']);
 
     /** Rutas para la gestión de unidades, departamentos o dependencias */
     Route::resource('departments', 'DepartmentController', ['except' => ['create', 'show', 'edit']]);

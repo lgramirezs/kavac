@@ -39,7 +39,11 @@ class AccountingEntryCategoriesTableSeeder extends Seeder
             [
                 'name' => 'Movimientos bancarios',
                 'acronym' => 'DEP',
-            ]
+            ],
+            [
+                'name' => 'Emisiones de Pago',
+                'acronym' => 'PAG',
+            ],
         ];
 
         DB::transaction(function () use ($categories) {

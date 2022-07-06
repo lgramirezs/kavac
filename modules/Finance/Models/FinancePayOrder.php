@@ -174,4 +174,14 @@ class FinancePayOrder extends Model implements Auditable
     {
         return $this->morphTo();
     }
+
+    /**
+     * The financePaymentExecute that belong to the FinancePayOrder
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function financePaymentExecute()
+    {
+        return $this->belongsToMany(FinancePaymentExecute::class)->withTimestamps();
+    }
 }
