@@ -725,12 +725,9 @@ class BudgetReportsController extends Controller
             $record[0] = $this->getAccountModifications($record[0]);
         }
 
-        // dd($records[2][0]);
-
         for ($i = 0; $i < count($records); $i++) {
             $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
         }
-
 
         $pdf = new ReportRepository();
 

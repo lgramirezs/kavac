@@ -98,9 +98,9 @@
 </table>
 <table cellspacing="0" cellpadding="1" border="1" style="font-weight: bold">
     <tr>
-        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="17%">
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="17.5%">
         </td>
-        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="11%">
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="10%">
             {{ number_format($real, 2) }}
         </td>
         <td style="font-size: 8rem; border-bottom: 1px solid #999; " align="center" width="9%">
@@ -118,7 +118,7 @@
         <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="9%">
             {{ number_format($total_compromised, 2) }}
         </td>
-        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="9%">
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="9.5%">
             {{ number_format($caused, 2) }}
         </td>
         <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="9%">
