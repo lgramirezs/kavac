@@ -121,7 +121,7 @@ class PayrollAssociatedParametersRepository
                         'name'      => 'Profesión',
                         'type'      => 'list',
                         'model'     => 'Modules\Payroll\Models\Profession',
-                        'required'  => ['Profession_id']
+                        'required'  => ['profession_id']
                     ],
                     [
                         'id'        => 'STUDENT',
