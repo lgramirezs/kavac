@@ -169,7 +169,7 @@
                                                 <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el disfrute de vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
                                                             'alias': 'numeric',
                                                             'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.days_for_vacations">
+                                                            'digits': 0" v-model="record.vacation_days">
                                             </div>
                                         </div>
                                         <!-- ./Días a otorgar para el disfrute de vacaciones -->
@@ -852,7 +852,7 @@ export default {
                 start_date: '',
                 end_date: '',
                 vacation_type: '',
-                days_for_vacations: '',
+                vacation_days: '',
                 vacation_periods_accumulated_per_year: '',
                 vacation_days: '',
                 vacation_period_per_year: '',
@@ -1113,7 +1113,7 @@ export default {
                         (vm.record.start_date != '') &&
                         (vm.record.institution_id != '') &&
                         (vm.record.additional_days_per_year != '') &&
-                        (vm.record.days_for_vacations != '') &&
+                        (vm.record.vacation_days != '') &&
                         (vm.record.minimum_additional_days_per_year != '') &&
                         (vm.record.maximum_additional_days_per_year != '') &&
                         (vm.record.vacation_period_per_year != '') &&
