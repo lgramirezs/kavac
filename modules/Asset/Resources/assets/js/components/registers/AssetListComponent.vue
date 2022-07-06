@@ -1,14 +1,5 @@
 <template>
-    <section>
-        <div class="form-group form-inline pull-right VueTables__limit-2">
-            <div class="VueTables__limit-field">
-                <label class="">Registros</label>
-                <select2 :options="perPageValues"
-                    v-model="perPage">
-                </select2>
-            </div>
-        </div>
-        <v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
+    <v-client-table :columns="columns" :data="records" :options="table_options">
             <div slot="institution" slot-scope="props" class="text-center">
                 <span>
                     {{ (props.row.institution)?props.row.institution.acronym:'N/A' }}
@@ -85,35 +76,6 @@
                 </div>
             </div>
         </v-client-table>
-        <div class="VuePagination-2 row col-md-12 ">
-            <nav class="text-center">
-                <ul class="pagination VuePagination__pagination" style="">
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="page != 1">
-                        <a class="page-link" @click="changePage(1)">PRIMERO</a>
-                    </li>
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk disabled">
-                        <a class="page-link">&lt;&lt;</a>
-                    </li>
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-page" v-if="page > 1">
-                        <a class="page-link" @click="changePage(page - 1)">&lt;</a>
-                    </li>
-                    <li :class="(page == number)?'VuePagination__pagination-item page-item active':'VuePagination__pagination-item page-item'" v-for="(number, index) in pageValues" :key="index" v-if="number <= lastPage">
-                        <a class="page-link active" role="button" @click="changePage(number)">{{number}}</a>
-                    </li>
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-page" v-if="page < lastPage">
-                        <a class="page-link" @click="changePage(page + 1)">&gt;</a>
-                    </li>
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-next-chunk disabled">
-                        <a class="page-link">&gt;&gt;</a>
-                    </li>
-                    <li class="VuePagination__pagination-item page-item  VuePagination__pagination-item-prev-chunk" v-if="lastPage != page">
-                        <a class="page-link" @click="changePage(lastPage)">ÚLTIMO</a>
-                    </li>
-                </ul>
-                <p class="VuePagination__count text-center col-md-12" style=""> </p>
-            </nav>
-        </div>
-    </section>
 </template>
 
 <script>
@@ -122,26 +84,6 @@
             return {
                 records: [],
                 supplier: [],
-                search: '',
-                page: 1,
-                total: '',
-                perPage: 10,
-                lastPage: '',
-                pageValues: [1,2,3,4,5,6,7,8,9,10],
-                perPageValues: [
-                    {
-                        'id': 10,
-                        'text': '10'
-                    },
-                    {
-                        'id': 25,
-                        'text': '25'
-                    },
-                    {
-                        'id': 50,
-                        'text': '50'
-                    }
-                ],
                 columns: [
                     'inventory_serial', 'institution', 'asset_condition','asset_status','serial','marca','model', 'id'
                 ]
@@ -164,22 +106,10 @@
             this.table_options.filterable = [
                 'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'model'
             ];
-            this.table_options.orderBy = { 'column': 'id'};
+           this.table_options.orderBy = { 'column': 'id'};
         },
         mounted () {
-            this.initRecords(this.route_list, '');
-        },
-        watch: {
-            perPage(res) {
-                if (this.page == 1){
-                    this.initRecords(this.route_list + '/' + res, '');
-                } else {
-                    this.changePage(1);
-                }
-            },
-            page(res) {
-                this.initRecords(this.route_list + '/' + this.perPage + '/' + res, '');
-            }
+            this.readRecords(this.route_list);
         },
         methods: {
             /**
@@ -231,30 +161,6 @@
             disassignAsset(id)
             {
                 location.href = `${window.app_url}/asset/disincorporations/asset/${id}`;
-            },
-            /**
-             * Cambia la pagina actual de la tabla
-             *
-             * @author Henry Paredes <hparedes@cenditel.gob.ve>
-             *
-             * @param [Integer] $page Número de pagina actual
-             */
-            changePage(page) {
-                const vm = this;
-                vm.page = page;
-                var pag = 0;
-                while(1) {
-                    if (pag + 10 >= vm.page) {
-                        pag += 1;
-                        break;
-                    } else {
-                        pag += 10;
-                    }
-                }
-                vm.pageValues = [];
-                for (var i = 0; i < 10; i++) {
-                    vm.pageValues.push(pag + i);
-                }
             },
             /**
              * Reescribe el método initRecords para cambiar su comportamiento por defecto

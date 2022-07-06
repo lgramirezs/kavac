@@ -1,4 +1,5 @@
 <template>
+	<div class="card-body">
 		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
 			<div slot="id" slot-scope="props" class="text-center">
 				<button @click="acceptRequest(props.index)"
@@ -27,8 +28,9 @@
                     {{ format_date(props.row.delivery_date) }}
                 </span>
             </div>
-
 		</v-client-table>
+	</div>
+		
 </template>
 
 <script>

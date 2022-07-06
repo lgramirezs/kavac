@@ -380,7 +380,7 @@ class AssetDisincorporationController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList($perPage = 10, $page = 1)
+    public function vueList()
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -388,11 +388,12 @@ class AssetDisincorporationController extends Controller
         : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetDisincorporations = AssetDisincorporation::with('assetDisincorporationMotive');
+            $assetDisincorporations = AssetDisincorporation::with('assetDisincorporationMotive')->get();
         } else {
             $assetDisincorporations = AssetDisincorporation::where('institution_id', $institution_id)
-                ->with('assetDisincorporationMotive');
+                ->with('assetDisincorporationMotive')->get();
         }
+<<<<<<< HEAD
 
         $total = $assetDisincorporations->count();
         $assetDisincorporations = $assetDisincorporations->offset(($page - 1) * $perPage)->limit($perPage)->get();
@@ -405,6 +406,10 @@ class AssetDisincorporationController extends Controller
             ],
             200
         );
+=======
+        
+        return response()->json(['records'  => $assetDisincorporations ], 200); 
+>>>>>>> Buienes: cambio en los limitadores de pagina en la tablas de registros
     }
 
     /**

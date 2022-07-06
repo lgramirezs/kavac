@@ -320,13 +320,11 @@ class AssetController extends Controller
      * Otiene un listado de los bienes registradas
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
-     * @param     Integer                          $perPage         Número de registros por página
-     * @param     Integer                          $page            Número de la página seleccionada
      * @param     String                           $operation       Tipo de operación realizada
      * @param     Integer                          $operation_id    Identificador único de la operación
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList($perPage = 10, $page = 1, $operation = null, $operation_id = null)
+    public function vueList($operation = null, $operation_id = null)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -558,17 +556,8 @@ class AssetController extends Controller
                 }
             }
         }
-        $total = $assets->count();
-        $assets = $assets->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
-        return response()->json(
-            [
-                'records'  => $assets,
-                'total'    => $total,
-                'lastPage' => $lastPage,
-            ],
-            200
-        );
+        
+        return response()->json( ['records'  => $assets->get()], 200);
     }
 
     /**
