@@ -263,22 +263,23 @@
                 if (date == '') {
                     date = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0];
                 }
+                //console.log(days, date);
                 
                 const sumarNoLaborables = (f, n) => {
-                    for(var i=0; i<=n; i++) {
-                        f.setTime( f.getTime() + (1000*60*60*24) );
+                    for(var i=0; i<n; i++) {
                         /** Se identifica si existen sabados o domingos en el periodo establecido */
                         if( (f.getDay()==6) || (f.getDay()==0) ) {
                             /** Si existe un dia no laborable se agrega a la regla del calendario */
                             remaining++;
                             n++;
                         }
+                        f.setTime( f.getTime() + (1000*60*60*24) );
                     }
 
                 }
                 sumarNoLaborables(new Date(date.replaceAll('-', '/')), days);
 
-                let newDate = vm.add_period(date, (remaining + days), 'days');
+                let newDate = vm.add_period(date, (remaining + days - 1), 'days');
                 let arrayDate = newDate.split("/");
                 return arrayDate[2] + '-' + arrayDate[1] + '-' + arrayDate[0];
 
@@ -388,7 +389,7 @@
                     let cont = 0;
                     
                     const sumarLaborables = (f, n) => {
-                        for(var i=0; i<=n; i++) {
+                        for(var i=0; i<n; i++) {
                             f.setTime( f.getTime() + (1000*60*60*24) );
                             /** Se identifica si existen sabados o domingos en el periodo establecido */
                             if( (f.getDay()==6) || (f.getDay()==0) ) {
@@ -400,7 +401,7 @@
                     }
 
                     sumarLaborables(start_date, dias);
-                    vm.record.time_permission = dias + ' días';
+                    vm.record.time_permission = (dias +1) + ' días';
                 }
                 if (vm.record.start_time && vm.record.end_time) {
                     const newDate = (partes) => {
