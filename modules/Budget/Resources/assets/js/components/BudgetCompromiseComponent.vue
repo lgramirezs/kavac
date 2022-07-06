@@ -243,6 +243,16 @@
                                             :value="account.amount"
                                         />
                                         <a
+                                            class="btn btn-sm btn-warning btn-action btn-tooltip"
+                                            href="#"
+                                            data-original-title="Editar cuenta presupuestaria"
+                                            data-toggle="modal"
+                                            data-target="#add_account"
+                                            @click="editAccount(index)"
+                                        >
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a
                                             class="btn btn-sm btn-danger btn-action"
                                             href="#"
                                             @click="deleteAccount(index)"
@@ -399,6 +409,7 @@
                                     type="button"
                                     class="btn btn-default btn-sm btn-round btn-modal-close"
                                     data-dismiss="modal"
+                                    @click="resetAccount"
                                 >
                                     Cerrar
                                 </button>
@@ -483,6 +494,7 @@ export default {
              */
             document_sources: [],
             document_number: "",
+            editIndex: null,
         };
     },
     props: {
@@ -649,6 +661,44 @@ export default {
             });
         },
         /**
+         * Edita una cuenta del listado de cuentas agregadas
+         *
+         * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+         * @param  {integer} index Índice del elemento a editar
+         */
+        editAccount(index) {
+            const vm = this;
+            vm.account_amount = '';
+            vm.account_concept = '';
+            vm.account_id = '';
+            vm.account_tax_id = '';
+            vm.specific_action_id = '';
+            vm.editIndex = index;
+
+            vm.account_amount = vm.record.accounts[vm.editIndex]['amount'];
+            vm.account_concept = vm.record.accounts[vm.editIndex]['description'];
+            vm.account_id = vm.record.accounts[vm.editIndex]['account_id'];
+            vm.account_tax_id = vm.record.accounts[vm.editIndex]['tax_id'];
+            vm.specific_action_id = vm.record.accounts[vm.editIndex]['specific_action_id'];
+
+            event.preventDefault();
+        },
+        /**
+         * Elimina los valores de los campos en el modal de las cuentas
+         *
+         * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+         * @param  {integer} index Índice del elemento a editar
+         */
+        resetAccount() {
+            const vm = this;
+            vm.account_amount = '';
+            vm.account_concept = '';
+            vm.account_id = '';
+            vm.account_tax_id = '';
+            vm.specific_action_id = '';
+            vm.editIndex = null;
+        },
+        /**
          * Agrega una cuenta presupuestaria al compromiso
          *
          * @method     addAccount
@@ -697,62 +747,111 @@ export default {
                 .getAccountDetail(vm.account_id)
                 .then((detail) => (account = detail.record));
 
-            vm.record.accounts.push({
-                spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
-                code: account.code,
-                description: vm.account_concept,
-                amount: vm.account_amount,
-                specific_action_id: vm.specific_action_id,
-                account_id: vm.account_id,
-                tax_id: vm.account_tax_id,
-            });
+            if (vm.editIndex != null) {
+                let amountEdit = vm.record.accounts[vm.editIndex]['amountEdit'];
+                vm.record.accounts.splice(vm.editIndex, 1);
 
-            if (vm.account_tax_id) {
-                let tax;
-                let tax_percentage;
-                let tax_description;
-                for (tax of vm.taxesData) {
-                    if (vm.account_tax_id == tax.id) {
-                        tax_description = tax.description;
-                        tax_percentage = tax.histories[0].percentage;
-                    }
-                }
-
-                vm.record.tax_accounts.push({
+                vm.record.accounts.push({
                     spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
                     code: account.code,
-                    description: tax_description,
-                    amount: (vm.account_amount * tax_percentage) / 100,
+                    description: vm.account_concept,
+                    amount: vm.account_amount,
+                    specific_action_id: vm.specific_action_id,
+                    account_id: vm.account_id,
+                    tax_id: vm.account_tax_id,
+                    amountEdit: amountEdit,
+                    operation: '',
+                });
+
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData) {
+                        if (vm.account_tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
+                    }
+
+                    vm.record.tax_accounts.push({
+                        spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        code: account.code,
+                        description: tax_description,
+                        amount: (vm.account_amount * tax_percentage) / 100,
+                        specific_action_id: vm.specific_action_id,
+                        account_id: vm.account_id,
+                        tax_id: vm.account_tax_id,
+                    });
+                }
+
+                $("#add_account").find(".close").click();
+
+                vm.specific_action_id = "";
+                vm.account_id = "";
+                vm.account_concept = "";
+                vm.account_amount = 0;
+                vm.account_tax_id = "";
+                vm.editIndex = null;
+            } else {
+                vm.record.accounts.push({
+                    spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                    code: account.code,
+                    description: vm.account_concept,
+                    amount: vm.account_amount,
                     specific_action_id: vm.specific_action_id,
                     account_id: vm.account_id,
                     tax_id: vm.account_tax_id,
                 });
-            }
 
-            bootbox.confirm({
-                title: "Agregar cuenta",
-                message: `Desea agregar otra cuenta?`,
-                buttons: {
-                    cancel: {
-                        label: '<i class="fa fa-times"></i> Cancelar',
-                    },
-                    confirm: {
-                        label: '<i class="fa fa-check"></i> Confirmar',
-                    },
-                },
-                callback: function (result) {
-                    if (!result) {
-                        $("#add_account").find(".close").click();
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData) {
+                        if (vm.account_tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
                     }
 
-                    vm.specific_action_id = "";
-                    vm.account_id = "";
-                    vm.account_concept = "";
-                    vm.account_amount = 0;
-                    vm.account_tax_id = "";
-                },
-            });
+                    vm.record.tax_accounts.push({
+                        spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                        code: account.code,
+                        description: tax_description,
+                        amount: (vm.account_amount * tax_percentage) / 100,
+                        specific_action_id: vm.specific_action_id,
+                        account_id: vm.account_id,
+                        tax_id: vm.account_tax_id,
+                    });
+                }
+
+                bootbox.confirm({
+                    title: "Agregar cuenta",
+                    message: `Desea agregar otra cuenta?`,
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> Cancelar',
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> Confirmar',
+                        },
+                    },
+                    callback: function (result) {
+                        if (!result) {
+                            $("#add_account").find(".close").click();
+                        }
+
+                        vm.specific_action_id = "";
+                        vm.account_id = "";
+                        vm.account_concept = "";
+                        vm.account_amount = 0;
+                        vm.account_tax_id = "";
+                    },
+                });
+            }
         },
+
         /**
          * Agrega un documento al compromiso
          *
@@ -804,6 +903,10 @@ export default {
                 );
             }
 
+            if (vm.editIndex != null) {
+                vm.specific_action_id = vm.record.accounts[vm.editIndex]['specific_action_id'];
+            }
+
             vm.loading = false;
         },
         /**
@@ -846,6 +949,9 @@ export default {
                     .catch((error) => {
                         console.error(error);
                     });
+                if (vm.editIndex != null) {
+                    vm.account_id = vm.record.accounts[vm.editIndex]['account_id'];
+                }
             }
 
             vm.loading = false;

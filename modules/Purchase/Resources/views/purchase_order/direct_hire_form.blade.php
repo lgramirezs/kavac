@@ -47,7 +47,7 @@
                                                  :employments="{{ $employments }}"
                                                  :purchase_supplier_objects="{{ $purchase_supplier_objects }}"
                                                  :suppliers="{{ $suppliers }}"
-                                                 :record_edit="{{ $record_edit }}"
+                                                 :record_edit="{{ $record_edit }}" 
                                                  route_list="/purchase/purchase_order" />
                     @endif
                 </div>
