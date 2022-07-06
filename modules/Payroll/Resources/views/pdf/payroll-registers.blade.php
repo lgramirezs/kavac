@@ -1,9 +1,3 @@
-@php
-    $assignments = 0;
-    $deductions  = 0;
-    $total = 0;
-@endphp
-
 <table cellspacing="0" cellpadding="1" border="1">
     <tr align="C">
         <th width="25%">Trabajador</th>
@@ -13,7 +7,11 @@
     </tr>
 
     @foreach($field as $record)
-
+    @php
+        $assignments = 0;
+        $deductions  = 0;
+        $total = 0;
+    @endphp
             <tr>
                 <td width="25%"> {{ ($record->payrollStaff)? $record->payrollStaff->first_name . ' ' . $record->payrollStaff->last_name: ''}} </td>
                 <td width="25%">
