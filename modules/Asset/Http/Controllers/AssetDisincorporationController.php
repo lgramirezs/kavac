@@ -10,10 +10,16 @@ use App\Repositories\UploadImageRepository;
 use App\Repositories\UploadDocRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CodeSetting;
+use App\Models\Document;
+use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 use Modules\Asset\Models\AssetDisincorporationAsset;
 use Modules\Asset\Models\AssetDisincorporation;
 use Modules\Asset\Models\Asset;
 use App\Models\Profile;
+
+use Illuminate\Support\Facades\Log;
+
 
 
 /**
@@ -232,8 +238,18 @@ class AssetDisincorporationController extends Controller
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
     public function update(Request $request, $id)
-    {
-        $disincorporation = AssetDisincorporation::find($id);
+    {   
+        Log::critical("lol");
+        Log::critical($id);
+
+        Log::critical($request);
+        $upImage =  new  UploadImageRepository;
+      $upDoc = new UploadDocRepository; 
+       $disincorporation = AssetDisincorporation::where(['id' => $id])
+    ->with('documents', 'images')->first();
+        Log::critical($disincorporation);
+
+        //$disincorporation = AssetDisincorporation::find($id);
         $this->validate($request, [
             'date' => ['required'],
             'asset_disincorporation_motive_id' => ['required'],
@@ -245,7 +261,7 @@ class AssetDisincorporationController extends Controller
         $disincorporation->asset_disincorporation_motive_id = $request->asset_disincorporation_motive_id;
         $disincorporation->observation = $request->observation;
         $disincorporation->save();
-
+          
         /** Se eliminan los demas elementos de la solicitud */
         $assets_disincorporation = AssetDisincorporationAsset::where('asset_disincorporation_id', $disincorporation->id)
             ->get();
@@ -258,6 +274,53 @@ class AssetDisincorporationController extends Controller
             $asset_disincorporation->delete();
         }
         /** Se agregan los nuevos elementos a la solicitud */
+        /** Se guardan los docmentos, según sea el tipo (imágenes y/o documentos)*/
+$documentFormat = ['doc', 'docx', 'pdf', 'odt'];
+$imageFormat = ['jpeg', 'jpg', 'png'];
+
+if ($request->has('files')) {
+    if(count($disincorporation->documents) > 0 ){
+           foreach ($disincorporation->documents as $key) {
+               Storage::disk('documents')->delete($key->file);
+
+           }
+           Document::where(['documentable_type' => 'Modules\Asset\Models\AssetDisincorporation','documentable_id' => $disincorporation->id])->delete();
+
+
+    }
+    if (count($disincorporation->images) > 0) {
+       foreach ($disincorporation->images as $key) {
+    Storage::disk('pictures')->delete($key->file);
+
+    }
+    Image::where(['imageable_type' => 'Modules\Asset\Models\AssetDisincorporation', 'imageable_id' => $disincorporation->id])->delete();
+
+   }
+
+
+
+
+    foreach ($request->file('files') as $file) {
+        $extensionFile = $file->getClientOriginalExtension();
+   
+
+        if (in_array($extensionFile, $documentFormat)) {
+            $upDoc->uploadDoc(
+                $file,
+                'documents',
+                AssetDisincorporation::class,
+                $disincorporation->id
+            );
+        } elseif (in_array($extensionFile, $imageFormat)) {
+            $upImage->uploadImage(
+                $file,
+                'pictures',
+                AssetDisincorporation::class,
+                $disincorporation->id
+            );
+        }
+    }
+}
 
         foreach ($request->assets as $asset_id) {
             $asset = Asset::find($asset_id);

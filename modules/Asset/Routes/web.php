@@ -101,6 +101,9 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
 
     /** Rutas para gestionar el registro de desincorporaciones de bienes */
     Route::resource('disincorporations', 'AssetDisincorporationController', ['only' => ['store', 'update']]);
+    
+    /** Rutas para gestionar la actualizacion de archivos pertinentes a  desincorporaciones de bienes */
+    Route::post('disincorporations/Updatefiles/{id}', 'AssetDisincorporationController@update')->name('asset.disincorporation.files.update');
 
     /** Ruta que obtiene un listado de las desincorporaciones de bienes institucionales registrados */
     Route::get('disincorporations', 'AssetDisincorporationController@index')->name('asset.disincorporation.index');
