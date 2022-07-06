@@ -363,6 +363,7 @@
                                         <div class="form-group is-required">
                                             <label>Cuenta:</label>
                                             <select2
+                                                id="accounts"
                                                 :options="accounts"
                                                 @input="getAmountAccounts()"
                                                 v-model="account_id"
@@ -953,6 +954,7 @@ export default {
                     vm.account_id = vm.record.accounts[vm.editIndex]['account_id'];
                 }
             }
+            vm.isDisable();
 
             vm.loading = false;
         },
@@ -1121,6 +1123,32 @@ export default {
                 }
                 vm.loading = false;
             });
+        },
+
+        /**
+         * Método que permite habilitar/deshabilitar las opciones de las cuentas
+         *
+         * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
+         *
+         */
+        isDisable() {
+            const vm = this;
+            let accountsTable = [{"id":"","text":"Seleccione..."}];
+            for (let [index, acc] of vm.record.accounts.entries()) {
+                accountsTable.push(acc);
+            }
+            for (let [index, acc] of vm.accounts.entries()) {
+                for (let account of accountsTable) {
+                    if (account.specific_action_id == vm.specific_action_id) {
+                        let esc = document.getElementById('accounts')
+                        if (acc.id == account.account_id) {
+                            $(Object.values(esc.options)[index]).prop("disabled", 'disabled');
+                        } else {
+                            $(Object.values(esc.options)[index]).prop("disabled", false);
+                        }
+                    }
+                }
+            }
         },
     },
     created() {},

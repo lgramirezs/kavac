@@ -199,7 +199,7 @@
                                         <div class="col-6">
                                             <div class="form-group is-required">
                                                 <label>Cuenta:</label>
-                                                <select2 :options="accounts"
+                                                <select2 id="accounts" :options="accounts"
                                                          v-model="from_account_id"/>
                                             </div>
                                         </div>
@@ -564,7 +564,22 @@
                     );
                     return false;
                 }
-
+                if (vm.type_modification == 'RE' || vm.type_modification == 'TR') {
+                    for (let acc of vm.accounts) {
+                        if (acc.id == vm.from_account_id) {
+                            if (Number(vm.from_amount) > Number(acc.amount)) {
+                                vm.showMessage(
+                                    "custom",
+                                    "Alerta!",
+                                    "warning",
+                                    "screen-error",
+                                    "El campo monto no puede ser mayor al asignado"
+                                );
+                                return;
+                            }
+                        }
+                    }
+                }
 
                 /** Obtiene datos de la acción específica seleccionada */
                 axios.get(
@@ -779,6 +794,7 @@
                         vm.to_account_id = vm.record.budget_account_id[vm.editIndex]['to_account_id'];
                     }
                 }
+                vm.isDisable();
 
                 vm.loading = false;
             },
@@ -810,6 +826,32 @@
                 }).catch(error => {
                     vm.logs('BudgetModificationComponent.vue', 415, error, 'getAccounts');
                 });
+            },
+
+            /**
+             * Método que permite habilitar/deshabilitar las opciones de las cuentas
+             *
+             * @author    Daniel Contreras <dcontreras@cenditel.gob.ve>
+             *
+             */
+            isDisable() {
+                const vm = this;
+                let accountsTable = [{"id":"","text":"Seleccione..."}];
+                for (let acc of vm.modification_accounts) {
+                    accountsTable.push(acc);
+                }
+                for (let [index, acc] of vm.accounts.entries()) {
+                    for (let account of accountsTable) {
+                        if (account.from_specific_action_id == vm.from_specific_action_id) {
+                            let esc = document.getElementById('accounts')
+                            if (acc.id == account.from_account_id) {
+                                $(Object.values(esc.options)[index]).prop("disabled", 'disabled');
+                            } else {
+                                $(Object.values(esc.options)[index]).prop("disabled", false);
+                            }
+                        }
+                    }
+                }
             },
         }
     };
