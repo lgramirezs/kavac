@@ -154,51 +154,6 @@
                     </div>
                 </div>
             </div>
-            <!--div class="row">
-                <div class="col-4 offset-md-8">
-                    <div class="float-right">
-                        <form
-                            action=""
-                            id=""
-                            method="post"
-                            role="form"
-                            class="form"
-                            enctype="multipart/form-data"
-                        >
-                            <button
-                                type="button"
-                                data-toggle="tooltip"
-                                :disabled="
-                                    !record.institution_id ||
-                                        !record.currency_id ||
-                                        !record.specific_action_id
-                                "
-                                class="btn btn-sm btn-info btn-import"
-                                title="Presione para importar la información. Los archivos permitidos son: .csv, .ods, .xls o .xlsx"
-                                @click="setFile('import_formulation')"
-                            >
-                                <i class="fa fa-upload"></i>
-                            </button>
-                            <button
-                                type="button"
-                                data-toggle="tooltip"
-                                class="btn btn-sm btn-warning btn-import"
-                                title="Presione para exportar la información."
-                            >
-                                <i class="fa fa-download"></i>
-                            </button>
-                            <input
-                                type="file"
-                                id="import_formulation"
-                                class="nodisplay"
-                                @change="
-                                    getImportFormulation('import_formulation')
-                                "
-                            />
-                        </form>
-                    </div>
-                </div>
-            </div-->
             <!-- Tabla para la formulación del presupuesto -->
             <div class="table-responsive" style=" overflow-y: auto; max-height: 500px;">
                 <table class="table table-formulation">
@@ -776,6 +731,7 @@ export default {
                 }
             });
         },
+
         /**
          * Muestra u oculta los campos de texto para ingresar información sobre los montos
          * a formular para una cuenta presupuestaria
@@ -788,6 +744,24 @@ export default {
                 bootbox.alert('Debe seleccionar primero un tipo de moneda');
                 return false;
             }
+
+            // Reinicializa campos de la fila en 0;
+            this.records[index].total_real_amount = 0;
+            this.records[index].total_estimated_amount = 0;
+            this.records[index].total_year_amount = 0;
+            this.records[index].jan_amount = 0;
+            this.records[index].jan_amount = 0;
+            this.records[index].feb_amount = 0;
+            this.records[index].mar_amount = 0;
+            this.records[index].apr_amount = 0;
+            this.records[index].may_amount = 0;
+            this.records[index].jun_amount = 0;
+            this.records[index].jul_amount = 0;
+            this.records[index].aug_amount = 0;
+            this.records[index].sep_amount = 0;
+            this.records[index].oct_amount = 0;
+            this.records[index].nov_amount = 0;
+            this.records[index].dec_amount = 0;
 
             this.records[index].formulated = !this.records[index].formulated;
             let add_account = $('#add_account_' + this.records[index].id);

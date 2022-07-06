@@ -39,7 +39,7 @@
             <div class="col-3">
                 <div class="form-group is-required">
                     <label class="control-label" for="departments1">Unidad contratante</label><br>
-                    <select2 :options="departments" id="departments1" v-model="record.contracting_department_id"></select2>
+                    <select2 :options="departments" id="departmentsss" v-model="record.contracting_department_id"></select2>
                 </div>
             </div>
             <div class="col-3">
@@ -456,6 +456,8 @@ export default {
                 first_signature_id: '',
                 second_signature_id: '',
             },
+            // Editar registro
+            recordEdit: false,
             // variables para proveedor
             purchase_supplier_id: '',
             supplier: {
@@ -463,7 +465,6 @@ export default {
                 rnc: ''
             },
             // .variables para proveedor
-
             fiscalYear: null,
             institutions: [{ id: '', text: 'Seleccione...' }],
             departments: [],
@@ -534,6 +535,10 @@ export default {
     },
     created() {
         const vm = this;
+        axios.get('/purchase/get-institutions').then(response => {
+            vm.institutions = response.data.institutions;
+        });
+        
         vm.table_options.headings = {
             'code': 'Código',
             'description': 'Descripción',
@@ -576,19 +581,41 @@ export default {
 
         vm.table2_options.filterable = [];
 
-        axios.get('/purchase/get-institutions').then(response => {
-            vm.institutions = response.data.institutions;
-        });
         // vm.reset();
     },
     mounted() {
         const vm = this;
-
         // vm.reset();
-
         vm.records = vm.requirements;
-
-        if (vm.record_edit) {
+        if(vm.record_edit) {
+            for( var i=0; i<vm.record_edit.length; i++ ) {
+                vm.record.institution_id = vm.record_edit[i]['institution_id'];
+                vm.record.contracting_department_id = vm.record_edit[i]['contracting_department_id'];
+                vm.record.user_department_id = vm.record_edit[i]['user_department_id'];
+                vm.getDepartments();
+                vm.record.purchase_supplier_object_id = vm.record_edit[i]['purchase_supplier_object_id'];
+                vm.record.funding_source = vm.record_edit[i]['funding_source'];
+                vm.record.description = vm.record_edit[i]['description'];
+                vm.record.fiscal_year_id = vm.record_edit[i]['fiscal_year_id'];
+                vm.record.purchase_supplier_id = vm.record_edit[i]['purchase_supplier_id'];
+                 vm.purchase_supplier_id = vm.record_edit[i]['purchase_supplier_id'];
+                vm.currency_id = vm.record_edit[i]['currency_id'];
+                vm.record.payment_methods = vm.record_edit[i]['payment_methods'];
+                // variables para firmas
+                vm.record.prepared_by_id = vm.record_edit[i]['prepared_by_id'];
+                vm.record.reviewed_by_id = vm.record_edit[i]['reviewed_by_id'];
+                vm.record.verified_by_id = vm.record_edit[i]['verified_by_id'];
+                vm.record.first_signature_id = vm.record_edit[i]['first_signature_id'];
+                vm.record.second_signature_id = vm.record_edit[i]['second_signature_id'];
+                vm.indexOf(vm.requirements,vm.requirements.id,true);
+                for (var j = 0; j < vm.requirements.length; j++) {
+                    if(vm.requirements[j]['purchase_base_budget']['orderable_id'] != null) {
+                        vm.requirementCheck(vm.requirements[j]);
+                        }
+                }
+            }
+        }
+        /*if (vm.record_edit) {
             vm.load_data_edit = true;
             vm.currency_id = vm.record_edit.currency_id;
             vm.purchase_supplier_id = vm.record_edit.purchase_supplier_id;
@@ -601,7 +628,7 @@ export default {
             for (var i = 0; i < vm.record_edit.purchase_requirement.length; i++) {
                 vm.addToList(vm.record_edit.purchase_requirement[i], prices);
             }
-        }
+        } */
 
         axios.get('/purchase/get-fiscal-year').then(response => {
             vm.fiscalYear = response.data.fiscal_year;
@@ -653,7 +680,6 @@ export default {
         uploadFile(inputID, e) {
             let vm = this;
             const files = e.target.files;
-
             Array.from(files).forEach(file => vm.addFile(file, inputID));
         },
         addFile(file, inputID) {
@@ -788,7 +814,6 @@ export default {
             /** Se obtiene y da formato para enviar el archivo a la ruta */
             let vm = this;
             var formData = new FormData();
-
             /**
              * Agrega los archivos a formData
              */
@@ -844,7 +869,7 @@ export default {
 
             vm.loading = true;
 
-            if (!this.record_edit) {
+            if (!vm.record_edit) {
                 axios.post('/purchase/direct_hire', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -871,7 +896,7 @@ export default {
             } else {
                 formData.append("list_to_delete", JSON.stringify(this.requirement_list_deleted));
 
-                axios.post('/purchase/direct_hire/' + this.record_edit.id, formData, {
+                axios.post('/purchase/direct_hire/' + vm.record_edit[0]['id'], formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -901,6 +926,11 @@ export default {
         getDepartments() {
             const vm = this;
             vm.departments = [];
+            if(vm.record_edit) { 
+                vm.record.institution_id = vm.record_edit[0]['institution_id'];
+                vm.record.contracting_department_id = vm.record_edit[0]['contracting_department_id'];
+                vm.record.user_department_id = vm.record_edit[0]['user_department_id'];
+            }
 
             if (vm.record.institution_id != '') {
                 axios.get('/get-departments/' + vm.record.institution_id).then(response => {

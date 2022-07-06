@@ -201,7 +201,7 @@ Route::group([
     Route::resource('direct_hire', 'PurchaseDirectHireController', [
         'as'     => 'purchase',
     ]);
-    // Route::post('direct_hire/{id}', 'PurchaseDirectHireController@updatePurchaseOrder');
+    Route::post('direct_hire/{id}', 'PurchaseDirectHireController@updatePurchaseOrder');
 
 
     /*
