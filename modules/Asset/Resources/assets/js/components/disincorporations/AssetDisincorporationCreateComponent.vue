@@ -577,39 +577,40 @@ export default {
         return false;
       }
       if (this.record.id) {
-         console.log(vm.selected)
         vm.selected = vm.selected.filter(
           (ele, pos) => vm.selected.indexOf(ele) == pos
         );
-        console.log(vm.selected)
+
         for (var i = 0; i < vm.selected.length; i++) {
           let file = inputFiles.files[i];
-          formData.append(`assets[]`,vm.selected[i]);
+          formData.append(`assets[]`, vm.selected[i]);
           // formData.append("files[" + i + "]", file);
         }
         //vm.record.assets = vm.selected;
         // this.updateRecord(url);
-		url = vm.setUrl(url);
-		 vm.loading = true;
-         Object.keys(vm.record).forEach((key) => {
-        if (vm.record[key] == null) {
-          vm.record[key] = "";
-        }
-        formData.append(key, vm.record[key]);
-      });
+        url = vm.setUrl(url);
+        vm.loading = true;
+        Object.keys(vm.record).forEach((key) => {
+          if (vm.record[key] == null) {
+            vm.record[key] = "";
+          }
+          formData.append(key, vm.record[key]);
+        });
         for (var i = 0; i < inputFiles.files.length; i++) {
           let file = inputFiles.files[i];
-          formData.append(`files[]`,inputFiles.files[i], inputFiles.files[i].name);
-          // formData.append("files[" + i + "]", file);
+          formData.append(
+            `files[]`,
+            inputFiles.files[i],
+            inputFiles.files[i].name
+          );
         }
-        // formData.append("assets", vm.record.assets);
-    
-        axios(
-            {
-        method:"post", 
-        url: url+"/Updatefiles/"+vm.record.id,
-        data: formData,
-      }).then((response) => {
+
+        axios({
+          method: "post",
+          url: url + "/Updatefiles/" + vm.record.id,
+          data: formData,
+        })
+          .then((response) => {
             if (typeof response.data.redirect !== "undefined") {
               location.href = response.data.redirect;
             } else {
@@ -685,26 +686,25 @@ export default {
       }
     },
     updateRecord(url) {
-		     const vm = this;
-			  var inputFiles = document.querySelector("#files");
+      const vm = this;
+      var inputFiles = document.querySelector("#files");
       var formData = new FormData();
       vm.loading = true;
-	    var fields = {};
-            url = vm.setUrl(url);
+      var fields = {};
+      url = vm.setUrl(url);
 
-            for (var index in vm.record) {
-				fields[index] = vm.record[index];
-             
-            }
-			formData.append(fields);
-          console.log(vm.record);
+      for (var index in vm.record) {
+        fields[index] = vm.record[index];
+      }
+      formData.append(fields);
+
       for (var i = 0; i < inputFiles.files.length; i++) {
         let file = inputFiles.files[i];
 
         formData.append("files[" + i + "]", file);
       }
       formData.append("assets", vm.selected);
-	  console.log(fields);
+
       axios
         .patch(
           `${url}${url.endsWith("/") ? "" : "/"}${vm.record.id}`,
@@ -765,7 +765,7 @@ export default {
         .get(`${window.app_url}/asset/disincorporations/get-documents/${id}`)
         .then((response) => {
           documents = response.data;
-          console.log(response.data);
+
           let fileText = ``;
           documents.records.forEach(function (files) {
             fileText += `<div class ="row">`;
