@@ -393,23 +393,7 @@ class AssetDisincorporationController extends Controller
             $assetDisincorporations = AssetDisincorporation::where('institution_id', $institution_id)
                 ->with('assetDisincorporationMotive')->get();
         }
-<<<<<<< HEAD
-
-        $total = $assetDisincorporations->count();
-        $assetDisincorporations = $assetDisincorporations->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
-        return response()->json(
-            [
-                'records' => $assetDisincorporations,
-                'total' => $total,
-                'lastPage' => $lastPage,
-            ],
-            200
-        );
-=======
-        
         return response()->json(['records'  => $assetDisincorporations ], 200); 
->>>>>>> Buienes: cambio en los limitadores de pagina en la tablas de registros
     }
 
     /**

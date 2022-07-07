@@ -267,7 +267,38 @@ class BudgetModificationController extends Controller
         $budgetModification = BudgetModification::find($id);
 
         if ($budgetModification) {
+            $BudgetModificationAccounts = BudgetModificationAccount::where('budget_modification_id', $budgetModification->id)->get();
+            $documentStatus = DocumentStatus::getStatus('AP');
+
+            foreach ($BudgetModificationAccounts as $account) {
+                /** @var object Obtiene la formulación correspondiente a la acción específica seleccionada */
+                $formulation = BudgetSubSpecificFormulation::where('id', $account['budget_sub_specific_formulation_id'])
+                     ->where('document_status_id', $documentStatus->id)
+                     ->where('assigned', true)
+                     ->orderBy('year', 'desc')->first();
+
+                if ($formulation) {
+                    $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
+                                                            ->where('budget_account_id', $account['budget_account_id'])
+                                                            ->first();
+                    if ($budgetAccountOpen) {
+                        $modificationType = ($account['operation']==="I") ? 'I' : 'D';
+
+                        if ($modificationType == 'D') {
+                            $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['amount'];
+                            $budgetAccountOpen->save();
+                        }
+
+                        if ($modificationType == 'I') {
+                            $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $account['amount'];
+                            $budgetAccountOpen->save();
+                        }
+                    }
+                }
+            }
+
             $budgetModification->delete();
+            $BudgetModificationAccountsDelete = BudgetModificationAccount::where('budget_modification_id', $budgetModification->id)->delete();
         }
 
         return response()->json(['record' => $budgetModification, 'message' => 'Success'], 200);

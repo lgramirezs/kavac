@@ -172,12 +172,7 @@
       </div>
 
       <hr />
-      <div class="form-group form-inline pull-right VueTables__limit-2">
-        <div class="VueTables__limit-field">
-          <label class="">Registros</label>
-          <select2 :options="perPageValues" v-model="perPage"> </select2>
-        </div>
-      </div>
+      
       <v-client-table
         id="helpTable"
         @row-click="toggleActive"
@@ -232,90 +227,6 @@
           }}</span>
         </div>
       </v-client-table>
-      <div class="VuePagination-2 row col-md-12">
-        <nav class="text-center">
-          <ul class="pagination VuePagination__pagination" style="">
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-prev-chunk
-              "
-              v-if="page != 1"
-            >
-              <a class="page-link" @click="changePage(1)">PRIMERO</a>
-            </li>
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-prev-chunk
-                disabled
-              "
-            >
-              <a class="page-link">&lt;&lt;</a>
-            </li>
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-prev-page
-              "
-              v-if="page > 1"
-            >
-              <a class="page-link" @click="changePage(page - 1)">&lt;</a>
-            </li>
-            <li
-              :class="
-                page == number
-                  ? 'VuePagination__pagination-item page-item active'
-                  : 'VuePagination__pagination-item page-item'
-              "
-              v-for="(number, index) in pageValues"
-              :key="index"
-              v-if="number <= lastPage"
-            >
-              <a
-                class="page-link active"
-                role="button"
-                @click="changePage(number)"
-                >{{ number }}</a
-              >
-            </li>
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-next-page
-              "
-              v-if="page < lastPage"
-            >
-              <a class="page-link" @click="changePage(page + 1)">&gt;</a>
-            </li>
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-next-chunk
-                disabled
-              "
-            >
-              <a class="page-link">&gt;&gt;</a>
-            </li>
-            <li
-              class="
-                VuePagination__pagination-item
-                page-item
-                VuePagination__pagination-item-prev-chunk
-              "
-              v-if="lastPage != page"
-            >
-              <a class="page-link" @click="changePage(lastPage)">ÚLTIMO</a>
-            </li>
-          </ul>
-          <p class="VuePagination__count text-center col-md-12" style=""></p>
-        </nav>
-      </div>
     </div>
 
     <div class="card-footer text-right">
@@ -373,25 +284,7 @@ export default {
 
       records: [],
       files: [],
-      page: 1,
-      total: "",
-      perPage: 10,
-      lastPage: "",
-      pageValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      perPageValues: [
-        {
-          id: 10,
-          text: "10",
-        },
-        {
-          id: 25,
-          text: "25",
-        },
-        {
-          id: 50,
-          text: "50",
-        },
-      ],
+
       columns: [
         "check",
         "inventory_serial",
@@ -451,26 +344,16 @@ export default {
       },
     };
   },
-  watch: {
-    perPage(res) {
-      if (this.page == 1) {
-        this.loadAssets(
-          `${window.app_url}/asset/registers/vue-list/${res}/${this.page}`
-        );
-      } else {
-        this.changePage(1);
-      }
-    },
-    page(res) {
-      this.loadAssets(
-        `${window.app_url}/asset/registers/vue-list/${this.perPage}/${res}`
-      );
-    },
-  },
   created() {
-    this.loadAssets(
-      `${window.app_url}/asset/registers/vue-list/${this.perPage}/${this.page}`
-    );
+    const vm = this;
+    let url 
+    if(vm.disincorporationid != null){
+         url = `${window.app_url}/asset/registers/vue-list/disincorporations/`+vm.disincorporationid;
+    }else{
+        url = `${window.app_url}/asset/registers/vue-list/disincorporations`;
+    }
+    
+    this.readRecords(url);
     this.getAssetTypes();
     this.getAssetDisincorporationMotives();
 
@@ -539,30 +422,7 @@ export default {
         }
       });
     },
-    /**
-     * Cambia la pagina actual de la tabla
-     *
-     * @author Henry Paredes <hparedes@cenditel.gob.ve>
-     *
-     * @param [Integer] $page Número de pagina actual
-     */
-    changePage(page) {
-      const vm = this;
-      vm.page = page;
-      var pag = 0;
-      while (1) {
-        if (pag + 10 >= vm.page) {
-          pag += 1;
-          break;
-        } else {
-          pag += 10;
-        }
-      }
-      vm.pageValues = [];
-      for (var i = 0; i < 10; i++) {
-        vm.pageValues.push(pag + i);
-      }
-    },
+
     createRecord(url, list = true, reset = true) {
       const vm = this;
       var inputFiles = document.querySelector("#files");
@@ -792,22 +652,7 @@ export default {
           }
         });
     },
-    loadAssets(url) {
-      const vm = this;
-      url = vm.setUrl(url);
-      url +=
-        vm.disincorporationid != null
-          ? "/disincorporations/" + vm.disincorporationid
-          : "/disincorporations";
-      axios.get(url).then((response) => {
-        if (typeof response.data.records !== "undefined") {
-          vm.records = response.data.records;
-          vm.total = response.data.total;
-          vm.lastPage = response.data.lastPage;
-          vm.$refs.tableMax.setLimit(vm.perPage);
-        }
-      });
-    },
+    
     filterRecords() {
       const vm = this;
       var url = `${window.app_url}/asset/registers/search/clasification`;
