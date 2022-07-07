@@ -85,7 +85,7 @@ class AccountingAccountController extends Controller
                 'institutional'  => 'required|digits:3',
                 'denomination'   => 'required',
                 'active'         => 'required',
-                'original'       => 'required',
+                'original'       => 'nullable',
             ]
         );
 
@@ -162,7 +162,7 @@ class AccountingAccountController extends Controller
                 'institutional'  => 'required|digits:3',
                 'denomination'   => 'required',
                 'active'         => 'required',
-                'original'       => 'required',
+                'original'       => 'nullable',
             ]
         );
 

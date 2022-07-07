@@ -3432,7 +3432,7 @@ class AccountingAccountsTableSeeder extends Seeder
                                   'externo'
             ],
         ];
-        DB::transaction(function () use ($accounting_acounts, $accounting_acounts_to_delete) {
+        // DB::transaction(function () use ($accounting_acounts, $accounting_acounts_to_delete) {
             foreach ($accounting_acounts as $account) {
 
                 /** @var Object que almacena la consulta de la cuenta, si esta no existe retorna null */
@@ -3473,7 +3473,7 @@ class AccountingAccountsTableSeeder extends Seeder
                         * en la columna parent_id a si mismo como su parent
                         */
                         'parent_id' => ($acc != null && $parent != false)
-                                       ? (($acc->id == $parent->id)?null:$parent->id)
+                                       ? (($acc->id != $parent->id)?$parent->id:null)
                                        : (($parent == false)?null:$parent->id) ,
                     ]
                 );
@@ -3533,6 +3533,6 @@ class AccountingAccountsTableSeeder extends Seeder
                     $account_to->delete();
                 }
             }
-        });
+        // });
     }
 }
