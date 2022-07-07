@@ -277,7 +277,7 @@ class BudgetCompromiseController extends Controller
      */
     public function destroy($id)
     {
-        /** @var object Objeto con información de la modificación presupuestaria a eliminar */
+        /** @var object Objeto con información del compromiso a eliminar */
         $budgetCompromise = BudgetCompromise::find($id);
         $compromisedYear = explode("-", $budgetCompromise->compromised_at)[0];
 
@@ -300,9 +300,10 @@ class BudgetCompromiseController extends Controller
                     'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m + $total,
                 ]);
             }
+
+            $budgetCompromise->delete();
+            $budgetCompromiseDetailsDelete = BudgetCompromiseDetail::where('budget_compromise_id', $id)->delete();
         }
-        $budgetCompromise->delete();
-        $budgetCompromiseDetailsDelete = BudgetCompromiseDetail::where('budget_compromise_id', $id)->delete();
 
         return response()->json(['record' => $budgetCompromise, 'message' => 'Success'], 200);
     }
