@@ -528,7 +528,9 @@ class WarehouseReceptionController extends Controller
         if($warehouseMovement) {
             $records = [];
             for($i = 0; $i<count($warehouseMovement); $i++) {
-                if($warehouseMovement[$i]['warehouseInstitutionWarehouseEnd']['warehouse']['active'] == true) {
+                if($warehouseMovement[$i]['warehouseInstitutionWarehouseEnd'] &&
+                    $warehouseMovement[$i]['warehouseInstitutionWarehouseEnd']['warehouse'] &&
+                    $warehouseMovement[$i]['warehouseInstitutionWarehouseEnd']['warehouse']['active'] == true) {
                     array_push($records, $warehouseMovement[$i]);
                 }
             }

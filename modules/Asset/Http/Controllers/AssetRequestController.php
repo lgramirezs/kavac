@@ -343,7 +343,7 @@ class AssetRequestController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList($perPage = 10, $page = 1)
+    public function vueList()
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -356,12 +356,7 @@ class AssetRequestController extends Controller
             $assetRequests = AssetRequest::where('institution_id', $institution_id)->get();
         }
         
-        return response()->json(
-            [
-                'records'  => $assetRequests,
-            ],
-            200
-        );
+        return response()->json([ 'records'  => $assetRequests,],200);
     }
 
     /**
@@ -370,7 +365,7 @@ class AssetRequestController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vuePendingList($perPage = 10, $page = 1)
+    public function vuePendingList()
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
@@ -378,24 +373,14 @@ class AssetRequestController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetRequests = AssetRequest::with('user')->where('state', 'Pendiente');
+            $assetRequests = AssetRequest::with('user')->where('state', 'Pendiente')->get();
         } else {
             $assetRequests = AssetRequest::with('user')
                 ->where('institution_id', $institution_id)
-                ->where('state', 'Pendiente');
+                ->where('state', 'Pendiente')->get();
         }
-        $total = $assetRequests->count();
-        $assetRequests = $assetRequests->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
         
-        return response()->json(
-            [
-                'records'  => $assetRequests,
-                'total'    => $total,
-                'lastPage' => $lastPage,
-            ],
-            200
-        );
+        return response()->json(['records'  => $assetRequests,], 200 );
     }
 
     /**

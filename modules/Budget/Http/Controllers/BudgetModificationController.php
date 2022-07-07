@@ -168,17 +168,18 @@ class BudgetModificationController extends Controller
                     $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
                                                             ->where('budget_account_id', $account['from_account_id'])
                                                             ->first();
+                    if ($budgetAccountOpen) {
+                        $modificationType = ($type==="C") ? 'I' : 'D';
 
-                    $modificationType = ($type==="C") ? 'I' : 'D';
+                        if ($modificationType == 'D') {
+                            $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $account['from_amount'];
+                            $budgetAccountOpen->save();
+                        }
 
-                    if ($modificationType == 'D') {
-                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $account['from_amount'];
-                        $budgetAccountOpen->save();
-                    }
-
-                    if ($modificationType == 'I') {
-                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['from_amount'];
-                        $budgetAccountOpen->save();
+                        if ($modificationType == 'I') {
+                            $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['from_amount'];
+                            $budgetAccountOpen->save();
+                        }
                     }
 
                     BudgetModificationAccount::create([
@@ -199,10 +200,12 @@ class BudgetModificationController extends Controller
                     $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation_transfer->id)
                                                             ->where('budget_account_id', $account['to_account_id'])
                                                             ->first();
-                    $modificationType = ($type==="C") ? 'I' : 'D';
-                    if ($modificationType == 'D') {
-                        $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['to_amount'];
-                        $budgetAccountOpen->save();
+                    if ($budgetAccountOpen) {
+                        $modificationType = ($type==="C") ? 'I' : 'D';
+                        if ($modificationType == 'D') {
+                            $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m + $account['to_amount'];
+                            $budgetAccountOpen->save();
+                        }
                     }
 
                     if ($formulation_transfer) {

@@ -1083,11 +1083,19 @@ class PayrollController extends Controller
                                             } else {
                                                 /** Se identifica el valor según el expediente del trabajador
                                                  * y se sustituye por su valor real en la fórmula del concepto */
-                                                $formula = str_replace(
-                                                    $children['id'],
-                                                    $record[$children['required'][0]],
-                                                    $formula ?? $concept['formula']
-                                                );
+                                                if (isset($record)) {
+                                                    $formula = str_replace(
+                                                        $children['id'],
+                                                        $record[$children['required'][0]],
+                                                        $formula ?? $concept['formula']
+                                                    );
+                                                } else {
+                                                    $formula = str_replace(
+                                                        $children['id'],
+                                                        0,
+                                                        $formula ?? $concept['formula']
+                                                    );
+                                                }
                                             }
                                         }
                                     }
@@ -2155,11 +2163,19 @@ class PayrollController extends Controller
                                             } else {
                                                 /** Se identifica el valor según el expediente del trabajador
                                                  * y se sustituye por su valor real en la fórmula del concepto */
-                                                $formula = str_replace(
-                                                    $children['id'],
-                                                    $record[$children['required'][0]],
-                                                    $formula ?? $concept['formula']
-                                                );
+                                                if (isset($record)) {
+                                                    $formula = str_replace(
+                                                        $children['id'],
+                                                        $record[$children['required'][0]],
+                                                        $formula ?? $concept['formula']
+                                                    );
+                                                } else {
+                                                    $formula = str_replace(
+                                                        $children['id'],
+                                                        0,
+                                                        $formula ?? $concept['formula']
+                                                    );
+                                                }
                                             }
                                         }
                                     }

@@ -76,11 +76,36 @@
                 @click="reset()">
                 Cancelar
             </button>
-            <button type="button" @click=""
+            <button type="button" @click="showTableResults()"
                 class="btn btn-primary btn-sm btn-round">
                 Consultar
             </button>
         </div>
+        <br>
+        <table v-if="tableResults" table border="1px" cellpadding="0px" cellspacing="0px" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>N° Referencia</th>
+                    <th>Monto</th>
+                    <th>Coincide</th>
+                    <th>Sub-total</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -117,6 +142,7 @@
                 years: [
                     { "id": "", "text": "Seleccione..." },
                 ],
+                tableResults: false
             }
         },
         methods: {
@@ -133,6 +159,14 @@
                     file: '',
                     coincidences: false,
                 };
+                this.tableResults = false
+            },
+
+            /**
+             * Método que muestra la tabla de resultados.
+             */
+            showTableResults() {
+                this.tableResults = true
             },
 
             /**

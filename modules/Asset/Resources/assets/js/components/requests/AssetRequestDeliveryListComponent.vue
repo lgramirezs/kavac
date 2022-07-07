@@ -1,5 +1,5 @@
 <template>
-	<div class="col-md-12">
+	<div class="card-body col-md-12">
 		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
 			<div slot="observation" slot-scope="props" class="text-center">
 				<span>
