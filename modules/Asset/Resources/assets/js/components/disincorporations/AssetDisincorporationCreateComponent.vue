@@ -346,11 +346,13 @@ export default {
   },
   created() {
     const vm = this;
-    let url = `${window.app_url}/asset/registers/vue-list`;
-    url +=
-      vm.disincorporationid != null
-        ? "/disincorporations/" + vm.disincorporationid
-        : "/disincorporations";
+    let url 
+    if(vm.disincorporationid != null){
+         url = `${window.app_url}/asset/registers/vue-list/disincorporations/`+vm.disincorporationid;
+    }else{
+        url = `${window.app_url}/asset/registers/vue-list/disincorporations`;
+    }
+    
     this.readRecords(url);
     this.getAssetTypes();
     this.getAssetDisincorporationMotives();
