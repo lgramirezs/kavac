@@ -1,65 +1,41 @@
 <template>
     <div class="card-body">
-        <v-client-table :columns="columns" :data="records" :options="table_options">
-            <div slot="code" slot-scope="props" class="text-center">
-                <span>
-                    {{ props.row.code }}
-                </span>
+        <v-client-table class="text-center" :columns="columns" :data="records" :options="table_options">
+            <div slot="code" slot-scope="props">
+                <span>{{ props.row.code }}</span>
             </div>
-            <div slot="type" slot-scope="props" class="text-center">
-                <div v-for="type in types" :key="type.id">
-                    <span v-if="props.row.type == type.id">
-                        {{ type.text }}
+            <div class="text-center" slot="type" slot-scope="props">
+                <div v-for="item in types" :key="item.id">
+                    <span v-if="props.row.type == item.id">
+                        {{ item.text }}
                     </span>
                 </div>
             </div>
-            <div slot="created_at" slot-scope="props" class="text-center">
-                <span>
-                    {{ format_date(props.row.created_at) }}
-                </span>
+            <div class="text-center" slot="created_at" slot-scope="props">
+                <span>{{ format_date(props.row.created_at) }}</span>
             </div>
-            <div v-html="props.row.motive" slot="motive" slot-scope="props"
-                class="text-center">
-            </div>
+            <div class="text-center" slot="motive" slot-scope="props" v-html="props.row.motive"></div>
             <div slot="id" slot-scope="props" class="d-flex justify-content-center">
-
-                <asset-request-info
-                    :route_list="app_url+'/asset/requests/vue-info/'+props.row.id">
-                </asset-request-info>
-
-                <asset-request-extension
-                    :requestid="props.row.id"
-                    :delivery_date="props.row.delivery_date"
-                    :state="props.row.state">
-                </asset-request-extension>
-
-                <asset-request-event
-                    :id="props.row.id"
-                    :state="props.row.state">
-                </asset-request-event>
-
-                <button
-                    @click="deliverEquipment(props.index)"
-                    class="btn btn-primary btn-xs btn-icon btn-action"
-                    :disabled="((props.row.state == 'Aprobado')||(props.row.state == 'Pendiente por entrega'))?false:true"
-                    data-toggle="tooltip" title="Entregar Equipos" type="button">
+                <asset-request-info :route_list="app_url+'/asset/requests/vue-info/'+props.row.id"></asset-request-info>
+                <asset-request-extension :requestid="props.row.id"
+                                         :delivery_date="props.row.delivery_date"
+                                         :state="props.row.state"></asset-request-extension>
+                <asset-request-event :id="props.row.id" :state="props.row.state"></asset-request-event>
+                <button class="btn btn-primary btn-xs btn-icon btn-action"
+                        type="button" data-toggle="tooltip" title="Entregar Equipos"
+                        :disabled="((props.row.state == 'Aprobado') || (props.row.state == 'Pendiente por entrega')) ? false : true"
+                        @click="deliverEquipment(props.index)">
                     <i class="icofont icofont-computer"></i>
                 </button>
-
-                <button
-                    @click="editForm(props.row.id)"
-                    class="btn btn-warning btn-xs btn-icon btn-action"
-                    :disabled="(props.row.state == 'Pendiente')?false:true"
-                    title="Editar Solicitud" data-toggle="tooltip" type="button">
+                <button class="btn btn-warning btn-xs btn-icon btn-action"
+                        type="button" data-toggle="tooltip" title="Editar Solicitud"
+                        :disabled="(props.row.state == 'Pendiente')?false:true"
+                        @click="editForm(props.row.id)">
                     <i class="icofont icofont-edit"></i>
                 </button>
-
-                <button
-                    @click="deleteRecord(props.index, '')"
-                    class="btn btn-danger btn-xs btn-icon btn-action"
-                    title="Eliminar registro"
-                    data-toggle="tooltip"
-                    type="button">
+                <button class="btn btn-danger btn-xs btn-icon btn-action"
+                        type="button" data-toggle="tooltip" title="Eliminar registro"
+                        @click="deleteRecord(props.index, '')">
                     <i class="fa fa-trash-o"></i>
                 </button>
             </div>
@@ -73,9 +49,7 @@
             return {
                 records: [],
                 errors: [],
-                
                 columns: ['code', 'type', 'motive', 'created_at', 'state', 'id'],
-
                 types: [
                     {"id":"","text":"Seleccione..."},
                     {"id":1,"text":"Prestamo de Equipos (Uso Interno)"},
@@ -95,7 +69,6 @@
             };
             this.table_options.sortable = ['code', 'type','motive','created_at','state'];
             this.table_options.filterable = ['code', 'type','motive','created_at','state'];
-
         },
         mounted () {
             //this.readRecords(`${this.route_list}`);
@@ -108,9 +81,7 @@
              * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
-
             },
-
             deliverEquipment(index) {
                 const vm = this;
                 var fields = this.records[index-1];
@@ -147,7 +118,7 @@
              * @param  {string}  url   Ruta que ejecuta la acción para eliminar un registro
              */
             deleteRecord(index, url) {
-                var url = (url)?vm.setUrl(url):this.route_delete;
+                var url = (url) ? vm.setUrl(url) : this.route_delete;
                 var records = this.records;
                 var confirmated = false;
                 var index = index - 1;
@@ -189,7 +160,6 @@
                     }
                 }
             },
-
         }
     };
 </script>
