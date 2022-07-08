@@ -451,6 +451,7 @@
                 let vm = this;
                 let editData = JSON.parse(vm.edit_object);
 
+                vm.record.id = editData.id;
                 vm.record.approved_at = vm.format_date(editData.approved_at, 'YYYY-MM-DD');
                 vm.record.document = editData.document;
                 vm.record.description = editData.description;
@@ -487,6 +488,7 @@
                         from_add.code = code;
                         from_add.description = account.budget_account.denomination;
                         from_add.amount = account.amount;
+                        from_add.amount_edit = account.amount;
                         from_add.account_id = acc.id;
                         from_add.specific_action_id = sp.id;
                     }
@@ -495,6 +497,7 @@
                         to_add.code = code;
                         to_add.description = account.budget_account.denomination;
                         to_add.amount = account.amount;
+                        to_add.amount_edit = account.amount;
                         to_add.account_id = acc.id;
                         to_add.specific_action_id = sp.id;
                     }
@@ -505,14 +508,17 @@
                             from_code: from_add.code,
                             from_description: from_add.description,
                             from_amount: from_add.amount,
+                            from_amount_edit: from_add.amount_edit,
                             from_account_id: from_add.account_id,
                             from_specific_action_id: from_add.specific_action_id,
                             to_spac_description: to_add.spac_description,
                             to_code: to_add.code,
                             to_description: to_add.description,
                             to_amount: to_add.amount,
+                            to_amount_edit: to_add.amount_edit,
                             to_account_id: to_add.account_id,
                             to_specific_action_id: to_add.specific_action_id,
+                            operation: ''
                         };
                         i++;
                     }
@@ -528,19 +534,26 @@
              */
             addAccount: function() {
                 const vm = this;
+                let amountEdit;
+                if (vm.editIndex != null) {
+                    amountEdit = vm.modification_accounts[vm.editIndex]['from_amount_edit'];
+                }
                 let to_add = {
                     from_spac_description: '',
                     from_code: '',
                     from_description: '',
                     from_amount: 0,
+                    from_amount_edit: amountEdit,
                     from_account_id: '',
                     from_specific_action_id: '',
                     to_spac_description: '',
                     to_code: '',
                     to_description: '',
                     to_amount: 0,
+                    to_amount_edit: 0,
                     to_account_id: '',
                     to_specific_action_id: '',
+                    operation: '',
                 };
 
                 if (!vm.from_specific_action_id) {
@@ -620,6 +633,7 @@
                                                         to_add.to_description = to_acc.denomination;
                                                         to_add.to_spac_description = `${to_spec.specificable.code} - ${to_spec.code} | ${to_spec.name}`;
                                                         to_add.to_amount = vm.to_amount;
+                                                        to_add.to_amount_edit = amountEdit;
                                                         to_add.to_account_id = vm.to_account_id;
                                                         to_add.to_specific_action_id = vm.to_specific_action_id;
                                                         vm.modification_accounts.push(to_add);
@@ -852,6 +866,117 @@
                         }
                     }
                 }
+            },
+
+            /**
+             * Método que permite actualizar información
+             *
+             * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             *
+             * @param  {string} url Ruta de la acci´on que modificará los datos
+             */
+            updateRecord(url) {
+                const vm = this;
+                vm.loading = true;
+                var fields = {};
+                url = vm.setUrl(url);
+
+                for (let account of vm.record.budget_account_id) {
+                    if (vm.record.type === 'AC') {
+                        if (parseFloat(account.from_amount_edit) == parseFloat(account.from_amount)) {
+                            account.operation = 'I';
+                            account.from_amount_edit = account.from_amount_edit;
+                        }
+                        if (parseFloat(account.from_amount_edit) < parseFloat(account.from_amount)) {
+                            account.operation = 'S';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                        }
+                        if (parseFloat(account.from_amount_edit) > parseFloat(account.from_amount)) {
+                            account.operation = 'R';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                        }
+                        if (typeof account.from_amount_edit === 'undefined') {
+                            account.from_amount_edit = 0;
+                        }
+
+                        if (typeof account.operation === 'undefined') {
+                            account.operation = '';
+                        }
+                    }
+
+                    if (vm.record.type === 'RE') {
+                        if (parseFloat(account.from_amount_edit) == parseFloat(account.from_amount)) {
+                            account.operation = 'I';
+                            account.from_amount_edit = account.from_amount_edit;
+                        }
+                        if (parseFloat(account.from_amount_edit) > parseFloat(account.from_amount)) {
+                            account.operation = 'S';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                        }
+                        if (parseFloat(account.from_amount_edit) < parseFloat(account.from_amount)) {
+                            account.operation = 'R';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                        }
+                        if (typeof account.from_amount_edit === 'undefined') {
+                            account.from_amount_edit = 0;
+                        }
+
+                        if (typeof account.operation === 'undefined') {
+                            account.operation = '';
+                        }
+                    }
+                    if (vm.record.type === 'TR') {
+                        if (parseFloat(account.from_amount_edit) == parseFloat(account.from_amount)) {
+                            account.operation = 'I';
+                            account.from_amount_edit = account.from_amount_edit;
+                            account.to_amount_edit = account.to_amount_edit;
+                        } else if (parseFloat(account.from_amount_edit) > parseFloat(account.from_amount)) {
+                            account.operation = 'S';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                            account.to_amount_edit = parseFloat(account.to_amount_edit) - parseFloat(account.to_amount);
+                        } else {
+                            account.operation = 'R';
+                            account.from_amount_edit = parseFloat(account.from_amount_edit) - parseFloat(account.from_amount);
+                            account.to_amount_edit = parseFloat(account.to_amount_edit) - parseFloat(account.to_amount);
+                        }
+                        if (typeof account.from_amount_edit === 'undefined' || typeof account.to_amount_edit === 'undefined') {
+                            account.from_amount_edit = 0;
+                            account.to_amount_edit = 0;
+                        }
+
+                        if (typeof account.operation === 'undefined') {
+                            account.operation = '';
+                        }
+                    }
+                }
+
+                for (var index in vm.record) {
+                    fields[index] = vm.record[index];
+                }
+                axios.put(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.id}`, fields).then(response => {
+                    if (typeof(response.data.redirect) !== "undefined") {
+                        location.href = response.data.redirect;
+                    }
+                    else {
+                        vm.readRecords(url);
+                        vm.reset();
+                        vm.loading = false;
+                        vm.showMessage('update');
+                    }
+
+                }).catch(error => {
+                    vm.errors = [];
+
+                    if (typeof(error.response) !="undefined") {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+                    vm.loading = false;
+                });
             },
         }
     };

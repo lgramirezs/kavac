@@ -256,7 +256,7 @@ class BudgetCompromiseController extends Controller
                     'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m - ($totalEdit < 0 ? $totalEdit * -1 : $totalEdit),
                 ]);
             } else {
-                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $total;
+                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - ($account['amount'] + $taxAmount);
                         $budgetAccountOpen->save();
             }
         }
