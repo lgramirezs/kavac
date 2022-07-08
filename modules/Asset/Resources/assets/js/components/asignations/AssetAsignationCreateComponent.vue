@@ -249,6 +249,12 @@
 			}
 		},
 
+		watch: {
+			'record.payroll_staff_id'(new_id) {
+				this.getPayrollStaffInfo(new_id);
+			}
+		},
+
 		created() {
 			const vm = this;
 			vm.getInstitutions();
@@ -257,6 +263,7 @@
 			// vm.getPayrollPositionTypes();
 			// vm.getPayrollPositions();
 		},
+		
 		mounted() {
 			const vm = this;
 			let url = `${window.app_url}/asset/registers/vue-list` 
@@ -274,6 +281,7 @@
 			asignationid: Number,
 			assetid: Number,
 		},
+		
 		methods: {
 			toggleActive({ row })
 			{
