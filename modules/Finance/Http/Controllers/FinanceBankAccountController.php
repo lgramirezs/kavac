@@ -76,7 +76,8 @@ class FinanceBankAccountController extends Controller
             'finance_banking_agency_id' => ['required'],
             'finance_account_type_id' => ['required'],
         ], [
-            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
+            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, " .
+                                           "incluyendo los 4 dígitos del código del banco.",
         ], $this->customAttributes);
 
         $ccc_number = $request->bank_code . $request->ccc_number;
@@ -128,7 +129,10 @@ class FinanceBankAccountController extends Controller
         
         $this->validate($request, [
             'ccc_number' => [
-                'required', 'numeric', 'digits_between:16, 20','unique:finance_bank_accounts,ccc_number,'. $bankAccount->id
+                'required',
+                'numeric',
+                'digits_between:16, 20',
+                'unique:finance_bank_accounts,ccc_number,'. $bankAccount->id
             ],
             'description' => ['required'],
             'opened_at' => ['required', 'date'],
@@ -136,7 +140,8 @@ class FinanceBankAccountController extends Controller
             'finance_account_type_id' => ['required'],
 
         ], [
-            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, incluyendo los 4 dígitos del código del banco.",
+            'ccc_number.digits_between' => "El campo código cuenta cliente debe tener 20 dígitos, " .
+                                           "incluyendo los 4 dígitos del código del banco.",
         ], $this->customAttributes);
 
         $ccc_number = $request->bank_code . $request->ccc_number;
