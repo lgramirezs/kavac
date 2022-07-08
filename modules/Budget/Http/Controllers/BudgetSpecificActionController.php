@@ -501,7 +501,7 @@ class BudgetSpecificActionController extends Controller
     {
         list($year, $month, $day) = explode("-", $selDate);
         $records = [['id' => '', 'text' => 'Seleccione...']];
-        $monthField = listMonths(true)[(int)$month] . "_amount";
+
         $openedAccounts = BudgetAccountOpen::with([
             'budgetAccount', 'subSpecificFormulation'
         ])->whereHas('budgetAccount', function ($q) {
@@ -510,7 +510,7 @@ class BudgetSpecificActionController extends Controller
             $q->where('year', $year)->whereHas('specificAction', function ($qq) use ($specificActionId) {
                 $qq->where('id', $specificActionId);
             });
-        })->where($monthField, '>', 0)->get();
+        })->get();
 
         foreach ($openedAccounts as $openAccount) {
             $records[] = [
