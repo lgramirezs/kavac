@@ -10,10 +10,6 @@ use Modules\Finance\Models\FinanceBank;
 use Modules\Finance\Models\FinanceCheckBook;
 use Modules\Finance\Models\FinanceBankAccount;
 
-
-
-
-
 /**
  * @class FinanceCheckBookController
  * @brief Controlador para las chequeras
@@ -75,8 +71,8 @@ class FinanceCheckBookController extends Controller
                 }
             }
         }
-      //  print($account->financeCheckBooks);
-       // dd($account->financeCheckBooks);
+        //  print($account->financeCheckBooks);
+        // dd($account->financeCheckBooks);
         return response()->json(['records' => $financeCheckBooks], 200);
     }
 
@@ -96,7 +92,6 @@ class FinanceCheckBookController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'code' => ['required'],
             'finance_bank_account_id' => ['required'],
@@ -109,42 +104,39 @@ class FinanceCheckBookController extends Controller
         ]);
 
         foreach ($request->numbers as $number) {
-            if($number == ""){
-                 $error[0]= "El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +";
+            if ($number == "") {
+                $error[0]= "El campo número de cheque es obligatorio. Se deben registrar los números de cheques, pulsando el icono +";
                 return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
-
             }
 
             //consulta que no exista el campo numero de cheque repetido con el codigo en la base de datos.
             $checksnumber = FinanceCheckBook::where('number', $number)->where('code', $request->code)->first();
-            if($checksnumber){
-                 $error[0]= "El campo Serial / Código o el Cheque # ya ha sido registrado en el sistema";
+            if ($checksnumber) {
+                $error[0]= "El campo Serial / Código o el Cheque # ya ha sido registrado en el sistema";
                 return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
             }
 
             //consulta que no exista el campo numero de cheque esta repetido en el formulario
-            if(count($request->numbers) > count(array_unique($request->numbers))){
-              $error[0]= "El campo numero de cheque esta repetido en el formulario";
-              return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
+            if (count($request->numbers) > count(array_unique($request->numbers))) {
+                $error[0]= "El campo numero de cheque esta repetido en el formulario";
+                return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
             }
         }
 
         //consulta que no exista el campo codigo repetido en base de datos.
         $checkscode = FinanceCheckBook::where('code', $request->code)->first();
-        if($checkscode){
-             $error[0]= "El campo código chequera ya ha sido registrado";
+        if ($checkscode) {
+            $error[0]= "El campo código chequera ya ha sido registrado";
             return response()->json(['result' => true, 'errors' => ["code" => $error]], 422);
-
         }
 
         foreach ($request->numbers as $number) {
-
-              FinanceCheckBook::create([
+            FinanceCheckBook::create([
                  'code' => $request->code,
                 'finance_bank_account_id' => $request->finance_bank_account_id,
                'number' => $number,
               ]);
-           }
+        }
 
 
         return response()->json(['result' => true, 'message' => 'Success'], 200);
@@ -175,10 +167,7 @@ class FinanceCheckBookController extends Controller
 
 
 
-      return view('finance::create', ['orderid' => $id, 'record' => $record]);
-
-
-
+        return view('finance::create', ['orderid' => $id, 'record' => $record]);
     }
 
     /**
@@ -219,7 +208,6 @@ class FinanceCheckBookController extends Controller
      */
     public function getBanksAccounts($bank_id)
     {
-
         $bank_account_id = ($bank_id)
                     ? FinanceBankAccount::where('finance_banking_agency_id', $bank_id)->get()
                     : FinanceBankAccount::all();
@@ -233,10 +221,4 @@ class FinanceCheckBookController extends Controller
 
         return response()->json($this->data);
     }
-
-
-
-
-
-
 }

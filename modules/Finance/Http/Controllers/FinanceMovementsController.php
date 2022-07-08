@@ -25,7 +25,7 @@ use DB;
 
 /**
  * @class FinanceMovementsController
- * 
+ *
  * @brief Gestión de Finanzas > Banco > Movimientos.
  *
  * Clase que gestiona lo referente a Conciliaciones bancarias.
@@ -38,7 +38,6 @@ use DB;
  */
 class FinanceMovementsController extends Controller
 {
-
     use ValidatesRequests;
 
     /**
@@ -103,9 +102,9 @@ class FinanceMovementsController extends Controller
             'currency_id.required'              => 'El campo tipo de moneda es obligatorio',
             'entry_category.required'           => 'El campo categoría del asiento es obligatorio',
             'entry_concept.required'            => 'El campo concepto o descripción es obligatorio',
-            'entry_concept.max'                 => 'El campo concepto o descripción debe ser menor a 400 caracteres',
+            'entry_concept.max'                 => 'El campo concepto o descripción debe ser menor a 400 carácteres',
             'recordsAccounting.required'        => 'Es obligatorio registrar un asiento contable',
-            'accounts.*.description.max'        => 'El campo concepto del compromiso debe ser menor a 400 caracteres',
+            'accounts.*.description.max'        => 'El campo concepto del compromiso debe ser menor a 400 carácteres',
             'totDebit.same'                     => 'El asiento no esta balanceado, Por favor verifique',
             'recordsAccounting.*.debit.min'     => 'Los valores agregados en la columna del DEBE deben ser positivos',
             'recordsAccounting.*.assets.min'    => 'Los valores agregados en la columna del HABER deben ser positivos',
@@ -147,7 +146,6 @@ class FinanceMovementsController extends Controller
      */
     public function create()
     {
-
         if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
             $accounting = 1;
         } else {
@@ -234,13 +232,14 @@ class FinanceMovementsController extends Controller
 
                     if ($is_admin) {
                         $institution = Institution::where('default', true)->first();
-                    }else{
+                    } else {
                         $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
 
                         $institution = $user_profile['institution'];
                     }
 
-                    AccountingManageEntries::dispatch([
+                    AccountingManageEntries::dispatch(
+                        [
                             'date' => $request->input('payment_date'),
                             'reference' => $request->input('reference'),
                             'concept' => $request->input('entry_concept'),
@@ -253,7 +252,8 @@ class FinanceMovementsController extends Controller
                             'model' => FinanceBankingMovement::class,
                             'relatable_id' => $bankingMovement->id,
                             'accountingAccounts' => $request->recordsAccounting
-                        ], ($request->institution_id) ?
+                        ],
+                        ($request->institution_id) ?
                             $request->institution_id :
                             $institution->id,
                     );
@@ -429,13 +429,14 @@ class FinanceMovementsController extends Controller
 
                 if ($is_admin) {
                     $institution = Institution::where('default', true)->first();
-                }else{
+                } else {
                     $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
 
                     $institution = $user_profile['institution'];
                 }
 
-                AccountingManageEntries::dispatch([
+                AccountingManageEntries::dispatch(
+                    [
                         'date' => $request->input('payment_date'),
                         'reference' => $request->input('reference'),
                         'concept' => $request->input('entry_concept'),
@@ -448,7 +449,8 @@ class FinanceMovementsController extends Controller
                         'model' => FinanceBankingMovement::class,
                         'relatable_id' => $bankingMovement->id,
                         'accountingAccounts' => $request->recordsAccounting
-                    ], ($request->institution_id) ?
+                    ],
+                    ($request->institution_id) ?
                         $request->institution_id :
                         $institution->id,
                 );
@@ -493,18 +495,20 @@ class FinanceMovementsController extends Controller
 
             /** @var Object Datos del compromiso */
             $compromise = BudgetCompromise::updateOrCreate(
-            [
+                [
                 'document_number' => $bankingMovement->code,
                 'institution_id' => $request->institution_id,
                 'compromiseable_type' => FinanceBankingMovement::class,
                 'compromiseable_id' => $bankingMovement->id
-            ], $colum);
+            ],
+                $colum
+            );
 
             $total = 0;
 
             $compromiseDetails = $compromise->budgetCompromiseDetails()->get();
 
-            foreach($compromiseDetails as $details) {
+            foreach ($compromiseDetails as $details) {
                 $details->delete();
             }
 
@@ -530,14 +534,15 @@ class FinanceMovementsController extends Controller
             }
 
             $compromise->budgetStages()->updateOrcreate(
-            [
+                [
                 'code' => $compromise->code,
             ],
-            [
+                [
                 'registered_at' => $request->payment_date,
                 'type' => 'PRE',
                 'amount' => $total,
-            ]);
+            ]
+            );
         }
 
         $request->session()->flash('message', ['type' => 'update']);
@@ -552,7 +557,7 @@ class FinanceMovementsController extends Controller
             $entryAccount = AccountingEntry::where('reference', $bankingMovement->reference)->first();
             $entries = AccountingEntryAccount::where('accounting_entry_id', $entryAccount->id)->get();
 
-            foreach($entries as $entry){
+            foreach ($entries as $entry) {
                 $entry->delete();
             }
 
@@ -564,7 +569,7 @@ class FinanceMovementsController extends Controller
                                     ->where('compromiseable_id', $bankingMovement->id)->first();
             $compromiseDetails = BudgetCompromiseDetail::where('budget_compromise_id', $budgetCompromise->id)->get();
 
-            foreach($compromiseDetails as $compromiseDetail){
+            foreach ($compromiseDetails as $compromiseDetail) {
                 $compromiseDetail->delete();
             }
 

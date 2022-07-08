@@ -3,15 +3,15 @@
 namespace Modules\Finance\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use DB;
+use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
 
 /**
  * @class FinanceSettingBankReconciliationFilesController
- * 
+ *
  * @brief Configuraciones de los archivos de conciliación bancaria.
  *
  * Clase que gestiona las configuraciones de archivos de conciliación bancarias.
@@ -24,7 +24,6 @@ use DB;
  */
 class FinanceSettingBankReconciliationFilesController extends Controller
 {
-
     use ValidatesRequests;
 
     /**
