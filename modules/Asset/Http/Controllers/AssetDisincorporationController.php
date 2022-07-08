@@ -110,6 +110,11 @@ class AssetDisincorporationController extends Controller
             $codeSetting->field
         );
 
+        $user_profile = Profile::where('user_id', auth()->user()->id)->first();
+        $institution_id = isset($user_profile->institution_id)
+        ? $user_profile->institution_id
+        : null;
+
         /**
          * Objeto asociado al modelo AssetDisincorporation
          *
@@ -121,6 +126,7 @@ class AssetDisincorporationController extends Controller
             'asset_disincorporation_motive_id' => $request->asset_disincorporation_motive_id,
             'observation' => $request->observation,
             'user_id' => Auth::id(),
+            'institution_id' => $institution_id,
         ]);
 
         $assets = explode(",", $request->assets);
