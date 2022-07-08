@@ -1,5 +1,5 @@
 <?php
-
+/** Controladores del módulo de finanzas */
 namespace Modules\Finance\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ use App\Models\Phone;
  *
  * Clase que gestiona las agencias bancarias
  *
- * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+ * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  * @license <a href='http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/'>
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>
@@ -48,13 +48,13 @@ class FinanceBankingAgencyController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
-    { 
+    {
         $record = FinanceBankingAgency::with([
             'financeBank', 'city', 'phones'
-        ])->get(); 
+        ])->get();
         //Log::emergency($record);
 
-        // return response()->json(['records' => 
+        // return response()->json(['records' =>
         // FinanceBankingAgency::with([
         //     'financeBank', 'city', 'phones'
         // ])->get()], 200);
@@ -78,18 +78,21 @@ class FinanceBankingAgencyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'unique:finance_banking_agencies,name'],
-            'direction' => ['required'],
-            'city_id' => ['required'],
-            'finance_bank_id' => ['required']
-          ],[
-            'name.required' => 'El campo nombre de agencia es obligatorio.',
-            'name.unique' => 'El nombre de agencia  ya ha sido registrado.',
-            'direction.required' => 'El campo dirección es obligatorio.',
-            'city_id.required' => 'El campo ciudad es obligatorio.',
-            'finance_bank_id.required' => 'El campo banco es obligatorio.',
-           ]
+        $this->validate(
+            $request,
+            [
+                'name' => ['required', 'unique:finance_banking_agencies,name'],
+                'direction' => ['required'],
+                'city_id' => ['required'],
+                'finance_bank_id' => ['required']
+            ],
+            [
+                'name.required' => 'El campo nombre de agencia es obligatorio.',
+                'name.unique' => 'El nombre de agencia  ya ha sido registrado.',
+                'direction.required' => 'El campo dirección es obligatorio.',
+                'city_id.required' => 'El campo ciudad es obligatorio.',
+                'finance_bank_id.required' => 'El campo banco es obligatorio.',
+            ]
         );
 
         $bankingAgency = FinanceBankingAgency::create([
@@ -149,17 +152,20 @@ class FinanceBankingAgencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => ['required'],
-            'direction' => ['required'],
-            'city_id' => ['required'],
-            'finance_bank_id' => ['required']
-          ],[
-            'name.required' => 'El campo nombre de agencia es obligatorio.',         
-            'direction.required' => 'El campo dirección es obligatorio.',
-            'city_id.required' => 'El campo ciudad es obligatorio.',
-            'finance_bank_id.required' => 'El campo banco es obligatorio.',
-           ] 
+        $this->validate(
+            $request,
+            [
+                'name' => ['required'],
+                'direction' => ['required'],
+                'city_id' => ['required'],
+                'finance_bank_id' => ['required']
+            ],
+            [
+                'name.required' => 'El campo nombre de agencia es obligatorio.',
+                'direction.required' => 'El campo dirección es obligatorio.',
+                'city_id.required' => 'El campo ciudad es obligatorio.',
+                'finance_bank_id.required' => 'El campo banco es obligatorio.',
+            ]
         );
 
         /** @var object Datos de la agencia bancaria */

@@ -12,7 +12,7 @@ use DB;
 
 /**
  * @class FinanceConciliationController
- * 
+ *
  * @brief Gestión de Finanzas > Banco > Conciliación.
  *
  * Clase que gestiona lo referente a Conciliaciones bancarias.
@@ -25,7 +25,6 @@ use DB;
  */
 class FinanceConciliationController extends Controller
 {
-
     use ValidatesRequests;
 
     /**
@@ -73,15 +72,13 @@ class FinanceConciliationController extends Controller
      */
     public function getInstitution()
     {
-        if(isset(auth()->user()->profile)){
+        if (isset(auth()->user()->profile)) {
             if (isset(auth()->user()->profile->institution_id)) {
                 $institution = Institution::where(['id' => auth()->user()->profile->institution_id])->first();
-            }
-            else {
+            } else {
                 $institution = Institution::where(['active' => true, 'default' => true])->first();
             }
-        }
-        else {
+        } else {
             $institution = Institution::where(['active' => true, 'default' => true])->first();
         }
         $inst = Institution::where('id', $institution->id)->with(['municipality' => function ($q) {

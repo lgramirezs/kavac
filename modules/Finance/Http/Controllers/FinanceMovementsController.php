@@ -2,30 +2,31 @@
 
 namespace Modules\Finance\Http\Controllers;
 
-use App\Models\CodeSetting;
-use App\Models\DocumentStatus;
 use App\Models\Tax;
+use App\Models\Profile;
+use App\Models\CodeSetting;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Renderable;
+use App\Models\DocumentStatus;
 use Illuminate\Routing\Controller;
-use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
-use Modules\Finance\Models\FinanceBankingMovement;
-use Modules\Accounting\Models\AccountingEntry;
-use Modules\Accounting\Models\AccountingEntryAccount;
-use Modules\Accounting\Models\AccountingAccount;
-use Modules\Accounting\Models\AccountingEntryCategory;
-use Modules\Accounting\Jobs\AccountingManageEntries;
+use Illuminate\Support\Facades\DB;
+use Nwidart\Modules\Facades\Module;
 use Modules\Accounting\Models\Institution;
 use Modules\Budget\Models\BudgetCompromise;
-use Modules\Budget\Models\BudgetCompromiseDetail;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\Accounting\Models\AccountingEntry;
 use Modules\Budget\Models\BudgetSpecificAction;
+use Modules\Accounting\Models\AccountingAccount;
+use Modules\Budget\Models\BudgetCompromiseDetail;
+use Modules\Finance\Models\FinanceBankingMovement;
+use Modules\Accounting\Jobs\AccountingManageEntries;
+use Modules\Accounting\Models\AccountingEntryAccount;
+use Modules\Accounting\Models\AccountingEntryCategory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Nwidart\Modules\Facades\Module;
-use DB;
+use Modules\Finance\Models\FinanceSettingBankReconciliationFiles;
 
 /**
  * @class FinanceMovementsController
- * 
+ *
  * @brief Gestión de Finanzas > Banco > Movimientos.
  *
  * Clase que gestiona lo referente a Conciliaciones bancarias.
@@ -38,7 +39,6 @@ use DB;
  */
 class FinanceMovementsController extends Controller
 {
-
     use ValidatesRequests;
 
     /**
@@ -103,9 +103,9 @@ class FinanceMovementsController extends Controller
             'currency_id.required'              => 'El campo tipo de moneda es obligatorio',
             'entry_category.required'           => 'El campo categoría del asiento es obligatorio',
             'entry_concept.required'            => 'El campo concepto o descripción es obligatorio',
-            'entry_concept.max'                 => 'El campo concepto o descripción debe ser menor a 400 caracteres',
+            'entry_concept.max'                 => 'El campo concepto o descripción debe ser menor a 400 carácteres',
             'recordsAccounting.required'        => 'Es obligatorio registrar un asiento contable',
-            'accounts.*.description.max'        => 'El campo concepto del compromiso debe ser menor a 400 caracteres',
+            'accounts.*.description.max'        => 'El campo concepto del compromiso debe ser menor a 400 carácteres',
             'totDebit.same'                     => 'El asiento no esta balanceado, Por favor verifique',
             'recordsAccounting.*.debit.min'     => 'Los valores agregados en la columna del DEBE deben ser positivos',
             'recordsAccounting.*.assets.min'    => 'Los valores agregados en la columna del HABER deben ser positivos',
@@ -130,9 +130,9 @@ class FinanceMovementsController extends Controller
             return view('finance::movements.list');
         } else {
             return redirect()->route('finance.setting.index')->with('message', [
-                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
-                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
-                        ]);
+                'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+            ]);
         }
     }
 
@@ -147,14 +147,13 @@ class FinanceMovementsController extends Controller
      */
     public function create()
     {
-
         if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
             $accounting = 1;
         } else {
             return redirect()->route('finance.setting.index')->with('message', [
-                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
-                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
-                        ]);
+                'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+            ]);
         }
 
         if (Module::has('Budget') && Module::isEnabled('Budget')) {
@@ -230,17 +229,18 @@ class FinanceMovementsController extends Controller
 
             if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
                 if ($request->recordsAccounting && !empty($request->recordsAccounting)) {
-                    $is_admin = auth()->user()->isAdmin();
+                    $is_admin = auth()->user()->isAdmin ?? false;
 
                     if ($is_admin) {
                         $institution = Institution::where('default', true)->first();
-                    }else{
+                    } else {
                         $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
 
                         $institution = $user_profile['institution'];
                     }
 
-                    AccountingManageEntries::dispatch([
+                    AccountingManageEntries::dispatch(
+                        [
                             'date' => $request->input('payment_date'),
                             'reference' => $request->input('reference'),
                             'concept' => $request->input('entry_concept'),
@@ -253,7 +253,8 @@ class FinanceMovementsController extends Controller
                             'model' => FinanceBankingMovement::class,
                             'relatable_id' => $bankingMovement->id,
                             'accountingAccounts' => $request->recordsAccounting
-                        ], ($request->institution_id) ?
+                        ],
+                        ($request->institution_id) ?
                             $request->institution_id :
                             $institution->id,
                     );
@@ -307,7 +308,9 @@ class FinanceMovementsController extends Controller
                         $tax = (isset($account['account_tax_id']) || isset($account['tax_id']))
                         ? Tax::find($account['account_tax_id'] ?? $account['tax_id'])
                         : new Tax();
-                        $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
+                        $taxHistory = ($tax)
+                                      ? $tax->histories()->orderBy('operation_date', 'desc')->first()
+                                      : new Tax();
                         $taxAmount = ($account['amount'] * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
                         $compromise->budgetCompromiseDetails()->create([
                             'description' => $account['description'],
@@ -364,9 +367,9 @@ class FinanceMovementsController extends Controller
             $accounting = 1;
         } else {
             return redirect()->route('finance.setting.index')->with('message', [
-                        'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
-                        'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
-                        ]);
+                'type' => 'other', 'title' => 'Alerta', 'icon' => 'screen-error', 'class' => 'growl-danger',
+                'text' => 'Debe tener instalado el módulo de contabilidad para poder utilizar esta funcionalidad.'
+            ]);
         }
 
         if (Module::has('Budget') && Module::isEnabled('Budget')) {
@@ -405,7 +408,10 @@ class FinanceMovementsController extends Controller
 
         $movement = FinanceBankingMovement::find($id);
 
-        return view('finance::movements.create', compact('accountingList', 'categories', 'accounting', 'budget', 'movement'));
+        return view(
+            'finance::movements.create',
+            compact('accountingList', 'categories', 'accounting', 'budget', 'movement')
+        );
     }
 
     public function update(Request $request, $id)
@@ -425,17 +431,18 @@ class FinanceMovementsController extends Controller
 
         if (Module::has('Accounting') && Module::isEnabled('Accounting')) {
             if ($request->recordsAccounting && !empty($request->recordsAccounting)) {
-                $is_admin = auth()->user()->isAdmin();
+                $is_admin = auth()->user()->isAdmin || false;
 
                 if ($is_admin) {
                     $institution = Institution::where('default', true)->first();
-                }else{
+                } else {
                     $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
 
                     $institution = $user_profile['institution'];
                 }
 
-                AccountingManageEntries::dispatch([
+                AccountingManageEntries::dispatch(
+                    [
                         'date' => $request->input('payment_date'),
                         'reference' => $request->input('reference'),
                         'concept' => $request->input('entry_concept'),
@@ -448,7 +455,8 @@ class FinanceMovementsController extends Controller
                         'model' => FinanceBankingMovement::class,
                         'relatable_id' => $bankingMovement->id,
                         'accountingAccounts' => $request->recordsAccounting
-                    ], ($request->institution_id) ?
+                    ],
+                    ($request->institution_id) ?
                         $request->institution_id :
                         $institution->id,
                 );
@@ -493,18 +501,20 @@ class FinanceMovementsController extends Controller
 
             /** @var Object Datos del compromiso */
             $compromise = BudgetCompromise::updateOrCreate(
-            [
-                'document_number' => $bankingMovement->code,
-                'institution_id' => $request->institution_id,
-                'compromiseable_type' => FinanceBankingMovement::class,
-                'compromiseable_id' => $bankingMovement->id
-            ], $colum);
+                [
+                    'document_number' => $bankingMovement->code,
+                    'institution_id' => $request->institution_id,
+                    'compromiseable_type' => FinanceBankingMovement::class,
+                    'compromiseable_id' => $bankingMovement->id
+                ],
+                $colum
+            );
 
             $total = 0;
 
             $compromiseDetails = $compromise->budgetCompromiseDetails()->get();
 
-            foreach($compromiseDetails as $details) {
+            foreach ($compromiseDetails as $details) {
                 $details->delete();
             }
 
@@ -530,14 +540,15 @@ class FinanceMovementsController extends Controller
             }
 
             $compromise->budgetStages()->updateOrcreate(
-            [
-                'code' => $compromise->code,
-            ],
-            [
-                'registered_at' => $request->payment_date,
-                'type' => 'PRE',
-                'amount' => $total,
-            ]);
+                [
+                    'code' => $compromise->code,
+                ],
+                [
+                    'registered_at' => $request->payment_date,
+                    'type' => 'PRE',
+                    'amount' => $total,
+                ]
+            );
         }
 
         $request->session()->flash('message', ['type' => 'update']);
@@ -552,7 +563,7 @@ class FinanceMovementsController extends Controller
             $entryAccount = AccountingEntry::where('reference', $bankingMovement->reference)->first();
             $entries = AccountingEntryAccount::where('accounting_entry_id', $entryAccount->id)->get();
 
-            foreach($entries as $entry){
+            foreach ($entries as $entry) {
                 $entry->delete();
             }
 
@@ -564,7 +575,7 @@ class FinanceMovementsController extends Controller
                                     ->where('compromiseable_id', $bankingMovement->id)->first();
             $compromiseDetails = BudgetCompromiseDetail::where('budget_compromise_id', $budgetCompromise->id)->get();
 
-            foreach($compromiseDetails as $compromiseDetail){
+            foreach ($compromiseDetails as $compromiseDetail) {
                 $compromiseDetail->delete();
             }
 
@@ -582,10 +593,12 @@ class FinanceMovementsController extends Controller
      */
     public function vueList()
     {
-        $movements = FinanceBankingMovement::with(['financeBankAccount.financeBankingAgency.financeBank', 'financeBankAccount.financeAccountType',
-                                                'currency', 'institution', 'accountingEntryPivot.accountingEntry.accountingAccounts.account',
-                                                'budgetCompromise.budgetCompromiseDetails.budgetSubSpecificFormulation',
-                                                'budgetCompromise.budgetCompromiseDetails.budgetAccount'])->get();
+        $movements = FinanceBankingMovement::with([
+            'financeBankAccount.financeBankingAgency.financeBank', 'financeBankAccount.financeAccountType',
+            'currency', 'institution', 'accountingEntryPivot.accountingEntry.accountingAccounts.account',
+            'budgetCompromise.budgetCompromiseDetails.budgetSubSpecificFormulation',
+            'budgetCompromise.budgetCompromiseDetails.budgetAccount'
+        ])->get();
         return response()->json(['records' => $movements], 200);
     }
 

@@ -15,7 +15,7 @@ use Modules\Finance\Models\FinancePaymentMethods;
  * Clase que gestiona las formas de pago
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
- * --colaborador  Ing. Marco Ocanto 
+ * @author Ing. Marco Ocanto
  * @license <a href='http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/'>
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>

@@ -27,9 +27,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
  * @class FinancePayOrderController
  * @brief [descripción detallada]
  *
- * [descripción corta]
+ * Establece los métodos a implementar en la gestión de órdenes de pago
  *
- * @author [autor de la clase] [correo del autor]
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  *
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
@@ -71,9 +71,9 @@ class FinancePayOrderController extends Controller
      *
      * @method    index
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la plantilla con la información a mostrar
      */
     public function index()
     {
@@ -85,9 +85,9 @@ class FinancePayOrderController extends Controller
      *
      * @method    create
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable   Retorna el formulario de registro de órdenes d pago
      */
     public function create()
     {
@@ -100,11 +100,11 @@ class FinancePayOrderController extends Controller
      *
      * @method    store
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     object    Request    $request    Objeto con información de la petición
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna información del registro almacenado
      */
     public function store(Request $request)
     {
@@ -149,10 +149,16 @@ class FinancePayOrderController extends Controller
         $receiver = Receiver::find($request->name_sourceable_id);
 
         $financePayOrder = DB::transaction(
-            function () use ($request, $code, $compromise, $specificActionId, $documentStatus, $receiver
-        ) {
-            $pendingAmount = $request->source_amount - $request->amount;
-            $financePayOrder = FinancePayOrder::create([
+            function () use (
+                $request,
+                $code,
+                $compromise,
+                $specificActionId,
+                $documentStatus,
+                $receiver
+            ) {
+                $pendingAmount = $request->source_amount - $request->amount;
+                $financePayOrder = FinancePayOrder::create([
                 'code' => $code,
                 'ordered_at' => $request->ordered_at,
                 'type' => $request->type,
@@ -177,10 +183,10 @@ class FinancePayOrderController extends Controller
                 'document_sourceable_id' => $request->document_sourceable_id ?? null,
                 'document_sourceable_type' => BudgetCompromise::class ?? null
             ]);
-            $accountingCategory = AccountingEntryCategory::where('acronym', 'SOP')->first();
-            $accountEntry = AccountingEntry::create([
+                $accountingCategory = AccountingEntryCategory::where('acronym', 'SOP')->first();
+                $accountEntry = AccountingEntry::create([
                 'from_date'                      => $request->ordered_at,
-                'reference'                      => $code, //Código de la orden de pagop como referencia
+                'reference'                      => $code, //Código de la órden de pago como referencia
                 'concept'                        => $request->concept,
                 'observations'                   => $request->observations,
                 'accounting_entry_category_id'   => $accountingCategory->id,
@@ -191,28 +197,29 @@ class FinancePayOrderController extends Controller
                 'approved'                       => false
             ]);
             
-            foreach ($request->accountingItems as $account) {
-                /**
-                 * Se crea la relación de cuenta a ese asiento si ya existe existe lo actualiza,
-                 * de lo contrario crea el nuevo registro de cuenta
-                 */
-                AccountingEntryAccount::create([
+                foreach ($request->accountingItems as $account) {
+                    /**
+                     * Se crea la relación de cuenta a ese asiento si ya existe lo actualiza,
+                     * de lo contrario crea el nuevo registro de cuenta
+                     */
+                    AccountingEntryAccount::create([
                     'accounting_entry_id' => $accountEntry->id,
                     'accounting_account_id' => $account['id'],
                     'debit' => $account['debit'],
                     'assets' => $account['assets'],
                 ]);
-            }
+                }
 
-            /** Crea la relación entre el asiento contable y el registro de orden de pago */
-            AccountingEntryable::create([
+                /** Crea la relación entre el asiento contable y el registro de orden de pago */
+                AccountingEntryable::create([
                 'accounting_entry_id' => $accountEntry->id,
                 'accounting_entryable_type' => FinancePayOrder::class,
                 'accounting_entryable_id' => $financePayOrder->id
             ]);
 
-            return $financePayOrder;
-        });
+                return $financePayOrder;
+            }
+        );
 
         $request->session()->flash('message', ['type' => 'store']);
 
@@ -220,15 +227,15 @@ class FinancePayOrderController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra detalles de una órden de pago
      *
      * @method    show
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la plantilla que mostrará los detalles de la órden de pago
      */
     public function show($id)
     {
@@ -236,15 +243,15 @@ class FinancePayOrderController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra el formulario para la actualización de datos de la órden de pago
      *
      * @method    edit
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna el formulario para la actualización de datos de la órden de pago
      */
     public function edit($id)
     {
@@ -257,12 +264,12 @@ class FinancePayOrderController extends Controller
      *
      * @method    update
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     object    Request    $request         Objeto con datos de la petición
      * @param     integer   $id        Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna el registro actualizado
      */
     public function update(Request $request, $id)
     {
@@ -278,15 +285,15 @@ class FinancePayOrderController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Elimina una órden de pago
      *
      * @method    destroy
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna el registro eliminado
      */
     public function destroy($id)
     {
@@ -305,24 +312,24 @@ class FinancePayOrderController extends Controller
     /**
      * Obtiene un listado de documentos para los cuales ordenar pago
      *
-     * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
+     * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @param  \Illuminate\Http\Request $request      
+     * @param  \Illuminate\Http\Request $request
      * @param  String                   $type         Tipo de órden de pago
      * @param  String                   $request->documentType Tipo de documento de origen a buscar
      *
-     * @return void                                   
+     * @return void
      */
     public function getSourceDocuments(Request $request)
     {
-        list($year,$month,$day) = explode('-', $request->ordered_at);
+        list($year, $month, $day) = explode('-', $request->ordered_at);
         
         $data = [['id' => '', 'text' => 'Seleccione...']];
         if ($request->type === 'PR' && Module::has('Budget')) {
             $compromises = $compromises = BudgetCompromise::whereHas(
-                'budgetCompromiseDetails', 
-                function($q) use ($year) {
-                    $q->whereHas('budgetSubSpecificFormulation', function($qq) use ($year) {
+                'budgetCompromiseDetails',
+                function ($q) use ($year) {
+                    $q->whereHas('budgetSubSpecificFormulation', function ($qq) use ($year) {
                         $qq->where(['assigned' => true, 'year' => $year]);
                     });
                 }
@@ -345,7 +352,7 @@ class FinancePayOrderController extends Controller
                     $total += $detail->total;
                 }
                 $data[] = [
-                    'id' => $compromise->id, 'text' => $compromise->document_number, 
+                    'id' => $compromise->id, 'text' => $compromise->document_number,
                     'budget_compromise_id' => $compromise->id, 'budget_total_amount' => $total,
                     'currency' => $currency
                 ];
@@ -355,43 +362,43 @@ class FinancePayOrderController extends Controller
     }
 
     /**
-	 * Obtiene los registros de las cuentas patrimoniales
-	 * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-	 * @return json [JSON con la información de las cuentas formateada]
-	*/
-	public function getAccountingAccounts()
-	{
-		/**
-		 * [$records listado de registros]
-		 * @var array
-		 */
-		$records = [];
-		array_push($records, [
-				'id'   => '',
-				'text' => 'Seleccione...'
-			]);
-		/**
-		 * ciclo para almecenar y formatear en array las cuentas patrimoniales
-		 */
-		foreach (AccountingAccount::orderBy('group', 'ASC')
-									->orderBy('subgroup', 'ASC')
-									->orderBy('item', 'ASC')
-									->orderBy('generic', 'ASC')
-									->orderBy('specific', 'ASC')
-									->orderBy('subspecific', 'ASC')
-									->get() as $account) {
-			if ($account->active) {
-				array_push($records, [
-					'id'   => $account->id,
-					'text' => "{$account->getCodeAttribute()} - {$account->denomination}"
-				]);
-			}
-		};
-		/**
-		 * se convierte array a JSON
-		 */
-		return json_encode($records);
-	}
+     * Obtiene los registros de las cuentas patrimoniales
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     * @return json [JSON con la información de las cuentas formateada]
+    */
+    public function getAccountingAccounts()
+    {
+        /**
+         * [$records listado de registros]
+         * @var array
+         */
+        $records = [];
+        array_push($records, [
+                'id'   => '',
+                'text' => 'Seleccione...'
+            ]);
+        /**
+         * ciclo para almecenar y formatear en array las cuentas patrimoniales
+         */
+        foreach (AccountingAccount::orderBy('group', 'ASC')
+                                    ->orderBy('subgroup', 'ASC')
+                                    ->orderBy('item', 'ASC')
+                                    ->orderBy('generic', 'ASC')
+                                    ->orderBy('specific', 'ASC')
+                                    ->orderBy('subspecific', 'ASC')
+                                    ->get() as $account) {
+            if ($account->active) {
+                array_push($records, [
+                    'id'   => $account->id,
+                    'text' => "{$account->getCodeAttribute()} - {$account->denomination}"
+                ]);
+            }
+        };
+        /**
+         * se convierte array a JSON
+         */
+        return json_encode($records);
+    }
 
     /**
      * Obtiene los registros a mostrar en listados de componente Vue
@@ -423,7 +430,7 @@ class FinancePayOrderController extends Controller
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
      *
-     * @return void 
+     * @return void
      */
     public function getPendingPayOrders($receiver_id = null)
     {
@@ -485,9 +492,9 @@ class FinancePayOrderController extends Controller
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
      *
-     * @param  \Illuminate\Http\Request $request 
+     * @param  \Illuminate\Http\Request $request
      *
-     * @return void                              
+     * @return void
      */
     public function changeDocumentStatus(Request $request)
     {
@@ -508,7 +515,10 @@ class FinancePayOrderController extends Controller
     public function pdf($id)
     {
         $financePayOrder = FinancePayOrder::with(
-            'institution', 'currency', 'financePaymentMethod', 'budgetSpecificAction'
+            'institution',
+            'currency',
+            'financePaymentMethod',
+            'budgetSpecificAction'
         )->find($id);
         
         $budjetProjectAcc = null;
@@ -518,11 +528,11 @@ class FinancePayOrderController extends Controller
                 $budjetProjectAcc = $financePayOrder->budgetSpecificAction->specificable->getTable();
                 $specificAction = [
                     'type' => ($budjetProjectAcc==='budget_projects')?'Proyecto':'Acción Centralizada',
-                    'code' => $financePayOrder->budgetSpecificAction->specificable->code . ' - ' . 
+                    'code' => $financePayOrder->budgetSpecificAction->specificable->code . ' - ' .
                               $financePayOrder->budgetSpecificAction->code
                 ];
             }
-            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function($q) {
+            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function ($q) {
                 $q->with('account');
             }])->where('reference', $financePayOrder->code)->first();
             $pdf = new ReportRepository;
@@ -537,10 +547,12 @@ class FinancePayOrderController extends Controller
                     'filename'    => $filename
                 ]
             );
-            $pdf->setHeader("ORDEN DE PAGO Nº $financePayOrder->code", "En ejercicio fiscal: $year", true, false,'','C','C');
+            $pdf->setHeader("ORDEN DE PAGO Nº $financePayOrder->code", "En ejercicio fiscal: $year", true, false, '', 'C', 'C');
             $pdf->setFooter();
             $pdf->setBody(
-                'finance::pay_orders.report', true, compact('financePayOrder', 'specificAction', 'accountingEntry')
+                'finance::pay_orders.report',
+                true,
+                compact('financePayOrder', 'specificAction', 'accountingEntry')
             );
         }
     }
