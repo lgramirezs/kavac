@@ -110,6 +110,11 @@ class AssetDisincorporationController extends Controller
             $codeSetting->field
         );
 
+        $user_profile = Profile::where('user_id', auth()->user()->id)->first();
+        $institution_id = isset($user_profile->institution_id)
+        ? $user_profile->institution_id
+        : null;
+
         /**
          * Objeto asociado al modelo AssetDisincorporation
          *
@@ -121,6 +126,7 @@ class AssetDisincorporationController extends Controller
             'asset_disincorporation_motive_id' => $request->asset_disincorporation_motive_id,
             'observation' => $request->observation,
             'user_id' => Auth::id(),
+            'institution_id' => $institution_id,
         ]);
 
         $assets = explode(",", $request->assets);
@@ -393,23 +399,7 @@ class AssetDisincorporationController extends Controller
             $assetDisincorporations = AssetDisincorporation::where('institution_id', $institution_id)
                 ->with('assetDisincorporationMotive')->get();
         }
-<<<<<<< HEAD
-
-        $total = $assetDisincorporations->count();
-        $assetDisincorporations = $assetDisincorporations->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        $lastPage = max((int) ceil($total / $perPage), 1);
-        return response()->json(
-            [
-                'records' => $assetDisincorporations,
-                'total' => $total,
-                'lastPage' => $lastPage,
-            ],
-            200
-        );
-=======
-        
         return response()->json(['records'  => $assetDisincorporations ], 200); 
->>>>>>> Buienes: cambio en los limitadores de pagina en la tablas de registros
     }
 
     /**

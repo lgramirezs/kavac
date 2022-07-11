@@ -122,6 +122,7 @@ class BudgetCompromiseController extends Controller
             ]);
 
             $total = 0;
+            $totalEdit = 0;
             /** Gestiona los ítems del compromiso */
             foreach ($request->accounts as $account) {
                 $spac = BudgetSpecificAction::find($account['specific_action_id']);
@@ -140,11 +141,12 @@ class BudgetCompromiseController extends Controller
                     'budget_sub_specific_formulation_id' => $formulation->id,
                 ]);
                 $total += ($account['amount'] + $taxAmount);
+                $totalEdit = ($account['amount'] + $taxAmount);
 
                 $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
                                                             ->where('budget_account_id', $account['account_id'])
                                                             ->first();
-                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $total;
+                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $totalEdit;
                         $budgetAccountOpen->save();
             }
 
@@ -254,7 +256,7 @@ class BudgetCompromiseController extends Controller
                     'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m - ($totalEdit < 0 ? $totalEdit * -1 : $totalEdit),
                 ]);
             } else {
-                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - $total;
+                $budgetAccountOpen->total_year_amount_m = $budgetAccountOpen->total_year_amount_m - ($account['amount'] + $taxAmount);
                         $budgetAccountOpen->save();
             }
         }
@@ -273,8 +275,37 @@ class BudgetCompromiseController extends Controller
      * Remove the specified resource from storage.
      * @return Renderable
      */
-    public function destroy()
+    public function destroy($id)
     {
+        /** @var object Objeto con información del compromiso a eliminar */
+        $budgetCompromise = BudgetCompromise::find($id);
+        $compromisedYear = explode("-", $budgetCompromise->compromised_at)[0];
+
+        if ($budgetCompromise) {
+            $budgetCompromiseDetails = BudgetCompromiseDetail::where('budget_compromise_id', $id)->get();
+
+            foreach ($budgetCompromiseDetails as $budgetCompromiseDetail) {
+                $formulation = $budgetCompromiseDetail->budgetSubSpecificFormulation()->where('year', $compromisedYear)->first();
+                $tax = isset($budgetCompromiseDetail['tax_id'])
+                ? Tax::find($budgetCompromiseDetail['tax_id'])
+                : new Tax();
+                $taxHistory = ($tax) ? $tax->histories()->orderBy('operation_date', 'desc')->first() : new Tax();
+                $taxAmount = ($budgetCompromiseDetail['amount'] * (($taxHistory) ? $taxHistory->percentage : 0)) / 100;
+                $total = ($budgetCompromiseDetail['amount'] + $taxAmount);
+
+                $budgetAccountOpen = BudgetAccountOpen::where('budget_sub_specific_formulation_id', $formulation->id)
+                                                            ->where('budget_account_id', $budgetCompromiseDetail['budget_account_id'])
+                                                            ->first();
+                $budgetAccountOpen->update([
+                    'total_year_amount_m' => $budgetAccountOpen->total_year_amount_m + $total,
+                ]);
+            }
+
+            $budgetCompromise->delete();
+            $budgetCompromiseDetailsDelete = BudgetCompromiseDetail::where('budget_compromise_id', $id)->delete();
+        }
+
+        return response()->json(['record' => $budgetCompromise, 'message' => 'Success'], 200);
     }
 
     /**

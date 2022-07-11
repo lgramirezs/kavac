@@ -1083,8 +1083,6 @@ export default {
                     account.amountEdit = parseFloat(account.amountEdit) - parseFloat(account.amount);
                 }
                 if (parseFloat(account.amountEdit) < parseFloat(account.amount)) {
-                    console.log(parseFloat(account.amount))
-                    console.log(parseFloat(account.amountEdit))
                     account.operation = 'R';
                     account.amountEdit = parseFloat(account.amountEdit) - parseFloat(account.amount);
                 }

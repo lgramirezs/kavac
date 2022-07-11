@@ -24,9 +24,9 @@ use Modules\Finance\Models\FinancePayOrderFinancePaymentExecute;
  * @class FinancePaymentExecuteController
  * @brief [descripción detallada]
  *
- * [descripción corta]
+ * Contiene los métodos necesarios para la gestión de la ejecución de pagos
  *
- * @author [autor de la clase] [correo del autor]
+ * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  *
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
@@ -53,13 +53,13 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra la plantilla con los registros de ejecuciones de pago
      *
      * @method    index
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la plantilla que mostrará el listado de órdenes de pago
      */
     public function index()
     {
@@ -67,13 +67,13 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra la plantilla con el formulario para el registro de ejecuciones de pago
      *
      * @method    create
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la plantilla con el formulario de registro de ejecuciones de pago
      */
     public function create()
     {
@@ -82,15 +82,15 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Realiza las acciones para almacenar una órden de pago
      *
      * @method    store
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     object    Request    $request    Objeto con información de la petición
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la ejecución de pago registrada
      */
     public function store(Request $request)
     {
@@ -188,15 +188,15 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra los detalles de una ejecución de pago
      *
      * @method    show
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna los detalles de la ejecución de pago
      */
     public function show($id)
     {
@@ -204,15 +204,15 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Muestra el formulario para la actualización de datos de la ejecución de pago
      *
      * @method    edit
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la plantilla con el formulario para la actualización de datos de la ejecución de pago
      */
     public function edit($id)
     {
@@ -221,16 +221,16 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Actualiza información de una ejecución de pago
      *
      * @method    update
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     object    Request    $request         Objeto con datos de la petición
      * @param     integer   $id        Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna los datos actualizados de la ejecución de pago
      */
     public function update(Request $request, $id)
     {
@@ -238,15 +238,15 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-     * [descripción del método]
+     * Elimina una ejecución de pago
      *
      * @method    destroy
      *
-     * @author    [nombre del autor] [correo del autor]
+     * @author    Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
      *
-     * @return    Renderable    [descripción de los datos devueltos]
+     * @return    Renderable    Retorna la ejecución de pago eliminada
      */
     public function destroy($id)
     {
@@ -267,21 +267,25 @@ class FinancePaymentExecuteController extends Controller
      *
      * @author Ing. Roldan Vargas <roldandvg at gmail.com> | <rvargas at cenditel.gob.ve>
      *
-     * @return void 
+     * @return void
      */
     public function getPayOrderReceivers()
     {
         $nameSources = FinancePayOrder::select(
-            'name_sourceable_type', 'name_sourceable_id'
+            'name_sourceable_type',
+            'name_sourceable_id'
         )->whereIn('status', ['PE', 'PP'])->groupBy(
-            'name_sourceable_type', 'name_sourceable_id'
+            'name_sourceable_type',
+            'name_sourceable_id'
         )->get()->toArray();
         
         $data = [['id' => '', 'text' => 'Seleccione...']];
         $groups = Receiver::select('group')->whereIn(
-            'receiverable_type', array_column($nameSources, 'name_sourceable_type')
+            'receiverable_type',
+            array_column($nameSources, 'name_sourceable_type')
         )->whereIn(
-            'receiverable_id', array_column($nameSources, 'name_sourceable_id')
+            'receiverable_id',
+            array_column($nameSources, 'name_sourceable_id')
         )->groupBy('group')->orderBy('group')->get();
         foreach ($groups as $g) {
             $childrens = Receiver::select('id', 'description AS text')
@@ -293,43 +297,43 @@ class FinancePaymentExecuteController extends Controller
     }
 
     /**
-	 * Obtiene los registros de las cuentas patrimoniales
-	 * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-	 * @return json [JSON con la información de las cuentas formateada]
-	*/
-	public function getAccountingAccounts()
-	{
-		/**
-		 * [$records listado de registros]
-		 * @var array
-		 */
-		$records = [];
-		array_push($records, [
-				'id'   => '',
-				'text' => 'Seleccione...'
-			]);
-		/**
-		 * ciclo para almecenar y formatear en array las cuentas patrimoniales
-		 */
-		foreach (AccountingAccount::orderBy('group', 'ASC')
-									->orderBy('subgroup', 'ASC')
-									->orderBy('item', 'ASC')
-									->orderBy('generic', 'ASC')
-									->orderBy('specific', 'ASC')
-									->orderBy('subspecific', 'ASC')
-									->get() as $account) {
-			if ($account->active) {
-				array_push($records, [
-					'id'   => $account->id,
-					'text' => "{$account->getCodeAttribute()} - {$account->denomination}"
-				]);
-			}
-		};
-		/**
-		 * se convierte array a JSON
-		 */
-		return json_encode($records);
-	}
+     * Obtiene los registros de las cuentas patrimoniales
+     * @author  Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     * @return json [JSON con la información de las cuentas formateada]
+    */
+    public function getAccountingAccounts()
+    {
+        /**
+         * [$records listado de registros]
+         * @var array
+         */
+        $records = [];
+        array_push($records, [
+                'id'   => '',
+                'text' => 'Seleccione...'
+            ]);
+        /**
+         * ciclo para almecenar y formatear en array las cuentas patrimoniales
+         */
+        foreach (AccountingAccount::orderBy('group', 'ASC')
+                                    ->orderBy('subgroup', 'ASC')
+                                    ->orderBy('item', 'ASC')
+                                    ->orderBy('generic', 'ASC')
+                                    ->orderBy('specific', 'ASC')
+                                    ->orderBy('subspecific', 'ASC')
+                                    ->get() as $account) {
+            if ($account->active) {
+                array_push($records, [
+                    'id'   => $account->id,
+                    'text' => "{$account->getCodeAttribute()} - {$account->denomination}"
+                ]);
+            }
+        };
+        /**
+         * se convierte array a JSON
+         */
+        return json_encode($records);
+    }
 
     /**
      * Obtiene los registros a mostrar en listados de componente Vue
@@ -341,7 +345,9 @@ class FinancePaymentExecuteController extends Controller
     {
         return response()->json([
             'records' => FinancePaymentExecute::with(
-                'financePayOrders', 'financePaymentDeductions', 'documentStatus'
+                'financePayOrders',
+                'financePaymentDeductions',
+                'documentStatus'
             )->orderBy('paid_at')->get(),
         ], 200);
     }
@@ -349,7 +355,7 @@ class FinancePaymentExecuteController extends Controller
     public function pdf($id)
     {
         $financePaymentExecute = FinancePaymentExecute::with([
-            'financePaymentDeductions' => function($q) {
+            'financePaymentDeductions' => function ($q) {
                 $q->with('deduction');
             }
         ])->find($id);
@@ -361,11 +367,11 @@ class FinancePaymentExecuteController extends Controller
                 $budjetProjectAcc = $financePaymentExecute->budgetSpecificAction->specificable->getTable();
                 $specificAction = [
                     'type' => ($budjetProjectAcc==='budget_projects')?'Proyecto':'Acción Centralizada',
-                    'code' => $financePaymentExecute->budgetSpecificAction->specificable->code . ' - ' . 
+                    'code' => $financePaymentExecute->budgetSpecificAction->specificable->code . ' - ' .
                               $financePaymentExecute->budgetSpecificAction->code
                 ];
             }*/
-            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function($q) {
+            $accountingEntry = AccountingEntry::with(['accountingAccounts' => function ($q) {
                 $q->with('account');
             }])->where('reference', $financePaymentExecute->code)->first();
             $payOrderPaymentExecute = FinancePayOrderFinancePaymentExecute::where([
@@ -384,10 +390,12 @@ class FinancePaymentExecuteController extends Controller
                     'filename'    => $filename
                 ]
             );
-            $pdf->setHeader("COMPROBANTE DE EMISIÓN Nº $financePaymentExecute->code", "ACUSE DE PAGO RECIBIDO", true, false,'','C','C');
+            $pdf->setHeader("COMPROBANTE DE EMISIÓN Nº $financePaymentExecute->code", "ACUSE DE PAGO RECIBIDO", true, false, '', 'C', 'C');
             $pdf->setFooter();
             $pdf->setBody(
-                'finance::payments_execute.report', true, compact('payOrder', 'financePaymentExecute', 'accountingEntry')
+                'finance::payments_execute.report',
+                true,
+                compact('payOrder', 'financePaymentExecute', 'accountingEntry')
             );
         }
     }

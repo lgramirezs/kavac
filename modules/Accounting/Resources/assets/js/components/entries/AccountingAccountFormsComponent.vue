@@ -1,82 +1,89 @@
 <template>
-    <div>
-        <accounting-show-errors ref="AccountingAccountsInForm" />
-        <table class="table table-formulation">
-            <thead>
-                <tr>
-                    <th class="text-uppercase" width="50%">CÓDIGO DE CUENTA - DENOMINACIÓN</th>
-                    <th class="text-uppercase" width="20%">DEBE</th>
-                    <th class="text-uppercase" width="20%">HABER</th>
-                    <th class="text-uppercase" width="10%">ACCIÓN</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(record, index) in recordsAccounting" :key="index">
-                    <td>
-                        <select2 :options="accounting_accounts" v-model="record.id" @input="changeSelectinTable(record)"></select2>
-                    </td>
-                    <td>
-                        <input :disabled="record.assets != 0" type="number" data-toggle="tooltip" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="record.debit" @change="CalculateTot()">
-                    </td>
-                    <td>
-                        <input :disabled="record.debit != 0 " type="number" data-toggle="tooltip" class="form-control input-sm" :step="cualculateLimitDecimal()" v-model="record.assets" @change="CalculateTot()">
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <button @click="clearValues(recordsAccounting.indexOf(record))" class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip" v-has-tooltip>
-                                <i class="fa fa-eraser"></i>
-                            </button>
-                            <button @click="deleteAccount(recordsAccounting.indexOf(record), record.entryAccountId)" class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" v-has-tooltip>
-                                <i class="fa fa-trash-o"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td id="helpEntriesAccountSelect">
-                        <select2 :disabled="!enableInput" :options="accounting_accounts" id="select2" @input="addAccountingAccount()"></select2>
-                    </td>
-                    <td id="helpEntriesTotDebit">
-                        <div class="form-group text-center">Total Debe:
-                            <h6>
-                                <span>{{ data.currency.symbol }}</span>
-                                <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
-										data.totDebit.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
-                                    <strong>{{ addDecimals(data.totDebit) }}</strong>
-                                </span>
-                                <span v-else style="color:#FF3636;">
-                                    <strong>{{ addDecimals(data.totDebit) }}</strong>
-                                </span>
-                            </h6>
-                        </div>
-                    </td>
-                    <td id="helpEntriesTotAssets">
-                        <div class="form-group text-center">Total Haber:
-                            <h6>
-                                <span>{{ data.currency.symbol }}</span>
-                                <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
-										data.totAssets.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
-                                    <strong>{{ addDecimals(data.totAssets) }}</strong>
-                                </span>
-                                <span v-else style="color:#FF3636;">
-                                    <strong>{{ addDecimals(data.totAssets) }}</strong>
-                                </span>
-                            </h6>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="card-footer text-right">
-            <buttonsDisplay route_list="/accounting/entries" display="false" />
-        </div>
+  <div>
+    <accounting-show-errors ref="AccountingAccountsInForm" />
+    <table class="table table-formulation">
+      <thead>
+        <tr>
+          <th class="text-uppercase" width="50%">CÓDIGO DE CUENTA - DENOMINACIÓN</th>
+          <th class="text-uppercase" width="20%">DEBE</th>
+          <th class="text-uppercase" width="20%">HABER</th>
+          <th class="text-uppercase" width="10%">ACCIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(record, index) in recordsAccounting" :key="index">
+          <td>
+            <select2 :options="accounting_accounts" v-model="record.id" @input="changeSelectinTable(record)"></select2>
+          </td>
+          <td>
+            <input :disabled="record.assets != 0" type="number" data-toggle="tooltip" class="form-control input-sm"
+              :step="cualculateLimitDecimal()" v-model="record.debit" @change="CalculateTot()">
+          </td>
+          <td>
+            <input :disabled="record.debit != 0" type="number" data-toggle="tooltip" class="form-control input-sm"
+              :step="cualculateLimitDecimal()" v-model="record.assets" @change="CalculateTot()">
+          </td>
+          <td>
+            <div class="text-center">
+              <button @click="clearValues(recordsAccounting.indexOf(record))"
+                class="btn btn-default btn-xs btn-icon btn-action" title="Vaciar valores" data-toggle="tooltip"
+                v-has-tooltip>
+                <i class="fa fa-eraser"></i>
+              </button>
+              <button @click="deleteAccount(recordsAccounting.indexOf(record), record.entryAccountId)"
+                class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip"
+                v-has-tooltip>
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td id="helpEntriesAccountSelect">
+            <select2 :disabled="!enableInput" :options="accounting_accounts" id="select2"
+              @input="addAccountingAccount()"></select2>
+          </td>
+          <td id="helpEntriesTotDebit">
+            <div class="form-group text-center">Total Debe:
+              <h6>
+                <span>{{ data.currency.symbol }}</span>
+                <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
+                data.totDebit.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
+                  <strong>{{ addDecimals(data.totDebit) }}</strong>
+                </span>
+                <span v-else style="color:#FF3636;">
+                  <strong>{{ addDecimals(data.totDebit) }}</strong>
+                </span>
+              </h6>
+            </div>
+          </td>
+          <td id="helpEntriesTotAssets">
+            <div class="form-group text-center">Total Haber:
+              <h6>
+                <span>{{ data.currency.symbol }}</span>
+                <span v-if="data.totDebit.toFixed(data.currency.decimal_places) == data.totAssets.toFixed(data.currency.decimal_places) &&
+                data.totAssets.toFixed(data.currency.decimal_places) >= 0" style="color:#18ce0f;">
+                  <strong>{{ addDecimals(data.totAssets) }}</strong>
+                </span>
+                <span v-else style="color:#FF3636;">
+                  <strong>{{ addDecimals(data.totAssets) }}</strong>
+                </span>
+              </h6>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-footer text-right">
+      <buttonsDisplay route_list="/accounting/entries" display="false" />
     </div>
+  </div>
 </template>
 <script>
 export default {
@@ -123,7 +130,6 @@ export default {
     };
   },
   created() {
-    const vm = this;
     this.table_options.headings = {
       'code': 'CÓDIGO PATRIMONIAL - DENOMINACIÓN',
       'debit': 'BEDE',
@@ -193,9 +199,9 @@ export default {
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {boolean}
          */
-    validateTotals: function() {
+    validateTotals: function () {
       return !(this.data.totDebit.toFixed(this.data.currency.decimal_places) >= 0 &&
-                this.data.totAssets.toFixed(this.data.currency.decimal_places) >= 0);
+        this.data.totAssets.toFixed(this.data.currency.decimal_places) >= 0);
     },
 
     /**
@@ -203,7 +209,7 @@ export default {
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-    validateErrors: function() {
+    validateErrors: function () {
       const vm = this;
       /** se cargan los errores */
       var errors = [];
@@ -250,7 +256,7 @@ export default {
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-    changeSelectinTable: function(record) {
+    changeSelectinTable: function (record) {
       // si asigna un select en vacio, vacia los valores del debe y haber de esa fila
       if (record.id == '') {
         record.debit = 0;
@@ -278,7 +284,7 @@ export default {
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-    CalculateTot: function() {
+    CalculateTot: function () {
 
       this.data.totDebit = 0;
       this.data.totAssets = 0;
@@ -306,11 +312,11 @@ export default {
     },
 
     /**
-         * Establece la información base para cada fila de cuentas
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         */
-    addAccountingAccount: function() {
+     * Establece la información base para cada fila de cuentas
+     *
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+    */
+    addAccountingAccount: function () {
       if ($('#select2').val() != '') {
         for (var i = this.accounting_accounts.length - 1; i >= 0; i--) {
           if (this.accounting_accounts[i].id == $('#select2').val()) {
@@ -332,7 +338,7 @@ export default {
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          * @return {[type]} [description]
          */
-    createRecord: function() {
+    createRecord: function () {
       if (this.entries == null) {
         this.storeEntry();
       } else {
@@ -358,16 +364,16 @@ export default {
 
       vm.loading = true;
 
-      axios.post(`${window.app_url}/accounting/entries`, vm.data).then(response => {
+      axios.post(`${window.app_url}/accounting/entries`, vm.data).then(() => {
         vm.loading = false;
         vm.showMessage('store');
-        setTimeout(function() {
+        setTimeout(function () {
           location.href = vm.urlPrevious;
         }, 2000);
 
       }).catch(error => {
         var errors = [];
-        if (typeof(error.response) != 'undefined') {
+        if (typeof (error.response) != 'undefined') {
           for (var index in error.response.data.errors) {
             if (error.response.data.errors[index]) {
               errors.push(error.response.data.errors[index][0]);
@@ -375,19 +381,19 @@ export default {
           }
         }
         /**
-                 * se cargan los errores
-                 */
+         * se cargan los errores
+         */
         vm.$refs.AccountingAccountsInForm.showAlertMessages(errors);
         vm.loading = false;
       });
     },
 
     /**
-         * Actualiza la información del asiento contable
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         */
-    updateRecord: function() {
+     * Actualiza la información del asiento contable
+     *
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     */
+    updateRecord: function () {
       const vm = this;
       if (vm.validateErrors()) {
         return;
@@ -400,15 +406,15 @@ export default {
       vm.loading = true;
 
       axios.put(`${window.app_url}/accounting/entries/${vm.entries.id}`, vm.data)
-        .then(response => {
+        .then(() => {
           vm.loading = false;
           vm.showMessage('update');
-          setTimeout(function() {
+          setTimeout(function () {
             location.href = vm.route_list;
           }, 2000);
         }).catch(error => {
           var errors = [];
-          if (typeof(error.response) != 'undefined') {
+          if (typeof (error.response) != 'undefined') {
             for (var index in error.response.data.errors) {
               if (error.response.data.errors[index]) {
                 errors.push(error.response.data.errors[index][0]);
@@ -416,19 +422,19 @@ export default {
             }
           }
           /**
-                     * se cargan los errores
-                     */
+           * se cargan los errores
+           */
           vm.$refs.AccountingAccountsInForm.showAlertMessages(errors);
           vm.loading = false;
         });
     },
 
     /**
-         * Elimina la fila de la cuenta y vuelve a calcular el total del asiento
-         *
-         * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
-         */
-    deleteAccount: function(index, id) {
+     * Elimina la fila de la cuenta y vuelve a calcular el total del asiento
+     *
+     * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
+     */
+    deleteAccount: function (index, id) {
       this.rowsToDelete.push(id);
       this.recordsAccounting.splice(index, 1);
       this.CalculateTot();
@@ -439,7 +445,7 @@ export default {
          *
          * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
          */
-    clearValues: function(index) {
+    clearValues: function (index) {
       this.recordsAccounting[index].assets = 0.00;
       this.recordsAccounting[index].debit = 0.00;
       this.CalculateTot();

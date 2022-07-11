@@ -262,7 +262,7 @@
 
                                         <!-- ./Días a otorgar para el disfrute de vacaciones -->
                                         <!-- Los días de disfrute se establecen de acuerdo a un escalafón -->
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>¿Los días de disfrute se establecen de acuerdo a un escalafón?</label>
                                                 <div class="col-12">
@@ -271,7 +271,7 @@
                                                     </p-check>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./Los días de disfrute se establecen de acuerdo a un escalafón -->
                                         <div class="col-12 row" v-if="record.days_on_scale">
                                             <!-- agrupar por -->
@@ -516,7 +516,7 @@
                                         </div> -->
                                         <!-- ./antiguedad del trabajador -->
                                         <!-- Los días de bonificación se establecen de acuerdo a un escalafón -->
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>¿Los días de bonificación se establecen de acuerdo a un escalafón?</label>
                                                 <div class="col-12">
@@ -525,10 +525,10 @@
                                                     </p-check>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./Los días de bonificación se establecen de acuerdo a un escalafón -->
                                         <!-- El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
-                                        <div class="col-md-6" v-if="record.payroll_payment_type_id">
+                                        <!-- <div class="col-md-6" v-if="record.payroll_payment_type_id">
                                             <div class="form-group">
                                                 <label>¿El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador?</label>
                                                 <div class="col-12">
@@ -537,7 +537,7 @@
                                                     </p-check>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- ./El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
                                         <!-- día de disfrute -->
                                         <div class="col-md-3">

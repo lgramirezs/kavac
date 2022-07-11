@@ -149,7 +149,7 @@ class AccountingEntryController extends Controller
 		 * [$AccountingAccounts almacena las cuentas pratrimoniales]
 		 * @var json
 		 */
-		$AccountingAccounts = $this->getAccountingAccount();
+		$AccountingAccounts = $this->getGroupAccountingAccount();
 
 		/**
 		 * [$categories contendra las categorias]
@@ -277,7 +277,7 @@ class AccountingEntryController extends Controller
 		 * [$AccountingAccounts cuentas pratrimoniales]
 		 * @var Json
 		 */
-		$AccountingAccounts = $this->getAccountingAccount();
+		$AccountingAccounts = $this->getGroupAccountingAccount();
 
 		/**
 		 * se guarda en variables la información necesaria para la edición del asiento contable
@@ -634,6 +634,116 @@ class AccountingEntryController extends Controller
 		return json_encode($records);
 	}
 
+	public function getGroupAccountingAccount($first = true, $parent_id = null)
+	{
+		/**
+		 * [$records listado de registros]
+		 * @var array
+		 */
+		$records = [];
+
+		if ($first && !$parent_id) {
+			array_push($records, [
+				'id'   => '',
+				'text' => 'Seleccione...',
+				'disabled' => true,
+			]);
+
+			$accounts = AccountingAccount::where('active', true)->where('original', true)->where('parent_id', null)->where('id', '<', 3)
+									->orderBy('group', 'ASC')
+									->orderBy('subgroup', 'ASC')
+									->orderBy('item', 'ASC')
+									->orderBy('generic', 'ASC')
+									->orderBy('specific', 'ASC')
+									->orderBy('subspecific', 'ASC')->get();
+
+			foreach ($accounts as $acc) {
+				$childrens = $this->getGroupAccountingAccount(false, $acc->id);
+
+				$childless = 0;
+
+				if (count($childrens) > 0) {
+					foreach ($childrens as $child) {
+						if (array_key_exists('element', $child) && $child['element'] === 'HTMLOptGroupElement') {
+							$childless++;
+						}
+					}
+				}
+
+				if ($childless == count($childrens)){
+					array_push($records, [
+						'id'   => '',
+						'text' => '-------------------',
+						'disabled' => true,
+					]);
+					array_push($records, [
+						"text"=> "{$acc->getCodeAttribute()} - {$acc->denomination}",
+						"children"=> $childrens,
+						"element"=> "HTMLOptGroupElement",
+					]);
+				} else {
+					array_push($records, [
+						"id" => $acc->id,
+						"text"=> "{$acc->getCodeAttribute()} - {$acc->denomination}",
+						"disabled"=> true
+					]);
+					$records = array_merge($records, $childrens);
+				}
+			}
+			/**
+			 * se convierte array a JSON
+			 */
+			return json_encode($records);
+		} else {
+			$sons = AccountingAccount::with('children')->where('active', true)->where('parent_id', $parent_id)
+									->orderBy('group', 'ASC')
+									->orderBy('subgroup', 'ASC')
+									->orderBy('item', 'ASC')
+									->orderBy('generic', 'ASC')
+									->orderBy('specific', 'ASC')
+									->orderBy('subspecific', 'ASC')->get();
+			foreach ($sons as $son) {
+				if (count($son->children) > 0 && $son->original) {
+					$childrens = $this->getGroupAccountingAccount(false, $son->id);
+
+					$childless = 0;
+
+					if (count($childrens) > 0) {
+						foreach ($childrens as $child) {
+							if (!array_key_exists('element', $child)) {
+								$childless++;
+							}
+						}
+					}
+
+					if ($childless == count($childrens)){
+						array_push($records, [
+							"text"=> "{$son->getCodeAttribute()} - {$son->denomination}",
+							"children"=> $childrens,
+							"element"=> "HTMLOptGroupElement",
+						]);
+					} else {
+						array_push($records, [
+							"id" => $son->id,
+							"text"=> "{$son->getCodeAttribute()} - {$son->denomination}",
+							"disabled"=> true
+						]);
+						$records = array_merge($records, $childrens);
+					}
+				} else {
+					array_push($records, [
+						"id"=> $son->id,
+						"text"=> "{$son->getCodeAttribute()} - {$son->denomination}",
+					]);
+				}
+			}
+			/**
+			 * se convierte array a JSON
+			 */
+			return $records;
+		}
+	}
+
 	/**
 	 * [unapproved vista con listado de asientos contable no aprobados]
 	 * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
@@ -731,12 +841,12 @@ class AccountingEntryController extends Controller
 	 * ejemplo de datos que recibe en request
 	 *  objectsList => [
 	 * 		{
-				'module'                : 'Budget',		Nombre del modulo hacia el cual se relacionara el registro
-				'model'                 : Modules\\Accounting\\Models\\BudgetAccount',  Clase a la que se hara la relacion
-				'accountable_id'        : id, identificador del registro a relacionar
-				'accounting_account_id' : id, identificador de la cuenta patrimonial
-			}
-		]
+	 *			'module'                : 'Budget',		Nombre del modulo hacia el cual se relacionara el registro
+	 *			'model'                 : Modules\\Accounting\\Models\\BudgetAccount',  Clase a la que se hara la relacion
+	 *			'accountable_id'        : id, identificador del registro a relacionar
+	 *			'accounting_account_id' : id, identificador de la cuenta patrimonial
+	 *		}
+	 *	]
 	 *
 	 * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
 	 * 
