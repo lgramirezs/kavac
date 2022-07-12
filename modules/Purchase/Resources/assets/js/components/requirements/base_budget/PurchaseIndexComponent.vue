@@ -75,6 +75,8 @@ export default {
             'status': 'col-xs-2 text-center',
             'id': 'col-xs-2'
         };
+        this.table_options.sortable = ['date'];
+        this.table_options.filterable = ['date'];
     },
     mounted() {
         axios.get('/purchase/base_budget').then(response => {

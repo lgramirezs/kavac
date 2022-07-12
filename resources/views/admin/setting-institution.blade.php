@@ -638,7 +638,7 @@
                       <strong>Municipio:</strong>
                       <div class="row">
                         <span class="col-md-12">
-                         <a  id="modal-municipality_id"></a>
+                         <a  id="modal-view-municipality_id"></a>
                         </span>
                       </div>
                     </div>
@@ -1312,7 +1312,8 @@
 					}
 					$("#modal-name").html(institution.name);
 							$("#modal-rif").html(institution.rif);
-					
+					console.log(institution.municipality.name);
+					$("#modal-view-municipality_id").html(institution.municipality.name);
 					$("#modal-acronym").html(institution.acronym);
 					$("#modal-business_name").html(institution.business_name);
 					$("#modal-country_id").html(institution.municipality.estate.country.name);
