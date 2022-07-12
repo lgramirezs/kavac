@@ -376,6 +376,7 @@
         vm.record.history_tax_id = '';
         vm.record.has_quantity_max = 0;
         vm.record.quantity_max_value = '';
+        vm.record.editProduct = false;
         vm.updateTotalProduct();
       },
       /**
@@ -405,8 +406,11 @@
         vm.record.history_tax_value = product.history_tax_value;
         vm.record.has_quantity_max = product.has_quantity_max;
         vm.record.quantity_max_value = product.quantity_max_value;
+        vm.record.old_quantity = product.old_quantity;
+        vm.record.editProduct = true;
         vm.updateTotalProduct();
         vm.record.product_position_value = index;
+        vm.updateProduct();
         event.preventDefault();
       },
       /**
@@ -471,6 +475,15 @@
               if (product_value) {
                 vm.record.has_quantity_max = 1;
                 vm.record.quantity_max_value = product_value;
+                for (let prod of vm.record.list_products) {
+                  if (prod.inventory_product.id == id) {
+                    if (vm.record.editProduct) {
+                      vm.record.quantity_max_value = vm.record.quantity_max_value;
+                    } else {
+                      vm.record.quantity_max_value = vm.record.quantity_max_value - prod.quantity;
+                    }
+                  }
+                }
               }
 
               vm.updateTotalProduct();
@@ -488,7 +501,6 @@
         let product = {}
         //validate product
         let option_name;
-
         product.sale_warehouse_inventory_product_id = vm.record.sale_warehouse_inventory_product_id;
         option_name = product.sale_warehouse_inventory_product_id;
         let inventory_product = vm.quote_inventory_products_list.find(o => o.id == product.sale_warehouse_inventory_product_id);
@@ -532,6 +544,7 @@
         }
 
         product.quantity = vm.record.quantity;
+        product.old_quantity = vm.record.old_quantity;
         //math total without tax
         product.total_without_tax = product.quantity * product.value;
         
@@ -600,7 +613,6 @@
       extractQuote() {
         const vm = this;
         if (vm.order) {
-          console.log(vm.order)
           vm.quote_edit = true;
           vm.record.id = vm.order.id;
           //extract client data
@@ -614,7 +626,9 @@
           //extract products data
 
           $.each(vm.order.list_products, function(index, product_load) {
-            vm.productToList(product_load);
+            setTimeout(function(){
+                vm.productToList(product_load);
+            }, 2000);
           });
           vm.record.email = vm.order.email;
         }
@@ -626,14 +640,17 @@
         const vm = this;
         let product = {};
         let option_name;
+        product.old_quantity = product_load.quantity;
+        product.reserved = 0;
         product.has_quantity_max = 0;
         product.quantity_max_value = '';
 
         product.sale_warehouse_inventory_product_id = product_load.sale_warehouse_inventory_product_id;
-        option_name = product.sale_warehouse_inventory_product_id;
-        let inventory_product = product_load.sale_warehouse_inventory_product;
+        console.log(product_load)
+        let inventory_product = vm.quote_inventory_products_list.find(o => o.id == product.sale_warehouse_inventory_product_id);
+        option_name = inventory_product.sale_warehouse_inventory_product_id;
         if (typeof inventory_product !== "undefined" && inventory_product) {
-          option_name = inventory_product.code;
+          option_name = inventory_product.text;
           if (inventory_product.exist) {
             product.has_quantity_max = 1;
             product.quantity_max_value = inventory_product.exist - inventory_product.reserved;
@@ -682,6 +699,55 @@
           vm.record.list_products.splice(product_index - 1, 1);
         }
         vm.record.list_products.push(product);
+      },
+
+      /**
+       * Método que permite actualizar información
+       *
+       * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+       *
+       * @param  {string} url Ruta de la acci´on que modificará los datos
+       */
+      updateRecord(url) {
+          const vm = this;
+          vm.loading = true;
+          var fields = {};
+          url = vm.setUrl(url);
+
+          for (let prod of vm.record.list_products) {
+              if (prod.quantity == prod.old_quantity) {
+                  prod.reserved = prod.quantity;
+              } else {
+                  prod.reserved = prod.quantity - prod.old_quantity;
+              }
+          }
+
+          for (var index in vm.record) {
+              fields[index] = vm.record[index];
+          }
+          axios.patch(`${url}${(url.endsWith('/'))?'':'/'}${vm.record.id}`, fields).then(response => {
+              if (typeof(response.data.redirect) !== "undefined") {
+                  location.href = response.data.redirect;
+              }
+              else {
+                  vm.readRecords(url);
+                  vm.reset();
+                  vm.loading = false;
+                  vm.showMessage('update');
+              }
+
+          }).catch(error => {
+              vm.errors = [];
+
+              if (typeof(error.response) !="undefined") {
+                  for (var index in error.response.data.errors) {
+                      if (error.response.data.errors[index]) {
+                          vm.errors.push(error.response.data.errors[index][0]);
+                      }
+                  }
+              }
+              vm.loading = false;
+          });
       },
     },
     created() {

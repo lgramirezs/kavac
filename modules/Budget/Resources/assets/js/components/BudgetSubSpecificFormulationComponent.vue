@@ -72,7 +72,6 @@
                         <select2
                             :options="currencies"
                             v-model="record.currency_id"
-                            disabled
                         ></select2>
                     </div>
                 </div>
@@ -1200,7 +1199,7 @@ export default {
         vm.loading = true;
         await vm.getOpenedFiscalYears();
         await vm.getInstitutions();
-        await vm.getDefaultCurrencies();
+        await vm.getCurrencies();
         await vm.getProjects();
         await vm.getCentralizedActions();
 
@@ -1242,7 +1241,6 @@ export default {
                     .removeClass('is-required');
             }
         });
-        vm.currencies ? vm.record.currency_id = vm.currencies[1].id : vm.record.currency_id = '';
     }
 };
 </script>
