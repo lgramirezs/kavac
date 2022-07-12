@@ -642,6 +642,8 @@ class PurchaseDirectHireController extends Controller
      *
      * @method    destroy
      *
+     * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve | pedrobui@gmail.com>
+     * 
      * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
@@ -652,6 +654,16 @@ class PurchaseDirectHireController extends Controller
     {
         $record = PurchaseDirectHire::find($id);
         if ($record) {
+            //Se busca los viejos requerimientos asociados contratación directa y limpiarlo
+        
+            $searchBaseBudgets = PurchaseBaseBudget::where('orderable_id',$id)->get();
+            foreach ($searchBaseBudgets as $sBaseBudget) { 
+                $sBaseBudget->status = 'WAIT_QUOTATION';
+                $sBaseBudget->orderable_type = null;
+                $sBaseBudget->orderable_id = null;
+                $sBaseBudget->save();
+            }
+
             /** Se elimina la relacion y los documentos previos **/
             $supp_docs = $record->documents()->get();
             if (count($supp_docs) > 0) {
