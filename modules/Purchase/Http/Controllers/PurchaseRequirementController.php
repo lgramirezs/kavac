@@ -138,7 +138,7 @@ class PurchaseRequirementController extends Controller
 			'purchase_supplier_object_id' => 'required|integer'
 		], [
 			'date.required'                        => 'El campo fecha es obligatorio.',
-			'description.required'                 => 'El campo descripcióm es obligatorio.',
+			'description.required'                 => 'El campo descripción es obligatorio.',
 			'institution_id.required'              => 'El campo institución es obligatorio.',
 			'institution_id.integer'               => 'El campo institución no esta en el formato de entero.',
 			'contracting_department_id.required'   => 'El campo unidad contratante es obligatorio.',
@@ -148,6 +148,7 @@ class PurchaseRequirementController extends Controller
 			'purchase_supplier_object_id.required' => 'El campo tipo es obligatorio.',
 			'purchase_supplier_object_id.integer'  => 'El campo tipo no esta en el formato de entero.'
 		]);
+        
 
 		$data = $request->all();
 
