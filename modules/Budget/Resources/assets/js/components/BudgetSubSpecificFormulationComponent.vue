@@ -430,7 +430,6 @@ export default {
             records: [],
             /** @type {Array} Lista de años fiscales abiertos */
             fiscal_years: [],
-            institutions: [],
             currencies: [],
             decimals: 2,
             projects: [],
