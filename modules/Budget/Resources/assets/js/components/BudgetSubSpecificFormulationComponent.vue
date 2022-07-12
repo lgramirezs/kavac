@@ -58,6 +58,7 @@
                         <select2
                             :options="institutions"
                             v-model="record.institution_id"
+                            disabled
                         ></select2>
                         <input type="hidden" v-model="record.id" />
                     </div>
@@ -451,7 +452,10 @@ export default {
             ]
         };
     },
-    props: ['formulationId'],
+    props: {
+        formulationId: Number,
+        institutions: Array,
+    },
     methods: {
         /**
          * Reinicia los valores de los elementos del formulario
@@ -1169,7 +1173,6 @@ export default {
         const vm = this;
         vm.loading = true;
         await vm.getOpenedFiscalYears();
-        await vm.getInstitutions();
         await vm.getCurrencies();
         await vm.getProjects();
         await vm.getCentralizedActions();
@@ -1212,6 +1215,7 @@ export default {
                     .removeClass('is-required');
             }
         });
+        vm.institutions ? vm.record.institution_id = vm.institutions[1]['id'] : vm.record.institution_id = '';
     }
 };
 </script>
