@@ -64,14 +64,12 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group is-required">
                                     <label>Activo:</label>
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                                   value="true" title="Indique si el tipo de cambio está activo"
-                                                   v-model="record.active" name="active">
-                                        </div>
-                                    </div>
+                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                         title="Indique si el tipo de cambio está o no activo">
+										<input type="checkbox" class="custom-control-input" 
+											   id="exchangeActive" v-model="record.active" :value="true">
+										<label class="custom-control-label" for="exchangeActive"></label>
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -194,8 +192,8 @@
             };
         },
         mounted() {
-            let vm = this;
-            vm.switchHandler('active');
+            const vm = this;
+            
             $("#add_exchange_rate").on('show.bs.modal', function() {
                 vm.getCurrencies();
             });

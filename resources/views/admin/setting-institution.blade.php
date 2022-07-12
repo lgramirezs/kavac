@@ -286,87 +286,46 @@
 											  </div>
                                 </div>
                             </div>
-                
-
-								@if(isset($model_institution->default)) 
-								<div class="col-md-2">
-								    <div class="form-group">
-                                    {!! Form::label('active', __('Activa'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('active', true, ( $model_institution->active == TRUE ? TRUE: FALSE), [
-                                                'id' => 'active', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    {!! Form::label('default', __('Organización por defecto'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('default', true, ( $model_institution->default == TRUE ? TRUE: FALSE), [
-                                                'id' => 'default', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-6 text-center">
+										<div class="form-group">
+											{!! Form::label('active', __('Activa'), []) !!}
+											<div class="custom-control custom-switch" data-toggle="tooltip" 
+												 title="Establece si el organismo esta activo">
+												{!! Form::checkbox('active', true, old('active') ?? ((isset($model_institution) && $model_institution->active)?true:false), [
+													'id' => 'active', 'class' => 'custom-control-input'
+												]) !!}
+												<label class="custom-control-label" for="active">&#160;</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 text-center">
+										<div class="form-group">
+											{!! Form::label('default', __('Organización por defecto'), []) !!}
+											<div class="custom-control custom-switch" data-toggle="tooltip" 
+												 title="Establece el organismo por defecto">
+												{!! Form::checkbox('default', true, old('default') ?? (isset($model_institution) && $model_institution->default)?true:false, [
+													'id' => 'default', 'class' => 'custom-control-input'
+												]) !!}
+												<label class="custom-control-label" for="default">&#160;</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 text-center">
+										<div class="form-group">
+											{!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
+											<div class="custom-control custom-switch" data-toggle="tooltip" 
+												 title="Establece si el organismo es agente de retención">
+												{!! Form::checkbox('retention_agent', true, old('retention_agent') ?? (isset($model_institution) && $model_institution->retention_agent)?true:false, [
+													'id' => 'retention_agent', 'class' => 'custom-control-input'
+												]) !!}
+												<label class="custom-control-label" for="retention_agent"></label>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('retention_agent', true,( $model_institution->retention_agent == TRUE ? TRUE: FALSE), [
-                                                'id' => 'retention_agent', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-								@else
-								<div class="col-md-2"> 
-								<div class="form-group">
-                                    {!! Form::label('active', __('Activa'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('active', true, null, [
-                                                'id' => 'active', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-								    <div class="form-group">
-                                    {!! Form::label('default', __('Organización por defecto'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('default', true, false, [
-                                                'id' => 'default', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-								</div>
-								<div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('retention_agent', __('Agente de Retención'), []) !!}
-                                    <div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            {!! Form::checkbox('retention_agent', true, null, [
-                                                'id' => 'retention_agent', 'class' => 'form-control bootstrap-switch',
-                                                'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-								@endif
-                            
-
+							</div>
                         </div>
 						<div class="row">
 							<div class="col-md-4">

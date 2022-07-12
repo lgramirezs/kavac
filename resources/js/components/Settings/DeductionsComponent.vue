@@ -120,18 +120,12 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label>Activa</label>
-                                    <div class="col-12">
-                                        <label for="">
-                                            <div class="bootstrap-switch-mini">
-                                                <input type="checkbox" class="form-control bootstrap-switch"
-                                                       name="active" data-toggle="tooltip"
-                                                       data-on-label="SI" data-off-label="NO"
-                                                       title="Indique si la deducción se encuentra activa"
-                                                       v-model.lazy="record.active" value="true"
-                                                       data-record="active">
-                                            </div>
-                                        </label>
-                                    </div>
+                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si la deducción se encuentra activa">
+										<input type="checkbox" class="custom-control-input" 
+											   id="deductionActive" v-model="record.active" :value="true">
+										<label class="custom-control-label" for="deductionActive"></label>
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -285,8 +279,8 @@
             };
         },
         mounted() {
-            let vm = this;
-            vm.switchHandler('active');
+            const vm = this;
+            
             $("#add_deduction").on('show.bs.modal', function() {
                 vm.reset();
                 vm.getAccountingAccounts();

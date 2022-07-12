@@ -182,7 +182,7 @@
              * @param {object} event   Objeto que gestiona los eventos
              */
             initUpdate(id, event) {
-                let vm = this;
+                const vm = this;
                 vm.editMunicipalities = 'true';
                 vm.errors = [];
                 let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
@@ -271,7 +271,7 @@
             };
         },
         mounted() {
-            let vm = this;
+            const vm = this;
             vm.editMunicipalities = 'false';
             $("#add_municipality").on('show.bs.modal', function() {
                 vm.getCountries();

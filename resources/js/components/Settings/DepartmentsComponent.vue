@@ -57,39 +57,33 @@
 							<div class="col-12 col-md-2">
 								<div class="form-group is-required">
 									<label>Solicita almacén:</label>
-									<div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-    										<input type="checkbox" class="form-control bootstrap-switch"
-    											   data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-    											   title="Indique si puede emitir solicitudes de almacén"
-    											   v-model="record.issue_requests" value="true" name="issue_requests">
-                                        </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si puede emitir solicitudes de almacén">
+										<input type="checkbox" class="custom-control-input" 
+											   id="departmentIssueRequest" v-model="record.issue_requests" :value="true">
+										<label class="custom-control-label" for="departmentIssueRequest"></label>
 									</div>
 			                    </div>
 							</div>
 							<div class="col-12 col-md-2">
 								<div class="form-group is-required">
 									<label>Activo:</label>
-									<div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-    										<input type="checkbox" class="form-control bootstrap-switch" name="active"
-    											   data-toggle="tooltip" title="Indique si se encuentra activo"
-    											   data-on-label="SI" data-off-label="NO" value="true"
-    											   v-model="record.active">
-                                        </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si se encuentra activo">
+										<input type="checkbox" class="custom-control-input" 
+											   id="departmentActive" v-model="record.active" :value="true">
+										<label class="custom-control-label" for="departmentActive"></label>
 									</div>
 			                    </div>
 							</div>
 							<div class="col-12 col-md-2">
 								<div class="form-group is-required">
 									<label>Administrativo:</label>
-									<div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-    										<input type="checkbox" class="form-control bootstrap-switch"
-    											   data-toggle="tooltip" title="Indique si la unidad, departamento o dependencia es del área administrativa" name="administrative"
-    											   data-on-label="SI" data-off-label="NO" value="true"
-    											   v-model="record.administrative">
-                                        </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si la unidad, departamento o dependencia es del área administrativa">
+										<input type="checkbox" class="custom-control-input" 
+											   id="departmentAdministrative" v-model="record.administrative" :value="true">
+										<label class="custom-control-label" for="departmentAdministrative"></label>
 									</div>
 			                    </div>
 							</div>
@@ -119,9 +113,9 @@
 								</span>
 								<span v-else>N/A</span>
 							</div>
-							<div slot="active" slot-scope="props">
-								<span v-if="props.row.active">SI</span>
-								<span v-else>NO</span>
+							<div slot="active" slot-scope="props" class="text-center">
+								<span v-if="props.row.active" class="text-success font-weight-bold">SI</span>
+								<span v-else class="text-danger font-weight-bold">NO</span>
 							</div>
 	                		<div slot="id" slot-scope="props" class="text-center">
 	                			<button @click="initUpdate(props.row.id, $event)"
@@ -226,14 +220,11 @@
 			};
 		},
 		mounted() {
-			let vm = this;
+			const vm = this;
 			$("#add_department").on('show.bs.modal', function() {
 				vm.getInstitutions();
 				vm.getDepartments();
 			});
-			vm.switchHandler('issue_requests');
-			vm.switchHandler('active');
-			vm.switchHandler('administrative');
 		}
 	};
 </script>

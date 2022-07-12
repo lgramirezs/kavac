@@ -49,13 +49,12 @@
 							<div class="col-12 col-md-6 col-md-3">
 								<div class="form-group is-required">
 									<label class="col-12">Activo:</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-    									<input type="checkbox" class="form-control bootstrap-switch"
-    										   data-toggle="tooltip" name="active"
-    										   title="Indique si la unidad tributaria esta o no activa"
-    										   data-on-label="SI" data-off-label="NO"
-    										   v-model="record.active" value="true">
-                                    </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si la unidad tributaria esta o no activa">
+										<input type="checkbox" class="custom-control-input" 
+											   id="taxUnitActive" v-model="record.active" :value="true">
+										<label class="custom-control-label" for="taxUnitActive"></label>
+									</div>
 			                    </div>
 							</div>
 						</div>

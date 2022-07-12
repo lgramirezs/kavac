@@ -54,28 +54,26 @@
 										   class="form-control input-sm" v-model="record.percentage">
 			                    </div>
 							</div>
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-3">
 								<div class="form-group is-required">
 									<label>Afecta cuenta de IVA:</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-    									<input type="checkbox" class="form-control bootstrap-switch"
-    										   data-toggle="tooltip" name="affect_tax"
-    										   title="Indique si afecta la cuenta presupuestaria de IVA"
-    										   data-on-label="SI" data-off-label="NO"
-    										   v-model="record.affect_tax" value="true">
-                                    </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si el impuesto afecta la cuenta de IVA">
+										<input type="checkbox" class="custom-control-input" 
+											   id="taxAffect" v-model="record.affect_tax" :value="true">
+										<label class="custom-control-label" for="taxAffect"></label>
+									</div>
 			                    </div>
 							</div>
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-3">
 								<div class="form-group is-required">
 									<label>Activo:</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-    									<input type="checkbox" class="form-control bootstrap-switch"
-    										   data-toggle="tooltip" name="active"
-    										   title="Indique si el impuesta esta o no activo"
-    										   data-on-label="SI" data-off-label="NO"
-    										   v-model="record.active" value="true">
-                                    </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si el impuesto esta o no activo">
+										<input type="checkbox" class="custom-control-input" 
+											   id="taxActive" v-model="record.active" :value="true">
+										<label class="custom-control-label" for="taxActive"></label>
+									</div>
 			                    </div>
 							</div>
 						</div>

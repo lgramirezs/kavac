@@ -137,7 +137,7 @@
             };
         },
         mounted() {
-            let vm = this;
+            const vm = this;
             $("#add_estate").on('show.bs.modal', function() {
                 vm.getCountries();
             });
