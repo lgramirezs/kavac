@@ -56,60 +56,65 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-4 mb-2">
-												<label for="">
-													<div class="col-12 bootstrap-switch-mini">
-														<input type="radio" class="form-control bootstrap-switch"
-															name="action" data-toggle="tooltip" data-on-label="SI"
-															data-off-label="NO" title="Indique si aprueba procesos"
-															v-model.lazy="record.action" value="AP" data-record="action"
-															v-has-tooltip readonly>
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento aprueba procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusAP" 
+															v-model="record.action" value="AP" disabled>
+													<label class="custom-control-label" for="docStatusAP">
 														Aprueba procesos
-													</div>
-												</label>
+													</label>
+												</div>
 											</div>
 											<div class="col-md-4 mb-2">
-												<label for="">
-													<div class="col-12 bootstrap-switch-mini">
-														<input type="radio" class="form-control bootstrap-switch"
-															name="action" data-toggle="tooltip" data-on-label="SI"
-															data-off-label="NO" title="Indique si rechaza procesos"
-															v-model="record.action" value="RE" data-record="action" readonly>
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento rechaza procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusRE" v-model="record.action" value="RE" disabled>
+													<label class="custom-control-label" for="docStatusRE">
 														Rechaza procesos
-													</div>
-												</label>
+													</label>
+												</div>
 											</div>
 											<div class="col-md-4 mb-2">
-												<label for="">
-													<div class="col-12 bootstrap-switch-mini">
-														<input type="radio" class="form-control bootstrap-switch"
-															name="action" data-toggle="tooltip" data-on-label="SI"
-															data-off-label="NO" title="Indique si elimina procesos"
-															v-model="record.action" value="EL" data-record="action" readonly>
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento elimina procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusEL" v-model="record.action" value="EL" disabled>
+													<label class="custom-control-label" for="docStatusEL">
 														Elimina procesos
-													</div>
-												</label>
+													</label>
+												</div>
 											</div>
 											<div class="col-md-4 mb-2">
-												<label for="">
-													<div class="col-12 bootstrap-switch-mini">
-														<input type="radio" class="form-control bootstrap-switch"
-															name="action" data-toggle="tooltip" data-on-label="SI"
-															data-off-label="NO" title="Indique si inicia procesos"
-															v-model="record.action" value="PR" data-record="action" readonly>
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento inicia procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusPR" v-model="record.action" value="PR" disabled>
+													<label class="custom-control-label" for="docStatusPR">
 														Inicia procesos
-													</div>
-												</label>
+													</label>
+												</div>
 											</div>
 											<div class="col-md-4 mb-2">
-												<label for="">
-													<div class="col-12 bootstrap-switch-mini">
-														<input type="radio" class="form-control bootstrap-switch"
-															name="action" data-toggle="tooltip" data-on-label="SI"
-															data-off-label="NO" title="Indique si anula procesos"
-															v-model="record.action" value="AN" data-record="action" readonly>
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento anula procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusAN" v-model="record.action" value="AN" disabled>
+													<label class="custom-control-label" for="docStatusAN">
 														Anula procesos
-													</div>
-												</label>
+													</label>
+												</div>
+											</div>
+											<div class="col-md-4 mb-2">
+												<div class="custom-control custom-switch" data-toggle="tooltip" 
+													 title="Indica si el estatus del documento cierra procesos">
+													<input type="radio" class="custom-control-input"
+															name="action" id="docStatusCE" v-model="record.action" value="CE" disabled>
+													<label class="custom-control-label" for="docStatusCE">
+														Cierra procesos
+													</label>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -185,24 +190,6 @@
 				columns: ['color', 'name', 'description', 'action', 'id'],
 			}
 		},
-        watch: {
-            record: {
-                deep: true,
-                handler: function(newValue, oldValue) {
-                    let vm = this;
-                    $("input[type=radio]").each(function() {
-                        if ($(this).val() !== vm.record.action) {
-                            $(this).attr("checked", false);
-                            $(this).closest('.bootstrap-switch-wrapper').removeClass('bootstrap-switch-on');
-                            $(this).closest('.bootstrap-switch-wrapper').addClass('bootstrap-switch-off');
-                        } else {
-                            $(this).closest('.bootstrap-switch-wrapper').removeClass('bootstrap-switch-off');
-                            $(this).closest('.bootstrap-switch-wrapper').addClass('bootstrap-switch-on');
-                        }
-                    });
-                }
-            },
-        },
 		methods: {
 			/**
 			 * Método que borra todos los datos del formulario
@@ -236,9 +223,6 @@
 				'action': 'col-md-2',
 				'id': 'col-md-2'
 			};
-		},
-		mounted() {
-            this.switchHandler('action');
 		}
 	};
 </script>

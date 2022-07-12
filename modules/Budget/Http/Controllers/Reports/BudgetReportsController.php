@@ -151,17 +151,39 @@ class BudgetReportsController extends Controller
             $flat_accounts_open = array_column($accounts_open, 'budget_account_id');
 
             foreach ($accounts_open as $account) {
-                if (!isset($account['compromised']) && !isset($account['amount_available']) && !isset($account['programmed'])) {
-                    $compromised = $this->getAccountCompromisedAmout($account->id);
+                $increment = 0;
+                $decrement = 0;
+                if (!isset($account['compromised']) && !isset($account['amount_available']) && !isset($account['programmed']) && !isset($account['increment']) && !isset($account['decrement'])) {
+                    $compromised = $this->getAccountCompromisedAmout($account->budget_account_id);
+                    $modifications = $this->getAccountModifications($account->budget_sub_specific_formulation_id);
+
+
                     $account['amount_available'] = ($account->total_year_amount - $compromised);
                     $account['compromised'] = $compromised;
                     $account['programmed'] = $account->total_year_amount;
+
+
+                    if ($modifications) {
+                        foreach ($modifications as $modif) {
+                            if ($account->budget_account_id == $modif->budget_account_id) {
+                                if ($modif->operation == 'I') {
+                                    $increment += $modif->amount;
+                                } else {
+                                    $decrement += $modif->amount;
+                                }
+                            }
+                        }
+                    }
+                    $account['increment'] = $increment;
+                    $account['decrement'] = $decrement;
 
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
                     if ($parent) {
                         $accounts_open[$parent]['compromised'] += $compromised;
                         $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
                         $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
+                        $accounts_open[$parent]['increment'] += $increment;
+                        $accounts_open[$parent]['decrement'] += $decrement;
                     }
                 } else {
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
@@ -169,6 +191,8 @@ class BudgetReportsController extends Controller
                         $accounts_open[$parent]['compromised'] += $account['compromised'];
                         $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
                         $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
+                        $accounts_open[$parent]['increment'] += $account['increment'];
+                        $accounts_open[$parent]['decrement'] += $account['decrement'];
                     }
                 }
             }
@@ -208,16 +232,34 @@ class BudgetReportsController extends Controller
 
     public function getAccountCompromisedAmout(int $accout_id)
     {
-        $compromised = BudgetCompromiseDetail::where('budget_account_id', $accout_id)->get()->all();
+        $compromised = BudgetCompromiseDetail::where('budget_account_id', $accout_id)->get();
         $amout = 0;
-        if (count($compromised) > 0) {
+        if (!$compromised->isEmpty()) {
             foreach ($compromised as $com) {
                 $amout = $amout + $com->amount + $com->tax_amount;
-                # code...
             }
             return $amout;
         }
         return $amout;
+    }
+
+    /**
+     * Metodo que retorna las modificaciones de una cuenta
+     * 
+     * @author José Briceño <josejorgebriceno9@gmail.com>
+     * 
+     * @method getModifications
+     * 
+     * @param int $account_id
+     * 
+     * @return Object Objecto que contiene aumentos y disminuciones
+     * 
+     */
+
+    public function getAccountModifications(int $account_budget_sub_specific_formulation_id)
+    {
+        $modifications = BudgetModificationAccount::where('budget_sub_specific_formulation_id', $account_budget_sub_specific_formulation_id)->get();
+        return !$modifications->isEmpty() ? $modifications : null;
     }
 
 
@@ -721,10 +763,6 @@ class BudgetReportsController extends Controller
 
         $records = $this->getBudgetAccountsOpen($data['accountsWithMovements'], $project);
 
-        foreach ($records as $record) {
-            $record[0] = $this->getAccountModifications($record[0]);
-        }
-
         for ($i = 0; $i < count($records); $i++) {
             $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
         }
@@ -735,8 +773,6 @@ class BudgetReportsController extends Controller
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
 
-
-
         $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE']);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
@@ -746,32 +782,9 @@ class BudgetReportsController extends Controller
             'institution' => $institution,
             'currencySymbol' => $currency['symbol'],
             'fiscal_year' => $fiscal_year['year'],
-            "report_date" => \Carbon\Carbon::today()->format('d-m-Y'),
+            'report_date' => \Carbon\Carbon::today()->format('d-m-Y'),
             'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['initialDate'])->format('d-m-Y'),
             'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['finalDate'])->format('d-m-Y'),
         ]);
-    }
-
-    public function getAccountModifications($budgetAccountsOpen)
-    {
-
-        foreach ($budgetAccountsOpen as $budgetAccountOpen) {
-            $modifications = BudgetModificationAccount::where('budget_sub_specific_formulation_id', $budgetAccountOpen->budget_sub_specific_formulation_id)->get();
-            $increment = 0;
-            $decrement = 0;
-            if (count($modifications->toArray()) > 0) {
-                foreach ($modifications as $modif) {
-                    if ($budgetAccountOpen->budget_account_id == $modif->budget_account_id) {
-                        if ($modif->operation == 'I') {
-                            $increment += $modif->amount;
-                        } else {
-                            $decrement += $modif->amount;
-                        }
-                    }
-                }
-                $budgetAccountOpen['increment'] = $increment;
-                $budgetAccountOpen['decrement'] = $increment;
-            }
-        }
     }
 }

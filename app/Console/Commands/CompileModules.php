@@ -29,6 +29,7 @@ class CompileModules extends Command
                             {--i|install : With previous install node packages}
                             {--u|update : With previous update node packages}
                             {--s|system : With core compile}
+                            {--x|no-compile : Without compile action}
                             {--d|details : With detail output info}';
 
     /**
@@ -65,6 +66,7 @@ class CompileModules extends Command
             return 0;
         }
         $withCore = ($this->option('system'))?true:false;
+        $withNoCompile = ($this->option('no-compile'))?true:false;
 
         $this->line('');
         $this->line('<fg=yellow>---------------------------------------------------------</>');
@@ -122,19 +124,21 @@ class CompileModules extends Command
                 $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Paquetes instalados</>");
             }
 
-            $this->line('');
-            $this->line("<fg=green>Compilando archivos generales del sistema</>");
-            $this->line('');
-            $result = shell_exec("npm run $compileMode");
-            if (strpos($result, 'successfully') === false) {
-                $hasError = true;
-                $errorMsg = $result;
-                $this->info("Ocurrió un error en la compilación");
-                $this->info("Detalles del error:");
-                $this->info($errorMsg);
-                return 0;
+            if (!$withNoCompile) {
+                $this->line('');
+                $this->line("<fg=green>Compilando archivos generales del sistema</>");
+                $this->line('');
+                $result = shell_exec("npm run $compileMode");
+                if (strpos($result, 'successfully') === false) {
+                    $hasError = true;
+                    $errorMsg = $result;
+                    $this->info("Ocurrió un error en la compilación");
+                    $this->info("Detalles del error:");
+                    $this->info($errorMsg);
+                    return 0;
+                }
+                $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Archivos compilados</>");
             }
-            $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Archivos compilados</>");
         }
 
         foreach ($modules as $key => $module) {
@@ -148,20 +152,24 @@ class CompileModules extends Command
             );
             $this->line('');
             $packages = (!empty($withUpdate))?$withUpdate:$withInstall;
-            $result = shell_exec("cd modules/$module $packages && npm run $compileMode");
-            if (strpos($result, 'successfully') === false) {
-                $hasError = true;
-                $errorMsg = $result;
-                $errorModule = $module;
-                break;
+            if (!$withNoCompile) {
+                $result = shell_exec("cd modules/$module $packages && npm run $compileMode");
+                if (strpos($result, 'successfully') === false) {
+                    $hasError = true;
+                    $errorMsg = $result;
+                    $errorModule = $module;
+                    break;
+                }
             }
             array_push($m, $module);
             if (!empty($successText)) {
                 $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Paquetes ".$successText."</>");
             }
-            $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Archivos compilados</>");
-            if ($this->option('details')) {
-                echo $result;
+            if (!$withNoCompile) {
+                $this->line("<fg=green>\xE2\x9C\x94</> <fg=yellow>Archivos compilados</>");
+                if ($this->option('details')) {
+                    echo $result;
+                }
             }
 
             $index++;

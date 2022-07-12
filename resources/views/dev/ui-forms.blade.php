@@ -156,11 +156,18 @@
                         </div>
                         <div class="col-sm-6 col-lg-3">
                             <p class="category">{{ __('Botones de selección') }}</p>
-                            <input type="checkbox" name="checkbox" class="bootstrap-switch"
-                                   data-on-label="{{ __('SI') }}" data-off-label="{{ __('NO') }}" checked>
-                            <br>
-                            <input type="checkbox" name="checkbox" class="bootstrap-switch"
-                                   data-on-label="{{ __('SI') }}" data-off-label="{{ __('NO') }}">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="checboxSelected" checked>
+                                <label class="custom-control-label" for="checboxSelected">
+                                    Seleccionado
+                                </label>
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="checboxUnselected">
+                                <label class="custom-control-label" for="checboxUnselected">
+                                    Deseleccionado
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <h6 class="pad-top-10">{{ __('Wizards') }}</h6>

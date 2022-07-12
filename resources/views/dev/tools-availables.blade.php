@@ -64,12 +64,13 @@
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Mantenimiento') }}</label>
 							<div class="col-12">
-                                <div class="col-12 bootstrap-switch-mini">
-    								{!! Form::checkbox('maintenance', true, false, [
-    									'id' => 'maintenance', 'class' => 'form-control bootstrap-switch',
-    									'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+								<div class="custom-control custom-switch" data-toggle="tooltip" 
+									 title="{{ __('Establecer la aplicación en modo de mantenimiento') }}">
+									{!! Form::checkbox('maintenance', true, false, [
+    									'id' => 'maintenance', 'class' => 'custom-control-input'
     								]) !!}
-                                </div>
+									<label class="custom-control-label" for="maintenance">&#160;</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -77,12 +78,13 @@
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Demostración') }}</label>
 							<div class="col-12">
-                                <div class="col-12 bootstrap-switch-mini">
-    								{!! Form::checkbox('demo', true, false, [
-    									'id' => 'demo', 'class' => 'form-control bootstrap-switch',
-    									'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+								<div class="custom-control custom-switch" data-toggle="tooltip" 
+									 title="{{ __('Establecer la aplicación en modo de demostración') }}">
+									 {!! Form::checkbox('demo', true, false, [
+    									'id' => 'demo', 'class' => 'custom-control-input'
     								]) !!}
-                                </div>
+									<label class="custom-control-label" for="demo">&#160;</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -90,12 +92,13 @@
 						<div class="form-group">
 							<label for="" class="control-label">{{ __('Debug') }}</label>
 							<div class="col-12">
-                                <div class="col-12 bootstrap-switch-mini">
-    								{!! Form::checkbox('debug', true, false, [
-    									'id' => 'debug', 'class' => 'form-control bootstrap-switch',
-    									'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+								<div class="custom-control custom-switch" data-toggle="tooltip" 
+									 title="{{ __('Establecer la aplicación en modo de desarrollo') }}">
+									 {!! Form::checkbox('debug', true, false, [
+    									'id' => 'debug', 'class' => 'custom-control-input'
     								]) !!}
-                                </div>
+									<label class="custom-control-label" for="debug">&#160;</label>
+								</div>
 							</div>
 						</div>
 					</div>

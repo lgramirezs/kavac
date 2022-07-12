@@ -29,56 +29,56 @@
 						@include('layouts.form-errors')
 					@endif
 					<div class="row">
-						<div id="switchNotify" class="col-12 col-md-3">
+						<div id="switchNotify" class="col-12 col-md-2 text-center">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Notificaciones') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
+								<div class="custom-control custom-switch">
 									{!! Form::checkbox('notify', true,
 										(!is_null($paramNotify) && $paramNotify->p_value === 'true'), [
-										'id' => 'notify', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+										'id' => 'notify', 'class' => 'custom-control-input'
 									]) !!}
+									<label class="custom-control-label" for="notify">&#160;</label>
 								</div>
 							</div>
 						</div>
-						<div id="switchBannerInReport" class="col-12 col-md-3">
+						<div id="switchBannerInReport" class="col-12 col-md-2 text-center">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Banner en reportes') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
+								<div class="custom-control custom-switch">
 									{!! Form::checkbox('report_banner', true,
 										(!is_null($paramReportBanner) && $paramReportBanner->p_value === 'true'), [
-										'id' => 'report_banner', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+										'id' => 'report_banner', 'class' => 'custom-control-input'
 									]) !!}
+									<label class="custom-control-label" for="report_banner">&#160;</label>
 								</div>
 							</div>
 						</div>
-						<div id="switchMultiInstitution" class="col-12 col-md-3">
+						<div id="switchMultiInstitution" class="col-12 col-md-2 text-center">
 							<div class="form-group">
 								<label for="" class="control-label">
                                     {{ __('Multi gestión') }}
                                 </label>
-								<div class="col-12 bootstrap-switch-mini">
+								<div class="custom-control custom-switch">
 									{!! Form::checkbox('multi_institution', true,
 										(
 											!is_null($paramMultiInstitution)
 											&& $paramMultiInstitution->p_value === 'true'
 										), [
-										'id' => 'multi_institution', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+										'id' => 'multi_institution', 'class' => 'custom-control-input'
 									]) !!}
+									<label class="custom-control-label" for="multi_institution">&#160;</label>
 								</div>
 							</div>
 						</div>
-						<div id="switchSign" class="col-12 col-md-3">
+						<div id="switchSign" class="col-12 col-md-2 text-center">
 							<div class="form-group">
 								<label for="" class="control-label">{{ __('Firma electrónica') }}</label>
-								<div class="col-12 bootstrap-switch-mini">
+								<div class="custom-control custom-switch">
 									{!! Form::checkbox('digital_sign', true,
 										(!is_null($paramDigitalSign) && $paramDigitalSign->p_value === 'true'), [
-										'id' => 'digital_sign', 'class' => 'form-control bootstrap-switch',
-										'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+										'id' => 'digital_sign', 'class' => 'custom-control-input'
 									]) !!}
+									<label class="custom-control-label" for="digital_sign">&#160;</label>
 								</div>
 							</div>
 						</div>
