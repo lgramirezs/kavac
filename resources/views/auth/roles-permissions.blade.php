@@ -6,7 +6,9 @@
                 <label for="" class="control-label">{{ $role->name }}</label>
                 <div class="custom-control custom-switch">
                     {!! Form::checkbox('role[]', $role->id, ($user) ? $user->hasRole($role->id) : null, [
-                        'class' => 'custom-control-input', 'id' => 'role_'.$role->id
+                        'class' => 'custom-control-input switch-roles', 'id' => 'role_'.$role->id,
+                        'onchange' => 'relatedPermissions(this)',
+                        'data-permissions' => json_encode($role->permissions->pluck('id')->toArray())
                     ]) !!}
                     <label class="custom-control-label" for="role_{{ $role->id }}"></label>
                 </div>
@@ -43,12 +45,36 @@
                 <div class="custom-control custom-switch">
                     {!! Form::checkbox(
                         'permission[]', $permission->id, (!is_null($userPerm) && !$userPerm->isEmpty()) ? true : null, [
-                            'class' => 'custom-control-input', 'id' => 'perm_'.$permission->id
-                        ]
-                    ) !!}
+                        'class' => 'custom-control-input switch-permission', 'id' => 'perm_'.$permission->id,
+                        'data-roles' => json_encode($permission->roles->pluck('id')->toArray())
+                    ]) !!}
                     <label class="custom-control-label" for="perm_{{ $permission->id }}"></label>
                 </div>
             </div>
         </div>
     @endforeach
 </div>
+
+@section('extra-js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const els = document.getElementsByClassName('switch-roles');
+            Array.from(els).forEach((el) => {
+                relatedPermissions(el);
+            });
+        });
+        /**
+        * Establece los permisos asociados a un role
+        *
+        * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+        */
+        const relatedPermissions = (roleEl) => {
+            const id = roleEl.getAttribute('id').split("_")[1];
+            const perms = JSON.parse(roleEl.dataset.permissions) || [];
+            
+            perms.forEach((p) => {
+                document.getElementById(`perm_${p}`).checked = roleEl.checked;
+            });
+        }
+    </script>
+@endsection
