@@ -33,7 +33,8 @@
                                 <th class="text-center col-10" :colspan="roles.length">ROLES</th>
                             </tr>
                             <tr>
-                                <th class="text-center" :title="role.description" data-toggle="tooltip" v-for="role in roles">
+                                <th class="text-center" :title="role.description" data-toggle="tooltip" 
+                                    v-for="(role, index) in roles" :key="index">
                                     <p-check class="p-icon p-plain" color="text-success" off-color="text-gray"
                                              v-model="allPermissionByRol" :value="role.id"
                                              @change="togglePermissionsByRol(role.id)"
@@ -46,7 +47,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody v-for="moduleGroup in moduleGroups">
+                        <tbody v-for="(moduleGroup, index) in moduleGroups" :key="index">
                             <tr>
                                 <td>&#160;</td>
                                 <td class="text-center" :colspan="roles.length">
@@ -56,11 +57,11 @@
                                 </td>
                             </tr>
                             <tr v-for="(filteredPermission, index) in filterGroupPermissions(moduleGroup)"
-                                v-if="searchResult(filteredPermission, moduleGroup)">
+                                v-if="searchResult(filteredPermission, moduleGroup)" :key="index">
                                 <td class="text-uppercase">
                                     {{ filteredPermission.short_description || filteredPermission.name }}
                                 </td>
-                                <td v-for="(cellRole, idx) in roles" class="text-center">
+                                <td v-for="(cellRole, idx) in roles" class="text-center" :key="idx">
                                     <p-check class="p-icon p-plain" :class="'role_' + cellRole.id" color="text-success"
                                              off-color="text-gray" data-toggle="tooltip" :title="'Rol: ' + cellRole.name"
                                              :value="cellRole.id + '_' + filteredPermission.id"
@@ -143,7 +144,7 @@
              * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
             reset: function() {
-                let vm = this;
+                const vm = this;
                 vm.record.roles_attach_permissions = [];
             },
             /**
@@ -154,7 +155,7 @@
              * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
             setModuleGroups: function() {
-                let vm = this;
+                const vm = this;
                 let moduleName = '';
                 vm.moduleGroups = [];
                 $.each(vm.permissions, function(index, perm) {
@@ -190,7 +191,7 @@
              * @return     {array}          Arreglo con información de los permisos asociados a un grupo o módulo
              */
             filterGroupPermissions: function(group) {
-                let vm = this;
+                const vm = this;
                 return vm.permissions.filter((permission) => {
                     return permission.model_prefix === group;
                 });
@@ -205,7 +206,7 @@
              * @param      {integer}    roleId  Identificador del rol del cual activar o desactivar todos los permisos
              */
             togglePermissionsByRol: function(roleId) {
-                let vm = this;
+                const vm = this;
                 vm.loading = true;
                 let listRol = vm.allPermissionByRol.filter(function(value, index, arr) {
                     return value === roleId;
@@ -240,7 +241,7 @@
              *                          y lo muestra, de lo contrario retorna falso y lo oculta
              */
             searchResult: function(filteredPermission, moduleGroup) {
-                let vm = this;
+                const vm = this;
                 let result = vm.search==='' ||
                              filteredPermission.short_description.indexOf(vm.search) >= 0 ||
                              filteredPermission.name.indexOf(vm.search) >= 0;
@@ -258,8 +259,8 @@
              *
              * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
-            getRolesAndPermissions: async function() {
-                let vm = this;
+            async getRolesAndPermissions() {
+                const vm = this;
                 vm.loading = true;
                 await axios.get(vm.rolesPermissionsUrl).then(response => {
                     if (response.data.result) {
@@ -278,13 +279,13 @@
                 vm.loading = false;
             }
         },
-        created() {
-            let vm = this;
-            vm.getRolesAndPermissions();
+        async created() {
+            const vm = this;
+            await vm.getRolesAndPermissions();
         },
-        mounted() {
-            let vm = this;
-            vm.setModuleGroups();
+        async mounted() {
+            const vm = this;
+            await vm.setModuleGroups();
             vm.record.roles_attach_permissions = [];
             vm.allPermissionByRol = [];
 
