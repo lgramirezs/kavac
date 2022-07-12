@@ -159,7 +159,6 @@ class SaleOrderSettingController extends Controller
             }
         }
 
-
         $order = SaleOrder::create([
           'name'        => $request->name,
           'id_number'   => $request->id_number,
@@ -221,7 +220,7 @@ class SaleOrderSettingController extends Controller
       foreach ($products as $id => $row) {
         $productos[] = [
           'id' => $id,
-          'sale_warehouse_inventory_product_id' => $row['inventory_product']['name'],
+          'sale_warehouse_inventory_product_id' => $row['inventory_product']['id'],
           'quantity' => $row['quantity'],
           'value' => $row["value"],
           'iva' => $row["product_tax_value"],
@@ -254,9 +253,17 @@ class SaleOrderSettingController extends Controller
         $this->saleOrderValidate($request);
         $products = [];
         if ($request->list_products && !empty($request->list_products)) {
-          foreach ($request->list_products as $product) {
-            $products[] = $product;
-          }
+            foreach ($request->list_products as $product) {
+                $inventory_product = SaleWarehouseInventoryProduct::find($product['sale_warehouse_inventory_product_id']);
+                if (!is_null($inventory_product)) {
+                    $exist_real = $inventory_product->exist - $inventory_product->reserved;
+                    if ($exist_real >= $product['quantity']) {
+                        $inventory_product->reserved = $inventory_product->reserved + $product['reserved'];
+                        $inventory_product->save();
+                        $products[] = $product;
+                    }
+                }
+            }
         }
 
         $order->name  = $request->name;
