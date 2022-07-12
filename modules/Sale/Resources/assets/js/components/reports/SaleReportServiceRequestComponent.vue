@@ -277,7 +277,7 @@ export default {
 
         getUrlReport(){
             const vm = this;
-            return ('/'+vm.reportUrl+'/['+vm.recordsToReport+']');
+            return (window.app_url + '/'+vm.reportUrl+'/['+vm.recordsToReport+']');
         },
 
     },
