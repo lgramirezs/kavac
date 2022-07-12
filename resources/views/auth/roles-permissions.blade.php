@@ -1,20 +1,20 @@
-<h5 class="card-title text-center">{{ __('Roles') }}</h5>
+<h5 class="card-title text-center mt-4">{{ __('Roles') }}</h5>
 <div class="row" id="role">
     @foreach (App\Roles\Models\Role::all() as $role)
         <div class="col-md-2 text-center">
             <div class="form-group">
                 <label for="" class="control-label">{{ $role->name }}</label>
-                <div class="col-12 bootstrap-switch-mini">
+                <div class="custom-control custom-switch">
                     {!! Form::checkbox('role[]', $role->id, ($user) ? $user->hasRole($role->id) : null, [
-                        'class' => 'form-control bootstrap-switch bootstrap-switch-mini role',
-                        'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                        'class' => 'custom-control-input', 'id' => 'role_'.$role->id
                     ]) !!}
+                    <label class="custom-control-label" for="role_{{ $role->id }}"></label>
                 </div>
             </div>
         </div>
     @endforeach
 </div>
-<h5 class="card-title text-center">{{ __('Permisos') }}</h5>
+<h5 class="card-title text-center mt-4">{{ __('Permisos') }}</h5>
 @php
     $module = "";
 @endphp
@@ -37,16 +37,16 @@
         <div class="col-md-3 text-center">
             <div class="form-group">
                 <label for="" class="control-label">{{ $permission->name }}</label>
-                <div class="col-12 bootstrap-switch-mini">
-                    @php
-                        $userPerm = ($user) ? $permission->users()->where('user_id', $user->id)->get() : null;
-                    @endphp
+                @php
+                    $userPerm = ($user) ? $permission->users()->where('user_id', $user->id)->get() : null;
+                @endphp
+                <div class="custom-control custom-switch">
                     {!! Form::checkbox(
                         'permission[]', $permission->id, (!is_null($userPerm) && !$userPerm->isEmpty()) ? true : null, [
-                            'class' => 'form-control bootstrap-switch bootstrap-switch-mini permission',
-                            'data-on-label' => __('SI'), 'data-off-label' => __('NO')
+                            'class' => 'custom-control-input', 'id' => 'perm_'.$permission->id
                         ]
                     ) !!}
+                    <label class="custom-control-label" for="perm_{{ $permission->id }}"></label>
                 </div>
             </div>
         </div>
