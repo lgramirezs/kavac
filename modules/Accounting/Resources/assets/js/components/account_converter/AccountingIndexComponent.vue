@@ -5,14 +5,18 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-lg-2" id="helpSearchSelectBudget">
                     <label for="sel_budget_acc" class="control-label">Por código presupuestario</label>
-                    <div class="col-12 bootstrap-switch-mini">
-                        <input type="radio" name="sel_account_type" id="sel_budget_acc" data-on-label="SI" data-off-label="NO" @click="loadAccounts('budget')" class="form-control bootstrap-switch sel_pry_acc">
+                    <div class="custom-control custom-switch">
+                      <input type="radio" name="sel_account_type" class="custom-control-input" id="sel_budget_acc" 
+                             @click="loadAccounts('budget')">
+                      <label class="custom-control-label" for="sel_budget_acc"></label>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-lg-2" id="helpSearchSelectAccounting">
                     <label for="sel_account_type" class="control-label">Por código patrimonial</label>
-                    <div class="col-12 bootstrap-switch-mini">
-                        <input type="radio" name="sel_account_type" id="sel_accounting_acc" checked="true" data-on-label="SI" @click="loadAccounts('accounting')" data-off-label="NO" class="form-control bootstrap-switch sel_pry_acc">
+                    <div class="custom-control custom-switch">
+                      <input type="radio" name="sel_account_type" class="custom-control-input" id="sel_accounting_acc" 
+                             @click="loadAccounts('accounting')" checked>
+                      <label class="custom-control-label" for="sel_accounting_acc"></label>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-lg-8 row" id="helpSearchRangeAccount">
@@ -25,9 +29,11 @@
                         <select2 id="sel_acc_end" :options="accountOptions[1]" v-model="accountSelect.end_id" :disabled="SelectAll"></select2>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-2" id="helpSearchRangeAll">
-                        <label for="" class="control-label">Seleccionar todas</label>
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="checkbox" name="sel_account_type" id="sel_all_acc" data-on-label="SI" data-off-label="NO" @click="checkAll()" class="form-control bootstrap-switch sel_pry_acc sel_all_acc_class">
+                        <label for="" class="control-label" style="font-size:.78em;">Seleccionar todas</label>
+                        <div class="custom-control custom-switch">
+                          <input type="radio" name="sel_account_type" class="custom-control-input" id="sel_all_acc" 
+                                @click="checkAll()">
+                          <label class="custom-control-label" for="sel_all_acc"></label>
                         </div>
                     </div>
                 </div>
@@ -80,6 +86,9 @@ export default {
     loadAccounts(type) {
       const vm = this;
       vm.accountSelect.type = type;
+      if (!document.getElementById(`sel_${type}_acc`).checked) {
+        return false;
+      }
       if (vm.accountSelect.type == 'budget') {
         vm.getAllRecords_selects_vuejs('getAllRecordsBudget_vuejs', vm.accountSelect.type, true);
         vm.accountSelect.all = false;
@@ -97,6 +106,9 @@ export default {
     checkAll() {
       const vm = this;
       vm.accountSelect.all = true;
+      if (!document.getElementById('sel_all_acc').checked) {
+        return false;
+      }
       if (vm.accountSelect.type == 'budget') {
         vm.getAllRecords_selects_vuejs('getAllRecordsBudget_vuejs', vm.accountSelect.type, true);
       } else if (vm.accountSelect.type == 'accounting') {

@@ -36,8 +36,10 @@
                 <div class="col-3" id="helpCheckupBalanceAllAccount">
                     <div class="form-group">
                         <label class="text-center"><strong>Mostrar valores en cero</strong></label>
-                        <div class="col-12 bootstrap-switch-mini mt-4">
-                            <input id="zero" data-on-label="SI" data-off-label="NO" name="zero" type="checkbox" class="form-control text-center bootstrap-switch">
+                        <div class="custom-control custom-switch mt-4" data-toggle="tooltip" 
+                             title="Seleccionar para mostrar valores de cuentas en cero">
+                          <input type="checkbox" class="custom-control-input" id="zero"  name="zero">
+                          <label class="custom-control-label" for="zero"></label>
                         </div>
                     </div>
                 </div>

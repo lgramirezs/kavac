@@ -7,16 +7,18 @@
                     <div class="col-xs-6 col-sm-6 col-md-2" id="helpSearchEntriesReference">
                         <div class="form-group">
                             <label class="control-label">Por Referencia</label>
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="sel_Search" id="sel_ref" data-on-label="SI" data-off-label="NO" class="form-control bootstrap-switch sel_search">
+                            <div class="custom-control custom-switch">
+                              <input type="radio" name="sel_Search" class="custom-control-input sel_search" id="sel_ref">
+                              <label class="custom-control-label" for="sel_ref"></label>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-2" id="helpSearchEntriesCategory">
                         <div class="form-group">
                             <label class="control-label">Por Categoría</label>
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="sel_Search" id="sel_origin" checked="true" data-on-label="SI" data-off-label="NO" class="form-control bootstrap-switch sel_search">
+                            <div class="custom-control custom-switch">
+                              <input type="radio" name="sel_Search" class="custom-control-input sel_search" id="sel_origin" checked>
+                              <label class="custom-control-label" for="sel_origin"></label>
                             </div>
                         </div>
                     </div>
@@ -37,14 +39,18 @@
                     <!-- filtrado por fechas -->
                     <div class="col-xs-6 col-sm-6 col-md-2" id="helpSearchEntriesDateSpecific">
                         <label for="" class="control-label">Por Período</label>
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="radio" name="sel_filter_date" id="sel_fil_date_specific" data-on-label="SI" data-off-label="NO" class="form-control bootstrap-switch sel_filterDate">
+                        <div class="custom-control custom-switch">
+                          <input type="radio" name="sel_filter_date" class="custom-control-input sel_filterDate" 
+                                 id="sel_fil_date_specific">
+                          <label class="custom-control-label" for="sel_fil_date_specific"></label>
                         </div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-2" id="helpSearchEntriesDateGeneric">
                         <label for="" class="control-label">Por Mes</label>
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="radio" name="sel_filter_date" id="sel_fil_date_generic" checked="true" data-on-label="SI" data-off-label="NO" class="form-control bootstrap-switch sel_filterDate">
+                        <div class="custom-control custom-switch">
+                          <input type="radio" name="sel_filter_date" class="custom-control-input sel_filterDate" 
+                                 id="sel_fil_date_generic" checked>
+                          <label class="custom-control-label" for="sel_fil_date_generic"></label>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-8 row">
@@ -148,7 +154,7 @@ export default {
          * Evento para determinar los datos a requerir segun la busqueda seleccionada
          */
     const vm = this;
-    $('.sel_search').on('switchChange.bootstrapSwitch', function(e) {
+    $('.sel_search').on('change', function(e) {
       if (e.target.id === 'sel_ref') {
         vm.typeSearch = 'reference';
       } else if (e.target.id === 'sel_origin') {
@@ -156,7 +162,7 @@ export default {
       }
     });
 
-    $('.sel_filterDate').on('switchChange.bootstrapSwitch', function(e) {
+    $('.sel_filterDate').on('change', function(e) {
       if (e.target.id === 'sel_fil_date_specific') {
         vm.filterDate = 'specific';
       } else if (e.target.id === 'sel_fil_date_generic') {

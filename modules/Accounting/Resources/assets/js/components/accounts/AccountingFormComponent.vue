@@ -30,16 +30,11 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label class="control-label">Activa</label>
-                                <div class="col-12 bootstrap-switch-mini">
-                                    <p-check class="pretty p-switch p-fill p-bigger" 
-                                        color="success" 
-                                        off-color="text-gray" 
-                                        toggle 
-                                        data-toggle="tooltip" 
-                                        title="Mostrar valores de cuentas en cero" 
-                                        v-model="record.active">
-                                        <label slot="off-label"></label>
-                                    </p-check>
+                                <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                     title="Indica si la cuenta estará activa" >
+                                  <input type="checkbox" class="custom-control-input" id="accountingActive" v-model="record.active" 
+                                         :value="true">
+                                  <label class="custom-control-label" for="accountingActive"></label>
                                 </div>
                             </div>
                         </div>
@@ -50,16 +45,11 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label class="control-label">Original</label>
-                                <div class="col-12 bootstrap-switch-mini">
-                                    <p-check class="pretty p-switch p-fill p-bigger" 
-                                        color="success" 
-                                        off-color="text-gray" 
-                                        toggle 
-                                        data-toggle="tooltip" 
-                                        title="Mostrar valores de cuentas en cero" 
-                                        v-model="record.original">
-                                        <label slot="off-label"></label>
-                                    </p-check>
+                                <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                     title="Indica si la cuenta a registrar es del listado original del organo que establece las cuentas patrimoniales" >
+                                  <input type="checkbox" class="custom-control-input" id="accountingOriginal" v-model="record.original" 
+                                         :value="true">
+                                  <label class="custom-control-label" for="accountingOriginal"></label>
                                 </div>
                             </div>
                         </div>
@@ -121,15 +111,12 @@ export default {
         }
 
       }
-
-      $('input[name=active]').bootstrapSwitch('state', this.record.active);
     });
   },
   mounted() {
     var selector = document.getElementById('code');
     Inputmask('9.9.9.99.99.99.999').mask(selector);
 
-    this.switchHandler('active');
     this.reset();
   },
   methods: {
@@ -291,6 +278,7 @@ export default {
         }
         axios.get(`${window.app_url}/accounting/get-children-account/${res}`).then(response => {
           var account = response.data.account;
+
           /**
                      * Selecciona en pantalla la nueva cuentas
                      */
@@ -299,7 +287,6 @@ export default {
             denomination: account.denomination,
             active: account.active
           };
-          $('input[name=active]').bootstrapSwitch('state', this.record.active);
         });
       }
     },

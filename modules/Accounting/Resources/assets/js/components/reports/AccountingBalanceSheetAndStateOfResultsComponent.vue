@@ -28,15 +28,11 @@
                 <div class="col-3" :id="'help'+this.type_report+'AllAccount'">
                     <div class="form-group">
                         <label class="text-center"><strong>Mostrar valores en cero</strong></label>
-                        <div class="col-12 bootstrap-switch-mini">
-                            <p-check class="pretty p-switch p-fill p-bigger" 
-                                color="success" 
-                                off-color="text-gray" 
-                                toggle 
-                                data-toggle="tooltip" 
-                                title="Mostrar valores de cuentas en cero" v-model="zero_accounts">
-                                <label slot="off-label"></label>
-                            </p-check>
+                        <div class="custom-control custom-switch mt-4" data-toggle="tooltip" 
+                             title="Seleccionar para mostrar valores de cuentas en cero">
+                          <input type="checkbox" class="custom-control-input" :id="type_report+'BalanceResultsZero'"  
+                                 :name="type_report+'BalanceResultsZero'" v-model="zero_accounts">
+                          <label class="custom-control-label" :for="type_report+'BalanceResultsZero'"></label>
                         </div>
                     </div>
                 </div>
