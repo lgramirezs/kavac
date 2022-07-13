@@ -54,7 +54,7 @@
                                 <div class="form-group" v-show="editMunicipalities == 'true'">
                                     <label>Municipio:</label>
                                     <select id="municipality" class="form-control" v-model="data.municipality_id">
-                                        <option v-for="(mty, index) in municipalities" :value="mty.id">
+                                        <option v-for="(mty, index) in municipalities" :value="mty.id" :key="index">
                                             {{ mty.text }}
                                         </option>
                                     </select>
@@ -245,7 +245,7 @@
              * @param {object} event   Objeto que gestiona los eventos
              */
             initUpdate(id, event) {
-                let vm = this;
+                const vm = this;
                 vm.errors = [];
                 vm.editEstate = 'true';
                 vm.editMunicipalities = 'true';
@@ -382,7 +382,7 @@
             };
         },
         mounted() {
-            let vm = this;
+            const vm = this;
             vm.editEstate = 'false';
             vm.editMunicipalities = 'false';
             //await vm.$nextTick();

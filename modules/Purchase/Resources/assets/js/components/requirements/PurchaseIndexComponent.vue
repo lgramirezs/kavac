@@ -69,7 +69,7 @@ export default {
             'code': 'Código',
             'description': 'Descripción',
             'fiscal_year.year': 'Año fiscal',
-            'contrating_department.name': 'Departamento contatante',
+            'contrating_department.name': 'Departamento contratante',
             'user_department.name': 'Departamento Usuario',
             'purchase_supplier_object': 'Tipo',
             'requirement_status': 'Estado del requerimiento',
@@ -85,6 +85,8 @@ export default {
             'requirement_status': 'col-xs-1',
             'id': 'col-xs-1'
         };
+        this.table_options.sortable = ['code'];
+        this.table_options.filterable = ['code'];
     },
     mounted() {
         this.records = this.record_list;

@@ -451,6 +451,8 @@ class PurchaseDirectHireController extends Controller
      *
      * @method    edit
      *
+     * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve | pedrobui@gmail.com>
+     * 
      * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
@@ -640,6 +642,8 @@ class PurchaseDirectHireController extends Controller
      *
      * @method    destroy
      *
+     * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve | pedrobui@gmail.com>
+     * 
      * @author Juan Rosas <jrosas@cenditel.gob.ve | juan.rosasr01@gmail.com>
      *
      * @param     integer    $id    Identificador del registro
@@ -650,6 +654,16 @@ class PurchaseDirectHireController extends Controller
     {
         $record = PurchaseDirectHire::find($id);
         if ($record) {
+            //Se busca los viejos requerimientos asociados contratación directa y limpiarlo
+        
+            $searchBaseBudgets = PurchaseBaseBudget::where('orderable_id',$id)->get();
+            foreach ($searchBaseBudgets as $sBaseBudget) { 
+                $sBaseBudget->status = 'WAIT_QUOTATION';
+                $sBaseBudget->orderable_type = null;
+                $sBaseBudget->orderable_id = null;
+                $sBaseBudget->save();
+            }
+
             /** Se elimina la relacion y los documentos previos **/
             $supp_docs = $record->documents()->get();
             if (count($supp_docs) > 0) {
@@ -675,9 +689,21 @@ class PurchaseDirectHireController extends Controller
         return response()->json(['records' => PurchaseDirectHire::with('fiscalYear')->orderBy('id', 'asc')->get()], 200);
     }
 
+    /**
+     * Realiza la actualización de registro de orden de compra directa
+     *
+     * @method    updatePurchaseOrder
+     *
+     * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve | pedrobui@gmail.com>
+     * 
+     * @param     integer    $id    Identificador del registro
+     *
+     * @return    Renderable    [description de los datos devueltos]
+     */
+
     public function updatePurchaseOrder(Request $request, $id)
     {
-        /*$this->validate($request, [
+        $this->validate($request, [
             'institution_id'                => 'required|integer',
             'contracting_department_id'     => 'required|integer',
             'user_department_id'            => 'required|integer',
@@ -694,11 +720,11 @@ class PurchaseDirectHireController extends Controller
             'verified_by_id'                => 'required',
             
             // Archivos
-            'start_minutes'                 => 'required|mimes:pdf',
+            /*'start_minutes'                 => 'required|mimes:pdf',
             'company_invitation'            => 'required|mimes:pdf',
             'certificate_receipt_of_offer'  => 'required|mimes:pdf',
             'motivated_act'                 => 'required|mimes:pdf',
-            'budget_availability'           => 'required|mimes:pdf',
+            'budget_availability'           => 'required|mimes:pdf',*/
         ], [
             'institution_id.required'                => 'El campo institución es obligatorio',
             'contracting_department_id.required'     => 'El campo unidad contratante es obligatorio',
@@ -716,6 +742,7 @@ class PurchaseDirectHireController extends Controller
             'verified_by_id.required'                => 'El campo verificado por es obligatorio',
 
             // Archivos
+            /*
             'start_minutes.required'                => 'El archivo de acta de inicio es obligatorio.',
             'start_minutes.mimes'                   => 'El archivo de acta de inicio debe estar en formato pdf.',
             'company_invitation.required'           => 'El archivo de invitación de la empresa es obligatorio.',
@@ -725,9 +752,10 @@ class PurchaseDirectHireController extends Controller
             'motivated_act.required'                => 'El archivo de acto motivado es obligatorio.',
             'motivated_act.mimes'                   => 'El archivo de acto motivado debe estar en formato pdf.',
             'budget_availability.required'          => 'El archivo de disponibilidad presupuestaria es obligatorio.',
-            'budget_availability.mimes'             => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',
-        ]); */
+            'budget_availability.mimes'             => 'El archivo de disponibilidad presupuestaria debe estar en formato pdf.',*/
+        ]); 
 
+        //Actualiza los campos del registro del modelo PurchaseDirectHire 
         $purchaseDirectHire = PurchaseDirectHire::find($id);
         $purchaseDirectHire->id                            = $request->id;
         $purchaseDirectHire->code                          = $request->code;  
@@ -760,6 +788,7 @@ class PurchaseDirectHireController extends Controller
             'budget_availability'
         ];
 
+        // Cargar los archivos pdf
         /*foreach ($documentListName as $nameFile) {
             if ($request->file($nameFile)) {
                 $file = $request->file($nameFile);

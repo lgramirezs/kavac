@@ -30,19 +30,19 @@
                     <select2 :options="currencies" id="currencies" v-model="currency_id"></select2>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" v-if="institutions.length > 1">
                 <div class="form-group is-required">
                     <label class="control-label" for="institutions">Institución</label><br>
                     <select2 :options="institutions" id="institutions" v-model="record.institution_id" @input="getDepartments()"></select2>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" v-if="departments.length > 0">
                 <div class="form-group is-required">
                     <label class="control-label" for="departments1">Unidad contratante</label><br>
                     <select2 :options="departments" id="departmentsss" v-model="record.contracting_department_id"></select2>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" v-if="departments.length > 0">
                 <div class="form-group is-required">
                     <label class="control-label" for="departments2">Unidad usuaria</label><br>
                     <select2 :options="departments" id="departments2" v-model="record.user_department_id"></select2>
@@ -535,9 +535,6 @@ export default {
     },
     created() {
         const vm = this;
-        axios.get('/purchase/get-institutions').then(response => {
-            vm.institutions = response.data.institutions;
-        });
         
         vm.table_options.headings = {
             'code': 'Código',
@@ -585,14 +582,18 @@ export default {
     },
     mounted() {
         const vm = this;
+        axios.get('/purchase/get-institutions').then(response => {
+            vm.institutions = response.data.institutions;
+
+            if (vm.record_edit) {
+                vm.record.institution_id = vm.record_edit[0]['institution_id'];
+                vm.getDepartments();
+            }
+        });
         // vm.reset();
         vm.records = vm.requirements;
         if(vm.record_edit) {
             for( var i=0; i<vm.record_edit.length; i++ ) {
-                vm.record.institution_id = vm.record_edit[i]['institution_id'];
-                vm.record.contracting_department_id = vm.record_edit[i]['contracting_department_id'];
-                vm.record.user_department_id = vm.record_edit[i]['user_department_id'];
-                vm.getDepartments();
                 vm.record.purchase_supplier_object_id = vm.record_edit[i]['purchase_supplier_object_id'];
                 vm.record.funding_source = vm.record_edit[i]['funding_source'];
                 vm.record.description = vm.record_edit[i]['description'];
@@ -926,15 +927,14 @@ export default {
         getDepartments() {
             const vm = this;
             vm.departments = [];
-            if(vm.record_edit) { 
-                vm.record.institution_id = vm.record_edit[0]['institution_id'];
-                vm.record.contracting_department_id = vm.record_edit[0]['contracting_department_id'];
-                vm.record.user_department_id = vm.record_edit[0]['user_department_id'];
-            }
 
             if (vm.record.institution_id != '') {
                 axios.get('/get-departments/' + vm.record.institution_id).then(response => {
                     vm.departments = response.data;
+                    if (vm.record_edit) {
+                        vm.record.contracting_department_id = vm.record_edit[0]['contracting_department_id'];
+                        vm.record.user_department_id = vm.record_edit[0]['user_department_id'];
+                    }
                     // vm.getWarehouses();
                     vm.getWarehouseProducts();
                 });

@@ -68,7 +68,7 @@
                                     </span>
                                     <input type="date" id="start_date" :disabled="(record.payroll_permission_policy_id == '')" 
                                            @input="getcalculate()" data-toggle="tooltip" title="Indique la fecha de inicio del permiso"
-                                           class="form-control no-restrict" :min="addBusinessDaysToDate(payrollPermissionPolicy.anticipation_day)"
+                                           class="form-control no-restrict" :min="addBusinessDaysToDate(payrollPermissionPolicy.anticipation_day + 1)"
                                            v-model="record.start_date">
                                 </div>
                             </div>

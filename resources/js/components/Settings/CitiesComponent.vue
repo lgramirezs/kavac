@@ -38,22 +38,12 @@
                                 <div class="form-group" v-show="editCities == 'true'">
                                     <label>Estados:</label>
                                     <select v-model="record.estate_id">
-                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
-                                                    v-for="ste in estates">
+                                        <option :value="ste.id" :selected="ste.id == record.estate_id" 
+												v-for="ste in estates" :key="ste.id">
                                                 {{ ste.text }}
                                         </option>
                                     </select>
                                 </div>
-								<!--<div class="form-group is-required">
-									<label>Estado:</label>
-									<select v-model="record.estate_id">
-                                        <option :value="ste.id" :selected="ste.id == record.estate_id"
-                                                    v-for="ste in estates">
-                                                {{ ste.text }}
-                                        </option>
-                                    </select>
-									<select2 :options="estates" v-model="record.estate_id"></select2>
-			                    </div>-->
 							</div>
 							<div class="col-12">
 								<div class="form-group is-required">
@@ -202,7 +192,7 @@
 			};
 		},
 		mounted() {
-			let vm = this;
+			const vm = this;
 			vm.editCities = 'false'; 
 			$("#add_city").on('show.bs.modal', function() {
 				vm.getCountries();

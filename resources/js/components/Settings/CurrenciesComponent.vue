@@ -58,13 +58,11 @@
 							<div class="col-12 col-md-2">
 								<div class="form-group is-required">
 									<label>Por defecto:</label>
-									<div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-    										<input type="checkbox" class="form-control bootstrap-switch"
-    											   data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                                   value="true" v-model="record.default" name="default"
-    											   title="Indique si es la moneda por defecto en la aplicación">
-                                        </div>
+									<div class="custom-control custom-switch" data-toggle="tooltip" 
+										 title="Indique si es la moneda por defecto en la aplicación">
+										<input type="checkbox" class="custom-control-input" 
+											   id="defaultCurrency" v-model="record.default" :value="true">
+										<label class="custom-control-label" for="defaultCurrency"></label>
 									</div>
 			                    </div>
 							</div>
@@ -101,9 +99,9 @@
 									<i class="fa fa-trash-o"></i>
 								</button>
 	                		</div>
-	                		<div slot="default" slot-scope="props">
-								<span v-if="props.row.default">SI</span>
-								<span v-else>NO</span>
+	                		<div slot="default" slot-scope="props" class="text-center">
+								<span v-if="props.row.default" class="text-success font-weight-bold">SI</span>
+								<span v-else class="text-danger font-weight-bold">NO</span>
 							</div>
 	                	</v-client-table>
 					</div>
@@ -166,8 +164,8 @@
 			};
 		},
 		mounted() {
-			let vm = this;
-			vm.switchHandler('default');
+			const vm = this;
+			
 			$("#add_currency").on('show.bs.modal', function() {
 				vm.getCountries();
 			});

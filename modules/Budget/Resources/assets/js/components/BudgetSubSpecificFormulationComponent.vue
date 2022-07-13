@@ -58,6 +58,7 @@
                         <select2
                             :options="institutions"
                             v-model="record.institution_id"
+                            disabled
                         ></select2>
                         <input type="hidden" v-model="record.id" />
                     </div>
@@ -72,7 +73,6 @@
                         <select2
                             :options="currencies"
                             v-model="record.currency_id"
-                            disabled
                         ></select2>
                     </div>
                 </div>
@@ -430,7 +430,6 @@ export default {
             records: [],
             /** @type {Array} Lista de años fiscales abiertos */
             fiscal_years: [],
-            institutions: [],
             currencies: [],
             decimals: 2,
             projects: [],
@@ -452,7 +451,10 @@ export default {
             ]
         };
     },
-    props: ['formulationId'],
+    props: {
+        formulationId: Number,
+        institutions: Array,
+    },
     methods: {
         /**
          * Reinicia los valores de los elementos del formulario
@@ -745,37 +747,66 @@ export default {
                 return false;
             }
 
-            // Reinicializa campos de la fila en 0;
-            this.records[index].total_real_amount = 0;
-            this.records[index].total_estimated_amount = 0;
-            this.records[index].total_year_amount = 0;
-            this.records[index].jan_amount = 0;
-            this.records[index].jan_amount = 0;
-            this.records[index].feb_amount = 0;
-            this.records[index].mar_amount = 0;
-            this.records[index].apr_amount = 0;
-            this.records[index].may_amount = 0;
-            this.records[index].jun_amount = 0;
-            this.records[index].jul_amount = 0;
-            this.records[index].aug_amount = 0;
-            this.records[index].sep_amount = 0;
-            this.records[index].oct_amount = 0;
-            this.records[index].nov_amount = 0;
-            this.records[index].dec_amount = 0;
-
-            this.records[index].formulated = !this.records[index].formulated;
             let add_account = $('#add_account_' + this.records[index].id);
 
             if (add_account.hasClass('fa-eye')) {
+                // Reinicializa campos de la fila en 0;
+                this.records[index].total_real_amount = 0;
+                this.records[index].total_estimated_amount = 0;
+                this.records[index].total_year_amount = 0;
+                this.records[index].jan_amount = 0;
+                this.records[index].jan_amount = 0;
+                this.records[index].feb_amount = 0;
+                this.records[index].mar_amount = 0;
+                this.records[index].apr_amount = 0;
+                this.records[index].may_amount = 0;
+                this.records[index].jun_amount = 0;
+                this.records[index].jul_amount = 0;
+                this.records[index].aug_amount = 0;
+                this.records[index].sep_amount = 0;
+                this.records[index].oct_amount = 0;
+                this.records[index].nov_amount = 0;
+                this.records[index].dec_amount = 0;
+                this.records[index].formulated = !this.records[index].formulated;
                 add_account.removeClass('fa-eye');
                 add_account.addClass('fa-eye-slash');
                 add_account.removeClass('text-blue');
                 add_account.addClass('text-red');
-            } else if (add_account.hasClass('fa-eye-slash')) {
-                add_account.addClass('fa-eye');
-                add_account.removeClass('fa-eye-slash');
-                add_account.addClass('text-blue');
-                add_account.removeClass('text-red');
+            }
+            else if (add_account.hasClass('fa-eye-slash')) {
+                // Si confirma, oculta y limpia los campos de texto para una cuenta presupuestaria.
+                let confirmar=confirm("¿Estas seguro de eliminar esta cuenta presupuestaria de la formulación?");
+                if (confirmar) {
+                    add_account.addClass('fa-eye');
+                    add_account.removeClass('fa-eye-slash');
+                    add_account.addClass('text-blue');
+                    add_account.removeClass('text-red');
+                    // Reinicializa campos de la fila en 0;
+                    this.records[index].total_real_amount = 0;
+                    this.records[index].total_estimated_amount = 0;
+                    this.records[index].total_year_amount = 0;
+                    this.records[index].jan_amount = 0;
+                    this.records[index].jan_amount = 0;
+                    this.records[index].feb_amount = 0;
+                    this.records[index].mar_amount = 0;
+                    this.records[index].apr_amount = 0;
+                    this.records[index].may_amount = 0;
+                    this.records[index].jun_amount = 0;
+                    this.records[index].jul_amount = 0;
+                    this.records[index].aug_amount = 0;
+                    this.records[index].sep_amount = 0;
+                    this.records[index].oct_amount = 0;
+                    this.records[index].nov_amount = 0;
+                    this.records[index].dec_amount = 0;
+                    this.records[index].formulated = !this.records[index].formulated;
+                }
+                // Si no confirma, deja los campos de texto sin modificar.
+                else {
+                    add_account.removeClass('fa-eye');
+                    add_account.addClass('fa-eye-slash');
+                    add_account.removeClass('text-blue');
+                    add_account.addClass('text-red');
+                }
             }
         },
         /**
@@ -1170,8 +1201,7 @@ export default {
         const vm = this;
         vm.loading = true;
         await vm.getOpenedFiscalYears();
-        await vm.getInstitutions();
-        await vm.getDefaultCurrencies();
+        await vm.getCurrencies();
         await vm.getProjects();
         await vm.getCentralizedActions();
 
@@ -1213,7 +1243,7 @@ export default {
                     .removeClass('is-required');
             }
         });
-        vm.currencies ? vm.record.currency_id = vm.currencies[1].id : vm.record.currency_id = '';
+        vm.institutions ? vm.record.institution_id = vm.institutions[1]['id'] : vm.record.institution_id = '';
     }
 };
 </script>

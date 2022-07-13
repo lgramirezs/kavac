@@ -186,7 +186,7 @@
              * @param      {string}         module    Nombre del módulo del cual se desea obtener información
              */
             viewDetails(module) {
-                let vm = this;
+                const vm = this;
                 axios.post(`${process.env.MIX_APP_URL}/modules/details`, {
                     module: module
                 }).then(response => {
@@ -204,7 +204,7 @@
              * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
             resetDetails() {
-                let vm = this;
+                const vm = this;
                 vm.details = {};
             },
             /**
