@@ -775,38 +775,53 @@ export default {
             }
             else if (add_account.hasClass('fa-eye-slash')) {
                 // Si confirma, oculta y limpia los campos de texto para una cuenta presupuestaria.
-                let confirmar=confirm("¿Estas seguro de eliminar esta cuenta presupuestaria de la formulación?");
-                if (confirmar) {
-                    add_account.addClass('fa-eye');
-                    add_account.removeClass('fa-eye-slash');
-                    add_account.addClass('text-blue');
-                    add_account.removeClass('text-red');
-                    // Reinicializa campos de la fila en 0;
-                    this.records[index].total_real_amount = 0;
-                    this.records[index].total_estimated_amount = 0;
-                    this.records[index].total_year_amount = 0;
-                    this.records[index].jan_amount = 0;
-                    this.records[index].jan_amount = 0;
-                    this.records[index].feb_amount = 0;
-                    this.records[index].mar_amount = 0;
-                    this.records[index].apr_amount = 0;
-                    this.records[index].may_amount = 0;
-                    this.records[index].jun_amount = 0;
-                    this.records[index].jul_amount = 0;
-                    this.records[index].aug_amount = 0;
-                    this.records[index].sep_amount = 0;
-                    this.records[index].oct_amount = 0;
-                    this.records[index].nov_amount = 0;
-                    this.records[index].dec_amount = 0;
-                    this.records[index].formulated = !this.records[index].formulated;
-                }
-                // Si no confirma, deja los campos de texto sin modificar.
-                else {
-                    add_account.removeClass('fa-eye');
-                    add_account.addClass('fa-eye-slash');
-                    add_account.removeClass('text-blue');
-                    add_account.addClass('text-red');
-                }
+                var data = this.records;
+                bootbox.confirm({
+                    message: "¿Esta seguro de eliminar esta cuenta presupuestaria de la formulación?",
+                    buttons: {
+                        confirm: {
+                            label:
+                                '<i class="fa fa-check"></i> Confirmar'
+                        },
+                        cancel: {
+                            label:
+                                '<i class="fa fa-times"></i> Cancelar'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            add_account.addClass('fa-eye');
+                            add_account.removeClass('fa-eye-slash');
+                            add_account.addClass('text-blue');
+                            add_account.removeClass('text-red');
+                            // Reinicializa campos de la fila en 0;
+                            data[index].total_real_amount = 0;
+                            data[index].total_estimated_amount = 0;
+                            data[index].total_year_amount = 0;
+                            data[index].jan_amount = 0;
+                            data[index].jan_amount = 0;
+                            data[index].feb_amount = 0;
+                            data[index].mar_amount = 0;
+                            data[index].apr_amount = 0;
+                            data[index].may_amount = 0;
+                            data[index].jun_amount = 0;
+                            data[index].jul_amount = 0;
+                            data[index].aug_amount = 0;
+                            data[index].sep_amount = 0;
+                            data[index].oct_amount = 0;
+                            data[index].nov_amount = 0;
+                            data[index].dec_amount = 0;
+                            data[index].formulated = !data[index].formulated;
+                        }
+                        // Si no confirma, deja los campos de texto sin modificar.
+                        else {
+                            add_account.removeClass('fa-eye');
+                            add_account.addClass('fa-eye-slash');
+                            add_account.removeClass('text-blue');
+                            add_account.addClass('text-red');
+                        }
+                    }
+                });
             }
         },
         /**

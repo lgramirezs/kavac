@@ -59,11 +59,9 @@ class AssetController extends Controller
             'asset_subcategory_id' => ['required'],
             'asset_specific_category_id' => ['required'],
             'asset_acquisition_type_id' => ['required'],
-            'acquisition_date' => ['required', new AcquisitionYear(Date("Y"))],
+            'acquisition_date' => [new AcquisitionYear(Date("Y"))],
             'asset_status_id' => ['required'],
             'asset_condition_id' => ['required'],
-            'value' => ['required', 'regex:/^\d+(\.\d+)?$/u'],
-            'currency_id' => ['required'],
             'institution_id' => ['required'],
         ];
 
@@ -75,14 +73,12 @@ class AssetController extends Controller
             'asset_subcategory_id.required'                 => 'El campo subcategoria es obligatorio.',
             'asset_specific_category_id.required'           => 'El campo categoria especifica es obligatorio.',
             'asset_acquisition_type_id.required'            => 'El campo forma de adquisición es obligatorio.',
-            'acquisition_date.required'                     => 'El campo fecha de adquisición es obligatorio.',
             'asset_status_id.required'                      => 'El campo estatus de uso es obligatorio.',
-            'value.required'                                => 'El campo valor es obligatorio.',
-            'currency_id.required'                          => 'El campo moneda es obligatorio.',
             'serial.required'                               => 'El campo serial es obligatorio.',
             'serial.unique'                                 => 'El campo serial ya existe',
             'marca.required'                                => 'El campo marca es obligatorio.',
             'model.required'                                => 'El campo modelo es obligatorio.',
+            'value.regex'                                   => 'El formato de valor es inválido.',
             'asset_use_function_id.required'                => 'El campo función de uso es obligatorio.',
             'parish_id.required'                            => 'El campo país es obligatorio.',
             'address.required'                              => 'El campo dirección es obligatorio.',
@@ -129,9 +125,17 @@ class AssetController extends Controller
         $item_required = AssetRequiredItem::where('asset_specific_category_id', $request->asset_specific_category_id)
             ->first();
 
+            $validateRules  = $this->validateRules;
+            if($request->value){
+                $validateRules  = array_merge(
+                    $validateRules,
+                    [
+                        'value' => ['regex:/^\d+(\.\d+)?$/u']
+                    ]
+                );
+            }
             if (!is_null($item_required)){
                 if ($request->asset_type_id == 1) {
-                    $validateRules  = $this->validateRules;
                     $validateRules  = array_merge(
                         $validateRules,
                         [
@@ -143,7 +147,6 @@ class AssetController extends Controller
                     );
                     $this->validate($request, $validateRules, $this->messages, $this->attributes);
                 } elseif ($request->type_id == 2) {
-                    $validateRules  = $this->validateRules;
                     $validateRules  = array_merge(
                         $validateRules,
                         [
@@ -214,7 +217,15 @@ class AssetController extends Controller
     {
         $asset = Asset::find($id);
 
-
+        $validateRules  = $this->validateRules;
+        if($request->value){
+            $validateRules  = array_merge(
+                $validateRules,
+                [
+                    'value' => ['regex:/^\d+(\.\d+)?$/u']
+                ]
+            );
+        }
         if ($request->asset_type_id == 1) {
             $validateRules  = $this->validateRules;
             $validateRules  = array_merge(
@@ -379,7 +390,8 @@ class AssetController extends Controller
                                 if($asset_index->assetRequestAsset == null){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                        || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }    
@@ -404,7 +416,8 @@ class AssetController extends Controller
                                 if($asset_index->assetRequestAsset == null){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                        || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }    
@@ -514,7 +527,8 @@ class AssetController extends Controller
                             if($asset_index->assetRequestAsset == null){
                                 array_push($selected, $asset_index->id);
                             }
-                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                 array_push($selected, $asset_index->id);
                             }
                         }    
