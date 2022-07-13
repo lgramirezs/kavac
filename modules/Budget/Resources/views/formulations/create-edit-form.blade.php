@@ -20,7 +20,8 @@
 	<div class="row">
 		<div class="col-12">
 			<budget-sub-specific-formulation :formulation-id="{!! (isset($formulation)) ? $formulation->id : "null" !!}"
-											 route_list="{{ url('budget/subspecific-formulations') }}"></budget-sub-specific-formulation>
+											 route_list="{{ url('budget/subspecific-formulations') }}"
+											 :institutions="{{ $institutions }}"></budget-sub-specific-formulation>
 		</div>
 	</div>
 @stop

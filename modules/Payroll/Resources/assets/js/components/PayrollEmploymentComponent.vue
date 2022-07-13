@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-md-4" id="helpEmploymentEmail">
-                    <div class="form-group is-required">
+                    <div class="form-group">
                         <label>Correo Institucional:</label>
                         <input type="email" class="form-control input-sm"
                             v-model="record.institution_email"/>

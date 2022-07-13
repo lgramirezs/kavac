@@ -153,12 +153,13 @@ class BudgetReportsController extends Controller
             foreach ($accounts_open as $account) {
                 $increment = 0;
                 $decrement = 0;
-                if (!isset($account['compromised']) && !isset($account['amount_available']) && !isset($account['programmed']) && !isset($account['increment']) && !isset($account['decrement'])) {
+                if (!isset($account['compromised']) && !isset($account['current']) && !isset($account['programmed']) && !isset($account['increment']) && !isset($account['decrement'])) {
                     $compromised = $this->getAccountCompromisedAmout($account->budget_account_id);
                     $modifications = $this->getAccountModifications($account->budget_sub_specific_formulation_id);
 
 
-                    $account['amount_available'] = ($account->total_year_amount - $compromised);
+                    $account['current'] = ($account->total_year_amount_m + $compromised);
+                    // dd($account);
                     $account['compromised'] = $compromised;
                     $account['programmed'] = $account->total_year_amount;
 
@@ -180,19 +181,28 @@ class BudgetReportsController extends Controller
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
                     if ($parent) {
                         $accounts_open[$parent]['compromised'] += $compromised;
-                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        // $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        $accounts_open[$parent]['current'] += $account['current'];
                         $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
                         $accounts_open[$parent]['increment'] += $increment;
                         $accounts_open[$parent]['decrement'] += $decrement;
+                        $accounts_open[$parent]['total_year_amount_m'] += $increment;
+                        $accounts_open[$parent]['total_year_amount_m'] -= $decrement;
+                        $accounts_open[$parent]['total_year_amount_m'] -= $compromised;
                     }
                 } else {
+
                     $parent = array_search($account->budgetAccount->parent_id, $flat_accounts_open);
                     if ($parent) {
                         $accounts_open[$parent]['compromised'] += $account['compromised'];
-                        $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        // $accounts_open[$parent]['amount_available'] = $accounts_open[$parent]->total_year_amount - $accounts_open[$parent]['compromised'];
+                        $accounts_open[$parent]['current'] += $account['current'];
                         $accounts_open[$parent]['programmed'] = $accounts_open[$parent]->total_year_amount;
                         $accounts_open[$parent]['increment'] += $account['increment'];
                         $accounts_open[$parent]['decrement'] += $account['decrement'];
+                        $accounts_open[$parent]['total_year_amount_m'] += $account['increment'];
+                        $accounts_open[$parent]['total_year_amount_m'] -= $account['decrement'];
+                        $accounts_open[$parent]['total_year_amount_m'] -= $accounts_open[$parent]['compromised'];
                     }
                 }
             }

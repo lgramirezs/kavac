@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 use App\Models\CodeSetting;
+use App\Models\Profile;
 use Modules\Budget\Models\DocumentStatus;
 use Modules\Budget\Models\BudgetSubSpecificFormulation;
 use Modules\Budget\Models\BudgetAccountOpen;
@@ -67,7 +68,18 @@ class BudgetSubSpecificFormulationController extends Controller
      */
     public function create()
     {
-        return view('budget::formulations.create-edit-form');
+        $is_admin = auth()->user()->isAdmin();
+        $user_profile = Profile::where('user_id', auth()->user()->id)->first();
+        $institution_id = isset($user_profile->institution_id)
+        ? $user_profile->institution_id
+        : null;
+        if ($institution_id && !$is_admin) {
+            $institutions = template_choices('App\Models\Institution', 'name', ['id' => $institution_id], true);
+        } else {
+            $institutions = template_choices('App\Models\Institution', 'name', [], true);
+        }
+        $institutions = json_encode($institutions);
+        return view('budget::formulations.create-edit-form', compact('institutions'));
     }
 
     /**
@@ -183,8 +195,19 @@ class BudgetSubSpecificFormulationController extends Controller
      */
     public function edit($id)
     {
+        $is_admin = auth()->user()->isAdmin();
+        $user_profile = Profile::where('user_id', auth()->user()->id)->first();
+        $institution_id = isset($user_profile->institution_id)
+        ? $user_profile->institution_id
+        : null;
+        if ($institution_id && !$is_admin) {
+            $institutions = template_choices('App\Models\Institution', 'name', ['id' => $institution_id], true);
+        } else {
+            $institutions = template_choices('App\Models\Institution', 'name', [], true);
+        }
+        $institutions = json_encode($institutions);
         $formulation = BudgetSubSpecificFormulation::find($id);
-        return view('budget::formulations.create-edit-form', compact("formulation"));
+        return view('budget::formulations.create-edit-form', compact("formulation", 'institutions'));
     }
 
     /**

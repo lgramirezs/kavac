@@ -48,7 +48,7 @@ class PayrollEmploymentController extends Controller
             'years_apn' => ['max:2'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
-            'institution_email' => ['required', 'unique:payroll_employments,institution_email', 'email'],
+            //'institution_email.*' => ['nullable', 'email', 'unique:payroll_employments,institution_email'],
             'function_description' => ['nullable'],
             'payroll_position_type_id' => ['required'],
             'payroll_position_id' => ['required'],
@@ -74,7 +74,7 @@ class PayrollEmploymentController extends Controller
             'department_id' => 'departamento',
             'payroll_contract_type_id' => 'tipo de contracto',
             'payroll_staff_id' => 'trabajador',
-            'institution_email' => 'correo institucional',
+            //'institution_email' => 'correo institucional',
             'previous_jobs.*.start_date' => 'fecha de inicio',
             'previous_jobs.*.end_date' => 'fecha de cese'
         ];
@@ -144,6 +144,16 @@ class PayrollEmploymentController extends Controller
                 ],
             );
         }
+
+        if ($request->institution_email) { 
+            $this->validate(
+                $request,
+                [
+                    'institution_email' => ['email', 'unique:payroll_employments,institution_email'],
+                ],
+            );
+        }
+
         $this->validate($request, $this->rules, [], $this->attributes);
         $payrollEmployment = PayrollEmployment::create([
             'payroll_staff_id' => $request->payroll_staff_id,
@@ -152,7 +162,8 @@ class PayrollEmploymentController extends Controller
             'end_date' => $request->end_date,
             'active' => ($request->active!==null),
             'payroll_inactivity_type_id' => (!$request->active) ? $request->payroll_inactivity_type_id : null,
-            'institution_email' => $request->institution_email,
+            //'institution_email' => $request->institution_email,
+            'institution_email' => (!is_null($request->institution_email)) ? $request->institution_email : null,
             'function_description' => $request->function_description,
             'payroll_position_type_id' => $request->payroll_position_type_id,
             'payroll_position_id' => $request->payroll_position_id,
@@ -248,10 +259,14 @@ class PayrollEmploymentController extends Controller
         $this->rules['payroll_staff_id'] = [
             'required', 'unique:payroll_employments,payroll_staff_id,'.$payrollEmployment->id
         ];
-        $this->rules['institution_email'] = [
+        /*$this->rules['institution_email'] = [
             'required', 'unique:payroll_employments,institution_email,'.$payrollEmployment->id, 'email'
-        ];
-        
+        ];*/
+        if ($request->institution_email) { 
+            $this->rules['institution_email'] = ['email', 
+            'unique:payroll_employments,institution_email,'.$payrollEmployment->id 
+            ];
+        }
         if ($request->start_date) {
             $this->rules['start_date'] = ['after:'.$institution->start_operations_date];
         }
@@ -279,7 +294,8 @@ class PayrollEmploymentController extends Controller
         $payrollEmployment->active = ($request->active!==null);
         $payrollEmployment
             ->payroll_inactivity_type_id = (!$request->active) ? $request->payroll_inactivity_type_id : null;
-        $payrollEmployment->institution_email = $request->institution_email;
+        //$payrollEmployment->institution_email = $request->institution_email;
+            $payrollEmployment->institution_email = (!is_null($request->institution_email)) ? $request->institution_email : null;
         $payrollEmployment->function_description = $request->function_description;
         $payrollEmployment->payroll_position_type_id = $request->payroll_position_type_id;
         $payrollEmployment->payroll_position_id = $request->payroll_position_id;

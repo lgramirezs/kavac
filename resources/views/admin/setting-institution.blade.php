@@ -1285,7 +1285,8 @@
 					}
 					$("#modal-name").html(institution.name);
 							$("#modal-rif").html(institution.rif);
-					
+					console.log(institution.municipality.name);
+					$("#modal-view-municipality_id").html(institution.municipality.name);
 					$("#modal-acronym").html(institution.acronym);
 					$("#modal-business_name").html(institution.business_name);
 					$("#modal-country_id").html(institution.municipality.estate.country.name);
