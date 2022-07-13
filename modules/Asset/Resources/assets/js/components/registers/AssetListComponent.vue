@@ -113,8 +113,8 @@
         },
         methods: {
             /**
-             * Función que verifica si un bien está en proceso de solicitud
-             *  o entregado
+             * Función que verifica si un bien está en proceso de solicitud,
+             * entregado o rechazado
              *
              * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
              */
@@ -123,7 +123,7 @@
                 if(value === null){
                     return true;
                 }else{
-                    if(value.asset_request.state === 'Entregados'){
+                    if(value.asset_request.state === 'Entregados' || value.asset_request.state === 'Rechazado'){
                         return true;
                     }else{
                         return false;

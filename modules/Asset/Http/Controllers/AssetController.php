@@ -379,7 +379,8 @@ class AssetController extends Controller
                                 if($asset_index->assetRequestAsset == null){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                        || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }    
@@ -404,7 +405,8 @@ class AssetController extends Controller
                                 if($asset_index->assetRequestAsset == null){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                        || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }    
@@ -514,7 +516,8 @@ class AssetController extends Controller
                             if($asset_index->assetRequestAsset == null){
                                 array_push($selected, $asset_index->id);
                             }
-                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
+                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                 array_push($selected, $asset_index->id);
                             }
                         }    
