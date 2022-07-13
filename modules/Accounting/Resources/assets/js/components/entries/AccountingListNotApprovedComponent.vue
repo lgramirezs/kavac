@@ -9,13 +9,6 @@
                     <input type="text" class="form-control" placeholder="Buscar..." v-model="search">
                 </div>
             </div>
-            <div class="form-group form-inline pull-right VueTables__limit-2">
-                <div class="VueTables__limit-field">
-                    <label class="">Registros</label>
-                    <select2 :options="perPageValues" v-model="perPage">
-                    </select2>
-                </div>
-            </div>
             <v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
                 <div slot="from_date" slot-scope="props" class="text-center">
                     {{ formatDate(props.row.from_date) }}
