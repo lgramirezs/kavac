@@ -98,7 +98,7 @@
                     {{ number_format($budgetAccount['decrement'], 2) }}</td>
 
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ number_format($budgetAccount['total_year_amount_m'], 2) }}
+                    {{ number_format($budgetAccount['current'], 2) }}
                 </td>
 
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
@@ -115,13 +115,13 @@
             </tr>
             @php
                 if ($budgetAccount->budgetAccount->item === '00') {
-                    $real += 0;
+                    $real += $budgetAccount['total_real_amount'];
                     $total_programmed += $budgetAccount['total_year_amount'];
-                    $current += $budgetAccount['total_year_amount_m'];
+                    $current += $budgetAccount['current'];
                     $total_compromised += $budgetAccount['compromised'];
                     $caused += 0;
                     $paid += 0;
-                    $total_amount_available += $budgetAccount['amount_available'];
+                    $total_amount_available += $budgetAccount['total_year_amount_m'];
                     $increment += $budgetAccount['increment'];
                     $decrement += $budgetAccount['decrement'];
                 }
