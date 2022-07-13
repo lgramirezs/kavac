@@ -71,8 +71,7 @@ class FinanceCheckBookController extends Controller
                 }
             }
         }
-        //  print($account->financeCheckBooks);
-        // dd($account->financeCheckBooks);
+
         return response()->json(['records' => $financeCheckBooks], 200);
     }
 
