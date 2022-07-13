@@ -29,14 +29,18 @@
                 </div>
                 <div class="card-body">
                     @if(!isset($record_edit))
-                        <purchase-plan-form :purchase_process="{{ $purchase_process }}"
-                                            :users="{{ $users }}" 
-                                            :purchase_types="{{ $purchase_types }}" />
+                        <purchase-plan-form 
+                            :purchase_process="{{ $purchase_process }}"
+                            :users="{{ $users }}" 
+                            :purchase_types="{{ $purchase_types }}" 
+                            route_list="{{ url('purchase/purchase_plans') }}" />
                     @else
-                        <purchase-plan-form :purchase_process="{{ $purchase_process }}"
-                                            :users="{{ $users }}" 
-                                            :purchase_types="{{ $purchase_types }}"
-                                            :record_edit="{{ $record_edit }}" />
+                        <purchase-plan-form 
+                            :purchase_process="{{ $purchase_process }}"
+                            :users="{{ $users }}" 
+                            :purchase_types="{{ $purchase_types }}"
+                            :record_edit="{{ $record_edit }}"
+                            route_list="{{ url('purchase/purchase_plans') }}"  />
                     @endif
                 </div>
             </div>
