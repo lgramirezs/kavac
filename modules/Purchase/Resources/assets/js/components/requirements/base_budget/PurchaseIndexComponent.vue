@@ -56,7 +56,8 @@ export default {
             records: [],
             columns: [
                 'date',
-                'currency.name',
+                'purchase_requirement.code',
+                'currency.name',              
                 'status',
                 'id'
             ],
@@ -65,13 +66,15 @@ export default {
     created() {
         this.table_options.headings = {
             'date': 'Fecha',
+            'purchase_requirement.code': 'Código de requerimiento',
             'currency.name': 'Tipo de moneda',
             'status': 'Estatus',
             'id': 'ACCIÓN'
         };
         this.table_options.columnsClasses = {
             'date': 'col-xs-2',
-            'currency.name': 'col-xs-6 text-center',
+            'purchase_requirement.code': 'col-xs-2 text-center',
+            'currency.name': 'col-xs-4 text-center',
             'status': 'col-xs-2 text-center',
             'id': 'col-xs-2'
         };
@@ -81,6 +84,7 @@ export default {
     mounted() {
         axios.get('/purchase/base_budget').then(response => {
             this.records = response.data.records;
+           
         });
     },
     method: {
