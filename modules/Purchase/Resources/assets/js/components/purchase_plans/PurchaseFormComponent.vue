@@ -30,7 +30,10 @@
                 <div class="col-3">
                     <div class="form-group is-required">
                         <label class="control-label">Fecha de culminación</label>
-                        <input type="date" class="form-control" v-model="record.end_date" tabindex="1">
+                        <input type="date" id="end_date" class="form-control input-sm no-restrict" data-toggle="tooltip"
+                                   :min="record.init_date"
+                                   title="Indique la fecha de culminación" v-model="record.end_date">
+                        <!--<input type="date" class="form-control" v-model="record.end_date" tabindex="1">-->
                     </div>
                 </div>
                
