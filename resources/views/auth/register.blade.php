@@ -89,6 +89,7 @@
 @endsection
 
 @section('extra-js')
+    @parent
     <script>
         /**
          * Muestra u oculta el campo de nombre si no se ha seleccionado un empleado
