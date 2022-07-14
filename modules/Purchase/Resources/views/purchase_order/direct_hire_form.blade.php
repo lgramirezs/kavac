@@ -13,7 +13,7 @@
 @stop
 
 @section('maproute-title')
-    Contratación directa
+    Orden de compra
 @stop
 
 @section('content')
@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="card-title">Gestión de ordenes de contratación directa</h6>
+                    <h6 class="card-title">Gestión de orden de compra</h6>
                     <div class="card-btns">
                         @include('buttons.previous', ['route' => url()->previous()])
                         @include('buttons.minimize')

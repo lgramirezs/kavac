@@ -40,7 +40,7 @@
         <li>
             <a href="{{ route('purchase.purchase_order.index') }}"
                 title="Gestión de ordenes de compra" data-toggle="tooltip" data-placement="right">
-                Orden de compra / servicio
+                Orden de compra
             </a>
         </li>
         <!--li>
