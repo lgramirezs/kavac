@@ -16,7 +16,7 @@
                         </button>
                         <h6>
                             <i class="fa fa-list inline-block"></i>
-                            Información de orden de compra: Contratación directa
+                            Información de orden de compra
                         </h6>
                     </div>
                     <!-- Fromulario -->
@@ -148,7 +148,13 @@
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Revisado por</strong> 
-                                {{ records.reviewed_by.payroll_staff.first_name +' '+ records.reviewed_by.payroll_staff.last_name }}
+                                {{ records.reviewed_by
+                                    ? records.reviewed_by 
+                                        ? records.reviewed_by.payroll_staff 
+                                            ? records.reviewed_by.payroll_staff.supplier.first_name +' '+ records.reviewed_by.payroll_staff.last_name 
+                                            : ''
+                                        : ''
+                                    : '' }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Verificado por</strong> 
@@ -156,11 +162,23 @@
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Firmado por</strong> 
-                                {{ records.first_signature.payroll_staff.first_name +' '+ records.first_signature.payroll_staff.last_name }}
+                                {{ records.first_signature
+                                    ? records.first_signature
+                                        ? records.first_signature.payroll_staff.first_name
+                                            ? records.first_signature.payroll_staff.first_name +' '+ records.first_signature.payroll_staff.last_name 
+                                            : '' 
+                                        : ''
+                                    : '' }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Firmado por</strong> 
-                                {{ records.second_signature.payroll_staff.first_name +' '+ records.second_signature.payroll_staff.last_name }}
+                                {{ records.second_signature
+                                    ? records.second_signature
+                                        ? records.second_signature.payroll_staff.first_name 
+                                            ? records.second_signature.payroll_staff.first_name +' '+ records.second_signature.payroll_staff.last_name 
+                                            : ''
+                                        : ''
+                                    : '' }}
                             </div>
                         </div>
                     </div>
