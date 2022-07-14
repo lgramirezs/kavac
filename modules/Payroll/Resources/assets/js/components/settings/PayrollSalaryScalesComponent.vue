@@ -60,13 +60,12 @@
                                         <div class="form-group">
                                             <label for="active">¿Activa?</label>
                                             <div class="col-12">
-                                                <p-check class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         data-toggle="tooltip"
-                                                         title="Indique si el escalafón está activo"
-                                                         v-model="record.active">
-                                                    <label slot="off-label"></label>
-                                                </p-check>
+                                                <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                     title="Indique si el escalafón está activo">
+                                                    <input type="checkbox" class="custom-control-input" id="salaryScaleActive" 
+                                                           v-model="record.active" :value="true">
+                                                    <label class="custom-control-label" for="salaryScaleActive"></label>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- ./activa -->

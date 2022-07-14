@@ -100,13 +100,13 @@
                                                     <div class="form-group">
                                                         <label>¿Activa?</label>
                                                         <div class="col-12">
-                                                            <p-check class="pretty p-switch p-fill p-bigger"
-                                                                     color="success" off-color="text-gray" toggle
-                                                                     data-toggle="tooltip"
-                                                                     title="Indique si el tabulador esá activo"
-                                                                     v-model="record.active">
-                                                                <label slot="off-label"></label>
-                                                            </p-check>
+                                                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                                 title="Indique si el tabulador está activo">
+                                                                <input type="checkbox" class="custom-control-input" 
+                                                                       id="salaryTabulatorActive" v-model="record.active" 
+                                                                       :value="true">
+                                                                <label class="custom-control-label" for="salaryTabulatorActive"></label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <!-- ./activa -->
@@ -116,13 +116,14 @@
                                                     <div class="form-group">
                                                         <label>Porcentaje:</label>
                                                         <div class="col-12">
-                                                            <p-check class="pretty p-switch p-fill p-bigger"
-                                                                     color="success" off-color="text-gray" toggle
-                                                                     data-toggle="tooltip"
-                                                                     title="Indique si el valor se calculará en porcentaje"
-                                                                     v-model="record.percentage">
-                                                                <label slot="off-label"></label>
-                                                            </p-check>
+                                                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                                 title="Indique si el valor se calculará en porcentaje">
+                                                                <input type="checkbox" class="custom-control-input" 
+                                                                       id="salaryTabulatorPercentaje" v-model="record.percentage" 
+                                                                       :value="true">
+                                                                <label class="custom-control-label" 
+                                                                       for="salaryTabulatorPercentaje"></label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <!-- ./porcentaje -->
