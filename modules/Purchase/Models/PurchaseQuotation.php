@@ -72,6 +72,8 @@ class PurchaseQuotation extends Model implements Auditable
         return $this->morphMany(PurchasePivotModelsToRequirementItem::class, 'relatable');
     }
 
+ 
+
     /**
      * Obtiene todos los documentos asociados al proveedor
      *

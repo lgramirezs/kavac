@@ -14,6 +14,14 @@
                     </div>
                 </div>
             </div>
+             <a slot="relatable[0].purchase_requirement_item.purchase_requirement.code" slot-scope="props" target="_blank">
+                           <span v-for="code in props.row.relatable" :key="code.id">
+                                    <span >
+                                        {{ code.purchase_requirement_item.purchase_requirement.code }}
+                                    </span>
+                                </span>
+                        
+                            </a>
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
                     <!-- <purchase-plan-show :id="props.row.id" :route_show="'/purchase/quotation/'+props.row.id" /> -->
@@ -47,6 +55,7 @@ export default {
             records: [],
             columns: [
                 'purchase_supplier.name',
+                'relatable[0].purchase_requirement_item.purchase_requirement.code',
                 'currency.name',
                 'id'
             ],
@@ -55,11 +64,13 @@ export default {
     created() {
         this.table_options.headings = {
             'purchase_supplier.name': 'Proveedor',
+             'relatable[0].purchase_requirement_item.purchase_requirement.code':"Código del requerimiento",
             'currency.name': 'tipo de moneda',
             'id': 'ACCIÓN'
         };
         this.table_options.columnsClasses = {
             'purchase_supplier.name': 'col-xs-3',
+             'relatable[0].purchase_requirement_item.purchase_requirement.code':'col-xs-3 text-center',
             'currency.name': 'col-xs-3 text-center',
             'id': 'col-xs-1'
         };
