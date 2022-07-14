@@ -287,7 +287,7 @@ class AssetAsignationController extends Controller
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
-    public function vueList()
+    public function vueList($perPage = null, $page = null)
     {
         $user_profile = Profile::where('user_id', auth()->user()->id)->first();
         $institution_id = isset($user_profile->institution_id)
