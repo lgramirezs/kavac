@@ -140,7 +140,7 @@ class PurchaseDirectHireController extends Controller
         if ($user_profile && $user_profile->institution !== null) {
             foreach (PayrollEmployment::with('payrollStaff', 'profile')
                     ->whereHas('profile', function($query) use ($user_profile){
-                        $query->where('institution_id', $user_profile->institution);
+                        $query->where('institution_id', $user_profile->institution_id);
                     })->get() as $key => $employment) {
                 $text = '';
                 if ($employment->payrollStaff->id_number) {
