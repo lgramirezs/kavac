@@ -80,20 +80,11 @@
             <hr />
             <div class="row">
                 <div class="col-6 mt-4">
-                    <label for="">
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input
-                                type="radio"
-                                name="project_centralized_action"
-                                value="project"
-                                id="sel_project"
-                                class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-                                data-on-label="SI"
-                                data-off-label="NO"
-                            />
-                            Proyecto
-                        </div>
-                    </label>
+                    <div class="custom-control custom-switch">
+                        <input type="radio" class="custom-control-input sel_pry_acc" id="sel_project" 
+                               name="project_centralized_action" value="project">
+                        <label class="custom-control-label" for="sel_project">Proyecto</label>
+                    </div>
                     <div class="mt-4">
                         <select2
                             :options="projects"
@@ -105,20 +96,11 @@
                     </div>
                 </div>
                 <div class="col-6 mt-4">
-                    <label for="">
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input
-                                type="radio"
-                                name="project_centralized_action"
-                                value="project"
-                                class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-                                id="sel_centralized_action"
-                                data-on-label="SI"
-                                data-off-label="NO"
-                            />
-                            Acción Centralizada
-                        </div>
-                    </label>
+                    <div class="custom-control custom-switch">
+                        <input type="radio" class="custom-control-input sel_pry_acc" id="sel_centralized_action" 
+                               name="project_centralized_action" value="centralized_action">
+                        <label class="custom-control-label" for="sel_centralized_action">Acción Centralizada</label>
+                    </div>
                     <div class="mt-4">
                         <select2
                             :options="centralized_actions"
@@ -1233,7 +1215,7 @@ export default {
          * Evento para determinar los datos a requerir según el tipo de formulación
          * (por proyecto o acción centralizada)
          */
-        $('.sel_pry_acc').on('switchChange.bootstrapSwitch', function(e) {
+        $('.sel_pry_acc').on('change', function(e) {
             $('#project_id').attr('disabled', e.target.id !== 'sel_project');
             $('#centralized_action_id').attr(
                 'disabled',
