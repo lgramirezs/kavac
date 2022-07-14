@@ -8,8 +8,6 @@
 
     @foreach($field as $record)
     @php
-        $assignments = 0;
-        $deductions  = 0;
         $total = 0;
     @endphp
             <tr>
@@ -25,8 +23,8 @@
                 <td width="25%">
                     <span>
                         @foreach(json_decode($record->deductions) as $deduction)
-                            <p><strong> Concepto: </strong> {{ $deductions->name }} </p>
-                            <p><strong> Valor: </strong> {{ $deductions->value }} </p>
+                            <p><strong> Concepto: </strong> {{ $deduction->name }} </p>
+                            <p><strong> Valor: </strong> {{ $deduction->value }} </p>
                         @endforeach
                     </span>
                 </td>
