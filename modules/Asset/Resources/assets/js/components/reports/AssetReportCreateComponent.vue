@@ -20,29 +20,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2"></div>
+                <div class="col-md-2"><input type="hidden" v-model="record.id"></div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>General</label>
-                        <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_report" value="general" id="sel_general_report"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_report"
-                                       data-on-label="SI" data-off-label="NO">
-                            </div>
-                            <input type="hidden" v-model="record.id">
+                        <div class="custom-control custom-switch">
+                            <input type="radio" name="type_report" value="general" class="custom-control-input sel_type_report" 
+                                   id="sel_general_report" v-model="record.type_report">
+                            <label class="custom-control-label" for="sel_general_report"></label>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Por clasificación</label>
-                        <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_report" value="clasification" id="sel_clasification_report"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_report"
-                                       data-on-label="SI" data-off-label="NO">
-                            </div>
+                        <div class="custom-control custom-switch">
+                            <input type="radio" name="type_report" value="clasification" v-model="record.type_report" 
+                                   class="custom-control-input sel_type_report" id="sel_clasification_report">
+                            <label class="custom-control-label" for="sel_clasification_report"></label>
                         </div>
                     </div>
                 </div>
@@ -82,12 +77,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Busqueda por periodo</label>
-                            <div class="col-12">
-                                <div class="col-12 bootstrap-switch-mini">
-                                    <input type="radio" name="type_search" value="date" id="sel_search_date"
-                                           class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                           data-on-label="SI" data-off-label="NO">
-                                </div>
+                            <div class="custom-control custom-switch">
+                                <input type="radio" name="type_search" value="date" v-model="record.type_search"
+                                    class="custom-control-input sel_type_search" id="sel_search_date">
+                                <label class="custom-control-label" for="sel_search_date"></label>
                             </div>
                         </div>
                     </div>
@@ -95,12 +88,10 @@
                     <div class="col-md-4">
                         <div class=" form-group">
                             <label>Busqueda por mes</label>
-                            <div class="col-12">
-                                <div class="col-12 bootstrap-switch-mini">
-                                    <input type="radio" name="type_search" value="mes" id="sel_search_mes"
-                                           class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                           data-on-label="SI" data-off-label="NO">
-                                </div>
+                            <div class="custom-control custom-switch">
+                                <input type="radio" name="type_search" value="mes" v-model="record.type_search"
+                                    class="custom-control-input sel_type_search" id="sel_search_mes">
+                                <label class="custom-control-label" for="sel_search_mes"></label>
                             </div>
                         </div>
                     </div>
