@@ -442,7 +442,7 @@
 						</div>
 					</div>
 
-					@if (!is_null($paramMultiInstitution))
+
 						<hr>
 						<h6 class="md-title card-title">{{ __('Organizaciones Registradas') }}</h6>
 						<div class="row">
@@ -504,7 +504,7 @@
 								@endforeach
 							</tbody>
 						</table>
-					@endif
+				
 				</div>
 			{!! Form::close() !!}
 		</div>
