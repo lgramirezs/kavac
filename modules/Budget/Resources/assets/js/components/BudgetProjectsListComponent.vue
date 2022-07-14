@@ -33,8 +33,8 @@
                 </button>
             </div>
             <div slot="active" slot-scope="props" class="text-center">
-                <span v-if="props.row.active">SI</span>
-                <span v-else>NO</span>
+                <span v-if="props.row.active" class="text-success font-weight-bold">SI</span>
+                <span v-else class="text-danger font-weight-bold">NO</span>
             </div>
         </v-client-table>
         <!-- Modal -->

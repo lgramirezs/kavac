@@ -127,13 +127,11 @@
 							<div class="col-3">
 								<div class="form-group">
 									<label for="" class="control-label">{{ __('Activo') }}</label>
-									<div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-    										{!! Form::checkbox('active', true, (isset($model))?$model->active:true, [
-    											'id' => 'active', 'class' => 'form-control bootstrap-switch',
-    											'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-    										]) !!}
-                                        </div>
+									<div class="custom-control custom-switch">
+										{!! Form::checkbox('active', true, (isset($model))?$model->active:null, [
+											'id' => 'active', 'class' => 'custom-control-input'
+										]) !!}
+										<label class="custom-control-label" for="active"></label>
 									</div>
 								</div>
 							</div>

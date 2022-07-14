@@ -71,88 +71,76 @@
 							</div>
 							<div class="col-6">
 								<div class="row">
-									<div class="col-3">
+									<div class="col-md-2">
 										<div class="form-group">
 											<label for="" class="control-label">{{ __('Recurso') }}</label>
-											<div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
-    												{!! Form::radio(
-                                                        'account_type', 'resource',
-                                                        (isset($model) && $model->resource), [
-        													'id' => 'account_type',
-                                                            'class' => 'form-control bootstrap-switch',
-        													'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                                        ]
-                                                    ) !!}
-                                                </div>
+											<div class="custom-control custom-switch">
+												{!! Form::radio(
+													'account_type', 'resource',
+													(isset($model) && $model->resource), [
+														'id' => 'resource',
+														'class' => 'custom-control-input'
+													]
+												) !!}
+												<label class="custom-control-label" for="resource"></label>
 											</div>
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-md-2">
 										<div class="form-group">
 											<label for="" class="control-label">{{ __('Egreso') }}</label>
-											<div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
-    												{!! Form::radio(
-                                                        'account_type', 'egress',
-                                                        (isset($model) && $model->egress), [
-        													'id' => 'account_type',
-                                                            'class' => 'form-control bootstrap-switch',
-        													'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                                        ]
-                                                    ) !!}
-                                                </div>
+											<div class="custom-control custom-switch">
+												{!! Form::radio(
+													'account_type', 'egress',
+													(isset($model) && $model->egress), [
+														'id' => 'egress',
+														'class' => 'custom-control-input'
+													]
+												) !!}
+												<label class="custom-control-label" for="egress"></label>
 											</div>
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-md-2">
 										<div class="form-group">
 											<label for="" class="control-label">{{ __('Original') }}</label>
-											<div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
-    												{!! Form::checkbox(
-                                                        'original', true, (isset($model) && $model->original), [
-                                                            'id' => 'original',
-                                                            'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => __('SI'), 'data-off-label' => __('NO')
-                                                        ]
-                                                    ) !!}
-                                                </div>
+											<div class="custom-control custom-switch">
+												{!! Form::checkbox(
+													'original', true, (isset($model) && $model->original), [
+														'id' => 'original',
+														'class' => 'custom-control-input'
+													]
+												) !!}
+												<label class="custom-control-label" for="original"></label>
 											</div>
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-md-2">
 										<div class="form-group">
 											<label for="" class="control-label">{{ __('Activa') }}</label>
-											<div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
-    												{!! Form::checkbox(
-                                                        'active', true, (isset($model) && $model->active), [
-        													'id' => 'active', 'class' => 'form-control bootstrap-switch',
-        													'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
-                                                            'checked' => true
-                                                        ]
-                                                    ) !!}
-                                                </div>
+											<div class="custom-control custom-switch">
+												{!! Form::checkbox(
+													'active', true, (isset($model) && $model->active), [
+														'id' => 'active',
+														'class' => 'custom-control-input'
+													]
+												) !!}
+												<label class="custom-control-label" for="active"></label>
 											</div>
 										</div>
 									</div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="" class="control-label">{{ __('Afecta Impuesto') }}</label>
-                                            <div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
-                                                    {!! Form::checkbox(
-                                                        'disaggregate_tax', true,
-                                                        (isset($model) && $model->disaggregate_tax), [
-                                                            'id' => 'disaggregate_tax',
-                                                            'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
-                                                            'checked' => true
-                                                        ]
-                                                    ) !!}
-                                                </div>
-                                            </div>
+											<div class="custom-control custom-switch">
+												{!! Form::checkbox(
+													'disaggregate_tax', true, (isset($model) && $model->disaggregate_tax), [
+														'id' => 'disaggregate_tax',
+														'class' => 'custom-control-input'
+													]
+												) !!}
+												<label class="custom-control-label" for="disaggregate_tax"></label>
+											</div>
                                         </div>
                                     </div>
 								</div>

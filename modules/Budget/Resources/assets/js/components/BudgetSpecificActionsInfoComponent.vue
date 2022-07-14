@@ -22,7 +22,7 @@
                                         <strong>Proyecto / Acc. Centralizada:</strong>
                                         <div class="row" style="margin: 1px 0">
                                             <span class="col-md-12">
-                                                {{ record.specificable.name }}
+                                                {{ (typeof(record.specificable)!=='undefined')?record.specificable.name:'' }}
                                             </span>
                                         </div>
                                     </div>
@@ -71,7 +71,8 @@
                                     <div class="form-group">
                                         <strong>Activo:</strong>
                                         <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
+                                            <span class="col-md-12 font-weight-bold" 
+                                                  :class="{'text-success': record.active, 'text-danger': !record.active}">
                                                 {{ record.active ? 'Si' : 'No' }}
                                             </span>
                                         </div>

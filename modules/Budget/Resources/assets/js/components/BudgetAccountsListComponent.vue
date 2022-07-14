@@ -1,5 +1,9 @@
 <template>
 	<v-client-table :columns="columns" :data="records" :options="table_options">
+		<div slot="original" slot-scope="props" class="text-center">
+			<span v-if="props.row.original" class="text-success font-weight-bold">SI</span>
+			<span v-else class="text-danger font-weight-bold">NO</span>
+		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<button @click="editForm(props.row.id)"
     				class="btn btn-warning btn-xs btn-icon btn-action"
