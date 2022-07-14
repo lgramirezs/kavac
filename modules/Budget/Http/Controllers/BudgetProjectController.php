@@ -12,6 +12,7 @@ use Modules\Budget\Models\Department;
 use Modules\Budget\Models\BudgetProject;
 use Modules\Payroll\Models\PayrollPosition;
 use Modules\Payroll\Models\PayrollStaff;
+use Modules\Accounting\Models\Profile;
 
 /**
  * @class BudgetProjectController
@@ -95,8 +96,22 @@ class BudgetProjectController extends Controller
             'role' => 'form',
             'class' => 'form-horizontal',
         ];
+
         /** @var array Arreglo de opciones de instituciones a representar en la plantilla para su selección */
         $institutions = template_choices(Institution::class, ['acronym'], ['active' => true]);
+
+        $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
+
+        if($user_profile->institution_id) {
+            foreach($institutions as $clave => $valor) {
+                if($user_profile->institution_id == $clave) {
+                    $institutions = array(
+                        $clave => $valor
+                    );
+                }
+            }
+        }
+
         /** @var array Arreglo de opciones de departamentos a representar en la plantilla para su selección */
         $departments = template_choices(Department::class, ['acronym', '-', 'name'], ['active' => true]);
         /** @var array Arreglo de opciones de cargos a representar en la plantilla para su selección */
