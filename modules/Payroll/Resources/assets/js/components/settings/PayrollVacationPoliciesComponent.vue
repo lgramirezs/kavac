@@ -89,9 +89,13 @@
                                             <div class="form-group">
                                                 <label>¿Activo?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="¿La política vacacional se encuentra activa actualmente?" v-model="record.active">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="¿La política vacacional se encuentra activa actualmente?">
+                                                        <input type="checkbox" class="custom-control-input" 
+                                                                id="vacationalPolicieActive" v-model="record.active" 
+                                                                :value="true">
+                                                        <label class="custom-control-label" for="vacationalPolicieActive"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,9 +147,14 @@
                                             <div class="form-group">
                                                 <label>¿Son días hábiles?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="¿La fecha incluye días hábiles?" v-model="vacation_period.business_days" @change="getCalculateTime(index)">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="¿La fecha incluye días hábiles?">
+                                                        <input type="checkbox" class="custom-control-input" 
+                                                                id="vacationalPolicieBusinessDays" 
+                                                                v-model="vacation_period.business_days" 
+                                                                :value="true" @change="getCalculateTime(index)">
+                                                        <label class="custom-control-label" for="vacationalPolicieBusinessDays"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -544,9 +553,12 @@
                                             <div class="form-group">
                                                 <label>¿Pago por día de disfrute?</label>
                                                 <div class="col-12">
-                                                    <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute" v-model="record.payment_calculation" value="enjoyment_days">
-                                                        <label slot="off-label"></label>
-                                                    </p-radio>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute">
+                                                        <input type="radio" class="custom-control-input" name="paymentCalculation" id="vacationPoliciesEnjoymentDays" v-model="record.payment_calculation" 
+                                                        value="enjoyment_days">
+                                                        <label class="custom-control-label" for="vacationPoliciesEnjoymentDays"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -556,9 +568,12 @@
                                             <div class="form-group">
                                                 <label>¿Pago por día general?</label>
                                                 <div class="col-12">
-                                                    <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el pago del bono vacacional se realiza de acuerdo a los días generales" v-model="record.payment_calculation" value="general_days">
-                                                        <label slot="off-label"></label>
-                                                    </p-radio>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="Indique si el pago del bono vacacional se realiza de acuerdo a los días generales">
+                                                        <input type="radio" class="custom-control-input" name="paymentCalculation" id="vacationPoliciesGeneralDays" v-model="record.payment_calculation" 
+                                                        value="general_days">
+                                                        <label class="custom-control-label" for="vacationPoliciesGeneralDays"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -673,9 +688,10 @@
                                                         <div class="form-group">
                                                             <label>Valor puntual</label>
                                                             <div class="col-12">
-                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado puntualmente" @change="resetScales()" v-model="type" value="value">
-                                                                    <label slot="off-label"></label>
-                                                                </p-radio>
+                                                                <div class="custom-control custom-switch" data-toggle="tooltip" title="Indique si el valor está expresado puntualmente">
+                                                                    <input type="radio" class="custom-control-input" id="typePuntualValue" name="valueType" @change="resetScales()" v-model="type" value="value">
+                                                                    <label class="custom-control-label" for="typePuntualValue"></label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -683,9 +699,10 @@
                                                         <div class="form-group">
                                                             <label>Rango</label>
                                                             <div class="col-12">
-                                                                <p-radio class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si el valor está expresado en rangos" @change="resetScales()" v-model="type" value="range">
-                                                                    <label slot="off-label"></label>
-                                                                </p-radio>
+                                                                <div class="custom-control custom-switch" data-toggle="tooltip" title="Indique si el valor está expresado en rangos">
+                                                                    <input type="radio" class="custom-control-input" id="typeRangeValue" name="valueType" @change="resetScales()" v-model="type" value="range">
+                                                                    <label class="custom-control-label" for="typeRangeValue"></label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -726,14 +743,9 @@
                                                         <div class="form-group">
                                                             <label>Valor</label>
                                                             <div class="col-12">
-                                                                <div class="pretty p-switch p-fill p-bigger p-toggle">
-                                                                    <input type="checkbox" data-toggle="tooltip" title="Indique si el campo está activo" v-model="scale.value">
-                                                                    <div class="state p-off">
-                                                                        <label></label>
-                                                                    </div>
-                                                                    <div class="state p-on p-success">
-                                                                        <label></label>
-                                                                    </div>
+                                                                <div class="custom-control custom-switch" data-toggle="tooltip" title="Indique si el campo está activo">
+                                                                    <input type="checkbox" class="custom-control-input" id="scaleValue" v-model="scale.value" :value="true">
+                                                                    <label class="custom-control-label" for="scaleValue"></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -816,8 +828,8 @@
                                 <span v-else> {{ props.row.start_date + ' - No definido' }} </span>
                             </div>
                             <div slot="active" slot-scope="props" class="text-center">
-                                <span v-if="props.row.active"> SI </span>
-                                <span v-else> NO </span>
+                                <span v-if="props.row.active" class="text-success font-weight-bold">SI</span>
+                                <span v-else class="text-danger font-weight-bold">NO</span>
                             </div>
                             <div slot="vacation_type" slot-scope="props">
                                 <span v-if="props.row.vacation_type == 'collective_vacations'">
@@ -1745,9 +1757,9 @@ export default {
                         for(var i=0; i<n; i++) {
                             f.setTime( f.getTime() + (1000*60*60*24) );
                             console.log(new Intl.DateTimeFormat('UTC', options).format(f));
-                            / Se identifica si existen sabados o domingos en el periodo establecido */
+                            /* Se identifica si existen sabados o domingos en el periodo establecido */
                             if( (f.getDay()==6) || (f.getDay()==0) ) {
-                                / Si existe un dia no laborable se hace el bucle una unidad mas larga */
+                                /* Si existe un dia no laborable se hace el bucle una unidad mas larga */
                                 dias--;
                             }
                         }
