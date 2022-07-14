@@ -21,6 +21,7 @@
 
 <table cellspacing="0" cellpadding="1" border="1">
     @php
+    // dd($records);
         $total_programmed = 0;
         $total_compromised = 0;
         $total_amount_available = 0;
@@ -58,13 +59,13 @@
                 <td style="font-size: 8rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
                     {{ number_format($budgetAccount['compromised'], 2) }}</td>
                 <td style="font-size: 8rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ number_format($budgetAccount['amount_available'], 2) }}</td>
+                    {{ number_format($budgetAccount['total_year_amount_m'], 2) }}</td>
             </tr>
             @php
                 if ($budgetAccount->budgetAccount->item === '00') {
                     $total_programmed += $budgetAccount['programmed'];
                     $total_compromised += $budgetAccount['compromised'];
-                    $total_amount_available += $budgetAccount['amount_available'];
+                    $total_amount_available += $budgetAccount['total_year_amount_m'];
                 }
             @endphp
         @endforeach
