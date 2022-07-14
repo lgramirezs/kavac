@@ -120,6 +120,36 @@ return response()->json([
                 }
      
     }
+
+    /**
+     * Obtiene Datos del los perfiles relacionados al campo seleccionado
+     *
+     * @method    getSelectStaffData
+     *
+     * @author
+     *
+     * @param     Request          $request         Datos de la petición
+     * @param     string           $parent_model    Nombre del modelo padre
+     * @param     integer          $parent_id       Identificador del elemento relacionado
+     * @param     string           $fk              Clave foránea
+     *
+     * @return    JsonResponse     Datos con los registros relacionados
+     */
+    public function getSelectStaffData(Request $request, $parent_model, $parent_id, $fk = null)
+    {
+        $model_name = "App\\Models\\Profile";
+
+        $fk = (is_null($fk))
+              ? ((strpos($parent_model, '_id') === false)
+              ? strtolower($parent_model) . '_id'
+              : $parent_model)
+              : $fk;
+
+        return response()->json([
+            'result' => true, 'records' => $model_name::where($fk, $parent_id)->where('user_id', null)
+            ->orderBy('first_name')->get()
+        ], 200);
+    }
     
     /**
      * Determina si un registro se encuentra eliminado
