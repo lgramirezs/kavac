@@ -111,8 +111,8 @@ Vue.component('asset-request-create', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-info', () => import(
-    /* webpackChunkName: "asset-request-info" */
+Vue.component('asset-show', () => import(
+    /* webpackChunkName: "asset-show" */
     './components/requests/AssetRequestInfoComponent.vue')
 );
 
@@ -211,8 +211,8 @@ Vue.component('asset-info', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-extension', () => import(
-    /* webpackChunkName: "asset-request-extension" */
+Vue.component('asset-extension', () => import(
+    /* webpackChunkName: "asset-extension" */
     './components/requests/AssetRequestExtensionComponent.vue')
 );
 
@@ -221,8 +221,8 @@ Vue.component('asset-request-extension', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-event', () => import(
-    /* webpackChunkName: "asset-request-event" */
+Vue.component('asset-events', () => import(
+    /* webpackChunkName: "asset-events" */
     './components/requests/AssetRequestEventComponent.vue')
 );
 

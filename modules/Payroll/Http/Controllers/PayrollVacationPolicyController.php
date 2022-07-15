@@ -71,6 +71,8 @@ class PayrollVacationPolicyController extends Controller
                 'es obligatorio.',
             'vacation_days.required'                         => 'El campo días a otorgar para el disfrute de ' .
                 'vacaciones es obligatorio.',
+            'vacation_pay_days.required'                     => 'El campo días a otorgar para el pago de ' .
+                'vacaciones es obligatorio.',
             'vacation_period_per_year.required'              => 'El campo períodos vacacionales permitidos por año ' .
                 'es obligatorio.',
             'additional_days_per_year.required'              => 'El campo días adicionales a otorgar para el ' .
@@ -242,6 +244,7 @@ class PayrollVacationPolicyController extends Controller
             'vacation_type'                         => $request->input('vacation_type'),
             'vacation_periods_accumulated_per_year' => $request->input('vacation_periods_accumulated_per_year'),
             'vacation_days'                         => $request->input('vacation_days'),
+            'vacation_pay_days'                     => $request->input('vacation_pay_days'),
             'vacation_period_per_year'              => $request->input('vacation_period_per_year'),
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
@@ -260,6 +263,9 @@ class PayrollVacationPolicyController extends Controller
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
             'max_days_advance'                      => $request->input('max_days_advance'),
+
+            'business_days'                         => $request->input('business_days'),
+            'old_jobs'                              => $request->input('old_jobs'),
 
             // Agrupar por
             'group_by'                              => $request->input('group_by'),
@@ -397,6 +403,7 @@ class PayrollVacationPolicyController extends Controller
             'institution_id'                        => 1 || $institution->id,
             'vacation_periods_accumulated_per_year' => $request->input('vacation_periods_accumulated_per_year'),
             'vacation_days'                         => $request->input('vacation_days'),
+            'vacation_pay_days'                     => $request->input('vacation_pay_days'),
             'vacation_period_per_year'              => $request->input('vacation_period_per_year'),
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
@@ -415,6 +422,9 @@ class PayrollVacationPolicyController extends Controller
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
             'max_days_advance'                      => $request->input('max_days_advance'),
+
+            'business_days'                         => $request->input('business_days'),
+            'old_jobs'                              => $request->input('old_jobs'),
 
             // Agrupar por
              'group_by'                             => $request->input('group_by'),

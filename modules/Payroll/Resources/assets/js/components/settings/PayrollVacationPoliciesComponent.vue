@@ -147,11 +147,11 @@
                                             <div class="form-group">
                                                 <label>¿Son días hábiles?</label>
                                                 <div class="col-12">
-                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip"
                                                          title="¿La fecha incluye días hábiles?">
-                                                        <input type="checkbox" class="custom-control-input" 
-                                                                id="vacationalPolicieBusinessDays" 
-                                                                v-model="vacation_period.business_days" 
+                                                        <input type="checkbox" class="custom-control-input"
+                                                                id="vacationalPolicieBusinessDays"
+                                                                v-model="vacation_period.business_days"
                                                                 :value="true" @change="getCalculateTime(index)">
                                                         <label class="custom-control-label" for="vacationalPolicieBusinessDays"></label>
                                                     </div>
@@ -220,7 +220,7 @@
                                         <!-- ./Días de disfrute de vacaciones mínimos por año -->
 
                                         <!-- Días de disfrute de vacaciones máximos por años de servicio -->
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="form-group is-required">
                                                 <label>Días de disfrute de vacaciones máximo por año de servicio:</label>
                                                 <input type="text" data-toggle="tooltip" title="Indique la cantidad de días de disfrute de vacaciones máximos por años de servicio" class="form-control input-sm" v-input-mask data-inputmask="
@@ -232,7 +232,7 @@
                                         <!-- ./Días de disfrute de vacaciones máximos por años de servicio -->
 
                                         <!-- Períodos vacacionales acumulados permitidos por año -->
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="form-group is-required">
                                                 <label> Períodos vacacionales acumulados permitidos por año:</label>
                                                 <input type="text" data-toggle="tooltip" title="Indique la cantidad de períodos vacacionales acumulados permitidos por año" class="form-control input-sm" v-input-mask data-inputmask="
@@ -243,14 +243,37 @@
                                         </div>
                                         <!-- ./Períodos vacacionales acumulados permitidos por año -->
 
+                                        <!-- Años de servicios en otras instituciones públicas -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>¿Toma en cuenta los años de servicios en otras instituciones públicas?</label>
+                                                <div class="col-12">
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip"
+                                                         title="¿Toma en cuenta los años de servicios en otras instituciones públicas?">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                                id="vacationalPolicieOldJobs"
+                                                                v-model="record.old_jobs"
+                                                                :value="true">
+                                                        <label class="custom-control-label" for="vacationalPolicieOldJobs"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./Años de servicios en otras instituciones públicas -->
+
                                         <!-- Permitir adelanto de disfrute de vacaciones -->
                                            <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>¿Permitir adelanto de disfrute de vacaciones?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si se habilita el adelanto de disfrute de vacaciones" v-model="record.vacation_advance">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip"
+                                                         title="Indique si se habilita el adelanto de disfrute de vacaciones">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                                id="vacationAdvance"
+                                                                v-model="record.vacation_advance"
+                                                                :value="true">
+                                                        <label class="custom-control-label" for="vacationAdvance"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -261,13 +284,35 @@
                                             <div class="form-group">
                                                 <label>¿Permitir postergar el disfrute de vacaciones?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger" color="success" off-color="text-gray" toggle data-toggle="tooltip" title="Indique si se habilita el adelanto de disfrute de vacaciones" v-model="record.vacation_postpone">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip"
+                                                         title="Indique si se habilita el postergar disfrute de vacaciones">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                                id="vacationPostpone"
+                                                                v-model="record.vacation_postpone"
+                                                                :value="true">
+                                                        <label class="custom-control-label" for="vacationPostpone"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- ./Permitir postergar el disfrute de vacaciones -->
+                                        <!-- Son días hábiles -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>¿Son días hábiles?</label>
+                                                <div class="col-12">
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip"
+                                                         title="¿La fecha incluye días hábiles?">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                                id="vacationalPolicieBusinessDays"
+                                                                v-model="record.business_days"
+                                                                :value="true">
+                                                        <label class="custom-control-label" for="vacationalPolicieBusinessDays"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./Son días hábiles -->
 
                                         <!-- ./Días a otorgar para el disfrute de vacaciones -->
                                         <!-- Los días de disfrute se establecen de acuerdo a un escalafón -->
@@ -282,16 +327,16 @@
                                             </div>
                                         </div> -->
                                         <!-- ./Los días de disfrute se establecen de acuerdo a un escalafón -->
+                                        <!-- agrupar por >
                                         <div class="col-12 row" v-if="record.days_on_scale">
-                                            <!-- agrupar por -->
                                             <div class="col-6">
                                                 <div class="form-group is-required">
                                                     <label for="days_group_by">Agrupar por:</label>
                                                     <select2 :options="payroll_salary_tabulators_groups" @input="getDaysOptions()" v-model="record.days_group_by"></select2>
                                                 </div>
                                             </div>
-                                            <!-- ./agrupar por -->
                                         </div>
+                                        < ./agrupar por -->
                                         <div class="col-12 row" v-if="record.days_on_scale && record.days_group_by">
                                             <div class="col-7 pad-top-10 with-border with-radius table-responsive" style="place-self: baseline;">
                                                 <h6 class="text-center">Escalas o niveles del escalafón</h6>
@@ -586,7 +631,7 @@
                                                             'alias': 'numeric',
                                                             'allowMinus': 'false',
                                                             'digits': 0" 
-                                                            v-model="record.vacation_days">
+                                                            v-model="record.vacation_pay_days">
                                             </div>
                                         </div>
                                         <!-- ./días a otorgar para el pago de vacaciones -->
@@ -867,6 +912,7 @@ export default {
                 vacation_days: '',
                 vacation_periods_accumulated_per_year: '',
                 vacation_days: '',
+                vacation_pay_days: '',
                 vacation_period_per_year: '',
                 additional_days_per_year: '',
                 minimum_additional_days_per_year: '',
@@ -896,6 +942,7 @@ export default {
                 payroll_days_scales: [],
                 days_type: '',
                 business_days: false,
+                old_jobs: false,
             },
             type:'',
             days_type:'',

@@ -136,26 +136,26 @@
                     <span>
                         {{
                             (props.row.warehouse_inventory_product &&
-                             props.row.warehouse_inventory_product.exist)
-                            ? props.row.warehouse_inventory_product.exist
+                             props.row.warehouse_inventory_product.real)
+                            ? props.row.warehouse_inventory_product.real
                             : '0'
                         }}
                     </span>
                 </div>
                  <div slot="detail" slot-scope="props">
-                        <span v-if="props.row.minimum == props.row.warehouse_inventory_product.exist">
+                        <span v-if="props.row.minimum == props.row.warehouse_inventory_product.real">
                             El artículo llego al mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.warehouse_inventory_product.exist == 0">
+                        <span v-else-if="props.row.warehouse_inventory_product.real == 0">
                             No hay existencia en inventario
                         </span>
                         
-                        <span v-else-if="props.row.minimum > props.row.warehouse_inventory_product.exist">
+                        <span v-else-if="props.row.minimum > props.row.warehouse_inventory_product.real">
                             El artículo sobrepasa el mínimo de existencia
                         </span>
 
-                        <span v-else-if="props.row.warehouse_inventory_product.exist > props.row.minimum">
+                        <span v-else-if="props.row.warehouse_inventory_product.real > props.row.minimum">
                             Hay existencia del artículo en inventario
                         </span>
                 </div>

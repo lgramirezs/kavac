@@ -363,7 +363,7 @@ class PurchaseDirectHireController extends Controller
                 $compromise = \Modules\Budget\Models\BudgetCompromise::create([
                     'document_number' => $codeDirectHire,
                     'institution_id' => $request->institution_id,
-                    'compromised_at' => $request->date,
+                    'compromised_at' => null,
                     'sourceable_type' => PurchaseDirectHire::class,
                     'sourceable_id' => $purchaseDirectHire->id,
                     'description' => $request->description,
