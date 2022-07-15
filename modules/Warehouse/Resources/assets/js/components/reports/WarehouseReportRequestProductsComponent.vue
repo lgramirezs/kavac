@@ -164,7 +164,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" @click="loadInventoryProduct('request-products')"
+                    <button type="button" @click="loadInventoryProduct('inventory-products')"
                             class='btn btn-sm btn-info float-right' title="Buscar registro" data-toggle="tooltip">
                         <i class="fa fa-search"></i>
                     </button>
@@ -174,44 +174,33 @@
             <v-client-table :columns="columns" :data="records" :options="table_options">
                 <div slot="code" slot-scope="props">
                     <span>
-                        {{ (props.row.warehouse_inventory_product)
-                            ? (props.row.warehouse_inventory_product.code)
-                            : ''
-                        }}
+                        {{ props.row.code }}
                     </span>
                 </div>
                 <div slot="description" slot-scope="props">
                     <span>
-                        <b> {{ (props.row.warehouse_inventory_product)
-                            ? (props.row.warehouse_inventory_product.warehouse_product)
+                        <b> {{ props.row.warehouse_product
                                 ? 'Nombre: '
                                 : ''
-                            : ''
                         }} </b>
-                        {{ (props.row.warehouse_inventory_product)
-                            ? (props.row.warehouse_inventory_product.warehouse_product)
-                                ? props.row.warehouse_inventory_product.warehouse_product.name + '.'
+                        {{ props.row.warehouse_product
+                                ? props.row.warehouse_product.name + '.'
                                 : ''
-                            : ''
                         }} <br>
-                        {{ (props.row.warehouse_inventory_product)
-                            ? (props.row.warehouse_inventory_product.warehouse_product)
+                        {{ props.row.warehouse_product
                                 ? prepareText(
-                                props.row.warehouse_inventory_product.warehouse_product.description)
+                                props.row.warehouse_product.description)
                                 : ''
-                            : ''
                         }} <br>
                     </span>
                     <span>
-                        <div v-for="att in props.row.warehouse_inventory_product.warehouse_product_values">
+                        <div v-for="att in props.row.warehouse_product_values">
                             <b>{{att.warehouse_product_attribute.name +": "}}</b> {{ att.value}} <br>
                         </div>
-                        <b>Valor:</b> {{props.row.warehouse_inventory_product.unit_value}}
-                            {{ (props.row.warehouse_inventory_product)
-                                ? (props.row.warehouse_inventory_product.currency)
-                                    ? props.row.warehouse_inventory_product.currency.acronym
+                        <b>Valor:</b> {{props.row.unit_value}}
+                            {{ props.row.currency
+                                    ? props.row.currency.acronym
                                     : ''
-                                : ''
                             }}
                     </span>
                 </div>
@@ -219,21 +208,17 @@
                     <span>
                         <b>Almacén:</b>
                             {{
-                                (props.row.warehouse_inventory_product)
-                                ? (props.row.warehouse_inventory_product.warehouse_institution_warehouse)
-                                    ? (props.row.warehouse_inventory_product.warehouse_institution_warehouse.warehouse)
-                                        ? (props.row.warehouse_inventory_product.warehouse_institution_warehouse.warehouse.name)
+                                props.row.warehouse_institution_warehouse
+                                    ? (props.row.warehouse_institution_warehouse.warehouse)
+                                        ? (props.row.warehouse_institution_warehouse.warehouse.name)
                                         : ''
                                     : ''
-                                : ''
                             }} <br>
                         <b>Existencia:</b>
                             {{
-                                (props.row.warehouse_inventory_product)
-                                ? props.row.warehouse_inventory_product.exist
-                                : ''
+                                props.row.real
                             }} <br>
-                        <b>Reservados:</b> {{ (props.row.warehouse_inventory_product.reserved === null)? '0':props.row.warehouse_inventory_product.reserved }}
+                        <b>Reservados:</b> {{ (props.row.reserved === null)? '0':props.row.reserved }}
                     </span>
                 </div>
             </v-client-table>

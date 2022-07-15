@@ -15,6 +15,7 @@ use Modules\Budget\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetSpecificAction;
 use Modules\Budget\Models\BudgetStage;
 use Modules\Budget\Models\BudgetAccountOpen;
+use Modules\Purchase\Models\PurchaseRequirement;
 
 class BudgetCompromiseController extends Controller
 {
@@ -45,6 +46,8 @@ class BudgetCompromiseController extends Controller
             'compromised_at' => ['required', 'date'],
             'source_document' => ['required', 'unique:budget_compromises,document_number'],
             'description' => ['required'],
+            'accounts.*.account_id' => ['required'],
+            'accounts.*.specific_action_id' => ['required'],
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -54,6 +57,8 @@ class BudgetCompromiseController extends Controller
             'source_document.required' => 'El campo documento origen es obligatorio.',
             'source_document.unique' => 'El campo documento origen ya ha sido registrado.',
             'description.required' => 'El campo descripción es obligatorio.',
+            'accounts.*.specific_action_id.required' => 'El campo acción específica es obligatorio',
+            'accounts.*.account_id.required' => 'El campo cuenta es obligatorio',
         ];
     }
 
@@ -206,6 +211,9 @@ class BudgetCompromiseController extends Controller
         $documentStatus = DocumentStatus::where('action', 'AP')->first();
 
         $budget = BudgetCompromise::find($request->id);
+        $this->validateRules['source_document'] = ['required', 'unique:budget_compromises,document_number,' . $budget->id];
+        $this->validate($request, $this->validateRules, $this->messages);
+
         $budget->document_number = $request->source_document;
         $budget->institution_id = $request->institution_id;
         $budget->compromised_at = $request->compromised_at;
@@ -262,6 +270,7 @@ class BudgetCompromiseController extends Controller
         }
 
         $budget->budgetStages()->update([
+            'type' => 'COM',
             'amount' => $total,
         ]);
 
@@ -318,10 +327,15 @@ class BudgetCompromiseController extends Controller
     {
         return response()->json([
             'records' => BudgetCompromise::with(
-                'budgetCompromiseDetails',
+                'budgetCompromiseDetails.budgetAccount',
+                'budgetCompromiseDetails.budgetSubSpecificFormulation',
+                'budgetCompromiseDetails.tax',
                 'budgetStages',
-                'documentStatus'
-            )->orderBy('compromised_at')->get(),
+                'documentStatus',
+                'institution'
+            )->whereHas('budgetStages', function ($query) {
+                $query->where('type', 'COM');
+            })->orderBy('compromised_at')->get(),
         ], 200);
     }
 
@@ -340,13 +354,14 @@ class BudgetCompromiseController extends Controller
     public function getDocumentSources($institution_id, $year)
     {
         /** @var object Obtiene todos los registros de fuentes de documentos que aún no han sido comprometidos */
-        $compromises = BudgetCompromise::where(['compromised_at' => null, 'institution_id' => $institution_id])->with([
+        $compromises = BudgetCompromise::where('institution_id', $institution_id)->with([
             'budgetCompromiseDetails',
             'sourceable',
-            'budgetStages' => function ($budgetStages) {
-                return $budgetStages->where('type', 'PRE');
-            },
-        ])->get();
+            'budgetStages'
+        ])->whereHas('budgetStages', function ($query) {
+            $query->where('type', 'PRE');
+        })->get();
+
         return response(['records' => $compromises], 200);
     }
 }

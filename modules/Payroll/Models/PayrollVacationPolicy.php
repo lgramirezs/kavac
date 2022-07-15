@@ -47,6 +47,9 @@ class PayrollVacationPolicy extends Model implements Auditable
         'generate_worker_arises',
         'min_days_advance',
         'max_days_advance',
+        'old_jobs',
+        'vacation_pay_days',
+        'business_days',
 
         // Usados por la funcionalidad de Agrupar por:
         'group_by', 'type',

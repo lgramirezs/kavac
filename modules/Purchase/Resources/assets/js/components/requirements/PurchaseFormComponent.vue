@@ -111,9 +111,32 @@
                 </div>
             </v-client-table>
         </div>
-        <div class="card-footer text-right">
-            <buttonsDisplay route_list="/purchese/requirements" display="false" />
+        <div class="row">
+            <div class="col-md-3 offset-md-9" id="helpParamButtons">
+                <button type="button" @click="reset()"
+                        class="btn btn-default btn-icon btn-round"
+                        data-toggle="tooltip"
+                        title="Borrar datos del formulario">
+                        <i class="fa fa-eraser"></i>
+                </button>
+
+                <button type="button" @click="redirect_back('/purchase/requirements')"
+                        class="btn btn-warning btn-icon btn-round btn-modal-close"
+                        data-dismiss="modal"
+                        title="Cancelar y regresar">
+                        <i class="fa fa-ban"></i>
+                </button>
+
+                <button type="button"  @click="createRecord('/purchase/requirements')"
+                        class="btn btn-success btn-icon btn-round btn-modal-save"
+                        title="Guardar registro">
+                    <i class="fa fa-save"></i>
+                </button>
+            </div>
         </div>
+        <!--<div class="card-footer text-right">
+            <buttonsDisplay route_list="/purchase/requirements" display="false" />
+        </div>-->
     </div>
 </template>
 <script>

@@ -16,11 +16,11 @@
             </div>
             <div class="text-center" slot="motive" slot-scope="props" v-html="props.row.motive"></div>
             <div slot="id" slot-scope="props" class="d-flex justify-content-center">
-                <asset-request-info :route_list="app_url+'/asset/requests/vue-info/'+props.row.id"></asset-request-info>
-                <asset-request-extension :requestid="props.row.id"
+                <asset-show :route_list="app_url+'/asset/requests/vue-info/'+props.row.id"></asset-show>
+                <asset-extension :requestid="props.row.id"
                                          :delivery_date="props.row.delivery_date"
-                                         :state="props.row.state"></asset-request-extension>
-                <asset-request-event :id="props.row.id" :state="props.row.state"></asset-request-event>
+                                         :state="props.row.state"></asset-extension>
+                <asset-events :id="props.row.id" :state="props.row.state"></asset-events>
                 <button class="btn btn-primary btn-xs btn-icon btn-action"
                         type="button" data-toggle="tooltip" title="Entregar Equipos"
                         :disabled="((props.row.state == 'Aprobado') || (props.row.state == 'Pendiente por entrega')) ? false : true"

@@ -34,7 +34,7 @@
 					</div>
 				</div>
 				{!! (!isset($model))?Form::open($header):Form::model($model, $header) !!}
-					<div class="card-body">
+					<div class="card-body"> 
 						@include('layouts.form-errors')
 						<div class="row">
 							<div class="col-3" id="helpInstitution">
@@ -52,6 +52,11 @@
 									) !!}
 								</div>
 							</div>
+							@php
+								$institution = count($institutions); 
+							@endphp
+
+							@if($institution > 1)
 							<div class="col-3" id="helpDepartment">
 								<div class="form-group is-required">
 									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
@@ -91,6 +96,47 @@
 									</div>
 								</div>
 							@endif
+						@else
+						<div class="col-3" id="helpDepartment">
+								<div class="form-group is-required">
+									{!! Form::label('department_id', __('Dependencia'), ['class' => 'control-label']) !!}
+									{!! Form::select('department_id', $departments, null, [
+										'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'department_id',
+											'disabled' => ( false),
+										'onchange' => 'updateSelectActive($(this), $("#payroll_staff_id"), "PayrollEmployment", "Payroll", "payrollStaff",[$("#payroll_position_id")])',
+										'title' => __('Seleccione un departamento o dependencia'),
+									]) !!}
+								</div>
+							</div>
+							@if (Module::has('Payroll') && Module::isEnabled('Payroll'))
+								<div class="col-3" id="helpResponsible">
+									<div class="form-group is-required">
+										{!! Form::label('payroll_staff_id', __('Responsable'), ['class' => 'control-label']) !!}
+										{!! Form::select('payroll_staff_id', $staffs, null, [
+											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'payroll_staff_id',
+											'disabled' => ( false),
+											'onchange' => 'updateSelectCustomPosition($(this), $("#payroll_position_id"), "PayrollEmployment", "Payroll", "")',
+											'title' => __('Seleccione una persona responsable del proyecto')
+										]) !!}
+									</div>
+								</div>
+								<div class="col-3" id="helpPosition">
+									<div class="form-group is-required">
+										{!! Form::label('payroll_position_id', __('Cargo de Responsable'), [
+											'class' => 'control-label'
+										]) !!}
+										{!! Form::select('payroll_position_id', $positions, null, [
+											'class' => 'select2', 'data-toggle' => 'tooltip',
+											'id' => 'payroll_position_id',
+											'disabled' => ( true),
+											'title' => __('Seleccione el cargo de la persona responsable del proyecto')
+										]) !!}
+									</div>
+								</div>
+							@endif
+						@endif
 						</div>
 						<div class="row">
 							<div class="col-3" id="helpCode">
