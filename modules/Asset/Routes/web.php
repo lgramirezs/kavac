@@ -91,7 +91,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('asignations/vue-info/{asignation}', 'AssetAsignationController@vueInfo');
 
     /** Ruta que obtiene un listado de las asignacioes de bienes institucionales */
-    Route::get('asignations/vue-list/{perPage?}/{page?}', 'AssetAsignationController@vueList');
+    Route::get('asignations/vue-list', 'AssetAsignationController@vueList');
 
     /**
      * ---------------------------------------------------------------------

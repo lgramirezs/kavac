@@ -28,9 +28,17 @@ class AddFieldsToAssetRequestsTable extends Migration
             Schema::table('asset_requests', function (Blueprint $table) {
                 if(!Schema::hasColumn('asset_requests', 'address')){
                     $table->text('address')->nullable()->comment('Dirección fisíca a donde se prestará el bien');
+                }
+                if(!Schema::hasColumn('asset_requests', 'country_id')){
                     $table->foreignId('country_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
+                }
+                if(!Schema::hasColumn('asset_requests', 'estate_id')){
                     $table->foreignId('estate_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
+                }
+                if(!Schema::hasColumn('asset_requests', 'municipality_id')){
                     $table->foreignId('municipality_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
+                }
+                if(!Schema::hasColumn('asset_requests', 'parish_id')){
                     $table->foreignId('parish_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
                 }
             
@@ -46,8 +54,29 @@ class AddFieldsToAssetRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('asset_requests', function (Blueprint $table) {
+        if(Schema::hasTable('asset_requests')){
+            Schema::table('asset_requests', function (Blueprint $table) {
+                if(Schema::hasColumn('asset_requests', 'address')){
+                    $table->text('address')->nullable()->comment('Dirección fisíca a donde se prestará el bien');
+                }
+                if(Schema::hasColumn('asset_requests', 'country_id')){
+                    $table->dropForeign('country_id');
+                    $table->dropColumn('country_id');
+                }
+                if(Schema::hasColumn('asset_requests', 'estate_id')){
+                    $table->dropForeign('estate_id');
+                    $table->dropColumn('estate_id');
+                }
+                if(Schema::hasColumn('asset_requests', 'municipality_id')){
+                    $table->dropForeig('municipality_id');
+                    $table->dropColumn('municipality_id');
+                }
+                if(Schema::hasColumn('asset_requests', 'parish_id')){
+                    $table->dropForeig('parish_id');
+                    $table->dropColumn('parish_id')->nullable()->constrained()->onDelete('restrict')->onUpdate('cascade');
+                }
             
-        });
+            });
+        }
     }
 }

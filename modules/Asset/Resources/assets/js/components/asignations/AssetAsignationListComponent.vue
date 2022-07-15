@@ -66,7 +66,7 @@
 			this.table_options.orderBy = { 'column': 'code'};
 		},
 		mounted () {
-			this.readRecords(`${this.route_list}`);
+			this.readRecords(this.route_list);
 		},
 		methods: {
 			/**
