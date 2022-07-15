@@ -56,6 +56,8 @@ export default {
             'description': 'col-xs-5',
             'id': 'col-xs-1'
         };
+        this.table_options.sortable = ['fiscal_year.year'];
+        this.table_options.filterable = ['fiscal_year.year'];
     },
     mounted() {
         const vm = this;
