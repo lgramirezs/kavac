@@ -63,7 +63,6 @@ class AssetController extends Controller
             'asset_status_id' => ['required'],
             'asset_condition_id' => ['required'],
             'institution_id' => ['required'],
-            'asset_institutional_code' => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -85,6 +84,7 @@ class AssetController extends Controller
             'address.required'                              => 'El campo dirección es obligatorio.',
             'asset_condition_id.required'                   => 'El campo condición física es obligatorio.',
             'asset_institutional_code.required'             => 'El campo código de bien organizacional es obligatorio.',
+            'asset_institutional_code.unique'               => 'El campo código de bien organizacional ya existe',
         ];
 
         $this->attributes = [
@@ -144,6 +144,7 @@ class AssetController extends Controller
                             'serial' => [new RequiredItem($item_required->serial), 'unique:assets,serial'],
                             'marca'  => new RequiredItem($item_required->marca),
                             'model' => new RequiredItem($item_required->model),
+                            'asset_institutional_code' => ['required', 'unique:assets,asset_institutional_code']
         
                         ]
                     );
@@ -238,6 +239,7 @@ class AssetController extends Controller
                     'serial' => ['required', 'unique:assets,serial'. $asset->id, 'max:50'],
                     'marca'  => ['required', 'max:50'],
                     'model' => ['required', 'max:50'],
+                    'asset_institutional_code' => ['required', 'unique:assets,asset_institutional_code'.$asset->id]
 
                 ]
             );
