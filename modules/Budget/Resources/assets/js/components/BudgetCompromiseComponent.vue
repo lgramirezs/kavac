@@ -133,15 +133,16 @@
                                                     v-for="(source, index) in document_sources"
                                                     :key="index"
                                                 >
-                                                    <td>{{ source.sourceable.code }}</td>
-                                                    <td>{{ format_date(source.created_at) }}</td>
-                                                    <td>{{ source.budget_stages[0].amount }}</td>
-                                                    <td>
+                                                    <td class="text-center">{{ source.sourceable ? source.sourceable.code : ''  }}</td>
+                                                    <td class="text-center">{{ format_date(source.created_at) }}</td>
+                                                    <td class="text-center">{{ source.budget_stages[0].amount }}</td>
+                                                    <td class="text-center">
                                                         <a
                                                             href="#"
                                                             data-original-title="Agregar documento"
                                                             class="btn btn-sm btn-info btn-action btn-tooltip"
                                                             @click="addDocument(source.id)"
+                                                            data-dismiss="modal"
                                                         >
                                                             <i class="fa fa-plus-circle"></i>
                                                         </a>
@@ -221,10 +222,10 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(account, index) in record.accounts" :key="index">
-                                    <td>{{ account.spac_description }}</td>
-                                    <td>{{ account.code }}</td>
-                                    <td>{{ account.description }}</td>
-                                    <td class="text-right">
+                                    <td class="text-center">{{ account.spac_description ? account.spac_description : 'Por asignar' }}</td>
+                                    <td class="text-center">{{ account.code ? account.code : 'Por asignar' }}</td>
+                                    <td class="text-center">{{ account.description }}</td>
+                                    <td class="text-center">
                                         {{ formatToCurrency(account.amount, "") }}
                                     </td>
                                     <td class="text-center">
@@ -290,10 +291,10 @@
                                     :id="tax_account.parent_account_id"
                                     :key="index"
                                 >
-                                    <td>{{ tax_account.spac_description }}</td>
-                                    <td>{{ tax_account.code }}</td>
-                                    <td>{{ tax_account.description }}</td>
-                                    <td class="text-right">
+                                    <td class="text-center">{{ tax_account.spac_description ? tax_account.spac_description : 'Por asignar' }}</td>
+                                    <td class="text-center">{{ tax_account.code ? tax_account.code : 'Por asignar' }}</td>
+                                    <td class="text-center">{{ tax_account.description }}</td>
+                                    <td class="text-center">
                                         {{ formatToCurrency(tax_account.amount, "") }}
                                     </td>
                                     <td class="text-center">
@@ -751,6 +752,7 @@ export default {
             if (vm.editIndex != null) {
                 let amountEdit = vm.record.accounts[vm.editIndex]['amountEdit'];
                 vm.record.accounts.splice(vm.editIndex, 1);
+                vm.record.tax_accounts.splice(vm.editIndex, 1);
 
                 vm.record.accounts.push({
                     spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
@@ -862,6 +864,8 @@ export default {
          */
         addDocument(sourceId) {
             const vm = this;
+            vm.record.accounts = [];
+            vm.record.tax_accounts = [];
             vm.record.documentToCompromise = JSON.parse(
                 JSON.stringify(
                     vm.document_sources.filter((doc) => {
@@ -869,6 +873,43 @@ export default {
                     })[0]
                 )
             );
+
+            if (vm.record.documentToCompromise && vm.record.documentToCompromise.sourceable) {
+                let doc = vm.record.documentToCompromise;
+                let date = vm.format_date(doc.created_at, 'YYYY-MM-DD');
+
+                vm.record.id = doc.id;
+                vm.record.compromised_at = date;
+                vm.record.source_document = doc.document_number;
+                vm.record.description = doc.description;
+
+                for (let detail of doc.budget_compromise_details) {
+                    detail.description = detail.description.replace(/(<([^>]+)>)/gi, "");
+                    vm.record.accounts.push(detail);
+
+                    if (detail.tax_id) {
+                        let tax;
+                        let tax_percentage;
+                        let tax_description;
+                        for (tax of vm.taxesData) {
+                            if (detail.tax_id == tax.id) {
+                                tax_description = tax.description;
+                                tax_percentage = tax.histories[0].percentage;
+                            }
+                        }
+
+                        vm.record.tax_accounts.push({
+                            spac_description: '',
+                            code: '',
+                            description: tax_description,
+                            amount: (detail.amount * tax_percentage) / 100,
+                            specific_action_id: '',
+                            account_id: detail.id,
+                            tax_id: detail.tax_id,
+                        });
+                    }
+                }
+            }
         },
         /**
          * Obtiene las Acciones Específicas
