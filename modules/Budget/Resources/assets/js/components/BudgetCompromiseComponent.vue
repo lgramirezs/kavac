@@ -561,76 +561,64 @@ export default {
             vm.record.description = editData.description;
             vm.record.source_document = editData.document_number;
 
-            if (editData.sourceable_type === "Modules\\Purchase\\Models\\PurchaseDirectHire") {
-                editData.budget_compromise_details.forEach(async function (word) {
-                    let specificAction = {};
-                    let account = {};
+            editData.budget_compromise_details.forEach(async function (word) {
+                let specificAction = {};
+                let account = {};
 
-                    vm.account_concept = word.description.replace(/(<([^>]+)>)/gi, "");;
-                    vm.account_amount = word.amount;
-                    vm.account_tax_id = word.tax_id;
+                vm.specific_action_id =
+                    word.budget_sub_specific_formulation.budget_specific_action_id;
+                vm.account_id = word.budget_account_id;
+
+                vm.account_concept = word.description;
+                vm.account_amount = word.amount;
+                vm.account_tax_id = word.tax_id;
+
+                await vm
+                    .getSpecificActionDetail(
+                        word.budget_sub_specific_formulation.budget_specific_action_id
+                    )
+                    .then((detail) => (specificAction = detail.record));
+
+                await vm
+                    .getAccountDetail(word.budget_account_id)
+                    .then((detail) => (account = detail.record));
+                vm.record.accounts.push({
+                    spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
+                    code: account.code,
+                    description: word.description,
+                    amount: word.amount,
+                    amountEdit: word.amount,
+                    operation: '',
+                    budgetCompromiseDetails: word.id,
+                    specific_action_id:
+                        word.budget_sub_specific_formulation.budget_specific_action_id,
+                    account_id: word.budget_account_id,
+                    tax_id: word.tax_id,
                 });
-            } else {
 
-                editData.budget_compromise_details.forEach(async function (word) {
-                    let specificAction = {};
-                    let account = {};
+                if (vm.account_tax_id) {
+                    let tax;
+                    let tax_percentage;
+                    let tax_description;
+                    for (tax of vm.taxesData) {
+                        if (word.tax_id == tax.id) {
+                            tax_description = tax.description;
+                            tax_percentage = tax.histories[0].percentage;
+                        }
+                    }
 
-                    vm.specific_action_id =
-                        word.budget_sub_specific_formulation.budget_specific_action_id;
-                    vm.account_id = word.budget_account_id;
-
-                    vm.account_concept = word.description;
-                    vm.account_amount = word.amount;
-                    vm.account_tax_id = word.tax_id;
-
-                    await vm
-                        .getSpecificActionDetail(
-                            word.budget_sub_specific_formulation.budget_specific_action_id
-                        )
-                        .then((detail) => (specificAction = detail.record));
-
-                    await vm
-                        .getAccountDetail(word.budget_account_id)
-                        .then((detail) => (account = detail.record));
-                    vm.record.accounts.push({
+                    vm.record.tax_accounts.push({
                         spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
                         code: account.code,
-                        description: word.description,
-                        amount: word.amount,
-                        amountEdit: word.amount,
-                        operation: '',
-                        budgetCompromiseDetails: word.id,
+                        description: tax_description,
+                        amount: (word.amount * tax_percentage) / 100,
                         specific_action_id:
                             word.budget_sub_specific_formulation.budget_specific_action_id,
                         account_id: word.budget_account_id,
                         tax_id: word.tax_id,
                     });
-
-                    if (vm.account_tax_id) {
-                        let tax;
-                        let tax_percentage;
-                        let tax_description;
-                        for (tax of vm.taxesData) {
-                            if (word.tax_id == tax.id) {
-                                tax_description = tax.description;
-                                tax_percentage = tax.histories[0].percentage;
-                            }
-                        }
-
-                        vm.record.tax_accounts.push({
-                            spac_description: `${specificAction.specificable.code}-${specificAction.code} | ${specificAction.name}`,
-                            code: account.code,
-                            description: tax_description,
-                            amount: (word.amount * tax_percentage) / 100,
-                            specific_action_id:
-                                word.budget_sub_specific_formulation.budget_specific_action_id,
-                            account_id: word.budget_account_id,
-                            tax_id: word.tax_id,
-                        });
-                    }
-                });
-            }
+                }
+            });
 
             //   !vm.specific_action_id && !vm.account_id && !vm.account_concept && !vm.account_amount &&
             //     !vm.account_tax_id

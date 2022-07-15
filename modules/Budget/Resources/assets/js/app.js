@@ -203,6 +203,18 @@ Vue.component('budget-compromise', () =>
 );
 
 /**
+ * Componente para mostrar listado de compromisos
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+ */
+Vue.component('budget-compromise-info', () =>
+    import(
+        /* webpackChunkName: "budget-compromise-info" */
+        './components/BudgetCompromiseInfoComponent.vue'
+    )
+);
+
+/**
  * Componente para mostrar el formulario de disponibilidad presupuestaria
  *
  * @author Jonathan Alvarado <wizardx1407@gmail.com> | <jonathanalvarado1407@gmail.com>

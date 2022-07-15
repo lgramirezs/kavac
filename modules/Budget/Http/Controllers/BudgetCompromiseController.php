@@ -327,9 +327,12 @@ class BudgetCompromiseController extends Controller
     {
         return response()->json([
             'records' => BudgetCompromise::with(
-                'budgetCompromiseDetails',
+                'budgetCompromiseDetails.budgetAccount',
+                'budgetCompromiseDetails.budgetSubSpecificFormulation',
+                'budgetCompromiseDetails.tax',
                 'budgetStages',
-                'documentStatus'
+                'documentStatus',
+                'institution'
             )->whereHas('budgetStages', function ($query) {
                 $query->where('type', 'COM');
             })->orderBy('compromised_at')->get(),
