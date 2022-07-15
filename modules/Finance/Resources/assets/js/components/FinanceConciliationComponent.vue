@@ -55,17 +55,10 @@
             </div>
             <div class="col-md-3">
                 <label>Mostrar coincidencias:</label>
-                <br>
-                <div class="pretty p-switch p-fill p-bigger p-toggle">
-                    <input type="checkbox" data-toggle="tooltip"
-                        title="Indique si el campo está activo"
-                        v-model="record.coincidences">
-                    <div class="state p-off">
-                        <label></label>
-                    </div>
-                    <div class="state p-on p-success">
-                        <label></label>
-                    </div>
+                <div class="custom-control custom-switch" data-toggle="tooltip" title="Indique si se mostrarán coincidencias">
+                    <input type="checkbox" class="custom-control-input" id="coincidences" v-model="record.coincidences" 
+                           :value="true">
+                    <label class="custom-control-label" for="coincidences"></label>
                 </div>
             </div>
         </div>

@@ -183,7 +183,7 @@
                                 <div class="row" v-if="(type_modification==='TR')">
                                     <div class="col-12">
                                         <h6 class="text-center">
-                                            Cuenta a Debitar
+                                            Cuenta cedentes
                                         </h6>
                                     </div>
                                 </div>

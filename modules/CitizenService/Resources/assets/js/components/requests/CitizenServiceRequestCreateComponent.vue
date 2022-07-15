@@ -258,15 +258,11 @@
     				<div class="form-group">
     					<label>Institución</label>
     					<div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-        						<input type="checkbox" name="type_institution"
-        							   id="type_institution"
-        							   class="form-control bootstrap-switch"
-        							   data-toggle="tooltip"
-        							   data-on-label="SI" data-off-label="NO"
-        							   v-model="record.type_institution"
-        							   value="true"/>
-                            </div>
+							<div class="custom-control custom-switch">
+								<input type="checkbox" class="custom-control-input" id="type_institution"
+									   name="type_institution" v-model="record.type_institution" :value="true">
+								<label class="custom-control-label" for="type_institution"></label>
+							</div>
     					</div>
     				</div>
     			</div>
@@ -450,7 +446,7 @@
 		},
 		mounted() {
 			const vm = this;
-			this.switchHandler('type_institution');
+			
 			if(this.requestid){
 				this.loadForm(this.requestid);
 			}
@@ -471,16 +467,5 @@
             vm.record.phones = [];
             this.record.type_institution = false;
 		},
-		watch: {
-			record: {
-				deep: true,
-				handler: function() {
-					const vm = this;
-					if (vm.record.type_institution) {
-						$('#type_institution').bootstrapSwitch('state', true, true);
-					}
-				}
-			}
-		}
 	};
 </script>

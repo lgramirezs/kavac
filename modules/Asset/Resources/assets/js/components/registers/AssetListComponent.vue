@@ -85,7 +85,7 @@
                 records: [],
                 supplier: [],
                 columns: [
-                    'inventory_serial', 'institution', 'asset_condition','asset_status','serial','marca','model', 'id'
+                    'inventory_serial', 'institution', 'asset_condition','asset_status','serial','marca','asset_institutional_code', 'id'
                 ]
             }
         },
@@ -97,14 +97,14 @@
                 'asset_status': 'Estatus de uso',
                 'serial': 'Serial',
                 'marca': 'Marca',
-                'model': 'Modelo',
+                'asset_institutional_code': 'Código de bien organizacional',
                 'id': 'Acción'
             };
             this.table_options.sortable = [
-                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'model'
+                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'asset_institutional_code'
             ];
             this.table_options.filterable = [
-                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'model'
+                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'asset_institutional_code'
             ];
            this.table_options.orderBy = { 'column': 'id'};
         },

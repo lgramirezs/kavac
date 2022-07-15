@@ -20,7 +20,7 @@
                     <div class="modal-body">
                         <div class="alert alert-danger mb-3" v-if="errors.length > 0">
                             <ul>
-                                <li v-for="error in errors">{{ error }}</li>
+                                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                             </ul>
                         </div>
                         <div class="form-group">
@@ -41,8 +41,8 @@
                                 <h6>Detalle de la firma</h6>
                                 <p>Número de firma(s): {{ records.count }}</p>
                                 <table class="table table-bordered">
-                                    <tbody v-for="item in records.signs">
-                                        <tr v-for="(value, key, index) in item">
+                                    <tbody v-for="(item, idx) in records.signs" :key="idx">
+                                        <tr v-for="(value, key, index) in item" :key="index">
                                             <template v-if="index === 0">
                                                 <th class="text-right"> {{ key }}: </th>
                                                 <th class="text-left"> {{ value }} </th>

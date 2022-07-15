@@ -51,7 +51,8 @@
                                     <div class="form-group">
                                         <strong>¿Está activo?:</strong>
                                         <div class="row" style="margin: 1px 0">
-                                            <span class="col-md-12">
+                                            <span class="col-md-12" 
+                                                  :class="{'text-success': record.active, 'text-danger': !record.active}">
                                                 {{ record.active == true ? 'Si' : 'No' }}
                                             </span>
                                         </div>
@@ -151,7 +152,7 @@
                             <hr>
                             <div>
                                 <h6 class="text-center">Trabajos anteriores</h6><br>
-                                <div v-for="job in record.payroll_previous_job" class="row">
+                                <div v-for="(job, index) in record.payroll_previous_job" class="row" :key="index">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <strong>Nombre de la organización:</strong>

@@ -40,17 +40,11 @@
                                 <div class="form-group">
                                     <label>Sede principal:</label>
                                     <div class="col-md-12">
-                                        <div class="pretty p-switch p-fill p-bigger p-toggle">
-                                            <input type="checkbox" data-toggle="tooltip"
-                                                title="Indique si el campo está activo"
-                                                v-model="record.headquarters"
-                                                tabindex="1">
-                                            <div class="state p-off">
-                                                <label></label>
-                                            </div>
-                                            <div class="state p-on p-success">
-                                                <label></label>
-                                            </div>
+                                        <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                             title="Indique si es la sede principal del banco">
+                                            <input type="checkbox" class="custom-control-input" id="headquarters"
+                                                   v-model="record.headquarters" :value="true">
+                                            <label class="custom-control-label" for="headquarters"></label>
                                         </div>
                                     </div>
                                 </div>
@@ -87,6 +81,17 @@
                                     <select2 :options="banks"
                                     tabindex="5" v-model="record.finance_bank_id"></select2>
                                 </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group is-required">
+                                    <label>Nombre de agencia:</label>
+                                    <input type="text" placeholder="Nombre agencia"
+                                        tabindex="6" data-toggle="tooltip"
+                                        title="Indique el nombre de la agencia bancaria (requerido)"
+                                        class="form-control input-sm" v-model="record.name">
+                                </div>                                
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Persona de contacto:</label>
                                     <input type="text" placeholder="Nombre contacto"
@@ -96,13 +101,6 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group is-required">
-                                    <label>Nombre de agencia:</label>
-                                    <input type="text" placeholder="Nombre agencia"
-                                        tabindex="6" data-toggle="tooltip"
-                                        title="Indique el nombre de la agencia bancaria (requerido)"
-                                        class="form-control input-sm" v-model="record.name">
-                                </div>
                                 <div class="form-group">
                                     <label>Correo de contacto:</label>
                                     <input type="text" placeholder="Nombre contacto"
@@ -111,7 +109,7 @@
                                         class="form-control input-sm" v-model="record.contact_email">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-12">
                                 <div class="form-group is-required">
                                     <label>Dirección:</label>
                                     <ckeditor :editor="ckeditor.editor"
@@ -190,10 +188,8 @@
                     </div>
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
-                            <div slot="direction" slot-scope="props" class="text-center">
-                                <span class="text-center">
-                                    {{ props.row.direction.replace(/<\/?[^>]+(>|$)/g, "") }}
-                                </span>
+                            <div slot="direction" slot-scope="props" class="text-justify">
+                                <span v-html="props.row.direction"></span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="customupdate(props.row.id, $event)"
@@ -209,8 +205,8 @@
                                 </button>
                             </div>
                             <div slot="headquarters" slot-scope="props" class="text-center">
-                                <span v-if="props.row.headquarters">SI</span>
-                                <span v-else>NO</span>
+                                <span v-if="props.row.headquarters" class="text-success font-weight-bold">SI</span>
+                                <span v-else class="text-danger font-weight-bold">NO</span>
                             </div>
                             <div slot="phones" slot-scope="props" class="text-center">
                                 <span v-for="(phone, index) in props.row.phones" :key="index">
@@ -260,8 +256,7 @@
              *
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
              */
-
-                reset() {
+            reset() {
                 this.record = {
                     id: '',
                     name: '',
@@ -278,35 +273,16 @@
             },
             customupdate(id,event ){
                 let vm = this;
-            vm.errors = [];
+                vm.errors = [];
 
-            let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
-                return rec.id === id;
-            })[0])) || vm.reset();
+                let recordEdit = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                    return rec.id === id;
+                })[0])) || vm.reset();
 
-            vm.record = recordEdit;
+                vm.record = recordEdit;
                 vm.record.country_id = vm.record.city.estate.country_id;
 
-            /**
-             * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
-             * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
-             */
-            $.each(vm.record, function(el, value) {
-                if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
-                    /** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
-                    $("input[name=" + el + "]").each(function() {
-                        if ($(this).val() === value) {
-                            $(this).bootstrapSwitch('state', value, true)
-                        }
-
-                    });
-                }
-                if (value === true || value === false) {
-                    $("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
-                }
-            });
-
-            event.preventDefault();
+                event.preventDefault();
             },
 
             /**
@@ -341,12 +317,12 @@
 
                 if (vm.record.estate_id) {
                     await axios.get(`${window.app_url}/get-cities/${this.record.estate_id}`).then(response => {
-                            vm.cities = response.data;
+                        vm.cities = response.data;
                     });
                 }
                 if(vm.record.id){
-                        if (vm.record.city.id )  {
-                    vm.record.city_id = vm.record.city.id;
+                    if (vm.record.city.id )  {
+                        vm.record.city_id = vm.record.city.id;
                     }
                 }
             },
@@ -363,6 +339,9 @@
             };
             this.table_options.sortable = ['finance_bank.name', 'city.name', 'name'];
             this.table_options.filterable = ['finance_bank.name', 'city.name', 'name'];
+            this.table_options.columnsClasses = {
+				'id': 'col-md-2'
+			};
             this.getCountries();
             this.getBanks();
         },

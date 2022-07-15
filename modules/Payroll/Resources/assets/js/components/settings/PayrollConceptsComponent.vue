@@ -56,14 +56,14 @@
                                         <div class=" form-group">
                                             <label>¿Activo?</label>
                                             <div class="col-12">
-                                                <p-check class="pretty p-switch p-fill p-bigger"
-                                                         color="success" off-color="text-gray" toggle
-                                                         data-toggle="tooltip"
-                                                         title="¿El concepto se encuentra activo actualmente?"
-                                                         v-model="record.active">
-                                                    <label slot="off-label"></label>
-                                                </p-check>
-                                              </div>
+                                                <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                     title="¿El concepto se encuentra activo actualmente?">
+                                                    <input type="checkbox" class="custom-control-input" 
+                                                            id="conceptActive" v-model="record.active" 
+                                                            :value="true">
+                                                    <label class="custom-control-label" for="conceptActive"></label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- ./activa -->

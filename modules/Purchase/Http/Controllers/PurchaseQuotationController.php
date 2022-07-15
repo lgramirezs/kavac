@@ -37,7 +37,14 @@ class PurchaseQuotationController extends Controller
 	public function index()
 	{
 		return view('purchase::quotation.index', [
-			'records' => PurchaseQuotation::with('purchaseSupplier', 'currency', 'relatable')
+			'records' => PurchaseQuotation::with(['purchaseSupplier', 'currency', 'relatable'=>
+			   function ($query) {
+                            $query->with(['purchaseRequirementItem' => function ($query) {
+                                $query->with('purchaseRequirement')->get();
+                            }])->get();
+						},
+			
+			])
 			->orderBy('id', 'ASC')->get()
 		]);
 	}

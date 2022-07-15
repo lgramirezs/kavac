@@ -730,7 +730,7 @@ export default {
                 vm.showMessage(
                     "custom",
                     "Alerta!",
-                    "warning",
+                    "danger",
                     "screen-error",
                     "El monto a comprometer no puede ser mayor al asignado"
                 );

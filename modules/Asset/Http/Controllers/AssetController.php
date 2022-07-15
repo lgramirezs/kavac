@@ -63,6 +63,7 @@ class AssetController extends Controller
             'asset_status_id' => ['required'],
             'asset_condition_id' => ['required'],
             'institution_id' => ['required'],
+            'asset_institutional_code' => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -83,6 +84,7 @@ class AssetController extends Controller
             'parish_id.required'                            => 'El campo país es obligatorio.',
             'address.required'                              => 'El campo dirección es obligatorio.',
             'asset_condition_id.required'                   => 'El campo condición física es obligatorio.',
+            'asset_institutional_code.required'             => 'El campo código de bien organizacional es obligatorio.',
         ];
 
         $this->attributes = [
@@ -181,7 +183,9 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
-            'purchase_supplier_id'       => $request->purchase_supplier_id
+            'purchase_supplier_id'       => $request->purchase_supplier_id,
+            'color'                      => $request->color,
+            'asset_institutional_code'   => $request->asset_institutional_code
 
         ]);
         $asset->inventory_serial = $asset->getCode();
@@ -269,7 +273,9 @@ class AssetController extends Controller
             'asset_use_function_id'      => $request->asset_use_function_id,
             'parish_id'                  => $request->parish_id,
             'address'                    => $request->address,
-            'purchase_supplier_id'       => $request->purchase_supplier_id
+            'purchase_supplier_id'       => $request->purchase_supplier_id,
+            'color'                      => $request->color,
+            'asset_institutional_code'   => $request->asset_institutional_code
 
         ]);
 

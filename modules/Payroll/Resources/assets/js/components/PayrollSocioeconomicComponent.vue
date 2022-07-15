@@ -14,7 +14,7 @@
                         </span>
                     </button>
                     <ul>
-                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                     </ul>
                 </div>
             </div>
@@ -101,15 +101,11 @@
                     <div class="row col-md-6">
                         <div class="form-group">
                             <label>¿Es estudiante?</label>
-                            <div class="row col-md-14">
-                                <div class="col-14 bootstrap-switch-mini">
-                                    <input type="checkbox" :id="'mySwicth' + `${index}`"
-                                        class="form-control bootstrap-switch" data-toggle="tooltip"
-                                        data-on-label="SI" data-off-label="NO"
-                                        title="Indique si el hijo es estudiante o no"
-                                        value="true"
-                                        v-model="payroll_children.is_student"/>
-                                </div>
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                    title="Indique si el hijo es estudiante o no">
+                                <input type="checkbox" class="custom-control-input" :id="`mySwicth${index}`" 
+                                        v-model="payroll_children.is_student" :value="true">
+                                <label class="custom-control-label" :for="`mySwicth${index}`"></label>
                             </div>
                         </div>
                     </div>
@@ -133,14 +129,12 @@
                     <div class="row col-md-10">
                         <div class="form-group">
                             <label>¿Posee una Discapacidad?</label>
-                            <div class="row col-md-14">
-                                <div class="col-14 bootstrap-switch-mini">
-                                    <input id="has_disability" name="has_disability" type="checkbox"
-                                    class="form-control bootstrap-switch sel_has_disability"
-                                    data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                    title="Indique si el trabajador posee una discapacidad o no"
-                                    v-model="payroll_children.has_disability" value="true"/>
-                                </div>
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                    title="Indique si el trabajador posee una discapacidad o no">
+                                <input type="checkbox" class="custom-control-input sel_has_disability" 
+                                        :id="`has_disability${index}`" :name="`has_disability${index}`" 
+                                        v-model="payroll_children.has_disability" :value="true">
+                                <label class="custom-control-label" :for="`has_disability${index}`"></label>
                             </div>
                         </div>
                     </div>
@@ -223,8 +217,8 @@
                 };
             },
 
-            getSocioeconomic() {
-                axios.get(`${window.app_url}/payroll/socioeconomics/${this.payroll_socioeconomic_id}`).then(response => {
+            async getSocioeconomic() {
+                await axios.get(`${window.app_url}/payroll/socioeconomics/${this.payroll_socioeconomic_id}`).then(response => {
                     this.record = response.data.record;
                 });
             },
@@ -249,23 +243,27 @@
             },
         },
 
-        created() {
+        async created() {
+            this.loading = true;
             //this.getPayrollStaffs((this.payroll_employment_id)?this.payroll_employment_id:'filter');
             if (this.payroll_socioeconomic_id) {
-                this.getPayrollSocioeconomic(this.payroll_socioeconomic_id);
+                await this.getPayrollSocioeconomic(this.payroll_socioeconomic_id);
             } else {
-                this.getPayrollSocioeconomic('filter');
+                await this.getPayrollSocioeconomic('filter');
             }
-            this.getMaritalStatus();
-            this.getPayrollSchoolingLevels();
-            this.getPayrollDisabilities();
+            await this.getMaritalStatus();
+            await this.getPayrollSchoolingLevels();
+            await this.getPayrollDisabilities();
             this.record.payroll_childrens = [];
+            this.loading = false;
         },
 
-        mounted() {
-            if(this.payroll_socioeconomic_id) {
-                this.getSocioeconomic();
+        async mounted() {
+            this.loading = true;
+            if (this.payroll_socioeconomic_id) {
+                await this.getSocioeconomic();
             }
+            this.loading = false;
         },
 
         // watch: {
