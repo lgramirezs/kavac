@@ -822,9 +822,9 @@ Vue.mixin({
          *
          * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          */
-        getCountries() {
+        async getCountries() {
             const vm = this;
-            axios.get('/get-countries').then(response => {
+            await axios.get('/get-countries').then(response => {
                 vm.countries = response.data;
             });
         },
@@ -833,13 +833,13 @@ Vue.mixin({
          *
          * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          */
-        getEstates() {
+        async getEstates() {
             const vm = this;
             vm.estates = [
                 {id: '', text: 'Seleccione...'}
             ];
             if (vm.record.country_id) {
-                axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
+                await axios.get(`/get-estates/${vm.record.country_id}`).then(response => {
                     if (response.data) {
                         vm.estates = response.data;
                     }
@@ -851,11 +851,11 @@ Vue.mixin({
          *
          * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
          */
-        getMunicipalities() {
+        async getMunicipalities() {
             const vm = this;
             vm.municipalities = [];
             if (vm.record.estate_id) {
-                axios.get(`/get-municipalities/${vm.record.estate_id}`).then(response => {
+                await axios.get(`/get-municipalities/${vm.record.estate_id}`).then(response => {
                     vm.municipalities = response.data;
                 });
             }
@@ -980,11 +980,11 @@ Vue.mixin({
          *
          * @param  {integer} id Identificador del estado civil a filtrarm este campo es opcional
          */
-        getMaritalStatus(id) {
+        async getMaritalStatus(id) {
             const vm = this;
             vm.marital_status = [];
             var marital_status_id = (typeof(id)!=="undefined")?'/'+id:'';
-            axios.get(`/get-marital-status${marital_status_id}`).then(response => {
+            await axios.get(`/get-marital-status${marital_status_id}`).then(response => {
                 vm.marital_status = response.data;
             });
         },
@@ -995,11 +995,11 @@ Vue.mixin({
          *
          * @param  {integer} id Identificador de la profesión a filtrar, este campo es opcional
          */
-        getProfessions(id) {
+        async getProfessions(id) {
             const vm = this;
             vm.professions = [];
             var profession_id = (typeof(id)!=="undefined")?'/'+id:'';
-            axios.get(`/get-professions${profession_id}`).then(response => {
+            await axios.get(`/get-professions${profession_id}`).then(response => {
                 vm.professions = response.data;
             });
         },
