@@ -138,7 +138,7 @@
                         <b>Almacén:</b> {{
                             props.row.warehouse_institution_warehouse.warehouse.name
                             }} <br>
-                        <b>Existencia:</b> {{ props.row.exist }}<br>
+                        <b>Existencia:</b> {{ props.row.real }}<br>
                         <b>Reservados:</b> {{ (props.row.reserved === null)? '0':props.row.reserved }}
                     </span>
                 </div>
