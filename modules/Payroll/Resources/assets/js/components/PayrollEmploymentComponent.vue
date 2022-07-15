@@ -14,7 +14,7 @@
                         </span>
                     </button>
                     <ul>
-                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                     </ul>
                 </div>
             </div>
@@ -27,6 +27,19 @@
                             v-model="record.payroll_staff_id">
                         </select2>
                         <input type="hidden" v-model="record.id">
+                    </div>
+                </div>
+                <div class="col-md-4" id="helpEmploymentIsActive">
+                    <div class="form-group">
+                        <label>¿Está Activo?</label>
+                        <div class="col-md-12">
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                 title="Indique si el trabajador está activo o no">
+                                <input type="checkbox" class="custom-control-input" id="active" name="active" 
+                                       v-model="record.active" :value="true">
+                                <label class="custom-control-label" for="active"></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4" id="helpEmploymentStartDate">
@@ -43,19 +56,6 @@
                             v-model="record.end_date"/>
                     </div>
                 </div>
-                <div class="col-md-4" id="helpEmploymentIsActive">
-                    <div class="form-group">
-                        <label>¿Está Activo?</label>
-                        <div class="col-md-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input id="active" name="active" type="checkbox" class="form-control bootstrap-switch"
-                                    data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                    title="Indique si el trabajador está activo o no"
-                                    v-model="record.active" value="true"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-4" v-if="!record.active">
                     <div class="form-group is-required">
                         <label>Tipo de Inactividad:</label>
@@ -69,16 +69,6 @@
                         <label>Correo Institucional:</label>
                         <input type="email" class="form-control input-sm"
                             v-model="record.institution_email"/>
-                    </div>
-                </div>
-                <div class="col-md-4" id="helpEmploymentFunction">
-                    <div class="form-group">
-                        <label>Descripción de Funciones:</label>
-                        <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
-                                  title="Indique una descripción para las funciones"
-                                  :config="ckeditor.editorConfig" class="form-control"
-                                  name="function_description" tag-name="textarea" rows="3"
-                                  v-model="record.function_description"></ckeditor>
                     </div>
                 </div>
                 <div class="col-md-4" id="helpEmploymentPossitionType">
@@ -125,6 +115,16 @@
                         <label>Departamento:</label>
                         <select2 :options="departments" v-model="record.department_id"
                                  id="department"></select2>
+                    </div>
+                </div>
+                <div class="col-12" id="helpEmploymentFunction">
+                    <div class="form-group">
+                        <label>Descripción de Funciones:</label>
+                        <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
+                                  title="Indique una descripción para las funciones"
+                                  :config="ckeditor.editorConfig" class="form-control"
+                                  name="function_description" tag-name="textarea" rows="3"
+                                  v-model="record.function_description"></ckeditor>
                     </div>
                 </div>
                 <!-- TRABAJOS ANTERIOS -->
@@ -563,18 +563,6 @@
         mounted() {
             if(this.payroll_employment_id) {
                 this.getEmployment();
-            }
-            this.switchHandler('active');
-        },
-        watch: {
-            record: {
-                deep: true,
-                handler: function() {
-                    const vm = this;
-                    if (!vm.record.active) {
-                        $('#active').bootstrapSwitch('state', false, true);
-                    }
-                }
             }
         }
     };

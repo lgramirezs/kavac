@@ -52,12 +52,12 @@
                                <div class="form-group">
                                   <label>¿Activo?</label>
                                     <div class="col-12">
-                                        <p-check class="pretty p-switch p-fill p-bigger"
-                                         color="success" off-color="text-gray" toggle
-                                         data-toggle="tooltip"
-                                         v-model="record.active">
-                                         <label slot="off-label"></label>
-                                        </p-check>
+                                        <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                             title="¿La política de permiso se encuentra activa actualmente?">
+                                            <input type="checkbox" class="custom-control-input" id="permissionPolicyActive" 
+                                                    v-model="record.active" :value="true">
+                                            <label class="custom-control-label" for="permissionPolicyActive"></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -151,8 +151,8 @@
                                 </div>
                             </div>
                             <div slot="active" slot-scope="props" class="text-center">
-                                <span v-if="props.row.active">Si</span>
-                                <span v-else>No</span>
+                                <span v-if="props.row.active" class="text-success font-weight-bold">Si</span>
+                                <span v-else class="text-danger font-weight-bold">No</span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"

@@ -15,14 +15,14 @@
                         </span>
                     </button>
                     <ul>
-                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                     </ul>
                 </div>
             </div>
             <!-- ./mensajes de error -->
             <div class="row">
                 <!-- código de la solicitud -->
-                <div class="col-md-6" v-if="id > 0" id="helpPayrollBenefitRequestCode">
+                <div class="col-md-3" v-if="id > 0" id="helpPayrollBenefitRequestCode">
                     <div class="form-group is-required">
                         <label>Código de la solicitud:</label>
                         <input type="text" readonly
@@ -33,7 +33,7 @@
                 </div>
                 <!-- ./código de la solicitud -->
                 <!-- fecha de la solicitud -->
-                <div class="col-md-6" id="helpPayrollBenefitRequestDate">
+                <div class="col-md-2" id="helpPayrollBenefitRequestDate">
                     <div class="form-group is-required">
                         <label>Fecha de la solicitud:</label>
                         <input type="date" readonly
@@ -57,7 +57,7 @@
                 <!-- ./trabajador -->
             </div>
             <div class="row" v-show="payroll_benefits_policy">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         <strong> Monto acumulado: </strong>
                         <div class="row" style="margin: 1px 0">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         <strong> Monto disponible: </strong>
                         <div class="row" style="margin: 1px 0">
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
                 <!-- monto solicitudo -->
-                <div class="col-md-6" id="helpPayrollBenefitAmountRequested">
+                <div class="col-md-3" id="helpPayrollBenefitAmountRequested">
                     <div class="form-group is-required">
                         <label>Monto solicitado:</label>
                         <input type="text"
@@ -90,7 +90,7 @@
                 </div>
                 <!-- ./monto solicitado -->
                 <!-- motivo -->
-                <div class="col-md-6" id="helpPayrollBenefitMotive">
+                <div class="col-12" id="helpPayrollBenefitMotive">
                     <div class="form-group is-required">
                         <label>Motivo de adelanto de prestaciones</label>
                         <ckeditor :editor="ckeditor.editor" id="motive" data-toggle="tooltip"
