@@ -138,6 +138,7 @@ class WarehouseRequestStaffController extends Controller
                             'warehouse_inventory_product_id' => $inventory_product->id,
                             'warehouse_request_id' => $data_request->id,
                             'quantity' => $product['requested'],
+                            'new_exist'=> $exist_real - $product['requested'],
                         ]);
                     } else {
                         /** Si la exitencia del producto es menor que lo que se solicita
@@ -235,6 +236,7 @@ class WarehouseRequestStaffController extends Controller
                         if (!is_null($old_request)) {
                             $old_request->quantity = $product['requested'];
                             $old_request->updated_at = $update;
+                            $old_request->new_exist = $exist_real - $product['requested'];
                             $old_request->save();
                         } else {
                             WarehouseInventoryProductRequest::create([
@@ -242,6 +244,7 @@ class WarehouseRequestStaffController extends Controller
                                 'warehouse_request_id' => $warehouse_request->id,
                                 'quantity' => $product['requested'],
                                 'updated_at' => $update,
+                                'new_exist'=> $exist_real - $product['requested'],
                             ]);
                         }
                     } else {

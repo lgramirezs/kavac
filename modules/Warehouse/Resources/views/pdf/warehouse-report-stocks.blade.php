@@ -17,16 +17,16 @@
             <td width="15%"> {{ $field->minimum }} </td>
 
             <td width="15%"> {{ $field->warehouseInventoryProduct
-                ? $field->warehouseInventoryProduct->exist
+                ? $field->warehouseInventoryProduct->real
                 : '' }} </td>
 
             <td width="30%">
                 <span>
-                    @if ($field->minimum == $field->warehouseInventoryProduct->exist)
+                    @if ($field->minimum == $field->warehouseInventoryProduct->real)
                             El artículo llegó al mínimo de existencia
                     
                     
-                    @elseif ($field->warehouseInventoryProduct->exist == 0)
+                    @elseif ($field->warehouseInventoryProduct->real == 0)
                             
                             No hay existencia en inventario
                         
@@ -35,7 +35,7 @@
                             El artículo sobrepasa el mínimo de existencia
                             
 
-                    @elseif ($field->minimum < $field->warehouseInventoryProduct->exist)
+                    @elseif ($field->minimum < $field->warehouseInventoryProduct->real)
                             Hay existencia del artículo en inventario
                     @endif     
 
