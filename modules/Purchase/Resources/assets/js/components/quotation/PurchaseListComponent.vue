@@ -2,9 +2,10 @@
     <section>
         <v-client-table :columns="columns" :data="records" :options="table_options">
               <a slot="relatable[0].purchase_requirement_item.purchase_requirement.code" slot-scope="props" target="_blank">
-                           <span v-for="code in props.row.relatable" :key="code.id">
+                          
+                                   <span v-for="codes in getUniqueCars(props.row.relatable)" :key="codes">
                                     <span >
-                                        {{ code.purchase_requirement_item.purchase_requirement.code }}
+                                        {{ codes}},                                        
                                     </span>
                                 </span>
                         
@@ -62,6 +63,11 @@ export default {
             ],
         }
     },
+      methods: {
+           getUniqueCars(id) {
+                  return id.map(x => x.purchase_requirement_item.purchase_requirement.code ).filter((v,i,s) => s.indexOf(v) === i)
+                 },
+      },
     created() {
         this.table_options.headings = {
             'relatable[0].purchase_requirement_item.purchase_requirement.code':"Código del requerimiento",
@@ -78,8 +84,14 @@ export default {
         this.table_options.sortable = ['purchase_supplier.name', 'currency.name'];
         this.table_options.filterable = ['purchase_supplier.name', 'currency.name'];
     },
+    
     mounted() {
         this.records = this.record_lists;
+        console.log(this.records);
+    },
+    computed:{
+      
+      
     },
 };
 </script>
