@@ -323,7 +323,7 @@
 								<h6 class="card-title">Datos del Registro Nacional de Contratistas</h6>
 								<div class="row">
 									<div class="col-8">
-										<div class="form-group is-required{{ $errors->has('rnc_status') ? ' has-error' : '' }}">
+										<div class="form-group {{ $errors->has('rnc_status') ? ' has-error' : '' }}">
 											{!! Form::label('rnc_status', 'Situación Actual') !!}
 											<div class="col-12">
 												<label class="radio-inline mt-4 mr-4">
