@@ -131,7 +131,7 @@
                             data-placement="left">
                             <i class="ion-ios-star"></i>{{ __('Registro de Actividad') }}</a> --}}
                         <lock-screen-option></lock-screen-option>
-                        <a id="doc-user" class="dropdown-item" href="" target="_blank"
+                        <a id="doc-user" class="dropdown-item" href="{{ url('docs/user') }}" target="_blank"
                             title="{{ __('Ayuda') }} / {{ __('Manual de usuario') }}" data-toggle="tooltip"
                             data-placement="left">
                             <i class="ion-help-circled"></i>{{ __('Ayuda') }}</a>
