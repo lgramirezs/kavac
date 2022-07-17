@@ -35,8 +35,7 @@
 				<payroll-socioeconomic :payroll_socioeconomic_id="{!! (isset($payrollSocioeconomic)) ? $payrollSocioeconomic->id : "null" !!}"
 	                route_list="{{ url('payroll/socioeconomics') }}">
 	            </payroll-socioeconomic>
-	           </div>
 	        </div>
-		</div>
+	    </div>
 	</div>
 @stop
