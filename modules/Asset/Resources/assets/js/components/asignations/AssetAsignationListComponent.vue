@@ -21,14 +21,25 @@
 					{{ (props.row.created_at)? format_date(props.row.created_at):'N/A' }}
 				</span>
 			</div>
+			<div slot="state" slot-scope="props" class="text-center">
+				<span>
+					{{ (props.row.state)}}
+				</span>
+			</div>
 			<div slot="id" slot-scope="props" class="text-center">
 				<div class="d-inline-flex">
 					<asset-asignation-info
 						:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id">
 					</asset-asignation-info>
-
+					<button class="btn btn-primary btn-xs btn-icon btn-action"
+                        type="button" data-toggle="tooltip" title="Entregar Equipos"
+                        :disabled="(props.row.state == 'Asignado') ? false : true"
+                        @click="deliverEquipment(props.index)">
+                    	<i class="icofont icofont-computer"></i>
+                	</button>
 					<button @click="editForm(props.row.id)"
 							class="btn btn-warning btn-xs btn-icon btn-action"
+							:disabled="(props.row.state == 'Asignado')?false:true"
 							title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 						<i class="fa fa-edit"></i>
 					</button>
@@ -49,7 +60,8 @@
 		data() {
 			return {
 				records: [],
-				columns: ['code', 'payroll_staff', 'location_place','created', 'id']
+				errors: [],
+				columns: ['code', 'payroll_staff', 'location_place','created', 'state', 'id']
 			}
 		},
 
@@ -59,10 +71,11 @@
 				'payroll_staff': 'Trabajador',
 				'location_place': 'Lugar de ubicación',
 				'created': 'Fecha de asignación',
+				'state': 'Estado de la asignación',
 				'id': 'Acción'
 			};
-			this.table_options.sortable = ['code', 'payroll_staff', 'location_place', 'created'];
-			this.table_options.filterable = ['code', 'payroll_staff', 'location_place','created'];
+			this.table_options.sortable = ['code', 'payroll_staff', 'location_place', 'created', 'state'];
+			this.table_options.filterable = ['code', 'payroll_staff', 'location_place','created', 'state'];
 			this.table_options.orderBy = { 'column': 'code'};
 		},
 		mounted () {
@@ -77,6 +90,33 @@
 			reset() {
 
 			},
+
+			deliverEquipment(index) {
+                const vm = this;
+                var fields = this.records[index-1];
+                var id = this.records[index-1].id;
+
+                axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${id}`, fields).then(response => {
+                    if (typeof(response.data.redirect) !== "undefined") {
+                        location.href = response.data.redirect;
+                    }
+                    else {
+                        vm.readRecords(url);
+                        vm.reset();
+                        vm.showMessage('update');
+                    }
+                }).catch(error => {
+                    vm.errors = [];
+
+                    if (typeof(error.response) !="undefined") {
+                        for (var index in error.response.data.errors) {
+                            if (error.response.data.errors[index]) {
+                                vm.errors.push(error.response.data.errors[index][0]);
+                            }
+                        }
+                    }
+                });
+            },
 		}
 	};
 </script>

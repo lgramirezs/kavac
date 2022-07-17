@@ -19,7 +19,7 @@
 					<i class="fa fa-check"></i>
 				</button>
 
-				<button @click="rejectedRequest(props.row.id)"
+				<button @click="rejectedRequest(props.index)"
 						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-danger btn-xs btn-icon btn-action" title="Rechazar Solicitud" data-toggle="tooltip" type="button">
 					<i class="fa fa-ban"></i>

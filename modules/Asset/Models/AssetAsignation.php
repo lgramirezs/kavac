@@ -39,7 +39,7 @@ class AssetAsignation extends Model implements Auditable
      *
      * @var array $fillable
      */
-    protected $fillable = ['code', 'payroll_staff_id', 'department_id', 'user_id', 'institution_id', 'location_place'];
+    protected $fillable = ['code', 'payroll_staff_id', 'department_id', 'user_id', 'institution_id', 'location_place', 'state'];
 
     /**
      * Método que obtiene los bienes asignados
@@ -66,6 +66,17 @@ class AssetAsignation extends Model implements Auditable
                ? $this->belongsTo(\Modules\Payroll\Models\PayrollStaff::class) : [];
     }
 
+    /**
+     * Método que obtiene las solicitude de entrega de los bienes asignados
+     *
+     * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo
+     * AssetAsignationDelivery
+     */
+    public function assetAsignationDelivery()
+    {
+        return $this->hasMany(AssetAsignationDelivery::class);
+    }
     /**
      * Método que obtiene el departamento donde recide el bien asignado
      *

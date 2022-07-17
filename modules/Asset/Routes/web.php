@@ -94,6 +94,20 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('asignations/vue-list', 'AssetAsignationController@vueList');
 
     /**
+     * -----------------------------------------------------------
+     * Rutas para gestionar las solicitudes de entregas pendientes
+     * -----------------------------------------------------------
+     */
+    Route::put('asignations/deliver-equipment/{asignation}', 'AssetAsignationController@deliver')
+             ->name('asset.asignation.deliver');
+
+    Route::resource(
+        'asignations/deliveries',
+        'AssetAsignationDeliveryController',
+        ['except' => ['show', 'create', 'edit']]
+    );
+
+    /**
      * ---------------------------------------------------------------------
      * Rutas para gestionar las desincorporaciones de bienes institucionales
      * ---------------------------------------------------------------------
