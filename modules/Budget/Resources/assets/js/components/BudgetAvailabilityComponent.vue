@@ -151,7 +151,7 @@
 						<label class="control-label">Hasta:</label>
 						<input
 							type="date"
-							class="form-control input-sm no-restrict"
+							class="form-control input-sm"
 							v-model="finalDate"
 						/>
 					</div>
