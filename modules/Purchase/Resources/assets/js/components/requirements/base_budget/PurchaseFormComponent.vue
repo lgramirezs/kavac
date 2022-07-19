@@ -376,7 +376,7 @@ export default {
             'code': 'Código',
             'description': 'Descripción',
             'fiscal_year.year': 'Año fiscal',
-            'contrating_department.name': 'Departamento contatante',
+            'contrating_department.name': 'Departamento contratante',
             'user_department.name': 'Departamento Usuario',
             'purchase_supplier_object.name': 'Tipo',
             'requirement_status': 'Estado',
