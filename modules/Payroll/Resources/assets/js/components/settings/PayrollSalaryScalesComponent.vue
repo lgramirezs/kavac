@@ -512,25 +512,6 @@
                 vm.resetScale = true;
                 vm.resetGroup = false;
 
-                /**
-                 * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
-                 * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
-                 */
-                $.each(vm.record, function(el, value) {
-                    if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
-                        /** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
-                        $("input[name=" + el + "]").each(function() {
-                            if ($(this).val() === value) {
-                                $(this).bootstrapSwitch('state', value, true)
-                            }
-
-                        });
-                    }
-                    if (value === true || value === false) {
-                        $("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
-                    }
-                });
-
                 event.preventDefault();
             },
 
