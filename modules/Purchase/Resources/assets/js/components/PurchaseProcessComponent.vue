@@ -22,12 +22,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            <input id='exists' data-on-label='SI' data-off-label='NO' name='exists' type='checkbox' class='form-control bootstrap-switch' v-model='exists'>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="exists" v-model="exists">
+                                        <label class="custom-control-label" for="exists">
                                             ¿El proceso existe?
-                                        </div>
-                                    </label>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6" v-if="exists">
@@ -210,25 +210,6 @@ export default {
             vm.errors = [];
             vm.record = data;
             vm.record.list_documents = list_documents;
-
-            /**
-             * Recorre todos los campos para determinar si existe un elemento booleano para, posteriormente,
-             * seleccionarlo en el formulario en el caso de que se encuentre activado en BD
-             */
-            $.each(vm.record, function(el, value) {
-                if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
-                    /** verifica los elementos bootstrap-switch para seleccionar el que corresponda según los registros del sistema */
-                    $("input[name=" + el + "]").each(function() {
-                        if ($(this).val() === value) {
-                            $(this).bootstrapSwitch('state', value, true)
-                        }
-
-                    });
-                }
-                if (value === true || value === false) {
-                    $("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
-                }
-            });
 
             event.preventDefault();
         },

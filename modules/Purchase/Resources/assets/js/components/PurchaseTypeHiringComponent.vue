@@ -45,8 +45,9 @@
                                 <div class='form-group'>
                                     <label class='control-label'>Activa</label>
                                     <div class='col-12'>
-                                        <div class="col-12 bootstrap-switch-mini">
-                                            <input id='active' data-on-label='SI' data-off-label='NO' name='active' type='checkbox' class='form-control bootstrap-switch' v-model='record.active'>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="active" v-model='record.active'>
+                                            <label class="custom-control-label" for="active"></label>
                                         </div>
                                     </div>
                                 </div>
