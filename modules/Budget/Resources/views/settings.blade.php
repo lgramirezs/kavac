@@ -155,11 +155,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <budget-projects-list
+                    <budget-list-projects
                         route_list="{{ url('budget/projects/vue-list') }}"
                         route_delete="{{ url('budget/projects') }}"
                         route_edit="{{ url('budget/projects/{id}/edit') }}">
-                    </budget-projects-list>
+                    </budget-list-projects>
                 </div>
             </div>
         </div>

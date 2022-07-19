@@ -17,9 +17,9 @@ Vue.component('budget-accounts-list', () =>
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-Vue.component('budget-projects-list', () =>
+Vue.component('budget-list-projects', () =>
 	import(
-		/* webpackChunkName: "budget-projects-list" */
+		/* webpackChunkName: "budget-list-projects" */
 		'./components/BudgetProjectsListComponent.vue'
 	)
 );
