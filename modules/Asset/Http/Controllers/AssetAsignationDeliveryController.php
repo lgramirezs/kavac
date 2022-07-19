@@ -31,7 +31,9 @@ class AssetAsignationDeliveryController extends Controller
      */
     public function index()
     { 
-        return response()->json(['records' => AssetAsignationDelivery::with('assetAsignation', 'user')->get()], 200);
+        return response()->json(['records' => AssetAsignationDelivery::with(['assetAsignation' => function ($query){
+                                                                                $query->with('payrollStaff');
+                                                                                } , 'user'])->get()], 200);
     }
 
     /**

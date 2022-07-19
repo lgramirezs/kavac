@@ -1,14 +1,29 @@
 <template>
 	<div class="card-body col-md-12">
 		<v-client-table :columns="columns" :data="records" :options="table_options" ref="tableMax">
+			<div slot="asset_asignation.code" slot-scope="props" class="text-center">
+				<span>
+					{{ props.row.asset_asignation.code }}
+				</span>
+			</div>
 			<div slot="observation" slot-scope="props" class="text-center">
 				<span>
 					{{ (props.row.observation)? props.row.observation:'N/A'}}
 				</span>
 			</div>
-			<div slot="created_at" slot-scope="props" class="text-center">
+			<div slot="asset_asignation.payroll_staff" slot-scope="props" class="text-center">
 				<span>
-					{{ (props.row.created_at)? format_date(props.row.created_at):'N/A'}}
+					{{ (props.row.asset_asignation.payroll_staff)?(props.row.asset_asignation.payroll_staff.first_name + ' ' + props.row.asset_asignation.payroll_staff.last_name):'N/A' }}
+				</span>
+			</div>
+			<div slot="asset_asignation.location_place" slot-scope="props" class="text-center">
+				<span>
+					{{ (props.row.asset_asignation.location_place)? props.row.asset_asignation.location_place:'N/A' }}
+				</span>
+			</div>
+			<div slot="state" slot-scope="props" class="text-center">
+				<span>
+					{{ props.row.state }}
 				</span>
 			</div>
 			<div slot="id" slot-scope="props" class="text-center">
@@ -50,7 +65,8 @@
 
 				records: [],
 				errors: [],
-				columns: ['asset_asignation.code', 'state', 'created_at', 'observation', 'id'],
+				columns: ['asset_asignation.code', 'asset_asignation.payroll_staff', 
+							'asset_asignation.location_place', 'state', 'observation', 'id'],
 			}
 		},
 		
@@ -58,13 +74,16 @@
 			this.readRecords(this.route_list);
 			this.table_options.headings = {
 				'asset_asignation.code': 'Código',
+				'asset_asignation.payroll_staff': 'Trabajador',
+				'asset_asignation.location_place': 'Lugar de ubicación',
 				'state': 'Estado de entrega',
-				'created_at': 'Fecha de emisión',
 				'observation': 'Observaciones',
 				'id': 'Acción'
 			};
-			this.table_options.sortable = ['asset_asignation.code', 'state', 'created_at'];
-			this.table_options.filterable = ['asset_asignation.code', 'state', 'created_at'];
+			this.table_options.sortable = ['asset_asignation.code', 'asset_asignation.payroll_staff', 
+											'asset_asignation.location_place', 'state'];
+			this.table_options.filterable = ['asset_asignation.code', 'asset_asignation.payroll_staff', 
+											'asset_asignation.location_place', 'state'];
 			
 		},
 		
