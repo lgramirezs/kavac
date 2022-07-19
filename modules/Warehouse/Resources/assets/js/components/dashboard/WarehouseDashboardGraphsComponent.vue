@@ -2,7 +2,7 @@
     <section>
         <div class="alert alert-danger" v-if="errors.length > 0">
             <ul>
-                <li v-for="error in errors">{{ error }}</li>
+                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
             </ul>
         </div>
         <div class="row">
@@ -11,10 +11,10 @@
                 <div class=" form-group">
                     <label>Existencia</label>
                     <div class="col-12">
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="radio" name="type_graph_products" value="exist" id="sel_product_exist"
-                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products"
-                                   data-on-label="SI" data-off-label="NO" checked>
+                        <div class="custom-control custom-switch">
+                            <input type="radio" class="custom-control-input sel_graph_products" 
+                                   id="sel_product_exist" name="type_graph_products" value="exist" checked>
+                            <label class="custom-control-label" for="sel_product_exist"></label>
                         </div>
                     </div>
                 </div>
@@ -23,10 +23,10 @@
                 <div class=" form-group">
                     <label>Más solicitados</label>
                     <div class="col-12">
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="radio" name="type_graph_products" value="max_request"
-                                   id="sel_product_max_request" data-on-label="SI" data-off-label="NO"
-                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
+                        <div class="custom-control custom-switch">
+                            <input type="radio" class="custom-control-input sel_graph_products" 
+                                   id="sel_product_max_request" name="type_graph_products" value="max_request">
+                            <label class="custom-control-label" for="sel_product_max_request"></label>
                         </div>
                     </div>
                 </div>
@@ -36,10 +36,10 @@
                 <div class=" form-group">
                     <label>Menos solicitados</label>
                     <div class="col-12">
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="radio" name="type_graph_products" value="min_request"
-                                   id="sel_product_min_request" data-on-label="SI" data-off-label="NO"
-                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_graph_products">
+                        <div class="custom-control custom-switch">
+                            <input type="radio" class="custom-control-input sel_graph_products" 
+                                   id="sel_product_min_request" name="type_graph_products" value="min_request">
+                            <label class="custom-control-label" for="sel_product_min_request"></label>
                         </div>
                     </div>
                 </div>
@@ -390,7 +390,6 @@
         mounted() {
             const vm = this;
             vm.reset();
-            vm.switchHandler('type_graph_products');
             vm.update();
 
             $('.sel_graph_products').on('switchChange.bootstrapSwitch', function(e) {

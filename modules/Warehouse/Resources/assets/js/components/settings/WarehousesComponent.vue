@@ -61,13 +61,11 @@
                                 <div class="form-group">
                                     <label for="" class="control-label">Principal</label>
                                     <div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   name="main" data-toggle="tolltip"
-                                                   v-has-tooltip title="Indique si es el almacén principal"
-                                                   data-on-label="Si" data-off-label="No" value="true"
-                                                   v-model="record.main">
-                                            </div>
+                                        <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                             title="Indique si es el almacén principal">
+                                            <input type="checkbox" class="custom-control-input" id="main" 
+                                                   :value="true" v-model="record.main">
+                                            <label class="custom-control-label" for="main"></label>
                                         </div>
                                 </div>
                             </div>-->
@@ -75,12 +73,11 @@
                                 <div class="form-group">
                                     <label for="" class="control-label">Activo</label>
                                     <div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   name="active" data-toggle="tolltip"
-                                                   v-has-tooltip title="Indique si el estatus del almacén"
-                                                   data-on-label="Si" data-off-label="No" value="true"
-                                                   v-model="record.active">
+                                        <div class="custom-control custom-switch" data-toggle="tolltip" 
+                                             title="Indique si el estatus del almacén">
+                                            <input type="checkbox" class="custom-control-input" id="active" 
+                                                   :value="true" v-model="record.active">
+                                            <label class="custom-control-label" for="active"></label>
                                         </div>
                                     </div>
                                 </div>
@@ -328,23 +325,6 @@
                     active: vm.record.active,
                     main: field.main,
                 };
-
-                $.each(elements, function (el, value) {
-                    if ($("input[name=" + el + "]").hasClass('bootstrap-switch')) {
-                        /**
-                         * verifica los elementos bootstrap-switch para seleccionar el que
-                         * corresponda según los registros del sistema
-                         */
-                        $("input[name=" + el + "]").each(function () {
-                            if ($(this).val() === value) {
-                                $(this).bootstrapSwitch('state', value, true);
-                            }
-                        });
-                    }
-                    if (value === true || value === false) {
-                        $("input[name=" + el + "].bootstrap-switch").bootstrapSwitch('state', value, true);
-                    }
-                });
                 event.preventDefault();
             },
         },
