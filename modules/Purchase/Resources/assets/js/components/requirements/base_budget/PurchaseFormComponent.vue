@@ -54,7 +54,7 @@
                             <th tabindex="0" class="col-3" style="border: 1px solid #dee2e6; position: relative;">Nombre</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Cantidad</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Unidad de medida</th>
-                            <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">Precio unitario sin IVA</th>
+                            <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;" id="pusiva" >Precio unitario sin IVA</th>
                             <th tabindex="0" class="col-2" style="border: 1px solid #dee2e6; position: relative;">cantidad * Precio unitario</th>
                         </tr>
                     </thead>
@@ -111,9 +111,32 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="card-footer text-right">
-                    <buttonsDisplay route_list="/purchese/requirements" display="false" />
+                <div class="row">
+                    <div class="col-md-3 offset-md-9" id="helpParamButtons">
+                        <button type="button" @click="reset()"
+                                class="btn btn-default btn-icon btn-round"
+                                data-toggle="tooltip"
+                                title="Borrar datos del formulario">
+                                <i class="fa fa-eraser"></i>
+                        </button>
+
+                        <button type="button" @click="redirect_back('/purchase/requirements')"
+                                class="btn btn-warning btn-icon btn-round btn-modal-close"
+                                data-dismiss="modal"
+                                title="Cancelar y regresar">
+                                <i class="fa fa-ban"></i>
+                        </button>
+
+                        <button type="button"  @click="createRecord()"
+                                class="btn btn-success btn-icon btn-round btn-modal-save"
+                                title="Guardar registro">
+                            <i class="fa fa-save"></i>
+                        </button>
+                    </div>
                 </div>
+                <!--<div class="card-footer text-right">
+                    <buttonsDisplay route_list="/purchese/requirements" display="false" />
+                </div>-->
             </div>
         </div>
     </section>
@@ -175,8 +198,19 @@ export default {
         }
     },
     methods: {
+        /**
+         * Reinicia los valores de los campos del formulario
+         *
+         * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve | pedrobui@gmail.com>
+         */
         reset() {
-            // 
+          this.currency_id = '';
+          this.currency = null;
+          this.tax_id = '';
+          for (var i = this.record_items.length - 1; i >= 0; i--) {
+                var r = this.record_items[i];
+                r.unit_price = 0;
+            }
         },
         // indexOf(list, id, returnBoolean){
         //     for (var i = list.length - 1; i >= 0; i--) {
@@ -342,7 +376,7 @@ export default {
             'code': 'Código',
             'description': 'Descripción',
             'fiscal_year.year': 'Año fiscal',
-            'contrating_department.name': 'Departamento contatante',
+            'contrating_department.name': 'Departamento contratante',
             'user_department.name': 'Departamento Usuario',
             'purchase_supplier_object.name': 'Tipo',
             'requirement_status': 'Estado',

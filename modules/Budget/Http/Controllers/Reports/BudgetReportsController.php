@@ -363,8 +363,8 @@ class BudgetReportsController extends Controller
 
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P']);
-        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P', 'reportDate' => '']);
+        $pdf->setHeader('', 'Certificado de disponibilidad presupuestaria');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
             'pdf' => $pdf,
@@ -452,7 +452,7 @@ class BudgetReportsController extends Controller
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P']);
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P', 'reportDate' => '']);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
@@ -783,8 +783,8 @@ class BudgetReportsController extends Controller
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE']);
-        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE', 'reportDate' => '']);
+        $pdf->setHeader('', 'Reporte Mayor Analítico por Proyecto o Acción Centralizada');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAnalyticMajor', true, [
             'pdf' => $pdf,

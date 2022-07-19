@@ -78,7 +78,7 @@ class ReportRepository implements ReportInterface
      */
     public function setConfig($params = [])
     {
-        $this->reportDate = \Carbon\Carbon::now()->format('d-m-Y');
+        $this->reportDate = $params['reportDate'] ?? \Carbon\Carbon::now()->format('d-m-Y');
         $this->orientation = $params['orientation'] ?? 'P';
         $this->units = $params['units'] ?? 'mm';
         $this->format = $params['format'] ?? 'LETTER';
@@ -260,7 +260,7 @@ class ReportRepository implements ReportInterface
             );
             /** Fecha de emisión del reporte */
             $pdf->MultiCell(
-                72,
+                $pdf->getPageWidth() - 123,
                 4,
                 $params->reportDate,
                 0,
@@ -278,7 +278,7 @@ class ReportRepository implements ReportInterface
                 true
             );
             /** Línea de separación entre el encabezado del reporte y el cuerpo */
-            $pdf->Line(7, $params->headerY + 15, 205, $params->headerY + 15, $params->lineStyle);
+            $pdf->Line(7, $params->headerY + 15, $pdf->getPageWidth() - $params->headerY, $params->headerY + 15, $params->lineStyle);
         });
     }
 
