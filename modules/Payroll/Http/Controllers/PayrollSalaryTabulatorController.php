@@ -222,107 +222,27 @@ class PayrollSalaryTabulatorController extends Controller
                 'payroll_horizontal_salary_scale_id' => $request->input('payroll_horizontal_salary_scale_id')
             ]);
 
-            /** Se eliminan los registros en desuso de tipos de personal de la tabla intermedia */
-            foreach ($salaryTabulator->payrollStaffTypes as $payrollStaffType) {
-                $staffType_id = PayrollStaffType::find($payrollStaffType['id']);
-                $salaryTabulator->payrollStaffTypes()->detach($staffType_id);
-            }
-
-            /**
-             * Fecha en la que fue actualizado el registro
-             * @var date $updated_at
-             */
-            $updated_at = now();
-            /**
-             * Objeto del registro de la escala asociada al tabulador salarial
-             * @var Object $salaryTabulatorScale
-             */
-            $salaryTabulatorScale = null;
-
-            /**
-             * Identificador único del registro del escalafón salarial horizontal
-             * @var integer $oldHorizontalScale
-             */
-            $oldHorizontalScale =
-                ($request->payroll_horizontal_salary_scale_id == $salaryTabulator->payroll_horizontal_salary_scale_id)
-                    ? null
-                    : $salaryTabulator->payroll_horizontal_salary_scale_id;
-            /**
-             * Identificador único del registro del escalafón salarial vertical
-             * @var integer $oldHorizontalScale
-             */
-            $oldVerticalScale =
-                ($request->payroll_vertical_salary_scale_id == $salaryTabulator->payroll_vertical_salary_scale_id)
-                    ? null
-                    : $salaryTabulator->payroll_vertical_salary_scale_id;
-
-            /** Se actualizan las escalas asociadas al tabulador */
-            foreach ($request->payroll_salary_tabulator_scales as $payrollScale) {
-                if (is_null($oldVerticalScale) && !is_null($oldHorizontalScale)) {
-                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::where([
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'payroll_vertical_scale_id'   => $payrollScale['payroll_vertical_scale_id'],
-                    ])->first();
-                    if ($salaryTabulatorScale) {
-                        $salaryTabulatorScale->value                       = $payrollScale['value'];
-                        $salaryTabulatorScale->updated_at                  = $updated_at;
-                        $salaryTabulatorScale->payroll_horizontal_scale_id =
-                            $payrollScale['payroll_horizontal_scale_id'];
-                        $salaryTabulatorScale->save();
-                    }
-                } elseif (!is_null($oldVerticalScale) && is_null($oldHorizontalScale)) {
-                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::where([
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'payroll_horizontal_scale_id' => $payrollScale['payroll_horizontal_scale_id'],
-                    ])->first();
-                    if ($salaryTabulatorScale) {
-                        $salaryTabulatorScale->value                     = $payrollScale['value'];
-                        $salaryTabulatorScale->updated_at                = $updated_at;
-                        $salaryTabulatorScale->payroll_vertical_scale_id = $payrollScale['payroll_vertical_scale_id'];
-                        $salaryTabulatorScale->save();
-                    }
-                } elseif (is_null($oldVerticalScale) && is_null($oldHorizontalScale)) {
-                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::where([
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'payroll_vertical_scale_id'   => $payrollScale['payroll_vertical_scale_id'] ?? null,
-                        'payroll_horizontal_scale_id' => $payrollScale['payroll_horizontal_scale_id'] ?? null,
-                    ])->orWhere([
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'payroll_vertical_scale_id'   => null,
-                        'payroll_horizontal_scale_id' => $payrollScale['payroll_horizontal_scale_id'] ?? null,
-                    ])->orWhere([
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'payroll_vertical_scale_id'   => $payrollScale['payroll_vertical_scale_id'] ?? null,
-                        'payroll_horizontal_scale_id' => null,
-                    ])->first();
-
-                    $salaryTabulatorScale->payroll_horizontal_scale_id = $payrollScale['payroll_horizontal_scale_id']
-                                                                         ?? null;
-                    $salaryTabulatorScale->payroll_vertical_scale_id   = $payrollScale['payroll_vertical_scale_id']
-                                                                         ?? null;
-                    $salaryTabulatorScale->value                       = $payrollScale['value'];
-                    $salaryTabulatorScale->updated_at                  = $updated_at;
-                    $salaryTabulatorScale->save();
-                }
-                if (is_null($salaryTabulatorScale)) {
-                    $salaryTabulatorScale = PayrollSalaryTabulatorScale::create([
-                        'value'                       => $payrollScale['value'],
-                        'payroll_vertical_scale_id'   => $payrollScale['payroll_vertical_scale_id'] ?? null,
-                        'payroll_horizontal_scale_id' => $payrollScale['payroll_horizontal_scale_id'] ?? null,
-                        'payroll_salary_tabulator_id' => $salaryTabulator->id,
-                        'updated_at'                  => $updated_at
-                    ]);
-                }
-            }
+            
             /** Se eliminan las demas escalas asociadas al tabulador */
-            $payrollSalaryTabulatorScales = PayrollSalaryTabulatorScale::where([
-                'payroll_salary_tabulator_id' => $salaryTabulator->id,
-            ])->get();
-            foreach ($payrollSalaryTabulatorScales as $payrollSalaryTabulatorScale) {
-                if ($payrollSalaryTabulatorScale->updated_at->format('Y-m-d H:i:s')
-                    != $updated_at->format('Y-m-d H:i:s')) {
-                    $payrollSalaryTabulatorScale->delete();
-                }
+            $salaryTabulator->payrollSalaryTabulatorScales()->forceDelete();
+
+            /** Se agregan o actualizan las escalas del tabulador salarial */
+            foreach ($request->payroll_salary_tabulator_scales as $payrollScale) {
+                /**
+                 * Objeto asociado al modelo PayrollSalaryTabulatorScale
+                 * @var Object $salaryTabulatorScale
+                 */
+                $salaryTabulatorScale = PayrollSalaryTabulatorScale::updateOrCreate(
+                    [
+                        'payroll_vertical_scale_id'   => $payrollScale['payroll_vertical_scale_id'] ?? null,
+                        'payroll_horizontal_scale_id' => $payrollScale['payroll_horizontal_scale_id'] ?? null,
+                        'payroll_salary_tabulator_id' => $salaryTabulator->id
+                    ],
+                    [
+                        'value'                       => $payrollScale['value'],
+                        'deleted_at'                  => null
+                    ]
+                );
             }
         });
     }
