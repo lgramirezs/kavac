@@ -613,16 +613,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<strong>{{ __('Municipio') }}:</strong>
-									<div class="row">
-										<span class="col-md-12">
-											<a  id="modal-municipality_id"></a>
-										</span>
-									</div>
-								</div>
-							</div>
+						
 							<div class="col-md-4">
 								<div class="form-group">
 									<strong>{{ __('Ciudad') }}:</strong>
