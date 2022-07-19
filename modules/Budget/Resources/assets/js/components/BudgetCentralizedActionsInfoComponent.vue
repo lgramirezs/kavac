@@ -100,7 +100,7 @@
                       <strong>Nombre del Responsable:</strong>
                       <div class="row">
                         <span class="col-md-12">
-                          {{ personal.fullname }}
+                          {{ personal.fullname  }}
                         </span>
                       </div>
                     </div>
@@ -110,7 +110,7 @@
                       <strong>Cargo de Responsable:</strong>
                       <div class="row">
                         <span class="col-md-12">
-                          {{ personal.fullname }}
+                          {{ position.name }}
                         </span>
                       </div>
                     </div>

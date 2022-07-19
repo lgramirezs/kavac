@@ -27,8 +27,10 @@
                     <!--<div class="col-md-3">
                         <div class="form-group is-required">
                             <label for="" class="control-label">Incluir cuentas presupuestarias</label>
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="checkbox" class='form-control bootstrap-switch' data-on-label="SI" data-off-label="NO">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="withBudgetAccounts" 
+                                       :value="true" v-model="record.with_budget_accounts">
+                                <label class="custom-control-label" for="withBudgetAccounts"></label>
                             </div>
                         </div>
                     </div>-->                    
@@ -46,8 +48,8 @@
                             <label for="" class="control-label">¿Pago Parcial?</label>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="isPartialSwitch" 
-                                       :value="true" v-model="record.is_partial" data-on-text="SI" data-off-text="NO">
-                                <label class="custom-control-label" for="isPartialSwitch">Si</label>
+                                       :value="true" v-model="record.is_partial">
+                                <label class="custom-control-label" for="isPartialSwitch"></label>
                             </div>
                         </div>
                     </div>
