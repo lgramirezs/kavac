@@ -23,6 +23,16 @@ Vue.component('financement-types', () => import(
 ));
 
 /**
+ * Componente para la gestión de las fuentes de financiamiento.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('financement-sources', () => import(
+    /* webpackChunkName: "financement-sources" */
+    './components/FinancementSourcesComponent.vue'
+));
+
+/**
  * Componente para mostrar listado de proyectos
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>

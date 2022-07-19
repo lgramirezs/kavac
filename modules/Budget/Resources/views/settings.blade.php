@@ -158,6 +158,7 @@
                 <div class="card-body">
                     <div class="row">
                         <financement-types></financement-types>
+                        <financement-sources></financement-sources>
                     </div>
                 </div>
             </div>
