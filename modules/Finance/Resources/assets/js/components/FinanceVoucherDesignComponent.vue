@@ -28,14 +28,13 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						<div class="form-group bootstrap-switch-mini">
+						<div class="form-group">
 							<label>Valores por defecto</label>
-	                		<div class="col-12">
-	                			<input type="checkbox" class="form-control bootstrap-switch bootstrap-switch-mini"
-	                    			   data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-	                    			   title="Configurar valores por defecto" name="default"
-									   v-model.lazy="record.default" value="AP" data-record="default">
-	                		</div>
+							<div class="custom-control custom-switch" data-toggle="tooltip" title="Configurar valores por defecto">
+                                <input type="checkbox" class="custom-control-input" id="defaultValues" 
+                                       value="AP" v-model="record.default">
+                                <label class="custom-control-label" for="defaultValues"></label>
+                            </div>
 						</div>
 					</div>
 					<div class="col-12">
@@ -384,9 +383,6 @@
 					}
 				});
 			}
-		},
-		created() {
-			this.switchHandler('default');
-		},
+		}
 	};
 </script>
