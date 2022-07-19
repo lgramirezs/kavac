@@ -5,9 +5,13 @@
             <div class="col-3">
                 <div class="form-group">
                     <label class="control-label">Fecha de generación</label><br>
-                    <label class="control-label">
+                    <input type="date" readonly
+                           data-toggle="tooltip"
+                           title="Fecha de generación"
+                           class="form-control input-sm" v-model="record.date">
+                    <!--<label class="control-label">
                         <h5>{{ format_date(date) }}</h5>
-                    </label>
+                    </label>-->
                 </div>
             </div>
             <div class="col-3">
@@ -370,13 +374,13 @@ export default {
                 return null;
             }
         },
-        date: {
+        /*date: {
             type: String,
             default: function() {
                 const dateJs = new Date();
                 return dateJs.getFullYear() + '-' + (dateJs.getMonth() + 1) + '-' + dateJs.getDate();
             }
-        },
+        }, */
         tax: {
             type: Object,
             default: function() {
@@ -455,6 +459,7 @@ export default {
                 verified_by_id: '',
                 first_signature_id: '',
                 second_signature_id: '',
+                date: '',
             },
             // Editar registro
             recordEdit: false,
@@ -598,6 +603,7 @@ export default {
                 vm.record.funding_source = vm.record_edit[i]['funding_source'];
                 vm.record.description = vm.record_edit[i]['description'];
                 vm.record.fiscal_year_id = vm.record_edit[i]['fiscal_year_id'];
+                vm.record.date = vm.record_edit[i]['date'];
                 vm.record.purchase_supplier_id = vm.record_edit[i]['purchase_supplier_id'];
                  vm.purchase_supplier_id = vm.record_edit[i]['purchase_supplier_id'];
                 vm.currency_id = vm.record_edit[i]['currency_id'];
@@ -615,7 +621,9 @@ export default {
                         }
                 }
             }
-        }
+        } else {
+                vm.record.date = vm.format_date(new Date(), 'YYYY-MM-DD');
+            }
         /*if (vm.record_edit) {
             vm.load_data_edit = true;
             vm.currency_id = vm.record_edit.currency_id;
@@ -676,6 +684,7 @@ export default {
             vm.tax_value = 0;
             vm.total = 0;
             vm.$refs.purchaseShowError.reset();
+            vm.record.date = vm.format_date(new Date(), 'YYYY-MM-DD');
         },
 
         uploadFile(inputID, e) {
@@ -849,7 +858,7 @@ export default {
                 formData.append("record_items", '');
             }
 
-            formData.append("date", this.date);
+            formData.append("date", this.record.created_at);
             formData.append("institution_id", this.record.institution_id);
             formData.append("contracting_department_id", this.record.contracting_department_id);
             formData.append("user_department_id", this.record.user_department_id);
