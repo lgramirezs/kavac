@@ -36,7 +36,8 @@ export default {
             records: [],
             url_start_certificate: `${window.app_url}/purchase/direct_hire/start_certificate/pdf/`,
             columns: [
-                'fiscal_year.year',
+                'code',
+                'fiscal_year.year',               
                 'funding_source',
                 'description',
                 'id'
@@ -45,15 +46,17 @@ export default {
     },
     created() {
         this.table_options.headings = {
-            'fiscal_year.year': 'Año fiscal',
+            'code': 'Codigo',
+            'fiscal_year.year': 'Año fiscal',          
             'funding_source': 'Fuente de financiamiento',
             'description': 'Denominación especifica del requerimiento',
             'id': 'Acción'
         };
         this.table_options.columnsClasses = {
-            'fiscal_year.year': 'col-xs-2',
-            'funding_source': 'col-xs-4',
-            'description': 'col-xs-5',
+            'code': 'col-xs-2 text-center',
+            'fiscal_year.year': 'col-xs-2 text-center',                    
+            'funding_source': 'col-xs-3 text-center',
+            'description': 'col-xs-4 text-center',
             'id': 'col-xs-1'
         };
         this.table_options.sortable = ['fiscal_year.year'];
