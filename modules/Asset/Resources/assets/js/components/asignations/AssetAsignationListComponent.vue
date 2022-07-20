@@ -31,12 +31,16 @@
 					<asset-asignation-info
 						:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id">
 					</asset-asignation-info>
-					<button class="btn btn-primary btn-xs btn-icon btn-action"
+					<asset-asignation-deliver-equipment
+						:index="props.row.id"
+						:state="props.row.state">
+					</asset-asignation-deliver-equipment>
+					<!-- <button class="btn btn-primary btn-xs btn-icon btn-action"
                         type="button" data-toggle="tooltip" title="Entregar Equipos"
                         :disabled="(props.row.state == 'Asignado') ? false : true"
                         @click="deliverEquipment(props.index)">
                     	<i class="icofont icofont-computer"></i>
-                	</button>
+                	</button> -->
 					<button @click="editForm(props.row.id)"
 							class="btn btn-warning btn-xs btn-icon btn-action"
 							:disabled="(props.row.state == 'Asignado')?false:true"
@@ -76,7 +80,7 @@
 			};
 			this.table_options.sortable = ['code', 'payroll_staff', 'location_place', 'created', 'state'];
 			this.table_options.filterable = ['code', 'payroll_staff', 'location_place','created', 'state'];
-			this.table_options.orderBy = { 'column': 'code'};
+			//this.table_options.orderBy = { 'column': 'code'};
 		},
 		mounted () {
 			this.readRecords(this.route_list);
@@ -91,32 +95,32 @@
 
 			},
 
-			deliverEquipment(index) {
-                const vm = this;
-                var fields = this.records[index-1];
-                var id = this.records[index-1].id;
+			// deliverEquipment(index) {
+            //     const vm = this;
+            //     var fields = this.records[index-1];
+            //     var id = this.records[index-1].id;
 
-                axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${id}`, fields).then(response => {
-                    if (typeof(response.data.redirect) !== "undefined") {
-                        location.href = response.data.redirect;
-                    }
-                    else {
-                        vm.readRecords(url);
-                        vm.reset();
-                        vm.showMessage('update');
-                    }
-                }).catch(error => {
-                    vm.errors = [];
+            //     axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${id}`, fields).then(response => {
+            //         if (typeof(response.data.redirect) !== "undefined") {
+            //             location.href = response.data.redirect;
+            //         }
+            //         else {
+            //             vm.readRecords(url);
+            //             vm.reset();
+            //             vm.showMessage('update');
+            //         }
+            //     }).catch(error => {
+            //         vm.errors = [];
 
-                    if (typeof(error.response) !="undefined") {
-                        for (var index in error.response.data.errors) {
-                            if (error.response.data.errors[index]) {
-                                vm.errors.push(error.response.data.errors[index][0]);
-                            }
-                        }
-                    }
-                });
-            },
-		}
+            //         if (typeof(error.response) !="undefined") {
+            //             for (var index in error.response.data.errors) {
+            //                 if (error.response.data.errors[index]) {
+            //                     vm.errors.push(error.response.data.errors[index][0]);
+            //                 }
+            //             }
+            //         }
+            //     });
+            // },
+		},
 	};
 </script>

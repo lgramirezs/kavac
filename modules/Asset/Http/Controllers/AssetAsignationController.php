@@ -320,10 +320,10 @@ class AssetAsignationController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetAsignations = AssetAsignation::with('payrollStaff')->get();
+            $assetAsignations = AssetAsignation::with('payrollStaff')->orderBy('id')->get();
         } else {
             $assetAsignations = AssetAsignation::where('institution_id', $institution_id)
-                ->with('payrollStaff')->get();
+                ->with('payrollStaff')->orderBy('id')->get();
         }
 
         return response()->json(['records'  => $assetAsignations], 200); 
