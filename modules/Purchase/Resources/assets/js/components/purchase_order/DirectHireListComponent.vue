@@ -35,6 +35,7 @@ export default {
         return {
             records: [],
             url_start_certificate: `${window.app_url}/purchase/direct_hire/start_certificate/pdf/`,
+            purchase_order_pdf: `${window.app_url}/purchase/direct_hire/purchase_order/pdf/`,
             columns: [
                 'code',
                 'fiscal_year.year',               

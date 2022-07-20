@@ -173,6 +173,7 @@
                 errors: [],
                 records: [],
                 payroll_staffs: [],
+                holidays : [],
                 payrollPermissionPolicy: {
                     id:        '',
                     time_max:  '',
@@ -224,10 +225,11 @@
                 $.each(vm.payroll_permission_policies, function(index, field) {
                     if (field['id'] == '') {
                         vm.payrollPermissionPolicy = {
-                                id:        '',
-                                time_max:  '',
-                                time_min:  '',
-                                time_unit: ''
+                                id:            '',
+                                time_max:      '',
+                                time_min:      '',
+                                time_unit:     '',
+                                business_days: '',
 
                             }
                     } else if (field['id'] == vm.record.payroll_permission_policy_id) {
@@ -387,7 +389,7 @@
                     let diff = end_date.getTime() - start_date.getTime()
                     let dias = diff/(1000*60*60*24)
                     let cont = 0;
-                    
+
                     const sumarLaborables = (f, n) => {
                         for(var i=0; i<n; i++) {
                             f.setTime( f.getTime() + (1000*60*60*24) );
@@ -398,6 +400,20 @@
                             }
                         }
 
+                    }
+
+                    if (vm.payrollPermissionPolicy.business_days == true) {
+                        let holidayDiscount = [];
+                        for (let holiday of vm.holidays) {
+                            if (holiday.text != 'Seleccione...') {
+                                let holidayDate = new Date(holiday.text)
+                                if (holidayDate.getTime() >= start_date && holidayDate.getTime() <= end_date) {
+                                    holidayDiscount.push(holiday.text);
+                                }
+                            }
+                        }
+
+                        dias = dias - holidayDiscount.length;
                     }
 
                     sumarLaborables(start_date, dias);
@@ -430,7 +446,24 @@
                     }
 
                 }
-            }
+            },
+
+            /**
+             * Método que carga los días feriados
+             *
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             *
+             */
+            getHolidays() {
+                const vm = this;
+                let url = vm.setUrl('payroll/get-holidays');
+
+                axios.get(url).then(response => {
+                    if (typeof(response.data) !== "undefined") {
+                        vm.holidays = response.data;
+                    }
+                });
+            },
         },
 
         mounted() {
@@ -452,6 +485,7 @@
             const vm = this;
             vm.getPayrollStaffs();
             vm.getPayrollPermissionPolicies();
+            vm.getHolidays();
         },
     };
 </script>
