@@ -40,7 +40,7 @@
 					<i class="fa fa-ban"></i>
 				</button>
 
-				<button @click="deleteRecord(props.row.id, 'asset/asignations/deliveries')"
+				<button @click="deleteRecord(props.row.id, 'asset/asignations/deliver')"
 						:disabled="(props.row.state == 'Aprobado')? true:false"
 						class="btn btn-danger btn-xs btn-icon btn-action" title="Eliminar registro" data-toggle="tooltip" type="button">
 					<i class="fa fa-trash-o"></i>
@@ -119,7 +119,7 @@
 	    			callback: function (result) {
 						if (result) {
 							vm.record.observation = document.getElementById('asignation_observation').value;
-	    					vm.createRecord('asset/asignations/deliveries');
+	    					vm.createRecord('asset/asignations/deliver');
 	    				}
 	    			}
 	    		});
@@ -147,7 +147,7 @@
 	    			callback: function (result) {
 						if (result) {
 							vm.record.observation = document.getElementById('asignation_observation').value;
-	    					vm.createRecord('asset/asignations/deliveries');
+	    					vm.createRecord('asset/asignations/deliver');
 	    				}
 	    			}
 	    		});

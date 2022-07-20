@@ -124,6 +124,7 @@ class AssetAsignationController extends Controller
             'payroll_staff_id' => $request->input('payroll_staff_id'),
             'location_place' => $request->input('location_place'),
             'state' => 'Asignado',
+            'ids_assets_delivered' => null,
             'user_id' => Auth::id()
         ]);
 
@@ -174,6 +175,7 @@ class AssetAsignationController extends Controller
         $asignation = AssetAsignation::where('id', $id)->with('assetAsignationAssets')->first();
         $asignation->payroll_staff_id = $request->payroll_staff_id;
         $asignation->location_place = $request->location_place;
+        $asignation->ids_assets_delivered = null;
         $asignation->save();
 
         /** Se eliminan los demas elementos de la solicitud */
@@ -295,6 +297,7 @@ class AssetAsignationController extends Controller
     {
         $asset_asignation = AssetAsignation::find($id);
         $asset_asignation->state = 'Procesando entrega';
+        $asset_asignation->ids_assets = (count($request->equipments) > 0) ? $request->equipments : null;
         $asset_asignation->save();
 
         $asignation_delivery = AssetAsignationDelivery::create([

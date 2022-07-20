@@ -86,11 +86,16 @@ class AssetAsignationDeliveryController extends Controller
             $asset_asignation = AssetAsignation::find($request->asset_asignation_id);
             $asset_asignation->state = 'Entregados';
             $asset_asignation->save();
+            $assets_assigned = AssetAsignationAsset::where('asset_asignation_id', $asset_asignation->id)->get();
 
-            $assets_requested = AssetAsignationAsset::where('asset_asignation_id', $asset_asignation->id)->get();
+            // if(count(json_decode($asset_asignation->ids_assets)) == count(array($assets_assigned->asset))){
+            //     $asset_asignation->state = 'Entregados';
+            //     $asset_asignation->save();
+            // }
+            
 
-            foreach ($assets_requested as $requested) {
-                $asset = $requested->asset;
+            foreach ($assets_assigned as $assigned) {
+                $asset = $assigned->asset;
                 $asset->asset_status_id = 10;
                 $asset->save();
             }
@@ -117,6 +122,7 @@ class AssetAsignationDeliveryController extends Controller
        
         $asset_asignation = AssetAsignation::find($delivery->asset_asignation_id);
         $asset_asignation->state = 'Asignado';
+        $asset_asignation->ids_assets_delivered = null;
         $asset_asignation->save();
 
         $delivery->delete();

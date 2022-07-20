@@ -33,6 +33,7 @@
 					</asset-asignation-info>
 					<asset-asignation-deliver-equipment
 						:index="props.row.id"
+						:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id"
 						:state="props.row.state">
 					</asset-asignation-deliver-equipment>
 					<!-- <button class="btn btn-primary btn-xs btn-icon btn-action"

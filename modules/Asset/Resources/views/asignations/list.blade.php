@@ -52,7 +52,7 @@
 				</div>
 				<div class="card-body">
 					<asset-asignation-delivery-list
-							route_list="{{ url('asset/asignations/deliveries') }}">
+							route_list="{{ url('asset/asignations/deliver') }}">
 					</asset-asignation-delivery-list>
 				</div>
 			</div>

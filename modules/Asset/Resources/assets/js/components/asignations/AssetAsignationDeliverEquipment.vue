@@ -3,14 +3,14 @@
         <a class="btn btn-success btn-xs btn-icon btn-action" data-toggle="tooltip"
            href="#" title="Entregar Equipos"
            :disabled="(state == 'Asignado') ? false : true"
-           @click="(state == 'Asignado') ? loadEquipment('add_delivery', index) : viewMessage()">
+           @click="(state == 'Asignado') ? initRecords('add_delivery' + index) : viewMessage()">
            <i class="icofont icofont-computer"></i>
         </a>
-        <div id="add_delivery" class="modal fade text-left" tabindex="-1" role="dialog">
+        <div :id="'add_delivery' + index" class="modal fade text-left" tabindex="-1" role="dialog">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close" @click="reset()">
                             <span aria-hidden="true">×</span>
                         </button>
                         <h6>
@@ -101,6 +101,7 @@
         },
         props: {
             index: Number,
+            route_list: String,
             state: String,
         },
         methods:{
@@ -152,17 +153,27 @@
                     asset_asignation_id: '',
                     equipments: []
                 };
+                selected = [];
             },
 
-            loadEquipment(modal_id, index){
+            initRecords(modal_id){
+                const vm = this;
+                vm.reset();
+                vm.record.asset_asignation_id = vm.index;
+
+                vm.loadEquipment(vm.route_list);
+                if ($("#" + modal_id).length) {
+                    $("#" + modal_id).modal('show');
+                }
+            },
+            loadEquipment(url){
 				const vm = this;
-                
-				axios.get(`${window.app_url}/asset/asignations/vue-info/${index}`).then(response => {
+                vm.equipments = [];
+                url = vm.setUrl(url);
+
+				axios.get(url).then(response => {
 					vm.equipments = response.data.records.asset_asignation_assets;
                     vm.equipments = vm.equipments.filter(asset => asset.asset.asset_status_id == 1);
-                    if ($("#" + modal_id).length) {
-                        $("#" + modal_id).modal('show');
-                    }
 				}).catch(error => {
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 403) {
@@ -190,15 +201,14 @@
                 const vm = this;
 
                 if (!vm.selected.length > 0){
-                    bootbox.alert("Debe agregar al menos un elemento a la solicitud");
+                    bootbox.alert("Debe agregar al menos un elemento a la solicitud de entrega");
                     return false;
                 };
 
                 vm.errors = [];
                 vm.record.equipments = vm.selected;
-                vm.record.asset_asignation_id = index;
-
-                axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${index}`, vm.record).then(response => {
+                
+                axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${vm.record.asset_asignation_id}`, vm.record).then(response => {
                     if (typeof(response.data.redirect) !== "undefined") {
                         location.href = response.data.redirect;
                     }
@@ -206,6 +216,7 @@
                         vm.readRecords(url);
                         vm.reset();
                         vm.showMessage('store');
+                        vm.reset();
                     }
                 }).catch(error => {
                     vm.errors = [];
@@ -222,9 +233,7 @@
         },
         mounted() {
             const vm = this;
-            $("#add_delivery").on('show.bs.modal', function() {
-                vm.reset();
-            });
+            
         }
     };
 </script>
