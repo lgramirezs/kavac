@@ -48,12 +48,14 @@
                                     'method' => 'PUT', 'id' => 'form_assign'
                                 ]) !!}
                                     {!! Form::token() !!}
-                                    {!! Form::checkbox('assigned', true, ($formulation->assigned), [
-                                        'class' => 'form-control bootstrap-switch bootstrap-switch-mini budget-assign',
-                                        'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
-                                        'disabled' => ($formulation->assigned || $formulation->assigned==='1'),
-                                        'data-toggle' => 'tooltip', 'title' => __('Asignar presupuesto')
-                                    ]) !!}
+                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                         title="{{ __('Asignar presupuesto') }}">
+                                         {!! Form::checkbox('assigned', true, ($formulation->assigned), [
+                                            'class' => 'custom-control-input budget-assign', 'id' => 'assigned',
+                                            'disabled' => ($formulation->assigned || $formulation->assigned==='1')
+                                        ]) !!}
+                                        <label class="custom-control-label" for="assigned"></label>
+                                    </div>                                    
                                 {!! Form::close() !!}
                             </label>
                         </div>

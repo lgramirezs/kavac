@@ -840,9 +840,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollNationalities() {
+		async getPayrollNationalities() {
 			this.payroll_nationalities = [];
-			axios.get(`${window.app_url}/payroll/get-nationalities`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-nationalities`).then(response => {
 				this.payroll_nationalities = response.data;
 			});
 		},
@@ -852,9 +852,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollGenders() {
+		async getPayrollGenders() {
 			this.payroll_genders = [];
-			axios.get(`${window.app_url}/payroll/get-genders`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-genders`).then(response => {
 				this.payroll_genders = response.data;
 			});
 		},
@@ -934,9 +934,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollStudyTypes() {
+		async getPayrollStudyTypes() {
 			this.payroll_study_types = [];
-			axios.get(`${window.app_url}/payroll/get-study-types`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-study-types`).then(response => {
 				this.payroll_study_types = response.data;
 			});
 		},
@@ -946,9 +946,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollLanguages() {
+		async getPayrollLanguages() {
 			this.payroll_languages = [];
-			axios.get(`${window.app_url}/payroll/get-languages`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-languages`).then(response => {
 				this.payroll_languages = response.data;
 			});
 		},
@@ -958,9 +958,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollLanguageLevels() {
+		async getPayrollLanguageLevels() {
 			this.payroll_language_levels = [];
-			axios.get(`${window.app_url}/payroll/get-language-levels`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-language-levels`).then(response => {
 				this.payroll_language_levels = response.data;
 			});
 		},
@@ -970,9 +970,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollInstructionDegrees() {
+		async getPayrollInstructionDegrees() {
 			this.payroll_instruction_degree = [];
-			axios.get(`${window.app_url}/payroll/get-instruction-degrees`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-instruction-degrees`).then(response => {
 				this.payroll_instruction_degrees = response.data;
 			});
 		},
@@ -1042,9 +1042,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollLicenseDegrees() {
+		async getPayrollLicenseDegrees() {
 			this.payroll_license_degrees = [];
-			axios.get(`${window.app_url}/payroll/get-license-degrees`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-license-degrees`).then(response => {
 				this.payroll_license_degrees = response.data;
 			});
 		},
@@ -1054,9 +1054,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve>
 		 */
-		getPayrollBloodTypes() {
+		async getPayrollBloodTypes() {
 			this.payroll_blood_types = [];
-			axios.get(`${window.app_url}/payroll/get-blood-types`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-blood-types`).then(response => {
 				this.payroll_blood_types = response.data;
 			});
 		},
@@ -1078,9 +1078,9 @@ Vue.mixin({
 		 *
 		 * @author William Páez <wpaez@cenditel.gob.ve> | <paez.william8@gmail.com>
 		 */
-		getPayrollDisabilities() {
+		async getPayrollDisabilities() {
 			this.payroll_disabilities = [];
-			axios.get(`${window.app_url}/payroll/get-disabilities`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-disabilities`).then(response => {
 				this.payroll_disabilities = response.data;
 			});
 		},
@@ -1090,9 +1090,9 @@ Vue.mixin({
 		 *
 		 * @author José Briceño <josejorgebriceno9@gmail.com> 
 		 */
-		getPayrollSchoolingLevels() {
+		async getPayrollSchoolingLevels() {
 			this.payroll_schooling_levels = [];
-			axios.get(`${window.app_url}/payroll/get-schooling-levels`).then(response => {
+			await axios.get(`${window.app_url}/payroll/get-schooling-levels`).then(response => {
 				this.payroll_schooling_levels = response.data;
 			});
 		}

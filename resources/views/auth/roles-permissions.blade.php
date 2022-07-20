@@ -56,6 +56,7 @@
 </div>
 
 @section('extra-js')
+    @parent
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const els = document.getElementsByClassName('switch-roles');

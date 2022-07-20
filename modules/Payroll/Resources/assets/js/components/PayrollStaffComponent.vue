@@ -101,12 +101,11 @@
                     <div class="form-group" id="helpStaffDisability">
                         <label>¿Posee una Discapacidad?</label>
                         <div class="col-md-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input id="has_disability" name="has_disability" type="checkbox"
-                                       class="form-control bootstrap-switch sel_has_disability"
-                                       data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                       title="Indique si el trabajador posee una discapacidad o no"
-                                       v-model="record.has_disability" value="true"/>
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                 title="Indique si el trabajador posee una discapacidad o no">
+                                <input type="checkbox" class="custom-control-input sel_has_disability" id="has_disability" 
+                                       v-model="record.has_disability" :value="true" name="has_disability">
+                                <label class="custom-control-label" for="has_disability"></label>
                             </div>
                         </div>
                     </div>
@@ -139,12 +138,11 @@
                     <div class="form-group">
                         <label>¿Posee Licencia de Conducir?</label>
                         <div class="col-md-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input id="has_driver_license" name="has_driver_license" type="checkbox"
-                                       class="form-control bootstrap-switch sel_has_driver_license"
-                                       data-toggle="tooltip" data-on-label="SI" data-off-label="NO"
-                                       title="Indique si el trabajador posee licencia de conducir o no"
-                                       v-model="record.has_driver_license" value="true"/>
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                 title="Indique si el trabajador posee licencia de conducir o no">
+                                <input type="checkbox" class="custom-control-input sel_has_driver_license" id="has_driver_license" 
+                                       v-model="record.has_driver_license" :value="true" name="has_driver_license">
+                                <label class="custom-control-label" for="has_driver_license"></label>
                             </div>
                         </div>
                     </div>
@@ -195,7 +193,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4" id="helpStaffMedicalHistory">
+                <div class="col-12" id="helpStaffMedicalHistory">
                     <div class="form-group">
                         <label>Historial Médico</label>
                         <ckeditor :editor="ckeditor.editor" id="medical_history" data-toggle="tooltip"
@@ -210,7 +208,7 @@
             <hr>
             <h6 class="card-title" id="helpStaffUniformSize">Talla de uniforme <i class="fa fa-plus-circle cursor-pointer"
                 @click="addUniformSize()"></i></h6>
-            <div class="row" v-for="(uniform, index) in record.uniform_sizes">
+            <div class="row" v-for="(uniform, index) in record.uniform_sizes" :key="index">
                 <div class="col-md-4">
                     <div class="form-group is-required">
                         <label for="uniform_name">Nombre:</label>
@@ -504,41 +502,29 @@
                 }
             },
         },
-        created() {
-            this.getPayrollNationalities();
-            this.getPayrollGenders();
-            this.getCountries();
-            this.getEstates();
-            this.getMunicipalities();
-            this.getPayrollLicenseDegrees();
-            this.getPayrollBloodTypes();
-            this.getPayrollDisabilities();
+        async created() {
+            this.loading = true;
+            await this.getPayrollNationalities();
+            await this.getPayrollGenders();
+            await this.getCountries();
+            await this.getEstates();
+            await this.getMunicipalities();
+            await this.getPayrollLicenseDegrees();
+            await this.getPayrollBloodTypes();
+            await this.getPayrollDisabilities();
             this.record.has_disability = false;
             this.record.has_driver_license = false;
             this.record.phones = [];
             this.record.uniform_sizes = [];
+            this.loading = false;
         },
-        mounted() {
+        async mounted() {
             const vm = this;
-            if(vm.payroll_staff_id) {
-                vm.getStaff();
+            vm.loading = true;
+            if (vm.payroll_staff_id) {
+                await vm.getStaff();
             }
-            vm.switchHandler('has_disability');
-            vm.switchHandler('has_driver_license');
-        },
-        /*watch: {
-            record: {
-                deep: true,
-                handler: function() {
-                    const vm = this;
-                    if (vm.record.has_disability) {
-                        $('#has_disability').bootstrapSwitch('state', true);
-                    }
-                    if (vm.record.has_driver_license) {
-                        $('#has_driver_license').bootstrapSwitch('state', true);
-                    }
-                }
-            }
-        }*/
+            vm.loading = false;
+        }
     };
 </script>

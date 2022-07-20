@@ -93,7 +93,7 @@
 					</div>
 				</div>
 				<div class="col-md-3" id="helpAssetAcquisitionYear">
-					<div class="form-group is-required">
+					<div class="form-group">
 						<label>Fecha de adquisición</label>
 						<input type="date" placeholder="Fecha de Adquisición" data-toggle="tooltip"
 							   title="Indique la fecha de adquisición"
@@ -167,8 +167,26 @@
 							   class="form-control input-sm" v-model="record.model">
 					</div>
 				</div>
-				<div class="col-md-3" id="helpAssetValue">
+				<div class="col-md-3" id="helpAssetColor"
+					v-if="record.asset_type_id == 1">
+					<div class="form-group">
+						<label>Color</label>
+						<input type="text" placeholder="Color" data-toggle="tooltip"
+							   title="Indique el color del bien"
+							   class="form-control input-sm" v-model="record.color">
+					</div>
+				</div>
+				<div class="col-md-3" id="helpAssetAsset_institutional_code"
+					v-if="record.asset_type_id == 1">
 					<div class="form-group is-required">
+						<label>Código de bien organizacional</label>
+						<input type="text" placeholder="Código de bien organizacional" data-toggle="tooltip"
+							   title="Indique el código de bien organizacional"
+							   class="form-control input-sm" v-model="record.asset_institutional_code">
+					</div>
+				</div>
+				<div class="col-md-3" id="helpAssetValue">
+					<div class="form-group">
 						<label>Valor</label>
 						<input type="decimal" min="0"
 								placeholder="Precio por unidad" data-toggle="tooltip"
@@ -177,7 +195,7 @@
 					</div>
 				</div>
 				<div class="col-md-3" id="helpAssetCurrency">
-					<div class="form-group is-required">
+					<div class="form-group">
 						<label>Moneda</label>
 						<select2 :options="currencies"
 								 v-model="record.currency_id"></select2>
@@ -285,6 +303,9 @@
 					marca: '',
 					model: '',
 					value: '',
+					purchase_supplier_id: '', 
+					color: '', 
+					asset_institutional_code: '',
 					
 
 					country_id: '',
@@ -344,6 +365,9 @@
 					marca: '',
 					model: '',
 					value: '',
+					purchase_supplier_id: '', 
+					color: '', 
+					asset_institutional_code: '',
 
 
 					country_id: '',

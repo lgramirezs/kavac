@@ -111,8 +111,8 @@ Vue.component('asset-request-create', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-info', () => import(
-    /* webpackChunkName: "asset-request-info" */
+Vue.component('asset-show', () => import(
+    /* webpackChunkName: "asset-show" */
     './components/requests/AssetRequestInfoComponent.vue')
 );
 
@@ -144,6 +144,26 @@ Vue.component('asset-asignation-list', () => import(
 Vue.component('asset-asignation-info', () => import(
     /* webpackChunkName: "asset-assignation-info" */
     './components/asignations/AssetAsignationInfoComponent.vue')
+);
+
+/**
+ * Componente para mostrar un listado de entregas registradas
+ *
+ * @author Henry Paredes <hparedes@cenditel.gob.ve>
+ */
+ Vue.component('asset-asignation-delivery-list', () => import(
+    /* webpackChunkName: "asset-asignation-delivery-list" */
+    './components/asignations/AssetAsignationDeliveryListComponent.vue')
+);
+
+/**
+ * Componente para gestinar una solicitud de entrega de bienes asignados
+ *
+ * @author Henry Paredes <hparedes@cenditel.gob.ve>
+ */
+ Vue.component('asset-asignation-deliver-equipment', () => import(
+    /* webpackChunkName: "asset-asignation-deliver-equipment" */
+    './components/asignations/AssetAsignationDeliverEquipment.vue')
 );
 
 /**
@@ -211,8 +231,8 @@ Vue.component('asset-info', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-extension', () => import(
-    /* webpackChunkName: "asset-request-extension" */
+Vue.component('asset-extension', () => import(
+    /* webpackChunkName: "asset-extension" */
     './components/requests/AssetRequestExtensionComponent.vue')
 );
 
@@ -221,8 +241,8 @@ Vue.component('asset-request-extension', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('asset-request-event', () => import(
-    /* webpackChunkName: "asset-request-event" */
+Vue.component('asset-events', () => import(
+    /* webpackChunkName: "asset-events" */
     './components/requests/AssetRequestEventComponent.vue')
 );
 

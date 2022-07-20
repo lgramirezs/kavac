@@ -28,7 +28,7 @@
                         class="btn btn-primary btn-xs btn-icon btn-action"
                         title="Asignar Bien"
                         data-toggle="tooltip"
-                        :disabled="((props.row.asset_asignation_asset == null)
+                        :disabled="((isAssigned(props.row.asset_asignation_asset))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_status_id == 10)
@@ -42,7 +42,7 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Desincorporar Bien"
                         data-toggle="tooltip"
-                        :disabled="((props.row.asset_asignation_asset == null)
+                        :disabled="((isAssigned(props.row.asset_asignation_asset))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_type_id == 1))?false:true"
@@ -55,7 +55,7 @@
                         class="btn btn-warning btn-xs btn-icon btn-action"
                         title="Modificar registro"
                         data-toggle="tooltip"
-                        :disabled="((props.row.asset_asignation_asset == null)
+                        :disabled="((isAssigned(props.row.asset_asignation_asset))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button"
@@ -67,7 +67,7 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Eliminar registro"
                         data-toggle="tooltip"
-                        :disabled="((props.row.asset_asignation_asset == null)
+                        :disabled="((isAssigned(props.row.asset_asignation_asset))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button" v-has-tooltip>
@@ -85,7 +85,7 @@
                 records: [],
                 supplier: [],
                 columns: [
-                    'inventory_serial', 'institution', 'asset_condition','asset_status','serial','marca','model', 'id'
+                    'inventory_serial', 'institution', 'asset_condition','asset_status','serial','marca','asset_institutional_code', 'id'
                 ]
             }
         },
@@ -97,14 +97,14 @@
                 'asset_status': 'Estatus de uso',
                 'serial': 'Serial',
                 'marca': 'Marca',
-                'model': 'Modelo',
+                'asset_institutional_code': 'Código de bien organizacional',
                 'id': 'Acción'
             };
             this.table_options.sortable = [
-                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'model'
+                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'asset_institutional_code'
             ];
             this.table_options.filterable = [
-                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'model'
+                'inventory_serial', 'institution', 'asset_condition', 'asset_status', 'serial', 'marca', 'asset_institutional_code'
             ];
            this.table_options.orderBy = { 'column': 'id'};
         },
@@ -113,8 +113,8 @@
         },
         methods: {
             /**
-             * Función que verifica si un bien está en proceso de solicitud
-             *  o entregado
+             * Función que verifica si un bien está en proceso de solicitud,
+             * entregado o rechazado
              *
              * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
              */
@@ -123,7 +123,26 @@
                 if(value === null){
                     return true;
                 }else{
-                    if(value.asset_request.state === 'Entregados'){
+                    if(value.asset_request.state === 'Entregados' || value.asset_request.state === 'Rechazado'){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            },
+
+            /**
+             * Función que verifica si un bien está asignado o ha sido entregado
+             *
+             *
+             * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
+             */
+            isAssigned(value){
+
+                if(value === null){
+                    return true;
+                }else{
+                    if(value.asset_asignation.state === 'Entregados'){
                         return true;
                     }else{
                         return false;

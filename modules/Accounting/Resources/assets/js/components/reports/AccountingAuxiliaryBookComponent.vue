@@ -32,17 +32,11 @@
                 </div>
                 <div class="col-3" id="helpAuxiliaryBookAllAccount">
                     <label for="" class="control-label mt-4">Seleccionar todas</label>
-                    <div class="col-12 bootstrap-switch-mini">
-                        <p-check class="pretty p-switch p-fill p-bigger" 
-                            color="success" 
-                            off-color="text-gray" 
-                            toggle 
-                            data-toggle="tooltip" 
-                            title="Seleccionar todas las cuentas de libro auxiliar" 
-                            @click="checkAll()"
-                            v-model="check_sel_all">
-                            <label slot="off-label"></label>
-                        </p-check>
+                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                         title="Seleccionar todas las cuentas de libro auxiliar">
+                      <input type="checkbox" class="custom-control-input" id="auxiliarBookReportCheckAll" 
+                              @click="checkAll()" v-model="check_sel_all">
+                      <label class="custom-control-label" for="auxiliarBookReportCheckAll"></label>
                     </div>
                 </div>
             </div>

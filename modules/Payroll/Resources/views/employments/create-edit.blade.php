@@ -32,7 +32,9 @@
                         @include('buttons.minimize')
                     </div>
                 </div>
-				<payroll-employment :payroll_employment_id="{!! (isset($payrollEmployment)) ? $payrollEmployment->id : "null" !!}">
+				<payroll-employment 
+					route_list="{{ url('payroll/employments') }}" 
+					:payroll_employment_id="{!! (isset($payrollEmployment)) ? $payrollEmployment->id : "null" !!}">
 	            </payroll-employment>
 	         </div>
 		</div>

@@ -119,6 +119,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong>Color</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12" id="asset_color">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong>Código de bien organizacional</strong>
+                                            <div class="row" style="margin: 1px 0">
+                                                <span class="col-md-12" id="asset_institutional_code">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -292,7 +310,9 @@
                         document.getElementById('asset_marca').innerText = (vm.records.marca)?vm.records.marca:'';
                         document.getElementById('asset_model').innerText = (vm.records.model)?vm.records.model:'';
                         document.getElementById('asset_value').innerText = (vm.records.value)?vm.records.value:'';
-                    
+                        document.getElementById('asset_color').innerText = (vm.records.color)?vm.records.color:'';   
+                        document.getElementById('asset_institutional_code').innerText = (vm.records.asset_institutional_code)?vm.records.asset_institutional_code:'';
+
                         if ($("#" + modal_id).length) {
                             $("#" + modal_id).modal('show');
                         }

@@ -37,15 +37,31 @@
                 @include('layouts.form-errors')
                 <div class="row">
                     <div class="col-6">
-                        <div class="form-group" id="user">
-                            {!! Form::label('staff', __('Empleado'), []) !!}
-                            {!! Form::select('staff', (isset($persons))?$persons:[], null, [
-                                    'class' => 'form-control select2', 'onchange' => 'hasStaff()',
-                                    'id' => 'staff'
+                        <div class="form-group is-required">
+                            {!! Form::label('institution_id', __('Institución'), []) !!}
+                            {!! Form::select('institution_id', (isset($institutions))?$institutions:[], isset($model) && $model->profile ? $model->profile->institution_id : old('institution_id'), [
+                                    'class' => 'form-control select2',
+                                    'id' => 'institution_id',
+                                    'disabled' => isset($model) && $model->profile->institution_id ? true : false,
+                                    'oninput' => 'updateStaffSelect($(this), $("#staff"))'
                                 ]
                             ) !!}
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group" id="user">
+                            {!! Form::label('staff', __('Empleado'), []) !!}
+                            {!! Form::select('staff', (isset($persons))?$persons:[], isset($model) && $model->profile ? $model->profile->id : old('staff'), [
+                                    'class' => 'form-control select2', 'onchange' => 'hasStaff()',
+                                    'id' => 'staff',
+                                    'disabled' => isset($model) && $model->profile->institution_id ? true : false,
+                                    'data-old' => old('staff')
+                                ]
+                            ) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-6 staff_name">
                         <div class="form-group is-required" id="user_first_name">
                             {!! Form::label('first_name', __('Nombre'), ['id' => 'first_name_label']) !!}
@@ -55,8 +71,6 @@
                             ]) !!}
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6">
                         <div class="form-group is-required" id="email">
                             {!! Form::label('email', __('Correo electrónico'), []) !!}
@@ -89,6 +103,7 @@
 @endsection
 
 @section('extra-js')
+    @parent
     <script>
         /**
          * Muestra u oculta el campo de nombre si no se ha seleccionado un empleado
@@ -101,5 +116,58 @@
                 $(".staff_name").hide();
             }
         }
+
+        /**
+         * Actualiza información de un select a partir de otro
+         *
+         * @param  {object}  parent_element Objeto con los datos del elemento que genera la acción
+         * @param  {object}  target_element Objeto que se cargara con la información
+         * @param  {string}  target_model   Modelo en el cual se va a realizar la consulta
+         * @param  {string}  module_name    Nombre del módulo que ejecuta la acción
+         */
+        function updateStaffSelect(parent_element, target_element, edit) {
+            var module_name = (typeof(module_name) !== "undefined")?'/' + module_name:'';
+            var parent_id = parent_element.val();
+            var parent_name = parent_element.attr('id');
+
+            target_element.empty();
+
+            if (parent_id) {
+                axios.get(
+                    `/get-select-data-staff/${parent_name}/${parent_id}`
+                ).then(response => {
+                    if (response.data.result) {
+                        target_element.attr('disabled', false);
+                        target_element.empty().append('<option value="">{{ __('Seleccione...') }}</option>');
+                        $.each(response.data.records, function(index, record) {
+                            target_element.append(
+                                `<option value="${record['id']}">${record['first_name']} ${record['last_name']}</option>`
+                            );
+                            if (edit) {
+                                let staff = document.getElementById('staff');
+                                let staffOld = staff.getAttribute('data-old');
+                                let staffValues = Object.values(staff);
+                                for (let value of staffValues) {
+                                    if (record['id'] == staffOld && staffOld == value.value) {
+                                        value.selected = true;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }).catch(error => {
+                    logs('app', 244, error, 'updateSelect');
+                })
+            }
+            else {
+                target_element.attr('disabled', true);
+            }
+        }
+        @if (old('staff'))
+            const timeOpen = setTimeout(addInstitutionId, 3000);
+            function addInstitutionId () {
+                updateStaffSelect($('#institution_id'), $('#staff'), true);
+            }
+        @endif
     </script>
 @endsection

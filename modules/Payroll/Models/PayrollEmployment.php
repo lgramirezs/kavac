@@ -158,7 +158,7 @@ class PayrollEmployment extends Model implements Auditable
      */
     public function profile()
     {
-        return $this->belongsTo(Profile::class, 'employee_id');
+        return $this->belongsTo(Profile::class, 'id', 'employee_id');
     }
 
     /**

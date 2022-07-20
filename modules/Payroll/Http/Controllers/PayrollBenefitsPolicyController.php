@@ -103,7 +103,7 @@ class PayrollBenefitsPolicyController extends Controller
     public function index()
     {
         $profileUser = Auth()->user()->profile;
-        if ($profileUser) {
+        if ($profileUser && $profileUser->institution_id !== null) {
             $institution = Institution::find($profileUser->institution_id);
         } else {
             $institution = Institution::where('active', true)->where('default', true)->first();

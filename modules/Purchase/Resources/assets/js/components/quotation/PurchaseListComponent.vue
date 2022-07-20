@@ -1,6 +1,15 @@
 <template>
     <section>
         <v-client-table :columns="columns" :data="records" :options="table_options">
+              <a slot="relatable[0].purchase_requirement_item.purchase_requirement.code" slot-scope="props" target="_blank">
+                          
+                                   <span v-for="codes in getUniqueCars(props.row.relatable)" :key="codes">
+                                    <span >
+                                        {{ codes}},                                        
+                                    </span>
+                                </span>
+                        
+                            </a>
             <div slot="purchase_supplier.purchase_supplier_object" slot-scope="props" class="text-center">
                 <div v-if="props.row.purchase_supplier.purchase_supplier_object">
                     <div v-if="props.row.purchase_supplier.purchase_supplier_object.type == 'S'">
@@ -14,6 +23,7 @@
                     </div>
                 </div>
             </div>
+           
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
                     <!-- <purchase-plan-show :id="props.row.id" :route_show="'/purchase/quotation/'+props.row.id" /> -->
@@ -46,28 +56,42 @@ export default {
         return {
             records: [],
             columns: [
-                'purchase_supplier.name',
+                'relatable[0].purchase_requirement_item.purchase_requirement.code',
+                'purchase_supplier.name',             
                 'currency.name',
                 'id'
             ],
         }
     },
+      methods: {
+           getUniqueCars(id) {
+                  return id.map(x => x.purchase_requirement_item.purchase_requirement.code ).filter((v,i,s) => s.indexOf(v) === i)
+                 },
+      },
     created() {
         this.table_options.headings = {
-            'purchase_supplier.name': 'Proveedor',
+            'relatable[0].purchase_requirement_item.purchase_requirement.code':"Código del requerimiento",
+            'purchase_supplier.name': 'Proveedor',             
             'currency.name': 'tipo de moneda',
             'id': 'ACCIÓN'
         };
         this.table_options.columnsClasses = {
-            'purchase_supplier.name': 'col-xs-3',
+            'relatable[0].purchase_requirement_item.purchase_requirement.code':'col-xs-3 text-center',
+            'purchase_supplier.name': 'col-xs-3',            
             'currency.name': 'col-xs-3 text-center',
             'id': 'col-xs-1'
         };
         this.table_options.sortable = ['purchase_supplier.name', 'currency.name'];
         this.table_options.filterable = ['purchase_supplier.name', 'currency.name'];
     },
+    
     mounted() {
         this.records = this.record_lists;
+        console.log(this.records);
+    },
+    computed:{
+      
+      
     },
 };
 </script>

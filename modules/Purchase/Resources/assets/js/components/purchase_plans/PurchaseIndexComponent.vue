@@ -71,6 +71,8 @@ export default {
             'active': 'col-xs-1',
             'id': 'col-xs-1'
         };
+        this.table_options.sortable = ['init_date','end_date'];
+        this.table_options.filterable = ['init_date', 'end_date'];
     },
     mounted() {
         this.records = this.record_list;

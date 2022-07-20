@@ -326,7 +326,7 @@ class FinanceMovementsController extends Controller
                     $compromise->budgetStages()->create([
                         'code' => $code,
                         'registered_at' => $request->payment_date,
-                        'type' => 'PRE',
+                        'type' => 'COM',
                         'amount' => $total,
                     ]);
                 }
@@ -545,7 +545,7 @@ class FinanceMovementsController extends Controller
                 ],
                 [
                     'registered_at' => $request->payment_date,
-                    'type' => 'PRE',
+                    'type' => 'COM',
                     'amount' => $total,
                 ]
             );

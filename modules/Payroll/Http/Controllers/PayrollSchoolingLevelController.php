@@ -89,7 +89,6 @@ class PayrollSchoolingLevelController extends Controller
         $this->validate($request, $this->rules, [], []);
         $payrollSchoolingLevel = PayrollSchoolingLevel::create([
             'name' => $request->name,
-            'institution_name' => $request->institution_name,
             'description' => $request->description
         ]);
         return response()->json(['record' => $payrollSchoolingLevel, 'message' => 'Success'], 200);
@@ -142,10 +141,13 @@ class PayrollSchoolingLevelController extends Controller
     public function update(Request $request, $id)
     {
         $payrollSchoolingLevel = PayrollSchoolingLevel::find($id);
+        $this->rules = [
+            'name' => ['required', 'max:100', 'unique:payroll_schooling_levels,name,' . $payrollSchoolingLevel->id],
+            'description' => ['nullable', 'max:200']
+        ];
         $this->validate($request, $this->rules, [], []);
         $payrollSchoolingLevel->name = $request->name;
         $payrollSchoolingLevel->description = $request->description;
-        $payrollSchoolingLevel->institution_name = $request->institution_name;
         $payrollSchoolingLevel->save();
         return response()->json(['message' => 'Success'], 200);
     }

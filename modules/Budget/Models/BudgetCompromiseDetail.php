@@ -88,4 +88,18 @@ class BudgetCompromiseDetail extends Model implements Auditable
     {
         return $this->belongsTo(BudgetSubSpecificFormulation::class);
     }
+
+    /**
+     * Método que obtiene el Impuesto asociado
+     *
+     * @method  tax
+     *
+     * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     *
+     * @return object Objeto con el registro relacionado al modelo Tax
+     */
+    public function tax()
+    {
+        return $this->belongsTo('App\\Models\\Tax');
+    }
 }

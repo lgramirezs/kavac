@@ -43,22 +43,11 @@
 			<hr />
 			<div class="row">
 				<div class="col-6 mt-4">
-					<label for="">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								v-model="isProject"
-								type="radio"
-								name="project"
-								:value="1"
-								id="project"
-								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-								data-on-label="SI"
-								data-off-label="NO"
-								@change="change"
-							/>
-							Proyecto
-						</div>
-					</label>
+					<div class="custom-control custom-switch">
+						<input type="radio" class="custom-control-input sel_pry_acc" id="project" 
+							   name="centralized_action" v-model="isProject" :value="1" @change="change">
+						<label class="custom-control-label" for="project">Proyecto</label>
+					</div>
 					<div class="mt-4">
 						<select2
 							v-model="params.project_id"
@@ -69,22 +58,11 @@
 					</div>
 				</div>
 				<div class="col-6 mt-4">
-					<label for="">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								v-model="isProject"
-								type="radio"
-								name="centralized_action"
-								:value="0"
-								class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-								id="centralized_action"
-								data-on-label="SI"
-								data-off-label="NO"
-								@change="change"
-							/>
-							Acción Centralizada
-						</div>
-					</label>
+					<div class="custom-control custom-switch">
+						<input type="radio" class="custom-control-input sel_pry_acc" id="centralized_action"  
+							   name="centralized_action" v-model="isProject" :value="0" @change="change">
+						<label class="custom-control-label" for="centralized_action">Acción Centralizada</label>
+					</div>
 					<div class="mt-4">
 						<select2
 							v-model="params.centralized_action_id"

@@ -93,9 +93,10 @@
                 <div class="col-md-4">
                     <div class="form-group is-required">
                         <label for="" class="control-label">Pago Parcial</label>
-                        <div class="col-12 bootstrap-switch-mini">
-                            <input type="checkbox" class='form-control bootstrap-switch' data-on-label="SI" data-off-label="NO" 
-                                   v-model="record.is_partial">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="partial" v-model="record.is_partial" 
+                                   :value="true">
+                            <label class="custom-control-label" for="partial"></label>
                         </div>
                     </div>
                 </div>

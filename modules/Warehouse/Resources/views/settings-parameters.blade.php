@@ -22,12 +22,12 @@
 							<div class="form-group">
 								<label for="" class="control-label"> {{ __('Multi Almacén') }} </label>
 								<div class="col-12">
-                                    <div class="bootstrap-switch-mini">
-    									{!! Form::checkbox('multi_warehouse', true,
+									<div class="custom-control custom-switch">
+                                    	{!! Form::checkbox('multi_warehouse', true,
     										(!is_null($paramMultiWarehouse) && $paramMultiWarehouse->p_value === 'true'), [
-    										'id' => 'multi_warehouse', 'class' => 'form-control bootstrap-switch',
-    										'data-on-label' => 'SI', 'data-off-label' => 'NO'
+    										'id' => 'multi_warehouse', 'class' => 'custom-control-input'
     									]) !!}
+										<label class="custom-control-label" for="multi_warehouse"></label>
                                     </div>
 								</div>
 							</div>

@@ -1,7 +1,9 @@
-<h1 style="font-size: 9rem;" align="center">MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h1>
-<h2 style="font-size: 9rem;" align="center">Información Presupuestaria {{ $initialDate }} HASTA {{ $finalDate }}
+{{-- <h1 style="font-size: 9rem;" align="center">MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h1> --}}
+<h2 style="font-size: 9rem;" align="center">Información Presupuestaria desde {{ $initialDate }} hasta {{ $finalDate }}
 </h2>
-<h4 style="font-size: 9rem;">EXPRESADO EN {{ $currencySymbol }}</h4>
+<h2></h2>
+<h2></h2>
+<h4 style="font-size: 9rem;">Expresado en: {{ $currencySymbol }}</h4>
 <h4 style="font-size: 9rem;">Código del ente: {{ $institution['onapre_code'] }}</h4>
 <h4 style="font-size: 9rem;">Denominación del ente: {{ $institution['name'] }}</h4>
 <h4 style="font-size: 9rem;">Proyecto / Acción Centralizada:
@@ -14,7 +16,6 @@
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <th style="font-size: 8rem" align="center" width="83.4%">
-            <h4>{{ strtoupper($institution['name']) }} Mérida</h4>
             <h4>MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h4>
             <h4>DESDE: {{ $initialDate }} al {{ $finalDate }}</h4>
             <br>
@@ -28,18 +29,18 @@
 
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th style="font-size: 7rem;" width="8.3%" align="center">FECHA</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">CÓDIGO</th>
-        <th style="font-size: 7rem;" width="8.7%" align="center">DENOMINACIÓN </th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">REAL</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">ASIGNACIÓN</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">AUMENTO</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">DISMINUCIÓN</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">ACTUAL</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">COMPROMETIDO</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">CAUSADO</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">PAGADO</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">DISPONIBLE</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Fecha</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Código</th>
+        <th style="font-size: 7rem;" width="8.7%" align="center">Denominación</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Detalle</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Asignado</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Aumento</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Disminución</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Actual</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Comprometido</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Causado</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Pagado</th>
+        <th style="font-size: 7rem;" width="8.3%" align="center">Disponible</th>
     </tr>
 </table>
 
@@ -132,10 +133,10 @@
 
 <table cellspacing="0" cellpadding="1" border="1" style="font-weight: bold">
     <tr>
-        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="25.3%">
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="Right" width="25.3%">
+            Total
         </td>
         <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="8.3%">
-            {{ number_format($real, 2) }}
         </td>
         <td style="font-size: 8rem; border-bottom: 1px solid #999; " align="center" width="8.3%">
             {{ number_format($total_programmed, 2) }}

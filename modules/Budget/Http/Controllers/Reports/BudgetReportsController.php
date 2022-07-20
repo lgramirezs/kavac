@@ -12,10 +12,11 @@ use App\Repositories\ReportRepository;
 use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\BudgetAccount;
 use Modules\Budget\Models\BudgetProject;
+use Modules\Budget\Models\BudgetCompromise;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Budget\Models\BudgetAccountOpen;
+use Modules\Budget\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetCentralizedAction;
-use Modules\Purchase\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetModificationAccount;
 use Modules\Budget\Models\BudgetSubSpecificFormulation;
 
@@ -134,11 +135,11 @@ class BudgetReportsController extends Controller
     /**
      * Metodo para retornar un array con las cuentas presupuestarias que han sido formuladas
      *
-     * @author    Jonathan Alvarado <wizardx1407@gmail.com> | <jonathanalvarado1407@gmail.com>
+     * @author  Jonathan Alvarado <wizardx1407@gmail.com> | <jonathanalvarado1407@gmail.com>
      *
-     * @param      bool accountsWithMovements
+     * @param   bool accountsWithMovements
      * 
-     * @return    Array Arreglo ordenado de cuentas presupuestarias formuladas
+     * @return  Array Arreglo ordenado de cuentas presupuestarias formuladas
      */
     public function getBudgetAccountsOpen(bool $accountsWithMovements, object $project)
     {
@@ -154,7 +155,8 @@ class BudgetReportsController extends Controller
                 $increment = 0;
                 $decrement = 0;
                 if (!isset($account['compromised']) && !isset($account['current']) && !isset($account['programmed']) && !isset($account['increment']) && !isset($account['decrement'])) {
-                    $compromised = $this->getAccountCompromisedAmout($account->budget_account_id);
+                    // dd($account);
+                    $compromised = $this->getAccountCompromisedAmout($account);
                     $modifications = $this->getAccountModifications($account->budget_sub_specific_formulation_id);
 
 
@@ -240,13 +242,14 @@ class BudgetReportsController extends Controller
      * 
      */
 
-    public function getAccountCompromisedAmout(int $accout_id)
+    public function getAccountCompromisedAmout(object $accout_id)
     {
-        $compromised = BudgetCompromiseDetail::where('budget_account_id', $accout_id)->get();
+        $compromised = BudgetCompromiseDetail::where('budget_sub_specific_formulation_id', $accout_id->budget_sub_specific_formulation_id)
+            ->where('budget_account_id', $accout_id->budget_account_id)->get();
         $amout = 0;
         if (!$compromised->isEmpty()) {
             foreach ($compromised as $com) {
-                $amout = $amout + $com->amount + $com->tax_amount;
+                $amout = $com->getTotalAttribute();
             }
             return $amout;
         }
@@ -363,8 +366,8 @@ class BudgetReportsController extends Controller
 
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P']);
-        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P', 'reportDate' => '']);
+        $pdf->setHeader('', 'Certificado de disponibilidad presupuestaria');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
             'pdf' => $pdf,
@@ -452,7 +455,7 @@ class BudgetReportsController extends Controller
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P']);
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'P', 'reportDate' => '']);
         $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
@@ -783,8 +786,8 @@ class BudgetReportsController extends Controller
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
 
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE']);
-        $pdf->setHeader('', 'Presupuesto Formulado del ejercicio económico financiero vigente');
+        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE', 'reportDate' => '']);
+        $pdf->setHeader('', 'Reporte Mayor Analítico por Proyecto o Acción Centralizada');
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAnalyticMajor', true, [
             'pdf' => $pdf,

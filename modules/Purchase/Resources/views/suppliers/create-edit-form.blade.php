@@ -61,20 +61,26 @@
 											<div class="col-12">
 												<label class="radio-inline">
 													<span class="left">Natural</span>
-                                                    <div class="col-12 bootstrap-switch-mini">
-    													{!! Form::radio('person_type', 'N', null, [
-    														'class' => 'form-control bootstrap-switch reseteable',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('person_type', 'N', null, [
+																'class' => 'custom-control-input reseteable',
+																'id' => 'personTypeN'
+															]) !!}
+															<label class="custom-control-label" for="personTypeN"></label>
+														</div>
                                                     </div>
 												</label>
 												<label class="radio-inline">
 													<span class="left">Jurídica</span>
-                                                    <div class="col-12 bootstrap-switch-mini">
-    													{!! Form::radio('person_type', 'J', null, [
-    														'class' => 'form-control bootstrap-switch reseteable',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('person_type', 'J', null, [
+																'class' => 'custom-control-input reseteable',
+																'id' => 'personTypeJ'
+															]) !!}
+															<label class="custom-control-label" for="personTypeJ"></label>
+														</div>
                                                     </div>
 												</label>
 											</div>
@@ -86,20 +92,26 @@
 											<div class="col-12">
 												<label class="radio-inline">
 													<span class="left">Pública</span>
-                                                    <div class="col-12 bootstrap-switch-mini">
-    													{!! Form::radio('company_type', 'PU', null, [
-    														'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('company_type', 'PU', null, [
+																'class' => 'custom-control-input',
+																'id' => 'companyTypePU'
+															]) !!}
+															<label class="custom-control-label" for="companyTypePU"></label>
+														</div>
                                                     </div>
 												</label>
 												<label class="radio-inline">
 													<span class="left">Privada</span>
-                                                    <div class="col-12 bootstrap-switch-mini">
-    													{!! Form::radio('company_type', 'PR', null, [
-    														'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('company_type', 'PR', null, [
+																'class' => 'custom-control-input',
+																'id' => 'companyTypePR'
+															]) !!}
+															<label class="custom-control-label" for="companyTypePR"></label>
+														</div>
                                                     </div>
 												</label>
 											</div>
@@ -109,12 +121,11 @@
 										<div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
 											{!! Form::label('active', 'Activo') !!}
 											<div class="col-12">
-                                                <div class="col-12 bootstrap-switch-mini">
+                                                <div class="custom-control custom-switch">
     												{!! Form::checkbox('active', true, null, [
-    													'class' => 'form-control bootstrap-switch',
-                                                        'data-on-label' => 'SI', 'data-off-label' => 'NO',
-                                                        'id' => 'activo'
+    													'class' => 'custom-control-input', 'id' => 'activo'
     												]) !!}
+													<label class="custom-control-label" for="activo"></label>
                                                 </div>
 											</div>
 										</div>
@@ -323,34 +334,41 @@
 								<h6 class="card-title">Datos del Registro Nacional de Contratistas</h6>
 								<div class="row">
 									<div class="col-8">
-										<div class="form-group is-required{{ $errors->has('rnc_status') ? ' has-error' : '' }}">
+										<div class="form-group {{ $errors->has('rnc_status') ? ' has-error' : '' }}">
 											{!! Form::label('rnc_status', 'Situación Actual') !!}
 											<div class="col-12">
 												<label class="radio-inline mt-4 mr-4">
 													<span class="left">Inscrito y no habilitado</span>
-                                                    <div class="col-12 bootstrap-switch-mini mt-3 text-center">
-    													{!! Form::radio('rnc_status', 'INH', null, [
-    														'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12 mt-3 text-center">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('rnc_status', 'INH', null, [
+																'class' => 'custom-control-input',
+																'id' => 'rnc_status_inh'
+															]) !!}
+															<label class="custom-control-label" for="tnc_status_inh"></label>
+														</div>
                                                     </div>
 												</label>
 												<label class="radio-inline mt-4 mr-4">
 													<span class="left">Inscrito y habilitado para contratar</span>
-                                                    <div class="col-12 bootstrap-switch-mini mt-3 text-center">
-    													{!! Form::radio('rnc_status', 'ISH', null, [
-    														'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12 mt-3 text-center">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('rnc_status', 'ISH', null, [
+																'class' => 'custom-control-input', 'id' => 'rnc_status_ish'
+															]) !!}
+															<label class="custom-control-label" for="tnc_status_ish"></label>
+														</div>
                                                     </div>
 												</label>
 												{{-- <label class="radio-inline mt-4 mr-4">
 													<span class="left">Inscrito, habilitado y calificado</span>
-                                                    <div class="col-12 bootstrap-switch-mini mt-3 text-center">
-    													{!! Form::radio('rnc_status', 'IHC', null, [
-    														'class' => 'form-control bootstrap-switch',
-                                                            'data-on-label' => 'SI', 'data-off-label' => 'NO'
-    													]) !!}
+                                                    <div class="col-12 mt-3 text-center">
+														<div class="custom-control custom-switch">
+															{!! Form::radio('rnc_status', 'IHC', null, [
+																'class' => 'custom-control-input', 'id' => 'rnc_status_ihc'
+															]) !!}
+															<label class="custom-control-label" for="tnc_status_ihc"></label>
+														</div>
                                                     </div>
 												</label> --}}
 											</div>
@@ -493,9 +511,10 @@
 	    		$(":checkbox").prop('checked', false).change();
 			});
 			$(".multiple").select2({
-          placeholder: "Seleccione..."
-      });
+				placeholder: "Seleccione..."
+			});
 		});
+		
 		function clickUploadDoc(id, ){
 			idclicker = id;
 			$('#doc'+id).click();
@@ -506,6 +525,7 @@
 
             Array.from(files).forEach(file => addFile(file, idclicker));
         };
+
         function addFile(file, inputID) {
 			
 			$('#reqDoc'+inputID).val(inputID);

@@ -88,4 +88,15 @@ class BudgetCompromise extends Model implements Auditable
     {
         return $this->belongsTo(DocumentStatus::class);
     }
+
+    /**
+     * BudgetModifications belongs to Institution.
+     *
+     * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
 }

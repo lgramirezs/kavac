@@ -36,9 +36,10 @@
 					<div class=" form-group">
 						<label>Quincena</label>
 						<div class="col-12">
-							<input type="radio" name="periodicity" id="sel_quincena"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_periodicity"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_periodicity" name="periodicity" id="sel_quincena">
+								<label class="custom-control-label" for="sel_quincena"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -47,9 +48,10 @@
 					<div class=" form-group">
 						<label>Mes</label>
 						<div class="col-12">
-							<input type="radio" name="periodicity" id="sel_mes"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_periodicity"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_periodicity" name="periodicity" id="sel_mes">
+								<label class="custom-control-label" for="sel_mes"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -58,9 +60,10 @@
 					<div class=" form-group">
 						<label>Año</label>
 						<div class="col-12">
-							<input type="radio" name="periodicity" id="sel_year"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_periodicity"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_periodicity" name="periodicity" id="sel_year">
+								<label class="custom-control-label" for="sel_year"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,9 +89,11 @@
 					<div class=" form-group">
 						<label>Valor Absoluto</label>
 						<div class="col-12">
-							<input type="radio" name="incidence_value" value="neto_value" id="sel_neto_value"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_incidence_value"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_incidence_value" name="incidence_value" 
+									   id="sel_neto_value" value="neto_value">
+								<label class="custom-control-label" for="sel_neto_value"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -97,9 +102,11 @@
 					<div class=" form-group">
 						<label>Unidad Tributaria</label>
 						<div class="col-12">
-							<input type="radio" name="incidence_value" value="tax_unit" id="sel_tax_unit"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_incidence_value"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_incidence_value" name="incidence_value" 
+									   id="sel_tax_unit" value="tax_unit">
+								<label class="custom-control-label" for="sel_tax_unit"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -108,9 +115,11 @@
 					<div class=" form-group">
 						<label>Porcentaje</label>
 						<div class="col-12">
-							<input type="radio" name="incidence_value" value="percent" id="sel_percent"
-								   class="form-control bootstrap-switch bootstrap-switch-mini sel_incidence_value"
-								   data-on-label="SI" data-off-label="NO">
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_incidence_value" name="incidence_value" 
+									   id="sel_percent" value="percent">
+								<label class="custom-control-label" for="sel_percent"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -190,8 +199,6 @@
 		mounted() {
 			const vm = this;
 			vm.getPositionTypes();
-			vm.switchHandler('periodicity');
-			vm.switchHandler('incidence_value');
 		},
 	};
 </script>

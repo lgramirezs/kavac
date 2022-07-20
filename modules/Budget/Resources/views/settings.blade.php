@@ -17,6 +17,7 @@
 @stop
 
 @section('content')
+    <!-- Formatos de códigos -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -141,6 +142,31 @@
             </div>
         </div>
     </div>
+    <!-- Final Formatos de códigos -->
+
+    <!-- Registros comunes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title">Registros comunes</h6>
+                    <div class="card-btns">
+                        @include('buttons.previous', ['route' => url()->previous()])
+                        @include('buttons.minimize')
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <financement-types></financement-types>
+                        <financement-sources></financement-sources>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Final Registros comunes -->
+
+    <!-- Proyectos -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -155,15 +181,18 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <budget-projects-list
+                    <budget-list-projects
                         route_list="{{ url('budget/projects/vue-list') }}"
                         route_delete="{{ url('budget/projects') }}"
                         route_edit="{{ url('budget/projects/{id}/edit') }}">
-                    </budget-projects-list>
+                    </budget-list-projects>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Final Proyectos -->
+
+    <!-- Acciones centralizadas -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -187,6 +216,9 @@
             </div>
         </div>
     </div>
+    <!-- Final Acciones centralizadas -->
+
+    <!-- Acciones específicas -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -210,4 +242,5 @@
             </div>
         </div>
     </div>
+    <!-- Final Acciones específicas -->
 @stop

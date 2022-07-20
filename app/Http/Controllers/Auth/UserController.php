@@ -62,17 +62,9 @@ class UserController extends Controller
             'role' => 'form',
         ];
 
-        $persons = template_choices(Profile::class, ['first_name', ' ', 'last_name'], $filters = ['user_id' => null]);
+        $institutions = template_choices('App\Models\Institution', 'name');
 
-        foreach ($persons as $key => $person) {
-            if ($key && $key !== "0" && $profile = Profile::find($key)) {
-                if ($profile->institution) {
-                    $persons[$key] = $profile->institution->acronym . " - " . $persons[$key];
-                }
-            }
-        }
-
-        return view('auth.register', compact('header', 'persons'));
+        return view('auth.register', compact('header', 'institutions'));
     }
 
     /**
@@ -90,15 +82,17 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'first_name' => ['required_without:staff'],
+            'institution_id' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'string', 'max:25', 'unique:users'],
             'role' => ['required_without:permission', 'array'],
-            'permission' => ['required_without:role', 'array']
+            'permission' => ['required_without:role', 'array'],
         ],
         [
             'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado',
+            'institution_id.required' => 'El campo institución es obligatorio',
             'role.required_without' => 'El campo roles es obligatorio cuando no se asignado al menos un permiso.',
-            'permission.required_without' => 'El campo permisos es obligatorio cuando no se asignado al menos un rol.'
+            'permission.required_without' => 'El campo permisos es obligatorio cuando no se asignado al menos un rol.',
         ]);
 
         if ($request->staff) {
@@ -124,6 +118,7 @@ class UserController extends Controller
         }
 
         $profile->user_id = $user->id;
+        $profile->institution_id = $request->institution_id;
         $profile->save();
 
         if (isset($request->role)) {
@@ -191,22 +186,20 @@ class UserController extends Controller
             'role' => 'form'
         ];
         /** @var User Objeto con información del usuario */
+        $user = $user->where('id', $user->id)->with('profile')->first();
         $model = $user;
-
         $persons = [];
         
         if ($user->profile !== null && !array_key_exists($user->profile->id, $persons)) {
-            $profile = Profile::where('user_id', $user->id)->first();
+            $profile = Profile::where('user_id', $user->id)->where('institution_id', $user->profile->institution_id)->first();
             if ($profile) {
-                if ($profile->institution) {
-                    $persons[$profile->id] = $profile->institution->acronym . " - " . $profile->first_name . " " . $profile->last_name;
-                } else {
-                    $persons[$profile->id] = $profile->first_name . " " . $profile->last_name;
-                }
+                $persons[$profile->id] = $profile->first_name . " " . $profile->last_name;
             }
         }
 
-        return view('auth.register', compact('header', 'model', 'persons'));
+        $institutions = template_choices('App\Models\Institution', 'name');
+
+        return view('auth.register', compact('header', 'model', 'institutions', 'persons'));
     }
 
     /**
@@ -231,7 +224,7 @@ class UserController extends Controller
                 'role' => ['required_without:permission', 'array'],
                 'permission' => ['required_without:role', 'array']
             ], [
-                'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado'
+                'first_name.required_without' => 'El campo nombre es requerido cuando no se ha seleccionado un empleado',
             ]);
     
             $user->name = $request->first_name;
@@ -274,7 +267,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'password' => ['min:6', 'confirmed'],
                 'password_confirmation' => ['min:6', 'required_with:password'],
-		        'complexity-level' => ['numeric', 'min:43', 'max:100']
+                'complexity-level' => ['numeric', 'min:43', 'max:100']
             ], [
                 'confirmed' => __('La contraseña no coincide con la verificación'),
                 'required_with' => __('Debe confirmar la nueva contraseña'),
@@ -282,7 +275,7 @@ class UserController extends Controller
                 'complexity-level.min' => __(
                     'Contraseña muy débil. Intente incorporar símbolos, letras y números, ' .
                     'en combinación con mayúsculas y minúsculas.'
-	            ),
+                ),
             ]);
 
             $user->password = bcrypt($request->input('password'));

@@ -94,6 +94,26 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::get('asignations/vue-list', 'AssetAsignationController@vueList');
 
     /**
+     * -----------------------------------------------------------
+     * Rutas para gestionar las solicitudes de entregas pendientes
+     * -----------------------------------------------------------
+     */
+    Route::put('asignations/deliver-equipment/{asignation}', 'AssetAsignationController@deliver')
+             ->name('asset.asignation.deliver');
+
+    Route::resource(
+        'asignations/deliveries',
+        'AssetAsignationDeliveryController',
+        ['except' => ['show', 'create', 'edit']],
+        ['names' => [
+            'index' => 'asignations.deliveries.index',
+            'store' => 'asignations.deliveries.store',
+            'update' => 'asignations.deliveries.update',
+            'destroy' => 'asignations.deliveries.destroy',
+        ]]
+    );
+
+    /**
      * ---------------------------------------------------------------------
      * Rutas para gestionar las desincorporaciones de bienes institucionales
      * ---------------------------------------------------------------------
@@ -220,7 +240,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::resource(
         'requests/deliveries',
         'AssetRequestDeliveryController',
-        ['except' => ['show', 'create', 'edit']]
+        ['except' => ['show', 'create', 'edit']],  
+        ['names' => [
+            'index' => 'requests.deliveries.index',
+            'store' => 'requests.deliveries.store',
+            'update' => 'requests.deliveries.update',
+            'destroy' => 'requests.deliveries.destroy',
+        ]]
     );
 
     /**

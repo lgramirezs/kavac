@@ -442,7 +442,7 @@
 						</div>
 					</div>
 
-					@if (!is_null($paramMultiInstitution))
+
 						<hr>
 						<h6 class="md-title card-title">{{ __('Organizaciones Registradas') }}</h6>
 						<div class="row">
@@ -504,7 +504,7 @@
 								@endforeach
 							</tbody>
 						</table>
-					@endif
+				
 				</div>
 			{!! Form::close() !!}
 		</div>
@@ -613,16 +613,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<strong>{{ __('Municipio') }}:</strong>
-									<div class="row">
-										<span class="col-md-12">
-											<a  id="modal-municipality_id"></a>
-										</span>
-									</div>
-								</div>
-							</div>
+						
 							<div class="col-md-4">
 								<div class="form-group">
 									<strong>{{ __('Ciudad') }}:</strong>
@@ -733,9 +724,8 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4 "></div>
-							<div class="col-md-4 "></div>
-							<div class="col-md-4 " style="padding-top: 3rem;padding-bottom: 1rem;">
+							
+							<div class="col-md-4 " style="padding-top: 1rem;padding-bottom: 1rem;">
 								<u><h6 class="">{{ __('DATOS COMPLEMENTARIOS') }}:</h6></u>
 							</div>
 							<div class="col-md-4 "></div>
@@ -1284,9 +1274,8 @@
 						
 					}
 					$("#modal-name").html(institution.name);
-							$("#modal-rif").html(institution.rif);
-					console.log(institution.municipality.name);
-					$("#modal-view-municipality_id").html(institution.municipality.name);
+					$("#modal-rif").html(institution.rif);
+					
 					$("#modal-acronym").html(institution.acronym);
 					$("#modal-business_name").html(institution.business_name);
 					$("#modal-country_id").html(institution.municipality.estate.country.name);

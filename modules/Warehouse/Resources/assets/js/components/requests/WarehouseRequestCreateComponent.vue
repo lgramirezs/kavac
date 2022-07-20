@@ -56,14 +56,11 @@
 				</div>
 				<div class="col-md-6" id="helpWarehouseRequestProject">
 					<div class=" form-group is-required">
-						<label class="mb-4">
-                            <div class="bootstrap-switch-mini">
-    							<input type="radio" name="project_centralized_action" value="project" id="sel_project"
-    							   class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-    							   data-on-label="SI" data-off-label="NO">
-    							Proyecto
-                            </div>
-                        </label>
+						<div class="custom-control custom-switch mb-4">
+							<input type="radio" class="custom-control-input sel_pry_acc" id="sel_project" 
+								   name="project_centralized_action" value="project">
+							<label class="custom-control-label" for="sel_project"></label>
+						</div>
 						<select2 :options="budget_projects" id="budget_project_id" @input="getBudgetSpecificActions('Project')" disabled
 							v-model="record.budget_project_id"></select2>
 
@@ -71,14 +68,11 @@
 				</div>
 				<div class="col-md-6" id="helpWarehouseRequestCentralizedAction">
 					<div class=" form-group is-required">
-						<label class="mb-4">
-                            <div class="bootstrap-switch-mini">
-    							<input type="radio" name="project_centralized_action" value="project"
-    								   class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-    								   id="sel_centralized_action" data-on-label="SI" data-off-label="NO">
-    							Acción centralizada
-                            </div>
-                        </label>
+						<div class="custom-control custom-switch mb-4">
+							<input type="radio" class="custom-control-input sel_pry_acc" id="sel_centralized_action" 
+								   name="project_centralized_action" value="centralized_action">
+							<label class="custom-control-label" for="sel_centralized_action"></label>
+						</div>
 						<select2 :options="budget_centralized_actions" id="budget_centralized_action_id" @input="getBudgetSpecificActions('CentralizedAction')" disabled
 							v-model="record.budget_centralized_action_id"></select2>
 					</div>
@@ -129,7 +123,7 @@
 						<b>Almacén:</b> {{
 							props.row.warehouse_institution_warehouse.warehouse.name
 							}} <br>
-						<b>Existencia:</b> {{ props.row.exist }}<br>
+						<b>Existencia:</b> {{ props.row.real }}<br>
 						<b>Reservados:</b> {{ (props.row.reserved === null)? '0':props.row.reserved }}
 					</span>
 				</div>

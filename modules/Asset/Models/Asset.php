@@ -42,7 +42,8 @@ class Asset extends Model implements Auditable
         'asset_type_id', 'asset_category_id', 'asset_subcategory_id', 'asset_specific_category_id',
         'asset_condition_id', 'asset_acquisition_type_id', 'acquisition_date', 'asset_status_id',
         'serial', 'marca', 'model', 'inventory_serial', 'value', 'asset_use_function_id',
-        'specifications', 'address', 'parish_id', 'currency_id', 'institution_id', 'purchase_supplier_id'
+        'specifications', 'address', 'parish_id', 'currency_id', 'institution_id', 'purchase_supplier_id', 'color',
+        'asset_institutional_code'
     ];
 
     /**

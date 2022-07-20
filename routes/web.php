@@ -254,6 +254,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         'get-select-data-active/{parent_name}/{parent_id}/{model}/{module_name?}/{fk?}',
         'CommonController@getSelectActive'
     )->name('get-select-data-active');
+    /** Ruta para obtener datos de los perfiles dependiendo de la institución*/
+    Route::get(
+        'get-select-data-staff/{parent_name}/{parent_id}/{fk?}',
+        'CommonController@getSelectStaffData'
+    )->name('get-select-data-staff');
 
     /** Ruta para obtener datos de los departamentos */
     Route::get(

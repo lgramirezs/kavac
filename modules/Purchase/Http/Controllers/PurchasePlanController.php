@@ -93,9 +93,9 @@ class PurchasePlanController extends Controller
 			'payroll_staff_id.required'				 => 'El campo responsable es obligatorio.',
 			'payroll_staff_id.int'				     => 'El campo responsable no tiene el formato adecuado.',
 
-			'init_date.required'             => 'El campo fecha inical es obligatorio.',
+			'init_date.required'             => 'El campo fecha inicial es obligatorio.',
 			'init_date.date'                 => 'El campo fecha inicial no tiene el formato adecuado.',
-			'end_date.required'              => 'El campo fecha inical es obligatorio.',
+			'end_date.required'              => 'El campo fecha de culminación es obligatorio.',
 			'end_date.date'                  => 'El campo fecha de culminación no tiene el formato adecuado.',
 		]);
 

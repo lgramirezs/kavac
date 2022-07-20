@@ -37,14 +37,12 @@
 							<div class="col-6">
 								<div class="form-group">
 									{!! Form::label('project', __('Proyecto')) !!}
-									<div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-    										{!! Form::radio('project_centralized_action', 'project', (isset($model) && strpos($model->specificable_type, 'Project'))?true:null, [
-    											'class' => 'form-control bootstrap-switch sel_project_centralized_action',
-    											'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
-    											'id' => 'sel_project'
-    										]) !!}
-                                        </div>
+									<div class="custom-control custom-switch">
+										{!! Form::radio('project_centralized_action', 'project', (isset($model) && strpos($model->specificable_type, 'Project'))?true:null, [
+											'class' => 'custom-control-input sel_project_centralized_action',
+											'id' => 'sel_project'
+										]) !!}
+										<label class="custom-control-label" for="sel_project"></label>
 									</div>
 								</div>
 								<div class="form-group">
@@ -59,14 +57,12 @@
 							<div class="col-6">
 								<div class="form-group">
 									{!! Form::label('centralized_action', __('Acción Centralizada')) !!}
-									<div class="col-12">
-                                        <div class="col-12 bootstrap-switch-mini">
-    										{!! Form::radio('project_centralized_action', 'centralized_action', (isset($model) && strpos($model->specificable_type, 'CentralizedAction'))?true:null, [
-    											'class' => 'form-control bootstrap-switch sel_project_centralized_action',
-    											'data-on-label' => __('SI'), 'data-off-label' => __('NO'),
-    											'id' => 'sel_centralized_action'
-    										]) !!}
-                                        </div>
+									<div class="custom-control custom-switch">
+										{!! Form::radio('project_centralized_action', 'centralized_action', (isset($model) && strpos($model->specificable_type, 'CentralizedAction'))?true:null, [
+											'class' => 'custom-control-input sel_project_centralized_action',
+											'id' => 'sel_centralized_action'
+										]) !!}
+										<label class="custom-control-label" for="sel_centralized_action"></label>
 									</div>
 								</div>
 								<div class="form-group">
@@ -152,7 +148,7 @@
 	<script>
 		$(document).ready(function() {
 
-			$('.sel_project_centralized_action').on('switchChange.bootstrapSwitch', function(e) {
+			$('.sel_project_centralized_action').on('change', function(e) {
 				$('#project_id').attr('disabled', (e.target.id!=="sel_project"));
 				$('#centralized_action_id').attr('disabled', (e.target.id!=="sel_centralized_action"));
 
@@ -166,26 +162,22 @@
 				}
 			});
 
-			if ($('.sel_project_centralized_action').is(':checked')){
- 
-                    if($('#project_id').val() !== ''){
-                   
-                   $('#project_id').attr('disabled', false);
-                                                      }
-				   if($('#centralized_action_id').val() !== ''){
-                   
-                   $('#centralized_action_id').attr('disabled', false);
-                                                      }									  
+			if ($('.sel_project_centralized_action').is(':checked')) {
+				if ($('#project_id').val() !== '') {
+					$('#project_id').attr('disabled', false);
 
-                  }
+					if ($('#centralized_action_id').val() !== '') {
+						$('#centralized_action_id').attr('disabled', false);
+					}
+				}
 
-				  
-			$("#from_date").on('change', function() {
-				$("#to_date").attr("min", $(this).val());
-			});
-			$("#to_date").on('change', function() {
-				$("#from_date").attr("max", $(this).val());
-			});
+				$("#from_date").on('change', function() {
+					$("#to_date").attr("min", $(this).val());
+				});
+				$("#to_date").on('change', function() {
+					$("#from_date").attr("max", $(this).val());
+				});
+			}
 		});
 	</script>
 @endsection

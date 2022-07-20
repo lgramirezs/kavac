@@ -13,13 +13,33 @@ Vue.component('budget-accounts-list', () =>
 );
 
 /**
+ * Componente para la gestión de los tipos de financiamiento.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('financement-types', () => import(
+    /* webpackChunkName: "financement-types" */
+    './components/FinancementTypesComponent.vue'
+));
+
+/**
+ * Componente para la gestión de las fuentes de financiamiento.
+ *
+ * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
+ */
+Vue.component('financement-sources', () => import(
+    /* webpackChunkName: "financement-sources" */
+    './components/FinancementSourcesComponent.vue'
+));
+
+/**
  * Componente para mostrar listado de proyectos
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-Vue.component('budget-projects-list', () =>
+Vue.component('budget-list-projects', () =>
 	import(
-		/* webpackChunkName: "budget-projects-list" */
+		/* webpackChunkName: "budget-list-projects" */
 		'./components/BudgetProjectsListComponent.vue'
 	)
 );
@@ -200,6 +220,18 @@ Vue.component('budget-compromise', () =>
 		/* webpackChunkName: "budget-compromise" */
 		'./components/BudgetCompromiseComponent.vue'
 	)
+);
+
+/**
+ * Componente para mostrar listado de compromisos
+ *
+ * @author Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+ */
+Vue.component('budget-compromise-info', () =>
+    import(
+        /* webpackChunkName: "budget-compromise-info" */
+        './components/BudgetCompromiseInfoComponent.vue'
+    )
 );
 
 /**

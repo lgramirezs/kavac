@@ -58,6 +58,8 @@ class PayrollVacationPolicyController extends Controller
             'vacation_type'                         => ['required'],
             'staff_antiquity'                       => ['required'],
             'institution_id'                        => ['required'],
+            'assign_to'                             => ['required'],
+            'min_days_advance'                      => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -81,7 +83,9 @@ class PayrollVacationPolicyController extends Controller
                 'por año de servicio es obligatorio.',
             // 'salary_type.required'                           => 'El campo salario a emplear para el cálculo del bono ' .
             //     'vacacional es obligatorio.',
-            'payroll_payment_type_id.required'               => 'El campo tipo de pago de nómina es obligatorio.'
+            'payroll_payment_type_id.required'               => 'El campo tipo de pago de nómina es obligatorio.',
+            'assign_to.required'                             => 'El campo asignar a es obligatorio.',
+            'min_days_advance.required'                      => 'El campo días de anticipación (mínimo) es obligatorio.'
         ];
     }
 
@@ -97,8 +101,9 @@ class PayrollVacationPolicyController extends Controller
     public function index()
     {
         //dd('initRecords index');
-        $profileUser = Auth()->user()->profile;
-        if ($profileUser) {
+        $profileUser = auth()->user()->profile;
+        
+        if ($profileUser && $profileUser->institution_id !== null) {
             $institution = Institution::find($profileUser->institution_id);
         } else {
             $institution = Institution::where('active', true)->where('default', true)->first();
@@ -196,18 +201,13 @@ class PayrollVacationPolicyController extends Controller
                     'payroll_payment_type_id'               => ['required']
                 ]
             );
-            if ($request->input('payment_calculation') == 'general_days') {
-                $validateRules  = array_merge(
-                    $validateRules,
-                    ['vacation_days' => ['required']]
-                );
-            }
         } elseif ($request->input('vacation_type') == 'vacation_period') {
             $validateRules  = array_merge(
                 $validateRules,
                 [
                     'vacation_periods_accumulated_per_year' => ['required'],
                     'vacation_period_per_year'              => ['required'],
+                    'vacation_days'                         => ['required'],
                     'additional_days_per_year'              => ['required'],
                     'minimum_additional_days_per_year'      => ['required'],
                     'maximum_additional_days_per_year'      => ['required'],
@@ -245,7 +245,6 @@ class PayrollVacationPolicyController extends Controller
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
-            'payment_calculation'                   => $request->input('payment_calculation'),
             // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),
             'vacation_postpone'                     => $request->input('vacation_postpone'),
@@ -258,7 +257,9 @@ class PayrollVacationPolicyController extends Controller
             'worker_arises'                         => $request->input('worker_arises'),
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
-            'max_days_advance'                      => $request->input('max_days_advance'),
+
+            'business_days'                         => $request->input('business_days'),
+            'old_jobs'                              => $request->input('old_jobs'),
 
             // Agrupar por
             'group_by'                              => $request->input('group_by'),
@@ -356,12 +357,6 @@ class PayrollVacationPolicyController extends Controller
                     'payroll_payment_type_id'               => ['required']
                 ]
             );
-            if ($request->input('payment_calculation') == 'general_days') {
-                $validateRules  = array_merge(
-                    $validateRules,
-                    ['vacation_days' => ['required']]
-                );
-            }
         } elseif ($request->input('vacation_type') == 'vacation_period') {
             $validateRules  = array_merge(
                 $validateRules,
@@ -400,7 +395,6 @@ class PayrollVacationPolicyController extends Controller
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
             'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
-            'payment_calculation'                   => $request->input('payment_calculation'),
             // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),
             'vacation_postpone'                     => $request->input('vacation_postpone'),
@@ -413,7 +407,9 @@ class PayrollVacationPolicyController extends Controller
             'worker_arises'                         => $request->input('worker_arises'),
             'generate_worker_arises'                => $request->input('generate_worker_arises'),
             'min_days_advance'                      => $request->input('min_days_advance'),
-            'max_days_advance'                      => $request->input('max_days_advance'),
+
+            'business_days'                         => $request->input('business_days'),
+            'old_jobs'                              => $request->input('old_jobs'),
 
             // Agrupar por
              'group_by'                             => $request->input('group_by'),

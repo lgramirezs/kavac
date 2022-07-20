@@ -14,7 +14,7 @@
                         </span>
                     </button>
                     <ul>
-                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                     </ul>
                 </div>
             </div>
@@ -112,12 +112,11 @@
                     <div class="form-group">
                         <label>¿Es Estudiante?</label>
                         <div class="col-md-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input id="is_student" name="is_student" type="checkbox"
-                                       class="form-control bootstrap-switch" data-toggle="tooltip"
-                                       data-on-label="SI" data-off-label="NO"
-                                       title="Indique si el trabajador es estudiante o no"
-                                       v-model="record.is_student" value="true"/>
+                            <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                 title="Indique si el trabajador es estudiante o no">
+                                <input type="checkbox" class="custom-control-input" id="is_student" 
+                                       v-model="record.is_student" :value="true" name="is_student">
+                                <label class="custom-control-label" for="is_student"></label>
                             </div>
                         </div>
                     </div>
@@ -531,30 +530,33 @@
 
             },
         },
-        created() {
+        async created() {
+            this.loading = true;
             this.record.is_student = false;
             this.record.payroll_languages = [];
             this.record.professions = [];
             this.record.payroll_cou_ack_files = [];
             this.record.payroll_studies = [];
             //this.getPayrollStaffs();
-            this.getPayrollInstructionDegrees();
-            this.getProfessions();
-            this.getPayrollStudyTypes();
-            this.getPayrollLanguages();
-            this.getPayrollLanguageLevels();
+            await this.getPayrollInstructionDegrees();
+            await this.getProfessions();
+            await this.getPayrollStudyTypes();
+            await this.getPayrollLanguages();
+            await this.getPayrollLanguageLevels();
             if (this.payroll_professional_id) {
-                this.getPayrollProfession(this.payroll_professional_id);
+                await this.getPayrollProfession(this.payroll_professional_id);
             } else {
-                this.getPayrollProfession('filter');
+                await this.getPayrollProfession('filter');
             }
+            this.loading = false;
         },
-        mounted() {
-            if(this.payroll_professional_id) {
-                this.getProfessional();
-                this.getJsonProfessions();
+        async mounted() {
+            this.loading = true;
+            if (this.payroll_professional_id) {
+                await this.getProfessional();
+                await this.getJsonProfessions();
             }
-            this.switchHandler('is_student');
+            this.loading = false;
         },
         watch: {
             record: {
@@ -562,7 +564,6 @@
                 handler: function() {
                     const vm = this;
                     if (vm.record.is_student) {
-                        $('#is_student').bootstrapSwitch('state', true, true);
                         $('#block_student').removeClass('d-none');
                     }
                     else {

@@ -7,8 +7,7 @@
 					<div class="alert-icon">
 						<i class="now-ui-icons objects_support-17"></i>
 					</div>
-					<strong>Cuidado!</strong> Debe verificar los siguientes
-					errores antes de continuar:
+					<strong>Cuidado!</strong> Debe verificar los siguientes errores antes de continuar:
 					<button
 						type="button"
 						class="close"
@@ -31,21 +30,10 @@
 			<div class="row">
 				<div class="row col-12" v-show="!consolidated">
 					<div class="col-6 mt-4">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								type="radio"
-								name="project_centralized_action"
-								value="project"
-								id="sel_project"
-								class="
-									form-control
-									bootstrap-switch
-									sel_pry_acc
-								"
-								data-on-label="SI"
-								data-off-label="NO"
-							/>
-							<label>Proyecto</label>
+						<div class="custom-control custom-switch">
+							<input type="radio" class="custom-control-input sel_pry_acc" id="sel_project"
+								   value="project" name="project_centralized_action">
+							<label class="custom-control-label" for="sel_project">Proyecto</label>
 						</div>
 						<div class="mt-4">
 							<select2
@@ -58,21 +46,12 @@
 						</div>
 					</div>
 					<div class="col-6 mt-4">
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								type="radio"
-								name="project_centralized_action"
-								value="project"
-								class="
-									form-control
-									bootstrap-switch
-									sel_pry_acc
-								"
-								id="sel_centralized_action"
-								data-on-label="SI"
-								data-off-label="NO"
-							/>
-							<label>Acción Centralizada</label>
+						<div class="custom-control custom-switch">
+							<input type="radio" class="custom-control-input sel_pry_acc" id="sel_centralized_action"
+								   value="centralized_action" name="project_centralized_action">
+							<label class="custom-control-label" for="sel_centralized_action">
+								Acción Centralizada
+							</label>
 						</div>
 						<div class="mt-4">
 							<select2
@@ -87,20 +66,13 @@
 					</div>
 					<div class="col-12 mt-4">
 						<label for="all_specific_actions"
-							>Seleccionar todas las acciones especificas de este
+							>Seleccionar todas las acciones específicas de este
 							Proyecto / Acción Centralizada</label
 						>
-						<div class="col-12 bootstrap-switch-mini">
-							<input
-								type="checkbox"
-								name="all_specific_actions"
-								value="true"
-								class="form-control bootstrap-switch"
-								id="all_specific_actions"
-								data-on-label="SI"
-								data-off-label="NO"
-								v-model="all_specific_actions"
-							/>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="setAllSpecificActions"
+								   :value="true" name="all_specific_actions" v-model="all_specific_actions">
+							<label class="custom-control-label" for="setAllSpecificActions"></label>
 						</div>
 					</div>
 					<div
@@ -179,13 +151,10 @@
 							<strong>Quitar cuentas sin movimientos</strong>
 						</label>
 						<div class="col-12 mt-4">
-							<div class="form-check">
-								<input
-									v-model="accountsWithMovements"
-									type="checkbox"
-									class="form-check-input"
-									id="checkbox"
-								/>
+							<div class="custom-control custom-switch">
+								<input type="checkbox" class="custom-control-input" id="accountsWithMovements" 
+									   v-model="accountsWithMovements">
+								<label class="custom-control-label" for="accountsWithMovements"></label>
 							</div>
 						</div>
 					</div>
@@ -261,14 +230,13 @@ export default {
 	mounted() {
 		const vm = this;
 
-		$(".sel_pry_acc").on("switchChange.bootstrapSwitch", function (e) {
+		$(".sel_pry_acc").on("change", function (e) {
 			$("#project_id").attr("disabled", e.target.id !== "sel_project");
 			$("#centralized_action_id").attr(
 				"disabled",
 				e.target.id !== "sel_centralized_action"
 			);
 			if (e.target.id === "sel_project") {
-				$("#all_specific_actions").bootstrapSwitch("state", false);
 				vm.centralized_action_id = "";
 				vm.specific_actions_ids = [];
 				$("#centralized_action_id")
@@ -278,7 +246,6 @@ export default {
 			} else if (e.target.id === "sel_centralized_action") {
 				vm.project_id = "";
 				vm.specific_actions_ids = [];
-				$("#all_specific_actions").bootstrapSwitch("state", false);
 				$("#centralized_action_id")
 					.closest(".form-group")
 					.addClass("is-required");
@@ -289,7 +256,7 @@ export default {
 		});
 
 		$("#all_specific_actions").on(
-			"switchChange.bootstrapSwitch",
+			"change",
 			function (event, state) {
 				vm.all_specific_actions = state;
 				if (vm.all_specific_actions) {
@@ -309,14 +276,14 @@ export default {
 		);
 
 		$("#consolidated").on(
-			"switchChange.bootstrapSwitch",
+			"change",
 			function (event, state) {
-				vm.consolidated = state;
-				$("#sel_project").bootstrapSwitch(
+				vm.consolidated = this.checked;
+				$("#sel_project").attr(
 					"disabled",
 					vm.consolidated !== false
 				);
-				$("#sel_centralized_action").bootstrapSwitch(
+				$("#sel_centralized_action").attr(
 					"disabled",
 					vm.consolidated !== false
 				);
@@ -328,11 +295,11 @@ export default {
 					vm.consolidated !== false
 				);
 
-				if ($("#all_specific_actions").bootstrapSwitch("state")) {
-					$("#all_specific_actions").bootstrapSwitch("state", false);
+				if (document.getElementById(all_specific_actions).checked) {
+					document.getElementById(all_specific_actions).checked = false;
 					vm.all_specific_actions = false;
 				}
-				$("#all_specific_actions").bootstrapSwitch(
+				$("#all_specific_actions").attr(
 					"disabled",
 					vm.consolidated !== false
 				);
@@ -344,7 +311,7 @@ export default {
 			const vm = this;
 			vm.all_specific_actions = false;
 			vm.specific_actions_ids = "";
-			$("#all_specific_actions").bootstrapSwitch("state", false);
+			document.getElementById(all_specific_actions).checked = false;
 		},
 
 		getSpecificActions(type) {

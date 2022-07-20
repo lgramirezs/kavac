@@ -126,7 +126,7 @@ class AccountingAccountController extends Controller
             [
                 'denomination'    => $request['denomination'],
                 'active'          => $request['active'],
-                'original'        => $request['original'],
+                'original'        => $request['original'] ?? false,
                 'inactivity_date' => (!$request['active'])?date('Y-m-d'):null,
 
                 /**

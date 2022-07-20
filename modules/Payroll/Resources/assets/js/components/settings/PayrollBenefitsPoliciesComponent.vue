@@ -33,7 +33,7 @@
                                     </span>
                                 </button>
                                 <ul>
-                                    <li v-for="error in errors" :key="error">{{ error }}</li>
+                                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -120,14 +120,13 @@
                                             <div class="form-group">
                                                 <label>¿Activo?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger"
-                                                             color="success" off-color="text-gray" toggle
-                                                             data-toggle="tooltip"
-                                                             title="¿La política de prestaciones se encuentra activa actualmente?"
-                                                             v-model="record.active">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
-                                                  </div>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="¿La política de prestaciones se encuentra activa actualmente?">
+                                                        <input type="checkbox" class="custom-control-input" id="benefitActive" 
+                                                               v-model="record.active" :value="true">
+                                                        <label class="custom-control-label" for="benefitActive"></label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- ./activa -->
@@ -251,13 +250,13 @@
                                             <div class="form-group">
                                                 <label>¿Permitir anticipo de prestaciones?</label>
                                                 <div class="col-12">
-                                                    <p-check class="pretty p-switch p-fill p-bigger"
-                                                             color="success" off-color="text-gray" toggle
-                                                             data-toggle="tooltip"
-                                                             title="Indique si se habilita la solicitud de anticipo de prestaciones"
-                                                             v-model="record.benefits_advance_payment">
-                                                        <label slot="off-label"></label>
-                                                    </p-check>
+                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                                         title="Indique si se habilita la solicitud de anticipo de prestaciones">
+                                                        <input type="checkbox" class="custom-control-input" 
+                                                               id="benefitAdvancePayment" v-model="record.benefits_advance_payment" 
+                                                               :value="true">
+                                                        <label class="custom-control-label" for="benefitAdvancePayment"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -364,8 +363,8 @@
                                 <span v-else> {{ props.row.start_date + ' - No definido' }} </span>
                             </div>
                             <div slot="active" slot-scope="props" class="text-center">
-                                <span v-if="props.row.active"> SI </span>
-                                <span v-else> NO </span>
+                                <span v-if="props.row.active" class="text-success font-weight-bold"> SI </span>
+                                <span v-else class="text-danger font-weight-bold"> NO </span>
                             </div>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"

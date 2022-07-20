@@ -29,7 +29,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <purchase-plan-list :record_list="{{ $record_list }}" route_edit="/purchase/purchase_plans/{id}/edit" />
+                    <purchase-plan-list 
+                        :record_list="{{ $record_list }}" 
+                        route_edit="/purchase/purchase_plans/{id}/edit" />
                 </div>
             </div>
         </div>

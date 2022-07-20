@@ -103,13 +103,13 @@
                                 <div class=" form-group">
                                     <label>¿Correlativo al expediente del trabajador?</label>
                                     <div class="col-12">
-                                        <p-check class="pretty p-switch p-fill p-bigger"
-                                                 color="success" off-color="text-gray" toggle
-                                                 data-toggle="tooltip"
-                                                 title="¿El tipo de pago es correlativo al expediente del trabajador?"
-                                                 v-model="record.correlative">
-                                            <label slot="off-label"></label>
-                                        </p-check>
+                                        <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                             title="¿El tipo de pago es correlativo al expediente del trabajador?">
+                                            <input type="checkbox" class="custom-control-input" 
+                                                    id="paymentTypeCorrelative" v-model="record.correlative" 
+                                                    :value="true">
+                                            <label class="custom-control-label" for="paymentTypeCorrelative"></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
