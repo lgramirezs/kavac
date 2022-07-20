@@ -39,10 +39,10 @@
                     <div class="form-group">
                         <label>Busqueda por periodo</label>
                         <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_search" value="date" id="sel_search_date"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                       data-on-label="SI" data-off-label="NO">
+                            <div class="custom-control custom-switch">
+                                <input type="radio" class="custom-control-input sel_type_search" id="sel_search_date" 
+                                        name="type_search" value="date">
+                                <label class="custom-control-label" for="sel_search_date"></label>
                             </div>
                         </div>
                     </div>
@@ -51,10 +51,10 @@
                     <div class=" form-group">
                         <label>Busqueda por mes</label>
                         <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_search" value="mes" id="sel_search_mes"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                       data-on-label="SI" data-off-label="NO">
+                            <div class="custom-control custom-switch">
+                                <input type="radio" class="custom-control-input sel_type_search" id="sel_search_mes" 
+                                        name="type_search" value="mes">
+                                <label class="custom-control-label" for="sel_search_mes"></label>
                             </div>
                         </div>
                     </div>

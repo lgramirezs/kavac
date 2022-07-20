@@ -147,6 +147,26 @@ Vue.component('asset-asignation-info', () => import(
 );
 
 /**
+ * Componente para mostrar un listado de entregas registradas
+ *
+ * @author Henry Paredes <hparedes@cenditel.gob.ve>
+ */
+ Vue.component('asset-asignation-delivery-list', () => import(
+    /* webpackChunkName: "asset-asignation-delivery-list" */
+    './components/asignations/AssetAsignationDeliveryListComponent.vue')
+);
+
+/**
+ * Componente para gestinar una solicitud de entrega de bienes asignados
+ *
+ * @author Henry Paredes <hparedes@cenditel.gob.ve>
+ */
+ Vue.component('asset-asignation-deliver-equipment', () => import(
+    /* webpackChunkName: "asset-asignation-deliver-equipment" */
+    './components/asignations/AssetAsignationDeliverEquipment.vue')
+);
+
+/**
  * Componente para gestionar las desincorporaciones de bienes institucionales
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>

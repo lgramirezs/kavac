@@ -17,13 +17,13 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group" style="text-align: right;">
-						<label>Busqueda por Periodo</label>
+						<label>Busqueda por Período</label>
 						<div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-    							<input type="radio" name="type_search" value="period" id="sel_search_period"
-    								   class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-    								   data-on-label="SI" data-off-label="NO">
-                            </div>
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_type_search" id="sel_search_period" 
+									   name="type_search" value="period">
+								<label class="custom-control-label" for="sel_search_period"></label>
+							</div>
 							<input type="hidden" v-model="record.type_search">
 						</div>
 					</div>
@@ -32,11 +32,11 @@
 					<div class=" form-group">
 						<label>Busqueda por Fecha </label>
 						<div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-								<input type="radio" name="type_search" value="date" id="sel_search_date"
-									   class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-									   data-on-label="SI" data-off-label="NO">
-                            </div>
+							<div class="custom-control custom-switch">
+								<input type="radio" class="custom-control-input sel_type_search" id="sel_search_date" 
+									   name="type_search" value="date">
+								<label class="custom-control-label" for="sel_search_date"></label>
+							</div>
 						</div>
 					</div>
 				</div>

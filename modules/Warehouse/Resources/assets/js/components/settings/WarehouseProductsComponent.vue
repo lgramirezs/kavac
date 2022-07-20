@@ -100,12 +100,11 @@
                                 <div class="form-group">
                                     <label for="" class="control-label">Atributos personalizados</label>
                                     <div class="col-12">
-                                        <div class="bootstrap-switch-mini">
-                                            <input type="checkbox" class="form-control bootstrap-switch"
-                                                   name="define_attributes" data-toggle="tooltip" v-has-tooltip
-                                                   title="Establecer los atributos del insumo para gestionar las variantes"
-                                                   data-on-label="Si" data-off-label="No" value="true"
-                                                   v-model="record.define_attributes">
+                                        <div class="custom-control custom-switch" data-toggle="tooltip" 
+                                             title="Establecer los atributos del insumo para gestionar las variantes">
+                                            <input type="checkbox" class="custom-control-input" id="define_attributes" 
+                                                   :value="true" v-model="record.define_attributes">
+                                            <label class="custom-control-label" for="define_attributes"></label>
                                         </div>
                                     </div>
                                 </div>

@@ -6,7 +6,7 @@
                     <li v-for="error in errors" :key="error">{{ error }}</li>
                 </ul>
             </div>
-       <div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <strong>Filtros</strong>
                 </div>
@@ -74,206 +74,206 @@
                 </div>
             </v-client-table>
             <div class="modal fade" tabindex="-1" role="dialog" id="show_employment">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h6>
-                            <i class="icofont icofont-read-book ico-2x"></i>
-                            Información Detallada de Datos Laborales y Personales
-                        </h6>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Trabajador</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_staff">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de ingreso a la administración pública</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="start_date_apn">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de ingreso a la institución</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="start_date">
-                                </div>
-                            </div>
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h6>
+                                <i class="icofont icofont-read-book ico-2x"></i>
+                                Información Detallada de Datos Laborales y Personales
+                            </h6>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fecha de egreso de la institución</label>
-                                    <input type="date" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="end_date">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Trabajador</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_staff">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>¿Está Activo?</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-                                        <input id="active" class="form-control bootstrap-switch"
-                                            data-on-label="SI" data-off-label="NO" type="checkbox">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha de ingreso a la administración pública</label>
+                                        <input type="date" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="start_date_apn">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha de ingreso a la institución</label>
+                                        <input type="date" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="start_date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4" v-if="!record.active">
-                                <div class="form-group">
-                                    <label>Tipo de la Inactividad</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_inactivity_type">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha de egreso de la institución</label>
+                                        <input type="date" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="end_date">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Correo Institucional</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="institution_email">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>¿Está Activo?</label>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="active" :value="true" 
+                                                v-model="record.active">
+                                            <label class="custom-control-label" for="active"></label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Descripción de las Funciones</label>
-                                    <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
-                                              :disabled="true" :config="ckeditor.editorConfig" class="form-control"
-                                              name="function_description" tag-name="textarea" rows="3"></ckeditor>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Cargo</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_position_type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Cargo</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_position">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Personal</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_staff_type">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Contrato</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_contract_type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Institución</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="institution">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Departamento</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="department">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Género</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_gender">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>¿Posee una Discapacidad?</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-                                        <input id="has_disability" class="form-control bootstrap-switch"
-                                               data-on-label="SI" data-off-label="NO" type="checkbox"
-                                               :value="record.has_disability">
+                                <div class="col-md-4" v-if="!record.active">
+                                    <div class="form-group">
+                                        <label>Tipo de la Inactividad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_inactivity_type">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4" v-if="record.has_disability">
-                                <div class="form-group">
-                                    <label>Discapacidad</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_disability">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Correo Institucional</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="institution_email">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Sangre</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_blood_type">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Descripción de las Funciones</label>
+                                        <ckeditor :editor="ckeditor.editor" id="function_description" data-toggle="tooltip"
+                                                :disabled="true" :config="ckeditor.editorConfig" class="form-control"
+                                                name="function_description" tag-name="textarea" rows="3"></ckeditor>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Seguro Social</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="social_security">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>¿Posee Licencia de Conducir?</label>
-                                    <div class="col-12 bootstrap-switch-mini">
-                                        <input id="has_driver_license" class="form-control bootstrap-switch"
-                                               data-on-label="SI" data-off-label="NO" type="checkbox"
-                                               :value="record.has_driver_license">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tipo de Cargo</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_position_type">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4" v-show="record.has_driver_license">
-                                <div class="form-group">
-                                    <label>Grado de la Licencia de Conducir</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_license_degree">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cargo</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_position">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tipo de Personal</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_staff_type">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tipo de Contrato</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_contract_type">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nacionalidad</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="payroll_nationality">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Institución</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="institution">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Departamento</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="department">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Género</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_gender">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Edad</label>
-                                    <input type="text" data-toggle="tooltip" class="form-control input-sm"
-                                        disabled="true" id="age">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>¿Posee una Discapacidad?</label>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="has_disability" :value="true" 
+                                                v-model="record.has_disability">
+                                            <label class="custom-control-label" for="has_disability"></label>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="col-md-4" v-if="record.has_disability">
+                                    <div class="form-group">
+                                        <label>Discapacidad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_disability">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tipo de Sangre</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_blood_type">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Seguro Social</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="social_security">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>¿Posee Licencia de Conducir?</label>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="has_driver_license" 
+                                                :value="true" v-model="record.has_driver_license">
+                                            <label class="custom-control-label" for="has_driver_license"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" v-show="record.has_driver_license">
+                                    <div class="form-group">
+                                        <label>Grado de la Licencia de Conducir</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_license_degree">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nacionalidad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="payroll_nationality">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Edad</label>
+                                        <input type="text" data-toggle="tooltip" class="form-control input-sm"
+                                            disabled="true" id="age">
+                                    </div>
+                                </div>
+                            
                             </div>
-                           
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
         </div>
     </section>
 </template>
@@ -319,7 +319,6 @@
                     $('#start_date_apn').val(vm.record.start_date_apn);
                     $('#start_date').val(vm.record.start_date);
                     $('#end_date').val(vm.record.end_date);
-                    $('#active').bootstrapSwitch('state', (vm.record.active)?true:false);
                     $('#payroll_inactivity_type').val(
                         (vm.record.payroll_inactivity_type) ? vm.record.payroll_inactivity_type.name : ' '
                     );
@@ -332,7 +331,6 @@
                     $('#department').val(vm.record.department.name);
                     $('#payroll_contract_type').val(vm.record.payroll_contract_type.name);
                     $('#payroll_gender').val(vm.record.payroll_staff.payroll_gender.name);
-                    $('#has_disability').bootstrapSwitch('state', (vm.record.payroll_staff.has_disability)?true:false);
                     $('#payroll_disability').val(
                         (vm.record.payroll_staff.payroll_disability) 
                         ? vm.record.payroll_staff.payroll_disability.name 
@@ -340,9 +338,6 @@
                     );
                     $('#payroll_blood_type').val(vm.record.payroll_staff.payroll_blood_type.name);
                     $('#social_security').val(vm.record.payroll_staff.social_security);
-                    $('#has_driver_license').bootstrapSwitch(
-                        'state', (vm.record.payroll_staff.has_driver_license)?true:false
-                    );
                     $('#payroll_license_degree').val(
                         (vm.record.payroll_staff.payroll_license_degree) 
                         ? vm.record.payroll_staff.payroll_license_degree.name 

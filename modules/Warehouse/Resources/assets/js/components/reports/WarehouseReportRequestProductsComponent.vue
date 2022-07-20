@@ -30,14 +30,11 @@
                 </div>
                 <div class="col-md-4" id="helpWarehouseRequestProject">
                     <div class=" form-group">
-                        <label class="mb-4">
-                            <div class="bootstrap-switch-mini">
-                                <input type="radio" name="project_centralized_action" value="project" id="sel_project"
-                                   class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-                                   data-on-label="SI" data-off-label="NO">
-                                Proyecto
-                            </div>
-                        </label>
+                        <div class="custom-control custom-switch mb-4">
+                            <input type="radio" class="custom-control-input sel_pry_acc" id="sel_project" 
+                                    name="project_centralized_action" value="project">
+                            <label class="custom-control-label" for="sel_project"></label>
+                        </div>
                         <div v-if="show_case_project" class="is-required">
                             <select2 :options="budget_projects" id="budget_project_id" @input="getBudgetSpecificActions('Project')"
                                 v-model="record.budget_project_id"></select2>
@@ -47,14 +44,11 @@
                 </div>
                 <div class="col-md-4" id="helpWarehouseRequestCentralizedAction">
                     <div class=" form-group">
-                        <label class="mb-4">
-                            <div class="bootstrap-switch-mini">
-                                <input type="radio" name="project_centralized_action" value="project"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-                                       id="sel_centralized_action" data-on-label="SI" data-off-label="NO">
-                                Acción Centralizada
-                            </div>
-                        </label>
+                        <div class="custom-control custom-switch mb-4">
+                            <input type="radio" class="custom-control-input sel_pry_acc" id="sel_centralized_action" 
+                                    name="project_centralized_action" value="centralized_action">
+                            <label class="custom-control-label" for="sel_centralized_action"></label>
+                        </div>
                         <div v-if="show_case_cent_acc" class="is-required">
                             <select2 :options="budget_centralized_actions" id="budget_centralized_action_id" @input="getBudgetSpecificActions('CentralizedAction')"
                                 v-model="record.budget_centralized_action_id"></select2>
@@ -63,14 +57,11 @@
                 </div>
                 <div class="col-md-4" id="helpWarehouseRequestStaff">
                     <div class=" form-group">
-                        <label class="mb-4">
-                            <div class="bootstrap-switch-mini">
-                                <input type="radio" name="project_centralized_action" value="project"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_pry_acc"
-                                       id="sel_staff" data-on-label="SI" data-off-label="NO">
-                                Solicitante
-                            </div>
-                        </label>
+                        <div class="custom-control custom-switch mb-4">
+                            <input type="radio" class="custom-control-input sel_pry_acc" id="sel_staff" 
+                                    name="project_centralized_action" value="staff">
+                            <label class="custom-control-label" for="sel_staff"></label>
+                        </div>
                         <div v-if="show_case_staff" class="is-required">
                             <select2 :options="payroll_staffs" id="budget_centralized_action_id"
                                 v-model="record.payroll_staff_id"></select2>
@@ -91,10 +82,10 @@
                     <div class="form-group">
                         <label>Busqueda por Periodo</label>
                         <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_search" value="date" id="sel_search_date"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                       data-on-label="SI" data-off-label="NO">
+                            <div class="custom-control custom-switch">
+                                <input type="radio" class="custom-control-input sel_type_search" id="sel_search_date" 
+                                        name="type_search" value="date">
+                                <label class="custom-control-label" for="sel_search_date"></label>
                             </div>
                         </div>
                     </div>
@@ -103,10 +94,10 @@
                     <div class=" form-group">
                         <label>Busqueda por Mes</label>
                         <div class="col-12">
-                            <div class="col-12 bootstrap-switch-mini">
-                                <input type="radio" name="type_search" value="mes" id="sel_search_mes"
-                                       class="form-control bootstrap-switch bootstrap-switch-mini sel_type_search"
-                                       data-on-label="SI" data-off-label="NO">
+                            <div class="custom-control custom-switch">
+                                <input type="radio" class="custom-control-input sel_type_search" id="sel_search_mes" 
+                                        name="type_search" value="mes">
+                                <label class="custom-control-label" for="sel_search_mes"></label>
                             </div>
                         </div>
                     </div>

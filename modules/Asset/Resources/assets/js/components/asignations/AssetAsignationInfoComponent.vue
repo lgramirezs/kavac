@@ -33,8 +33,13 @@
 	                        </li>
 
 	                        <li class="nav-item">
-	                            <a class="nav-link" data-toggle="tab" href="#equipment" role="tab" @click="loadEquipment()">
+	                            <a class="nav-link" data-toggle="tab" href="#equipment_assigned" role="tab" @click="loadEquipment()">
 	                                <i class="ion-arrow-swap"></i> Equipos asignados
+	                            </a>
+	                        </li>
+							<li class="nav-item">
+	                            <a class="nav-link" data-toggle="tab" href="#equipment_delivered" role="tab" @click="loadEquipment()">
+	                                <i class="ion-arrow-swap"></i> Equipos entregados
 	                            </a>
 	                        </li>
 	                    </ul>
@@ -76,11 +81,19 @@
 							    </div>
 	                    	</div>
 
-	                    	<div class="tab-pane" id="equipment" role="tabpanel">
+	                    	<div class="tab-pane" id="equipment_assigned" role="tabpanel">
 	                    		<div class="row">
 	                    			<div class="col-md-12">
 										<hr>
-										<v-client-table :columns="columns" :data="records" :options="table_options"></v-client-table>
+										<v-client-table :columns="columns" :data="equipments_assigned" :options="table_options"></v-client-table>
+									</div>
+	                    		</div>
+	                    	</div>
+							<div class="tab-pane" id="equipment_delivered" role="tabpanel">
+	                    		<div class="row">
+	                    			<div class="col-md-12">
+										<hr>
+										<v-client-table :columns="columns" :data="equipments_delivered" :options="table_options"></v-client-table>
 									</div>
 	                    		</div>
 	                    	</div>
@@ -105,8 +118,10 @@
 		data() {
 			return {
 				records: [],
+				equipments_assigned: [],
+				equipments_delivered: [],
 				errors: [],
-				columns: ['asset.inventory_serial','asset.serial','asset.marca','asset.model'],
+				columns: ['asset.inventory_serial','asset.serial','asset.marca','asset.asset_institutional_code'],
 			}
 		},
 		created() {
@@ -114,10 +129,10 @@
 				'asset.inventory_serial': 'Código',
 				'asset.serial': 'Serial',
 				'asset.marca': 'Marca',
-				'asset.model': 'Modelo',
+				'asset.asset_institutional_code': 'Código org.',
 			};
-			this.table_options.sortable = ['asset.inventory_serial','asset.serial','asset.marca','asset.model'];
-			this.table_options.filterable = ['asset.inventory_serial','asset.serial','asset.marca','asset.model'];
+			this.table_options.sortable = ['asset.inventory_serial','asset.serial','asset.marca','asset.asset_institutional_code'];
+			this.table_options.filterable = ['asset.inventory_serial','asset.serial','asset.marca','asset.asset_institutional_code'];
 			this.table_options.orderBy = { 'column': 'asset.id'};
 
 		},
@@ -175,6 +190,8 @@
             	var index = $(".modal-body #id").val();
 				axios.get(`${window.app_url}/asset/asignations/vue-info/${index}`).then(response => {
 					vm.records = response.data.records.asset_asignation_assets;
+					vm.equipments_assigned = vm.records.filter(asset => asset.asset.asset_status_id == 1);
+					vm.equipments_delivered = vm.records.filter(asset => asset.asset.asset_status_id == 10);
 				});
 			}
 		},

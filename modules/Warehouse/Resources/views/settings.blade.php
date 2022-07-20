@@ -60,7 +60,7 @@
 	@parent
 	<script>
 		$(document).ready(function() {
-			$('#multi_warehouse').closest('.bootstrap-switch-wrapper').attr({
+			$('#multi_warehouse').closest('.custom-switch').attr({
 	            'title': 'Gestionar multiples almacenes',
 	            'data-toggle': 'tooltip'
 	        }).tooltip({delay: 4});
