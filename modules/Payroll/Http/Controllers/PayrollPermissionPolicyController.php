@@ -34,7 +34,7 @@ class PayrollPermissionPolicyController extends Controller
            'anticipation_day' => ['required'],
            'time_min'         => ['required'],
            'time_max'         => ['required'],
-           'time_unit'         => ['required'],
+           'time_unit'        => ['required'],
            'institution_id'   => ['required']
         ];
 
@@ -97,6 +97,7 @@ class PayrollPermissionPolicyController extends Controller
             'time_max'         => $request->input('time_max'),
             'time_unit'        => $request->input('time_unit'),
             'active'           => $request->active,
+            'business_days'    => $request->business_days,
             'institution_id'   => $request->institution_id
         ]);
         return response()->json(['record' => $payrollPermissionPolicy, 'message' => 'Success'], 200);
@@ -151,6 +152,7 @@ class PayrollPermissionPolicyController extends Controller
         $payrollPermissionPolicy->time_max         = $request->input('time_max');
         $payrollPermissionPolicy->time_unit        = $request->input('time_unit');
         $payrollPermissionPolicy->active           = $request->active;
+        $payrollPermissionPolicy->business_days    = $request->business_days;
         $payrollPermissionPolicy->institution_id   = $request->institution_id;
         $payrollPermissionPolicy->save();
 
@@ -183,7 +185,8 @@ class PayrollPermissionPolicyController extends Controller
                 'anticipation_day' => $rec->anticipation_day,
                 'time_min'         => $rec->time_min,
                 'time_max'         => $rec->time_max,
-                'time_unit'        => $rec->time_unit
+                'time_unit'        => $rec->time_unit,
+                'business_days'    => $rec->business_days
             ]);
         };
         return $options;

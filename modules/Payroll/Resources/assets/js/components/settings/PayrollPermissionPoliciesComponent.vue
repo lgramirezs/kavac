@@ -123,6 +123,23 @@
                                              v-model="record.time_unit"></select2>
                                 </div>
                             </div>
+                            <!-- días hábiles -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>¿Son días hábiles?</label>
+                                    <div class="col-12">
+                                        <div class="custom-control custom-switch" data-toggle="tooltip"
+                                             title="¿La fecha incluye días hábiles?">
+                                            <input type="checkbox" class="custom-control-input"
+                                                    id="vacationalPolicieBusinessDays"
+                                                    v-model="record.business_days"
+                                                    :value="true">
+                                            <label class="custom-control-label" for="vacationalPolicieBusinessDays"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./días hábiles -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -187,6 +204,7 @@
                     time_max:          '',
                     time_unit:         '',
                     active:           false,
+                    business_days:    false,
                     institution_id:   ''
                 },
                 errors:       [],
@@ -218,6 +236,7 @@
                     time_max:          '',
                     time_unit:         '',
                     active:           false,
+                    business_days:    false,
                     institution_id:   ''
                 };
             },
