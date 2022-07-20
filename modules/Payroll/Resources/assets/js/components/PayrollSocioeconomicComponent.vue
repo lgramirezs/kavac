@@ -71,6 +71,7 @@
             <div class="row" v-for="(payroll_children, index) in record.payroll_childrens" :key="index">
                 <div class="col-3">
                     <div class="form-group is-required">
+                        <label>Nombres del hijo del trabajador:</label>
                         <input type="text" placeholder="Nombres del hijo del trabajador" data-toggle="tooltip"
                             title="Indique los nombres del hijo del trabajador" v-model="payroll_children.first_name"
                             class="form-control input-sm">
@@ -78,6 +79,7 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
+                        <label>Apellidos del hijo del trabajador:</label>
                         <input type="text" placeholder="Apellidos del hijo del trabajador" data-toggle="tooltip"
                             title="Indique los apellidos del hijo del trabajador" v-model="payroll_children.last_name"
                             class="form-control input-sm">
@@ -85,6 +87,7 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group">
+                        <label>Cédula de identidad del hijo del trabajador:</label>
                         <input type="text" placeholder="Cédula de Identidad del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la cédula de indentidad del hijo del trabajador"
                             v-model="payroll_children.id_number" class="form-control input-sm">
@@ -92,6 +95,7 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group is-required">
+                        <label>Fecha de Nacimiento del hijo del trabajador:</label>
                         <input type="date" placeholder="Fecha de Nacimiento del hijo del trabajador" data-toggle="tooltip"
                             title="Indique la fecha de nacimiento del hijo del trabajador"
                             v-model="payroll_children.birthdate" class="form-control input-sm">
