@@ -724,9 +724,8 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4 "></div>
-							<div class="col-md-4 "></div>
-							<div class="col-md-4 " style="padding-top: 3rem;padding-bottom: 1rem;">
+							
+							<div class="col-md-4 " style="padding-top: 1rem;padding-bottom: 1rem;">
 								<u><h6 class="">{{ __('DATOS COMPLEMENTARIOS') }}:</h6></u>
 							</div>
 							<div class="col-md-4 "></div>
