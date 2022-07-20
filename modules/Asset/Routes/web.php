@@ -104,7 +104,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::resource(
         'asignations/deliveries',
         'AssetAsignationDeliveryController',
-        ['except' => ['show', 'create', 'edit']]
+        ['except' => ['show', 'create', 'edit']],
+        ['names' => [
+            'index' => 'asignations.deliveries.index',
+            'store' => 'asignations.deliveries.store',
+            'update' => 'asignations.deliveries.update',
+            'destroy' => 'asignations.deliveries.destroy',
+        ]]
     );
 
     /**
@@ -234,7 +240,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     Route::resource(
         'requests/deliveries',
         'AssetRequestDeliveryController',
-        ['except' => ['show', 'create', 'edit']]
+        ['except' => ['show', 'create', 'edit']],  
+        ['names' => [
+            'index' => 'requests.deliveries.index',
+            'store' => 'requests.deliveries.store',
+            'update' => 'requests.deliveries.update',
+            'destroy' => 'requests.deliveries.destroy',
+        ]]
     );
 
     /**
