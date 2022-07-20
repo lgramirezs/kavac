@@ -162,7 +162,7 @@
                 });
             @endif
 
-            $('.budget-assign').on('switchChange.bootstrapSwitch', function(e) {
+            $('.budget-assign').on('change', function(e) {
                 var el = $(this);
                 if (el.is(':checked')) {
                     bootbox.confirm(
@@ -176,7 +176,6 @@
                             }
                             else {
                                 el.is(':checked', false);
-                                el.bootstrapSwitch('state', false, true);
                             }
                         }
                     );

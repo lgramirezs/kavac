@@ -101,10 +101,10 @@ class BudgetProjectController extends Controller
         $institutions = template_choices(Institution::class, ['acronym'], ['active' => true]);
 
         $user_profile = Profile::with('institution')->where('user_id', auth()->user()->id)->first();
-
-        if($user_profile->institution_id) {
+        
+        if( $user_profile!==null && $user_profile->institution_id!==null) {
             foreach($institutions as $clave => $valor) {
-                if($user_profile->institution_id == $clave) {
+                if ($user_profile->institution_id == $clave) {
                     $institutions = array(
                         $clave => $valor
                     );
