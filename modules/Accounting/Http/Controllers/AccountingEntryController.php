@@ -649,7 +649,7 @@ class AccountingEntryController extends Controller
 				'disabled' => true,
 			]);
 
-			$accounts = AccountingAccount::where('active', true)->where('original', true)->where('parent_id', null)->where('id', '<', 3)
+			$accounts = AccountingAccount::where('active', true)->where('original', true)->where('parent_id', null)
 									->orderBy('group', 'ASC')
 									->orderBy('subgroup', 'ASC')
 									->orderBy('item', 'ASC')

@@ -42,6 +42,7 @@
                                                  :tax_unit="{{ $tax_unit }}"
                                                  :suppliers="{{ $suppliers }}"
                                                  :record_edit="{{ $record_edit }}"
+                                                 :base_budget_edit="{{ $base_budget_edit }}"
                                                  route_list="/purchase/quotation" />
                     @endif
                 </div>
