@@ -593,48 +593,6 @@
                                             </div>
                                         </div> -->
                                         <!-- ./El pago de vacaciones se realiza cuando nace el derecho a vacaciones del trabajador -->
-                                        <!-- día de disfrute -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>¿Pago por día de disfrute?</label>
-                                                <div class="col-12">
-                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
-                                                         title="Indique si el pago del bono vacacional se realiza de acuerdo a los días de disfrute">
-                                                        <input type="radio" class="custom-control-input" name="paymentCalculation" id="vacationPoliciesEnjoymentDays" v-model="record.payment_calculation" 
-                                                        value="enjoyment_days">
-                                                        <label class="custom-control-label" for="vacationPoliciesEnjoymentDays"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ./día de disfrute -->
-                                        <!-- día general -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>¿Pago por día general?</label>
-                                                <div class="col-12">
-                                                    <div class="custom-control custom-switch" data-toggle="tooltip" 
-                                                         title="Indique si el pago del bono vacacional se realiza de acuerdo a los días generales">
-                                                        <input type="radio" class="custom-control-input" name="paymentCalculation" id="vacationPoliciesGeneralDays" v-model="record.payment_calculation" 
-                                                        value="general_days">
-                                                        <label class="custom-control-label" for="vacationPoliciesGeneralDays"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ./día general -->
-                                        <!-- días a otorgar para el pago de vacaciones -->
-                                        <div class="col-md-6" v-show="record.payment_calculation == 'general_days'">
-                                            <div class="form-group is-required">
-                                                <label>Días a otorgar para el pago de vacaciones:</label>
-                                                <input type="text" data-toggle="tooltip" title="Indique la cantidad de días a otorgar para el pago de las vacaciones" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" 
-                                                            v-model="record.vacation_pay_days">
-                                            </div>
-                                        </div>
-                                        <!-- ./días a otorgar para el pago de vacaciones -->
                                     </div>
                                     <div class="container">
                                         <div class="row" v-if="record.worker_arises">
@@ -825,15 +783,6 @@
                                                             'digits': 0" v-model="record.min_days_advance">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group is-required">
-                                                <label>Días de anticipación (máximo)</label>
-                                                <input type="text" data-toggle="tooltip" title="Días de anticipación (máximo)" class="form-control input-sm" v-input-mask data-inputmask="
-                                                            'alias': 'numeric',
-                                                            'allowMinus': 'false',
-                                                            'digits': 0" v-model="record.max_days_advance">
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -912,12 +861,10 @@ export default {
                 vacation_days: '',
                 vacation_periods_accumulated_per_year: '',
                 vacation_days: '',
-                vacation_pay_days: '',
                 vacation_period_per_year: '',
                 additional_days_per_year: '',
                 minimum_additional_days_per_year: '',
                 maximum_additional_days_per_year: '',
-                payment_calculation: '',
                 salary_type: '',
                 institution_id: '',
                 payroll_payment_type_id: '',
@@ -935,7 +882,6 @@ export default {
                 worker_arises: false,
                 generate_worker_arises: 0,
                 min_days_advance: '',
-                max_days_advance: '',
 
                 days_on_scale: false,
                 days_group_by: '',
@@ -1071,7 +1017,6 @@ export default {
                 additional_days_per_year: '',
                 minimum_additional_days_per_year: '',
                 maximum_additional_days_per_year: '',
-                payment_calculation: '',
                 salary_type: '',
                 institution_id: '',
                 payroll_payment_type_id: '',
@@ -1089,7 +1034,6 @@ export default {
                 worker_arises: false,
                 generate_worker_arises: 0,
                 min_days_advance: '',
-                max_days_advance: '',
 
                 days_on_scale: false,
                 days_group_by: '',
@@ -1161,6 +1105,7 @@ export default {
                     if ((vm.record.name != '') &&
                         (vm.record.start_date != '') &&
                         (vm.record.institution_id != '') &&
+                        (vm.record.assign_to != '') &&
                         (vm.record.vacation_periods.length > 0)) {
                         return false;
                     } else {
@@ -1176,6 +1121,7 @@ export default {
                         (vm.record.minimum_additional_days_per_year != '') &&
                         (vm.record.maximum_additional_days_per_year != '') &&
                         (vm.record.vacation_period_per_year != '') &&
+                        (vm.record.assign_to != '') &&
                         (vm.record.vacation_periods_accumulated_per_year != '')) {
                         return false;
                     } else {
@@ -1185,8 +1131,7 @@ export default {
                     return true;
                 }
             } else if (vm.panel == 'vacationPaymentForm') {
-                if ((vm.record.payroll_payment_type_id != '') &&
-                    (vm.record.payment_calculation != '')) {
+                if ((vm.record.payroll_payment_type_id != '')) {
                     return false;
                 } else {
                     return true;
@@ -1272,7 +1217,6 @@ export default {
                             additional_days_per_year: field['additional_days_per_year'],
                             minimum_additional_days_per_year: field['minimum_additional_days_per_year'],
                             maximum_additional_days_per_year: field['maximum_additional_days_per_year'],
-                            payment_calculation: field['payment_calculation'],
                             salary_type: field['salary_type'],
                             vacation_advance: field['vacation_advance'],
                             vacation_postpone: field['vacation_postpone'],
@@ -1282,7 +1226,6 @@ export default {
                             assign_to: field['assign_to'],
                             assign_options: field['assign_options'],
                             min_days_advance: field['min_days_advance'],
-                            max_days_advance: field['max_days_advance'],
                             payroll_scales: field['payroll_scales'],
                             on_scale: field['on_scale'],
                             group_by: field['group_by'],

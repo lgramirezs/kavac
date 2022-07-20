@@ -391,7 +391,7 @@
                                             <input
                                                 type="number"
                                                 onfocus="$(this).select()"
-                                                class="form-control input-sm"
+                                                class="form-control input-sm numeric"
                                                 data-toggle="tooltip"
                                                 title="Indique el monto a asignar para la cuenta seleccionada"
                                                 v-model="account_amount"

@@ -13,7 +13,6 @@ use Modules\Payroll\Models\Payroll;
 use Modules\Payroll\Models\Parameter;
 use Modules\Payroll\Models\Institution;
 use Modules\Payroll\Models\PayrollStaff;
-// use Modules\Payroll\Models\PayrollConcept;
 use Modules\Payroll\Models\PayrollStaffPayroll;
 use Modules\Payroll\Models\PayrollSalaryTabulatorScale;
 
@@ -201,6 +200,7 @@ class PayrollPaymentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $errors = [];
         /**
          * Objeto con la información del tipo de pago a editar asociado al modelo PayrollPaymentType
          * @var Object $payrollPaymentType
@@ -212,6 +212,14 @@ class PayrollPaymentTypeController extends Controller
             ['code' => ['required', 'unique:payroll_payment_types,code,' . $payrollPaymentType->id]]
         );
         $this->validate($request, $validateRules, $this->messages);
+
+        /** Se eliminan los períodos de pago asociados al tipo de pago */
+        try {
+            $payrollPaymentType->payrollPaymentPeriods()->where('payment_status', 'pending')->forceDelete();
+        } catch (\Exception $e) {
+            $errors = array_merge($errors, ["operation" => ["No se pudo completar la operación, existen registros de nómina sin cerrar para este tipo de pago."]]);
+            return response()->json(['errors' => $errors], 422);
+        }
 
         $payrollPaymentType->code                  = $request->code;
         $payrollPaymentType->name                  = $request->name;
@@ -235,12 +243,6 @@ class PayrollPaymentTypeController extends Controller
                 $concept = PayrollConcept::find($payrollConcept['id']);
                 $payrollPaymentType->payrollConcepts()->attach($concept);
             }
-        }
-
-        /** Se eliminan los períodos de pago asociados al tipo de pago */
-        foreach ($payrollPaymentType->payrollPaymentPeriods as $payrollPaymentPeriod) {
-            $payrollPaymentPeriod->forceDelete();
-            ;
         }
         /** Se agregan los períodos de pago asociados al tipo de pago */
         foreach ($request->payroll_payment_periods as $paymentPeriod) {

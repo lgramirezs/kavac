@@ -11,6 +11,7 @@ use App\Models\CodeSetting;
 use Modules\Asset\Models\AssetAsignationAsset;
 use Modules\Asset\Models\AssetAsignation;
 use Modules\Asset\Models\Asset;
+use Modules\Asset\Models\AssetAsignationDelivery;
 use App\Models\Profile;
 use Attribute;
 
@@ -122,6 +123,7 @@ class AssetAsignationController extends Controller
             'institution_id' => $request->input('institution_id'),
             'payroll_staff_id' => $request->input('payroll_staff_id'),
             'location_place' => $request->input('location_place'),
+            'state' => 'Asignado',
             'user_id' => Auth::id()
         ]);
 
@@ -282,6 +284,29 @@ class AssetAsignationController extends Controller
     }
 
     /**
+     * Actualiza el estado de una solicitud de entrega
+     *
+     * @author    Henry Paredes <hparedes@cenditel.gob.ve>
+     * @param     \Illuminate\Http\Request         $request    Datos de la petición
+     * @param     Integer                          $id         Identificador único de la asignación
+     * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
+     */
+    public function deliver(Request $request, $id)
+    {
+        $asset_asignation = AssetAsignation::find($id);
+        $asset_asignation->state = 'Procesando entrega';
+        $asset_asignation->save();
+
+        $asignation_delivery = AssetAsignationDelivery::create([
+            'state' => 'Pendiente',
+            'asset_asignation_id' => $asset_asignation->id,
+            'user_id' => Auth::id(),
+        ]);
+
+        $request->session()->flash('message', ['type' => 'update']);
+        return response()->json(['result' => true, 'redirect' => route('asset.asignation.index')], 200);
+    }
+    /**
      * Otiene un listado de las asignaciones registradas
      *
      * @author    Henry Paredes <hparedes@cenditel.gob.ve>
@@ -295,10 +320,10 @@ class AssetAsignationController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetAsignations = AssetAsignation::with('payrollStaff')->get();
+            $assetAsignations = AssetAsignation::with('payrollStaff')->orderBy('id')->get();
         } else {
             $assetAsignations = AssetAsignation::where('institution_id', $institution_id)
-                ->with('payrollStaff')->get();
+                ->with('payrollStaff')->orderBy('id')->get();
         }
 
         return response()->json(['records'  => $assetAsignations], 200); 

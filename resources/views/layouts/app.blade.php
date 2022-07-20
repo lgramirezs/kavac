@@ -28,9 +28,9 @@
             {!! Html::style(
                 'vendor/datatable/responsive/css/responsive.bootstrap4.min.css', ['media' => 'screen'], Request::secure()
             ) !!}
-            {{-- Hoja de estilo para los mensajes de la aplicación (requerida) --}}
-            {!! Html::style('vendor/jquery.gritter/css/jquery.gritter.css', ['media' => 'screen'], Request::secure()) !!}
         @endauth
+        {{-- Hoja de estilo para los mensajes de la aplicación (requerida) --}}
+        {!! Html::style('vendor/jquery.gritter/css/jquery.gritter.css', ['media' => 'screen'], Request::secure()) !!}
 
         @yield('modules-css')
         <script>
@@ -113,8 +113,6 @@
             <script src="{{ asset('vendor/datatable/js/dataTables.bootstrap4.min.js', Request::secure()) }}" defer></script>
             <script src="{{ asset('vendor/datatable/js/dataTables.responsive.min.js', Request::secure()) }}" defer></script>
             <script src="{{ asset('vendor/datatable/js/responsive.bootstrap4.min.js', Request::secure()) }}" defer></script>
-            {{-- Plugin Gritter --}}
-            <script src="{{ asset('vendor/jquery.gritter/js/jquery.gritter.min.js', Request::secure()) }}" defer></script>
             {{-- Scripts comúnes --}}
             <script src="{{ asset('js/common.js', Request::secure()) }}" defer></script>
 
@@ -123,6 +121,8 @@
             {{-- Ventanas modales de uso general --}}
             @include('layouts.modals')
         @endauth
+        {{-- Plugin Gritter --}}
+        <script src="{{ asset('vendor/jquery.gritter/js/jquery.gritter.min.js', Request::secure()) }}" defer></script>
         {{-- Mensaje de espera al cargar procesos del sistema --}}
         @include('layouts.messages')
         <script>

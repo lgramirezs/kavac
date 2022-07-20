@@ -194,9 +194,11 @@ Route::group([
         'PurchaseDirectHireController@vueList'
     );
     /**
-     * rutas para los pdf de asientos contables
+     * rutas para los pdf de orden de compra
      */
     Route::get('direct_hire/start_certificate/pdf/{id}', 'Reports\DirectHire\PurchaseStartCertificateController@pdf');
+
+    Route::get('direct_hire/purchase_order/pdf/{id}', 'Reports\DirectHire\PurchaseOrderController@pdf');
 
     Route::resource('direct_hire', 'PurchaseDirectHireController', [
         'as'     => 'purchase',

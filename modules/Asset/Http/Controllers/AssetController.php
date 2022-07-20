@@ -353,7 +353,9 @@ class AssetController extends Controller
         if ($operation == null) {
             if (Auth()->user()->isAdmin()) {
                 $assets = Asset::with(['institution', 'assetCondition', 'assetStatus'
-                                        , 'assetAsignationAsset'
+                                        , 'assetAsignationAsset' => function ($query){
+                                            $query->with('assetAsignation');
+                                            }
                                         , 'assetDisincorporationAsset' => function ($query) {
                                             $query->with(['assetDisincorporation' => function ($query) {
                                                 $query->with('assetDisincorporationMotive');
@@ -368,8 +370,9 @@ class AssetController extends Controller
                         'institution',
                         'assetCondition',
                         'assetStatus',
-                        'assetAsignationAsset',
-                        'assetRequestAsset',
+                        'assetAsignationAsset' => function ($query){
+                            $query->with('assetAsignation');
+                        },
                         'assetDisincorporationAsset' => function ($query) {
                             $query->with(['assetDisincorporation' => function ($query) {
                                 $query->with('assetDisincorporationMotive');
@@ -384,23 +387,34 @@ class AssetController extends Controller
             if ($operation == 'asignations' || $operation == 'requests') {
                 if (Auth()->user()->isAdmin()) {
                     $assets_list = Asset::with(['institution', 'assetCondition', 'assetStatus'
-                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetAsignationAsset'=> function ($query){
+                                            $query->with('assetAsignation');
+                                            }
+                                        , 'assetDisincorporationAsset'
                                         , 'assetRequestAsset' => function($query){
                                                 $query->with('assetRequest');
                                         }])
                                         ->where('asset_condition_id', 1)->where('asset_status_id', 10)
                                         ->where('asset_type_id', 1)
                                         ->orderBy('id')->get();
+                    
                     $selected = [];
                     foreach($assets_list as $asset_index){
-                        if($asset_index->assetAsignationAsset == null
-                            && $asset_index->assetDisincorporationAsset == null){
-                                if($asset_index->assetRequestAsset == null){
+                        if($asset_index->assetDisincorporationAsset == null){
+                                if($asset_index->assetRequestAsset == null
+                                    && $asset_index->assetAsignationAsset == null){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                elseif($asset_index->assetRequestAsset){
+                                    if($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
                                         || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
                                     array_push($selected, $asset_index->id);
+                                    }
+                                }
+                                elseif($asset_index->assetAsignationAsset){
+                                    if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                                        array_push($selected, $asset_index->id);
+                                    }
                                 }
                             }    
                     }
@@ -409,7 +423,10 @@ class AssetController extends Controller
                                     ->whereIn('id', $selected)->orderBy('id');
                 } else {
                     $assets_list = Asset::with(['institution', 'assetCondition', 'assetStatus'
-                                        , 'assetAsignationAsset', 'assetDisincorporationAsset'
+                                        , 'assetAsignationAsset' => function ($query){
+                                            $query->with('assetAsignation');
+                                            }
+                                        , 'assetDisincorporationAsset'
                                         , 'assetRequestAsset'=> function($query){
                                             $query->with('assetRequest');
                                         }])
@@ -419,16 +436,23 @@ class AssetController extends Controller
                                         ->orderBy('id')->get();
                     $selected = [];
                     foreach($assets_list as $asset_index){
-                        if($asset_index->assetAsignationAsset == null
-                            && $asset_index->assetDisincorporationAsset == null){
-                                if($asset_index->assetRequestAsset == null){
+                        if($asset_index->assetDisincorporationAsset == null){
+                            if($asset_index->assetRequestAsset == null
+                                && $asset_index->assetAsignationAsset == null){
+                                array_push($selected, $asset_index->id);
+                            }
+                            elseif($asset_index->assetRequestAsset){
+                                if($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
+                                array_push($selected, $asset_index->id);
+                                }
+                            }
+                            elseif($asset_index->assetAsignationAsset){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
-                                        || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
-                                    array_push($selected, $asset_index->id);
-                                }
-                            }    
+                            }
+                        }    
                     }
                    
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
@@ -447,15 +471,23 @@ class AssetController extends Controller
                     
                     $selected = [];
                     foreach($assets_list as $asset_index){
-                        if($asset_index->assetAsignationAsset == null
-                            && $asset_index->assetDisincorporationAsset == null){
-                                if($asset_index->assetRequestAsset == null){
+                        if($asset_index->assetDisincorporationAsset == null){
+                            if($asset_index->assetRequestAsset == null
+                                && $asset_index->assetAsignationAsset == null){
+                                array_push($selected, $asset_index->id);
+                            }
+                            elseif($asset_index->assetRequestAsset){
+                                if($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
+                                array_push($selected, $asset_index->id);
+                                }
+                            }
+                            elseif($asset_index->assetAsignationAsset){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
-                                    array_push($selected, $asset_index->id);
-                                }
-                            }    
+                            }
+                        }    
                     }
                    
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
@@ -473,15 +505,23 @@ class AssetController extends Controller
                     
                     $selected = [];
                     foreach($assets_list as $asset_index){
-                        if($asset_index->assetAsignationAsset == null
-                            && $asset_index->assetDisincorporationAsset == null){
-                                if($asset_index->assetRequestAsset == null){
+                        if($asset_index->assetDisincorporationAsset == null){
+                            if($asset_index->assetRequestAsset == null
+                                && $asset_index->assetAsignationAsset == null){
+                                array_push($selected, $asset_index->id);
+                            }
+                            elseif($asset_index->assetRequestAsset){
+                                if($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
+                                array_push($selected, $asset_index->id);
+                                }
+                            }
+                            elseif($asset_index->assetAsignationAsset){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
                                     array_push($selected, $asset_index->id);
                                 }
-                                elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'){
-                                    array_push($selected, $asset_index->id);
-                                }
-                            }    
+                            }
+                        }    
                     }
                    
                     $assets = Asset::with('institution', 'assetCondition', 'assetStatus')
@@ -530,16 +570,23 @@ class AssetController extends Controller
                                         ->orderBy('id')->get();
 
                 foreach($assets_list as $asset_index){
-                    if($asset_index->assetAsignationAsset == null
-                        && $asset_index->assetDisincorporationAsset == null){
-                            if($asset_index->assetRequestAsset == null){
+                    if($asset_index->assetDisincorporationAsset == null){
+                        if($asset_index->assetRequestAsset == null
+                            && $asset_index->assetAsignationAsset == null){
+                            array_push($selected, $asset_index->id);
+                        }
+                        elseif($asset_index->assetRequestAsset){
+                            if($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
+                                || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
+                            array_push($selected, $asset_index->id);
+                            }
+                        }
+                        elseif($asset_index->assetAsignationAsset){
+                            if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
                                 array_push($selected, $asset_index->id);
                             }
-                            elseif($asset_index->assetRequestAsset->assetRequest->state == 'Entregados'
-                                    || $asset_index->assetRequestAsset->assetRequest->state == 'Rechazado'){
-                                array_push($selected, $asset_index->id);
-                            }
-                        }    
+                        }
+                    }     
                 }
                    
                 $assetDisincorporationAssets = AssetDisincorporation::find($operation_id)

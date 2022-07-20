@@ -32,7 +32,10 @@
                     <div slot="id" slot-scope="props" class="text-center">
                         <div class="feature-list-content-left mr-2" v-if="record.currency">
                             <label class="custom-control custom-checkbox">
-                                <p-check class="p-icon p-smooth p-plain p-curve" color="primary-o" :value="'_'+props.row.id" :id="'requirement_check_'+props.row.id" :checked="indexOf(base_budget_list, props.row.id, true)" @change="recordCheck(props.row)">
+                                <p-check class="p-icon p-smooth p-plain p-curve" color="primary-o"
+                                    :value="'_' + props.row.id" :id="'requirement_check_' + props.row.id"
+                                    :checked="indexOf(base_budget_list, props.row.id, true)"
+                                    @change="recordCheck(props.row)">
                                     <i slot="extra" class="icon fa fa-check"></i>
                                 </p-check>
                             </label>
@@ -47,10 +50,12 @@
                         <h6 align="left">{{ props.row.quantity }} {{ props.row.measurement_unit_acronym }}</h6>
                     </div>
                     <div slot="unit_price" slot-scope="props">
-                        <input type="number" v-model="record_items[props.index-1].unit_price" class="form-control" :step="cualculateLimitDecimal()" @input="CalculateTot(record_items[props.index-1], props.index-1)">
+                        <input type="number" v-model="record_items[props.index - 1].unit_price" class="form-control"
+                            :step="cualculateLimitDecimal()"
+                            @input="CalculateTot(record_items[props.index - 1], props.index - 1)">
                     </div>
                     <div slot="qty_price" slot-scope="props">
-                        <h6 align="right">{{ CalculateQtyPrice(record_items[props.index-1].qty_price) }}</h6>
+                        <h6 align="right">{{ CalculateQtyPrice(record_items[props.index - 1].qty_price) }}</h6>
                     </div>
                 </v-client-table>
             </div>
@@ -69,7 +74,9 @@
                                         <h6 align="right">SUB-TOTAL {{ currency_symbol }}</h6>
                                     </td>
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ sub_total.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                        <h6 align="right">{{
+                                                sub_total.toFixed((record.currency) ? currency_decimal_places : '')
+                                        }}</h6>
                                     </td>
                                 </tr>
                                 <tr>
@@ -78,10 +85,12 @@
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.6%"></td>
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%"></td>
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="16.75%">
-                                        <h6 align="right">{{ tax?tax.percentage:'' }} % IVA {{ currency_symbol }}</h6>
+                                        <h6 align="right">{{ tax ? tax.percentage : '' }} % IVA {{ currency_symbol }}</h6>
                                     </td>
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ tax_value.toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                        <h6 align="right">{{
+                                                tax_value.toFixed((record.currency) ? currency_decimal_places : '')
+                                        }}</h6>
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,7 +102,9 @@
                                         <h6 align="right">TOTAL {{ currency_symbol }}</h6>
                                     </td>
                                     <td style="border: 1px solid #dee2e6;" tabindex="0" width="20%">
-                                        <h6 align="right">{{ (total).toFixed((record.currency)?currency_decimal_places:'') }}</h6>
+                                        <h6 align="right">{{
+                                                (total).toFixed((record.currency) ? currency_decimal_places : '')
+                                        }}</h6>
                                     </td>
                                 </tr>
                             </tbody>
@@ -109,7 +120,7 @@
             </div>
             <div class="col-12">
                 <ul class="feature-list list-group list-group-flush">
-                    <li class="list-group-item" v-for="(file, idx) in files">
+                    <li class="list-group-item" v-for="(file, idx) in files" :key="idx">
                         <div class="feature-list-indicator bg-info">
                             <label style="margin-left: 2rem;" for="acta_inicio">
                                 {{ idx.replace(/_/g, ' ') }}
@@ -119,15 +130,13 @@
                             <div class="feature-list-content-wrapper">
                                 <div class="feature-list-content-left mr-2">
                                     <label class="custom-control">
-                                        <button type="button" 
-                                            data-toggle="tooltip" 
-                                            v-has-tooltip 
-                                            class="btn btn-sm btn-info btn-import" 
-                                            title="Presione para subir el archivo." 
-                                            @click="setFile(idx)">
+                                        <button type="button" data-toggle="tooltip" v-has-tooltip
+                                            class="btn btn-sm btn-info btn-import"
+                                            title="Presione para subir el archivo." @click="setFile(idx)">
                                             <i class="fa fa-upload"></i>
                                         </button>
-                                        <input type="file" :id="idx" @change="uploadFile(idx, $event)" style="display:none;">
+                                        <input type="file" :id="idx" @change="uploadFile(idx, $event)"
+                                            style="display:none;">
                                     </label>
                                 </div>
                                 <div class="feature-list-content-left">
@@ -139,7 +148,7 @@
                                             Cargar documento.
                                         </div>
                                     </div>
-                                    <div class="feature-list-subheading" :id="'status_'+idx" style="display:none;">
+                                    <div class="feature-list-subheading" :id="'status_' + idx" style="display:none;">
                                         <span class="badge badge-info">
                                             <strong>Documento Cargado.</strong>
                                         </span>
@@ -164,7 +173,13 @@ export default {
     props: {
         record_edit: {
             type: Object,
-            default: function() {
+            default: function () {
+                return null;
+            }
+        },
+        base_budget_edit: {
+            type: Array,
+            default: function () {
                 return null;
             }
         },
@@ -174,31 +189,31 @@ export default {
         },
         tax: {
             type: Object,
-            default: function() {
+            default: function () {
                 return null;
             }
         },
         tax_units: {
             type: Object,
-            default: function() {
+            default: function () {
                 return null;
             }
         },
         record_base_budgets: {
             type: Array,
-            default: function() {
+            default: function () {
                 return [];
             }
         },
         suppliers: {
             type: Array,
-            default: function() {
+            default: function () {
                 return [];
             }
         },
         currencies: {
             type: Array,
-            default: function() {
+            default: function () {
                 return [];
             }
         },
@@ -325,13 +340,29 @@ export default {
             vm.purchase_supplier_id = vm.record_edit.purchase_supplier_id;
 
             var prices = [];
+
+            const dataArr = new Set(vm.base_budget_edit)
+            const bb_ids = [...dataArr]
+            // console.log(vm.record_edit.relatable)
             for (var i = 0; i < vm.record_edit.relatable.length; i++) {
                 prices[vm.record_edit.relatable[i].purchase_requirement_item_id] = vm.record_edit.relatable[i].unit_price;
             }
 
-            for (var i = 0; i < vm.record_edit.purchase_base_budgets.length; i++) {
-                vm.addToList(vm.record_edit.purchase_base_budgets[i], prices);
-            }
+            vm.record_edit.relatable.forEach(element => {
+                let bb = element.purchase_requirement_item.purchase_requirement.purchase_base_budget
+                if (bb_ids.includes(bb.id)) {
+                    console.log("Base")
+                    console.log(bb)
+                    vm.recordCheck(bb, false)
+                    vm.base_budget_list.push(bb)
+                }
+            });
+
+            // console.log(vm.record_base_budgets)
+
+            // for (var i = 0; i < vm.record_edit.purchase_base_budgets.length; i++) {
+            //     vm.addToList(vm.record_edit.purchase_base_budgets[i], prices);
+            // }
         }
     },
     methods: {
@@ -383,7 +414,7 @@ export default {
             return (returnBoolean) ? false : -1;
         },
 
-        recordCheck(record) {
+        recordCheck(record, edit = true) {
             const vm = this;
             axios.get('/purchase/get-convertion/' + vm.currency_id + '/' + record.currency_id)
                 .then(response => {
@@ -400,12 +431,14 @@ export default {
                         }
                     } else {
                         vm.convertion_list.push(response.data.record);
-                        vm.addToList(record);
+                        if (edit) {
+                            vm.addToList(record);
+                        }
                     }
                 });
         },
 
-        addToList: function(record, prices) {
+        addToList: function (record, prices) {
             const vm = this;
             var pos = vm.indexOf(vm.base_budget_list, record.id);
             // se agregan a la lista a guardar
@@ -462,8 +495,6 @@ export default {
          */
         CalculateTot(item, pos) {
             const vm = this;
-            // console.log(item)
-            // vm.record_items[pos] = item;
 
             vm.sub_total = 0;
             vm.tax_value = 0;
@@ -548,7 +579,7 @@ export default {
                     location.href = vm.route_list;
                 }).catch(error => {
                     vm.errors = [];
-                    if (typeof(error.response) != 'undefined') {
+                    if (typeof (error.response) != 'undefined') {
                         for (var index in error.response.data.errors) {
                             if (error.response.data.errors[index]) {
                                 vm.errors.push(error.response.data.errors[index][0]);
@@ -572,7 +603,7 @@ export default {
 
                 }).catch(error => {
                     vm.errors = [];
-                    if (typeof(error.response) != 'undefined') {
+                    if (typeof (error.response) != 'undefined') {
                         for (var index in error.response.data.errors) {
                             if (error.response.data.errors[index]) {
                                 vm.errors.push(error.response.data.errors[index][0]);
@@ -586,7 +617,7 @@ export default {
         },
     },
     watch: {
-        currency_id: function(res, ant) {
+        currency_id: function (res, ant) {
             const vm = this;
             if (res != ant && !vm.load_data_edit) {
                 vm.record_items = [];
@@ -609,7 +640,7 @@ export default {
                 })
             }
         },
-        purchase_supplier_id: function(res) {
+        purchase_supplier_id: function (res) {
             if (res) {
                 axios.get('/purchase/get-purchase-supplier-object/' + res).then(response => {
                     this.record.purchase_supplier_object = response.data;
@@ -619,18 +650,18 @@ export default {
         },
     },
     computed: {
-        currency_symbol: function() {
+        currency_symbol: function () {
             return (this.record.currency) ? this.record.currency.symbol : '';
         },
-        currency_decimal_places: function() {
+        currency_decimal_places: function () {
             if (this.record.currency) {
                 return this.record.currency.decimal_places;
             }
         },
-        currency: function() {
+        currency: function () {
             return (this.record.currency) ? this.record.currency : null;
         },
-        getRecordItems: function() {
+        getRecordItems: function () {
             return this.record_items;
         }
     }
