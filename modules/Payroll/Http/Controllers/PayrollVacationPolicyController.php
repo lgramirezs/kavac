@@ -59,7 +59,6 @@ class PayrollVacationPolicyController extends Controller
             'staff_antiquity'                       => ['required'],
             'institution_id'                        => ['required'],
             'assign_to'                             => ['required'],
-            'min_days_advance'                      => ['required']
         ];
 
         /** Define los mensajes de validación para las reglas del formulario */
@@ -85,7 +84,9 @@ class PayrollVacationPolicyController extends Controller
             //     'vacacional es obligatorio.',
             'payroll_payment_type_id.required'               => 'El campo tipo de pago de nómina es obligatorio.',
             'assign_to.required'                             => 'El campo asignar a es obligatorio.',
-            'min_days_advance.required'                      => 'El campo días de anticipación (mínimo) es obligatorio.'
+            'min_days_advance.required'                      => 'El campo días de anticipación (mínimo) es obligatorio.',
+            'from_year.required'                             => 'El campo a partir de es obligatorio.',
+            'from_year.between'                              => 'El campo a partir de debe estar entre 1960 y ' . date('Y'),
         ];
     }
 
@@ -209,9 +210,11 @@ class PayrollVacationPolicyController extends Controller
                     'vacation_period_per_year'              => ['required'],
                     'vacation_days'                         => ['required'],
                     'additional_days_per_year'              => ['required'],
-                    'minimum_additional_days_per_year'      => ['required'],
+                    //'minimum_additional_days_per_year'      => ['required'],
                     'maximum_additional_days_per_year'      => ['required'],
-                    'payroll_payment_type_id'               => ['required']
+                    'payroll_payment_type_id'               => ['required'],
+                    'min_days_advance'                      => ['required'],
+                    'from_year'                             => ['required', 'integer','between:1960,' . date('Y')]
                 ]
             );
         }
@@ -243,7 +246,8 @@ class PayrollVacationPolicyController extends Controller
             'vacation_days'                         => $request->input('vacation_days'),
             'vacation_period_per_year'              => $request->input('vacation_period_per_year'),
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
-            'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
+            //'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
+            'from_year'                             => $request->input('from_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
             // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),
@@ -364,9 +368,10 @@ class PayrollVacationPolicyController extends Controller
                     'vacation_periods_accumulated_per_year' => ['required'],
                     'vacation_period_per_year'              => ['required'],
                     'additional_days_per_year'              => ['required'],
-                    'minimum_additional_days_per_year'      => ['required'],
+                    //'minimum_additional_days_per_year'      => ['required'],
                     'maximum_additional_days_per_year'      => ['required'],
-                    'payroll_payment_type_id'               => ['required']
+                    'payroll_payment_type_id'               => ['required'],
+                    'from_year'                             => ['required', 'integer','between:1960,' . date('Y')]
                 ]
             );
         }
@@ -393,7 +398,8 @@ class PayrollVacationPolicyController extends Controller
             'vacation_days'                         => $request->input('vacation_days'),
             'vacation_period_per_year'              => $request->input('vacation_period_per_year'),
             'additional_days_per_year'              => $request->input('additional_days_per_year'),
-            'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
+            //'minimum_additional_days_per_year'      => $request->input('minimum_additional_days_per_year'),
+            'from_year'                             => $request->input('from_year'),
             'maximum_additional_days_per_year'      => $request->input('maximum_additional_days_per_year'),
             // 'salary_type'                           => $request->input('salary_type'),
             'vacation_advance'                      => $request->input('vacation_advance'),

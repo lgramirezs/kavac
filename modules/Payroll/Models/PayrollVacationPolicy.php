@@ -50,6 +50,7 @@ class PayrollVacationPolicy extends Model implements Auditable
         'old_jobs',
         'vacation_pay_days',
         'business_days',
+        'from_year',
 
         // Usados por la funcionalidad de Agrupar por:
         'group_by', 'type',
