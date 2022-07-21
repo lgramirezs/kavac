@@ -234,7 +234,7 @@ class PayrollSalaryScaleController extends Controller
         return template_choices(
             'Modules\Payroll\Models\PayrollSalaryScale',
             'name',
-            ['institution_id' => $request->institution_id ?? $institution->id],
+            ['institution_id' => $request->institution_id ?? $institution->id, 'active' => 't'],
             true
         );
     }

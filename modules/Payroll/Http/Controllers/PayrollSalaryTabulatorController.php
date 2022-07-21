@@ -275,7 +275,7 @@ class PayrollSalaryTabulatorController extends Controller
      */
     public function getSalaryTabulators()
     {
-        return template_choices('Modules\Payroll\Models\PayrollSalaryTabulator', 'name', '', true);
+        return template_choices('Modules\Payroll\Models\PayrollSalaryTabulator', 'name', ['active' => 't'], true);
     }
 
     /**

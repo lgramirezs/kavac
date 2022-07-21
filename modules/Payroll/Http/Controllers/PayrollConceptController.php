@@ -449,7 +449,7 @@ class PayrollConceptController extends Controller
      */
     public function getPayrollConcepts()
     {
-        return template_choices('Modules\Payroll\Models\PayrollConcept', ['name'], '', true);
+        return template_choices('Modules\Payroll\Models\PayrollConcept', ['name'], ['active' => 't'], true);
     }
 
     /**
