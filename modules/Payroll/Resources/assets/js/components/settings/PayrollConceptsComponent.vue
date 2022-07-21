@@ -485,7 +485,7 @@
                     {"id": "==", "text": "Igualdad (==)"},
                     {"id": "!=", "text": "Desigualdad (!=)"},
                     {"id": ">",  "text": "Mayor estricto (>)"},
-                    {"id": "<",  "text": "Menor estricto (>)"},
+                    {"id": "<",  "text": "Menor estricto (<)"},
                     {"id": ">=", "text": "Mayor o igual (>=)"},
                     {"id": "<=", "text": "Menor o igual (<=)"}
                 ],

@@ -226,7 +226,7 @@ class PayrollPaymentTypeController extends Controller
         $payrollPaymentType->payment_periodicity   = $request->payment_periodicity;
         $payrollPaymentType->correlative           = !empty($request->correlative)
                                                          ? $request->correlative
-                                                         : $payrollPaymentType->correlative;
+                                                         : false;
         $payrollPaymentType->start_date            = $request->start_date;
         $payrollPaymentType->payment_relationship  = $request->payment_relationship;
         $payrollPaymentType->associated_records    = json_encode($request->associated_records);

@@ -171,7 +171,7 @@ class PayrollSalaryScaleController extends Controller
             $payrollSalaryScale->institution_id         = $request->input('institution_id');
             $payrollSalaryScale->active                 = !empty($request->input('active'))
                                                               ? $request->input('active')
-                                                              : $payrollSalaryScale->active;
+                                                              : false;
             $payrollSalaryScale->group_by               = $request->input('group_by');
             $payrollSalaryScale->type                   = $request->input('type');
 

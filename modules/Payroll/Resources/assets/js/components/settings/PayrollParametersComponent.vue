@@ -346,7 +346,7 @@
                     {"id": "==", "text": "Igualdad (==)"},
                     {"id": "!=", "text": "Desigualdad (!=)"},
                     {"id": ">",  "text": "Mayor estricto (>)"},
-                    {"id": "<",  "text": "Menor estricto (>)"},
+                    {"id": "<",  "text": "Menor estricto (<)"},
                     {"id": ">=", "text": "Mayor o igual (>=)"},
                     {"id": "<=", "text": "Menor o igual (<=)"}
                 ],
@@ -392,7 +392,9 @@
                         return false;
                     }
                 });
-                $('.btn-formula').on('click', function() {
+                $('.btn-formula').on('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
                     let keys = vm.record.formula.indexOf('}');
                     let showKeys = vm.formula.indexOf('}');
                     if (keys > 0 && showKeys > 0) {
