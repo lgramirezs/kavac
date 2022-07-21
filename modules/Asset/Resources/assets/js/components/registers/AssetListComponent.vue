@@ -142,7 +142,7 @@
                 if(value === null){
                     return true;
                 }else{
-                    if(value.asset_asignation.state === 'Entregados'){
+                    if(value.asset_asignation.state === 'Entregados' || value.asset_request.state === 'Entrega parcial'){
                         return true;
                     }else{
                         return false;

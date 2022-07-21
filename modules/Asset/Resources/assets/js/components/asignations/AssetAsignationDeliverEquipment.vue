@@ -2,8 +2,8 @@
     <div>
         <a class="btn btn-success btn-xs btn-icon btn-action" data-toggle="tooltip"
            href="#" title="Entregar Equipos"
-           :disabled="(state == 'Asignado') ? false : true"
-           @click="(state == 'Asignado') ? initRecords('add_delivery' + index) : viewMessage()">
+           :disabled="(state == 'Asignado' || state == 'Entrega parcial') ? false : true"
+           @click="(state == 'Asignado' || state == 'Entrega parcial') ? initRecords('add_delivery' + index) : viewMessage()">
            <i class="icofont icofont-computer"></i>
         </a>
         <div :id="'add_delivery' + index" class="modal fade text-left" tabindex="-1" role="dialog">
@@ -213,7 +213,7 @@
                 });
                 vm.record.equipments = {assigned: [...equipments_id.filter(id => !vm.selected.includes(id))], 
                                         possible_deliveries: vm.selected,
-                                        delivered: []},
+                                        delivered: []}
                                         
                 axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${vm.record.asset_asignation_id}`, vm.record).then(response => {
                     if (typeof(response.data.redirect) !== "undefined") {

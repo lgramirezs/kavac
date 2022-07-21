@@ -96,32 +96,59 @@
 
 			},
 
-			// deliverEquipment(index) {
-            //     const vm = this;
-            //     var fields = this.records[index-1];
-            //     var id = this.records[index-1].id;
+			/**
+         * Método para la eliminación de registros
+         *
+         * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         *
+         * @param  {integer} id    ID del Elemento seleccionado para su eliminación
+         * @param  {string}  url   Ruta que ejecuta la acción para eliminar un registro
+         */
+        deleteRecord(id, url) {
+            const vm = this;
+            /** @type {string} URL que atiende la petición de eliminación del registro */
+            var url = vm.setUrl((url)?url:vm.route_delete);
 
-            //     axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${id}`, fields).then(response => {
-            //         if (typeof(response.data.redirect) !== "undefined") {
-            //             location.href = response.data.redirect;
-            //         }
-            //         else {
-            //             vm.readRecords(url);
-            //             vm.reset();
-            //             vm.showMessage('update');
-            //         }
-            //     }).catch(error => {
-            //         vm.errors = [];
+            bootbox.confirm({
+                title: "¿Eliminar registro?",
+                message: "¿Está seguro de eliminar este registro?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancelar'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Confirmar'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        /** @type {object} Objeto con los datos del registro a eliminar */
+                        let recordDelete = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                            return rec.id === id;
+                        })[0]));
 
-            //         if (typeof(error.response) !="undefined") {
-            //             for (var index in error.response.data.errors) {
-            //                 if (error.response.data.errors[index]) {
-            //                     vm.errors.push(error.response.data.errors[index][0]);
-            //                 }
-            //             }
-            //         }
-            //     });
-            // },
+                        axios.delete(`${url}${url.endsWith('/')?'':'/'}${recordDelete.id}`).then(response => {
+                            if (typeof(response.data.error) !== "undefined") {
+                                /** Muestra un mensaje de error si sucede algún evento en la eliminación */
+                                vm.showMessage('custom', 'Alerta!', 'warning', 'screen-error', response.data.message);
+                                return false;
+                            }
+                            /** @type {array} Arreglo de registros filtrado sin el elemento eliminado */
+                            vm.records = JSON.parse(JSON.stringify(vm.records.filter((rec) => {
+                                return rec.id !== id;
+                            })));
+                            if (typeof(vm.$refs.tableResults) !== "undefined") {
+                                vm.$refs.tableResults.refresh();
+                            }
+                            vm.showMessage('destroy');
+							location.href = response.data.redirect;
+                        }).catch(error => {
+                            vm.logs('mixins.js', 498, error, 'deleteRecord');
+                        });
+                    }
+                }
+            });
+        },
 		},
 	};
 </script>
