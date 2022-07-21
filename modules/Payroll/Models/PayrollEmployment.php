@@ -50,6 +50,14 @@ class PayrollEmployment extends Model implements Auditable
         'payroll_staff_type_id', 'payroll_contract_type_id', 'payroll_staff_id'
     ];
 
+    protected $appends = ['startDateApn'];
+
+    public function getStartDateApnAttribute()
+    {
+        $totalDate = strtotime('-' . $this->years_apn . ' year', strtotime($this->start_date));
+        return date('Y-m-d', $totalDate);
+    }
+
     /**
      * Método que obtiene el dato laboral del trabajador que está asociada a muchas organizaciones
      *
