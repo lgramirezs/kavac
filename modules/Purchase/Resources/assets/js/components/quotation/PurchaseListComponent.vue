@@ -26,7 +26,11 @@
            
             <div slot="id" slot-scope="props" class="text-center">
                 <div class="d-inline-flex">
-                    <!-- <purchase-plan-show :id="props.row.id" :route_show="'/purchase/quotation/'+props.row.id" /> -->
+                    <purchase-quotation-show 
+                        :id="props.row.id" />
+                    <!--<purchase-quotation-show 
+                        :id="props.row.id" 
+                        :route_show="'/purchase/quotation/'+props.row.id" />-->
                     <button @click="editForm(props.row.id)"
                             class="btn btn-warning btn-xs btn-icon btn-action"
                             title="Modificar registro"
@@ -87,7 +91,6 @@ export default {
     
     mounted() {
         this.records = this.record_lists;
-        console.log(this.records);
     },
     computed:{
       

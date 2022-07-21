@@ -206,9 +206,16 @@ class PurchaseQuotationController extends Controller
      * Show the specified resource.
      * @return Renderable
      */
-    public function show()
+    public function show($id)
     {
-        return view('purchase::show');
+        //return view('purchase::show');
+        return response()->json([
+	        'records' => PurchaseQuotation::with(
+	        	'purchaseSupplier',
+	           	'currency',
+	            'documents'
+	            )->find($id)
+	        ], 200);
     }
 
     /**
