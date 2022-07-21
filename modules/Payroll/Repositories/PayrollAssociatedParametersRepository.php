@@ -174,7 +174,7 @@ class PayrollAssociatedParametersRepository
                         'name'     => 'Años en la administración pública',
                         'type'     => 'date',
                         'model'    => '',
-                        'required' => ['start_date_apn']
+                        'required' => ['start_date']
                     ],
                     [
                         'id'       => 'START_DATE',

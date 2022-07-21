@@ -210,10 +210,10 @@ class PayrollSalaryTabulatorController extends Controller
                 'name'                               => $request->input('name'),
                 'active'                             => !empty($request->input('active'))
                                                         ? $request->input('active')
-                                                        : $salaryTabulator->active,
+                                                        : false,
                 'percentage'                         => !empty($request->input('percentage'))
                                                         ? $request->input('percentage')
-                                                        : $salaryTabulator->percentage,
+                                                        : false,
                 'description'                        => $request->input('description') ?? '',
                 'institution_id'                     => $request->input('institution_id'),
                 'currency_id'                        => $request->input('currency_id'),
