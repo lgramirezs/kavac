@@ -73,7 +73,9 @@
                 record: {
                     id:'',
                     asset_asignation_id: '',
-                    equipments: []
+                    equipments: {assigned: [], 
+                                possible_deliveries: [],
+                                delivered: []}
                 },
                 equipments: [],
                 records: [],
@@ -153,7 +155,7 @@
                     asset_asignation_id: '',
                     equipments: []
                 };
-                selected = [];
+                this.selected = [];
             },
 
             initRecords(modal_id){
@@ -204,10 +206,15 @@
                     bootbox.alert("Debe agregar al menos un elemento a la solicitud de entrega");
                     return false;
                 };
-
+                let equipments_id = [];
                 vm.errors = [];
-                vm.record.equipments = vm.selected;
-                
+                vm.equipments.forEach(element => {
+                    equipments_id.push(element.asset_id);
+                });
+                vm.record.equipments = {assigned: [...equipments_id.filter(id => !vm.selected.includes(id))], 
+                                        possible_deliveries: vm.selected,
+                                        delivered: []},
+                                        
                 axios.put(`${window.app_url}/asset/asignations/deliver-equipment/${vm.record.asset_asignation_id}`, vm.record).then(response => {
                     if (typeof(response.data.redirect) !== "undefined") {
                         location.href = response.data.redirect;
@@ -231,9 +238,5 @@
                 });
             },
         },
-        mounted() {
-            const vm = this;
-            
-        }
     };
 </script>

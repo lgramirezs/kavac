@@ -297,7 +297,7 @@ class AssetAsignationController extends Controller
     {
         $asset_asignation = AssetAsignation::find($id);
         $asset_asignation->state = 'Procesando entrega';
-        $asset_asignation->ids_assets = (count($request->equipments) > 0) ? $request->equipments : null;
+        $asset_asignation->ids_assets = json_encode($request->equipments);
         $asset_asignation->save();
 
         $asignation_delivery = AssetAsignationDelivery::create([

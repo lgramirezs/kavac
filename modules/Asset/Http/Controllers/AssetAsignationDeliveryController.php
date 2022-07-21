@@ -79,28 +79,46 @@ class AssetAsignationDeliveryController extends Controller
             'asset_asignation_id' => ['required']
         ]);
 
+        $asset_asignation = AssetAsignation::find($request->asset_asignation_id);
+        $asset_asignation->ids_assets = json_decode($asset_asignation->ids_assets);
+
         $delivery->state = $request->input('state');
         $delivery->observation = $request->input('observation');
         $delivery->save();
+
         if ($request->state == 'Aprobado') {
-            $asset_asignation = AssetAsignation::find($request->asset_asignation_id);
-            $asset_asignation->state = 'Entregados';
-            $asset_asignation->save();
-            $assets_assigned = AssetAsignationAsset::where('asset_asignation_id', $asset_asignation->id)->get();
-
-            // if(count(json_decode($asset_asignation->ids_assets)) == count(array($assets_assigned->asset))){
-            //     $asset_asignation->state = 'Entregados';
-            //     $asset_asignation->save();
-            // }
             
+            if(count($asset_asignation->ids_assets->assigned) == 0){
+                $asset_asignation->ids_assets->delivered = array_merge($asset_asignation->ids_assets->delivered, 
+                                                                        $asset_asignation->ids_assets->possible_deliveries);
+                $asset_asignation->ids_assets->possible_deliveries = [];
+                $asset_asignation->ids_assets = json_encode($asset_asignation->ids_assets);
+                $asset_asignation->state = 'Entregados';
+                $asset_asignation->save();
 
-            foreach ($assets_assigned as $assigned) {
-                $asset = $assigned->asset;
-                $asset->asset_status_id = 10;
-                $asset->save();
+                $assets_assigned = AssetAsignationAsset::where('asset_asignation_id', $asset_asignation->id)->get();
+                foreach ($assets_assigned as $assigned) {
+                    $asset = $assigned->asset;
+                    $asset->asset_status_id = 10;
+                    $asset->save();
+                }
+            }else{
+                $assets_assigned = AssetAsignationAsset::where('asset_asignation_id', $asset_asignation->id)
+                                                        ->whereIn('asset_id', $asset_asignation->ids_assets->possible_deliveries)->get();
+                foreach ($assets_assigned as $assigned) {
+                    $asset = $assigned->asset;
+                    $asset->asset_status_id = 10;
+                    $asset->save();
+                }
+                $asset_asignation->ids_assets->delivered = array_merge($asset_asignation->ids_assets->delivered, 
+                                                                        $asset_asignation->ids_assets->possible_deliveries);
+                $asset_asignation->state = 'Entrega parcial';
+                $asset_asignation->ids_assets->possible_deliveries = [];
+                $asset_asignation->ids_assets = json_encode($asset_asignation->ids_assets);
+                $asset_asignation->save();
             }
+   
         } elseif ($request->state == 'Rechazado') {
-            $asset_asignation = AssetAsignation::find($request->asset_asignation_id);
             $asset_asignation->state = 'Pendiente por entrega';
             $asset_asignation->save();
         }
@@ -122,7 +140,7 @@ class AssetAsignationDeliveryController extends Controller
        
         $asset_asignation = AssetAsignation::find($delivery->asset_asignation_id);
         $asset_asignation->state = 'Asignado';
-        $asset_asignation->ids_assets_delivered = null;
+        $asset_asignation->ids_assets = null;
         $asset_asignation->save();
 
         $delivery->delete();
