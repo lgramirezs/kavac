@@ -155,7 +155,6 @@ class BudgetReportsController extends Controller
                 $increment = 0;
                 $decrement = 0;
                 if (!isset($account['compromised']) && !isset($account['current']) && !isset($account['programmed']) && !isset($account['increment']) && !isset($account['decrement'])) {
-                    // dd($account);
                     $compromised = $this->getAccountCompromisedAmout($account);
                     $modifications = $this->getAccountModifications($account->budget_sub_specific_formulation_id);
 
@@ -167,14 +166,21 @@ class BudgetReportsController extends Controller
 
 
                     if ($modifications) {
+                        // dd($modifications);
+                        $increment_descriptions = array();
+                        $decrement_descriptions = array();
                         foreach ($modifications as $modif) {
                             if ($account->budget_account_id == $modif->budget_account_id) {
                                 if ($modif->operation == 'I') {
                                     $increment += $modif->amount;
+                                    array_push($increment_descriptions, $modif->budgetModification->description);
                                 } else {
                                     $decrement += $modif->amount;
+                                    array_push($decrement_descriptions, $modif->budgetModification->description);
                                 }
                             }
+                            $account['increment_descriptions'] = $increment_descriptions;
+                            $account['decrement_descriptions'] = $decrement_descriptions;
                         }
                     }
                     $account['increment'] = $increment;
@@ -247,10 +253,13 @@ class BudgetReportsController extends Controller
         $compromised = BudgetCompromiseDetail::where('budget_sub_specific_formulation_id', $accout_id->budget_sub_specific_formulation_id)
             ->where('budget_account_id', $accout_id->budget_account_id)->get();
         $amout = 0;
+        $descriptions = array();
         if (!$compromised->isEmpty()) {
             foreach ($compromised as $com) {
                 $amout = $com->getTotalAttribute();
+                array_push($descriptions, $com->description);
             }
+            $accout_id['compromised_descriptions'] = $descriptions;
             return $amout;
         }
         return $amout;
@@ -271,7 +280,7 @@ class BudgetReportsController extends Controller
 
     public function getAccountModifications(int $account_budget_sub_specific_formulation_id)
     {
-        $modifications = BudgetModificationAccount::where('budget_sub_specific_formulation_id', $account_budget_sub_specific_formulation_id)->get();
+        $modifications = BudgetModificationAccount::with('budgetModification')->where('budget_sub_specific_formulation_id', $account_budget_sub_specific_formulation_id)->get();
         return !$modifications->isEmpty() ? $modifications : null;
     }
 
@@ -367,7 +376,7 @@ class BudgetReportsController extends Controller
         $currency = Currency::where('default', true)->first();
 
         $pdf->setConfig(['institution' => $institution, 'orientation' => 'P', 'reportDate' => '']);
-        $pdf->setHeader('', 'Certificado de disponibilidad presupuestaria');
+        $pdf->setHeader('', 'Certificado de disponibilidad presupuestaria', true);
         $pdf->setFooter();
         $pdf->setBody('budget::pdf.budgetAvailability', true, [
             'pdf' => $pdf,
@@ -785,7 +794,6 @@ class BudgetReportsController extends Controller
         $institution = Institution::find(1);
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
-
         $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE', 'reportDate' => '']);
         $pdf->setHeader('', 'Reporte Mayor Analítico por Proyecto o Acción Centralizada');
         $pdf->setFooter();

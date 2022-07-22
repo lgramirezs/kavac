@@ -48,7 +48,7 @@
 
 <table cellspacing="0" cellpadding="1" border="1">
     @php
-        // dd($records);
+        
         $total_programmed = 0;
         $total_compromised = 0;
         $total_amount_available = 0;
@@ -74,6 +74,10 @@
         @endphp
         @foreach ($budgetAccounts[0] as $budgetAccount)
             @php
+            // dd($budgetAccount);
+                $compromised_des = join(',', $budgetAccount['compromised_descriptions'] ?? []);
+                $increment_des = join(',', $budgetAccount['increment_descriptions'] ?? []);
+                $decrement_des = join(',', $budgetAccount['decrement_descriptions'] ?? []);
                 $styles = $budgetAccount->budgetAccount->specific === '00' ? 'font-weight: bold;' : '';
             @endphp
             <tr>
@@ -86,8 +90,8 @@
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="left">
                     {{ $budgetAccount['budgetAccount']['denomination'] }}</td>
 
-                <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
-                    {{ number_format($budgetAccount['total_real_amount'], 2) }}</td>
+                <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="left">
+                    {{'Aumento: ' . $increment_des . "\r" . 'Disminución: ' . $decrement_des . "\r" . 'Compromiso: ' . $compromised_des }}</td>
 
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
                     {{ number_format($budgetAccount['total_year_amount'], 2) }}</td>
