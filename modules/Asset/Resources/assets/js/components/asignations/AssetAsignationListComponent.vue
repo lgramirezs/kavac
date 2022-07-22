@@ -36,17 +36,24 @@
 						:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id"
 						:state="props.row.state">
 					</asset-asignation-deliver-equipment>
-					<!-- <button class="btn btn-primary btn-xs btn-icon btn-action"
-                        type="button" data-toggle="tooltip" title="Entregar Equipos"
-                        :disabled="(props.row.state == 'Asignado') ? false : true"
-                        @click="deliverEquipment(props.index)">
-                    	<i class="icofont icofont-computer"></i>
-                	</button> -->
 					<button @click="editForm(props.row.id)"
 							class="btn btn-warning btn-xs btn-icon btn-action"
 							:disabled="(props.row.state == 'Asignado')?false:true"
 							title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 						<i class="fa fa-edit"></i>
+					</button>
+					<button 
+							class="btn btn-primary btn-xs btn-icon btn-action"
+							title="Generar acta" data-toggle="tooltip"
+							type="button" v-has-tooltip>
+							<i class="fa fa-file-pdf-o"></i>
+					</button>
+					<!-- :href="url+'pdf/'+props.row.id" -->
+					<button
+							class="btn btn-primary btn-xs btn-icon" 
+							title="Imprimir acta" 
+							data-toggle="tooltip" v-has-tooltip target="_blank">
+							<i class="fa fa-print" style="text-align: center;"></i>
 					</button>
 					<button @click="deleteRecord(props.row.id, '')"
 							class="btn btn-danger btn-xs btn-icon btn-action"
