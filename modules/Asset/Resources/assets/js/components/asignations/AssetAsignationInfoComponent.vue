@@ -9,7 +9,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="reset()">
 							<span aria-hidden="true">×</span>
 						</button>
 						<h6>
@@ -37,8 +37,8 @@
 	                                <i class="ion-arrow-swap"></i> Equipos asignados
 	                            </a>
 	                        </li>
-							<li class="nav-item">
-	                            <a class="nav-link" data-toggle="tab" href="#equipment_delivered" role="tab" @click="loadEquipment()">
+							<li class="nav-item" v-if="flag">
+	                            <a class="nav-link" data-toggle="tab" href="#equipment_delivered" role="tab">
 	                                <i class="ion-arrow-swap"></i> Equipos entregados
 	                            </a>
 	                        </li>
@@ -103,7 +103,7 @@
 	                <div class="modal-footer">
 
 	                	<button type="button" class="btn btn-default btn-sm btn-round btn-modal-close"
-	                			data-dismiss="modal">
+	                			data-dismiss="modal" @click="reset()">
 	                		Cerrar
 	                	</button>
 		            </div>
@@ -121,6 +121,7 @@
 				equipments_assigned: [],
 				equipments_delivered: [],
 				errors: [],
+				flag : false,
 				columns: ['asset.inventory_serial','asset.serial','asset.marca','asset.asset_institutional_code'],
 			}
 		},
@@ -144,6 +145,11 @@
              * @author  Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
              */
             reset() {
+				const vm = this;
+				vm.records = [];
+				vm.equipments_assigned = [];
+				vm.equipments_delivered = [];
+				vm.flag = false;
             },
 
 			/**
@@ -187,11 +193,21 @@
             },
             loadEquipment(){
 				const vm = this;
+				vm.equipments_assigned = [];
+				vm.equipments_delivered = [];
+				let equipments = [];
+				vm.flag = true;
             	var index = $(".modal-body #id").val();
 				axios.get(`${window.app_url}/asset/asignations/vue-info/${index}`).then(response => {
 					vm.records = response.data.records.asset_asignation_assets;
-					vm.equipments_assigned = vm.records.filter(asset => asset.asset.asset_status_id == 1);
-					vm.equipments_delivered = vm.records.filter(asset => asset.asset.asset_status_id == 10);
+					equipments = JSON.parse(response.data.records.ids_assets);
+					if(equipments == null){
+						vm.equipments_assigned = vm.records;
+					}else{
+						vm.equipments_assigned = vm.records.filter(asset => equipments.assigned.includes(asset.asset.id)
+																	|| equipments.possible_deliveries.includes(asset.asset.id));
+						vm.equipments_delivered = vm.records.filter(asset => equipments.delivered.includes(asset.asset.id));
+					}
 				});
 			}
 		},

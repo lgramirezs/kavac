@@ -172,10 +172,15 @@
 				const vm = this;
                 vm.equipments = [];
                 url = vm.setUrl(url);
+                let equipments = [];
 
 				axios.get(url).then(response => {
-					vm.equipments = response.data.records.asset_asignation_assets;
-                    vm.equipments = vm.equipments.filter(asset => asset.asset.asset_status_id == 1);
+                    equipments = JSON.parse(response.data.records.ids_assets);
+					if(equipments == null){
+                        vm.equipments = response.data.records.asset_asignation_assets;
+					}else{
+						vm.equipments = response.data.records.asset_asignation_assets.filter(asset => equipments.assigned.includes(asset.asset.id));
+					}
 				}).catch(error => {
                     if (typeof(error.response) !== "undefined") {
                         if (error.response.status == 403) {
