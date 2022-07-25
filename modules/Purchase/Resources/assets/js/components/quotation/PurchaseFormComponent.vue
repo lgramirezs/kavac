@@ -351,8 +351,6 @@ export default {
             vm.record_edit.relatable.forEach(element => {
                 let bb = element.purchase_requirement_item.purchase_requirement.purchase_base_budget
                 if (bb_ids.includes(bb.id)) {
-                    console.log("Base")
-                    console.log(bb)
                     vm.recordCheck(bb, false)
                     vm.base_budget_list.push(bb)
                 }

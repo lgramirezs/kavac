@@ -203,18 +203,23 @@ class PurchaseQuotationController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     * @return Renderable
+     * Metodo que muestra informacion de cotizacion
+     * @param  Request $id
+     * @return JsonResponse
      */
     public function show($id)
     {
-        //return view('purchase::show');
+        $records = PurchaseQuotation::with(['purchaseSupplier', 'currency', 'documents', 'relatable' => function ($query) {
+                    $query->with(['purchaseRequirementItem' => function ($query) {
+                        $query->with(['purchaseRequirement' => function ($query) { 
+							$query->with('userDepartment')->get(); 
+						}])->get();
+                    }])->get();
+                },
+	        	])->find($id);
+
         return response()->json([
-	        'records' => PurchaseQuotation::with(
-	        	'purchaseSupplier',
-	           	'currency',
-	            'documents'
-	            )->find($id)
+	        'records' => $records,	         
 	        ], 200);
     }
 
