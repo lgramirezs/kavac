@@ -56,18 +56,18 @@
                             <div class="col-md-4">
                                 <label>Leer línea de inicio:</label>
                                 <div class="custom-control custom-switch" data-toggle="tooltip" 
-                                     title="Indique si se debe leer el archivo desde la primera línea">
+                                    title="Indique si se debe leer el archivo desde la primera línea">
                                     <input type="checkbox" class="custom-control-input" id="readStartLine" 
-                                           v-model="record.read_start_line" :value="true">
+                                        v-model="record.read_start_line" :value="true">
                                     <label class="custom-control-label" for="readStartLine"></label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label>Leer línea final:</label>
                                 <div class="custom-control custom-switch" data-toggle="tooltip" 
-                                     title="Indique si se debe leer el archivo hasta la última línea">
+                                    title="Indique si se debe leer el archivo hasta la última línea">
                                     <input type="checkbox" class="custom-control-input" id="readEndLine" 
-                                           v-model="record.read_end_line" :value="true">
+                                        v-model="record.read_end_line" :value="true">
                                     <label class="custom-control-label" for="readEndLine"></label>
                                 </div>
                             </div>
