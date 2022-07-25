@@ -3,7 +3,7 @@
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
             href="#" title="Tipos de financiamiento"
             data-toggle="tooltip"
-            @click="addRecord('add_bank_reconciliation_file', '/finance/setting-bank-reconciliation-files', $event)"
+            @click="addRecord('add_bank_reconciliation_file', '/budget/financement-types', $event)"
         >
             <i class="icofont icofont-files ico-3x"></i>
             <span>Tipos de financiamiento</span>
