@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Modules\Budget\Models\BudgetFinancementTypes;
 
 /**
  * @class BudgetFinancementTypesController
@@ -46,8 +47,7 @@ class BudgetFinancementTypesController extends Controller
      */
     public function index()
     {
-        // return response()->json(['records' => FinanceSettingBankReconciliationFiles::orderBy('bank_id')->get()], 200);
-        return response()->json(['projects'=>'Hola!'], 200);
+        return response()->json(['records' => BudgetFinancementTypes::orderBy('id')->get()], 200);
     }
 
     /**
