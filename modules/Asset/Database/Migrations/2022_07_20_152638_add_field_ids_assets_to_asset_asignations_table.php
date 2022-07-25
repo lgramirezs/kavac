@@ -15,7 +15,7 @@ use Illuminate\Database\Migrations\Migration;
  * @license
  *     [LICENCIA DE SOFTWARE CENDITEL](http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/)
  */
-class AddFieldToAssetAsignationsTable extends Migration
+class AddFieldIdsAssetsToAssetAsignationsTable extends Migration
 {
     /**
      * Ejecuta las migraciones.
