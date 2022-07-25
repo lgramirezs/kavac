@@ -81,14 +81,14 @@
 							Proyecto / Acción Centralizada</label
 						>
 						<div class="custom-control custom-switch">
-							<input type="checkbox" class="custom-control-input" id="allSpecificActions" 
-								   :value="true" name="all_specific_actions" v-model="all_specific_actions">
-							<label class="custom-control-label" for="allSpecificActions"></label>
+							<input type="checkbox" class="custom-control-input" id="all_specific_actions" 
+								   value="true" name="all_specific_actions" v-model="all_specific_actions">
+							<label class="custom-control-label" for="all_specific_actions"></label>
 						</div>
 					</div>
 					<div
 						class="col-12"
-						id="all_specific_actions"
+						id="allSpecificActions"
 						v-if="!all_specific_actions"
 					>
 						<div class="mt-4">
@@ -235,18 +235,7 @@ export default {
 		};
 	},
 	created() {
-		this.all_specific_actions = false;
-		const vm = this;
 
-		window.addEventListener("updateProjectId", (event) => {
-			vm.project_id = event.value;
-			vm.specific_actions_ids = [];
-		});
-
-		window.addEventListener("updateCentralizedActionId", (event) => {
-			vm.centralized_action_id = event.value;
-			vm.specific_actions_ids = [];
-		});
 	},
 	mounted() {
 		const vm = this;
@@ -260,7 +249,6 @@ export default {
 			document.getElementById("all_specific_actions").checked = false;
 
 			if (e.target.id === "sel_project") {
-				// window.dispatchEvent(new CustomEvent("updateCentralizedActionId", {value: '' }));
 				vm.centralized_action_id = "";
 				vm.specific_actions_ids = [];
 				$("#centralized_action_id")
@@ -268,7 +256,6 @@ export default {
 					.removeClass("is-required");
 				$("#project_id").closest(".form-group").addClass("is-required");
 			} else if (e.target.id === "sel_centralized_action") {
-				// window.dispatchEvent(new CustomEvent("updateProjectId", {value: '' }));
 				vm.project_id = "";
 				vm.specific_actions_ids = [];
 				
@@ -283,8 +270,8 @@ export default {
 
 		$("#all_specific_actions").on(
 			"change",
-			function (event, state) {
-				vm.all_specific_actions = state;
+			function () {
+				vm.all_specific_actions = this.checked;
 				if (vm.all_specific_actions) {
 					for (
 						let index = 1;
@@ -303,7 +290,7 @@ export default {
 
 		$("#consolidated").on(
 			"change",
-			function (event, state) {
+			function () {
 				vm.consolidated = this.checked;
 				$("#sel_project").attr(
 					"disabled",
@@ -333,11 +320,14 @@ export default {
 		);
 	},
 	methods: {
+		// getAllSpecificActionsIds(e) {
+		// 	console.log(e.target.checked);
+		// },
 		reset() {
 			const vm = this;
 			vm.all_specific_actions = false;
 			vm.specific_actions_ids = "";
-			document.getElementById("all_specific_actions").checked = false;
+			// document.getElementById("all_specific_actions").checked = false;
 		},
 
 		getSpecificActions(type) {
@@ -373,6 +363,7 @@ export default {
 		generateReport: function () {
 			this.errors = [];
 			if (!this.consolidated) {
+				console.log('Here');
 				if (!this.initialDate) {
 					this.errors.push("El campo fecha Desde es obligatorio");
 				}
@@ -398,7 +389,8 @@ export default {
 					this.errors.push(
 						"El campo Acción Específica es obligatorio"
 					);
-				} else {
+				} 
+				else {
 					if (!this.all_specific_actions) {
 						this.specific_actions_ids =
 							this.specific_actions_ids.map(function (object) {
