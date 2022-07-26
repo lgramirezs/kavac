@@ -66,16 +66,16 @@ class PayrollVacationPolicyController extends Controller
             'name.required'                                  => 'El campo nombre es obligatorio.',
             'start_date.required'                            => 'El campo desde (fecha de aplicación) es obligatorio.',
             'institution_id.required'                        => 'El campo organización es obligatorio.',
-            'vacation_periods.required'                      => 'Los campos de salidas individuales son obligatorio.',
+            'vacation_periods.required'                      => 'Los campos de salidas colectivas son obligatorios.',
             'vacation_type.required'                         => 'El campo tipo de vacaciones es obligatorio.',
             'vacation_periods_accumulated_per_year.required' => 'El campo períodos vacacionales acumulados por año ' .
                 'es obligatorio.',
-            'vacation_days.required'                         => 'El campo días a otorgar para el disfrute de ' .
-                'vacaciones es obligatorio.',
+            'vacation_days.required'                         => 'El campo días de disfrute adicionales a otorgar por año ' .
+                'de servicio es obligatorio.',
             'vacation_period_per_year.required'              => 'El campo períodos vacacionales permitidos por año ' .
                 'es obligatorio.',
-            'additional_days_per_year.required'              => 'El campo días adicionales a otorgar para el ' .
-                'disfrute de vacaciones es obligatorio.',
+            'additional_days_per_year.required'              => 'El campo días de disfrute adicionales a otorgar por año ' .
+                'de servicio es obligatorio.',
             'minimum_additional_days_per_year.required'      => 'El campo días de disfrute de vacaciones mínimo ' .
                 'por año de servicio es obligatorio.',
             'maximum_additional_days_per_year.required'      => 'El campo días de disfrute de vacaciones máximo ' .
@@ -85,8 +85,7 @@ class PayrollVacationPolicyController extends Controller
             'payroll_payment_type_id.required'               => 'El campo tipo de pago de nómina es obligatorio.',
             'assign_to.required'                             => 'El campo asignar a es obligatorio.',
             'min_days_advance.required'                      => 'El campo días de anticipación (mínimo) es obligatorio.',
-            'from_year.required'                             => 'El campo a partir de es obligatorio.',
-            'from_year.between'                              => 'El campo a partir de debe estar entre 1960 y ' . date('Y'),
+            'from_year.required'                             => 'El campo a partir del año es obligatorio.',
         ];
     }
 
@@ -214,7 +213,7 @@ class PayrollVacationPolicyController extends Controller
                     'maximum_additional_days_per_year'      => ['required'],
                     'payroll_payment_type_id'               => ['required'],
                     'min_days_advance'                      => ['required'],
-                    'from_year'                             => ['required', 'integer','between:1960,' . date('Y')]
+                    'from_year'                             => ['required', 'integer']
                 ]
             );
         }
@@ -371,7 +370,7 @@ class PayrollVacationPolicyController extends Controller
                     //'minimum_additional_days_per_year'      => ['required'],
                     'maximum_additional_days_per_year'      => ['required'],
                     'payroll_payment_type_id'               => ['required'],
-                    'from_year'                             => ['required', 'integer','between:1960,' . date('Y')]
+                    'from_year'                             => ['required', 'integer']
                 ]
             );
         }
