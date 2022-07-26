@@ -50,9 +50,15 @@ class PurchaseOrderController extends Controller
         $is_admin = $user_profile == null || $user_profile['institution_id'] == null ? true : false;
 
         if ($is_admin) {
-            $purchaseDirectHire = PurchaseDirectHire::find($id);
+            $purchaseDirectHire = PurchaseDirectHire::with(
+							'contratingDepartment',
+							'userDepartment',
+							'purchaseSupplier')->find($id);
         } else {
-            $purchaseDirectHire = PurchaseDirectHire::where('institution_id', $user_profile['institution_id'])->find($id);
+            $purchaseDirectHire = PurchaseDirectHire::with(
+							'contratingDepartment',
+							'userDepartment',
+							'purchaseSupplier')->where('institution_id', $user_profile['institution_id'])->find($id);
         }
 
 		if (!$is_admin) {
