@@ -57,7 +57,16 @@ class PurchaseDirectHire extends Model implements Auditable
         'verified_by_id',
         'first_signature_id',
         'second_signature_id',
+
+        // Factura
+        'receiver',
     ];
+
+    protected $appends = ['receiver_json'];
+
+    public function getReceiverJsonAttribute(){
+        return json_decode($this->receiver);
+    }
 
     /**
      * PurchaseDirectHire belongs to FiscalYear.

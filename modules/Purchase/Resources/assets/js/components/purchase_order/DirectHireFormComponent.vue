@@ -587,6 +587,8 @@ export default {
     },
     mounted() {
         const vm = this;
+        vm.reset();
+
         axios.get('/purchase/get-institutions').then(response => {
             vm.institutions = response.data.institutions;
 
@@ -595,7 +597,7 @@ export default {
                 vm.getDepartments();
             }
         });
-        // vm.reset();
+
         vm.records = vm.requirements;
         if(vm.record_edit) {
             for( var i=0; i<vm.record_edit.length; i++ ) {
@@ -614,6 +616,9 @@ export default {
                 vm.record.verified_by_id = vm.record_edit[i]['verified_by_id'];
                 vm.record.first_signature_id = vm.record_edit[i]['first_signature_id'];
                 vm.record.second_signature_id = vm.record_edit[i]['second_signature_id'];
+
+                vm.record.receiver = vm.record_edit[i]['receiver_json'];
+
                 vm.indexOf(vm.requirements,vm.requirements.id,true);
                 for (var j = 0; j < vm.requirements.length; j++) {
                     if(vm.requirements[j]['purchase_base_budget']['orderable_id'] != null) {
@@ -683,7 +688,7 @@ export default {
             vm.sub_total = 0;
             vm.tax_value = 0;
             vm.total = 0;
-            vm.$refs.purchaseShowError.reset();
+            // vm.$refs.purchaseShowError.reset();
             vm.record.date = vm.format_date(new Date(), 'YYYY-MM-DD');
         },
 
@@ -838,44 +843,47 @@ export default {
                 }
             }
 
-            formData.append("purchase_supplier_id", this.purchase_supplier_id);
-            formData.append("currency_id", this.currency_id);
-            // formData.append("subtotal", this.sub_total);
+            formData.append("purchase_supplier_id", vm.purchase_supplier_id);
+            formData.append("currency_id", vm.currency_id);
+            // formData.append("subtotal", vm.sub_total);
 
-            if(this.requirement_list.length > 0){
-                for(let i = 0; i < this.requirement_list.length; i++){
-                    formData.append("requirement_list[]", JSON.stringify(this.requirement_list[i]));
+            if(vm.requirement_list.length > 0){
+                for(let i = 0; i < vm.requirement_list.length; i++){
+                    formData.append("requirement_list[]", JSON.stringify(vm.requirement_list[i]));
                 }
             } else {
                 formData.append("requirement_list", '');
             }
 
-            if(this.record_items.length > 0){
-                for(let i = 0; i < this.record_items.length; i++){
-                    formData.append("record_items[]", JSON.stringify(this.record_items[i]));
+            if(vm.record_items.length > 0){
+                for(let i = 0; i < vm.record_items.length; i++){
+                    formData.append("record_items[]", JSON.stringify(vm.record_items[i]));
                 }
             } else {
                 formData.append("record_items", '');
             }
 
-            formData.append("date", this.record.created_at);
-            formData.append("institution_id", this.record.institution_id);
-            formData.append("contracting_department_id", this.record.contracting_department_id);
-            formData.append("user_department_id", this.record.user_department_id);
-            formData.append("fiscal_year_id", this.fiscalYear.id);
-            formData.append("purchase_supplier_id", this.record.purchase_supplier_id);
-            formData.append("purchase_supplier_object_id", this.record.purchase_supplier_object_id);
-            formData.append("funding_source", this.record.funding_source);
-            formData.append("description", this.record.description);
-            formData.append("payment_methods", this.record.payment_methods);
+            formData.append("date", vm.record.date);
+            formData.append("institution_id", vm.record.institution_id);
+            formData.append("contracting_department_id", vm.record.contracting_department_id);
+            formData.append("user_department_id", vm.record.user_department_id);
+            formData.append("fiscal_year_id", vm.fiscalYear.id);
+            formData.append("purchase_supplier_id", vm.record.purchase_supplier_id);
+            formData.append("purchase_supplier_object_id", vm.record.purchase_supplier_object_id);
+            formData.append("funding_source", vm.record.funding_source);
+            formData.append("description", vm.record.description);
+            formData.append("payment_methods", vm.record.payment_methods);
 
+            formData.append("receiver[invoice_to]", vm.record.receiver.invoice_to);
+            formData.append("receiver[send_to]", vm.record.receiver.send_to);
+            formData.append("receiver[rif]", vm.record.receiver.rif);
 
             // variables para firmas
-            formData.append("prepared_by_id", this.record.prepared_by_id);
-            formData.append("reviewed_by_id", this.record.reviewed_by_id);
-            formData.append("verified_by_id", this.record.verified_by_id);
-            formData.append("first_signature_id", this.record.first_signature_id);
-            formData.append("second_signature_id", this.record.second_signature_id);
+            formData.append("prepared_by_id", vm.record.prepared_by_id);
+            formData.append("reviewed_by_id", vm.record.reviewed_by_id);
+            formData.append("verified_by_id", vm.record.verified_by_id);
+            formData.append("first_signature_id", vm.record.first_signature_id);
+            formData.append("second_signature_id", vm.record.second_signature_id);
 
             vm.loading = true;
 

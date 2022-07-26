@@ -156,9 +156,9 @@ Vue.component('budget-formulation-list', () =>
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-Vue.component('budget-sub-specific-formulation', () =>
+Vue.component('budget-formulation-subspecific', () =>
 	import(
-		/* webpackChunkName: "budget-subspecific-formulation" */
+		/* webpackChunkName: "budget-formulation-subspecific" */
 		'./components/BudgetSubSpecificFormulationComponent.vue'
 	)
 );
