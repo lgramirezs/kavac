@@ -51,7 +51,7 @@
             <a href="javascript:void(0)">{{ __('Reportes') }}</a>
             <ul class="submenu">
                 <li><a href="{{ route('budget.report.budgetAnalyticalMajor') }}" data-toggle="tooltip"
-                        data-placement="right">Mayor Análitico</a></li>
+                        data-placement="right">Mayor Analítico</a></li>
                 <li><a href="javascript:void(0)">{{ __('Consolidado') }}</a></li>
                 <li><a href="{{ route('budget.report.budgetAvailability') }}" data-toggle="tooltip"
                         data-placement="right">Disponibilidad Presupuestaria</a></li>

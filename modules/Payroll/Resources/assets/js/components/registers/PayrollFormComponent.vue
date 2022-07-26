@@ -94,7 +94,7 @@
                         <!-- ./conceptos -->
                     </div>
                 </div>
-                <section v-show="payroll_parameters.length > 0">
+                <section v-show="record.payroll_payment_type_id > 0">
                     <hr>
                     <div class="row">
                         <div class="col-md-6" v-if="payroll_parameters.length > 0">

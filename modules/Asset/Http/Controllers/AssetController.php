@@ -412,7 +412,8 @@ class AssetController extends Controller
                                     }
                                 }
                                 elseif($asset_index->assetAsignationAsset){
-                                    if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                                    if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'
+                                        && $asset_index->assetAsignationAsset->assetAsignation->state == 'Entrega parcial'){
                                         array_push($selected, $asset_index->id);
                                     }
                                 }
@@ -448,7 +449,8 @@ class AssetController extends Controller
                                 }
                             }
                             elseif($asset_index->assetAsignationAsset){
-                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'
+                                    && $asset_index->assetAsignationAsset->assetAsignation->state == 'Entrega parcial'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }
@@ -483,7 +485,8 @@ class AssetController extends Controller
                                 }
                             }
                             elseif($asset_index->assetAsignationAsset){
-                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'
+                                    && $asset_index->assetAsignationAsset->assetAsignation->state == 'Entrega parcial'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }
@@ -517,7 +520,8 @@ class AssetController extends Controller
                                 }
                             }
                             elseif($asset_index->assetAsignationAsset){
-                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                                if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'
+                                    && $asset_index->assetAsignationAsset->assetAsignation->state == 'Entrega parcial'){
                                     array_push($selected, $asset_index->id);
                                 }
                             }
@@ -582,7 +586,8 @@ class AssetController extends Controller
                             }
                         }
                         elseif($asset_index->assetAsignationAsset){
-                            if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'){
+                            if($asset_index->assetAsignationAsset->assetAsignation->state == 'Entregados'
+                                && $asset_index->assetAsignationAsset->assetAsignation->state == 'Entrega parcial'){
                                 array_push($selected, $asset_index->id);
                             }
                         }

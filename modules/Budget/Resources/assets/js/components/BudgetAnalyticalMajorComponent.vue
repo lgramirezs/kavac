@@ -66,18 +66,18 @@
 					</div>
 					<div class="col-12 mt-4">
 						<label for="all_specific_actions"
-							>Seleccionar todas las acciones específicas de este
+							>Seleccionar todas las acciones especificas de este
 							Proyecto / Acción Centralizada</label
 						>
 						<div class="custom-control custom-switch">
-							<input type="checkbox" class="custom-control-input" id="setAllSpecificActions"
-								   :value="true" name="all_specific_actions" v-model="all_specific_actions">
-							<label class="custom-control-label" for="setAllSpecificActions"></label>
+							<input type="checkbox" class="custom-control-input" id="all_specific_actions" 
+								   value="true" name="all_specific_actions" v-model="all_specific_actions">
+							<label class="custom-control-label" for="all_specific_actions"></label>
 						</div>
 					</div>
 					<div
 						class="col-12"
-						id="all_specific_actions"
+						id="allSpecificActions"
 						v-if="!all_specific_actions"
 					>
 						<div class="mt-4">
@@ -257,8 +257,8 @@ export default {
 
 		$("#all_specific_actions").on(
 			"change",
-			function (event, state) {
-				vm.all_specific_actions = state;
+			function () {
+				vm.all_specific_actions = this.checked;
 				if (vm.all_specific_actions) {
 					for (
 						let index = 1;
@@ -277,7 +277,7 @@ export default {
 
 		$("#consolidated").on(
 			"change",
-			function (event, state) {
+			function () {
 				vm.consolidated = this.checked;
 				$("#sel_project").attr(
 					"disabled",

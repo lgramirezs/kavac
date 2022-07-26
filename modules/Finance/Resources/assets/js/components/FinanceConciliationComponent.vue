@@ -55,9 +55,10 @@
             </div>
             <div class="col-md-3">
                 <label>Mostrar coincidencias:</label>
-                <div class="custom-control custom-switch" data-toggle="tooltip" title="Indique si se mostrarán coincidencias">
-                    <input type="checkbox" class="custom-control-input" id="coincidences" v-model="record.coincidences" 
-                           :value="true">
+                <div class="custom-control custom-switch" data-toggle="tooltip"
+                    title="Indique si se mostrarán coincidencias">
+                    <input type="checkbox" class="custom-control-input"
+                        id="coincidences" v-model="record.coincidences" :value="true">
                     <label class="custom-control-label" for="coincidences"></label>
                 </div>
             </div>
@@ -75,7 +76,8 @@
             </button>
         </div>
         <br>
-        <table v-if="tableResults" table border="1px" cellpadding="0px" cellspacing="0px" style="width:100%">
+        <table v-if="tableResults" table border="1px" cellpadding="0px"
+            cellspacing="0px" style="width:100%">
             <thead>
                 <tr>
                     <th>Fecha</th>

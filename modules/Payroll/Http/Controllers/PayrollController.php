@@ -2752,7 +2752,7 @@ class PayrollController extends Controller
                         $assignments,
                         [
                             'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                            'value' => $formula ? str_eval($formula): $formula
                         ]
                     );
                 } elseif ($concept['field']->payrollConceptType['sign'] == '-') {
@@ -2760,7 +2760,7 @@ class PayrollController extends Controller
                         $deductions,
                         [
                             'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                            'value' => $formula ? str_eval($formula): $formula
                         ]
                     );
                 }
@@ -2865,7 +2865,7 @@ class PayrollController extends Controller
         )->where('p_key', 'like', 'global_parameter_%')->get();
         foreach ($parameters as $parameter) {
             $jsonValue = json_decode($parameter->p_value);
-            $formula = str_replace('parameter(' . $jsonValue->id . ')', $jsonValue->name, $formula);
+            $formula = str_replace('parameter(' . $jsonValue->id . ')', $jsonValue->value, $formula);
         }
 
         /** Se hace la busqueda de los conceptos */

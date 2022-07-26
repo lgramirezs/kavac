@@ -172,7 +172,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h6 class="card-title">
-						Configuración General
+						Registros comunes
 						@include('buttons.help', [
 							'helpId' => 'PurchaseCommon',
 							'helpSteps' => get_json_resource('ui-guides/settings/common.json', 'purchase')
