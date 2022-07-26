@@ -171,7 +171,7 @@ class PayrollSalaryScaleController extends Controller
             $payrollSalaryScale->institution_id         = $request->input('institution_id');
             $payrollSalaryScale->active                 = !empty($request->input('active'))
                                                               ? $request->input('active')
-                                                              : $payrollSalaryScale->active;
+                                                              : false;
             $payrollSalaryScale->group_by               = $request->input('group_by');
             $payrollSalaryScale->type                   = $request->input('type');
 
@@ -234,7 +234,7 @@ class PayrollSalaryScaleController extends Controller
         return template_choices(
             'Modules\Payroll\Models\PayrollSalaryScale',
             'name',
-            ['institution_id' => $request->institution_id ?? $institution->id],
+            ['institution_id' => $request->institution_id ?? $institution->id, 'active' => 't'],
             true
         );
     }

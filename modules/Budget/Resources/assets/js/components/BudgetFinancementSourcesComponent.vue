@@ -1,15 +1,15 @@
 <template>
     <div class="col-xs-2 text-center">
         <a class="btn-simplex btn-simplex-md btn-simplex-primary"
-            href="#" title="Tipos de financiamiento"
+            href="#" title="Fuentes de financiamiento"
             data-toggle="tooltip"
-            @click="addRecord('add_bank_reconciliation_file', '/finance/setting-bank-reconciliation-files', $event)"
+            @click="addRecord('add_financement-sources', '/budget/financement-types', $event)"
         >
-            <i class="icofont icofont-files ico-3x"></i>
-            <span>Tipos de financiamiento</span>
+            <i class="icofont icofont-law-document ico-3x"></i>
+            <span>Fuentes de financiamiento</span>
         </a>
         <div class="modal fade text-left" tabindex="-1" role="dialog"
-            id="add_bank_reconciliation_file">
+            id="add_financement-sources">
             <div class="modal-dialog vue-crud" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -19,7 +19,7 @@
                         </button>
                         <h6>
                             <i class="icofont icofont-bank-alt inline-block"></i>
-                            Tipos de financiamiento
+                            Fuentes de financiamiento
                         </h6>
                     </div>
                     <div class="modal-body">

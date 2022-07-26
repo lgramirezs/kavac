@@ -368,7 +368,7 @@ class PayrollConceptController extends Controller
         $payrollConcept->description                 = $request->description ?? '';
         $payrollConcept->active                      = !empty($request->active)
                                                            ? $request->active
-                                                           : $payrollConcept->active;
+                                                           : false;
         $payrollConcept->formula                     = $request->formula;
         $payrollConcept->institution_id              = $request->institution_id;
         $payrollConcept->payroll_concept_type_id     = $request->payroll_concept_type_id;
@@ -449,7 +449,7 @@ class PayrollConceptController extends Controller
      */
     public function getPayrollConcepts()
     {
-        return template_choices('Modules\Payroll\Models\PayrollConcept', ['name'], '', true);
+        return template_choices('Modules\Payroll\Models\PayrollConcept', ['name'], ['active' => 't'], true);
     }
 
     /**

@@ -27,6 +27,19 @@
 							title="Modificar registro" data-toggle="tooltip" type="button">
 						<i class="fa fa-edit"></i>
 					</button>
+					<button 
+							class="btn btn-primary btn-xs btn-icon btn-action"
+							title="Generar acta" data-toggle="tooltip"
+							type="button" v-has-tooltip>
+						<i class="fa fa-file-pdf-o"></i>
+					</button>
+					<!-- :href="url+'pdf/'+props.row.id" -->
+					<button
+							class="btn btn-primary btn-xs btn-icon" 
+							title="Imprimir acta" 
+							data-toggle="tooltip" v-has-tooltip target="_blank">
+							<i class="fa fa-print" style="text-align: center;"></i>
+					</button>
 					<button @click="deleteRecord(props.row.id, '')"
 							class="btn btn-danger btn-xs btn-icon btn-action"
 							title="Eliminar registro" data-toggle="tooltip"

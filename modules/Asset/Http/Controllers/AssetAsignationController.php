@@ -124,6 +124,7 @@ class AssetAsignationController extends Controller
             'payroll_staff_id' => $request->input('payroll_staff_id'),
             'location_place' => $request->input('location_place'),
             'state' => 'Asignado',
+            'ids_assets_delivered' => null,
             'user_id' => Auth::id()
         ]);
 
@@ -174,6 +175,7 @@ class AssetAsignationController extends Controller
         $asignation = AssetAsignation::where('id', $id)->with('assetAsignationAssets')->first();
         $asignation->payroll_staff_id = $request->payroll_staff_id;
         $asignation->location_place = $request->location_place;
+        $asignation->ids_assets_delivered = null;
         $asignation->save();
 
         /** Se eliminan los demas elementos de la solicitud */
@@ -217,7 +219,7 @@ class AssetAsignationController extends Controller
     public function destroy(AssetAsignation $asignation)
     {
         $assets_asignation_assets = AssetAsignationAsset::where('asset_asignation_id', $asignation->id)->get();
-        
+        $assets_asignation_delivery = AssetAsignationDelivery::where('asset_asignation_id', $asignation->id);
         foreach($assets_asignation_assets as $assets_asignation){
             $asset = Asset::find($assets_asignation->asset_id);
             $asset->asset_status_id = 10;
@@ -226,8 +228,9 @@ class AssetAsignationController extends Controller
             $assets_asignation->delete();
         }
         
+        $assets_asignation_delivery->delete();
         $asignation->delete();
-        return response()->json(['message' => 'destroy'], 200);
+        return response()->json(['message' => 'destroy', 'redirect' => route('asset.asignation.index')], 200);
     }
 
     /**
@@ -292,9 +295,19 @@ class AssetAsignationController extends Controller
      * @return    \Illuminate\Http\JsonResponse    Objeto con los registros a mostrar
      */
     public function deliver(Request $request, $id)
-    {
+    {   
         $asset_asignation = AssetAsignation::find($id);
         $asset_asignation->state = 'Procesando entrega';
+
+        if(isset($asset_asignation->ids_assets)){
+            $asset_asignation->ids_assets = json_decode($asset_asignation->ids_assets); 
+            $asset_asignation->ids_assets->assigned = $request->equipments['assigned'];
+            $asset_asignation->ids_assets->possible_deliveries = $request->equipments['possible_deliveries'];
+
+            $asset_asignation->ids_assets = json_encode($asset_asignation->ids_assets);
+        }else{
+            $asset_asignation->ids_assets = json_encode($request->equipments);
+        }
         $asset_asignation->save();
 
         $asignation_delivery = AssetAsignationDelivery::create([

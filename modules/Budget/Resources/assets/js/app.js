@@ -17,9 +17,9 @@ Vue.component('budget-accounts-list', () =>
  *
  * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
  */
-Vue.component('financement-types', () => import(
-    /* webpackChunkName: "financement-types" */
-    './components/FinancementTypesComponent.vue'
+Vue.component('budget-financement-types', () => import(
+    /* webpackChunkName: "budget-financement-types" */
+    './components/BudgetFinancementTypesComponent.vue'
 ));
 
 /**
@@ -27,9 +27,9 @@ Vue.component('financement-types', () => import(
  *
  * @author  Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
  */
-Vue.component('financement-sources', () => import(
-    /* webpackChunkName: "financement-sources" */
-    './components/FinancementSourcesComponent.vue'
+Vue.component('budget-financement-sources', () => import(
+    /* webpackChunkName: "budget-financement-sources" */
+    './components/BudgetFinancementSourcesComponent.vue'
 ));
 
 /**
@@ -156,9 +156,9 @@ Vue.component('budget-formulation-list', () =>
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-Vue.component('budget-sub-specific-formulation', () =>
+Vue.component('budget-formulation-subspecific', () =>
 	import(
-		/* webpackChunkName: "budget-subspecific-formulation" */
+		/* webpackChunkName: "budget-formulation-subspecific" */
 		'./components/BudgetSubSpecificFormulationComponent.vue'
 	)
 );

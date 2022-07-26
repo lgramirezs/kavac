@@ -28,7 +28,7 @@
                         class="btn btn-primary btn-xs btn-icon btn-action"
                         title="Asignar Bien"
                         data-toggle="tooltip"
-                        :disabled="((isAssigned(props.row.asset_asignation_asset))
+                        :disabled="((isAssigned(props.row.asset_asignation_asset, props.row.asset_status_id))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_status_id == 10)
@@ -42,7 +42,7 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Desincorporar Bien"
                         data-toggle="tooltip"
-                        :disabled="((isAssigned(props.row.asset_asignation_asset))
+                        :disabled="((isAssigned(props.row.asset_asignation_asset, props.row.asset_status_id))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset))
                                     &&(props.row.asset_type_id == 1))?false:true"
@@ -55,7 +55,7 @@
                         class="btn btn-warning btn-xs btn-icon btn-action"
                         title="Modificar registro"
                         data-toggle="tooltip"
-                        :disabled="((isAssigned(props.row.asset_asignation_asset))
+                        :disabled="((isAssigned(props.row.asset_asignation_asset, props.row.asset_status_id))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button"
@@ -67,7 +67,7 @@
                         class="btn btn-danger btn-xs btn-icon btn-action"
                         title="Eliminar registro"
                         data-toggle="tooltip"
-                        :disabled="((isAssigned(props.row.asset_asignation_asset))
+                        :disabled="((isAssigned(props.row.asset_asignation_asset, props.row.asset_status_id))
                                     &&(props.row.asset_disincorporation_asset == null)
                                     &&(isReq(props.row.asset_request_asset)))?false:true"
                         type="button" v-has-tooltip>
@@ -122,12 +122,14 @@
 
                 if(value === null){
                     return true;
-                }else{
+                }else if(typeof(value.asset_request) !== "undefined"){
                     if(value.asset_request.state === 'Entregados' || value.asset_request.state === 'Rechazado'){
                         return true;
                     }else{
                         return false;
                     }
+                }else{
+                    return true;
                 }
             },
 
@@ -137,16 +139,24 @@
              *
              * @author Francisco J. P. Ruiz <javierrupe19@gmail.com>
              */
-            isAssigned(value){
+            isAssigned(value, status){
 
                 if(value === null){
                     return true;
-                }else{
+                }else if(typeof(value.asset_asignation) !== "undefined"){
                     if(value.asset_asignation.state === 'Entregados'){
                         return true;
+                    }else if(value.asset_asignation.state === 'Entrega parcial'){
+                        if(status === 1){
+                            return false;
+                        }else{
+                            return true;
+                        }
                     }else{
                         return false;
                     }
+                }else{
+                    return true;
                 }
             },
             /**

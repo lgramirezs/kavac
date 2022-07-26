@@ -181,7 +181,7 @@ Vue.component('purchase-plan-start-diagnosis', () =>
  *
  * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
  */
-Vue.component('purchase-quotation-form', () =>
+Vue.component('purchase-quotation-form-update', () =>
     import (
         /* webpackChunkName: "purchase-quotation-form" */
         './components/quotation/PurchaseFormComponent.vue'));
@@ -195,6 +195,17 @@ Vue.component('purchase-quotation-list', () =>
     import (
         /* webpackChunkName: "purchase-quotation-list" */
         './components/quotation/PurchaseListComponent.vue'));
+
+
+/**
+ * Componente para visualización la orden de compra
+ *
+ * @author Pedro Buitrago <pbuitrago@cenditel.gob.ve> | <pedrobui@gmail.com>
+ */
+Vue.component('purchase-quotation-show', () =>
+    import (
+        /* webpackChunkName: "purchase-quotation-list" */
+        './components/quotation/PurchaseShowComponent.vue'));
 
 
 

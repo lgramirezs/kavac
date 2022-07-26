@@ -206,8 +206,19 @@
                                             </div>
                                         </div>
                                         <!-- ./Días de disfrute adicionales a otorgar por año de servicio -->
+                                        <!-- A partir del año -->
+                                        <div class="col-md-3">
+                                            <div class="form-group is-required">
+                                                <label>A partir del año:</label>
+                                                <input type="text" data-toggle="tooltip" title="Indique el año a partir del que se cuentan los años de servicio" class="form-control input-sm" v-input-mask data-inputmask="
+                                                            'alias': 'numeric',
+                                                            'allowMinus': 'false',
+                                                            'digits': 0" v-model="record.from_year">
+                                            </div>
+                                        </div>
+                                        <!-- ./A partir del año -->
 
-                                        <!-- Días de disfrute de vacaciones mínimos por año -->
+                                        <!-- Días de disfrute de vacaciones mínimos por año 
                                         <div class="col-md-3">
                                             <div class="form-group is-required">
                                                 <label>Días de disfrute de vacaciones mínimo por año:</label>
@@ -217,6 +228,7 @@
                                                             'digits': 0" v-model="record.minimum_additional_days_per_year">
                                             </div>
                                         </div>
+                                        -->
                                         <!-- ./Días de disfrute de vacaciones mínimos por año -->
 
                                         <!-- Días de disfrute de vacaciones máximos por años de servicio -->
@@ -865,6 +877,7 @@ export default {
                 additional_days_per_year: '',
                 minimum_additional_days_per_year: '',
                 maximum_additional_days_per_year: '',
+                from_year: '',
                 salary_type: '',
                 institution_id: '',
                 payroll_payment_type_id: '',
@@ -1017,6 +1030,7 @@ export default {
                 additional_days_per_year: '',
                 minimum_additional_days_per_year: '',
                 maximum_additional_days_per_year: '',
+                from_year: '',
                 salary_type: '',
                 institution_id: '',
                 payroll_payment_type_id: '',
@@ -1118,7 +1132,8 @@ export default {
                         (vm.record.institution_id != '') &&
                         (vm.record.additional_days_per_year != '') &&
                         (vm.record.vacation_days != '') &&
-                        (vm.record.minimum_additional_days_per_year != '') &&
+                        //(vm.record.minimum_additional_days_per_year != '') &&
+                        (vm.record.from_year != '') &&
                         (vm.record.maximum_additional_days_per_year != '') &&
                         (vm.record.vacation_period_per_year != '') &&
                         (vm.record.assign_to != '') &&
@@ -1173,7 +1188,8 @@ export default {
                 vm.record.vacation_days = '';
                 vm.record.vacation_period_per_year = '';
                 vm.record.additional_days_per_year = '';
-                vm.record.minimum_additional_days_per_year = '';
+                //vm.record.minimum_additional_days_per_year = '';
+                vm.record.from_year = '';
                 vm.record.maximum_additional_days_per_year = '';
             } else if (vm.record.vacation_type == 'vacation_period') {
                 vm.record.vacation_periods = [];
@@ -1215,7 +1231,8 @@ export default {
                             vacation_days: field['vacation_days'],
                             vacation_period_per_year: field['vacation_period_per_year'],
                             additional_days_per_year: field['additional_days_per_year'],
-                            minimum_additional_days_per_year: field['minimum_additional_days_per_year'],
+                            //minimum_additional_days_per_year: field['minimum_additional_days_per_year'],
+                            from_year: field['from_year'],
                             maximum_additional_days_per_year: field['maximum_additional_days_per_year'],
                             salary_type: field['salary_type'],
                             vacation_advance: field['vacation_advance'],
@@ -1697,7 +1714,8 @@ export default {
 		 * Método que carga el formulario con los datos a modificar
 		 *
 		 * @author  Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
-         * @author José Briceño <josejorgebriceno9@gmail.com>
+         * @author  José Briceño <josejorgebriceno9@gmail.com>
+         * @author  Daniel Contreras <dcontreras@cenditel.gob.ve>
 		 *
 		 * @param  {integer} index Identificador del registro a ser modificado
 		 * @param {object} event   Objeto que gestiona los eventos
@@ -1715,9 +1733,12 @@ export default {
 
             setTimeout(() => {
                 vm.record.vacation_days = recordEdit.vacation_days;        
+                vm.record.vacation_periods = recordEdit.vacation_periods;
+                for (const [i, v] of vm.record.vacation_periods.entries()) {
+                    vm.getCalculateTime(i);
+                }
             }, 1000);
 
-            vm.record.vacation_periods = JSON.parse(recordEdit.vacation_periods);
 		},
 
         getCalculateTime(index) {
@@ -1746,7 +1767,6 @@ export default {
                         const options = { weekday: 'long'};
                         for(var i=0; i<n; i++) {
                             f.setTime( f.getTime() + (1000*60*60*24) );
-                            console.log(new Intl.DateTimeFormat('UTC', options).format(f));
                             /* Se identifica si existen sabados o domingos en el periodo establecido */
                             if( (f.getDay()==6) || (f.getDay()==0) ) {
                                 /* Si existe un dia no laborable se hace el bucle una unidad mas larga */

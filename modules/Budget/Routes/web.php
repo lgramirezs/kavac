@@ -39,13 +39,16 @@ Route::group(
          * Rutas para la configuración general del módulo de presupuesto
          * -----------------------------------------------------------------------
          *
-         * Gestiona los datos de configuración del módulo de presupuesto
+         * Gestiona los datos de configuración del módulo de presupuesto y los
+         * registros comunes
          */
         Route::group(
             ['middleware' => 'permission:budget.setting.create'],
             function () {
                 Route::get('settings', 'BudgetSettingController@index')->name('budget.settings.index');
                 Route::post('settings', 'BudgetSettingController@store')->name('budget.settings.store');
+                /** Rutas para la gestión de los tipos de financiamiento */
+                Route::resource('financement-types', BudgetFinancementTypesController::class, ['as' => 'budget']);
             }
         );
 

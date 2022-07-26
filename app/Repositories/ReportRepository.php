@@ -363,7 +363,7 @@ class ReportRepository implements ReportInterface
             }
             /** Texto a mostrar en el pie de página del reporte */
             $pdf->MultiCell(
-                198,
+                $pdf->getPageWidth() - PDF_MARGIN_RIGHT,
                 8,
                 $footerText,
                 0,
