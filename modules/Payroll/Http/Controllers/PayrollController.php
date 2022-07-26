@@ -623,18 +623,18 @@ class PayrollController extends Controller
                                                                                                 ->where('payroll_vertical_scale_id', $scaleV['id'])->first();
 
                                                                                             if ($payrollSalaryTabulator->percentage) {
-                                                                                                $formula = str_replace(
-                                                                                                    $match,
-                                                                                                    $tabScale['value']/100,
-                                                                                                    $formula ?? $concept['formula']
-                                                                                                );
-                                                                                            } else {
-                                                                                                $formula = str_replace(
-                                                                                                    $match,
-                                                                                                    $tabScale['value'],
-                                                                                                    $formula ?? $concept['formula']
-                                                                                                );
-                                                                                            }
+                                                                                                    $formula = str_replace(
+                                                                                                        $match,
+                                                                                                        $tabScale['value']/100,
+                                                                                                        $formula ?? $concept['formula']
+                                                                                                    );
+                                                                                                } else {
+                                                                                                    $formula = str_replace(
+                                                                                                        $match,
+                                                                                                        $tabScale['value'],
+                                                                                                        $formula ?? $concept['formula']
+                                                                                                    );
+                                                                                                }
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1392,7 +1392,7 @@ class PayrollController extends Controller
                         $assignments,
                         [
                             'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                            'value' => $formula ? str_eval($formula): $formula
                         ]
                     );
                 } elseif ($concept['field']->payrollConceptType['sign'] == '-') {
@@ -1400,7 +1400,7 @@ class PayrollController extends Controller
                         $deductions,
                         [
                             'name'  => $concept['field']->name,
-                            'value' => $formula ? str_eval($formula): str_eval($concept['formula'])
+                            'value' => $formula ? str_eval($formula): $formula
                         ]
                     );
                 }
