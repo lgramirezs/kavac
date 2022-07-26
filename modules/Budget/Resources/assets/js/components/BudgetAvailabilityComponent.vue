@@ -320,14 +320,12 @@ export default {
 		);
 	},
 	methods: {
-		// getAllSpecificActionsIds(e) {
-		// 	console.log(e.target.checked);
-		// },
+		
 		reset() {
 			const vm = this;
 			vm.all_specific_actions = false;
 			vm.specific_actions_ids = "";
-			// document.getElementById("all_specific_actions").checked = false;
+			document.getElementById("all_specific_actions").checked = false;
 		},
 
 		getSpecificActions(type) {
@@ -473,7 +471,6 @@ export default {
 				"disabled",
 				this.specific_actions.length <= 1
 			);
-			// $('#all_specific_actions').bootstrapSwitch('state', false);
 		},
 	},
 };

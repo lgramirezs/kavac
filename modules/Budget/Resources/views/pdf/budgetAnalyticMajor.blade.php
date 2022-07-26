@@ -16,8 +16,8 @@
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <th style="font-size: 8rem" align="center" width="83.4%">
-            <h4>MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h4>
-            <h4>DESDE: {{ $initialDate }} al {{ $finalDate }}</h4>
+            {{-- <h4>MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h4> --}}
+            {{-- <h4>DESDE: {{ $initialDate }} al {{ $finalDate }}</h4> --}}
             <br>
         </th>
         <th style="font-size: 8rem" align="center" width="16.6%">
