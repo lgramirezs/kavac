@@ -123,19 +123,19 @@
                                 <strong class="d-block">
                                     Facturar a
                                 </strong>
-                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                                {{ records.receiver_json.invoice_to }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">
                                     Enviar a
                                 </strong>
-                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                                {{ records.receiver_json.send_to }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">
                                     RIF
                                 </strong>
-                                <!-- {{ payment_methods[records.payment_methods] }} -->
+                                {{ records.receiver_json.rif }}
                             </div>
                         </div>
                         <br>
@@ -144,41 +144,53 @@
                         <div class="row">
                             <div class="col-3">
                                 <strong class="d-block">Preparado por</strong> 
-                                {{ records.prepared_by.payroll_staff.first_name +' '+ records.prepared_by.payroll_staff.last_name }}
+                                {{ 
+                                    records.prepared_by
+                                        ? records.prepared_by.payroll_staff 
+                                            ? records.prepared_by.payroll_staff.first_name +' '+ records.prepared_by.payroll_staff.last_name 
+                                            : 'No definido'
+                                        : 'No definido'
+                                }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Revisado por</strong> 
-                                {{ records.reviewed_by
-                                    ? records.reviewed_by 
+                                {{ 
+                                    records.reviewed_by
                                         ? records.reviewed_by.payroll_staff 
-                                            ? records.reviewed_by.payroll_staff.supplier.first_name +' '+ records.reviewed_by.payroll_staff.last_name 
-                                            : ''
-                                        : ''
-                                    : '' }}
+                                            ? records.reviewed_by.payroll_staff.first_name +' '+ records.reviewed_by.payroll_staff.last_name 
+                                            : 'No definido'
+                                        : 'No definido'
+                                }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Verificado por</strong> 
-                                {{ records.verified_by.payroll_staff.first_name +' '+ records.verified_by.payroll_staff.last_name }}
+                                {{ 
+                                    records.verified_by
+                                        ? records.verified_by.payroll_staff 
+                                            ? records.verified_by.payroll_staff.first_name +' '+ records.verified_by.payroll_staff.last_name 
+                                            : 'No definido'
+                                        : 'No definido'
+                                }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Firmado por</strong> 
-                                {{ records.first_signature
-                                    ? records.first_signature
-                                        ? records.first_signature.payroll_staff.first_name
+                                {{ 
+                                    records.first_signature
+                                        ? records.first_signature.payroll_staff 
                                             ? records.first_signature.payroll_staff.first_name +' '+ records.first_signature.payroll_staff.last_name 
-                                            : '' 
-                                        : ''
-                                    : '' }}
+                                            : 'No definido'
+                                        : 'No definido'
+                                }}
                             </div>
                             <div class="col-3">
                                 <strong class="d-block">Firmado por</strong> 
-                                {{ records.second_signature
-                                    ? records.second_signature
-                                        ? records.second_signature.payroll_staff.first_name 
+                                {{ 
+                                    records.second_signature
+                                        ? records.second_signature.payroll_staff 
                                             ? records.second_signature.payroll_staff.first_name +' '+ records.second_signature.payroll_staff.last_name 
-                                            : ''
-                                        : ''
-                                    : '' }}
+                                            : 'No definido'
+                                        : 'No definido'
+                                }}
                             </div>
                         </div>
                     </div>
