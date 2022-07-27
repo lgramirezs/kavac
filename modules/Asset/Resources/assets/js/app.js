@@ -167,6 +167,16 @@ Vue.component('asset-asignation-info', () => import(
 );
 
 /**
+ * Componente para gestinar las actas de asignación, entrega o desincorporación de un bien
+ *
+ * @author Henry Paredes <hparedes@cenditel.gob.ve>
+ */
+ Vue.component('asset-manage-record-component', () => import(
+    /* webpackChunkName: "asset-manage-record-component" */
+    './components/manageRecord/AssetManageRecordComponent.vue')
+);
+
+/**
  * Componente para gestionar las desincorporaciones de bienes institucionales
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>

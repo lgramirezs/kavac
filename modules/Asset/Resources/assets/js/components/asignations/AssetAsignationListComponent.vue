@@ -42,12 +42,11 @@
 							title="Modificar registro" data-toggle="tooltip" v-has-tooltip type="button">
 						<i class="fa fa-edit"></i>
 					</button>
-					<button 
-							class="btn btn-primary btn-xs btn-icon btn-action"
-							title="Generar acta" data-toggle="tooltip"
-							type="button" v-has-tooltip>
-							<i class="fa fa-file-pdf-o"></i>
-					</button>
+					<asset-manage-record-component 
+							:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id"
+							:index="props.row.id"
+							:action='"asignación"'>
+					</asset-manage-record-component>
 					<!-- :href="url+'pdf/'+props.row.id" -->
 					<button
 							class="btn btn-primary btn-xs btn-icon" 
