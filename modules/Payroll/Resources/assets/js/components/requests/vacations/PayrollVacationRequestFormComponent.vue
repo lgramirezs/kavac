@@ -59,10 +59,12 @@
                 <div class="col-md-4" id="helpPayrollVacationPeriodYear">
                     <div class="form-group is-required">
                         <label>Año del período vacacional:</label>
-                        <select2 :options="vacation_period_years"
-                                 @input="getPayrollVacationPeriods()"
-                                 v-model="record.vacation_period_year">
-                        </select2>
+                        <v-multiselect :options="vacation_period_years" track_by="text"
+                            :hide_selected="false" data-toggle="tooltip"
+                            title="Indique los periodos vacaionales"
+                            @input="getPayrollVacationPeriods(); addEndDate();"
+                            v-model="record.vacation_period_year">
+                        </v-multiselect>
                     </div>
                 </div>
                 <!-- ./año del período vacacional -->
@@ -74,7 +76,8 @@
                         <label>Fecha de inicio de vacaciones:</label>
                         <input type="date" id="start_date"
                                data-toggle="tooltip" title="Fecha de inicio de vacaciones"
-                               :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]" class="form-control input-sm no-restrict" v-model="record.start_date">
+                               :min="new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0]" class="form-control input-sm no-restrict" v-model="record.start_date"
+                               @input="addEndDate()">
                     </div>
                 </div>
                 <!-- ./fecha de inicio de vacaciones -->
@@ -83,16 +86,15 @@
                     <div class="form-group is-required">
                         <label>Fecha de culminación de vacaciones:</label>
                         <input type="date" id="end_date"
-                               :min="record.start_date"
+                               disabled
                                data-toggle="tooltip"
                                title="Fecha de culminación de vacaciones"
-                               @input="getcalculate()"
                                class="form-control input-sm no-restrict" v-model="record.end_date">
                     </div>
                 </div>
                 <!-- ./fecha de culminación de vacaciones -->
                 <!-- días solicitudos -->
-                <div class="col-md-4" v-if="record.vacation_period_year > 0" id="helpPayrollVacationDaysRequested">
+                <div class="col-md-4" v-if="record.vacation_period_year.length > 0" id="helpPayrollVacationDaysRequested">
                     <div class="form-group is-required">
                         <label>Días solicitados:</label>
                         <input type="text"
@@ -150,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row"  v-show="record.vacation_period_year > 0">
+                    <div class="row"  v-show="record.vacation_period_year.length > 0">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <strong>Días de disfrute según antigüedad:</strong>
@@ -406,7 +408,7 @@
                 vm.vacation_request_for_periods = [];
                 let days_requested = 0;
                 let year = 0;
-                if (vm.record.vacation_period_year > 0) {
+                if (vm.record.vacation_period_year.length > 0) {
                     $.each(vm.payroll_vacation_requests, function(index, field) {
                         if ((vm.record.vacation_period_year == field['vacation_period_year']) &&
                             (vm.record.id != field['id']) ) {
@@ -418,20 +420,64 @@
                         }
                     });
                     $.each(vm.vacation_period_years, function(index, field) {
-                        if (field['id'] == vm.record.vacation_period_year) {
-                            year = field['yearId'];
-                        }
-                    });
+                        $.each(vm.record.vacation_period_year, function(index, year) {
+                            if (field['id'] == year.id) {
+                                year = field['yearId'];
 
-                    document.getElementById('vacation_days_to_antiquity').innerText = 
-                        vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
-                            ? (vm.payroll_vacation_policy['additional_days_per_year'] * year) + vm.payroll_vacation_policy['vacation_days']
-                            : 'No definido';
-                    document.getElementById('pending_days').innerText =
-                        vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
-                            ? (vm.payroll_vacation_policy['additional_days_per_year'] * year) + vm.payroll_vacation_policy['vacation_days'] - days_requested
-                            : 'No definido';
-                    vm.updatePendingDays();
+                                if (year >= vm.payroll_vacation_policy.from_year || vm.payroll_vacation_policy.old_jobs) {
+                                    if (vm.payroll_vacation_policy.old_jobs && vm.payroll_staff.payroll_employment
+                                        && vm.payroll_staff.payroll_employment.years_apn) {
+                                        document.getElementById('vacation_days_to_antiquity').innerText =
+                                            vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            && document.getElementById('vacation_days_to_antiquity').innerText <
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year ?
+                                            (vm.payroll_vacation_policy['additional_days_per_year'] * (year +
+                                            parseInt(vm.payroll_staff.payroll_employment.years_apn))) +
+                                            vm.payroll_vacation_policy['vacation_days'] - 1 :
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year;
+
+                                        document.getElementById('pending_days').innerText =
+                                            vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            && document.getElementById('pending_days').innerText <
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year ?
+                                            (vm.payroll_vacation_policy['additional_days_per_year'] * (year +
+                                            parseInt(vm.payroll_staff.payroll_employment.years_apn))) +
+                                            vm.payroll_vacation_policy['vacation_days'] - days_requested - 1 :
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year;
+                                        vm.updatePendingDays();
+                                    } else {
+                                        document.getElementById('vacation_days_to_antiquity').innerText =
+                                            vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            && document.getElementById('vacation_days_to_antiquity').innerText <
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year ?
+                                            (vm.payroll_vacation_policy['additional_days_per_year'] * (year -
+                                            vm.payroll_vacation_policy.from_year + 2)) + vm.payroll_vacation_policy['vacation_days'] - 1 :
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year;
+
+                                        document.getElementById('pending_days').innerText =
+                                            vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            && document.getElementById('pending_days').innerText <
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year ?
+                                            (vm.payroll_vacation_policy['additional_days_per_year'] * (year -
+                                            vm.payroll_vacation_policy.from_year + 2)) + vm.payroll_vacation_policy['vacation_days'] - days_requested - 1 :
+                                            vm.payroll_vacation_policy.maximum_additional_days_per_year;
+                                        vm.updatePendingDays();
+                                    }
+                                } else {
+                                    document.getElementById('vacation_days_to_antiquity').innerText =
+                                        vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            ? vm.payroll_vacation_policy['vacation_days']
+                                            : 'No definido';
+                                    document.getElementById('pending_days').innerText =
+                                        vm.payroll_vacation_policy['additional_days_per_year'] && vm.payroll_vacation_policy['vacation_days']
+                                            ? vm.payroll_vacation_policy['vacation_days'] - days_requested
+                                            : 'No definido';
+                                    vm.updatePendingDays();
+                                }
+                                vm.record.days_requested = document.getElementById('vacation_days_to_antiquity').innerText;
+                            }
+                        });
+                    });
                 }
             },
             /**
@@ -450,48 +496,6 @@
                 });
             },
 
-            getcalculate() {
-                const vm = this;
-                vm.record.days_requested = '';
-
-                if (vm.record.start_date && vm.record.end_date) {
-                    let start_date = new Date(document.getElementById('start_date').value.replaceAll('-', '/'));
-                    let end_date   = new Date(document.getElementById('end_date').value.replaceAll('-', '/'));
-
-                    let diff = end_date.getTime() - start_date.getTime()
-                    let dias = diff/(1000*60*60*24)
-                    let cont = 0;
-
-                    const sumarLaborables = (f, n) => {
-                        for(var i=0; i<n; i++) {
-                            f.setTime( f.getTime() + (1000*60*60*24) );
-                            /** Se identifica si existen sabados o domingos en el periodo establecido */
-                            if( (f.getDay()==6) || (f.getDay()==0) ) {
-                                /** Si existe un dia no laborable se hace el bucle una unidad mas larga */
-                                dias--;
-                            }
-                        }
-
-                    }
-
-                    /*if (vm.payrollVacationPolicy.business_days == true) {
-                        let holidayDiscount = [];
-                        for (let holiday of vm.holidays) {
-                            if (holiday.text != 'Seleccione...') {
-                                let holidayDate = new Date(holiday.text)
-                                if (holidayDate.getTime() >= start_date && holidayDate.getTime() <= end_date) {
-                                    holidayDiscount.push(holiday.text);
-                                }
-                            }
-                        }
-
-                        dias = dias - holidayDiscount.length;
-                    }*/
-
-                    sumarLaborables(start_date, dias);
-                    vm.record.days_requested = (dias +1) + ' días';
-                }
-            },
             /**
              * Método que carga los días feriados
              *
@@ -508,6 +512,79 @@
                     }
                 });
             },
+
+            /**
+             * Método que agrega la fecha de finalización de las vacaciones
+             *
+             * @author  Daniel Contreras <dcontreras@cenditel.gob.ve> | <exodiadaniel@gmail.com>
+             *
+             */
+            addEndDate() {
+                const vm = this;
+                let remaining = 0;
+                let dias = parseInt(vm.record.days_requested);
+                let date = '';
+                let holidayDiscount = [];
+                let start_date = new Date(vm.record.start_date);
+
+                if (vm.payroll_vacation_policy.business_days) {
+                    const sumarLaborables = (f, n) => {
+                        const options = { weekday: 'long'};
+                        for(let i=0; i<n; i++) {
+                            f.setTime( f.getTime() + (1000*60*60*24) );
+                            /* Se identifica si existen sabados o domingos en el periodo establecido */
+                            if( (f.getDay()==6) || (f.getDay()==0) ) {
+                                /* Si existe un dia no laborable se hace el bucle una unidad mas larga */
+                                dias++;
+                            }
+                        }
+                    }
+
+                    sumarLaborables(start_date, dias);
+
+                    let i_date = vm.add_period(vm.record.start_date, dias, 'days', 'YYYY-MM-DD');
+                    i_date = i_date.replaceAll('-', '');
+                    for (let holiday of vm.holidays) {
+                        if (holiday.text != 'Seleccione...') {
+                            let hDate = new Date(holiday.text);
+                            let holidayDate = holiday.text.replaceAll('-', '');
+
+                            hDate.setTime( hDate.getTime() + (1000*60*60*24) );
+
+                            /* Se identifica si existen sabados o domingos en el periodo establecido */
+                            if( (hDate.getDay()!=6) && (hDate.getDay()!=0) ) {
+                                /* Se busca si existe un día feriado dentro del periodo establecido */
+                                if (holidayDate >= vm.record.start_date.replaceAll('-', '') && holidayDate <= i_date) {
+                                    holidayDiscount.push(holiday.text);
+                                }
+                            }
+                        }
+                    }
+
+                    dias = dias + holidayDiscount.length + 1;
+
+                    date = vm.add_period(vm.record.start_date, dias, 'days', 'YYYY-MM-DD');
+
+                    let endDate = new Date(date);
+                    endDate.setTime( endDate.getTime() + (1000*60*60*24) );
+
+                    /* Se identifica si hay un día domingo en el periodo establecido */
+                    if(endDate.getDay()==0) {
+                        /* Si existe se agrega un día mas a la fecha */
+                        endDate.setTime( endDate.getTime() + (1000*60*60*24) );
+                    }
+                    /* Se identifica si hay un día sábado en el periodo establecido */
+                    if(endDate.getDay()==6) {
+                        /* Si existe se agregan dos días mas a la fecha */
+                        endDate.setTime( endDate.getTime() + (1000*60*60*24) + (1000*60*60*24) );
+                    }
+                    /* Se coloca la fecha en un formato válido y se agrega al record */
+                    vm.record.end_date = vm.format_date(endDate, 'YYYY-MM-DD');
+                } else {
+                    date = vm.add_period(vm.record.start_date, vm.record.days_requested, 'days', 'YYYY-MM-DD');
+                    vm.record.end_date = date;
+                }
+            }
         }
     };
 </script>

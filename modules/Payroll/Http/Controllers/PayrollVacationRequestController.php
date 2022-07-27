@@ -150,7 +150,7 @@ class PayrollVacationRequestController extends Controller
             'code'                 => $code,
             'status'               => 'pending',
             'days_requested'       => $request->input('days_requested'),
-            'vacation_period_year' => $request->input('vacation_period_year'),
+            'vacation_period_year' => json_encode($request->vacation_period_year),
             'start_date'           => $request->input('start_date'),
             'end_date'             => $request->input('end_date'),
             'payroll_staff_id'     => $request->input('payroll_staff_id'),
@@ -233,7 +233,7 @@ class PayrollVacationRequestController extends Controller
         $payrollVacationRequest->update([
             'status'               => $payrollVacationRequest->status,
             'days_requested'       => $request->input('days_requested'),
-            'vacation_period_year' => $request->input('vacation_period_year'),
+            'vacation_period_year' => json_encode($request->vacation_period_year),
             'start_date'           => $request->input('start_date'),
             'end_date'             => $request->input('end_date'),
             'payroll_staff_id'     => $request->input('payroll_staff_id'),

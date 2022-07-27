@@ -83,9 +83,9 @@
                                 <div class="form-group">
                                     <strong>Año del período vacacional:</strong>
                                     <div class="row" style="margin: 1px 0">
-                                        <span class="col-md-12" id="vacation_period_year">
-                                            {{ record.vacation_period_year }}
-                                        </span>
+                                        <p class="col-md-12" id="vacation_period_year" v-for="period in record.vacation_period_year">
+                                            <span>{{ period.text }}</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
                             code:                 payrollVacationRequest['code'],
                             status:               payrollVacationRequest['status'],
                             days_requested:       payrollVacationRequest['days_requested'],
-                            vacation_period_year: payrollVacationRequest['vacation_period_year'],
+                            vacation_period_year: JSON.parse(payrollVacationRequest['vacation_period_year']),
                             start_date:           payrollVacationRequest['start_date'],
                             end_date:             payrollVacationRequest['end_date'],
                             institution_id:       payrollVacationRequest['institution_id'],
