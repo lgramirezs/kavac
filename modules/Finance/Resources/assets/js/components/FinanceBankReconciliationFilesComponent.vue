@@ -421,6 +421,16 @@
                 'position_balance_according_bank',
                 'decimal_separator'
             ];
+            this.table_options.filterable = [
+                'bank_id',
+                'position_reference_column',
+                'position_date_column',
+                'position_debit_amount_column',
+                'position_credit_amount_column',
+                'position_description_column',
+                'position_balance_according_bank',
+                'decimal_separator'
+            ];
         },
         mounted() {
             const vm = this;

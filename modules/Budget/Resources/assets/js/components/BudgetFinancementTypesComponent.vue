@@ -136,6 +136,9 @@
             this.table_options.sortable = [
                 'name',
             ];
+            this.table_options.filterable = [
+                'name',
+            ];
         },
         mounted() {
         },

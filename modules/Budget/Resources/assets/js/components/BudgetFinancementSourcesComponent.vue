@@ -155,6 +155,11 @@
                 'id': 'Acción'
             };
             this.table_options.sortable = [
+                'budget_financement_type_id',
+                'name',
+            ];
+            this.table_options.filterable = [
+                'budget_financement_type_id',
                 'name',
             ];
         },
