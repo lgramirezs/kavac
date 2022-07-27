@@ -9,11 +9,11 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 use App\Traits\ModelsTrait;
 
 /**
- * @class BudgetFinancementTypes
+ * @class BudgetFinancementSources
  * 
- * @brief Gestión de los tipos de financiamiento.
+ * @brief Gestión de las fuentes de financiamiento.
  *
- * Gestiona el modelo de datos para los tipos de financiamiento.
+ * Gestiona el modelo de datos para las fuentes de financiamiento.
  *
  * @author Ing. Argenis Osorio <aosorio@cenditel.gob.ve>
  *
@@ -21,27 +21,29 @@ use App\Traits\ModelsTrait;
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>
  */
-class BudgetFinancementTypes extends Model implements Auditable
+class BudgetFinancementSources extends Model implements Auditable
 {
     use SoftDeletes;
     use AuditableTrait;
     use ModelsTrait;
 
-    protected $table = 'budget_financement_types';
     public $timestamps = true;
 
     protected $fillable = [
         'name',
+        'budget_financement_type_id',
     ];
 
+    protected $with = ['budgetFinancementType'];
+
     /**
-     * Tipos de financiamiento puede tener muchas fuentes de financiamiento.
+     * Las fuentes de financiamiento tiene un tipo de financiamiento.
      *
      * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function budgetFinancementSources()
+    public function budgetFinancementType()
     {
-        return $this->hasMany(BudgetFinancementSources::class);
+        return $this->belongsTo(BudgetFinancementTypes::class);
     }
 }

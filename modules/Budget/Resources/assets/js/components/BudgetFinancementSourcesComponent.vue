@@ -46,7 +46,7 @@
                             <div class="col-md-4">
                                 <div class="form-group is-required">
                                     <label>Tipo de financiamiento:</label>
-                                    <select2 :options="financementTypes" v-model="record.financement_types_id"></select2>
+                                    <select2 :options="financementTypes" v-model="record.budget_financement_type_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -75,7 +75,7 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click=""
+                            <button type="button" @click="createRecord('budget/financement-sources')"
                                 class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
@@ -86,13 +86,21 @@
                     <!-- Tabla de registros -->
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
+                            <a slot="budget_financement_type_id" slot-scope="props" target="_blank"
+                                v-if="props.row.budget_financement_type_id">
+                                <span v-for="financementType in financementTypes" :key="financementType.id">
+                                    <span v-if="props.row.budget_financement_type_id==financementType.id">
+                                        {{ financementType.text }}
+                                    </span>
+                                </span>
+                            </a>
                             <div slot="id" slot-scope="props" class="text-center">
                                 <button @click="initUpdate(props.row.id, $event)"
                                     class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button @click="deleteRecord(props.row.id, '/budget/financement-types')"
+                                <button @click="deleteRecord(props.row.id, '/budget/financement-sources')"
                                     class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
@@ -113,11 +121,11 @@
         data() {
             return {
                 record: {
-                    financement_types_id: '',
+                    budget_financement_type_id: '',
                     name: ''
                 },
                 columns: [
-                    'financement_types_id',
+                    'budget_financement_type_id',
                     'name',
                     'id'
                 ],
@@ -134,7 +142,7 @@
              */
             reset() {
                 this.record = {
-                    financement_types_id: '',
+                    budget_financement_type_id: '',
                     name: ''
                 };
             },
@@ -142,7 +150,7 @@
         created() {
             this.getFinancementTypes();
             this.table_options.headings = {
-                'financement_types_id': 'Tipo de financiamiento',
+                'budget_financement_type_id': 'Tipo de financiamiento',
                 'name': 'Fuente de financiamiento',
                 'id': 'Acción'
             };

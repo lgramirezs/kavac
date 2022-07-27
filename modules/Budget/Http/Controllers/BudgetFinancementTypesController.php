@@ -79,7 +79,8 @@ class BudgetFinancementTypesController extends Controller
     {
         $this->validate($request, [
             'name' => ['required']
-        ], [
+        ],
+        [
             'name.required' => 'El nombre del tipo de financiamiento es obligatorio.',
         ]);
 

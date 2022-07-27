@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-// use Modules\Budget\Models\BudgetFinancementSources;
+use Modules\Budget\Models\BudgetFinancementSources;
 
 /**
  * @class BudgetFinancementSourcesController
@@ -47,7 +47,7 @@ class BudgetFinancementSourcesController extends Controller
      */
     public function index()
     {
-        // return response()->json(['records' => BudgetFinancementSources::orderBy('id')->get()], 200);
+        return response()->json(['records' => BudgetFinancementSources::orderBy('id')->get()], 200);
     }
 
     /**
@@ -62,6 +62,23 @@ class BudgetFinancementSourcesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required'],
+            'budget_financement_type_id' => ['required']
+        ],
+        [
+            'name.required' => 'El nombre del tipo de financiamiento es obligatorio.',
+            'budget_financement_type_id.required' => 'El nombre de la fuente de financiamiento es obligatorio.',
+        ]);
+
+        $data = DB::transaction(function () use ($request) {
+            $data = BudgetFinancementSources::create([
+                'budget_financement_type_id' => $request->budget_financement_type_id,
+                'name' => $request->name
+            ]);
+            return $data;
+        });
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 
     /**
@@ -84,6 +101,11 @@ class BudgetFinancementSourcesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = BudgetFinancementSources::find($id);
+        $data->name = $request->name;
+        $data->budget_financement_type_id = $request->budget_financement_type_id;
+        $data->save();
+        return response()->json(['message' => 'Registro actualizado correctamente'], 200);
     }
 
     /**
@@ -98,5 +120,8 @@ class BudgetFinancementSourcesController extends Controller
      */
     public function destroy($id)
     {
+        $data = BudgetFinancementSources::find($id);
+        $data->delete();
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 }
