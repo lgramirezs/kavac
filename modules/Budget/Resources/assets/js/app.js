@@ -307,6 +307,19 @@ Vue.mixin({
 			);
 			return response.data;
 		},
+		/**
+         * Obtiene el lista de los tipos de financiamiento.
+         *
+         * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+         */
+		async getFinancementTypes() {
+            const vm = this;
+            await axios.get(`${vm.app_url}/budget/get-financement-types`).then(response => {
+                vm.financementTypes = response.data;
+            }).catch(error => {
+                vm.logs('Budget/Resources/assets/js/_all.js', 90, error, 'getFinancementTypes');
+            });
+        },
 	},
 	mounted() {
 		// Agregar instrucciones para determinar el año de ejecución

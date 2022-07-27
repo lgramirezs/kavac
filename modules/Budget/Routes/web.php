@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Budget\Http\Controllers\BudgetFinancementTypesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::group(
                 Route::post('settings', 'BudgetSettingController@store')->name('budget.settings.store');
                 /** Rutas para la gestión de los tipos de financiamiento */
                 Route::resource('financement-types', BudgetFinancementTypesController::class, ['as' => 'budget']);
+                Route::get('get-financement-types', [BudgetFinancementTypesController::class, 'getFinancementTypes']);
+                /** Rutas para la gestión de las fuentes de financiamiento */
+                Route::resource('financement-sources', BudgetFinancementSourcesController::class, ['as' => 'budget']);
             }
         );
 

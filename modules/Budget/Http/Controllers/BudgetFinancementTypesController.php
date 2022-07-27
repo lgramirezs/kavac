@@ -34,6 +34,14 @@ class BudgetFinancementTypesController extends Controller
     public function __construct()
     {
         /**
+         * Primer registro para los selects.
+         */
+        $this->data[0] = [
+            'id' => '',
+            'text' => 'Seleccione...'
+        ];
+
+        /**
          * Establece permisos de acceso para cada método del controlador
          */
         $this->middleware('permission:budget.financementtypes.index', ['only' => 'index']);
@@ -125,5 +133,23 @@ class BudgetFinancementTypesController extends Controller
         $data = BudgetFinancementTypes::find($id);
         $data->delete();
         return response()->json(['record' => $data, 'message' => 'Success'], 200);
+    }
+
+    /**
+     * Obtiene los datos de los tipos de financiamiento
+     *
+     * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
+     * @return \Illuminate\Http\JsonResponse Devuelve un JSON con listado de los
+     * tipos de financiamiento
+     */
+    public function getFinancementTypes()
+    {
+        foreach (BudgetFinancementTypes::all() as $type) {
+            $this->data[] = [
+                'id' => $type->id,
+                'text' => $type->name
+            ];
+        }
+        return response()->json($this->data);
     }
 }
