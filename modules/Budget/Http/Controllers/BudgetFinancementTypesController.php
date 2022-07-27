@@ -115,5 +115,8 @@ class BudgetFinancementTypesController extends Controller
      */
     public function destroy($id)
     {
+        $data = BudgetFinancementTypes::find($id);
+        $data->delete();
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 }

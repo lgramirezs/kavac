@@ -84,7 +84,7 @@
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button @click=""
+                                <button @click="deleteRecord(props.row.id, '/budget/financement-types')"
                                     class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
