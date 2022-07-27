@@ -190,12 +190,11 @@ Vue.mixin({
          */
         async getBanks() {
             const vm = this;
-
             await axios.get(`${vm.app_url}/finance/get-banks`).then(response => {
                 vm.banks = response.data;
             }).catch(error => {
                 vm.logs('Finance/Resources/assets/js/_all.js', 90, error, 'getBanks');
-            });;
+            });
         },
         /**
          * Obtiene las agencias bancarias registradas.

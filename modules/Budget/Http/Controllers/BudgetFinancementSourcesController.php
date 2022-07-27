@@ -7,10 +7,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Modules\Budget\Models\BudgetFinancementTypes;
+use Modules\Budget\Models\BudgetFinancementSources;
 
 /**
- * @class BudgetFinancementTypesController
+ * @class BudgetFinancementSourcesController
  *
  * @brief Gestión de las fuentes de financiamiento.
  *
@@ -22,7 +22,7 @@ use Modules\Budget\Models\BudgetFinancementTypes;
  *              LICENCIA DE SOFTWARE CENDITEL
  *          </a>
  */
-class BudgetFinancementTypesController extends Controller
+class BudgetFinancementSourcesController extends Controller
 {
     use ValidatesRequests;
 
@@ -33,21 +33,6 @@ class BudgetFinancementTypesController extends Controller
      */
     public function __construct()
     {
-        /**
-         * Primer registro para los selects.
-         */
-        $this->data[0] = [
-            'id' => '',
-            'text' => 'Seleccione...'
-        ];
-
-        /**
-         * Establece permisos de acceso para cada método del controlador
-         */
-        $this->middleware('permission:budget.financementtypes.index', ['only' => 'index']);
-        $this->middleware('permission:budget.financementtypes.store', ['only' => 'store']);
-        $this->middleware('permission:budget.financementtypes.update', ['only' => 'update']);
-        $this->middleware('permission:budget.financementtypes.destroy', ['only' => 'destroy']);
     }
 
     /**
@@ -62,7 +47,7 @@ class BudgetFinancementTypesController extends Controller
      */
     public function index()
     {
-        return response()->json(['records' => BudgetFinancementTypes::orderBy('id')->get()], 200);
+        return response()->json(['records' => BudgetFinancementSources::orderBy('id')->get()], 200);
     }
 
     /**
@@ -78,14 +63,17 @@ class BudgetFinancementTypesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required']
+            'name' => ['required'],
+            'budget_financement_type_id' => ['required']
         ],
         [
             'name.required' => 'El nombre del tipo de financiamiento es obligatorio.',
+            'budget_financement_type_id.required' => 'El nombre de la fuente de financiamiento es obligatorio.',
         ]);
 
         $data = DB::transaction(function () use ($request) {
-            $data = BudgetFinancementTypes::create([
+            $data = BudgetFinancementSources::create([
+                'budget_financement_type_id' => $request->budget_financement_type_id,
                 'name' => $request->name
             ]);
             return $data;
@@ -113,8 +101,9 @@ class BudgetFinancementTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = BudgetFinancementTypes::find($id);
+        $data = BudgetFinancementSources::find($id);
         $data->name = $request->name;
+        $data->budget_financement_type_id = $request->budget_financement_type_id;
         $data->save();
         return response()->json(['message' => 'Registro actualizado correctamente'], 200);
     }
@@ -131,26 +120,8 @@ class BudgetFinancementTypesController extends Controller
      */
     public function destroy($id)
     {
-        $data = BudgetFinancementTypes::find($id);
+        $data = BudgetFinancementSources::find($id);
         $data->delete();
         return response()->json(['record' => $data, 'message' => 'Success'], 200);
-    }
-
-    /**
-     * Obtiene los datos de los tipos de financiamiento
-     *
-     * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
-     * @return \Illuminate\Http\JsonResponse Devuelve un JSON con listado de los
-     * tipos de financiamiento
-     */
-    public function getFinancementTypes()
-    {
-        foreach (BudgetFinancementTypes::all() as $type) {
-            $this->data[] = [
-                'id' => $type->id,
-                'text' => $type->name
-            ];
-        }
-        return response()->json($this->data);
     }
 }

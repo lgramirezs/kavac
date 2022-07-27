@@ -76,6 +76,7 @@
                     </div>
                     <!-- Final modal-footer -->
 
+                    <!-- Tabla de registros -->
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="id" slot-scope="props" class="text-center">
@@ -93,6 +94,7 @@
                             </div>
                         </v-client-table>
                     </div>
+                    <!-- Final tabla de registros -->
                 </div>
             </div>
         </div>
@@ -132,6 +134,9 @@
                 'id': 'Acción'
             };
             this.table_options.sortable = [
+                'name',
+            ];
+            this.table_options.filterable = [
                 'name',
             ];
         },
