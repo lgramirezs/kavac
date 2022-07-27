@@ -72,9 +72,9 @@ Vue.component('budget-centralized-actions-list', () =>
  *
  * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
  */
-Vue.component('budget-specific-actions-list', () =>
+Vue.component('budget-list-specific-actions', () =>
 	import(
-		/* webpackChunkName: "budget-specific-actions-list" */
+		/* webpackChunkName: "budget-list-specific-actions" */
 		'./components/BudgetSpecificActionsListComponent.vue'
 	)
 );

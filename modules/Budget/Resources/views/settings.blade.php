@@ -233,11 +233,11 @@
                     </div>
                 </div>
                 <div class="card-body" id="helpBudgetSpecificActionsList">
-                    <budget-specific-actions-list
+                    <budget-list-specific-actions
 						route_list="{{ url('budget/specific-actions/vue-list') }}"
                         route_delete="{{ url('budget/specific-actions') }}"
                         route_edit="{{ url('budget/specific-actions/{id}/edit') }}">
-                    </budget-specific-actions-list>
+                    </budget-list-specific-actions>
                 </div>
             </div>
         </div>
