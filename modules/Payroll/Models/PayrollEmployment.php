@@ -54,8 +54,13 @@ class PayrollEmployment extends Model implements Auditable
 
     public function getStartDateApnAttribute()
     {
-        $totalDate = strtotime('-' . $this->years_apn . ' year', strtotime($this->start_date));
-        return date('Y-m-d', $totalDate);
+        if ($this->years_apn > 0) {
+            $totalDate = strtotime('-' . $this->years_apn . ' year', strtotime($this->start_date));
+            return date('Y-m-d', $totalDate);
+        } else {
+            return $this->start_date;
+        }
+
     }
 
     /**
