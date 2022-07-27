@@ -33,6 +33,13 @@ class BudgetFinancementTypesController extends Controller
      */
     public function __construct()
     {
+        /**
+         * Establece permisos de acceso para cada método del controlador
+         */
+        $this->middleware('permission:budget.financementtypes.index', ['only' => 'index']);
+        $this->middleware('permission:budget.financementtypes.store', ['only' => 'store']);
+        $this->middleware('permission:budget.financementtypes.update', ['only' => 'update']);
+        $this->middleware('permission:budget.financementtypes.destroy', ['only' => 'destroy']);
     }
 
     /**
@@ -62,6 +69,19 @@ class BudgetFinancementTypesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required']
+        ], [
+            'name.required' => 'El nombre del tipo de financiamiento es obligatorio.',
+        ]);
+
+        $data = DB::transaction(function () use ($request) {
+            $data = BudgetFinancementTypes::create([
+                'name' => $request->name
+            ]);
+            return $data;
+        });
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 
     /**
@@ -84,6 +104,10 @@ class BudgetFinancementTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = BudgetFinancementTypes::find($id);
+        $data->name = $request->name;
+        $data->save();
+        return response()->json(['message' => 'Registro actualizado correctamente'], 200);
     }
 
     /**
@@ -98,5 +122,8 @@ class BudgetFinancementTypesController extends Controller
      */
     public function destroy($id)
     {
+        $data = BudgetFinancementTypes::find($id);
+        $data->delete();
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 }

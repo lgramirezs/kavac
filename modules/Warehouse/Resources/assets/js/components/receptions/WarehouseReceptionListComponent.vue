@@ -22,20 +22,20 @@
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
-				<warehouse-reception-info 
+				<warehouse-rec-info
 					:route_list="app_url + '/warehouse/receptions/info/'+ props.row.id">
-				</warehouse-reception-info>
+				</warehouse-rec-info>
 
-				<button @click="editForm(props.row.id)" 
-	    				class="btn btn-warning btn-xs btn-icon btn-action" 
-	    				title="Modificar registro" data-toggle="tooltip" type="button"
-	    				:disabled="props.row.state != 'Pendiente'">
-	    			<i class="fa fa-edit"></i>
-	    		</button>
-	    		<button @click="deleteRecord(props.index, '')" 
-						class="btn btn-danger btn-xs btn-icon btn-action" 
-						title="Eliminar registro" data-toggle="tooltip" type="button"
-						:disabled="props.row.state != 'Pendiente'">
+				<button class="btn btn-warning btn-xs btn-icon btn-action" type="button"
+						data-toggle="tooltip" title="Modificar registro"
+						:disabled="props.row.state != 'Pendiente'"
+						@click="editForm(props.row.id)">
+					<i class="fa fa-edit"></i>
+				</button>
+				<button class="btn btn-danger btn-xs btn-icon btn-action" type="button"
+						data-toggle="tooltip" title="Eliminar registro"
+						:disabled="props.row.state != 'Pendiente'"
+						@click="deleteRecord(props.index, '')">
 					<i class="fa fa-trash-o"></i>
 				</button>
 			</div>
@@ -73,7 +73,7 @@
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
 			 */
 			reset() {
-				
+
 			},
 			deleteRecord(index, url) {
 	            var url = (url)?url:this.route_delete;

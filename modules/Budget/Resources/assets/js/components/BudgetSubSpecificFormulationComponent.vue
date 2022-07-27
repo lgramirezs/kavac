@@ -5,21 +5,11 @@
                 Formulación de presupuesto de gastos por sub específica
             </h6>
             <div class="card-btns">
-                <a
-                    href="#"
-                    class="btn btn-sm btn-primary btn-custom"
-                    @click="redirect_back(route_list)"
-                    title="Ir atrás"
-                    data-toggle="tooltip"
-                >
+                <a class="btn btn-sm btn-primary btn-custom" data-toggle="tooltip" href="#" title="Ir atrás"
+                   @click="redirect_back(route_list)">
                     <i class="fa fa-reply"></i>
                 </a>
-                <a
-                    href="#"
-                    class="card-minimize btn btn-card-action btn-round"
-                    title="Minimizar"
-                    data-toggle="tooltip"
-                >
+                <a class="card-minimize btn btn-card-action btn-round" data-toggle="tooltip" href="#" title="Minimizar">
                     <i class="now-ui-icons arrows-1_minimal-up"></i>
                 </a>
             </div>
@@ -33,47 +23,37 @@
             <div class="row mb-3" v-if="fiscal_years.length > 0">
                 <div class="col-2">
                     <div class="form-group">
-                        <label for="" class="control-label">
+                        <label class="control-label">
 							Ejercicio fiscal
 						</label>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <select2
-                            :options="fiscal_years"
-                            v-model="record.fiscal_year"
-                        ></select2>
+                        <select2 :options="fiscal_years" v-model="record.fiscal_year"></select2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
                     <div class="form-group">
-                        <label for="" class="control-label">Institución</label>
+                        <label class="control-label">Institución</label>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group is-required">
-                        <select2
-                            :options="institutions"
-                            v-model="record.institution_id"
-                            disabled
-                        ></select2>
+                        <select2 :options="institutions" v-model="record.institution_id" disabled></select2>
                         <input type="hidden" v-model="record.id" />
                     </div>
                 </div>
                 <div class="col-1">
                     <div class="form-group">
-                        <label for="" class="control-label">Moneda</label>
+                        <label class="control-label">Moneda</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group is-required" v-if="currencies">
-                        <select2
-                            :options="currencies"
-                            v-model="record.currency_id"
-                        ></select2>
+                        <select2 :options="currencies" v-model="record.currency_id"></select2>
                     </div>
                 </div>
             </div>
@@ -81,63 +61,61 @@
             <div class="row">
                 <div class="col-6 mt-4">
                     <div class="custom-control custom-switch">
-                        <input type="radio" class="custom-control-input sel_pry_acc" id="sel_project" 
-                               name="project_centralized_action" value="project">
+                        <input id="sel_project" class="custom-control-input sel_pry_acc" type="radio"
+                               name="project_centralized_action" value="project" />
                         <label class="custom-control-label" for="sel_project">Proyecto</label>
                     </div>
                     <div class="mt-4">
-                        <select2
-                            :options="projects"
-                            v-model="record.project_id"
-                            id="project_id"
-                            @input="getSpecificActions('Project')"
-                            disabled
-                        ></select2>
+                        <select2 id="project_id" disabled :options="projects" v-model="record.project_id"
+                                 @input="getSpecificActions('Project')"></select2>
                     </div>
                 </div>
                 <div class="col-6 mt-4">
                     <div class="custom-control custom-switch">
-                        <input type="radio" class="custom-control-input sel_pry_acc" id="sel_centralized_action" 
-                               name="project_centralized_action" value="centralized_action">
+                        <input id="sel_centralized_action" class="custom-control-input sel_pry_acc"
+                               type="radio" name="project_centralized_action"
+                               value="centralized_action" />
                         <label class="custom-control-label" for="sel_centralized_action">Acción Centralizada</label>
                     </div>
                     <div class="mt-4">
-                        <select2
-                            :options="centralized_actions"
-                            v-model="record.centralized_action_id"
-                            @input="getSpecificActions('CentralizedAction')"
-                            id="centralized_action_id"
-                            disabled
-                        ></select2>
+                        <select2 id="centralized_action_id" disabled :options="centralized_actions"
+                                 v-model="record.centralized_action_id"
+                                 @input="getSpecificActions('CentralizedAction')"></select2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 mt-4">
                     <div class="form-group is-required">
-                        <label for="" class="control-label">
-							Acción Específica
-						</label>
-                        <select2
-                            :options="specific_actions"
-                            v-model="record.specific_action_id"
-                            id="specific_action_id"
-                            disabled
-                        ></select2>
+                        <label class="control-label">Acción Específica</label>
+                        <select2 id="specific_action_id" disabled :options="specific_actions"
+                            v-model="record.specific_action_id"></select2>
                     </div>
                 </div>
             </div>
             <div class="row mt-2">
-                <div class="col-12">
+                <div class="col-12 col-lg-6">
                     <div class="form-group">
-                        <label for="" class="control-label">
+                        <label class="control-label">
                             Distribución financiera
                         </label>
                     </div>
                 </div>
+                <div class="col-12 col-lg-4">
+                    <input class="form-control input-sm" type="text" placeholder="Buscador de cuentas"
+                        @keyup.enter="searchAccounts" v-model="search" />
+                </div>
+                <div class="col-12 col-lg-2 form-group">
+                    <button type="button" class="btn btn-primary btn-sm btn-round" @click="searchAccounts">
+                        Buscar <i class="fa fa-search"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm btn-round" @click="cleanSearch">
+                        Ver todas <i class="fa fa-eraser"></i>
+                    </button>
+                </div>
             </div>
             <!-- Tabla para la formulación del presupuesto -->
-            <div class="table-responsive" style=" overflow-y: auto; max-height: 500px;">
+            <div class="table-responsive" style="overflow-y: auto; max-height: 500px;">
                 <table class="table table-formulation">
                     <thead class="sticky-top bg-light border-top border-light" style="top: -2px">
                         <tr>
@@ -157,238 +135,141 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(account, index) in records" :key="index"
-                            :class="account.specific === '00' ? 'disable-row' : ''"
-                            :data-index="index"
-                            :id="account.id"
-                            data-formulated="false"
-                            :data-code="account.code"
-                        >
+                        <tr v-for="(account, index) in records" data-formulated="false" :id="account.id"
+                            :class="account.specific === '00' ? 'disable-row' : ''" class="accounts"
+                            :data-code="account.code" :data-index="index" :key="index">
                             <td>
-                                <i
-                                    class="fa fa-ban text-white"
-                                    v-if="account.locked"
-                                    title="Elemento bloqueado, de solo lectura"
-                                    data-toggle="tooltip"
-                                ></i>
-                                <i
-                                    class="fa fa-eye text-blue cursor-pointer"
-                                    v-else
+                                <i v-if="account.locked" class="fa fa-ban text-white"
+                                   title="Elemento bloqueado, de solo lectura" data-toggle="tooltip"></i>
+                                <i v-else :id="'add_account_' + account.id" class="fa fa-eye text-blue cursor-pointer"
                                     title="Pulse para agregar esta cuenta presupuestaria a la formulación"
-                                    data-toggle="tooltip"
-                                    @click="showAccountInputs(index)"
-                                    :id="'add_account_' + account.id"
-                                ></i>
+                                    data-toggle="tooltip" @click="showAccountInputs(index)"></i>
                             </td>
-                            <td class="td-code">
-                                {{ account.code }}
-                            </td>
+                            <td class="td-code">{{ account.code }}</td>
                             <td>{{ account.denomination }}</td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm total_real"
-                                    v-model="account.total_real_amount"
-                                    v-show="account.locked || account.formulated"
-                                    data-toggle="tooltip"
-                                    :readonly="account.locked"
-                                    @change="calculateAmounts(index, 'real')"
+                                <input class="form-control input-sm total_real" type="text" data-toggle="tooltip"
                                     onfocus="this.select()"
                                     oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                    :readonly="account.locked" v-model="account.total_real_amount"
+                                    v-show="account.locked || account.formulated"
+                                    @change="calculateAmounts(index, 'real')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm total_estimated"
-                                    data-toggle="tooltip"
+                                <input class="form-control input-sm total_estimated" type="text" data-toggle="tooltip"
+                                    onfocus="this.select()"
+                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                    :readonly="account.locked"
                                     v-model="account.total_estimated_amount"
                                     v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'estimated')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                    @change="calculateAmounts(index, 'estimated')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm total_year"
-                                    v-model="account.total_year_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'year')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm total_year" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.total_year_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'year')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm jan"
-                                    v-model="account.jan_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm jan" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.jan_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm feb"
-                                    v-model="account.feb_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm feb" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.feb_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm mar"
-                                    v-model="account.mar_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm mar" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.mar_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm apr"
-                                    v-model="account.apr_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm apr" type="text" data-toggle="tooltip"
+                                        onfocus="this.select()"
+                                        oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                        :readonly="account.locked" v-model="account.apr_amount"
+                                        v-show="account.locked || account.formulated"
+                                        @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm may"
-                                    v-model="account.may_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm may" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.may_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm jun"
-                                    v-model="account.jun_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm jun" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.jun_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm jul"
-                                    v-model="account.jul_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm jul" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.jul_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm aug"
-                                    v-model="account.aug_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm aug" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked"
+                                       v-model="account.aug_amount" v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm sep"
-                                    v-model="account.sep_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                    oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
-                                />
+                                <input class="form-control input-sm sep" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()"
+                                       oninput="this.value=this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');"
+                                       :readonly="account.locked" v-model="account.sep_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm oct"
-                                    v-model="account.oct_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                />
+                                <input class="form-control input-sm oct" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()" :readonly="account.locked" v-model="account.oct_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm nov"
-                                    v-model="account.nov_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                />
+                                <input class="form-control input-sm nov" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()" :readonly="account.locked" v-model="account.nov_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                             <td class="td-with-border">
-                                <input
-                                    type="text"
-                                    class="form-control input-sm dec"
-                                    v-model="account.dec_amount"
-                                    data-toggle="tooltip"
-                                    v-show="account.locked || account.formulated"
-                                    :readonly="account.locked"
-                                    onfocus="this.select()"
-                                    @change="calculateAmounts(index, 'month')"
-                                />
+                                <input class="form-control input-sm dec" type="text" data-toggle="tooltip"
+                                       onfocus="this.select()" :readonly="account.locked" v-model="account.dec_amount"
+                                       v-show="account.locked || account.formulated"
+                                       @change="calculateAmounts(index, 'month')" />
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <buttonsDisplay
-                :route_list="app_url+'/budget/subspecific-formulations'"
-            ></buttonsDisplay>
+            <buttonsDisplay :route_list="app_url+'/budget/subspecific-formulations'"></buttonsDisplay>
         </div>
         <div class="card-footer text-right">
-            <buttonsDisplay
-                :route_list="app_url+'/budget/subspecific-formulations'"
-                display="false"
-            ></buttonsDisplay>
+            <buttonsDisplay :route_list="app_url+'/budget/subspecific-formulations'" display="false"></buttonsDisplay>
         </div>
     </div>
 </template>
@@ -410,6 +291,7 @@ export default {
             },
             errors: [],
             records: [],
+            search: '',
             /** @type {Array} Lista de años fiscales abiertos */
             fiscal_years: [],
             currencies: [],
@@ -1152,6 +1034,26 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        searchAccounts() {
+            const vm = this;
+            let arrayFilter = vm.records.filter((account) => account.code.includes(vm.search));
+            const accountsNodes = document.querySelectorAll(".accounts");
+            if (vm.search !== '') {
+                accountsNodes.forEach(classAccount => classAccount.classList.add("d-none"));
+            } else {
+                accountsNodes.forEach(classAccount => classAccount.classList.remove("d-none"));
+            }
+            if (arrayFilter.length > 0) {
+                arrayFilter.forEach((account) => {
+                    document.getElementById(account.id).classList.remove("d-none");
+                });
+            }
+        },
+        cleanSearch() {
+            const vm = this;
+            vm.search = '';
+            vm.searchAccounts();
         }
     },
     watch: {
@@ -1183,7 +1085,6 @@ export default {
             }
         }
     },
-
     created() {
         window.addEventListener('updateProjectId', (event) => {
             this.record.project_id = event.value;
@@ -1193,7 +1094,6 @@ export default {
             this.record.centralized_action_id = event.value;
         });
     },
-
     async mounted() {
         const vm = this;
         vm.loading = true;

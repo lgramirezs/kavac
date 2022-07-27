@@ -245,7 +245,13 @@ class AssetAsignationController extends Controller
         $ids = explode(',', $id);
         if (count($ids) > 1) {
             $asignation = AssetAsignation::whereIn('id', $ids)
-                ->with(['payrollStaff', 'assetAsignationAssets' =>
+                ->with(['payrollStaff', 'institution' => function($query){
+                    $query->with(['fiscalYears', 
+                    'municipality' => function($query){
+                            $query->with('estate');
+                    }]);
+                }
+                , 'assetAsignationAssets' =>
                 function ($query) {
                     $query->with(
                         ['asset' => function ($query) {
@@ -264,7 +270,13 @@ class AssetAsignationController extends Controller
                 }])->get();
         } else {
             $asignation = AssetAsignation::where('id', $id)
-                ->with(['payrollStaff', 'assetAsignationAssets' =>
+                ->with(['payrollStaff', 'institution' => function($query){
+                    $query->with(['fiscalYears', 
+                    'municipality' => function($query){
+                            $query->with('estate');
+                    }]);
+                }
+                , 'assetAsignationAssets' =>
                 function ($query) {
                     $query->with(
                         ['asset' => function ($query) {
@@ -333,10 +345,21 @@ class AssetAsignationController extends Controller
             : null;
 
         if (Auth()->user()->isAdmin()) {
-            $assetAsignations = AssetAsignation::with('payrollStaff')->orderBy('id')->get();
+            $assetAsignations = AssetAsignation::with(['payrollStaff', 
+                                                        'institution' => function($query){
+                                                            $query->with(['fiscalYears', 
+                                                            'municipality' => function($query){
+                                                                    $query->with('estate');
+                                                            }]);
+                                                        }])->orderBy('id')->get();
         } else {
             $assetAsignations = AssetAsignation::where('institution_id', $institution_id)
-                ->with('payrollStaff')->orderBy('id')->get();
+                ->with(['payrollStaff', 'institution' => function($query){
+                    $query->with(['fiscalYears'
+                    , 'municipality' => function($query){
+                            $query->with('estate');
+                    }]);
+                }])->orderBy('id')->get();
         }
 
         return response()->json(['records'  => $assetAsignations], 200); 

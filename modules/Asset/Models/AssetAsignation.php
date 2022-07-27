@@ -85,7 +85,8 @@ class AssetAsignation extends Model implements Auditable
      */
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return (Module::has('Department'))?
+             $this->belongsTo(\App\Models\Department::class):[];
     }
 
     /**
@@ -97,5 +98,17 @@ class AssetAsignation extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Método que obtiene la institución a la cual está relaciona la asiganción
+     *
+     * @author Henry Paredes <hparedes@cenditel.gob.ve>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Objeto con el registro relacionado al modelo
+     *                                                           Institution
+     */
+    public function institution()
+    {
+        return $this->belongsTo(\App\Models\Institution::class);
     }
 }

@@ -208,6 +208,11 @@ class PurchaseDirectHireController extends Controller
             'description'                   => 'required',
             'requirement_list'              => 'required',
 
+            // Factura
+            'receiver.invoice_to'           => 'required',
+            'receiver.send_to'              => 'required',
+            'receiver.rif'                  => 'required',
+
             // Firmas
             'prepared_by_id'                => 'required',
             'verified_by_id'                => 'required',
@@ -229,6 +234,11 @@ class PurchaseDirectHireController extends Controller
             'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
             'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
             'requirement_list.required'              => 'Debe seleccionar al menos un presupuesto base.',
+
+            // Factura
+            'receiver.invoice_to.required'           => 'El campo facturar a de factura es obligatorio',
+            'receiver.send_to.required'              => 'El campo enviar a de factura es obligatorio',
+            'receiver.rif.required'                  => 'El campo RIF de factura es obligatorio',
 
             // firmas
             'prepared_by_id.required'                => 'El campo preparado por es obligatorio',
@@ -270,6 +280,7 @@ class PurchaseDirectHireController extends Controller
 
             $data = $request->all();
             $data['code'] = $codeDirectHire;
+            $data['receiver'] = json_encode($request->receiver);
 
             $purchaseDirectHire = PurchaseDirectHire::create($data);
 
@@ -603,6 +614,11 @@ class PurchaseDirectHireController extends Controller
             'description'                   => 'required',
             'presupuesto_base_estimado'     => 'required|mimes:pdf',
             'disponibilidad_presupuestaria' => 'required|mimes:pdf',
+
+            // Factura
+            'receiver.invoice_to'           => 'required',
+            'receiver.send_to'              => 'required',
+            'receiver.rif'                  => 'required',
         ], [
             'presupuesto_base_estimado.required'     => 'El archivo de presupuesto base estimado es obligatorio.',
             'presupuesto_base_estimado.mimes'        => 'El archivo de presupuesto base estimado debe estar en formato pdf.',
@@ -617,6 +633,11 @@ class PurchaseDirectHireController extends Controller
             'currency_id.required'                   => 'El campo tipo de moneda es obligatorio',
             'funding_source.required'                => 'El campo fuente de financiamiento es obligatorio',
             'description.required'                   => 'El campo denominación especifica del requerimiento es obligatorio',
+
+            // Factura
+            'receiver.invoice_to.required'           => 'El campo facturar a de factura es obligatorio',
+            'receiver.send_to.required'              => 'El campo enviar a de factura es obligatorio',
+            'receiver.rif.required'                  => 'El campo RIF de factura es obligatorio',
         ]);
 
         /**
@@ -686,7 +707,14 @@ class PurchaseDirectHireController extends Controller
      */
     public function vueList()
     {
-        return response()->json(['records' => PurchaseDirectHire::with('fiscalYear')->orderBy('id', 'asc')->get()], 200);
+        return response()->json(['records' => PurchaseDirectHire::with(
+            'fiscalYear',
+            'preparedBy', 
+            'reviewedBy', 
+            'verifiedBy', 
+            'firstSignature', 
+            'secondSignature'
+        )->orderBy('id', 'asc')->get()], 200);
     }
 
     /**

@@ -170,7 +170,6 @@ class FinanceSettingBankReconciliationFilesController extends Controller
      */
     public function destroy($id)
     {
-        /** @var object Datos de la entidad bancaria */
         $data = FinanceSettingBankReconciliationFiles::find($id);
         $data->delete();
         return response()->json(['record' => $data, 'message' => 'Success'], 200);

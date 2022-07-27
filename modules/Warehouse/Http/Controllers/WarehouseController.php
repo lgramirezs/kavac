@@ -54,6 +54,9 @@ class WarehouseController extends Controller
         $this->validateRules = [
             'name'      => ['required', 'max:100'],
             'address'   => ['required'],
+            'country_id'=> ['required'],
+            'estate_id' => ['required'],
+            'municipality_id' => ['required'],
             'parish_id' => ['required'],
         ];
 
@@ -61,6 +64,9 @@ class WarehouseController extends Controller
         $this->messages = [
             'name.required'      => 'El campo nombre del almacén es obligatorio.',
             'name.max'           => 'El campo nombre del almacén no debe ser mayor que 100 caracteres.',
+            'country_id.required'         => 'El campo país es obligatorio.',
+            'estate_id.required'          => 'El campo estado es obligatorio.',
+            'municipality_id.required'       => 'El campo municipio es obligatorio.',            
             'address.required'   => 'El campo dirección es obligatorio.',
             'parish_id.required' => 'El campo parroquia es obligatorio.'
         ];
@@ -122,6 +128,9 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::create([
             'name'      => $request->input('name'),
             'address'   => $request->input('address'),
+            'country_id' => $request->input('country_id'),
+            'estate_id' => $request->input('estate_id'),
+            'municipality_id' => $request->input('municipality_id'),
             'parish_id' => $request->input('parish_id'),
             'active'    => !empty($request->active)?$request->input('active'):false,
         ]);
@@ -177,6 +186,9 @@ class WarehouseController extends Controller
 
         $warehouse->name      = $request->input('name');
         $warehouse->address   = $request->input('address');
+        $warehouse->country_id = $request->input('country_id');
+        $warehouse->estate_id = $request->input('estate_id');
+        $warehouse->municipality_id = $request->input('municipality_id');
         $warehouse->parish_id = $request->input('parish_id');
         $warehouse->active    = !empty($request->active)?$request->input('active'):false;
         $warehouse->save();

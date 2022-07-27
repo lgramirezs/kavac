@@ -89,21 +89,21 @@
                                 <b>Ubicación del almacén</b>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group is-required">
                                     <label>Pais:</label>
                                     <select2 id="input_country" :options="countries" @input="getEstates"
                                              v-model="record.country_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group is-required">
                                     <label>Estado:</label>
                                     <select2 id="input_estate" :options="estates" @input="getMunicipalities"
                                              v-model="record.estate_id"></select2>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group is-required">
                                     <label>Municipio:</label>
                                     <select2 :options="municipalities" @input="getParishes"
                                              v-model="record.municipality_id"></select2>

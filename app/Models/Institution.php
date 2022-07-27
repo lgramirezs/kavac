@@ -160,6 +160,17 @@ class Institution extends Model implements Auditable
     }
 
     /**
+     * Método que obtiene las asignacion relacionadas con la institución
+     *
+     * @author Daniel Contreras <dcontreras@cenditel.gob.ve>
+     * @return Array|\Illuminate\Database\Eloquent\Relations\HasMany Objeto con el registro relacionado al modelo
+     * AssetAsignation
+     */
+    public function assetAsignation()
+    {
+        return $this->hasMany(\Modules\Asset\Models\AssetAsignation::class);
+    }
+    /**
      * Filtra datos de la Organización de acuerdo al usuario autenticado
      *
      * @method     newQuery(boolean $excludeDeleted)

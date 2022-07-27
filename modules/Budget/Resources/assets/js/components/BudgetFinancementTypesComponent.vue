@@ -68,7 +68,7 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click=""
+                            <button type="button" @click="createRecord('budget/financement-types')"
                                 class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>
@@ -79,12 +79,12 @@
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="id" slot-scope="props" class="text-center">
-                                <button @click=""
+                                <button @click="initUpdate(props.row.id, $event)"
                                     class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button @click=""
+                                <button @click="deleteRecord(props.row.id, '/budget/financement-types')"
                                     class="btn btn-danger btn-xs btn-icon btn-action btn-tooltip"
                                     title="Eliminar registro" data-toggle="tooltip"
                                     type="button">
