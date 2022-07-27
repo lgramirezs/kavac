@@ -111,8 +111,8 @@ Vue.component('warehouse-request-pending-list', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('warehouse-request-info', () => import(
-    /* webpackChunkName: "warehouse-request-info" */
+Vue.component('warehouse-req-info', () => import(
+    /* webpackChunkName: "warehouse-req-info" */
     './components/requests/WarehouseRequestInfoComponent.vue')
 );
 
@@ -151,8 +151,8 @@ Vue.component('warehouse-reception-pending-list', () => import(
  *
  * @author Henry Paredes <hparedes@cenditel.gob.ve>
  */
-Vue.component('warehouse-reception-info', () => import(
-    /* webpackChunkName: "warehouse-reception-info" */
+Vue.component('warehouse-rec-info', () => import(
+    /* webpackChunkName: "warehouse-rec-info" */
     './components/receptions/WarehouseReceptionInfoComponent.vue')
 );
 

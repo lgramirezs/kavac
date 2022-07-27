@@ -20,17 +20,17 @@
 		</div>
 		<div slot="id" slot-scope="props" class="text-center">
 			<div class="d-inline-flex">
-				<warehouse-request-info 
+				<warehouse-req-info
 					:route_list="app_url + '/warehouse/requests/info/'+ props.row.id">
-				</warehouse-request-info>
-				<button @click="editForm(props.row.id)" 
-	    				class="btn btn-warning btn-xs btn-icon btn-action" 
+				</warehouse-req-info>
+				<button @click="editForm(props.row.id)"
+	    				class="btn btn-warning btn-xs btn-icon btn-action"
 	    				title="Modificar registro" data-toggle="tooltip" type="button"
 	    				:disabled="props.row.state != 'Pendiente'">
 	    			<i class="fa fa-edit"></i>
 	    		</button>
-	    		<button @click="deleteRecord(props.index, '')" 
-						class="btn btn-danger btn-xs btn-icon btn-action" 
+	    		<button @click="deleteRecord(props.index, '')"
+						class="btn btn-danger btn-xs btn-icon btn-action"
 						title="Eliminar registro" data-toggle="tooltip" type="button"
 						:disabled="props.row.state != 'Pendiente'">
 					<i class="fa fa-trash-o"></i>
@@ -70,11 +70,11 @@
 			 * @author Ing. Roldan Vargas <rvargas@cenditel.gob.ve | roldandvg@gmail.com>
 			 */
 			prepareText(text) {
-                return text.substr(3, text.length-4); 
+                return text.substr(3, text.length-4);
 
             },
 			reset() {
-				
+
 			},
 			deleteRecord(index, url) {
 	            var url = (url)?url:this.route_delete;
