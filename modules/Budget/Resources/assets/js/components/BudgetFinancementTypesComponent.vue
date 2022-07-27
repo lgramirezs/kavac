@@ -79,7 +79,7 @@
                     <div class="modal-body modal-table">
                         <v-client-table :columns="columns" :data="records" :options="table_options">
                             <div slot="id" slot-scope="props" class="text-center">
-                                <button @click=""
+                                <button @click="initUpdate(props.row.id, $event)"
                                     class="btn btn-warning btn-xs btn-icon btn-action btn-tooltip"
                                     title="Modificar registro" data-toggle="tooltip" type="button">
                                     <i class="fa fa-edit"></i>

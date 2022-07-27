@@ -97,6 +97,10 @@ class BudgetFinancementTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = BudgetFinancementTypes::find($id);
+        $data->name = $request->name;
+        $data->save();
+        return response()->json(['message' => 'Registro actualizado correctamente'], 200);
     }
 
     /**
