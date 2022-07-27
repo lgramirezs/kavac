@@ -68,7 +68,7 @@
                                 @click="reset()">
                                 Cancelar
                             </button>
-                            <button type="button" @click=""
+                            <button type="button" @click="createRecord('budget/financement-types')"
                                 class="btn btn-primary btn-sm btn-round btn-modal-save">
                                 Guardar
                             </button>

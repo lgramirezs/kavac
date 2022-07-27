@@ -62,6 +62,19 @@ class BudgetFinancementTypesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required']
+        ], [
+            'name.required' => 'El nombre del tipo de financiamiento es obligatorio.',
+        ]);
+
+        $data = DB::transaction(function () use ($request) {
+            $data = BudgetFinancementTypes::create([
+                'name' => $request->name
+            ]);
+            return $data;
+        });
+        return response()->json(['record' => $data, 'message' => 'Success'], 200);
     }
 
     /**
