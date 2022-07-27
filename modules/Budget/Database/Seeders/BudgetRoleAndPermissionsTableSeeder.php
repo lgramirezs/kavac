@@ -296,6 +296,46 @@ class BudgetRoleAndPermissionsTableSeeder extends Seeder
                 'model' => 'Modules\Budget\Models\BudgetModification', 'model_prefix' => 'presupuesto',
                 'slug_alt' => 'modificacion.ver', 'short_description' => 'ver modificación presupuestaria'
             ],
+
+            /**
+            * Permisos de los Registros comúnes > Tipos de financiamiento.
+            */
+            [
+                'name'              => 'Obtener listado de los tipos de financiamiento',
+                'slug'              => 'budget.financementtypes.index',
+                'description'       => 'Acceso para obtener listado de los tipos de financiamiento',
+                'model'             => 'Modules\Budget\Models\BudgetFinancementTypes',
+                'model_prefix'      => 'presupuesto',
+                'slug_alt'          => 'tipos_financiamiento.listado',
+                'short_description' => 'Acceder al listado de tipos de financiamiento'
+            ],
+            [
+                'name'              => 'Registrar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'budget.financementtypes.store',
+                'description'       => 'Acceso para registrar un configuració de archivo de conciliación bancaria',
+                'model'             => 'Modules\Budget\Models\BudgetFinancementTypes',
+                'model_prefix'      => 'presupuesto',
+                'slug_alt'          => 'tipos_financiamiento.crear',
+                'short_description' => 'Registrar un tipo de financiamiento'
+            ],
+            [
+                'name'              => 'Actualizar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'budget.financementtypes.update',
+                'description'       => 'Acceso para actualizar un configuración de archivo de conciliación bancaria',
+                'model'             => 'Modules\Budget\Models\BudgetFinancementTypes',
+                'model_prefix'      => 'presupuesto',
+                'slug_alt'          => 'tipos_financiamiento.actualizar',
+                'short_description' => 'Actualizar un tipo de financiamiento'
+            ],
+            [
+                'name'              => 'Eliminar una configuración de archivo de conciliación bancaria',
+                'slug'              => 'budget.financementtypes.destroy',
+                'description'       => 'Acceso para eliminar un configuración de archivo de conciliación bancaria',
+                'model'             => 'Modules\Budget\Models\BudgetFinancementTypes',
+                'model_prefix'      => 'presupuesto',
+                'slug_alt'          => 'tipos_financiamiento.eliminar',
+                'short_description' => 'Eliminar un tipo de financiamiento'
+            ],
         ];
 
         $permissions = array_merge($permissions, [
