@@ -32,13 +32,13 @@ class DataExport implements FromCollection, WithHeadingRow
     /**
      * Método constructor de la clase
      *
-     * @method    __contruct(object $model)
+     * @method    __construct(object $model)
      *
      * @author     Ing. Roldan Vargas <rvargas@cenditel.gob.ve> | <roldandvg@gmail.com>
      *
      * @param     object|null   $model    Objeto con información del modelo para el cual se van a exportar los datos
      */
-    public function __contruct($model = null)
+    public function __construct($model = null)
     {
         $this->model = $model;
     }
