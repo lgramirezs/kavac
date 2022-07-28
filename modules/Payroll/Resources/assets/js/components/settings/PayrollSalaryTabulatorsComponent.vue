@@ -243,9 +243,9 @@
                                             <tbody>
                                                 <tr class="text-center">
                                                     <th>Nombre:</th>
-                                                    <th
+                                                    <th 
                                                         v-for="(field_h, index) in payroll_salary_scale_h.payroll_scales" :key="index">
-                                                        {{field_h.name}}
+                                                        <div class="column">{{field_h.name}}</div>
                                                     </th>
                                                 </tr>
                                                 <tr class="text-center"
@@ -902,3 +902,13 @@
 		}
 	};
 </script>
+
+
+<style scoped>
+
+.column {
+  min-width: 130px;
+  
+}
+
+</style>
