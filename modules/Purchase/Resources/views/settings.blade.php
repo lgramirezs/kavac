@@ -189,11 +189,14 @@
 						<purchase-supplier-objects id="purchase_supplier_objects"></purchase-supplier-objects>
 						<purchase-supplier-specialties id="purchase_supplier_specialties"></purchase-supplier-specialties>
 						<purchase-supplier-types id="purchase_supplier_types"></purchase-supplier-types>
-						<required-documents module="purchase" model="supplier" 
+						<required-documents 
+							module="purchase" model="supplier" 
 							id="required_documents"
-							short_name_component="doc. requeridos de proveedor"
-							name_component="documentos requeridos de proveedor" 
-							title="Registros de documentos requeridos de proveedor"></required-documents>
+							short_name_component="doc. requeridos"
+							name_component="documentos requeridos"
+							title="Registros de documentos requeridos"
+							typedoc= "true" >
+						</required-documents> 
 						<purchase-processes id="purchase_processes"></purchase-processes>
 						<purchase-type id="purchase_type"></purchase-type>
 						<!-- <purchase-type-operations id="purchase_type_operations"></purchase-type-operations> -->

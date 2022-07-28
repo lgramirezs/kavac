@@ -37,6 +37,6 @@ class RequiredDocument extends Model implements Auditable
      * @var array $fillable
      */
     protected $fillable = [
-        'name', 'description', 'module', 'model'
+        'name', 'description', 'module', 'model', 'type'
     ];
 }

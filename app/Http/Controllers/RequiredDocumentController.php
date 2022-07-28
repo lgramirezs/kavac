@@ -76,7 +76,8 @@ class RequiredDocumentController extends Controller
             'name' => $request->name,
             'description' => $request->description ?? null,
             'module' => $module,
-            'model' => $model
+            'model' => $model,
+            'type' => $request->type
         ]);
 
         return response()->json(['record' => $requiredDocument, 'message' => 'Success'], 200);

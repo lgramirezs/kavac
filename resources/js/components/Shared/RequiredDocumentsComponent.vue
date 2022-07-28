@@ -40,6 +40,10 @@
                                            data-toggle="tooltip" v-model="record.name"
                                            title="Indique el nombre del documento a solicitar (requerido)" class="form-control input-sm">
                                 </div>
+                                <div class="form-group" v-if="typedoc">
+                                    <label>tipo:</label>
+                                    <select2 :options="type_docs" v-model="record.type"></select2>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -102,13 +106,16 @@
                     id: '',
                     name: '',
                     description: '',
+                    type: '',
                 },
                 errors: [],
                 records: [],
-                columns: ['name', 'description', 'id'],
+                type_docs: [],
+                columns: ['name', 'description', 'type', 'id'],
             }
         },
-        props: ['module', 'model', 'title', 'name_component', 'short_name_component'],
+        props: ['module', 'model', 'title', 'name_component', 'short_name_component', 'typedoc'],
+        
         methods: {
             /**
              * Método que borra todos los datos del formulario
@@ -120,6 +127,7 @@
                     id: '',
                     name: '',
                     description: '',
+                    type: '',
                 };
             },
         },
@@ -127,15 +135,26 @@
             this.table_options.headings = {
                 'name': 'Nombre',
                 'description': 'Descripción',
+                'type': 'Tipo',
                 'id': 'Acción'
             };
-            this.table_options.sortable = ['name', 'description'];
-            this.table_options.filterable = ['name', 'description'];
+            this.table_options.sortable = ['name', 'description', 'type'];
+            this.table_options.filterable = ['name', 'description', 'type'];
             this.table_options.columnsClasses = {
                 'name': 'col-md-3',
-                'description': 'col-md-7',
+                'description': 'col-md-5',
+                'type': 'col-md-3',
                 'id': 'col-md-2'
             };
         },
+
+        mounted() {
+            const vm = this;
+            vm.type_docs = [
+                { "id": "", "text": "Seleccione..." },
+                { "id": "Proveedor", "text": "Proveedor" },
+                { "id": "Compra", "text": "Compra" }, 
+            ];
+        }
     };
 </script>
