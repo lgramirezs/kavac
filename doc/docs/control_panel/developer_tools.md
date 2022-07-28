@@ -7,7 +7,7 @@ Esta sección se encuentra dirigida a usuarios desarrolladores o usuarios avanza
 
 ## Acceder a herramientas para desarrolladores 
 
-***Usuario Administrador, Desarrollador***
+***Usuario Desarrollador***
 
 
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
@@ -22,17 +22,25 @@ Estos elementos de interfaz mantienen una uniformidad en el desarrollo de la apl
 
 ![Screenshot](../img/figure_29.png)<div style="text-align: center;font-weight: bold">Figura 29: Interfaz</div>
 
--   Presione el botón **Iconos** para acceder a la lista.
+#### Iconos
+
+-   Presione el botón **Iconos** de las herramientas de interfaz para acceder a la lista.
 
 ![Screenshot](../img/figure_29_1.png)<div style="text-align: center;font-weight: bold">Iconos</div>
+
+#### Componentes
 
 -   Presione el botón **Componentes** para acceder a la lista. 
 
 ![Screenshot](../img/figure_29_2.png)<div style="text-align: center;font-weight: bold">Componentes</div>
 
+#### Botones
+
 -   Presione el botón **Botones** para acceder a la lista. 
 
 ![Screenshot](../img/figure_29_3.png)<div style="text-align: center;font-weight: bold">Botones</div>
+
+#### Formularios
 
 -   Presione el botón **Formularios** para acceder a la lista. 
 

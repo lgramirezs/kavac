@@ -5,11 +5,11 @@
 
 ## Acceso a la aplicación
 
-Esta sección permite llevar un control de acceso en la aplicación, además de visualizar y gestionar información de cuentas de usuarios. Se compone de una tabla de registros que muestra los siguientes datos: usuarios, nombre de usuarios, direcciones IP, estatus (usuario conectado o desconectado) e información sobre la última conexión.  
+Esta sección permite llevar un control de acceso en la aplicación, además de visualizar y gestionar la información de las cuentas de usuarios. Se compone de una tabla de registros que muestra los siguientes datos: usuarios, nombre de usuarios, direcciones IP, estatus (usuario conectado o desconectado) e información sobre la última conexión.  
 
 La gestión de acceso a la aplicación para las cuentas de usuarios que se pueden ejecutar en esta sección incluye las siguientes acciones:
 
--   **Enviar mensaje**.
+-   **Enviar mensaje** (enviar correo electrónico).
 -   **Configurar cuenta de usuario** (bloquear y desbloquear cuenta de usuario).   
 -   **Enviar notificación**. 
 -   **Ver información del usuario**. 
