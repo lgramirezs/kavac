@@ -70,11 +70,20 @@
             @endif
         </div>
         <div class="footer text-center">
-            <label class="mb-0">
-                <span class="btn btn-link font-small">{{ __('Recuérdame') }}</span>
-                <input type="checkbox" name="remember" class="form-control bootstrap-switch mb-0"
-                       data-on-label="SI" data-off-label="NO" data-toggle="tooltip" data-placement="right"
-                       title="{{ __('Seleccione si desea que el sistema recuerde sus datos') }}" />
+            <label class="mb-2">
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <label class="font-small">{{ __('Recuérdame') }}</label>
+                    </div>
+                    <div class="col-6 text-left">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" name="remember" id="remember" data-toggle="tolltip" 
+                                   title="{{  __('Seleccione si desea que el sistema recuerde sus datos') }}" value="true" 
+                                   {{ (old('remember'))?'checked':'' }}>
+                            <label class="custom-control-label" for="remember"></label>
+                        </div>
+                    </div>
+                </div>
             </label>
 
             <button class="btn btn-primary btn-round btn-block" data-toggle="tooltip" data-placement="right"
@@ -91,16 +100,6 @@
 
 @section('extra-js')
     <script>
-        $(document).ready(function() {
-            $('.bootstrap-switch-wrapper').attr({
-                'title': '{{ __('Seleccione si desea que el sistema recuerde sus datos') }}',
-                'data-toggle': 'tooltip',
-                'data-placement': 'right'
-            }).tooltip({
-                trigger:"hover",
-                delay: {hide: 200}
-            });
-        });
         /**
          * Función que permite cargar una nueva imagen de captcha
          */
