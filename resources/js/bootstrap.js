@@ -13,7 +13,7 @@ try {
     /** @type {object} Requerido para el uso de popper.js en Bootstrap 4 */
     window.Popper = require('popper.js').default;
     require('bootstrap');
-    /** @type {object} Requerido para tour giados en funcionalidades del sistema */
+    /** @type {object} Requerido para tour guiados en funcionalidades del sistema */
     window.introJs = require('intro.js');
     /** JQuery.Complexify required for validate strong password */
     require('jquery.complexify/jquery.complexify.banlist');
