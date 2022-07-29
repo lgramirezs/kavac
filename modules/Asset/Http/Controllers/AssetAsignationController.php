@@ -13,7 +13,10 @@ use Modules\Asset\Models\AssetAsignation;
 use Modules\Asset\Models\Asset;
 use Modules\Asset\Models\AssetAsignationDelivery;
 use App\Models\Profile;
+use App\Repositories\ReportRepository;
+use App\Models\Institution;
 use Attribute;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @class      AssetAsignationController
@@ -246,7 +249,9 @@ class AssetAsignationController extends Controller
         if (count($ids) > 1) {
             $asignation = AssetAsignation::whereIn('id', $ids)
                 ->with(['payrollStaff', 'institution' => function($query){
-                    $query->with(['fiscalYears', 
+                    $query->with(['fiscalYears' => function($query){
+                        $query->where(['active' => true])->first();
+                    }, 
                     'municipality' => function($query){
                             $query->with('estate');
                     }]);
@@ -256,6 +261,7 @@ class AssetAsignationController extends Controller
                     $query->with(
                         ['asset' => function ($query) {
                             $query->with(
+                                'institution',
                                 'assetType',
                                 'assetCategory',
                                 'assetSubcategory',
@@ -271,7 +277,9 @@ class AssetAsignationController extends Controller
         } else {
             $asignation = AssetAsignation::where('id', $id)
                 ->with(['payrollStaff', 'institution' => function($query){
-                    $query->with(['fiscalYears', 
+                    $query->with(['fiscalYears' => function($query){
+                        $query->where(['active' => true])->first();
+                    }, 
                     'municipality' => function($query){
                             $query->with('estate');
                     }]);
@@ -281,6 +289,7 @@ class AssetAsignationController extends Controller
                     $query->with(
                         ['asset' => function ($query) {
                             $query->with(
+                                'institution',
                                 'assetType',
                                 'assetCategory',
                                 'assetSubcategory',
@@ -347,7 +356,9 @@ class AssetAsignationController extends Controller
         if (Auth()->user()->isAdmin()) {
             $assetAsignations = AssetAsignation::with(['payrollStaff', 
                                                         'institution' => function($query){
-                                                            $query->with(['fiscalYears', 
+                                                            $query->with(['fiscalYears' => function($query){
+                                                                $query->where(['active' => true])->first();
+                                                            }, 
                                                             'municipality' => function($query){
                                                                     $query->with('estate');
                                                             }]);
@@ -363,5 +374,73 @@ class AssetAsignationController extends Controller
         }
 
         return response()->json(['records'  => $assetAsignations], 200); 
+    }
+
+    public function managePdf(Request $request)
+    {
+        //dd(json_decode($request->data));
+        //dd(json_decode($request->data, true));
+
+        // Validar acceso para el registro
+
+        // $asignation = AssetAsignation::where('id', $id)
+        //         ->with(['assetAsignationAssets' =>
+        //         function ($query) {
+        //             $query->with(
+        //                 ['asset' => function ($query) {
+        //                     $query->with(
+        //                         'institution',
+        //                         'assetType',
+        //                         'assetCategory',
+        //                         'assetSubcategory',
+        //                         'assetSpecificCategory',
+        //                         'assetAcquisitionType',
+        //                         'assetCondition',
+        //                         'assetStatus',
+        //                         'assetUseFunction'
+        //                     );
+        //                 }]
+        //             );
+        //         }])->first();
+
+        $user_profile = Profile::find(auth()->user()->id);
+
+        // if (!auth()->user()->isAdmin) {
+        //     if ($requirement && $requirement->queryAccess($user_profile['institution']['id'])) {
+        //         return view('errors.403');
+        //     }
+        // }
+
+        /**
+         * [$pdf base para generar el pdf]
+         */
+        $pdf = new ReportRepository();
+
+        /*
+         *  Definicion de las caracteristicas generales de la página pdf
+         */
+        $institution = null;
+
+        /*
+         *  Definicion de las caracteristicas generales de la página pdf
+         */
+        if (!auth()->user()->isAdmin) {
+            $institution = Institution::find($user_profile->institution->id);
+        }
+
+        $pdf->setConfig(['institution' => $institution]);
+        $pdf->setHeader($title = '',
+                        $subTitle = 'Bienes asignados',
+                        $hasQR = false,
+                        $hasBarCode = false,
+                        $logoAlign = 'L',
+                        $titleAlign = 'L',
+                        $subTitleAlign = 'L');
+        $pdf->setFooter(false, $institution->name);
+        $pdf->setBody('asset::pdf.asset_acta', true, [
+            'pdf'       => $pdf,
+            'request'    => json_decode($request->data, true),
+        ],'D');
+        $pdf->show($file = 'acta_de_asignacion_de_bienes.pdf', $outputMethod = 'FI');
     }
 }

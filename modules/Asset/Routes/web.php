@@ -93,6 +93,9 @@ Route::group(['middleware' => ['web', 'auth', 'verified'], 'prefix' => 'asset'],
     /** Ruta que obtiene un listado de las asignacioes de bienes institucionales */
     Route::get('asignations/vue-list', 'AssetAsignationController@vueList');
 
+    /** Ruta que obtiene un listado de las asignacioes de bienes institucionales */
+    Route::post('asignations/asignations-record-pdf', 'AssetAsignationController@managePdf');
+
     /**
      * -----------------------------------------------------------
      * Rutas para gestionar las solicitudes de entregas pendientes

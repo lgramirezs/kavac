@@ -44,8 +44,9 @@
 					</button>
 					<asset-manage-record-component 
 							:route_list="app_url + '/asset/asignations/vue-info/' + props.row.id"
+							:data="props.row"
 							:index="props.row.id"
-							:action='"asignación"'>
+							:action='"Asignación"'>
 					</asset-manage-record-component>
 					<!-- :href="url+'pdf/'+props.row.id" -->
 					<button
