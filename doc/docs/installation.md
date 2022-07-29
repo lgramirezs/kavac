@@ -275,7 +275,7 @@ Para identificar si la aplicación se encuentra correctamente instalada, puedes 
 
     $ php artisan serve
 
-Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en el puerto 8000, para verificarlo puedes acceder a el enlace [127.0.0.1:8000](127.0.0.1:8000)
+Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en el puerto 8000, para verificarlo puedes acceder a el enlace **127.0.0.1:8000**
 
 Puedes, de igual forma asignarle una dirección IP o dominio a este comando y un puerto en donde atenderá las peticiones para lo cual se puede agregar las opciones --host y/o --port, un ejemplo de su uso sería:
 
@@ -569,7 +569,7 @@ Para identificar si la aplicación se encuentra correctamente instalada, puedes 
 
     $ php artisan serve
 
-Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en el puerto 8000, para verificarlo puedes acceder a el enlace [127.0.0.1:8000](127.0.0.1:8000)
+Este comando levanta un servidor en la dirección ip 127.0.0.1 o localhost y en el puerto 8000, para verificarlo puedes acceder a el enlace **127.0.0.1:8000**
 
 Puedes, de igual forma asignarle una dirección IP o dominio a este comando y un puerto en donde atenderá las peticiones para lo cual se puede agregar las opciones --host y/o --port, un ejemplo de su uso sería:
 
