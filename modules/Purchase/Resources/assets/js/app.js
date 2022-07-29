@@ -181,7 +181,7 @@ Vue.component('purchase-plan-start-diagnosis', () =>
  *
  * @author Juan Rosas <jrosas@cenditel.gob.ve> | <juan.rosasr01@gmail.com>
  */
-Vue.component('purchase-quotation-form-update', () =>
+Vue.component('purchase-quotation-form', () =>
     import (
         /* webpackChunkName: "purchase-quotation-form" */
         './components/quotation/PurchaseFormComponent.vue'));
