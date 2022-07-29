@@ -16,11 +16,11 @@ Para acceder a la sección de gráficos del inventario de bienes del panel contr
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Gráficos del Inventario de Bienes**.
 
-![Screenshot](../img/figure_38.png)<div style="text-align: center;font-weight: bold">Figura 38: Gráficos del Inventario de Bienes</div>
+![Screenshot](../img/figure_38.png)<div style="text-align: center;font-weight: bold">Figura 143: Gráficos del Inventario de Bienes</div>
 
 -   Indique la opción ![Screenshot](../img/select.png) del botón de selección para filtrar los registros de bienes por las siguientes categorías: **Existencia**, **Más Solicitados** o **Menos Solicitados**. 
 
-![Screenshot](../img/figure_38_1.png)<div style="text-align: center;font-weight: bold">Figura 38: Gráficos del Inventario de Bienes</div>
+![Screenshot](../img/figure_38_1.png)<div style="text-align: center;font-weight: bold">Figura 144: Gráficos del Inventario de Bienes</div>
 
 !!! success ""
     **Cambiar el tipo de gráfico**
@@ -47,19 +47,19 @@ Para acceder a la sección de historial de operaciones módulo de bienes del pan
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Historial de Operaciones Módulo de Bienes**.
 
-![Screenshot](../img/figure_39.png)<div style="text-align: center;font-weight: bold">Figura 39: Historial de Operaciones en el Módulo de Bienes</div>
+![Screenshot](../img/figure_39.png)<div style="text-align: center;font-weight: bold">Figura 145: Historial de Operaciones en el Módulo de Bienes</div>
 
 -   Presione el botón **Consultar registro** ![Screenshot](../img/see.png) ubicado en la columna titulada **Acción** de un registro que se desee consultar. 
 
-![Screenshot](../img/figure_39_1.png)<div style="text-align: center;font-weight: bold">Figura 39: Historial de Operaciones en el Módulo de Bienes</div>
+![Screenshot](../img/figure_39_1.png)<div style="text-align: center;font-weight: bold">Figura 146: Historial de Operaciones en el Módulo de Bienes</div>
 
 -   A continuación el sistema despliega una sección donde se describen los datos del registro seleccionado.
 
-![Screenshot](../img/figure_39_2.png)<div style="text-align: center;font-weight: bold">Figura 39: Historial de Operaciones en el Módulo de Bienes</div>
+![Screenshot](../img/figure_39_2.png)<div style="text-align: center;font-weight: bold">Figura 147: Historial de Operaciones en el Módulo de Bienes</div>
 
 -   Presione el botón **Imprimir registro** ![Screenshot](../img/print.png) ubicado en la columna titulada **Acción** de un registro seleccionado. 
 
-![Screenshot](../img/figure_39_3.png)<div style="text-align: center;font-weight: bold">Figura 39: Historial de Operaciones en el Módulo de Bienes</div>
+![Screenshot](../img/figure_39_3.png)<div style="text-align: center;font-weight: bold">Figura 148: Historial de Operaciones en el Módulo de Bienes</div>
 
 
 

@@ -17,17 +17,17 @@ Para acceder a la sección de operaciones en el módulo de contabilidad del pane
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Operaciones en el Módulo de Contabilidad**.
 
 
-![Screenshot](../img/figure_36.png)<div style="text-align: center;font-weight: bold">Figura 36: Operaciones el en Módulo de Contabilidad</div>
+![Screenshot](../img/figure_36.png)<div style="text-align: center;font-weight: bold">Figura 137: Operaciones el en Módulo de Contabilidad</div>
 
 **Imprimir registro**
 
 -   Seleccione un asiento contable y presione el botón **Imprimir registro** ![Screenshot](../img/print.png) ubicado en la columna titulada **Acción** de la tabla de registros.  
 
-![Screenshot](../img/figure_36_1.png)<div style="text-align: center;font-weight: bold">Figura 36: Imprimir Asiento Contable</div>
+![Screenshot](../img/figure_36_1.png)<div style="text-align: center;font-weight: bold">Figura 138: Imprimir Asiento Contable</div>
 
 -   A continuación el sistema genera un archivo en formato **pdf** con detalles sobre el asiento contable.
 
-![Screenshot](../img/figure_36_2.png)<div style="text-align: center;font-weight: bold">Figura: Reporte</div>
+![Screenshot](../img/figure_36_2.png)<div style="text-align: center;font-weight: bold">Figura 139: Reporte</div>
 
 ## Reportes de contabilidad
 
@@ -42,17 +42,17 @@ Para acceder a la sección de operaciones en módulo de contabilidad del panel c
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Operaciones en Módulo de Contabilidad**.
 
 
-![Screenshot](../img/figure_37.png)<div style="text-align: center;font-weight: bold">Figura 36: Reportes de Contabilidad</div>
+![Screenshot](../img/figure_37.png)<div style="text-align: center;font-weight: bold">Figura 140: Reportes de Contabilidad</div>
 
 **Imprimir registro**
 
 -   Seleccione un asiento contable y presione el botón **Imprimir registro** ![Screenshot](../img/print.png) ubicado en la columna titulada **Acción** de la tabla de registros.  
 
-![Screenshot](../img/figure_37_1.png)<div style="text-align: center;font-weight: bold">Figura 36: Imprimir Reporte</div>
+![Screenshot](../img/figure_37_1.png)<div style="text-align: center;font-weight: bold">Figura 141: Imprimir Reporte</div>
 
 -   A continuación el sistema genera un archivo en formato **pdf** con detalles sobre el asiento contable.
 
-![Screenshot](../img/figure_37_2.png)<div style="text-align: center;font-weight: bold">Figura: Reporte</div>
+![Screenshot](../img/figure_37_2.png)<div style="text-align: center;font-weight: bold">Figura 142: Reporte</div>
 
 
 

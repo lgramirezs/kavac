@@ -17,11 +17,11 @@ A continuación se describe los pasos a seguir para la gestión de módulos:
 -   Ingresar a través del panel lateral a **Configuración** > **Módulos** (ver Figura).
 -   A través de esta sección es posible filtrar la lista de módulos por las siguientes opciones: **Todos**, **Sin Instalar**, **Instalados**, **Inhabilitados** y **Habilitados**.   
 
-![Screenshot](../img/figure_18.png)<div style="text-align: center;font-weight: bold">Figura 18: Gestión de Aplicaciones</div>
+![Screenshot](../img/figure_18.png)<div style="text-align: center;font-weight: bold">Figura 121: Gestión de Aplicaciones</div>
 
 -   Haga clic sobre el módulo que desea gestionar.
 
-![Screenshot](../img/figure_18_1.png)<div style="text-align: center;font-weight: bold">Figura 18: Gestión de Aplicación</div>
+![Screenshot](../img/figure_18_1.png)<div style="text-align: center;font-weight: bold">Figura 122: Gestión de Aplicación</div>
 
 
 -   Presione el botón **Instalar** para incorporar el módulo al sistema. 
@@ -30,4 +30,4 @@ A continuación se describe los pasos a seguir para la gestión de módulos:
 -   Para retornar a la ruta anterior, presione el botón ![Screenshot](../img/back.png).
 -   Presione el botón **Listar Módulos** para retornar a la lista de módulos. 
 
-![Screenshot](../img/figure_19.png)<div style="text-align: center;font-weight: bold">Figura 19: Gestión Módulo de Bienes</div>
+![Screenshot](../img/figure_19.png)<div style="text-align: center;font-weight: bold">Figura 123: Gestión Módulo de Bienes</div>

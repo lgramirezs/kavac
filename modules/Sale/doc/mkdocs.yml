@@ -63,7 +63,7 @@ plugins:
       author: CENDITEL Nodo Mérida
       copyright: http://conocimientolibre.cenditel.gob.ve/licencia-de-software-v-1-3/
       cover_subtitle: KAVAC - Módulo de Comercialización
-      #output_path: ../../../public/docs/user_sale_module_manual.pdf
+      output_path: ../../../public/docs/user_sale_module_manual.pdf
 
 # Customization
 # extra:

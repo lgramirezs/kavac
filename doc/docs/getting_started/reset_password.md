@@ -9,7 +9,7 @@ En caso de que un usuario registrado en el sistema haya olvidado su contraseña,
 
 -   Acceder a la Página de inicio de sesión del sistema.
 
-![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura: Inicio de Sesión</div>
+![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura 12: Inicio de Sesión</div>
 
  -   Presionar el enlace ¿Olvidaste la contraseña?
 
