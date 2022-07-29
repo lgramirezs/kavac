@@ -16,16 +16,16 @@ Para iniciar el registro de una organización se deben seguir los siguientes pas
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
 -   Ingresar a través del panel lateral a **Configuración** > **General** y ubicarse en la sección **Configurar Organización** (ver Figura).
 
-![Screenshot](../img/organization.png)<div style="text-align: center;font-weight: bold">Figura : Configurar Organización</div>
+![Screenshot](../img/organization.png)<div style="text-align: center;font-weight: bold">Figura 36: Configurar Organización</div>
 
 ### Logotipo y banner institucional
 
 -   Para establecer un logotipo y banner institucional haga clic sobre los recuadros correspondientes que tienen por titulo **IMAGEN** (ver Figura).
 -   Seleccione un archivo desde su directorio local (ver Figura ).  
 
-![Screenshot](../img/logo_banner.png)<div style="text-align: center;font-weight: bold">Figura : Seleccionar Logotipo y Banner Institucional desde Directorio Local</div> 
+![Screenshot](../img/logo_banner.png)<div style="text-align: center;font-weight: bold">Figura 37: Seleccionar Logotipo y Banner Institucional desde Directorio Local</div> 
 
-![Screenshot](../img/figure_14.png)<div style="text-align: center;font-weight: bold">Figura : Logotipo y Banner Institucional</div>
+![Screenshot](../img/figure_14.png)<div style="text-align: center;font-weight: bold">Figura 38: Logotipo y Banner Institucional</div>
 
 ### Datos básicos
 
@@ -47,13 +47,13 @@ Para iniciar el registro de una organización se deben seguir los siguientes pas
     -   ***Tipo***: Para crear un nuevo registro de tipo de organización acceda a **Configuración** > **General** > **Registros Comunes** > **Tipos de organizaciones**.
      
 
-![Screenshot](../img/basic_data.png)<div style="text-align: center;font-weight: bold">Figura : Datos Básicos de la Organización</div>
+![Screenshot](../img/basic_data.png)<div style="text-align: center;font-weight: bold">Figura 39: Datos Básicos de la Organización</div>
 
 ### Datos complementarios
 
 -   Complete el formulario del apartado **Datos Complementarios**. Tenga en cuenta que todos los campos de este apartado no son obligatorios, por lo que no se requiere agregar información de forma obligatorio para completar el registro de una organización.
 
-![Screenshot](../img/supplementary_data.png)<div style="text-align: center;font-weight: bold">Figura : Datos Complementarios de la Organización</div>
+![Screenshot](../img/supplementary_data.png)<div style="text-align: center;font-weight: bold">Figura 40: Datos Complementarios de la Organización</div>
 
 - Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
 - Presione el botón **Cancelar**  ![Screenshot](../img/cancel.png) para cancelar registro y regresar a la ruta anterior.
@@ -72,7 +72,7 @@ Para actualizar los datos de una organización registrada se requiere seguir lo 
 
 -   Ingresar a través del panel lateral a **Configuración** > **General** y ubicarse en la sección **Configurar Organización** (ver Figura).
 
-![Screenshot](../img/organization.png)<div style="text-align: center;font-weight: bold">Figura : Editar Organización</div>
+![Screenshot](../img/organization.png)<div style="text-align: center;font-weight: bold">Figura 41: Editar Organización</div>
 
 -   Actualice los datos del formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
 -   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
@@ -85,7 +85,7 @@ Esta funcionalidad se encuentra desactivada por defecto, para activar dicha func
 
 -   Ingresar a través del panel lateral a **Configuración** > **General** y ubicarse en la sección **Parámetros Generales** (ver Figura).
 
-![Screenshot](../img/image10.png)<div style="text-align: center;font-weight: bold">Figura : Habilitar Opción Multi-Gestión</div>
+![Screenshot](../img/image10.png)<div style="text-align: center;font-weight: bold">Figura 42: Habilitar Opción Multi-Gestión</div>
 
 -   Indique la opción ![Screenshot](../img/select.png) del botón de selección del campo **Multi gestión** para habilitar la gestión de multiples organizaciones. 
 - Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
@@ -109,13 +109,13 @@ Desde este apartado se pueden llevar a cabo las siguientes acciones:
 -   ***Editar registros***. 
 
 
-![Screenshot](../img/organizations.png)<div style="text-align: center;font-weight: bold">Figura : Organizaciones Registradas</div>
+![Screenshot](../img/organizations.png)<div style="text-align: center;font-weight: bold">Figura 43: Organizaciones Registradas</div>
 
 ### Registrar organización
 
 -   Presione el botón **Crear registro** ![Screenshot](../img/create.png) ubicado en la parte superior derecha del apartado **Organizaciones Registradas** (ver Figura )
 
-![Screenshot](../img/organizations_1.png)<div style="text-align: center;font-weight: bold">Figura : Registrar Organización / Multi-Gestión Activa</div>
+![Screenshot](../img/organizations_1.png)<div style="text-align: center;font-weight: bold">Figura 44: Registrar Organización / Multi-Gestión Activa</div>
 
 -   A continuación complete el formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
 -   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.
@@ -124,17 +124,17 @@ Desde este apartado se pueden llevar a cabo las siguientes acciones:
 
 -   Presione el botón **Consultar registro** ![Screenshot](../img/see.png) ubicado en la columna titulada **Acción** de un registro de organización que se prefiere consultar. 
 
-![Screenshot](../img/organizations_2.png)<div style="text-align: center;font-weight: bold">Figura : Consular Registros de Organizaciones / Multi-Gestión Activa</div>
+![Screenshot](../img/organizations_2.png)<div style="text-align: center;font-weight: bold">Figura 45: Consular Registros de Organizaciones / Multi-Gestión Activa</div>
 
 -   A continuación el sistema despliega una sección donde se describen los datos de la organización seleccionada. 
 
-![Screenshot](../img/info.png)<div style="text-align: center;font-weight: bold">Figura : Datos de la Organización</div>
+![Screenshot](../img/info.png)<div style="text-align: center;font-weight: bold">Figura 46: Datos de la Organización</div>
 
 ### Editar registros
 
 -   Presione el botón **Editar registro** ![Screenshot](../img/edit.png)  ubicado en la columna titulada **Acción** del registro de organización que se desee seleccionar para actualizar datos. 
 
-![Screenshot](../img/organizations_3.png)<div style="text-align: center;font-weight: bold">Figura : Editar Registros de Organizaciones/ Multi-Gestión Activa</div>
+![Screenshot](../img/organizations_3.png)<div style="text-align: center;font-weight: bold">Figura 47 : Editar Registros de Organizaciones/ Multi-Gestión Activa</div>
 
 -   Actualice los datos del formulario siguiendo los pasos descritos en el apartado [Registrar organizacion](#logotipo-y-banner-institucional).
 -   Presione el botón **Guardar**  ![Screenshot](../img/save_1.png) para registrar los cambios efectuados.

@@ -25,7 +25,7 @@ Para llevar a cabo la gestión de acceso a la aplicación se deben seguir los si
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Acceso a la Aplicación**.
 
 
-![Screenshot](../img/figure_33.png)<div style="text-align: center;font-weight: bold">Figura 33: Acceso a la Aplicación</div>
+![Screenshot](../img/figure_33.png)<div style="text-align: center;font-weight: bold">Figura 130: Acceso a la Aplicación</div>
 
 Haciendo uso de los elementos que se ubican sobre la columna titulada **Acción**, se ejecutan las funciones que se describen a continuación.
 
@@ -93,7 +93,7 @@ Para realizar una auditoría o seguimiento de un registro, es necesario seguir l
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Auditoría de Registros**.
 
-![Screenshot](../img/figure_34.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_34.png)<div style="text-align: center;font-weight: bold">Figura 131: Auditoría de Registros</div>
 
 !!! note ""
     **Filtrar registros**
@@ -114,11 +114,11 @@ Para realizar una auditoría o seguimiento de un registro, es necesario seguir l
 
 -   Seleccione un registro y presione el botón **Ver detalles del registro** ![Screenshot](../img/see.png) ubicada en la columna titula **Acción** de la tabla de registros.
 
-![Screenshot](../img/figure_34_1.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_34_1.png)<div style="text-align: center;font-weight: bold">Figura 132: Auditoría de Registros</div>
 
 -   A continuación el sistema despliega una sección donde se describen los datos del registro seleccionado. 
 
-![Screenshot](../img/figure_34_2.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_34_2.png)<div style="text-align: center;font-weight: bold">Figura 133: Auditoría de Registros</div>
 
 ## Restaurar registros eliminados 
 
@@ -131,7 +131,7 @@ Para restaurar un registro, es necesario seguir los siguientes pasos:
 -   Acceder al sistema e iniciar sesión con usuario y contraseña.
 -   Ingresar a través del panel lateral a **Panel de Control** y dirigirse a la sección **Restaurar Registros Eliminados**.
 
-![Screenshot](../img/figure_35.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_35.png)<div style="text-align: center;font-weight: bold">Figura 134: Auditoría de Registros</div>
 
 !!! note ""
     **Filtrar registros**
@@ -152,11 +152,11 @@ Para restaurar un registro, es necesario seguir los siguientes pasos:
 
 -   Seleccione un registro y presione el botón **Restaurar registro** ![Screenshot](../img/restore.png) ubicada en la columna titula **Acción** de la tabla de registros.
 
-![Screenshot](../img/figure_35_1.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_35_1.png)<div style="text-align: center;font-weight: bold">Figura 135: Auditoría de Registros</div>
 
 -   **Confirme** la acción a ejecutar a través de la ventana emergente que se muestra a continuación. 
 
-![Screenshot](../img/figure_35_2.png)<div style="text-align: center;font-weight: bold">Figura 34: Auditoría de Registros</div>
+![Screenshot](../img/figure_35_2.png)<div style="text-align: center;font-weight: bold">Figura 136: Auditoría de Registros</div>
 
 
 

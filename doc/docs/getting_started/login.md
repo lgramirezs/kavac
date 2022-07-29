@@ -7,7 +7,7 @@ Acceda al sistema desde cualquier navegador de internet es recomendable utilizar
 
 A continuación tendrá acceso a la **pantalla principal** o **página de inicio de sesión** del sistema.
 
-![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura : Inicio de Sesión</div>
+![Screenshot](../img/figure_42.png#imagen)<div style="text-align: center;font-weight: bold"> Figura 10: Inicio de Sesión</div>
 
 !!! note "Nota"
 
@@ -39,7 +39,7 @@ A continuación tendrá acceso a la **pantalla principal** o **página de inicio
 
 -   A continuación tendrá acceso a la pantalla prinicipal de su cuenta de usuario.
 
-![Screenshot](../img/figure_56.png#imagen)<div style="text-align: center;font-weight: bold"> Figura : Pantalla de Inicio</div>
+![Screenshot](../img/figure_56.png#imagen)<div style="text-align: center;font-weight: bold"> Figura 11: Pantalla de Inicio</div>
 
 <br/>
 
