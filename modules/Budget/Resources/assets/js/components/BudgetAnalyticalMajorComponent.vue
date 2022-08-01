@@ -166,10 +166,20 @@
 				class="btn btn-primary btn-sm"
 				data-toggle="tooltip"
 				title="Generar Reporte"
-				@click="generateReport"
-				id="budgetAvailabilityGenerateReport"
+				@click="generateReport(false)"
+				id="budgetMajorAnayticalGenerateReport"
 			>
 				<span>Generar reporte</span>
+				<i class="fa fa-print"></i>
+			</button>
+			<button
+				class="btn btn-primary btn-sm"
+				data-toggle="tooltip"
+				title="Generar Reporte"
+				@click="generateReport(true)"
+				id="budgetMajorAnayticalExportReport"
+			>
+				<span>Exportar reporte</span>
 				<i class="fa fa-print"></i>
 			</button>
 		</div>
@@ -211,8 +221,6 @@ export default {
 
 			specific_actions_ids: [],
 			all_specific_actions: false,
-
-			consolidated: false,
 
 			budgetItemsArray: JSON.parse(this.budgetItems),
 			budgetProjectsArray: JSON.parse(this.budgetProjects),
@@ -344,108 +352,61 @@ export default {
 			$("#specific_action_id").attr("disabled", len == 0);
 		},
 
-		generateReport: function () {
+		generateReport(exportReport) {
 			this.errors = [];
-			if (!this.consolidated) {
-				if (!this.initialDate) {
-					this.errors.push("El campo fecha Desde es obligatorio");
-				}
-				if (!this.finalDate) {
-					this.errors.push("El campo fecha Hasta es obligatorio");
-				}
-				if (!this.initialCode) {
-					this.errors.push(
-						"El campo Desde: Partida Presupuestario es obligatorio"
-					);
-				}
-				if (!this.finalCode) {
-					this.errors.push(
-						"El campo Hasta: Partida Presupuestario es obligatorio"
-					);
-				}
-				if (!this.project_id && !this.centralized_action_id) {
-					this.errors.push(
-						"El campo Proyecto o Acción Centralizada es obligatorio"
-					);
-				}
-				if (!this.specific_actions_ids) {
-					this.errors.push(
-						"El campo Acción Específica es obligatorio"
-					);
-				} else {
-					if (!this.all_specific_actions) {
-						this.specific_actions_ids =
-							this.specific_actions_ids.map(function (object) {
-								return object.id;
-							});
-					}
-				}
-				let initialDate_ = new Date(this.initialDate);
-				let finalDate_ = new Date(this.finalDate);
-
-				if (initialDate_.getTime() >= finalDate_.getTime()) {
-					this.errors.push("La fecha inicial es incorrecta");
-				}
-
-				if (this.errors.length === 0) {
-					window.open(
-						`${this.url}?initialDate=${this.initialDate}
-						&finalDate=${this.finalDate}
-						&initialCode=${this.initialCode}
-						&finalCode=${this.finalCode}
-						&accountsWithMovements=${this.accountsWithMovements}
-						&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
-						&project_type=${this.project_id ? "project" : "centralized_action"}
-						&specific_actions_ids=${this.specific_actions_ids}`
-					);
-					this.reset();
-				}
+			if (!this.initialDate) {
+				this.errors.push("El campo fecha Desde es obligatorio");
+			}
+			if (!this.finalDate) {
+				this.errors.push("El campo fecha Hasta es obligatorio");
+			}
+			if (!this.initialCode) {
+				this.errors.push(
+					"El campo Desde: Partida Presupuestario es obligatorio"
+				);
+			}
+			if (!this.finalCode) {
+				this.errors.push(
+					"El campo Hasta: Partida Presupuestario es obligatorio"
+				);
+			}
+			if (!this.project_id && !this.centralized_action_id) {
+				this.errors.push(
+					"El campo Proyecto o Acción Centralizada es obligatorio"
+				);
+			}
+			if (!this.specific_actions_ids) {
+				this.errors.push(
+					"El campo Acción Específica es obligatorio"
+				);
 			} else {
-				let initialDate_ = new Date(this.initialDate);
-				let finalDate_ = new Date(this.finalDate);
+				if (!this.all_specific_actions) {
+					this.specific_actions_ids =
+						this.specific_actions_ids.map(function (object) {
+							return object.id;
+						});
+				}
+			}
+			let initialDate_ = new Date(this.initialDate);
+			let finalDate_ = new Date(this.finalDate);
 
-				if (initialDate_.getTime() >= finalDate_.getTime()) {
-					this.errors.push("La fecha inicial es incorrecta");
-				}
+			if (initialDate_.getTime() >= finalDate_.getTime()) {
+				this.errors.push("La fecha inicial es incorrecta");
+			}
 
-				if (!this.initialDate) {
-					this.errors.push("El campo desde es obligatorio");
-				}
-				if (!this.finalDate) {
-					this.errors.push("El campo hasta es obligatorio");
-				}
-				if (!this.initialCode) {
-					this.errors.push(
-						"El campo Desde: Partida Presupuestario es obligatorio"
-					);
-				}
-				if (!this.finalCode) {
-					this.errors.push(
-						"El campo Hasta: Partida Presupuestario es obligatorio"
-					);
-				}
-
-				let projects_ids = this.budgetProjectsArray
-					.slice(1)
-					.map((element) => {
-						return element.id;
-					});
-				let centralized_actions_ids = this.budgetCentralizedActionsArray
-					.slice(1)
-					.map((element) => {
-						return element.id;
-					});
-
-				if (this.errors.length === 0) {
-					window.open(`${window.app_url}/budget/report/consolidated-pdf?
-						initialDate=${this.initialDate}
-						&finalDate=${this.finalDate}
-						&initialCode=${this.initialCode}
-						&finalCode=${this.finalCode}
-						&accountsWithMovements=${this.accountsWithMovements}
-						&projects_ids=${projects_ids}
-						&centralized_actions_ids=${centralized_actions_ids}`);
-				}
+			if (this.errors.length === 0) {
+				window.open(
+					`${this.url}?initialDate=${this.initialDate}
+					&finalDate=${this.finalDate}
+					&initialCode=${this.initialCode}
+					&finalCode=${this.finalCode}
+					&accountsWithMovements=${this.accountsWithMovements}
+					&project_id=${this.project_id ? this.project_id : this.centralized_action_id}
+					&project_type=${this.project_id ? "project" : "centralized_action"}
+					&specific_actions_ids=${this.specific_actions_ids}
+					&exportReport=${exportReport}`
+				);
+				this.reset();
 			}
 		},
 	},

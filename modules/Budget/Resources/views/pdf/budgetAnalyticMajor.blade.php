@@ -1,5 +1,37 @@
 {{-- <h1 style="font-size: 9rem;" align="center">MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h1> --}}
-<h2 style="font-size: 9rem;" align="center">Información Presupuestaria desde {{ $initialDate }} hasta {{ $finalDate }}
+<h3 style="font-size: 9rem;" align="center">
+    Información Presupuestaria desde {{ $initialDate }} hasta {{ $finalDate }}
+</h3>
+<table cellspacing="2" cellpadding="2" border="0" style="font-size: 10rem; font-weight: bold">
+    <tr>
+        <td>Expresado en: {{ $currencySymbol }}</td>
+    </tr>
+    <tr>
+        <td>Código del ente: {{ $institution['onapre_code'] }}</td>
+    </tr>
+    <tr>
+        <td>Denominación del ente:
+            {{ $institution['name'] }}</td>
+    </tr>
+    <tr>
+        <td>Denominación del ente:
+            {{ $fiscal_year }}</td>
+    </tr>
+    <tr>
+        <td>Proyecto / Acción Centralizada:
+            {{ $records[0][1]['specificAction']['specificable']['name'] }}</td>
+    </tr>
+    <tr>
+        <td>Código de Proyecto / Acción Centralizada:
+            {{ $records[0][1]['specificAction']['specificable']['code'] }}
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+
+{{-- <h2 style="font-size: 9rem;" align="center">Información Presupuestaria desde {{ $initialDate }} hasta {{ $finalDate }}
 </h2>
 <h2></h2>
 <h2></h2>
@@ -11,44 +43,27 @@
 <h4 style="font-size: 9rem;">Código de Proyecto / Acción Centralizada:
     {{ $records[0][1]['specificAction']['specificable']['code'] }}</h4>
 <h4 style="font-size: 9rem;">Año Fiscal: {{ $fiscal_year }}</h4>
-<br>
+<br> --}}
 
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th style="font-size: 8rem" align="center" width="83.4%">
-            {{-- <h4>MAYOR ANALÍTICO PRESUPUESTO POR PROYECTO / ACCIÓN CENTRALIZADA</h4> --}}
-            {{-- <h4>DESDE: {{ $initialDate }} al {{ $finalDate }}</h4> --}}
-            <br>
-        </th>
-        <th style="font-size: 8rem" align="center" width="16.6%">
-            <h4>Fecha: {{ $report_date }} </h4>
-        </th>
-    </tr>
-
-</table>
-
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Fecha</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Código</th>
-        <th style="font-size: 7rem;" width="8.7%" align="center">Denominación</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Detalle</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Asignado</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Aumento</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Disminución</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Actual</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Comprometido</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Causado</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Pagado</th>
-        <th style="font-size: 7rem;" width="8.3%" align="center">Disponible</th>
+        <th style="font-size: 7rem;" align="center">Fecha</th>
+        <th style="font-size: 7rem;" align="center">Código</th>
+        <th style="font-size: 7rem;" align="center">Denominación</th>
+        <th style="font-size: 7rem;" align="center">Detalle</th>
+        <th style="font-size: 7rem;" align="center">Asignado</th>
+        <th style="font-size: 7rem;" align="center">Aumento</th>
+        <th style="font-size: 7rem;" align="center">Disminución</th>
+        <th style="font-size: 7rem;" align="center">Actual</th>
+        <th style="font-size: 7rem;" align="center">Comprometido</th>
+        <th style="font-size: 7rem;" align="center">Causado</th>
+        <th style="font-size: 7rem;" align="center">Pagado</th>
+        <th style="font-size: 7rem;" align="center">Disponible</th>
     </tr>
 </table>
-
-
 
 <table cellspacing="0" cellpadding="1" border="1">
     @php
-        
         $total_programmed = 0;
         $total_compromised = 0;
         $total_amount_available = 0;
@@ -74,7 +89,6 @@
         @endphp
         @foreach ($budgetAccounts[0] as $budgetAccount)
             @php
-            // dd($budgetAccount);
                 $compromised_des = join(',', $budgetAccount['compromised_descriptions'] ?? []);
                 $increment_des = join(',', $budgetAccount['increment_descriptions'] ?? []);
                 $decrement_des = join(',', $budgetAccount['decrement_descriptions'] ?? []);
@@ -91,7 +105,8 @@
                     {{ $budgetAccount['budgetAccount']['denomination'] }}</td>
 
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="left">
-                    {{'Aumento: ' . $increment_des . "\r" . 'Disminución: ' . $decrement_des . "\r" . 'Compromiso: ' . $compromised_des }}</td>
+                    {{ 'Aumento: ' . $increment_des . "\r" . 'Disminución: ' . $decrement_des . "\r" . 'Compromiso: ' . $compromised_des }}
+                </td>
 
                 <td style="font-size: 7rem; border-bottom: 1px solid #999; {{ $styles }}" align="center">
                     {{ number_format($budgetAccount['total_year_amount'], 2) }}</td>
@@ -137,7 +152,11 @@
 
 <table cellspacing="0" cellpadding="1" border="1" style="font-weight: bold">
     <tr>
-        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="Right" width="25.3%">
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="Right" width="8.3%">
+        </td>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" width="8.3%">
+        </td>
+        <td style="font-size: 8rem; border-bottom: 1px solid #999;" width="8.3%">
             Total
         </td>
         <td style="font-size: 8rem; border-bottom: 1px solid #999;" align="center" width="8.3%">

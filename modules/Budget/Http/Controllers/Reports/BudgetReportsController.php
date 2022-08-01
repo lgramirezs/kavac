@@ -4,6 +4,7 @@
 
 namespace Modules\Budget\Http\Controllers\Reports;
 
+use Modules\Budget\Exports\RecordsExport;
 use App\Models\FiscalYear;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -12,8 +13,8 @@ use App\Repositories\ReportRepository;
 use Modules\Budget\Models\Institution;
 use Modules\Budget\Models\BudgetAccount;
 use Modules\Budget\Models\BudgetProject;
-use Modules\Budget\Models\BudgetCompromise;
 use Illuminate\Contracts\Support\Renderable;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Budget\Models\BudgetAccountOpen;
 use Modules\Budget\Models\BudgetCompromiseDetail;
 use Modules\Budget\Models\BudgetCentralizedAction;
@@ -789,23 +790,34 @@ class BudgetReportsController extends Controller
             $records[$i][0] = $this->filterBudgetAccounts($records[$i][0], $data['initialCode'], $data['finalCode'], $data['initialDate'], $data['finalDate']);
         }
 
-        $pdf = new ReportRepository();
-
         $institution = Institution::find(1);
         $fiscal_year = FiscalYear::where('active', true)->first();
         $currency = Currency::where('default', true)->first();
-        $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE', 'reportDate' => '']);
-        $pdf->setHeader('', 'Reporte Mayor Analítico por Proyecto o Acción Centralizada');
-        $pdf->setFooter();
-        $pdf->setBody('budget::pdf.budgetAnalyticMajor', true, [
-            'pdf' => $pdf,
-            'records' => $records,
-            'institution' => $institution,
-            'currencySymbol' => $currency['symbol'],
-            'fiscal_year' => $fiscal_year['year'],
-            'report_date' => \Carbon\Carbon::today()->format('d-m-Y'),
-            'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['initialDate'])->format('d-m-Y'),
-            'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['finalDate'])->format('d-m-Y'),
-        ]);
+
+        if ($request->exportReport === 'true') {
+            return Excel::download(new RecordsExport([
+                'records' => $records, 'institution' => $institution,
+                'currencySymbol' => $currency['symbol'],
+                'fiscal_year' => $fiscal_year['year'],
+                'report_date' => \Carbon\Carbon::today()->format('d-m-Y'),
+                'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['initialDate'])->format('d-m-Y'),
+                'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['finalDate'])->format('d-m-Y'),
+            ]), now()->format('d-m-Y') . '_Reporte_Mayor_Analitico.xlsx');
+        } else {
+            $pdf = new ReportRepository();
+            $pdf->setConfig(['institution' => $institution, 'orientation' => 'L', 'format' => 'A2 LANDSCAPE', 'reportDate' => '']);
+            $pdf->setHeader('', 'Reporte Mayor Analítico por Proyecto o Acción Centralizada');
+            $pdf->setFooter();
+            $pdf->setBody('budget::pdf.budgetAnalyticMajor', true, [
+                'pdf' => $pdf,
+                'records' => $records,
+                'institution' => $institution,
+                'currencySymbol' => $currency['symbol'],
+                'fiscal_year' => $fiscal_year['year'],
+                'report_date' => \Carbon\Carbon::today()->format('d-m-Y'),
+                'initialDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['initialDate'])->format('d-m-Y'),
+                'finalDate' => \Carbon\Carbon::rawCreateFromFormat('Y-m-d', $request['finalDate'])->format('d-m-Y'),
+            ]);
+        }
     }
 }
