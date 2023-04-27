@@ -629,7 +629,7 @@ Genera nuevo seeder para el módulo especificado (nombre del modelo en plural)
 La aplicación cuenta con una amplia documentación técnica y para usuarios del sistema, las cuales se encuentran bajo las siguientes rutas:
 
 * [Técnica]()
-* [Usuario]()
+* [Usuario](https://github.com/lgramirezs/Documentacion-sistema-ERP)
 
 ## Licencia
 
