@@ -4,7 +4,7 @@
     | . \  / ___ \ V / ___ \ |___ 
     |_|\_\/_/   \_\_/_/   \_\____|
 
-# KAVAC | Sistema de Gestión Organizacional
+# KAVAC | Sistema de Gestión Organizacional |
 
 ## Sobre la aplicación
 
@@ -20,7 +20,7 @@ Esta aplicación cuenta con funcionalidades y mejoras con respecto a otras herra
 
 Como antecedentes de esta aplicación se considera como precursor a [SAID - Sistema Administrativo Integrado Descentralizado](http://said.cenditel.gob.ve/wiki).
 
-## Instalación de la aplicación
+## Instalación de la aplicación 
 
     Entorno: Desarrollo
     Usaremos $ para describir los comandos que se ejecutaran con usuario regular.
